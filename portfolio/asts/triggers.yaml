@@ -2,6 +2,8 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+schema_version: '1.0.1'
+profile: full_model
 meta:
   ticker: ASTS
   company: AST SpaceMobile, Inc.
@@ -12,8 +14,7 @@ meta:
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/ASTS?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 58.52
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
-automations:
-  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+automations: {}
 route:
   steps:
   - id: vector
@@ -25,6 +26,7 @@ rules:
   trigger_not_decision: true
 triggers:
 - id: ASTS-E-01
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Constellation_Deployment
@@ -44,6 +46,7 @@ triggers:
   status: planned
   fired: []
 - id: ASTS-E-02
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Constellation_Deployment
@@ -63,6 +66,7 @@ triggers:
   status: planned
   fired: []
 - id: ASTS-E-03
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Commercial_Contracting
@@ -82,6 +86,7 @@ triggers:
   status: planned
   fired: []
 - id: ASTS-E-04
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Commercial_Contracting
@@ -100,6 +105,7 @@ triggers:
   status: planned
   fired: []
 - id: ASTS-E-05
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Service_Monetization
@@ -118,6 +124,7 @@ triggers:
   status: planned
   fired: []
 - id: ASTS-E-06
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Service_Monetization
@@ -136,6 +143,7 @@ triggers:
   status: planned
   fired: []
 - id: ASTS-E-07
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Regulatory_Spectrum
@@ -153,6 +161,7 @@ triggers:
   status: planned
   fired: []
 - id: ASTS-E-08
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Regulatory_Spectrum
@@ -173,6 +182,7 @@ triggers:
   fired: []
   notes: 'patch v1.1: условие переведено на ASTS-KPI-11'
 - id: ASTS-E-09
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Funding_Dilution
@@ -193,6 +203,7 @@ triggers:
   status: planned
   fired: []
 - id: ASTS-E-10
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Funding_Dilution
@@ -212,3 +223,4 @@ triggers:
   automation: null
   status: planned
   fired: []
+automations_note: 'дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку'

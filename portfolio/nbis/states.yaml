@@ -1,4 +1,5 @@
 # Вектор состояний NBIS (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+schema_version: '1.0.1'
 version: '1.1'
 artifact: NBIS State Vector
 as_of: '2026-09-21'
@@ -11,9 +12,18 @@ semantics:
   trigger_not_decision: true
   numeric_thresholds_provenance: model_assumption
 sources:
-  NBIS_Q2_RELEASE: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm
-  NBIS_Q2_LETTER: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm
-  NBIS_Q2_6K: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm
+  NBIS_Q2_RELEASE:
+    source_class: issuer_ir_release
+    url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm
+    as_of: '2026-09-21'
+  NBIS_Q2_LETTER:
+    source_class: issuer_ir_release
+    url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm
+    as_of: '2026-09-21'
+  NBIS_Q2_6K:
+    source_class: issuer_ir_release
+    url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm
+    as_of: '2026-09-21'
 axes:
   Demand_Monetization:
     name: Demand Monetization

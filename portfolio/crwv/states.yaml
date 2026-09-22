@@ -1,4 +1,5 @@
 # Вектор состояний CRWV (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: CRWV State Vector
 as_of: '2026-09-21'
@@ -6,18 +7,25 @@ ticker: CRWV
 source_artifact: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
 purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
 semantics:
+  evidence_required: true
   primary_only: true
-  thresholds_provenance: model_assumption
+  numeric_thresholds_provenance: model_assumption
   pending_verification_blocks_transition: true
   trigger_not_decision: true
 sources:
   CRWV_Q2_2026_10Q:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm
     type: SEC 10-Q
   CRWV_Q2_2026_RELEASE:
+    source_class: issuer_ir_release
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm
     type: SEC earnings-release exhibit
   CRWV_2026_CONVERT_PRESENTATION:
+    source_class: issuer_investor_presentation
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm
     type: SEC-filed investor presentation
     note: Used only for figures explicitly dated in the presentation, including contracted power as of 2026-08-11.

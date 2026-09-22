@@ -8,7 +8,9 @@
   "fired": [],
   "events_reported": [],
   "pending_verification": [],
-  "notes": "Папка создана 2026-09-21 по партии 1 моделей компаний; сверка фактов по отчёту выполнена 2026-09-20 (задание facts-verify, батч 1).",
+  "notes": [
+    "Папка создана 2026-09-21 по партии 1 моделей компаний; сверка фактов по отчёту выполнена 2026-09-20 (задание facts-verify, батч 1)."
+  ],
   "route": {
     "current": "vector",
     "done_steps": [],
@@ -83,7 +85,9 @@
       "value_raw": "NVIDIA today reported revenue for the second quarter ended July 26, 2026, of $96.2 billion, up 18% from the previous quarter and up 106% from a year ago",
       "unit": "YoY fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NVDA-KPI-02",
@@ -93,7 +97,9 @@
       "value_raw": "Second-quarter revenue was $89.0 billion, up 18% from the previous quarter and up 117% from a year ago",
       "unit": "YoY fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NVDA-KPI-03",
@@ -103,7 +109,9 @@
       "value_raw": "For the quarter, GAAP and non-GAAP gross margins were both 75.0%",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NVDA-KPI-04",
@@ -113,7 +121,9 @@
       "value_raw": "Revenue$96,221 ... Operating income63,734 (Three Months Ended Jul 26, 2026)",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NVDA-KPI-05",
@@ -124,7 +134,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NVDA-KPI-06",
@@ -135,7 +147,9 @@
       "unit": "x",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NVDA-KPI-07",
@@ -146,7 +160,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NVDA-KPI-08",
@@ -157,18 +173,23 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NVDA-KPI-09",
       "name": "China Data Center revenue share",
       "period_end": "2026-07-26",
-      "value": "<0.01",
+      "value": 0.01,
       "value_raw": "«Shipments of Data Center Hopper products to China during the second quarter of fiscal year 2027 were less than 1% of Data Center revenue»; «we were effectively foreclosed from competing in China's data center computing/compute market»",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
+      "observation_qualifier": "upper_bound",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NVDA-KPI-10",
@@ -179,8 +200,11 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     }
   ],
-  "calc_runs": []
+  "calc_runs": [],
+  "schema_version": "1.0.1"
 }

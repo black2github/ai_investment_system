@@ -1,4 +1,5 @@
 # KPI NET с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: NET KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: NET-KPI-01
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Revenue YoY
   unit: fraction
   period: quarterly
@@ -29,6 +33,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm
   verified: false
 - id: NET-KPI-02
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Dollar-based net retention rate
   unit: x
   period: quarterly
@@ -42,6 +49,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm
   verified: false
 - id: NET-KPI-03
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Current RPO YoY growth
   unit: fraction
   period: quarterly
@@ -55,6 +65,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm
   verified: false
 - id: NET-KPI-04
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: GAAP gross margin
   unit: fraction
   period: quarterly
@@ -69,6 +82,9 @@ critical_kpis:
   verified: false
   formula: 499.5 / 696.1 = 0.7176
 - id: NET-KPI-05
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Non-GAAP operating margin
   unit: fraction
   period: quarterly
@@ -83,6 +99,9 @@ critical_kpis:
   verified: false
   formula: 96.1 / 696.1 = 0.138
 - id: NET-KPI-06
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: GAAP operating margin
   unit: fraction
   period: quarterly
@@ -97,6 +116,9 @@ critical_kpis:
   verified: false
   formula: -205.7 / 696.1 = -0.2955
 - id: NET-KPI-07
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Large-customer growth
   unit: YoY fraction
   period: quarterly
@@ -111,6 +133,9 @@ critical_kpis:
   verified: null
   note: ' Не раскрывается компанией (not_separately_disclosed) — не выдумывать (см. NET-E-05).'
 - id: NET-KPI-08
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: AI/Workers annualized revenue or ARR
   unit: USD
   period: quarterly
@@ -125,6 +150,9 @@ critical_kpis:
   verified: null
   note: ' Не раскрывается компанией (not_separately_disclosed) — не выдумывать (см. NET-E-05).'
 - id: NET-KPI-09
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: AI/Workers share of company revenue
   unit: fraction
   period: quarterly
@@ -139,6 +167,9 @@ critical_kpis:
   verified: null
   note: ' Не раскрывается компанией (not_separately_disclosed) — не выдумывать (см. NET-E-05).'
 - id: NET-KPI-10
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: DBNRR change YoY
   unit: absolute ratio points
   period: quarterly

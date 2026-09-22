@@ -1,6 +1,8 @@
 # Реестр триггеров: Cloudflare (NET, NYSE)
 # Источник: финальный блок (ChatGPT, 17.09.2026). Предпосылки проверены 17.09 по релизу/10-Q Q2 2026: revenue $696.1 млн +36%, клиенты >$100k 4 698 (+27%), >7.4 млн разработчиков, AI-доля не раскрывается — совпадают.
 
+schema_version: '1.0.1'
+profile: full_model
 meta:
   ticker: NET
   exchange: NYSE
@@ -9,13 +11,17 @@ meta:
   company: Cloudflare
   status_in_basket: наблюдать до ценового триггера
   target_weight: "25% (максимум)"
-  horizon: 2030
+  horizon: '2030'
   strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
   strategy_date: 2026-09-17
   registry_updated: 2026-09-21  # 17.09: реестр владельца; 21.09: вектор состояний (states.yaml), legacy-триггеры привязаны к осям, добавлены NET-E-06..E-11
   price_at_strategy: 324.65
   fiscal_year: календарный
   scenario: portfolio/_scenarios/taiwan.yaml
+  source_artifact: 'inbox/received/NET_company_state_v1.0.yaml (другая LLM, партия 3, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)'
+  price_source: 'Yahoo Finance chart (дозор)'
+  price_at_registry: 324.65
+  position: null
 
 automations:
   aiinfra-price-watch:  { covers: [NET-P-01, NET-P-02, NET-P-03], cadence: "каждые 30 мин" }
@@ -36,6 +42,7 @@ route:
 triggers:
 
   - id: NET-P-01
+    fired: []
     class: price
     step: entry
     condition: "NET ≤ $275"
@@ -44,6 +51,7 @@ triggers:
     automation: aiinfra-price-watch
     status: active
   - id: NET-P-02
+    fired: []
     class: price
     step: entry
     condition: "NET ≤ $250"
@@ -52,6 +60,7 @@ triggers:
     automation: aiinfra-price-watch
     status: active
   - id: NET-P-03
+    fired: []
     class: price
     step: entry
     condition: "NET ≤ $225"
@@ -60,6 +69,7 @@ triggers:
     automation: aiinfra-price-watch
     status: active
   - id: NET-P-04
+    fired: []
     class: price
     step: entry
     condition: "падение на 20% от цены последней покупки"
@@ -69,6 +79,7 @@ triggers:
     notes: "Активируется после первой покупки: нужна цена последней покупки от владельца"
 
   - id: NET-F-01
+    fired: []
     class: price
     step: exit
     condition: "market cap ≥ $250 млрд"
@@ -76,6 +87,7 @@ triggers:
     automation: null
     status: planned
   - id: NET-F-02
+    fired: []
     class: price
     step: exit
     condition: "market cap ≥ $350 млрд"
@@ -83,6 +95,7 @@ triggers:
     automation: null
     status: planned
   - id: NET-F-03
+    fired: []
     class: price
     step: exit
     condition: "market cap ≥ $400 млрд"
@@ -91,6 +104,7 @@ triggers:
     status: planned
 
   - id: NET-E-01
+    fired: []
     class: event
     step: confirm
     axis: Revenue_Growth
@@ -102,6 +116,7 @@ triggers:
     status: active
     notes: "Q2 2026 по данным обсуждения: +36% — первый квартал условия; нужен Q3"
   - id: NET-E-02
+    fired: []
     class: event
     step: confirm
     axis: Revenue_Growth
@@ -113,6 +128,7 @@ triggers:
     status: active
     notes: "Q2 2026 по данным обсуждения: 4 698, +27%"
   - id: NET-E-03
+    fired: []
     class: event
     step: confirm
     axis: AI_Edge_Monetization
@@ -124,6 +140,7 @@ triggers:
     status: active
     notes: "Операционное определение «Workers — стандарт для агентов». По обсуждению: >7.4 млн разработчиков, >80% крупных AI-компаний — клиенты"
   - id: NET-E-04
+    fired: []
     class: event
     step: confirm
     axis: Expansion_Retention
@@ -134,6 +151,7 @@ triggers:
     automation: aiinfra-report-check
     status: active
   - id: NET-E-05
+    fired: []
     class: event
     step: confirm
     axis: AI_Edge_Monetization
@@ -146,6 +164,7 @@ triggers:
     notes: "Сейчас не раскрывает — не выдумывать процент"
 
   - id: NET-X-01
+    fired: []
     class: event
     step: confirm
     axis: Revenue_Growth
@@ -156,6 +175,7 @@ triggers:
     automation: aiinfra-report-check
     status: active
   - id: NET-X-02
+    fired: []
     class: event
     step: confirm
     axis: Revenue_Growth
@@ -166,6 +186,7 @@ triggers:
     automation: aiinfra-report-check
     status: active
   - id: NET-X-03
+    fired: []
     class: event
     step: confirm
     axis: Expansion_Retention
@@ -179,6 +200,7 @@ triggers:
 
   # ---------- переходы вектора состояний (states.yaml), партия 3 от другой LLM, 21.09.2026 ----------
   - id: NET-E-06
+    condition_provenance: model_assumption
     class: event
     step: vector
     axis: Revenue_Growth
@@ -198,6 +220,7 @@ triggers:
     fired: []
     notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
   - id: NET-E-07
+    condition_provenance: model_assumption
     class: event
     step: vector
     axis: Revenue_Growth
@@ -217,6 +240,7 @@ triggers:
     fired: []
     notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
   - id: NET-E-08
+    condition_provenance: model_assumption
     class: event
     step: vector
     axis: Expansion_Retention
@@ -236,6 +260,7 @@ triggers:
     fired: []
     notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
   - id: NET-E-09
+    condition_provenance: model_assumption
     class: event
     step: vector
     axis: Expansion_Retention
@@ -255,6 +280,7 @@ triggers:
     fired: []
     notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
   - id: NET-E-10
+    condition_provenance: model_assumption
     class: event
     step: vector
     axis: Contracted_Demand
@@ -274,6 +300,7 @@ triggers:
     fired: []
     notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
   - id: NET-E-11
+    condition_provenance: model_assumption
     class: event
     step: vector
     axis: AI_Edge_Monetization
@@ -295,6 +322,7 @@ triggers:
     notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
 
   - id: NET-C-01
+    fired: []
     class: calendar
     step: confirm
     condition: "Q3 2026 earnings — 29.10.2026 по рыночному календарю, подтвердить на IR"
@@ -302,3 +330,7 @@ triggers:
     window: { from: 2026-10-29, to: 2026-10-30 }
     automation: aiinfra-report-check
     status: active
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true

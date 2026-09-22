@@ -1,4 +1,5 @@
 # KPI NVDA с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: NVDA KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: NVDA-KPI-01
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Total revenue YoY
   unit: YoY fraction
   period: quarterly
@@ -29,6 +33,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: NVDA-KPI-02
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Data Center revenue YoY
   unit: YoY fraction
   period: quarterly
@@ -42,6 +49,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: NVDA-KPI-03
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Gross margin
   unit: fraction
   period: quarterly
@@ -55,6 +65,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: NVDA-KPI-04
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Operating margin
   unit: fraction
   period: quarterly
@@ -69,6 +82,9 @@ critical_kpis:
   verified: false
   formula: 63.734/96.221
 - id: NVDA-KPI-05
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: H1 operating cash flow margin
   unit: fraction
   period: semiannual
@@ -83,6 +99,9 @@ critical_kpis:
   verified: false
   formula: 74.421/177.837
 - id: NVDA-KPI-06
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Supply commitments / annualized latest-quarter revenue
   unit: x
   period: quarterly
@@ -97,6 +116,9 @@ critical_kpis:
   verified: false
   formula: 279/(96.221*4)
 - id: NVDA-KPI-07
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Inventory/excess-purchase provisions / quarterly revenue
   unit: fraction
   period: quarterly
@@ -111,6 +133,9 @@ critical_kpis:
   verified: false
   formula: 0.985/96.221
 - id: NVDA-KPI-08
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: ACIE share of Data Center revenue
   unit: fraction
   period: quarterly
@@ -125,6 +150,9 @@ critical_kpis:
   verified: false
   formula: 40.313/89.023
 - id: NVDA-KPI-09
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: China Data Center revenue share
   unit: fraction
   period: quarterly
@@ -133,12 +161,16 @@ critical_kpis:
     green: '>=0.10'
     yellow: '>=0.01 and <0.10'
     red: <0.01
-  last_value: <0.01
+  last_value: 0.01
+  observation_qualifier: upper_bound
   last_date: null
   source_url: null
   verified: false
   note: market-access KPI
 - id: NVDA-KPI-10
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Top-5 direct customer share of accounts receivable
   unit: fraction
   period: quarterly

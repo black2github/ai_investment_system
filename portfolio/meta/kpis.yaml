@@ -1,4 +1,5 @@
 # KPI META с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: META KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: META-KPI-01
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Total revenue YoY
   unit: fraction
   period: quarterly
@@ -29,6 +33,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm
   verified: false
 - id: META-KPI-02
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Advertising revenue YoY
   unit: fraction
   period: quarterly
@@ -43,6 +50,9 @@ critical_kpis:
   verified: false
   formula: 59.363 / 46.563 - 1 = 0.2749; company reports 27%
 - id: META-KPI-03
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Ad impressions YoY
   unit: fraction
   period: quarterly
@@ -56,6 +66,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm
   verified: false
 - id: META-KPI-04
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Average price per ad YoY
   unit: fraction
   period: quarterly
@@ -69,6 +82,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm
   verified: false
 - id: META-KPI-05
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Family daily active people YoY
   unit: fraction
   period: quarterly
@@ -82,6 +98,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm
   verified: false
 - id: META-KPI-06
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: FoA operating margin
   unit: fraction
   period: quarterly
@@ -96,6 +115,9 @@ critical_kpis:
   verified: false
   formula: 23.394 / 60.370 = 0.3875
 - id: META-KPI-07
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Capex / revenue
   unit: fraction
   period: quarterly
@@ -111,6 +133,9 @@ critical_kpis:
   formula: 31.08 / 60.801 = 0.5112
   note: Risk KPI; high capex can be value-creating if monetization and FCF subsequently improve.
 - id: META-KPI-08
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Free cash flow margin
   unit: fraction
   period: quarterly
@@ -125,6 +150,9 @@ critical_kpis:
   verified: false
   formula: 0.784 / 60.801 = 0.0129
 - id: META-KPI-09
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Non-cancelable commitments / annualized latest-quarter revenue
   unit: x
   period: quarterly
@@ -140,6 +168,9 @@ critical_kpis:
   formula: 349.31 / (60.801 * 4) = 1.4363
   note: Model-derived risk ratio; company reports the commitments, not this ratio.
 - id: META-KPI-10
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Reality Labs operating loss
   unit: USD B
   period: quarterly

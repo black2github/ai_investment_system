@@ -1,0 +1,3443 @@
+schema_package_version: 1.0.1
+artifact: Company Artifact Schema
+json_schema_dialect: https://json-schema.org/draft/2020-12/schema
+as_of: '2026-09-22'
+status: proposed_normative_patch
+source_policy_ref: Source_Policy_v1.0 (Party 2; source-class enum provisionally frozen here)
+provenance_schema_ref: Provenance_Schema_v1.0
+files:
+  states.yaml:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    title: states.yaml canonical artifact
+    type: object
+    additionalProperties: false
+    required:
+    - schema_version
+    - version
+    - artifact
+    - as_of
+    - ticker
+    - purpose
+    - semantics
+    - sources
+    - axes
+    properties:
+      schema_version:
+        const: 1.0.1
+      version:
+        type: string
+      artifact:
+        type: string
+      as_of:
+        type: string
+        format: date
+      ticker:
+        type: string
+      source_artifact:
+        type:
+        - string
+        - 'null'
+      purpose:
+        type: string
+      semantics:
+        type: object
+        additionalProperties: false
+        required:
+        - evidence_required
+        - pending_verification_blocks_transition
+        - trigger_not_decision
+        - numeric_thresholds_provenance
+        properties:
+          evidence_required:
+            type: boolean
+          pending_verification_blocks_transition:
+            type: boolean
+          trigger_not_decision:
+            const: true
+          numeric_thresholds_provenance:
+            const: model_assumption
+          primary_only:
+            type:
+            - boolean
+            - 'null'
+          thresholds_provenance:
+            type:
+            - string
+            - 'null'
+            enum:
+            - model_assumption
+            - null
+            deprecated: true
+            description: Deprecated legacy name; migrate to numeric_thresholds_provenance.
+          existing_trigger_policy:
+            type:
+            - string
+            - 'null'
+          accounting_note:
+            type:
+            - string
+            - 'null'
+      sources:
+        type: object
+        minProperties: 1
+        additionalProperties:
+          oneOf:
+          - type: object
+            additionalProperties: false
+            required:
+            - source_class
+            - url
+            - as_of
+            properties:
+              source_class:
+                type: string
+                enum: &id001
+                - regulatory_filing
+                - issuer_ir_release
+                - issuer_investor_presentation
+                - issuer_transcript
+                - first_tier_media
+                - market_data_provider
+                - other_primary
+              url:
+                type: string
+                format: uri
+              as_of:
+                type: string
+                format: date
+              title:
+                type:
+                - string
+                - 'null'
+              document_type:
+                type:
+                - string
+                - 'null'
+                deprecated: true
+                description: Legacy/candidate alias; prefer type for document label.
+              type:
+                type:
+                - string
+                - 'null'
+              note:
+                type:
+                - string
+                - 'null'
+              access_note:
+                type:
+                - string
+                - 'null'
+          - type: string
+            format: uri
+            deprecated: true
+            description: Deprecated scalar URL source. Deterministic migration must wrap it into source object and add source_class/as_of.
+      axes:
+        type: object
+        minProperties: 1
+        additionalProperties:
+          type: object
+          additionalProperties: false
+          required:
+          - name
+          - states
+          - current
+          - current_evidence
+          - source_refs
+          properties:
+            name:
+              type: string
+            name_ru:
+              type:
+              - string
+              - 'null'
+            states:
+              type: object
+              minProperties: 2
+              additionalProperties:
+                type: object
+                additionalProperties: false
+                required:
+                - name
+                - criteria
+                properties:
+                  name:
+                    type: string
+                  criteria:
+                    type: string
+            current:
+              type: string
+            current_evidence:
+              type: array
+              items:
+                type:
+                - string
+                - object
+            source_refs:
+              type: array
+              items:
+                type: string
+            prior_snapshot:
+              type:
+              - string
+              - 'null'
+            current_note:
+              type:
+              - string
+              - 'null'
+            note:
+              type:
+              - string
+              - 'null'
+            evidence_type:
+              type:
+              - string
+              - 'null'
+              enum:
+              - quantitative
+              - qualitative_primary_source
+              - mixed
+              - derived_binary
+              - null
+            verification_rule:
+              type:
+              - string
+              - 'null'
+      changelog:
+        type: array
+        items:
+          oneOf:
+          - type: string
+          - type: object
+            additionalProperties: true
+  kpis.yaml:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    title: kpis.yaml canonical artifact
+    type: object
+    additionalProperties: false
+    required:
+    - schema_version
+    - version
+    - artifact
+    - as_of
+    - ticker
+    - max_critical_kpis
+    - zone_semantics
+    - critical_kpis
+    properties:
+      schema_version:
+        const: 1.0.1
+      version:
+        type: string
+      artifact:
+        type: string
+      as_of:
+        type: string
+        format: date
+      ticker:
+        type: string
+      max_critical_kpis:
+        type: integer
+        minimum: 1
+      source_artifact:
+        type:
+        - string
+        - 'null'
+      zone_semantics:
+        type: object
+        additionalProperties: false
+        required:
+        - thresholds_provenance
+        properties:
+          thresholds_provenance:
+            const: model_assumption
+          green:
+            type:
+            - string
+            - 'null'
+          yellow:
+            type:
+            - string
+            - 'null'
+          red:
+            type:
+            - string
+            - 'null'
+      source_policy:
+        type: object
+        deprecated: true
+        description: Legacy embedded policy. Source Policy v1.0 becomes the normative external document in Party 2.
+        additionalProperties: false
+        properties:
+          primary:
+            type: array
+            items:
+              type: string
+          secondary:
+            type: array
+            items:
+              type: string
+          rule:
+            type: string
+      critical_kpis:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - id
+          - name
+          - unit
+          - period
+          - thresholds
+          - last_value
+          - value_type
+          - source_class
+          - source_url
+          - verified
+          - provenance
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            unit:
+              type: string
+            period:
+              type: string
+            source:
+              type:
+              - string
+              - 'null'
+              deprecated: true
+              description: Legacy shorthand source class; use source_class.
+            source_class:
+              type: string
+              enum: *id001
+            source_ref:
+              type:
+              - string
+              - 'null'
+            thresholds:
+              type: object
+              additionalProperties: false
+              required:
+              - green
+              - red
+              properties:
+                green:
+                  type: string
+                yellow:
+                  type: string
+                red:
+                  type: string
+                binary:
+                  type: boolean
+              allOf:
+              - if:
+                  required:
+                  - binary
+                  properties:
+                    binary:
+                      const: true
+                then: {}
+                else:
+                  required:
+                  - yellow
+            last_value:
+              type:
+              - number
+              - 'null'
+            observation_qualifier:
+              type: string
+              enum:
+              - exact
+              - approximate
+              - lower_bound
+              - upper_bound
+              - range
+              - not_separately_disclosed
+              - pending_verification
+            value_range:
+              type: object
+              additionalProperties: false
+              required:
+              - min
+              - max
+              properties:
+                min:
+                  type: number
+                max:
+                  type: number
+            last_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            source_url:
+              type:
+              - string
+              - 'null'
+              format: uri
+            verified:
+              type:
+              - boolean
+              - 'null'
+            provenance:
+              type: string
+              enum: &id002
+              - verified_fact
+              - derived_fact
+              - model_assumption
+              - owner_judgment
+              - normative_rule
+              - external_methodology
+            formula:
+              type:
+              - string
+              - 'null'
+            note:
+              type:
+              - string
+              - 'null'
+            value_type:
+              type: string
+              enum:
+              - actual
+              - company_guidance
+              - analyst_estimate
+            target_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            verified_note:
+              type:
+              - string
+              - 'null'
+            verification_status:
+              type:
+              - string
+              - 'null'
+              enum:
+              - pending_verification
+              - not_separately_disclosed
+              - null
+            disclosure_status:
+              type:
+              - string
+              - 'null'
+            source_channel:
+              type:
+              - string
+              - 'null'
+            sec_mirror:
+              type:
+              - string
+              - 'null'
+              format: uri
+            ir_document:
+              type:
+              - string
+              - 'null'
+              format: uri
+            ir_landing_page:
+              type:
+              - string
+              - 'null'
+              format: uri
+            observation_window_days:
+              type:
+              - integer
+              - 'null'
+              minimum: 1
+          allOf:
+          - if:
+              properties:
+                provenance:
+                  const: derived_fact
+              required:
+              - provenance
+            then:
+              required:
+              - formula
+          - if:
+              properties:
+                observation_qualifier:
+                  const: range
+              required:
+              - observation_qualifier
+            then:
+              required:
+              - value_range
+              properties:
+                last_value:
+                  type: 'null'
+          - if:
+              properties:
+                observation_qualifier:
+                  enum:
+                  - not_separately_disclosed
+                  - pending_verification
+              required:
+              - observation_qualifier
+            then:
+              properties:
+                last_value:
+                  type: 'null'
+      changelog:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - date
+          - change
+          properties:
+            version:
+              type:
+              - string
+              - 'null'
+            date:
+              type: string
+              format: date
+            change:
+              type: string
+  triggers.yaml:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    title: triggers.yaml canonical registry artifact
+    type: object
+    additionalProperties: false
+    required:
+    - schema_version
+    - profile
+    - meta
+    - route
+    - triggers
+    properties:
+      schema_version:
+        const: 1.0.1
+      meta:
+        type: object
+        additionalProperties: false
+        required:
+        - ticker
+        - company
+        - exchange
+        - yahoo_symbol
+        - registry_updated
+        properties:
+          ticker:
+            type: string
+          company:
+            type: string
+          exchange:
+            type: string
+          yahoo_symbol:
+            type: string
+          registry_updated:
+            type: string
+          source_artifact:
+            type:
+            - string
+            - 'null'
+          price_source:
+            type:
+            - string
+            - 'null'
+          price_at_registry:
+            type:
+            - number
+            - 'null'
+          position:
+            type:
+            - string
+            - 'null'
+          currency:
+            type:
+            - string
+            - 'null'
+          fiscal_year:
+            type:
+            - integer
+            - string
+            - 'null'
+          horizon:
+            type:
+            - string
+            - 'null'
+          price_at_strategy:
+            type:
+            - number
+            - 'null'
+          scenario:
+            type:
+            - string
+            - 'null'
+          status_in_basket:
+            type:
+            - string
+            - 'null'
+          strategy_date:
+            type:
+            - string
+            - 'null'
+            format: date
+          strategy_source:
+            type:
+            - string
+            - 'null'
+      automations:
+        type: object
+        additionalProperties:
+          type: object
+          additionalProperties: false
+          properties:
+            covers:
+              type: array
+              items:
+                type: string
+            cadence:
+              type:
+              - string
+              - 'null'
+            note:
+              type:
+              - string
+              - 'null'
+        properties:
+          _note:
+            type: string
+            deprecated: true
+            description: Deprecated legacy note; migrate to root automations_note.
+      route:
+        type: object
+        additionalProperties: false
+        required:
+        - steps
+        properties:
+          steps:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              required:
+              - id
+              - kind
+              - name
+              properties:
+                id:
+                  type: string
+                kind:
+                  type: string
+                name:
+                  type: string
+                ref:
+                  type:
+                  - string
+                  - 'null'
+      rules:
+        type: object
+        additionalProperties: false
+        required:
+        - evidence_required
+        - pending_verification_blocks_transition
+        - trigger_not_decision
+        properties:
+          evidence_required:
+            type: boolean
+          pending_verification_blocks_transition:
+            type: boolean
+          trigger_not_decision:
+            const: true
+          all_numeric_thresholds_provenance:
+            type:
+            - string
+            - 'null'
+            enum:
+            - model_assumption
+            - null
+      triggers:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - id
+          - class
+          - step
+          - status
+          properties:
+            id:
+              type: string
+            class:
+              type: string
+              enum:
+              - event
+              - price
+              - calendar
+              - digest
+            step:
+              type: string
+            axis:
+              type:
+              - string
+              - 'null'
+            transition:
+              type: object
+              additionalProperties: false
+              required:
+              - from
+              - to
+              properties:
+                from:
+                  type: string
+                to:
+                  type: string
+            level:
+              type:
+              - string
+              - 'null'
+              enum:
+              - E1
+              - E2
+              - E3
+              - null
+            kpis:
+              type: array
+              items:
+                type: string
+            condition:
+              type:
+              - string
+              - 'null'
+            condition_provenance:
+              type:
+              - string
+              - 'null'
+              enum:
+              - model_assumption
+              - normative_rule
+              - null
+            period:
+              type:
+              - string
+              - 'null'
+            source:
+              type:
+              - string
+              - 'null'
+            action:
+              type:
+              - string
+              - 'null'
+            automation:
+              type:
+              - string
+              - 'null'
+            status:
+              type: string
+              enum:
+              - active
+              - planned
+              - due
+              - done
+              - dropped
+            fired:
+              type: array
+              items: {}
+            note:
+              type:
+              - string
+              - 'null'
+            notes:
+              type:
+              - string
+              - 'null'
+            window:
+              type:
+              - string
+              - object
+              - 'null'
+              description: Legacy registry timing/window semantics. Object form may contain provider-specific structured window data.
+          allOf:
+          - if:
+              required:
+              - transition
+            then:
+              required:
+              - axis
+              - level
+              - kpis
+              - condition
+              - condition_provenance
+      profile:
+        type: string
+        enum:
+        - full_model
+        - registry_only
+      automations_note:
+        type:
+        - string
+        - 'null'
+    allOf:
+    - if:
+        properties:
+          profile:
+            const: full_model
+        required:
+        - profile
+      then:
+        required:
+        - rules
+        properties:
+          meta:
+            required:
+            - source_artifact
+            - price_source
+            - price_at_registry
+            - position
+          triggers:
+            items:
+              required:
+              - fired
+    - if:
+        properties:
+          profile:
+            const: registry_only
+        required:
+        - profile
+      then:
+        properties:
+          rules: {}
+  mpc_inputs.yaml:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    title: mpc_inputs.yaml canonical artifact
+    type: object
+    additionalProperties: false
+    required:
+    - schema_version
+    - version
+    - ticker
+    - artifact
+    - as_of
+    - driver_exposure_vector
+    - driver_vector_provenance
+    - failure_modes
+    - driver_taxonomy_version
+    properties:
+      schema_version:
+        const: 1.0.1
+      version:
+        type: string
+      ticker:
+        type: string
+      artifact:
+        const: mpc_inputs
+      as_of:
+        type: string
+        format: date
+      source_artifact:
+        type:
+        - string
+        - 'null'
+      driver_exposure_vector:
+        type: object
+        additionalProperties:
+          type: integer
+          minimum: -2
+          maximum: 2
+        minProperties: 1
+      driver_vector_provenance:
+        const: model_assumption
+      driver_interpretation:
+        type: object
+        additionalProperties: true
+      failure_modes:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - failure_id
+          - common_cause_id
+          - severity
+          - name
+          properties:
+            failure_id:
+              type: string
+            common_cause_id:
+              type: string
+              pattern: ^[A-Z0-9_]+$
+            severity:
+              type: string
+              enum:
+              - low
+              - medium
+              - high
+              - critical
+            name:
+              type: string
+            axis_refs:
+              type: array
+              items:
+                type: string
+            shared_with:
+              type: array
+              items:
+                type: string
+            rationale:
+              type:
+              - string
+              - 'null'
+            note:
+              type:
+              - string
+              - 'null'
+      failure_modes_provenance:
+        type:
+        - string
+        - 'null'
+        enum:
+        - model_assumption
+        - null
+      cross_portfolio_common_causes:
+        type: object
+        additionalProperties: true
+      benchmark:
+        type: object
+        additionalProperties: false
+        properties:
+          sector_id:
+            type: string
+          recommendation:
+            type:
+            - string
+            - 'null'
+          reason:
+            type:
+            - string
+            - 'null'
+          benchmark_id:
+            type:
+            - string
+            - 'null'
+          methodology_ref:
+            type:
+            - string
+            - 'null'
+      driver_taxonomy_version:
+        type: string
+      taxonomy_gap:
+        type: array
+        items:
+          type: string
+      taxonomy_gap_note:
+        type:
+        - string
+        - 'null'
+      changelog:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - date
+          - change
+          properties:
+            date:
+              type: string
+              format: date
+            change:
+              type: string
+      driver_exposure_semantics:
+        type: object
+        additionalProperties: false
+        properties:
+          scale:
+            type: object
+            additionalProperties:
+              type: string
+          provenance:
+            type: string
+            enum:
+            - model_assumption
+            - normative_rule
+          direction_rule:
+            type:
+            - string
+            - 'null'
+  state.json:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    title: state.json canonical runtime artifact
+    type: object
+    additionalProperties: false
+    required:
+    - schema_version
+    - updated
+    - price
+    - fired
+    - events_reported
+    - pending_verification
+    - route
+    - info_log
+    - scenario_state
+    - state_transitions
+    - kpi_observations
+    - calc_runs
+    properties:
+      schema_version:
+        const: 1.0.1
+      updated:
+        type: string
+        format: date-time
+      price:
+        type: object
+        additionalProperties: false
+        required:
+        - last
+        - last_at
+        - zone
+        properties:
+          last:
+            type:
+            - number
+            - 'null'
+          last_at:
+            type:
+            - string
+            - 'null'
+            format: date
+          zone:
+            type:
+            - string
+            - 'null'
+          source_url:
+            type:
+            - string
+            - 'null'
+            format: uri
+          provenance:
+            type:
+            - string
+            - 'null'
+            enum:
+            - verified_fact
+            - null
+          symbol:
+            type:
+            - string
+            - 'null'
+          note:
+            type:
+            - string
+            - 'null'
+      fired:
+        type: array
+        items: {}
+      events_reported:
+        type: array
+        items: {}
+      pending_verification:
+        type: array
+        items: {}
+      notes:
+        oneOf:
+        - type: array
+          items:
+            type: string
+        - type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated scalar note; migrate to one-element string array.
+      route:
+        type: object
+        additionalProperties: false
+        required:
+        - current
+        - done_steps
+        - changed_at
+        - note
+        properties:
+          current:
+            type: string
+          done_steps:
+            type: array
+            items:
+              type: string
+          changed_at:
+            type: string
+            format: date
+          note:
+            type:
+            - string
+            - 'null'
+      info_log:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - timestamp
+          - kind
+          - summary
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            kind:
+              type: string
+            summary:
+              type: string
+      scenario_state:
+        type: object
+        additionalProperties:
+          type: object
+          additionalProperties: false
+          required:
+          - state
+          - since
+          - evidence
+          - source
+          - verified
+          properties:
+            state:
+              type: string
+            since:
+              type: string
+              format: date
+            evidence:
+              type: array
+              items: {}
+            source:
+              type:
+              - string
+              - 'null'
+            verified:
+              type: boolean
+            verified_note:
+              type:
+              - string
+              - 'null'
+            prior_snapshot:
+              type:
+              - string
+              - 'null'
+            evidence_type:
+              type:
+              - string
+              - 'null'
+              enum:
+              - quantitative
+              - qualitative_primary_source
+              - mixed
+              - derived_binary
+              - null
+      state_transitions:
+        type: array
+        items:
+          type: object
+          additionalProperties: true
+        description: Item shape deferred in v1.0 because NBIS reference contains no entries; field itself is required.
+      kpi_observations:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - kpi_id
+          - name
+          - period_end
+          - value
+          - unit
+          - source_url
+          - verified
+          - provenance
+          properties:
+            kpi_id:
+              type: string
+            name:
+              type: string
+            period_end:
+              type: string
+              format: date
+            value:
+              type:
+              - number
+              - 'null'
+            observation_qualifier:
+              type: string
+              enum:
+              - exact
+              - approximate
+              - lower_bound
+              - upper_bound
+              - range
+              - not_separately_disclosed
+              - pending_verification
+            value_range:
+              type: object
+              additionalProperties: false
+              required:
+              - min
+              - max
+              properties:
+                min:
+                  type: number
+                max:
+                  type: number
+            value_raw:
+              type:
+              - string
+              - 'null'
+            unit:
+              type: string
+            source_url:
+              type: string
+              format: uri
+            verified:
+              type:
+              - boolean
+              - 'null'
+              description: true=verified match; false=verified mismatch/negative result; null=not yet verified.
+            verified_by:
+              type:
+              - string
+              - 'null'
+            value_type:
+              type:
+              - string
+              - 'null'
+              enum:
+              - actual
+              - company_guidance
+              - analyst_estimate
+              - null
+            provenance:
+              type: string
+              enum:
+              - verified_fact
+              - derived_fact
+            observation_window_days:
+              type:
+              - integer
+              - 'null'
+              minimum: 1
+            why:
+              type:
+              - string
+              - 'null'
+            note:
+              type:
+              - string
+              - 'null'
+      calc_runs:
+        type: array
+        items:
+          type: object
+          additionalProperties: true
+        description: Calculation engine references; item shape deferred because NBIS reference contains no entries.
+      conviction:
+        type: object
+        additionalProperties: false
+        required:
+        - status
+        - since
+        - journal_id
+        - L_max
+        - provenance
+        properties:
+          status:
+            type: string
+            enum:
+            - active
+            - suspended
+            - revoked
+            - expired
+            - under_review
+          since:
+            type: string
+            format: date
+          journal_id:
+            type: string
+          L_max:
+            type: number
+            minimum: 0
+            maximum: 1
+          provenance:
+            const: owner_judgment
+          exception:
+            type:
+            - string
+            - 'null'
+      owner_decisions:
+        type: array
+        items:
+          type: object
+          additionalProperties: true
+      source:
+        type:
+        - string
+        - object
+        - 'null'
+integrity_rules:
+- id: ART-REF-001
+  severity: error
+  rule: 'if triggers.profile == full_model: for each triggers.triggers[*] with axis != null: axis in states.axes'
+  message: Trigger axis must exist.
+- id: ART-REF-002
+  severity: error
+  rule: 'if triggers.profile == full_model: for each trigger with transition: transition.from and transition.to in states.axes[trigger.axis].states'
+  message: Transition endpoints must exist.
+- id: ART-REF-003
+  severity: error
+  rule: 'if triggers.profile == full_model: for each triggers.triggers[*].kpis[*]: id in kpis.critical_kpis[*].id'
+  message: Trigger KPI references must resolve.
+- id: ART-REF-004
+  severity: error
+  rule: 'for each states.axes[*].source_refs[*]: ref in states.sources keys'
+  message: Axis source refs must resolve.
+- id: ART-REF-005
+  severity: error
+  rule: 'for each kpis.critical_kpis[*]: source_class in SourcePolicyV1.source_classes'
+  message: KPI source class must be allowed by Source Policy.
+- id: ART-REF-006
+  severity: error
+  rule: 'for each material numeric field: provenance resolves to Provenance_Schema_v1.0 directly or via enclosing provenance field'
+  message: Material numbers require provenance.
+- id: ART-REF-007
+  severity: error
+  rule: 'for each kpis.critical_kpis[*]: last_value is number or null'
+  message: No strings/ranges in last_value.
+- id: ART-REF-008
+  severity: error
+  rule: 'for each kpis.critical_kpis[*]: value_type in {actual,company_guidance,analyst_estimate}'
+  message: Guidance/actual typing is mandatory.
+- id: ART-REF-009
+  severity: error
+  rule: 'for each state.json.scenario_state axis: axis in states.axes'
+  message: Runtime scenario axis must exist.
+- id: ART-REF-010
+  severity: error
+  rule: 'for each state.json.scenario_state[axis].state: state == pending_verification OR state in states.axes[axis].states'
+  message: Runtime state must resolve.
+- id: ART-REF-011
+  severity: error
+  rule: 'for each state.json.kpi_observations[*].kpi_id: id in kpis.critical_kpis[*].id'
+  message: Observation KPI must resolve.
+- id: ART-REF-012
+  severity: error
+  rule: unique(kpis.critical_kpis[*].id) and unique(triggers.triggers[*].id) and unique(mpc_inputs.failure_modes[*].failure_id)
+  message: Canonical IDs must be unique.
+- id: ART-REF-013
+  severity: error
+  rule: canonical KPI/trigger/failure IDs are assigned only by Integrator and existing canonical IDs are immutable
+  message: LLM cannot overwrite canonical IDs.
+- id: ART-REF-014
+  severity: error
+  rule: keys(mpc_inputs.driver_exposure_vector) == taxonomy(mpc_inputs.driver_taxonomy_version).driver_ids
+  message: Driver vector must match declared taxonomy.
+- id: ART-REF-015
+  severity: error
+  rule: 'if triggers.rules exists: triggers.rules.trigger_not_decision == true; no trigger action encodes executable trade instruction'
+  message: Trigger must create monitoring/Decision Request, not trade.
+- id: ART-REF-016
+  severity: error
+  rule: all present canonical company files schema_version == 1.0.1
+  message: All canonical files in schema profile must declare schema version 1.0.1.
+- id: ART-REF-017
+  severity: error
+  rule: ticker identity agrees across states.yaml, kpis.yaml, triggers.yaml.meta, mpc_inputs.yaml
+  message: Ticker identity must be consistent.
+- id: ART-REF-018
+  severity: error
+  rule: if KPI observation_qualifier == range then last_value == null and value_range.min/max are numeric
+  message: Ranges are represented structurally.
+- id: ART-REF-019
+  severity: error
+  rule: if KPI observation_qualifier == lower_bound or upper_bound then last_value is numeric and qualifier carries inequality
+  message: Bounds are numeric, not string-prefixed.
+- id: ART-REF-020
+  severity: error
+  rule: 'for each KPI with source_ref != null: source_ref in states.sources keys AND KPI.source_class == states.sources[source_ref].source_class'
+  message: KPI source reference/class must resolve to canonical source object.
+- id: ART-REF-021
+  severity: error
+  rule: 'for each KPI/observation: value_type in {actual,company_guidance,analyst_estimate}; observation qualifier carries approximate/bound/range semantics'
+  message: Economic value type and observation qualifier must not be conflated.
+- id: ART-REF-022
+  severity: error
+  rule: if thresholds.binary != true then thresholds.yellow must exist; if thresholds.binary == true, green/red are required and yellow is optional
+  message: Binary KPI thresholds may use two zones; non-binary KPI requires three zones.
+- id: ART-REF-023
+  severity: error
+  rule: if scenario_state.*.evidence_type == qualitative_primary_source then evidence/source must be populated and any binary KPI derivation must be declared in accepted
+    KPI/formula or verification_rule
+  message: Qualitative state evidence must remain explicitly typed and auditable.
+- id: ART-REF-024
+  severity: error
+  rule: triggers.profile == registry_only does not require states.yaml/kpis.yaml/mpc_inputs.yaml and cross-file trigger axis/KPI integrity checks are skipped
+  message: Registry-only trigger files are valid without a company model.
+field_catalog:
+- file: kpis.yaml
+  path: artifact
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: as_of
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: changelog
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: kpis.yaml
+  path: changelog[].change
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: changelog[].date
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: changelog[].version
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].id
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].last_date
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: 'null'
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].last_value
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: number | null
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].name
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].note
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].observation_qualifier
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: Use for lower_bound/range/not_disclosed/pending.
+  type: string
+  enum:
+  - exact
+  - approximate
+  - lower_bound
+  - upper_bound
+  - range
+  - not_separately_disclosed
+  - pending_verification
+- file: kpis.yaml
+  path: critical_kpis[].observation_window_days
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: integer|null
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].period
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].provenance
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: Material-value provenance.
+  type: string
+  enum: *id002
+- file: kpis.yaml
+  path: critical_kpis[].source
+  classification: deprecated
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: Deprecated legacy shorthand (SEC/IR); use source_class.
+  type: string|null
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].source_class
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: Resolved from Candidate source_ref; enum owned by Source Policy v1.0.
+  type: string
+  enum: *id001
+- file: kpis.yaml
+  path: critical_kpis[].source_ref
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Preserves candidate source identity.
+  type: string | null
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].source_url
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: null | string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].target_date
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].thresholds
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].thresholds.binary
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: If true, green/red two-zone thresholds are valid; yellow optional.
+  type: boolean
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].thresholds.green
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].thresholds.red
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].thresholds.yellow
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].unit
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].value_range
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: Numeric range; last_value remains null.
+  type: object
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].value_range.max
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: number
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].value_range.min
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: number
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].value_type
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - actual
+  - company_guidance
+  - analyst_estimate
+- file: kpis.yaml
+  path: critical_kpis[].verification_status
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum:
+  - pending_verification
+  - not_separately_disclosed
+  - null
+- file: kpis.yaml
+  path: critical_kpis[].verified
+  classification: required
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: boolean
+  enum: null
+- file: kpis.yaml
+  path: critical_kpis[].verified_note
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: max_critical_kpis
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: integer
+  enum: null
+- file: kpis.yaml
+  path: schema_version
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: New v1 header.
+  type: string
+  enum:
+  - '1.0'
+- file: kpis.yaml
+  path: source_artifact
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: source_policy
+  classification: deprecated
+  value_source: integrator
+  mutation_authority: integrator
+  note: Legacy embedded source policy/shorthand; Source Policy v1.0 + source_class replaces it.
+  type: object
+  enum: null
+- file: kpis.yaml
+  path: source_policy.primary
+  classification: deprecated
+  value_source: integrator
+  mutation_authority: integrator
+  note: Legacy embedded source policy/shorthand; Source Policy v1.0 + source_class replaces it.
+  type: array
+  enum: null
+- file: kpis.yaml
+  path: source_policy.rule
+  classification: deprecated
+  value_source: integrator
+  mutation_authority: integrator
+  note: Legacy embedded source policy/shorthand; Source Policy v1.0 + source_class replaces it.
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: source_policy.secondary
+  classification: deprecated
+  value_source: integrator
+  mutation_authority: integrator
+  note: Legacy embedded source policy/shorthand; Source Policy v1.0 + source_class replaces it.
+  type: array
+  enum: null
+- file: kpis.yaml
+  path: ticker
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: version
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: kpis.yaml
+  path: zone_semantics
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: kpis.yaml
+  path: zone_semantics.green
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: kpis.yaml
+  path: zone_semantics.red
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: kpis.yaml
+  path: zone_semantics.thresholds_provenance
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - model_assumption
+- file: kpis.yaml
+  path: zone_semantics.yellow
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: mpc_inputs.yaml
+  path: artifact
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: as_of
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: benchmark
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: mpc_inputs.yaml
+  path: benchmark.methodology_ref
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: mpc_inputs.yaml
+  path: benchmark.reason
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: benchmark.recommendation
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: benchmark.sector_id
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: changelog
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: mpc_inputs.yaml
+  path: changelog[].change
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: changelog[].date
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: driver_exposure_semantics
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: mpc_inputs.yaml
+  path: driver_exposure_semantics.direction_rule
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: mpc_inputs.yaml
+  path: driver_exposure_semantics.provenance
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - model_assumption
+  - normative_rule
+- file: mpc_inputs.yaml
+  path: driver_exposure_semantics.scale
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: mpc_inputs.yaml
+  path: driver_exposure_vector
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: mpc_inputs.yaml
+  path: driver_exposure_vector.*
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: integer
+  enum:
+  - -2
+  - -1
+  - 0
+  - 1
+  - 2
+- file: mpc_inputs.yaml
+  path: driver_taxonomy_version
+  classification: required
+  value_source: integrator_from_candidate_methodology_ref
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: driver_vector_provenance
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - model_assumption
+- file: mpc_inputs.yaml
+  path: failure_modes
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: mpc_inputs.yaml
+  path: failure_modes[].common_cause_id
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: failure_modes[].failure_id
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: failure_modes[].name
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: failure_modes[].severity
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - low
+  - medium
+  - high
+  - critical
+- file: mpc_inputs.yaml
+  path: failure_modes_provenance
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: Defaults to model_assumption for new candidates.
+  type: string | null
+  enum: null
+- file: mpc_inputs.yaml
+  path: schema_version
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: New v1 header.
+  type: string
+  enum:
+  - '1.0'
+- file: mpc_inputs.yaml
+  path: source_artifact
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: ticker
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: mpc_inputs.yaml
+  path: version
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: calc_runs
+  classification: required
+  value_source: calculation_engine_via_integrator
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: conviction
+  classification: optional
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: state.json
+  path: conviction.L_max
+  classification: optional
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: null
+  type: number
+  enum: null
+- file: state.json
+  path: conviction.exception
+  classification: optional
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: conviction.journal_id
+  classification: optional
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: conviction.provenance
+  classification: required_when_conviction_present
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: Must be owner_judgment.
+  type: string
+  enum:
+  - owner_judgment
+- file: state.json
+  path: conviction.since
+  classification: optional
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: conviction.status
+  classification: optional
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - active
+  - suspended
+  - revoked
+  - expired
+  - under_review
+- file: state.json
+  path: events_reported
+  classification: required
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: fired
+  classification: required
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: info_log
+  classification: required
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: info_log[].kind
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: info_log[].summary
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: info_log[].timestamp
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: kpi_observations
+  classification: required
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: kpi_observations[].kpi_id
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: kpi_observations[].name
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: kpi_observations[].note
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string|null
+  enum: null
+- file: state.json
+  path: kpi_observations[].observation_qualifier
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum:
+  - exact
+  - approximate
+  - lower_bound
+  - upper_bound
+  - range
+  - not_separately_disclosed
+  - pending_verification
+- file: state.json
+  path: kpi_observations[].observation_window_days
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: integer|null
+  enum: null
+- file: state.json
+  path: kpi_observations[].period_end
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: kpi_observations[].provenance
+  classification: required
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Verified/derived fact provenance.
+  type: string
+  enum:
+  - verified_fact
+  - derived_fact
+- file: state.json
+  path: kpi_observations[].source_url
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: kpi_observations[].unit
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: kpi_observations[].value
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: number | null
+  enum: null
+- file: state.json
+  path: kpi_observations[].value_range
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: object
+  enum: null
+- file: state.json
+  path: kpi_observations[].value_range.max
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: number
+  enum: null
+- file: state.json
+  path: kpi_observations[].value_range.min
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: number
+  enum: null
+- file: state.json
+  path: kpi_observations[].value_raw
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: kpi_observations[].value_type
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum:
+  - actual
+  - company_guidance
+  - analyst_estimate
+  - null
+- file: state.json
+  path: kpi_observations[].verified
+  classification: required
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: true verified match; false verified mismatch/negative result; null not yet verified.
+  type: boolean|null
+  enum: null
+- file: state.json
+  path: kpi_observations[].verified_by
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: kpi_observations[].why
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string|null
+  enum: null
+- file: state.json
+  path: notes
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Normative form array<string>; scalar is deprecated migration input.
+  type: array<string> | deprecated string|null
+  enum: null
+- file: state.json
+  path: owner_decisions
+  classification: optional
+  value_source: owner_or_integrator
+  mutation_authority: integrator_or_owner
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: pending_verification
+  classification: required
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: price
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: state.json
+  path: price.last
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: number
+  enum: null
+- file: state.json
+  path: price.last_at
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: price.note
+  classification: optional
+  value_source: integrator_or_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string|null
+  enum: null
+- file: state.json
+  path: price.provenance
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Normally verified_fact.
+  type: string | null
+  enum:
+  - verified_fact
+  - null
+- file: state.json
+  path: price.source_url
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Market-data source.
+  type: string | null
+  enum: null
+- file: state.json
+  path: price.symbol
+  classification: optional
+  value_source: integrator_or_market_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string|null
+  enum: null
+- file: state.json
+  path: price.zone
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: 'null'
+  enum: null
+- file: state.json
+  path: route
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: state.json
+  path: route.changed_at
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: route.current
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: route.done_steps
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: route.note
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: scenario_state
+  classification: required
+  value_source: integrator_seed_then_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: object
+  enum: null
+- file: state.json
+  path: scenario_state.*
+  classification: optional
+  value_source: integrator_seed_then_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: object
+  enum: null
+- file: state.json
+  path: scenario_state.*.evidence
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: scenario_state.*.evidence_type
+  classification: optional
+  value_source: integrator_seed_then_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string|null
+  enum:
+  - quantitative
+  - qualitative_primary_source
+  - mixed
+  - derived_binary
+  - null
+- file: state.json
+  path: scenario_state.*.prior_snapshot
+  classification: optional
+  value_source: integrator_seed_then_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: scenario_state.*.since
+  classification: optional
+  value_source: integrator_seed_then_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: scenario_state.*.source
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: scenario_state.*.state
+  classification: optional
+  value_source: integrator_seed_then_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: scenario_state.*.verified
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: boolean
+  enum: null
+- file: state.json
+  path: scenario_state.*.verified_note
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: state.json
+  path: schema_version
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: New v1 header.
+  type: string
+  enum:
+  - '1.0'
+- file: state.json
+  path: source
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string|object|null
+  enum: null
+- file: state.json
+  path: state_transitions
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: state.json
+  path: updated
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: artifact
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: as_of
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: axes
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: states.yaml
+  path: axes.*
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: states.yaml
+  path: axes.*.current
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: axes.*.current_evidence
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: states.yaml
+  path: axes.*.current_note
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: axes.*.evidence_type
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum:
+  - quantitative
+  - qualitative_primary_source
+  - mixed
+  - derived_binary
+  - null
+- file: states.yaml
+  path: axes.*.name
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: axes.*.name_ru
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: axes.*.prior_snapshot
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: axes.*.source_refs
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: states.yaml
+  path: axes.*.states
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: states.yaml
+  path: axes.*.states.*
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: states.yaml
+  path: axes.*.states.*.criteria
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: axes.*.states.*.name
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: axes.*.verification_rule
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: states.yaml
+  path: changelog
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: states.yaml
+  path: purpose
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: schema_version
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: New v1 header.
+  type: string
+  enum:
+  - '1.0'
+- file: states.yaml
+  path: semantics
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: states.yaml
+  path: semantics.accounting_note
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: states.yaml
+  path: semantics.evidence_required
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: boolean
+  enum: null
+- file: states.yaml
+  path: semantics.existing_trigger_policy
+  classification: optional
+  value_source: llm_candidate_or_integrator
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: states.yaml
+  path: semantics.numeric_thresholds_provenance
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - model_assumption
+- file: states.yaml
+  path: semantics.pending_verification_blocks_transition
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: boolean
+  enum: null
+- file: states.yaml
+  path: semantics.primary_only
+  classification: optional
+  value_source: llm_candidate_or_integrator
+  mutation_authority: integrator
+  note: Preserved from accepted company source policy semantics.
+  type: boolean|null
+  enum: null
+- file: states.yaml
+  path: semantics.thresholds_provenance
+  classification: deprecated
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: Migrate rename to semantics.numeric_thresholds_provenance.
+  type: string|null
+  enum:
+  - model_assumption
+  - null
+- file: states.yaml
+  path: semantics.trigger_not_decision
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: boolean
+  enum: null
+- file: states.yaml
+  path: source_artifact
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: sources
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: states.yaml
+  path: sources.*
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: v1 canonical source entry is object{source_class,url,as_of}; scalar URL is legacy-compatible only.
+  type: object | legacy string(deprecated)
+  enum: null
+- file: states.yaml
+  path: sources.*.access_note
+  classification: optional
+  value_source: llm_candidate_or_integrator
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: states.yaml
+  path: sources.*.as_of
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: date-string
+  enum: null
+- file: states.yaml
+  path: sources.*.document_type
+  classification: deprecated
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: Prefer sources.*.type.
+  type: string|null
+  enum: null
+- file: states.yaml
+  path: sources.*.note
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: states.yaml
+  path: sources.*.source_class
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - regulatory_filing
+  - issuer_ir_release
+  - issuer_investor_presentation
+  - issuer_transcript
+  - first_tier_media
+  - market_data_provider
+  - other_primary
+- file: states.yaml
+  path: sources.*.type
+  classification: optional
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: states.yaml
+  path: sources.*.url
+  classification: required
+  value_source: llm_candidate
+  mutation_authority: integrator
+  note: null
+  type: uri-string
+  enum: null
+- file: states.yaml
+  path: ticker
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: states.yaml
+  path: version
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: automations
+  classification: optional
+  value_source: integrator_or_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: object
+  enum: null
+- file: triggers.yaml
+  path: automations.*
+  classification: optional
+  value_source: integrator_or_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: object
+  enum: null
+- file: triggers.yaml
+  path: automations.*.cadence
+  classification: optional
+  value_source: integrator_or_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: automations.*.covers
+  classification: optional
+  value_source: integrator_or_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: array
+  enum: null
+- file: triggers.yaml
+  path: automations.*.note
+  classification: optional
+  value_source: integrator_or_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: automations._note
+  classification: deprecated
+  value_source: legacy_registry
+  mutation_authority: integrator
+  note: Migrate to root automations_note.
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: automations_note
+  classification: optional
+  value_source: integrator_or_dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string|null
+  enum: null
+- file: triggers.yaml
+  path: meta
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: triggers.yaml
+  path: meta.company
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: meta.currency
+  classification: optional
+  value_source: integrator_or_owner_registry
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: triggers.yaml
+  path: meta.exchange
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: meta.fiscal_year
+  classification: optional
+  value_source: integrator_or_owner_registry
+  mutation_authority: integrator
+  note: null
+  type: integer|string|null
+  enum: null
+- file: triggers.yaml
+  path: meta.horizon
+  classification: optional
+  value_source: integrator_or_owner_registry
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: triggers.yaml
+  path: meta.position
+  classification: conditional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Required for profile=full_model; optional for registry_only.
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: meta.price_at_registry
+  classification: conditional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Required for profile=full_model; optional for registry_only.
+  type: number
+  enum: null
+- file: triggers.yaml
+  path: meta.price_at_strategy
+  classification: optional
+  value_source: integrator_or_owner_registry
+  mutation_authority: integrator
+  note: null
+  type: number|null
+  enum: null
+- file: triggers.yaml
+  path: meta.price_source
+  classification: conditional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Required for profile=full_model; optional for registry_only.
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: meta.registry_updated
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: meta.scenario
+  classification: optional
+  value_source: integrator_or_owner_registry
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: triggers.yaml
+  path: meta.source_artifact
+  classification: conditional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Required for profile=full_model; optional for registry_only.
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: meta.status_in_basket
+  classification: optional
+  value_source: integrator_or_owner_registry
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: triggers.yaml
+  path: meta.strategy_date
+  classification: optional
+  value_source: integrator_or_owner_registry
+  mutation_authority: integrator
+  note: null
+  type: date-string|null
+  enum: null
+- file: triggers.yaml
+  path: meta.strategy_source
+  classification: optional
+  value_source: integrator_or_owner_registry
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: triggers.yaml
+  path: meta.ticker
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: meta.yahoo_symbol
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: profile
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - full_model
+  - registry_only
+- file: triggers.yaml
+  path: route
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: triggers.yaml
+  path: route.steps
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: triggers.yaml
+  path: route.steps[].id
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: route.steps[].kind
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: route.steps[].name
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: route.steps[].ref
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum: null
+- file: triggers.yaml
+  path: rules
+  classification: conditional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Required for profile=full_model; optional for profile=registry_only.
+  type: object
+  enum: null
+- file: triggers.yaml
+  path: rules.all_numeric_thresholds_provenance
+  classification: optional
+  value_source: llm_candidate_or_integrator
+  mutation_authority: integrator
+  note: null
+  type: string|null
+  enum:
+  - model_assumption
+  - null
+- file: triggers.yaml
+  path: rules.evidence_required
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: boolean
+  enum: null
+- file: triggers.yaml
+  path: rules.pending_verification_blocks_transition
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: boolean
+  enum: null
+- file: triggers.yaml
+  path: rules.trigger_not_decision
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: boolean
+  enum:
+  - true
+- file: triggers.yaml
+  path: schema_version
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: New v1 header.
+  type: string
+  enum:
+  - '1.0'
+- file: triggers.yaml
+  path: triggers
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: triggers.yaml
+  path: triggers[].action
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].automation
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].axis
+  classification: optional
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].class
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - event
+  - price
+  - calendar
+  - digest
+- file: triggers.yaml
+  path: triggers[].condition
+  classification: optional
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].condition_provenance
+  classification: required_when_transition_present
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: Numeric/model threshold provenance.
+  type: string | null
+  enum:
+  - model_assumption
+  - normative_rule
+  - null
+- file: triggers.yaml
+  path: triggers[].fired
+  classification: conditional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Required for full_model; optional for registry_only until first firing.
+  type: array
+  enum: null
+- file: triggers.yaml
+  path: triggers[].id
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].kpis
+  classification: optional
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: null
+  type: array
+  enum: null
+- file: triggers.yaml
+  path: triggers[].level
+  classification: optional
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum:
+  - E1
+  - E2
+  - E3
+  - null
+- file: triggers.yaml
+  path: triggers[].note
+  classification: optional
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].period
+  classification: optional
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].source
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].status
+  classification: required
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: null
+  type: string
+  enum:
+  - active
+  - planned
+  - due
+  - done
+  - dropped
+- file: triggers.yaml
+  path: triggers[].step
+  classification: required
+  value_source: integrator
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].transition
+  classification: optional
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: null
+  type: object
+  enum: null
+- file: triggers.yaml
+  path: triggers[].transition.from
+  classification: optional
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].transition.to
+  classification: optional
+  value_source: llm_candidate_or_legacy_registry
+  mutation_authority: integrator
+  note: null
+  type: string
+  enum: null
+- file: triggers.yaml
+  path: triggers[].window
+  classification: optional
+  value_source: owner_registry_or_integrator
+  mutation_authority: integrator
+  note: null
+  type: string|object|null
+  enum: null
+legacy_reference_coverage:
+  reference: ima-foundation-to-llm/portfolio_nbis/*
+  coverage_requirement: Every structural field path in the five reference files must match a field_catalog path.
+  known_value_migrations:
+  - kpis.yaml NBIS-KPI-06 legacy last_value=[0.5,0.6] -> v1 last_value:null + observation_qualifier:range + value_range
+  - kpis.yaml NBIS-KPI-07 legacy last_value='>40' -> v1 last_value:40 + observation_qualifier:lower_bound
+  - state.json analogous kpi_observations range/lower-bound values require the same normalization
+  - 'new v1 required metadata: schema_version, KPI source_class/provenance/value_type, trigger condition_provenance, runtime observation provenance'
+  patch_validation_basis:
+    workspace_snapshot: S0 / git commit df6029d
+    models_in_patch_report: 13
+    spcx_included: false
+    report_ref: ima-party1.validation-report.md
+title: Company Artifact Schema Package v1.0.1
+supersedes: Company Artifact Schema v1.0
+patch_scope: Additive compatibility patch based on accepted 13-model workspace validation; SPCX explicitly excluded.
+known_migrations_v1_0_to_v1_0_1:
+- id: MIG-101-SCHEMA-VERSION
+  action: set_schema_version
+  from: 1.0_or_missing
+  to: 1.0.1
+  scope: all canonical company files
+- id: MIG-102-SOURCE-SCALAR
+  action: wrap_source_scalar
+  scope: states.yaml.sources.*
+  rule: string URL -> object{url:<same>, source_class:<resolved by Source Policy>, as_of:<document date>}; preserve source key
+- id: MIG-103-SOURCE-OBJECT-ENRICH
+  action: enrich_source_object
+  scope: states.yaml.sources.*
+  rule: existing {url,type,...} remains object; add source_class and as_of; keep type first-class
+- id: MIG-104-THRESHOLD-PROVENANCE-RENAME
+  action: rename_if_target_absent
+  from: states.yaml.semantics.thresholds_provenance
+  to: states.yaml.semantics.numeric_thresholds_provenance
+- id: MIG-105-VALUE-TYPE-QUALIFIER
+  action: split_value_type_and_qualifier
+  scope:
+  - kpis.yaml.critical_kpis[]
+  - state.json.kpi_observations[]
+  rule: legacy value_type in {lower_bound,upper_bound,approximate} -> observation_qualifier=<legacy>; value_type=actual
+- id: MIG-106-BINARY-THRESHOLDS
+  action: mark_binary_when_semantically_proven
+  scope: kpis.yaml.critical_kpis[].thresholds
+  rule: if accepted KPI is binary and yellow zone is absent, set thresholds.binary=true; do not infer binary from missing yellow without known KPI semantics
+- id: MIG-107-AUTOMATIONS-NOTE
+  action: move_field
+  from: triggers.yaml.automations._note
+  to: triggers.yaml.automations_note
+- id: MIG-108-NOTES-LIST
+  action: normalize_scalar_to_list
+  scope: state.json.notes
+  rule: string -> [string]; null -> [] if workspace convention requires materialized list
+- id: MIG-109-TRIGGER-PROFILE
+  action: add_profile
+  scope: triggers.yaml.profile
+  rule: full_model if canonical company states/kpis/mpc exist; registry_only otherwise
+- id: MIG-110-FULL-MODEL-TRIGGER-DEFAULTS
+  action: add_required_full_model_fields
+  scope: triggers.yaml
+  rule: for profile=full_model populate rules and canonical meta fields from workspace/integrator; each trigger gets fired:[] if absent
+- id: MIG-111-DATE-NORMALIZATION
+  action: pre_validation_normalization
+  scope: all date/date-time fields
+  rule: YAML native date/datetime objects are serialized to ISO-8601 strings before JSON Schema validation; semantic date is unchanged

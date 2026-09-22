@@ -2,6 +2,8 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/ASML_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+schema_version: '1.0.1'
+profile: full_model
 meta:
   ticker: ASML
   company: ASML Holding N.V.
@@ -12,8 +14,7 @@ meta:
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/ASML?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 1679.92
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
-automations:
-  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+automations: {}
 route:
   steps:
   - id: vector
@@ -26,6 +27,7 @@ rules:
   all_numeric_thresholds_provenance: model_assumption
 triggers:
 - id: ASML-E-01
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Demand_Visibility
@@ -48,6 +50,7 @@ triggers:
   note: Q2 2026 release did not provide a numeric Q2 booking value in the selected machine-readable source; trigger remains
     future-observable.
 - id: ASML-E-02
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Demand_Visibility
@@ -67,6 +70,7 @@ triggers:
   status: planned
   fired: []
 - id: ASML-E-03
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: EUV_Adoption
@@ -85,6 +89,7 @@ triggers:
   status: planned
   fired: []
 - id: ASML-E-04
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: EUV_Adoption
@@ -103,6 +108,7 @@ triggers:
   status: planned
   fired: []
 - id: ASML-E-05
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Margin_Execution
@@ -121,6 +127,7 @@ triggers:
   status: planned
   fired: []
 - id: ASML-E-06
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Margin_Execution
@@ -139,6 +146,7 @@ triggers:
   status: planned
   fired: []
 - id: ASML-E-07
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: China_Export_Exposure
@@ -158,6 +166,7 @@ triggers:
   status: planned
   fired: []
 - id: ASML-E-08
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: China_Export_Exposure
@@ -176,6 +185,7 @@ triggers:
   status: planned
   fired: []
 - id: ASML-E-09
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: China_Export_Exposure
@@ -195,6 +205,7 @@ triggers:
   status: planned
   fired: []
 - id: ASML-E-10
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Installed_Base_Resilience
@@ -214,6 +225,7 @@ triggers:
   status: planned
   fired: []
 - id: ASML-E-11
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Installed_Base_Resilience
@@ -231,3 +243,4 @@ triggers:
   automation: null
   status: planned
   fired: []
+automations_note: 'дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку'

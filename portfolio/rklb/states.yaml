@@ -1,4 +1,5 @@
 # Вектор состояний RKLB (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: RKLB State Vector
 as_of: '2026-09-21'
@@ -6,15 +7,20 @@ ticker: RKLB
 source_artifact: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
 purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
 semantics:
+  evidence_required: true
   primary_only: true
-  thresholds_provenance: model_assumption
+  numeric_thresholds_provenance: model_assumption
   pending_verification_blocks_transition: true
   trigger_not_decision: true
 sources:
   RKLB_Q2_2026_10Q:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
     type: SEC 10-Q
   RKLB_Q2_2026_RELEASE:
+    source_class: issuer_ir_release
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm
     type: SEC earnings-release exhibit
 axes:

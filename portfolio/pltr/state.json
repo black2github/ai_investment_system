@@ -1,4 +1,5 @@
 {
+  "schema_version": "1.0.1",
   "updated": "2026-09-21T06:51:25Z",
   "price": {
     "last": 177.64,
@@ -8,7 +9,9 @@
   "fired": [],
   "events_reported": [],
   "pending_verification": [],
-  "notes": "Папка создана 2026-09-21 по партии моделей компаний; значения KPI сверены заданием batch04-facts-verify 2026-09-21.",
+  "notes": [
+    "Папка создана 2026-09-21 по партии моделей компаний; значения KPI сверены заданием batch04-facts-verify 2026-09-21."
+  ],
   "route": {
     "current": "vector",
     "done_steps": [],
@@ -83,16 +86,16 @@
   },
   "state_transitions": [],
   "kpi_observations": [
-    {"kpi_id": "PLTR-KPI-01", "name": "Total revenue YoY", "period_end": "2026-06-30", "value": 0.93, "value_raw": "Revenue grew 93% year-over-year and 19% quarter-over-quarter to $1.935 billion", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true},
-    {"kpi_id": "PLTR-KPI-02", "name": "U.S. commercial revenue YoY", "period_end": "2026-06-30", "value": 1.49, "value_raw": "U.S. commercial revenue grew 149% year-over-year and 28% quarter-over-quarter to $764 million", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true},
-    {"kpi_id": "PLTR-KPI-03", "name": "U.S. government revenue YoY", "period_end": "2026-06-30", "value": 0.9, "value_raw": "U.S. government revenue grew 90% year-over-year and 18% quarter-over-quarter to $809 million", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true},
-    {"kpi_id": "PLTR-KPI-04", "name": "U.S. commercial RDV", "period_end": "2026-06-30", "value": 6.238, "value_raw": "U.S. commercial remaining deal value (\"RDV\") of $6.238 billion, up 124% year-over-year and 27% quarter-over-quarter", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true},
-    {"kpi_id": "PLTR-KPI-05", "name": "U.S. commercial RDV YoY", "period_end": "2026-06-30", "value": 1.24, "value_raw": "U.S. commercial remaining deal value (\"RDV\") of $6.238 billion, up 124% year-over-year", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true},
-    {"kpi_id": "PLTR-KPI-06", "name": "Total contract value closed", "period_end": "2026-06-30", "value": 3.373, "value_raw": "Closed total contract value (\"TCV\") of $3.373 billion, up 49% year-over-year", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true},
-    {"kpi_id": "PLTR-KPI-07", "name": "GAAP operating margin", "period_end": "2026-06-30", "value": 0.47, "value_raw": "GAAP income from operations of $912 million, representing a 47% margin", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true},
-    {"kpi_id": "PLTR-KPI-08", "name": "Adjusted FCF margin", "period_end": "2026-06-30", "value": 0.63, "value_raw": "Adjusted free cash flow of $1.220 billion, representing a 63% margin", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true},
-    {"kpi_id": "PLTR-KPI-09", "name": "H1 U.S. revenue share", "period_end": "2026-06-30", "value": 0.8, "value_raw": "In the six months ended June 30, 2026, we generated 80% of our revenue from customers in the United States and the remaining 20% from non-U.S. customers", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm", "verified": true},
-    {"kpi_id": "PLTR-KPI-10", "name": "Stock-based compensation / revenue", "period_end": "2026-06-30", "value": 0.137, "value_raw": "Total stock-based compensation expense $265,209 (thousand) за квартал при revenue $1,935,464 (тыс.) — 265,209/1,935,464=0.137", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm", "verified": true}
+    {"kpi_id": "PLTR-KPI-01", "name": "Total revenue YoY", "period_end": "2026-06-30", "value": 0.93, "value_raw": "Revenue grew 93% year-over-year and 19% quarter-over-quarter to $1.935 billion", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "PLTR-KPI-02", "name": "U.S. commercial revenue YoY", "period_end": "2026-06-30", "value": 1.49, "value_raw": "U.S. commercial revenue grew 149% year-over-year and 28% quarter-over-quarter to $764 million", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "PLTR-KPI-03", "name": "U.S. government revenue YoY", "period_end": "2026-06-30", "value": 0.9, "value_raw": "U.S. government revenue grew 90% year-over-year and 18% quarter-over-quarter to $809 million", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "PLTR-KPI-04", "name": "U.S. commercial RDV", "period_end": "2026-06-30", "value": 6.238, "value_raw": "U.S. commercial remaining deal value (\"RDV\") of $6.238 billion, up 124% year-over-year and 27% quarter-over-quarter", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "PLTR-KPI-05", "name": "U.S. commercial RDV YoY", "period_end": "2026-06-30", "value": 1.24, "value_raw": "U.S. commercial remaining deal value (\"RDV\") of $6.238 billion, up 124% year-over-year", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "PLTR-KPI-06", "name": "Total contract value closed", "period_end": "2026-06-30", "value": 3.373, "value_raw": "Closed total contract value (\"TCV\") of $3.373 billion, up 49% year-over-year", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "PLTR-KPI-07", "name": "GAAP operating margin", "period_end": "2026-06-30", "value": 0.47, "value_raw": "GAAP income from operations of $912 million, representing a 47% margin", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "PLTR-KPI-08", "name": "Adjusted FCF margin", "period_end": "2026-06-30", "value": 0.63, "value_raw": "Adjusted free cash flow of $1.220 billion, representing a 63% margin", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "PLTR-KPI-09", "name": "H1 U.S. revenue share", "period_end": "2026-06-30", "value": 0.8, "value_raw": "In the six months ended June 30, 2026, we generated 80% of our revenue from customers in the United States and the remaining 20% from non-U.S. customers", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "PLTR-KPI-10", "name": "Stock-based compensation / revenue", "period_end": "2026-06-30", "value": 0.137, "value_raw": "Total stock-based compensation expense $265,209 (thousand) за квартал при revenue $1,935,464 (тыс.) — 265,209/1,935,464=0.137", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"}
   ],
   "calc_runs": []
 }

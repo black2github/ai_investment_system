@@ -8,7 +8,9 @@
   "fired": [],
   "events_reported": [],
   "pending_verification": [],
-  "notes": "Папка создана 2026-09-21 по партии моделей компаний; все critical_kpis сверены заданием batch05-facts-verify 2026-09-21.",
+  "notes": [
+    "Папка создана 2026-09-21 по партии моделей компаний; все critical_kpis сверены заданием batch05-facts-verify 2026-09-21."
+  ],
   "route": {
     "current": "vector",
     "done_steps": [],
@@ -94,7 +96,9 @@
       "value_raw": "Revenue $2,575 (Three Months Ended June 30, 2026) vs $1,212 (2025)",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "CRWV-KPI-02",
@@ -104,7 +108,9 @@
       "value_raw": "Revenue Backlog 1 $104.2B +246% YoY",
       "unit": "USD B",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "CRWV-KPI-03",
@@ -114,7 +120,9 @@
       "value_raw": "We recognized an aggregate of approximately 36%, 26%, and 10% of our revenue from our top three customers for the three months ended June 30, 2026",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "CRWV-KPI-04",
@@ -124,7 +132,9 @@
       "value_raw": "Adjusted EBITDA $1,510; Adjusted EBITDA margin 59%",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "CRWV-KPI-05",
@@ -134,7 +144,9 @@
       "value_raw": "Adjusted operating income $128; Adjusted operating income margin 5%",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "CRWV-KPI-06",
@@ -145,7 +157,9 @@
       "unit": "GW",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm",
       "verified": true,
-      "value_type": "approximate"
+      "value_type": "actual",
+      "observation_qualifier": "approximate",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "CRWV-KPI-07",
@@ -156,7 +170,9 @@
       "unit": "GW",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm",
       "verified": true,
-      "value_type": "approximate"
+      "value_type": "actual",
+      "observation_qualifier": "approximate",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "CRWV-KPI-08",
@@ -166,7 +182,9 @@
       "value_raw": "$2.6B Up 112% YoY Revenue; $104.2B Revenue Backlog; $9.4B Capital Expenditures",
       "unit": "x",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "CRWV-KPI-09",
@@ -176,7 +194,9 @@
       "value_raw": "Cash and cash equivalents 5,524; Marketable securities 15; Availability under existing facilities 10,014; Total liquidity $15,553",
       "unit": "x",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "CRWV-KPI-10",
@@ -186,8 +206,11 @@
       "value_raw": "Total Debt ($Billion) ... $35.6 (Q2'26); Total Debt / Revenue Backlog 0.3x",
       "unit": "x",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     }
   ],
-  "calc_runs": []
+  "calc_runs": [],
+  "schema_version": "1.0.1"
 }

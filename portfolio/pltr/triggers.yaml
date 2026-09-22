@@ -2,6 +2,8 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/PLTR_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+schema_version: '1.0.1'
+profile: full_model
 meta:
   ticker: PLTR
   company: Palantir Technologies Inc.
@@ -12,8 +14,7 @@ meta:
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/PLTR?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 177.64
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
-automations:
-  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+automations: {}
 route:
   steps:
   - id: vector
@@ -25,6 +26,7 @@ rules:
   trigger_not_decision: true
 triggers:
 - id: PLTR-E-01
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: US_Commercial_AIP_Monetization
@@ -44,6 +46,7 @@ triggers:
   status: planned
   fired: []
 - id: PLTR-E-02
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: US_Commercial_AIP_Monetization
@@ -63,6 +66,7 @@ triggers:
   status: planned
   fired: []
 - id: PLTR-E-03
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: US_Government_Demand
@@ -81,6 +85,7 @@ triggers:
   status: planned
   fired: []
 - id: PLTR-E-04
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: US_Government_Demand
@@ -99,6 +104,7 @@ triggers:
   status: planned
   fired: []
 - id: PLTR-E-05
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Geographic_Concentration
@@ -117,6 +123,7 @@ triggers:
   status: planned
   fired: []
 - id: PLTR-E-06
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Geographic_Concentration
@@ -135,6 +142,7 @@ triggers:
   status: planned
   fired: []
 - id: PLTR-E-07
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Profitability_Cash
@@ -154,6 +162,7 @@ triggers:
   status: planned
   fired: []
 - id: PLTR-E-08
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Profitability_Cash
@@ -173,6 +182,7 @@ triggers:
   status: planned
   fired: []
 - id: PLTR-E-09
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Contracted_Demand
@@ -192,6 +202,7 @@ triggers:
   status: planned
   fired: []
 - id: PLTR-E-10
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Contracted_Demand
@@ -210,3 +221,4 @@ triggers:
   automation: null
   status: planned
   fired: []
+automations_note: 'дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку'

@@ -2,6 +2,8 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+schema_version: '1.0.1'
+profile: full_model
 meta:
   ticker: LLY
   company: Eli Lilly and Company
@@ -12,8 +14,7 @@ meta:
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/LLY?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 1152.93
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
-automations:
-  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+automations: {}
 route:
   steps:
   - id: vector
@@ -26,6 +27,7 @@ rules:
   all_numeric_thresholds_provenance: model_assumption
 triggers:
 - id: LLY-E-01
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Incretin_Demand
@@ -45,6 +47,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-02
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Incretin_Demand
@@ -63,6 +66,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-03
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Pricing_Access
@@ -82,6 +86,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-04
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Pricing_Access
@@ -101,6 +106,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-05
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Manufacturing_Expansion
@@ -119,6 +125,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-06
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Manufacturing_Expansion
@@ -137,6 +144,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-07
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Manufacturing_Expansion
@@ -155,6 +163,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-08
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Pipeline_Diversification
@@ -174,6 +183,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-09
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Pipeline_Diversification
@@ -193,6 +203,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-10
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Cash_Economics
@@ -211,6 +222,7 @@ triggers:
   status: planned
   fired: []
 - id: LLY-E-11
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Cash_Economics
@@ -228,3 +240,4 @@ triggers:
   automation: null
   status: planned
   fired: []
+automations_note: 'дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку'

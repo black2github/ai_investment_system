@@ -1,4 +1,5 @@
 # KPI HOOD с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: HOOD KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: HOOD-KPI-01
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Funded Customers
   unit: million
   period: monthly
@@ -29,6 +33,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: HOOD-KPI-02
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Total Platform Assets
   unit: USD B
   period: monthly
@@ -42,6 +49,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: HOOD-KPI-03
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: LTM Net Deposit growth rate
   unit: fraction
   period: monthly
@@ -55,6 +65,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: HOOD-KPI-04
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: ARPU
   unit: USD annualized
   period: quarterly
@@ -68,6 +81,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: HOOD-KPI-05
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Robinhood Gold Subscribers
   unit: million
   period: quarterly
@@ -81,6 +97,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: HOOD-KPI-06
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Total net revenue YoY
   unit: YoY fraction
   period: quarterly
@@ -94,6 +113,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: HOOD-KPI-07
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Adjusted EBITDA margin
   unit: fraction
   period: quarterly
@@ -108,6 +130,9 @@ critical_kpis:
   verified: false
   formula: 741/1308
 - id: HOOD-KPI-08
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Transaction-based revenue share
   unit: fraction
   period: quarterly
@@ -121,6 +146,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: HOOD-KPI-09
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Event-contract revenue share
   unit: fraction
   period: quarterly
@@ -135,6 +163,9 @@ critical_kpis:
   verified: false
   note: risk/concentration KPI
 - id: HOOD-KPI-10
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Credit-loss provision / revenue
   unit: fraction
   period: quarterly

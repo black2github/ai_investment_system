@@ -201,7 +201,16 @@ AG: invest, КАРТОЧКА: <Компания> (<тикер>)
 2. Триггер — это факт, прошедший проверку источника. Факт без первоисточника → `pending_verification`,
    перехода нет («pending_verification блокирует переход»).
 3. Условие «N кварталов подряд» считается по `kpi_observations`: новое значение сначала записывается
-   туда (kpi_id, period_end, value, source_url, verified), потом считаются кварталы. Не по памяти.
+   туда (kpi_id, name, period_end, value, unit, source_url, verified, provenance), потом считаются кварталы.
+   Не по памяти.
+   Формат значений (Company Artifact Schema v1.0.1, с 22.09; проверяется валидатором G5 `artifact_validator`
+   сайдкара): `value` и `last_value` — ТОЛЬКО число или null. Границу «>40» писать как `value: 40` +
+   `observation_qualifier: lower_bound` (`upper_bound` для «<»), диапазон — `value: null` +
+   `observation_qualifier: range` + `value_range: {min, max}`, нераскрытое — `value: null` +
+   `observation_qualifier: not_separately_disclosed`. `value_type` — только `actual | company_guidance |
+   analyst_estimate` (прогноз компании ≠ факт: 5 GW к концу 2026 — это company_guidance). `provenance` у
+   каждого наблюдения — `verified_fact` (число воспроизведено из первоисточника) или `derived_fact` (с
+   `formula`). `verified: null` = ещё не проверялось, `false` = проверено и расходится.
 4. Переход записывается в `state_transitions` (timestamp, axis, from, to, trigger_id, evidence, source,
    confidence) и обновляет `scenario_state`. Инвестиционное действие переходом НЕ предопределено.
 5. Уровень события (общее правило системы, согласовано 20.09): E1 — факт обновляет информацию, но

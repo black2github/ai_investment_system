@@ -1,4 +1,5 @@
 # Вектор состояний NET (оси и состояния). Переходы — triggers.yaml (NET-E-06..E-11 + привязка legacy NET-E-*/X-* к осям), текущий вектор — state.json.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: NET State Vector
 as_of: '2026-09-21'
@@ -7,16 +8,21 @@ source_artifact: inbox/received/NET_company_state_v1.0.yaml (другая LLM, �
 purpose: 'Оси и состояния компании поверх реестра владельца от 17.09: legacy-триггеры NET-E-01..05 / X-01..03 сохранены и
   привязаны к осям (поле axis), переходы состояний — NET-E-06..E-11.'
 semantics:
+  evidence_required: true
   primary_only: true
-  thresholds_provenance: model_assumption
+  numeric_thresholds_provenance: model_assumption
   pending_verification_blocks_transition: true
   trigger_not_decision: true
   existing_trigger_policy: Existing owner NET-E-* triggers are not replaced or renumbered.
 sources:
   NET_Q2_2026_10Q:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm
     type: SEC 10-Q
   NET_Q2_2026_RELEASE:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm
     type: SEC earnings-release exhibit
 axes:

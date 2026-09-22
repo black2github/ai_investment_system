@@ -1,6 +1,8 @@
 # Реестр триггеров: Yaskawa Electric (6506, TSE Prime)
 # Источник: финальный блок (ChatGPT, 17.09.2026). Предпосылки проверены 17.09 по отчёту Q1 FY (до 28.02.2027): orders ¥163.8 млрд +29%, Robotics revenue ¥56.7 млрд +2.0% — совпадают; дата Q2 на IR — «Oct. 2026» без дня.
 
+schema_version: '1.0.1'
+profile: registry_only
 meta:
   ticker: "6506"
   exchange: TSE Prime
@@ -10,7 +12,7 @@ meta:
   company: Yaskawa Electric
   status_in_basket: наблюдать до триггера (покупка только после 6506-E-01 или E-02)
   target_weight: "20%"
-  horizon: 2030
+  horizon: '2030'
   strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
   strategy_date: 2026-09-17
   registry_updated: 2026-09-17

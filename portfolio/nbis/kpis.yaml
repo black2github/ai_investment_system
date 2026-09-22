@@ -1,4 +1,5 @@
 # KPI NBIS с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.1'
 artifact: NBIS KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: NBIS-KPI-01
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: AI cloud revenue YoY
   unit: YoY fraction
   period: quarterly
@@ -29,6 +33,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: NBIS-KPI-02
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: AI cloud quarterly revenue
   unit: USD B
   period: quarterly
@@ -42,6 +49,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: NBIS-KPI-03
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: AI cloud ARR
   unit: USD B
   period: quarterly
@@ -55,6 +65,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: NBIS-KPI-04
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: AI cloud adjusted EBITDA margin
   unit: fraction
   period: quarterly
@@ -68,6 +81,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: NBIS-KPI-05
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Quarterly capex
   unit: USD B
   period: quarterly
@@ -82,6 +98,9 @@ critical_kpis:
   verified: false
   note: risk KPI; interpret with monetization/funding
 - id: NBIS-KPI-06
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Customer prepayment coverage of associated capex
   unit: fraction
   period: deal_cohort
@@ -90,13 +109,18 @@ critical_kpis:
     green: '>=0.50'
     yellow: '>=0.30 and <0.50'
     red: <0.30
-  last_value:
-  - 0.5
-  - 0.6
+  last_value: null
+  observation_qualifier: range
+  value_range:
+    min: 0.5
+    max: 0.6
   last_date: null
   source_url: null
   verified: false
 - id: NBIS-KPI-07
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Disclosed customer commitments
   unit: USD B
   period: quarterly
@@ -105,11 +129,14 @@ critical_kpis:
     green: '>=30'
     yellow: '>=15 and <30'
     red: <15
-  last_value: '>40'
+  last_value: 40
+  observation_qualifier: lower_bound
   last_date: null
   source_url: null
   verified: false
 - id: NBIS-KPI-08
+  source_class: issuer_ir_release
+  provenance: verified_fact
   name: Year-end contracted power target
   unit: GW
   period: quarterly
@@ -128,6 +155,9 @@ critical_kpis:
   target_date: '2026-12-31'
   verified_note: 'host-check 21.09: «raising our year-end contracted power target again to 5 GW» — guidance, не факт'
 - id: NBIS-KPI-09
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Cash and cash equivalents
   unit: USD B
   period: quarterly
@@ -141,6 +171,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: NBIS-KPI-10
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Group adjusted EBITDA margin
   unit: fraction
   period: quarterly
@@ -154,6 +187,9 @@ critical_kpis:
   source_url: null
   verified: false
 - id: NBIS-KPI-11
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Actually secured contracted power as of reporting date
   unit: GW
   period: quarterly

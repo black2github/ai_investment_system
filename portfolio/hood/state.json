@@ -8,7 +8,9 @@
   "fired": [],
   "events_reported": [],
   "pending_verification": [],
-  "notes": "Папка создана 2026-09-21 по партии 1 моделей компаний; сверка фактов по отчёту выполнена 2026-09-20 (задание facts-verify, батч 1).",
+  "notes": [
+    "Папка создана 2026-09-21 по партии 1 моделей компаний; сверка фактов по отчёту выполнена 2026-09-20 (задание facts-verify, батч 1)."
+  ],
   "route": {
     "current": "vector",
     "done_steps": [],
@@ -85,7 +87,9 @@
       "value_raw": "Funded Customers: 28.6 million, up about 120,000 from July 2026 and about 1.90 million year over year",
       "unit": "million",
       "source_url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "HOOD-KPI-02",
@@ -95,7 +99,9 @@
       "value_raw": "Total Platform Assets: $383.7 billion, up 8% from July 2026 and 26% year over year",
       "unit": "USD B",
       "source_url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "HOOD-KPI-03",
@@ -106,7 +112,9 @@
       "unit": "fraction",
       "source_url": "https://investors.robinhood.com/static-files/5980b367-8c3d-486b-b38d-99fad8d6da70",
       "verified": true,
-      "verified_by": "другая LLM (batch_01_source_corrections, 21.09) с указанием точного места в релизе; дозор подтвердит при следующей сверке по PDF"
+      "verified_by": "другая LLM (batch_01_source_corrections, 21.09) с указанием точного места в релизе; дозор подтвердит при следующей сверке по PDF",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "HOOD-KPI-04",
@@ -116,7 +124,9 @@
       "value_raw": "Average Revenue Per User (\"ARPU\") increased 24% year-over-year to $187",
       "unit": "USD annualized",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "HOOD-KPI-05",
@@ -126,7 +136,9 @@
       "value_raw": "Robinhood Gold Subscribers reached a record 4.8 million",
       "unit": "million",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "HOOD-KPI-06",
@@ -136,7 +148,9 @@
       "value_raw": "Total net revenues increased 32% year-over-year to $1.31 billion",
       "unit": "YoY fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "HOOD-KPI-07",
@@ -146,7 +160,9 @@
       "value_raw": "Adjusted EBITDA (non-GAAP) increased 35% year-over-year to $741 million; Total net revenues989 1,308 32% (Q2'25 / Q2'26, in millions)",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "HOOD-KPI-08",
@@ -156,7 +172,9 @@
       "value_raw": "Transaction-based revenues increased 44% year-over-year to $776 million; Total net revenues989 1,308 (Q2'26 in millions)",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "HOOD-KPI-09",
@@ -166,7 +184,9 @@
       "value_raw": "event contracts revenue of $156 million, up over 10x; Total net revenues 1,308 (Q2'26, in millions)",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "HOOD-KPI-10",
@@ -176,8 +196,11 @@
       "value_raw": "Provision for credit losses28 56 100% (Q2'25 / Q2'26, in millions); Total net revenues989 1,308",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     }
   ],
-  "calc_runs": []
+  "calc_runs": [],
+  "schema_version": "1.0.1"
 }

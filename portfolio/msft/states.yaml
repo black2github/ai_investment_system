@@ -1,4 +1,5 @@
 # Вектор состояний MSFT (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: MSFT State Vector
 as_of: '2026-09-21'
@@ -6,21 +7,30 @@ ticker: MSFT
 source_artifact: inbox/received/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
 purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
 semantics:
+  evidence_required: true
   primary_only: true
-  thresholds_provenance: model_assumption
+  numeric_thresholds_provenance: model_assumption
   pending_verification_blocks_transition: true
   trigger_not_decision: true
 sources:
   MSFT_FY2026_10K:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm
     type: SEC 10-K
   MSFT_FY2026_Q4_RELEASE:
+    source_class: issuer_ir_release
+    as_of: '2026-09-21'
     url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast
     type: Microsoft IR earnings release
   MSFT_FY2026_Q4_METRICS:
+    source_class: issuer_ir_release
+    as_of: '2026-09-21'
     url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
     type: Microsoft IR metrics
   MSFT_FY2026_Q4_CALL:
+    source_class: issuer_transcript
+    as_of: '2026-09-21'
     url: https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4
     type: Microsoft IR earnings call
 axes:

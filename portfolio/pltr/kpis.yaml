@@ -1,4 +1,5 @@
 # KPI PLTR с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: PLTR KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: PLTR-KPI-01
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Total revenue YoY
   unit: fraction
   period: quarterly
@@ -29,6 +33,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
   verified: false
 - id: PLTR-KPI-02
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: U.S. commercial revenue YoY
   unit: fraction
   period: quarterly
@@ -42,6 +49,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
   verified: false
 - id: PLTR-KPI-03
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: U.S. government revenue YoY
   unit: fraction
   period: quarterly
@@ -56,6 +66,9 @@ critical_kpis:
   verified: false
   formula: 809 / 426 - 1 = 0.899
 - id: PLTR-KPI-04
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: U.S. commercial RDV
   unit: USD B
   period: quarterly
@@ -69,6 +82,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
   verified: false
 - id: PLTR-KPI-05
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: U.S. commercial RDV YoY
   unit: fraction
   period: quarterly
@@ -82,6 +98,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
   verified: false
 - id: PLTR-KPI-06
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Total contract value closed
   unit: USD B
   period: quarterly
@@ -95,6 +114,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
   verified: false
 - id: PLTR-KPI-07
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: GAAP operating margin
   unit: fraction
   period: quarterly
@@ -109,6 +131,9 @@ critical_kpis:
   verified: false
   formula: 0.912004 / 1.935464 = 0.4712
 - id: PLTR-KPI-08
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Adjusted FCF margin
   unit: fraction
   period: quarterly
@@ -123,6 +148,9 @@ critical_kpis:
   verified: false
   formula: 1.220359 / 1.935464 = 0.6305
 - id: PLTR-KPI-09
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: H1 U.S. revenue share
   unit: fraction
   period: semiannual
@@ -137,6 +165,9 @@ critical_kpis:
   verified: false
   note: 'Diversification/risk KPI: lower concentration is better.'
 - id: PLTR-KPI-10
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Stock-based compensation / revenue
   unit: fraction
   period: quarterly

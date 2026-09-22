@@ -1,6 +1,8 @@
 # Реестр триггеров: Schneider Electric (SU, Euronext Paris)
 # Источник: финальный блок (ChatGPT, 17.09.2026). Предпосылки проверены 17.09 по H1 2026 release: H1 +14.0%, Q2 +17% (точно +16.5%), Energy Management +18%, дата Q3 29.10.2026 — совпадают.
 
+schema_version: '1.0.1'
+profile: registry_only
 meta:
   ticker: SU
   exchange: Euronext Paris
@@ -9,7 +11,7 @@ meta:
   company: Schneider Electric
   status_in_basket: покупать
   target_weight: "20%"
-  horizon: 2030
+  horizon: '2030'
   strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
   strategy_date: 2026-09-17
   registry_updated: 2026-09-17

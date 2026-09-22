@@ -1,6 +1,8 @@
 # Реестр триггеров: CrowdStrike (CRWD, NASDAQ) — статус «наблюдать», в основной корзине нет
 # Источник: финальный блок «Инвестиции в ИИ-инфраструктуру» (ChatGPT, 17.09.2026).
 
+schema_version: '1.0.1'
+profile: registry_only
 meta:
   ticker: CRWD
   exchange: NASDAQ

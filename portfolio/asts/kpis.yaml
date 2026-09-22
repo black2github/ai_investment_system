@@ -1,4 +1,5 @@
 # KPI ASTS с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.1'
 artifact: ASTS KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: ASTS-KPI-01
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: In-orbit spacecraft
   unit: satellites
   period: event_driven
@@ -29,6 +33,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
   verified: false
 - id: ASTS-KPI-02
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Spacecraft launched within disclosed 50-day window
   unit: satellites
   period: event_driven
@@ -47,6 +54,9 @@ critical_kpis:
     red: <3
   last_date: null
 - id: ASTS-KPI-03
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: BlueBird satellites in production/assembly pipeline
   unit: satellites
   period: quarterly
@@ -61,6 +71,9 @@ critical_kpis:
   verified: false
   formula: BlueBird 17 through 46 inclusive = 46 - 17 + 1 = 30
 - id: ASTS-KPI-04
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Contracted revenue backlog
   unit: USD B
   period: quarterly
@@ -74,6 +87,8 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
   verified: false
 - id: ASTS-KPI-05
+  source_class: regulatory_filing
+  provenance: verified_fact
   name: MNO partnership count lower bound
   unit: MNOs
   period: quarterly
@@ -86,8 +101,12 @@ critical_kpis:
   last_date: null
   source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
   verified: false
-  value_type: lower_bound
+  value_type: actual
+  observation_qualifier: lower_bound
 - id: ASTS-KPI-06
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Quarterly revenue
   unit: USD M
   period: quarterly
@@ -101,6 +120,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
   verified: false
 - id: ASTS-KPI-07
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: SpaceMobile Service quarterly revenue
   unit: USD M
   period: quarterly
@@ -114,6 +136,8 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
   verified: false
 - id: ASTS-KPI-08
+  source_class: issuer_ir_release
+  provenance: verified_fact
   name: Pro forma liquidity
   unit: USD B
   period: event_driven
@@ -126,8 +150,12 @@ critical_kpis:
   last_date: null
   source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
   verified: false
-  value_type: lower_bound
+  value_type: actual
+  observation_qualifier: lower_bound
 - id: ASTS-KPI-09
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Annualized H1 OCF + PP&E cash use
   unit: USD B/year
   period: semiannual
@@ -142,6 +170,8 @@ critical_kpis:
   verified: false
   formula: 2 * (0.145212 operating cash use + 0.859215 PP&E purchases) = 2.008854
 - id: ASTS-KPI-10
+  source_class: issuer_ir_release
+  provenance: verified_fact
   name: Latest financing effective dilution
   unit: fraction
   period: event_driven
@@ -154,13 +184,18 @@ critical_kpis:
   last_date: null
   source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
   verified: false
-  value_type: upper_bound
+  value_type: actual
+  observation_qualifier: upper_bound
 - id: ASTS-KPI-11
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: FCC planned-constellation authorization status
   unit: binary
   period: event_driven
   source: SEC
   thresholds:
+    binary: true
     green: =1
     red: =0
   last_value: 1

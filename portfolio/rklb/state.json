@@ -8,7 +8,9 @@
   "fired": [],
   "events_reported": [],
   "pending_verification": [],
-  "notes": "Папка создана 2026-09-21 по партии моделей компаний; значения KPI ждут сверки (задание facts-verify).",
+  "notes": [
+    "Папка создана 2026-09-21 по партии моделей компаний; значения KPI ждут сверки (задание facts-verify)."
+  ],
   "route": {
     "current": "vector",
     "done_steps": [],
@@ -99,7 +101,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "RKLB-KPI-02",
@@ -110,7 +114,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "RKLB-KPI-03",
@@ -121,7 +127,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "RKLB-KPI-04",
@@ -132,7 +140,9 @@
       "unit": "launches",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "RKLB-KPI-05",
@@ -143,7 +153,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "RKLB-KPI-06",
@@ -154,7 +166,9 @@
       "unit": "USD B",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "RKLB-KPI-07",
@@ -165,7 +179,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "RKLB-KPI-08",
@@ -177,7 +193,9 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm",
       "verified": true,
       "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
-      "value_type": "lower_bound"
+      "value_type": "actual",
+      "observation_qualifier": "lower_bound",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "RKLB-KPI-09",
@@ -188,7 +206,9 @@
       "unit": "ordinal",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "RKLB-KPI-10",
@@ -199,8 +219,11 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     }
   ],
-  "calc_runs": []
+  "calc_runs": [],
+  "schema_version": "1.0.1"
 }

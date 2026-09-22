@@ -166,7 +166,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NET-KPI-02",
@@ -177,7 +179,9 @@
       "unit": "x",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NET-KPI-03",
@@ -188,7 +192,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NET-KPI-04",
@@ -199,7 +205,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NET-KPI-05",
@@ -210,7 +218,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NET-KPI-06",
@@ -221,7 +231,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NET-KPI-07",
@@ -231,7 +243,9 @@
       "unit": "YoY fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm",
       "verified": null,
-      "why": "компания показатель не раскрывает (not_separately_disclosed) — не искать, не выдумывать"
+      "why": "компания показатель не раскрывает (not_separately_disclosed) — не искать, не выдумывать",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NET-KPI-08",
@@ -241,7 +255,9 @@
       "unit": "USD",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
       "verified": null,
-      "why": "компания показатель не раскрывает (not_separately_disclosed) — не искать, не выдумывать"
+      "why": "компания показатель не раскрывает (not_separately_disclosed) — не искать, не выдумывать",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NET-KPI-09",
@@ -251,7 +267,9 @@
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
       "verified": null,
-      "why": "компания показатель не раскрывает (not_separately_disclosed) — не искать, не выдумывать"
+      "why": "компания показатель не раскрывает (not_separately_disclosed) — не искать, не выдумывать",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "NET-KPI-10",
@@ -262,8 +280,11 @@
       "unit": "absolute ratio points",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     }
   ],
-  "calc_runs": []
+  "calc_runs": [],
+  "schema_version": "1.0.1"
 }

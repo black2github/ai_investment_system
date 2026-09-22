@@ -1,4 +1,5 @@
 # Вектор состояний HOOD (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: HOOD State Vector
 as_of: '2026-09-21'
@@ -11,9 +12,18 @@ semantics:
   trigger_not_decision: true
   numeric_thresholds_provenance: model_assumption
 sources:
-  HOOD_Q2_10Q: https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
-  HOOD_Q2_RELEASE: https://investors.robinhood.com/news-releases/news-release-details/robinhood-reports-second-quarter-2026-results
-  HOOD_AUG_OPS: https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data
+  HOOD_Q2_10Q:
+    source_class: regulatory_filing
+    url: https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+    as_of: '2026-09-21'
+  HOOD_Q2_RELEASE:
+    source_class: issuer_ir_release
+    url: https://investors.robinhood.com/news-releases/news-release-details/robinhood-reports-second-quarter-2026-results
+    as_of: '2026-09-21'
+  HOOD_AUG_OPS:
+    source_class: issuer_ir_release
+    url: https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data
+    as_of: '2026-09-21'
 axes:
   Customer_Asset_Scale:
     name: Customer Asset Scale

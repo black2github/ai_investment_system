@@ -1,4 +1,5 @@
 # KPI ETN с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: ETN KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: ETN-KPI-01
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Total organic sales growth
   unit: fraction
   period: quarterly
@@ -29,6 +33,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm
   verified: false
 - id: ETN-KPI-02
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: FY organic-growth guidance midpoint
   unit: fraction
   period: quarterly
@@ -43,6 +50,9 @@ critical_kpis:
   verified: false
   formula: (0.11 + 0.13) / 2 = 0.12
 - id: ETN-KPI-03
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Electrical Americas organic sales growth
   unit: fraction
   period: quarterly
@@ -56,6 +66,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
   verified: false
 - id: ETN-KPI-04
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Electrical Americas TTM organic orders growth
   unit: fraction
   period: quarterly
@@ -69,6 +82,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
   verified: false
 - id: ETN-KPI-05
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Electrical Americas backlog
   unit: USD B
   period: quarterly
@@ -82,6 +98,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
   verified: false
 - id: ETN-KPI-06
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Electrical Americas backlog YoY
   unit: fraction
   period: quarterly
@@ -96,6 +115,9 @@ critical_kpis:
   verified: false
   formula: 15.175 / 11.377 - 1 = 0.3338
 - id: ETN-KPI-07
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Electrical Americas operating margin
   unit: fraction
   period: quarterly
@@ -110,6 +132,9 @@ critical_kpis:
   verified: false
   formula: 1.088 / 3.951 = 0.2754
 - id: ETN-KPI-08
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Electrical Global TTM organic orders growth
   unit: fraction
   period: quarterly
@@ -123,6 +148,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
   verified: false
 - id: ETN-KPI-09
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Total Electrical backlog
   unit: USD B
   period: quarterly
@@ -137,6 +165,9 @@ critical_kpis:
   verified: false
   formula: 15.175 Electrical Americas + 3.602 Electrical Global = 18.777
 - id: ETN-KPI-10
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Total debt
   unit: USD B
   period: quarterly

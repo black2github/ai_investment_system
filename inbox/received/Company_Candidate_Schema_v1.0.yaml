@@ -1,0 +1,1620 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://ai-investment-system.local/schema/company-candidate/1.0
+title: Company Candidate Schema v1.0
+description: Strict LLM output contract for IMA-07 Compile Candidate Model Package.
+type: object
+additionalProperties: false
+required:
+- candidate_schema_version
+- package_type
+- ticker
+- company
+- as_of
+- methodology_refs
+- sources
+- states
+- kpis
+- transitions
+- mpc_inputs
+properties:
+  candidate_schema_version:
+    const: '1.0'
+    x-classification: required
+    x-owner: llm_candidate
+  package_type:
+    const: company_model_candidate
+    x-classification: required
+    x-owner: llm_candidate
+  ticker:
+    type: string
+    pattern: ^[A-Z0-9.\-]{1,12}$
+    x-classification: required
+    x-owner: llm_candidate
+  company:
+    type: string
+    minLength: 1
+    x-classification: required
+    x-owner: llm_candidate
+  exchange:
+    type:
+    - string
+    - 'null'
+    x-classification: optional
+    x-owner: llm_candidate
+  as_of:
+    type: string
+    format: date
+    x-classification: required
+    x-owner: llm_candidate
+  methodology_refs:
+    type: object
+    additionalProperties:
+      type: string
+    required:
+    - provenance_schema
+    - driver_taxonomy
+    - company_candidate_schema
+    x-classification: required
+    x-owner: llm_candidate
+  sources:
+    type: array
+    minItems: 1
+    items:
+      $ref: '#/$defs/source'
+    x-classification: required
+    x-owner: llm_candidate
+  states:
+    type: object
+    additionalProperties: false
+    required:
+    - axes
+    properties:
+      axes:
+        type: object
+        minProperties: 1
+        additionalProperties:
+          $ref: '#/$defs/axis'
+        x-classification: required
+        x-owner: llm_candidate
+    x-classification: required
+    x-owner: llm_candidate
+  kpis:
+    type: object
+    additionalProperties: false
+    required:
+    - items
+    properties:
+      items:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/$defs/kpi'
+    x-classification: required
+    x-owner: llm_candidate
+  transitions:
+    type: object
+    additionalProperties: false
+    required:
+    - items
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/$defs/transition'
+    x-classification: required
+    x-owner: llm_candidate
+  mpc_inputs:
+    $ref: '#/$defs/mpc_inputs'
+    x-classification: required
+    x-owner: llm_candidate
+$defs:
+  provenance:
+    type: string
+    enum: &id002
+    - verified_fact
+    - derived_fact
+    - model_assumption
+    - owner_judgment
+    - normative_rule
+    - external_methodology
+  source_class:
+    type: string
+    enum: &id001
+    - regulatory_filing
+    - issuer_ir_release
+    - issuer_investor_presentation
+    - issuer_transcript
+    - first_tier_media
+    - market_data_provider
+    - other_primary
+  local_id:
+    type: string
+    pattern: ^[a-z][a-z0-9_]{1,63}$
+  source:
+    type: object
+    additionalProperties: false
+    required:
+    - source_ref
+    - source_class
+    - url
+    - as_of
+    properties:
+      source_ref:
+        $ref: '#/$defs/local_id'
+      source_class:
+        $ref: '#/$defs/source_class'
+      url:
+        type: string
+        format: uri
+      as_of:
+        type: string
+        format: date
+      title:
+        type:
+        - string
+        - 'null'
+      document_type:
+        type:
+        - string
+        - 'null'
+      access_note:
+        type:
+        - string
+        - 'null'
+  state:
+    type: object
+    additionalProperties: false
+    required:
+    - name
+    - criteria
+    - criteria_provenance
+    properties:
+      name:
+        type: string
+      criteria:
+        type: string
+        minLength: 1
+      criteria_provenance:
+        const: model_assumption
+  axis:
+    type: object
+    additionalProperties: false
+    required:
+    - name
+    - states
+    - current
+    - current_provenance
+    - current_evidence_refs
+    properties:
+      name:
+        type: string
+      name_ru:
+        type:
+        - string
+        - 'null'
+      states:
+        type: object
+        minProperties: 2
+        additionalProperties:
+          $ref: '#/$defs/state'
+      current:
+        type: string
+      current_provenance:
+        type: string
+        enum:
+        - verified_fact
+        - derived_fact
+        - model_assumption
+      current_evidence_refs:
+        type: array
+        items:
+          $ref: '#/$defs/local_id'
+      prior_snapshot:
+        type:
+        - string
+        - 'null'
+      current_note:
+        type:
+        - string
+        - 'null'
+      note:
+        type:
+        - string
+        - 'null'
+  thresholds:
+    type: object
+    additionalProperties: false
+    required:
+    - green
+    - yellow
+    - red
+    properties:
+      green:
+        type: string
+      yellow:
+        type: string
+      red:
+        type: string
+  value_range:
+    type: object
+    additionalProperties: false
+    required:
+    - min
+    - max
+    properties:
+      min:
+        type: number
+      max:
+        type: number
+  kpi:
+    type: object
+    additionalProperties: false
+    required:
+    - local_id
+    - name
+    - unit
+    - period
+    - source_ref
+    - provenance
+    - last_value
+    - value_type
+    - observation_qualifier
+    - thresholds
+    - thresholds_provenance
+    properties:
+      local_id:
+        $ref: '#/$defs/local_id'
+      name:
+        type: string
+      unit:
+        type: string
+      period:
+        type: string
+      source_ref:
+        $ref: '#/$defs/local_id'
+      provenance:
+        $ref: '#/$defs/provenance'
+      last_value:
+        type:
+        - number
+        - 'null'
+      value_type:
+        type: string
+        enum:
+        - actual
+        - company_guidance
+        - analyst_estimate
+      observation_qualifier:
+        type: string
+        enum:
+        - exact
+        - approximate
+        - lower_bound
+        - upper_bound
+        - range
+        - not_separately_disclosed
+        - pending_verification
+      value_range:
+        $ref: '#/$defs/value_range'
+      formula:
+        type:
+        - string
+        - 'null'
+      target_date:
+        type:
+        - string
+        - 'null'
+        format: date
+      thresholds:
+        $ref: '#/$defs/thresholds'
+      thresholds_provenance:
+        const: model_assumption
+      verification_status:
+        type:
+        - string
+        - 'null'
+        enum:
+        - pending_verification
+        - not_separately_disclosed
+        - null
+      note:
+        type:
+        - string
+        - 'null'
+    allOf:
+    - if:
+        properties:
+          observation_qualifier:
+            const: range
+        required:
+        - observation_qualifier
+      then:
+        required:
+        - value_range
+        properties:
+          last_value:
+            type: 'null'
+    - if:
+        properties:
+          provenance:
+            const: derived_fact
+        required:
+        - provenance
+      then:
+        required:
+        - formula
+    - if:
+        properties:
+          observation_qualifier:
+            enum:
+            - not_separately_disclosed
+            - pending_verification
+        required:
+        - observation_qualifier
+      then:
+        properties:
+          last_value:
+            type: 'null'
+  transition:
+    type: object
+    additionalProperties: false
+    required:
+    - local_id
+    - axis
+    - transition
+    - level
+    - kpi_refs
+    - condition
+    - condition_provenance
+    - period
+    properties:
+      local_id:
+        $ref: '#/$defs/local_id'
+      axis:
+        type: string
+      transition:
+        type: object
+        additionalProperties: false
+        required:
+        - from
+        - to
+        properties:
+          from:
+            type: string
+          to:
+            type: string
+      level:
+        type: string
+        enum:
+        - E1
+        - E2
+        - E3
+      kpi_refs:
+        type: array
+        items:
+          $ref: '#/$defs/local_id'
+      condition:
+        type: string
+      condition_provenance:
+        const: model_assumption
+      period:
+        type:
+        - string
+        - 'null'
+      note:
+        type:
+        - string
+        - 'null'
+  failure_mode:
+    type: object
+    additionalProperties: false
+    required:
+    - local_id
+    - common_cause_id
+    - severity
+    - name
+    properties:
+      local_id:
+        $ref: '#/$defs/local_id'
+      common_cause_id:
+        type: string
+        pattern: ^[A-Z0-9_]+$
+      severity:
+        type: string
+        enum:
+        - low
+        - medium
+        - high
+        - critical
+      name:
+        type: string
+      axis_refs:
+        type: array
+        items:
+          type: string
+      note:
+        type:
+        - string
+        - 'null'
+  mpc_inputs:
+    type: object
+    additionalProperties: false
+    required:
+    - driver_taxonomy_version
+    - driver_exposure_vector
+    - driver_vector_provenance
+    - failure_modes_provenance
+    - failure_modes
+    properties:
+      driver_taxonomy_version:
+        type: string
+      driver_exposure_vector:
+        type: object
+        properties:
+          AI_COMPUTE_DEMAND:
+            type: integer
+            minimum: -2
+            maximum: 2
+          HYPERSCALER_CAPEX:
+            type: integer
+            minimum: -2
+            maximum: 2
+          SEMICONDUCTOR_WFE:
+            type: integer
+            minimum: -2
+            maximum: 2
+          ADVANCED_PACKAGING:
+            type: integer
+            minimum: -2
+            maximum: 2
+          HBM_MEMORY:
+            type: integer
+            minimum: -2
+            maximum: 2
+          EDA_DESIGN_COMPLEXITY:
+            type: integer
+            minimum: -2
+            maximum: 2
+          CLOUD_SOFTWARE_DEMAND:
+            type: integer
+            minimum: -2
+            maximum: 2
+          DATA_CENTER_POWER:
+            type: integer
+            minimum: -2
+            maximum: 2
+          LAUNCH_ECONOMICS:
+            type: integer
+            minimum: -2
+            maximum: 2
+          SATELLITE_CONNECTIVITY:
+            type: integer
+            minimum: -2
+            maximum: 2
+          GOVERNMENT_DEFENSE:
+            type: integer
+            minimum: -2
+            maximum: 2
+          INTEREST_RATES:
+            type: integer
+            minimum: -2
+            maximum: 2
+          CAPITAL_MARKETS:
+            type: integer
+            minimum: -2
+            maximum: 2
+          CHINA_REVENUE:
+            type: integer
+            minimum: -2
+            maximum: 2
+          TAIWAN_SUPPLY:
+            type: integer
+            minimum: -2
+            maximum: 2
+          ACQUISITION_INTEGRATION:
+            type: integer
+            minimum: -2
+            maximum: 2
+          AI_CLOUD_PRICING:
+            type: integer
+            minimum: -2
+            maximum: 2
+          HEALTHCARE_DEMAND:
+            type: integer
+            minimum: -2
+            maximum: 2
+          DRUG_PIPELINE:
+            type: integer
+            minimum: -2
+            maximum: 2
+          REIMBURSEMENT_PRICING:
+            type: integer
+            minimum: -2
+            maximum: 2
+          BIOPHARMA_MANUFACTURING_CAPACITY:
+            type: integer
+            minimum: -2
+            maximum: 2
+          PHARMA_REGULATION:
+            type: integer
+            minimum: -2
+            maximum: 2
+          PATENT_EXCLUSIVITY:
+            type: integer
+            minimum: -2
+            maximum: 2
+          ELECTRIFICATION_GRID:
+            type: integer
+            minimum: -2
+            maximum: 2
+          UTILITY_CAPEX:
+            type: integer
+            minimum: -2
+            maximum: 2
+          INDUSTRIAL_RESHORING:
+            type: integer
+            minimum: -2
+            maximum: 2
+          AEROSPACE_CYCLE:
+            type: integer
+            minimum: -2
+            maximum: 2
+          CONSUMER_CREDIT:
+            type: integer
+            minimum: -2
+            maximum: 2
+          CRYPTO_CYCLE:
+            type: integer
+            minimum: -2
+            maximum: 2
+          FINTECH_REGULATION:
+            type: integer
+            minimum: -2
+            maximum: 2
+          DIGITAL_AD_DEMAND:
+            type: integer
+            minimum: -2
+            maximum: 2
+          SPACE_REGULATION:
+            type: integer
+            minimum: -2
+            maximum: 2
+        required:
+        - AI_COMPUTE_DEMAND
+        - HYPERSCALER_CAPEX
+        - SEMICONDUCTOR_WFE
+        - ADVANCED_PACKAGING
+        - HBM_MEMORY
+        - EDA_DESIGN_COMPLEXITY
+        - CLOUD_SOFTWARE_DEMAND
+        - DATA_CENTER_POWER
+        - LAUNCH_ECONOMICS
+        - SATELLITE_CONNECTIVITY
+        - GOVERNMENT_DEFENSE
+        - INTEREST_RATES
+        - CAPITAL_MARKETS
+        - CHINA_REVENUE
+        - TAIWAN_SUPPLY
+        - ACQUISITION_INTEGRATION
+        - AI_CLOUD_PRICING
+        - HEALTHCARE_DEMAND
+        - DRUG_PIPELINE
+        - REIMBURSEMENT_PRICING
+        - BIOPHARMA_MANUFACTURING_CAPACITY
+        - PHARMA_REGULATION
+        - PATENT_EXCLUSIVITY
+        - ELECTRIFICATION_GRID
+        - UTILITY_CAPEX
+        - INDUSTRIAL_RESHORING
+        - AEROSPACE_CYCLE
+        - CONSUMER_CREDIT
+        - CRYPTO_CYCLE
+        - FINTECH_REGULATION
+        - DIGITAL_AD_DEMAND
+        - SPACE_REGULATION
+        additionalProperties: false
+      driver_vector_provenance:
+        const: model_assumption
+      driver_interpretation:
+        type: object
+        additionalProperties: true
+      failure_modes_provenance:
+        const: model_assumption
+      failure_modes:
+        type: array
+        items:
+          $ref: '#/$defs/failure_mode'
+      cross_portfolio_common_causes:
+        type: object
+        additionalProperties: true
+      taxonomy_gap:
+        type: array
+        items:
+          type: string
+      taxonomy_gap_note:
+        type:
+        - string
+        - 'null'
+x-integrity-rules:
+- id: CAND-REF-001
+  severity: error
+  rule: unique(sources[*].source_ref)
+  message: source_ref must be unique
+- id: CAND-REF-002
+  severity: error
+  rule: 'for each axis.source/evidence ref: ref in sources[*].source_ref'
+  message: Axis evidence refs must resolve
+- id: CAND-REF-003
+  severity: error
+  rule: unique(kpis.items[*].local_id)
+  message: KPI local IDs must be unique
+- id: CAND-REF-004
+  severity: error
+  rule: 'for each KPI: source_ref in sources[*].source_ref'
+  message: KPI source_ref must resolve
+- id: CAND-REF-005
+  severity: error
+  rule: unique(transitions.items[*].local_id)
+  message: Transition local IDs must be unique
+- id: CAND-REF-006
+  severity: error
+  rule: 'for each transition: axis in states.axes'
+  message: Transition axis must exist
+- id: CAND-REF-007
+  severity: error
+  rule: 'for each transition: transition.from and transition.to in states.axes[axis].states'
+  message: Transition states must exist
+- id: CAND-REF-008
+  severity: error
+  rule: 'for each transition.kpi_refs[*]: ref in kpis.items[*].local_id'
+  message: Transition KPI refs must resolve
+- id: CAND-REF-009
+  severity: error
+  rule: 'for each axis: current == pending_verification OR current in axis.states'
+  message: Current state must exist or be pending_verification
+- id: CAND-REF-010
+  severity: error
+  rule: 'for each axis with prior_snapshot != null: prior_snapshot in axis.states'
+  message: prior_snapshot must exist
+- id: CAND-REF-011
+  severity: error
+  rule: all material numeric fields have explicit or enclosing provenance
+  message: Material numbers must be typed by Provenance Schema v1.0
+- id: CAND-REF-012
+  severity: error
+  rule: kpis.items[*].last_value is number or null
+  message: No numeric string/list in last_value; use qualifier/value_range
+- id: CAND-REF-013
+  severity: error
+  rule: kpis.items[*].value_type in {actual,company_guidance,analyst_estimate}
+  message: value_type must distinguish guidance from actual
+- id: CAND-REF-014
+  severity: error
+  rule: keys(mpc_inputs.driver_exposure_vector) == taxonomy(driver_taxonomy_version).driver_ids
+  message: Driver vector must be complete for declared taxonomy
+- id: CAND-REF-015
+  severity: error
+  rule: candidate local IDs do not match canonical ticker-prefixed ID patterns
+  message: LLM candidate must not assign canonical IDs
+- id: CAND-REF-016
+  severity: error
+  rule: 'trigger_not_decision: transitions contain no trade action'
+  message: Candidate transition must not prescribe trade action
+x-full-example:
+  candidate_schema_version: '1.0'
+  package_type: company_model_candidate
+  ticker: NBIS
+  company: Nebius Group N.V.
+  exchange: NASDAQ
+  as_of: '2026-09-21'
+  methodology_refs:
+    provenance_schema: 1.0.0
+    driver_taxonomy: '1.1'
+    company_candidate_schema: '1.0'
+  sources:
+  - source_ref: src_q2_release
+    source_class: issuer_ir_release
+    url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm
+    as_of: '2026-08-12'
+  - source_ref: src_q2_letter
+    source_class: issuer_ir_release
+    url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm
+    as_of: '2026-08-12'
+  - source_ref: src_q2_6k
+    source_class: regulatory_filing
+    url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm
+    as_of: '2026-08-12'
+  states:
+    axes:
+      Demand_Monetization:
+        name: Demand Monetization
+        name_ru: спрос и монетизация AI-облака
+        states:
+          N0:
+            name: optionality
+            criteria: AI cloud quarterly revenue < $0.10B
+            criteria_provenance: model_assumption
+          N1:
+            name: demand_validation
+            criteria: AI cloud quarterly revenue >= $0.10B AND ARR >= $0.50B
+            criteria_provenance: model_assumption
+          N2:
+            name: scale_validation
+            criteria: AI cloud quarterly revenue >= $0.30B AND ARR >= $1.50B
+            criteria_provenance: model_assumption
+          N3:
+            name: contracted_scale
+            criteria: AI cloud quarterly revenue >= $0.50B AND ARR >= $3.0B AND disclosed customer commitments >= $20B
+            criteria_provenance: model_assumption
+          N4:
+            name: durable_scale
+            criteria: AI cloud quarterly revenue >= $1.0B AND ARR >= $5.0B for 2 consecutive quarters
+            criteria_provenance: model_assumption
+        current: N3
+        current_provenance: derived_fact
+        current_evidence_refs:
+        - src_q2_letter
+        - src_q2_6k
+      Unit_Economics:
+        name: Unit Economics
+        name_ru: юнит-экономика AI-облака
+        states:
+          E0:
+            name: negative
+            criteria: AI cloud adjusted EBITDA margin < 0%
+            criteria_provenance: model_assumption
+          E1:
+            name: breakeven
+            criteria: margin >= 0% and < 20%
+            criteria_provenance: model_assumption
+          E2:
+            name: scaled_positive
+            criteria: margin >= 20% and < 35%
+            criteria_provenance: model_assumption
+          E3:
+            name: high_margin
+            criteria: margin >= 35% for at least 1 quarter
+            criteria_provenance: model_assumption
+          E4:
+            name: durable_high_margin
+            criteria: AI cloud margin >= 45% for 2 quarters AND group adjusted EBITDA margin >= 35%
+            criteria_provenance: model_assumption
+        current: E3
+        current_provenance: derived_fact
+        current_evidence_refs:
+        - src_q2_letter
+        - src_q2_6k
+      Capacity_Secured:
+        name: Capacity Secured
+        name_ru: законтрактованная мощность (ГВт)
+        states:
+          C0:
+            name: subscale
+            criteria: contracted power guidance < 1 GW
+            criteria_provenance: model_assumption
+          C1:
+            name: initial_scale
+            criteria: guidance >= 1 GW and < 3 GW
+            criteria_provenance: model_assumption
+          C2:
+            name: large_scale
+            criteria: guidance >= 3 GW and < 5 GW
+            criteria_provenance: model_assumption
+          C3:
+            name: hyperscale_secured
+            criteria: guidance >= 5 GW
+            criteria_provenance: model_assumption
+          C4:
+            name: hyperscale_execution
+            criteria: contracted power >= 6 GW AND >= 1 GW capacity brought online in trailing 12 months
+            criteria_provenance: model_assumption
+        current: pending_verification
+        current_provenance: derived_fact
+        current_evidence_refs:
+        - src_q2_letter
+        prior_snapshot: C3
+        current_note: 5 GW — guidance на конец 2026, не realized contracted power; факт по actual contracted power не раскрыт отдельно.
+      Capital_Intensity:
+        name: Capital Intensity
+        name_ru: капиталоёмкость (capex к выручке)
+        states:
+          K0:
+            name: normalized
+            criteria: quarterly capex/revenue < 1x
+            criteria_provenance: model_assumption
+          K1:
+            name: expansion
+            criteria: capex/revenue >= 1x and < 3x
+            criteria_provenance: model_assumption
+          K2:
+            name: aggressive_expansion
+            criteria: capex/revenue >= 3x and < 6x
+            criteria_provenance: model_assumption
+          K3:
+            name: extreme_but_prefunded
+            criteria: capex/revenue >= 6x AND prepayment coverage >= 40% AND AI cloud adjusted EBITDA > 0
+            criteria_provenance: model_assumption
+          K4:
+            name: overbuild_financing_risk
+            criteria: capex/revenue >= 6x AND (prepayment coverage < 30% OR AI cloud adjusted EBITDA margin < 15%) for 2 quarters
+            criteria_provenance: model_assumption
+        current: K3
+        current_provenance: derived_fact
+        current_evidence_refs:
+        - src_q2_letter
+      Funding_Liquidity:
+        name: Funding Liquidity
+        name_ru: финансирование и ликвидность
+        states:
+          F0:
+            name: internally_funded
+            criteria: no material external financing in trailing 12m AND cash >= 2x latest quarterly capex
+            criteria_provenance: model_assumption
+          F1:
+            name: ample_liquidity
+            criteria: cash >= 2x latest quarterly capex
+            criteria_provenance: model_assumption
+          F2:
+            name: funded_expansion
+            criteria: cash >= 1x latest quarterly capex AND external funding/prepayments actively support buildout
+            criteria_provenance: model_assumption
+          F3:
+            name: refinancing_dependence
+            criteria: cash < 1x latest quarterly capex OR interest expense > 50% of group adjusted EBITDA for 2 quarters
+            criteria_provenance: model_assumption
+          F4:
+            name: liquidity_stress
+            criteria: cash < 0.5x latest quarterly capex AND no committed funding sufficient for next 2 quarters
+            criteria_provenance: model_assumption
+        current: F2
+        current_provenance: derived_fact
+        current_evidence_refs:
+        - src_q2_6k
+        - src_q2_letter
+  kpis:
+    items:
+    - local_id: kpi_01
+      name: AI cloud revenue YoY
+      unit: YoY fraction
+      period: quarterly
+      source_ref: src_q2_letter
+      provenance: verified_fact
+      last_value: 5.14
+      value_type: actual
+      observation_qualifier: exact
+      thresholds:
+        green: '>=1.00'
+        yellow: '>=0.40 and <1.00'
+        red: <0.40
+      thresholds_provenance: model_assumption
+    - local_id: kpi_02
+      name: AI cloud quarterly revenue
+      unit: USD B
+      period: quarterly
+      source_ref: src_q2_6k
+      provenance: verified_fact
+      last_value: 0.5749
+      value_type: actual
+      observation_qualifier: exact
+      thresholds:
+        green: '>=0.50'
+        yellow: '>=0.30 and <0.50'
+        red: <0.30
+      thresholds_provenance: model_assumption
+    - local_id: kpi_03
+      name: AI cloud ARR
+      unit: USD B
+      period: quarterly
+      source_ref: src_q2_letter
+      provenance: verified_fact
+      last_value: 3.0
+      value_type: actual
+      observation_qualifier: exact
+      thresholds:
+        green: '>=3.0'
+        yellow: '>=1.5 and <3.0'
+        red: <1.5
+      thresholds_provenance: model_assumption
+    - local_id: kpi_04
+      name: AI cloud adjusted EBITDA margin
+      unit: fraction
+      period: quarterly
+      source_ref: src_q2_letter
+      provenance: verified_fact
+      last_value: 0.497
+      value_type: actual
+      observation_qualifier: exact
+      thresholds:
+        green: '>=0.35'
+        yellow: '>=0.15 and <0.35'
+        red: <0.15
+      thresholds_provenance: model_assumption
+    - local_id: kpi_05
+      name: Quarterly capex
+      unit: USD B
+      period: quarterly
+      source_ref: src_q2_letter
+      provenance: verified_fact
+      last_value: 5.7
+      value_type: actual
+      observation_qualifier: approximate
+      thresholds:
+        green: <3.0
+        yellow: '>=3.0 and <5.0'
+        red: '>=5.0'
+      thresholds_provenance: model_assumption
+      note: risk KPI; interpret with monetization/funding
+    - local_id: kpi_06
+      name: Customer prepayment coverage of associated capex
+      unit: fraction
+      period: deal_cohort
+      source_ref: src_q2_letter
+      provenance: verified_fact
+      last_value: null
+      value_type: actual
+      observation_qualifier: range
+      value_range:
+        min: 0.5
+        max: 0.6
+      thresholds:
+        green: '>=0.50'
+        yellow: '>=0.30 and <0.50'
+        red: <0.30
+      thresholds_provenance: model_assumption
+    - local_id: kpi_07
+      name: Disclosed customer commitments
+      unit: USD B
+      period: quarterly
+      source_ref: src_q2_letter
+      provenance: verified_fact
+      last_value: 40.0
+      value_type: actual
+      observation_qualifier: lower_bound
+      thresholds:
+        green: '>=30'
+        yellow: '>=15 and <30'
+        red: <15
+      thresholds_provenance: model_assumption
+    - local_id: kpi_08
+      name: Year-end contracted power target
+      unit: GW
+      period: quarterly
+      source_ref: src_q2_letter
+      provenance: verified_fact
+      last_value: 5.0
+      value_type: company_guidance
+      observation_qualifier: exact
+      target_date: '2026-12-31'
+      thresholds:
+        green: '>=5'
+        yellow: '>=3 and <5'
+        red: <3
+      thresholds_provenance: model_assumption
+      note: Guidance, not realized contracted power; supporting evidence only for Capacity_Secured.
+    - local_id: kpi_09
+      name: Cash and cash equivalents
+      unit: USD B
+      period: quarterly
+      source_ref: src_q2_6k
+      provenance: verified_fact
+      last_value: 8.0421
+      value_type: actual
+      observation_qualifier: exact
+      thresholds:
+        green: '>=8'
+        yellow: '>=4 and <8'
+        red: <4
+      thresholds_provenance: model_assumption
+    - local_id: kpi_10
+      name: Group adjusted EBITDA margin
+      unit: fraction
+      period: quarterly
+      source_ref: src_q2_letter
+      provenance: verified_fact
+      last_value: 0.41
+      value_type: actual
+      observation_qualifier: exact
+      thresholds:
+        green: '>=0.35'
+        yellow: '>=0.15 and <0.35'
+        red: <0.15
+      thresholds_provenance: model_assumption
+    - local_id: kpi_11
+      name: Actually secured contracted power as of reporting date
+      unit: GW
+      period: quarterly
+      source_ref: src_q2_letter
+      provenance: verified_fact
+      last_value: null
+      value_type: actual
+      observation_qualifier: pending_verification
+      verification_status: pending_verification
+      thresholds:
+        green: '>=5'
+        yellow: '>=3 and <5'
+        red: <3
+      thresholds_provenance: model_assumption
+      note: Source does not separately quantify actual secured contracted power as of reporting date.
+  transitions:
+    items:
+    - local_id: transition_01
+      axis: Demand_Monetization
+      transition:
+        from: N3
+        to: N4
+      level: E2
+      kpi_refs:
+      - kpi_02
+      - kpi_03
+      condition: AI cloud quarterly revenue >= $1.0B AND ARR >= $5.0B for 2 consecutive quarters
+      condition_provenance: model_assumption
+      period: 2 quarters
+    - local_id: transition_02
+      axis: Demand_Monetization
+      transition:
+        from: N3
+        to: N2
+      level: E2
+      kpi_refs:
+      - kpi_01
+      - kpi_03
+      condition: AI cloud revenue YoY <50% for 2 quarters OR ARR declines sequentially for 2 quarters
+      condition_provenance: model_assumption
+      period: 2 quarters
+    - local_id: transition_03
+      axis: Unit_Economics
+      transition:
+        from: E3
+        to: E4
+      level: E2
+      kpi_refs:
+      - kpi_04
+      - kpi_10
+      condition: AI cloud adjusted EBITDA margin >=45% AND group adjusted EBITDA margin >=35% for 2 quarters
+      condition_provenance: model_assumption
+      period: 2 quarters
+    - local_id: transition_04
+      axis: Unit_Economics
+      transition:
+        from: E3
+        to: E2
+      level: E2
+      kpi_refs:
+      - kpi_04
+      condition: AI cloud adjusted EBITDA margin <30% for 2 quarters
+      condition_provenance: model_assumption
+      period: 2 quarters
+    - local_id: transition_05
+      axis: Capacity_Secured
+      transition:
+        from: C3
+        to: C4
+      level: E2
+      kpi_refs:
+      - kpi_11
+      - kpi_08
+      condition: contracted power >=6 GW AND >=1 GW capacity brought online in trailing 12 months
+      condition_provenance: model_assumption
+      period: rolling 12m
+      note: Actual fact KPI governs state change; guidance is supporting evidence.
+    - local_id: transition_06
+      axis: Capacity_Secured
+      transition:
+        from: C3
+        to: C2
+      level: E2
+      kpi_refs:
+      - kpi_11
+      - kpi_08
+      condition: contracted-power guidance <4 GW OR planned next-12m capacity additions reduced/delayed >=25%
+      condition_provenance: model_assumption
+      period: one verified update
+      note: Actual fact KPI governs state change; guidance is supporting evidence.
+    - local_id: transition_07
+      axis: Capital_Intensity
+      transition:
+        from: K3
+        to: K2
+      level: E2
+      kpi_refs:
+      - kpi_04
+      - kpi_05
+      condition: quarterly capex/revenue <6x AND AI cloud adjusted EBITDA margin >=35% for 2 quarters
+      condition_provenance: model_assumption
+      period: 2 quarters
+    - local_id: transition_08
+      axis: Capital_Intensity
+      transition:
+        from: K3
+        to: K4
+      level: E2
+      kpi_refs:
+      - kpi_04
+      - kpi_05
+      - kpi_06
+      condition: capex/revenue >=8x AND (prepayment coverage <30% OR AI cloud adjusted EBITDA margin <15%) for 2 quarters
+      condition_provenance: model_assumption
+      period: 2 quarters
+    - local_id: transition_09
+      axis: Funding_Liquidity
+      transition:
+        from: F2
+        to: F3
+      level: E2
+      kpi_refs:
+      - kpi_05
+      - kpi_09
+      - kpi_10
+      condition: cash <1x latest quarterly capex OR interest expense >50% of group adjusted EBITDA for 2 quarters
+      condition_provenance: model_assumption
+      period: 2 quarters
+    - local_id: transition_10
+      axis: Funding_Liquidity
+      transition:
+        from: F2
+        to: F1
+      level: E2
+      kpi_refs:
+      - kpi_05
+      - kpi_09
+      condition: cash >=2x latest quarterly capex for 2 quarters
+      condition_provenance: model_assumption
+      period: 2 quarters
+  mpc_inputs:
+    driver_taxonomy_version: '1.1'
+    driver_exposure_vector:
+      AI_COMPUTE_DEMAND: 2
+      HYPERSCALER_CAPEX: 1
+      SEMICONDUCTOR_WFE: 0
+      ADVANCED_PACKAGING: 1
+      HBM_MEMORY: 1
+      EDA_DESIGN_COMPLEXITY: 0
+      CLOUD_SOFTWARE_DEMAND: 2
+      DATA_CENTER_POWER: 2
+      LAUNCH_ECONOMICS: 0
+      SATELLITE_CONNECTIVITY: 0
+      GOVERNMENT_DEFENSE: 0
+      INTEREST_RATES: -1
+      CAPITAL_MARKETS: 2
+      CHINA_REVENUE: 0
+      TAIWAN_SUPPLY: 2
+      ACQUISITION_INTEGRATION: 1
+      AI_CLOUD_PRICING: 2
+      HEALTHCARE_DEMAND: 0
+      DRUG_PIPELINE: 0
+      REIMBURSEMENT_PRICING: 0
+      BIOPHARMA_MANUFACTURING_CAPACITY: 0
+      PHARMA_REGULATION: 0
+      PATENT_EXCLUSIVITY: 0
+      ELECTRIFICATION_GRID: 1
+      UTILITY_CAPEX: 1
+      INDUSTRIAL_RESHORING: 0
+      AEROSPACE_CYCLE: 0
+      CONSUMER_CREDIT: 0
+      CRYPTO_CYCLE: 0
+      FINTECH_REGULATION: 0
+      DIGITAL_AD_DEMAND: 0
+      SPACE_REGULATION: 0
+    driver_vector_provenance: model_assumption
+    failure_modes_provenance: model_assumption
+    failure_modes:
+    - local_id: fm_01
+      common_cause_id: AI_OVERBUILD
+      severity: high
+      name: AI capacity overbuild / pricing compression
+    - local_id: fm_02
+      common_cause_id: DATA_CENTER_POWER_CONSTRAINT
+      severity: high
+      name: Power/site buildout delays
+    - local_id: fm_03
+      common_cause_id: TAIWAN_SUPPLY_DISRUPTION
+      severity: high
+      name: GPU/component supply disruption
+    - local_id: fm_04
+      common_cause_id: CAPITAL_MARKETS_TIGHTENING
+      severity: high
+      name: External financing unavailable/expensive
+    - local_id: fm_05
+      common_cause_id: AI_CLOUD_CUSTOMER_FINANCING_STRESS
+      severity: high
+      name: Customer prepayment/commitment conversion weakens
+    - local_id: fm_06
+      common_cause_id: ACQUISITION_INTEGRATION_FAILURE
+      severity: medium
+      name: Acquisition integration distracts platform execution
+x-field-catalog:
+- path: candidate_schema_version
+  classification: required
+  type: string
+  enum:
+  - '1.0'
+  value_source: llm_candidate
+- path: package_type
+  classification: required
+  type: string
+  enum:
+  - company_model_candidate
+  value_source: llm_candidate
+- path: ticker
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: company
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: exchange
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: as_of
+  classification: required
+  type: date-string
+  enum: null
+  value_source: llm_candidate
+- path: methodology_refs
+  classification: required
+  type: object
+  enum: null
+  value_source: llm_candidate
+- path: sources
+  classification: required
+  type: array
+  enum: null
+  value_source: llm_candidate
+- path: sources[].source_ref
+  classification: required
+  type: local_id
+  enum: null
+  value_source: llm_candidate
+- path: sources[].source_class
+  classification: required
+  type: string
+  enum: *id001
+  value_source: llm_candidate
+- path: sources[].url
+  classification: required
+  type: uri
+  enum: null
+  value_source: llm_candidate
+- path: sources[].as_of
+  classification: required
+  type: date-string
+  enum: null
+  value_source: llm_candidate
+- path: sources[].title
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: sources[].document_type
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: sources[].access_note
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: states.axes
+  classification: required
+  type: object
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.name
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.name_ru
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.states
+  classification: required
+  type: object
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.states.*.name
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.states.*.criteria
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.states.*.criteria_provenance
+  classification: required
+  type: string
+  enum:
+  - model_assumption
+  value_source: llm_candidate
+- path: states.axes.*.current
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.current_provenance
+  classification: required
+  type: string
+  enum:
+  - verified_fact
+  - derived_fact
+  - model_assumption
+  value_source: llm_candidate
+- path: states.axes.*.current_evidence_refs
+  classification: required
+  type: array[local_id]
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.prior_snapshot
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.current_note
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: states.axes.*.note
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items
+  classification: required
+  type: array
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].local_id
+  classification: required
+  type: local_id
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].name
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].unit
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].period
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].source_ref
+  classification: required
+  type: local_id
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].provenance
+  classification: required
+  type: string
+  enum: *id002
+  value_source: llm_candidate
+- path: kpis.items[].last_value
+  classification: required
+  type: number|null
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].value_type
+  classification: required
+  type: string
+  enum:
+  - actual
+  - company_guidance
+  - analyst_estimate
+  value_source: llm_candidate
+- path: kpis.items[].observation_qualifier
+  classification: required
+  type: string
+  enum:
+  - exact
+  - approximate
+  - lower_bound
+  - upper_bound
+  - range
+  - not_separately_disclosed
+  - pending_verification
+  value_source: llm_candidate
+- path: kpis.items[].value_range
+  classification: optional
+  type: object
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].formula
+  classification: optional/required_if_derived
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].target_date
+  classification: optional
+  type: date-string|null
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].thresholds
+  classification: required
+  type: object
+  enum: null
+  value_source: llm_candidate
+- path: kpis.items[].thresholds_provenance
+  classification: required
+  type: string
+  enum:
+  - model_assumption
+  value_source: llm_candidate
+- path: kpis.items[].verification_status
+  classification: optional
+  type: string|null
+  enum:
+  - pending_verification
+  - not_separately_disclosed
+  - null
+  value_source: llm_candidate
+- path: kpis.items[].note
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: transitions.items
+  classification: required
+  type: array
+  enum: null
+  value_source: llm_candidate
+- path: transitions.items[].local_id
+  classification: required
+  type: local_id
+  enum: null
+  value_source: llm_candidate
+- path: transitions.items[].axis
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: transitions.items[].transition.from
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: transitions.items[].transition.to
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: transitions.items[].level
+  classification: required
+  type: string
+  enum:
+  - E1
+  - E2
+  - E3
+  value_source: llm_candidate
+- path: transitions.items[].kpi_refs
+  classification: required
+  type: array[local_id]
+  enum: null
+  value_source: llm_candidate
+- path: transitions.items[].condition
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: transitions.items[].condition_provenance
+  classification: required
+  type: string
+  enum:
+  - model_assumption
+  value_source: llm_candidate
+- path: transitions.items[].period
+  classification: required
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: transitions.items[].note
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.driver_taxonomy_version
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.driver_exposure_vector
+  classification: required
+  type: object
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.driver_exposure_vector.*
+  classification: required_by_taxonomy
+  type: integer
+  enum:
+  - -2
+  - -1
+  - 0
+  - 1
+  - 2
+  value_source: llm_candidate
+- path: mpc_inputs.driver_vector_provenance
+  classification: required
+  type: string
+  enum:
+  - model_assumption
+  value_source: llm_candidate
+- path: mpc_inputs.driver_interpretation
+  classification: optional
+  type: object
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.failure_modes_provenance
+  classification: required
+  type: string
+  enum:
+  - model_assumption
+  value_source: llm_candidate
+- path: mpc_inputs.failure_modes
+  classification: required
+  type: array
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.failure_modes[].local_id
+  classification: required
+  type: local_id
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.failure_modes[].common_cause_id
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.failure_modes[].severity
+  classification: required
+  type: string
+  enum:
+  - low
+  - medium
+  - high
+  - critical
+  value_source: llm_candidate
+- path: mpc_inputs.failure_modes[].name
+  classification: required
+  type: string
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.failure_modes[].axis_refs
+  classification: optional
+  type: array[string]
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.failure_modes[].note
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.cross_portfolio_common_causes
+  classification: optional
+  type: object
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.taxonomy_gap
+  classification: optional
+  type: array[string]
+  enum: null
+  value_source: llm_candidate
+- path: mpc_inputs.taxonomy_gap_note
+  classification: optional
+  type: string|null
+  enum: null
+  value_source: llm_candidate

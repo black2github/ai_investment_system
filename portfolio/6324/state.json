@@ -109,5 +109,10 @@
     "changed_at": "2026-09-17",
     "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
   },
-  "info_log": []
+  "info_log": [],
+  "schema_version": "1.0.1",
+  "state_transitions": [],
+  "kpi_observations": [],
+  "calc_runs": [],
+  "scenario_state": {}
 }

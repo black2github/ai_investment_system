@@ -1,4 +1,5 @@
 # Вектор состояний ASML (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: ASML State Vector
 as_of: '2026-09-21'
@@ -6,8 +7,9 @@ ticker: ASML
 source_artifact: inbox/received/ASML_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
 purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
 semantics:
+  evidence_required: true
   primary_only: true
-  thresholds_provenance: model_assumption
+  numeric_thresholds_provenance: model_assumption
   pending_verification_blocks_transition: true
   trigger_not_decision: true
   accounting_note: 'ASML states that its primary accounting standard for quarterly earnings releases and annual reports is
@@ -17,21 +19,33 @@ semantics:
     '
 sources:
   ASML_IR_Q2_RESULTS:
+    source_class: issuer_ir_release
+    as_of: '2026-09-21'
     url: https://www.asml.com/en/investors/financial-results/q2-2026
     type: ASML IR results package landing page
   ASML_IR_Q2_RELEASE:
+    source_class: issuer_ir_release
+    as_of: '2026-09-21'
     url: https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results
     type: ASML IR press release; US GAAP headline results
   ASML_SEC_Q2_6K:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/form6-kquarterlyfilings.htm
     type: SEC Form 6-K
   ASML_SEC_Q2_USGAAP:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm
     type: SEC 6-K Exhibit 99.3; Summary US GAAP financial statements
   ASML_SEC_Q2_INTERIM:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm
     type: SEC 6-K Exhibit 99.4; Statutory Interim Report under IAS 34 / EU-IFRS
   ASML_SEC_Q2_PRESENTATION:
+    source_class: issuer_investor_presentation
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/presentationinvestorrela.htm
     type: SEC 6-K Exhibit 99.2; investor presentation
 axes:

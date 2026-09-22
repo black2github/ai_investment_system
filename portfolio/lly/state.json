@@ -1,4 +1,5 @@
 {
+  "schema_version": "1.0.1",
   "updated": "2026-09-21T06:06:02Z",
   "price": {
     "last": 1152.93,
@@ -8,7 +9,9 @@
   "fired": [],
   "events_reported": [],
   "pending_verification": [],
-  "notes": "Папка создана 2026-09-21 по партии моделей компаний; KPI сверены по 10-Q и пресс-релизу (задание facts-verify, партия 2).",
+  "notes": [
+    "Папка создана 2026-09-21 по партии моделей компаний; KPI сверены по 10-Q и пресс-релизу (задание facts-verify, партия 2)."
+  ],
   "route": {
     "current": "vector",
     "done_steps": [],
@@ -82,16 +85,16 @@
   },
   "state_transitions": [],
   "kpi_observations": [
-    {"kpi_id": "LLY-KPI-01", "name": "Total revenue YoY", "period_end": "2026-06-30", "value": 0.48, "value_raw": "Total Revenue 22,974 15,558 48%", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm", "verified": true},
-    {"kpi_id": "LLY-KPI-02", "name": "Tirzepatide quarterly revenue", "period_end": "2026-06-30", "value": 14.871, "value_raw": "Mounjaro $9,943 + Zepbound $4,928 (в млн $)", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
-    {"kpi_id": "LLY-KPI-03", "name": "Tirzepatide revenue YoY", "period_end": "2026-06-30", "value": 0.7332, "value_raw": "Mounjaro 91% YoY ($9,943 vs $5,199); Zepbound 46% YoY ($4,928 vs $3,381); формула даёт 0.7332", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
-    {"kpi_id": "LLY-KPI-04", "name": "Tirzepatide share of total revenue", "period_end": "2026-06-30", "value": 0.6473, "value_raw": "(9,943+4,928)/22,974 = 0.6473 (Revenue 22,974 в отчёте)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
-    {"kpi_id": "LLY-KPI-05", "name": "Consolidated realized-price contribution", "period_end": "2026-06-30", "value": -0.13, "value_raw": "driven by a 60% increase in volume, partially offset by ... price -13%", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
-    {"kpi_id": "LLY-KPI-06", "name": "Consolidated volume contribution", "period_end": "2026-06-30", "value": 0.6, "value_raw": "driven by a 60% increase in volume", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
-    {"kpi_id": "LLY-KPI-07", "name": "Gross margin", "period_end": "2026-06-30", "value": 0.858, "value_raw": "Gross margin as a percent of revenue 85.8 %", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
-    {"kpi_id": "LLY-KPI-08", "name": "Simple FCF margin", "period_end": "2026-06-30", "value": 0.2517, "value_raw": "Net Cash Provided by Operating Activities 16,023; Purchases of property and equipment (5,259); Revenue H1 42,773", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
-    {"kpi_id": "LLY-KPI-09", "name": "PP&E capex / revenue", "period_end": "2026-06-30", "value": 0.123, "value_raw": "Purchases of property and equipment (5,259); Revenue H1 42,773", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
-    {"kpi_id": "LLY-KPI-10", "name": "Validated next-generation incretin milestones", "period_end": "2026-06-30", "value": 2, "value_raw": "FDA approved orforglipron for treatment of obesity; Phase 3 trials for retatrutide for obesity met their primary endpoints", "unit": "count", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true}
+    {"kpi_id": "LLY-KPI-01", "name": "Total revenue YoY", "period_end": "2026-06-30", "value": 0.48, "value_raw": "Total Revenue 22,974 15,558 48%", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "LLY-KPI-02", "name": "Tirzepatide quarterly revenue", "period_end": "2026-06-30", "value": 14.871, "value_raw": "Mounjaro $9,943 + Zepbound $4,928 (в млн $)", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "LLY-KPI-03", "name": "Tirzepatide revenue YoY", "period_end": "2026-06-30", "value": 0.7332, "value_raw": "Mounjaro 91% YoY ($9,943 vs $5,199); Zepbound 46% YoY ($4,928 vs $3,381); формула даёт 0.7332", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "LLY-KPI-04", "name": "Tirzepatide share of total revenue", "period_end": "2026-06-30", "value": 0.6473, "value_raw": "(9,943+4,928)/22,974 = 0.6473 (Revenue 22,974 в отчёте)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "LLY-KPI-05", "name": "Consolidated realized-price contribution", "period_end": "2026-06-30", "value": -0.13, "value_raw": "driven by a 60% increase in volume, partially offset by ... price -13%", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "LLY-KPI-06", "name": "Consolidated volume contribution", "period_end": "2026-06-30", "value": 0.6, "value_raw": "driven by a 60% increase in volume", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "LLY-KPI-07", "name": "Gross margin", "period_end": "2026-06-30", "value": 0.858, "value_raw": "Gross margin as a percent of revenue 85.8 %", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "LLY-KPI-08", "name": "Simple FCF margin", "period_end": "2026-06-30", "value": 0.2517, "value_raw": "Net Cash Provided by Operating Activities 16,023; Purchases of property and equipment (5,259); Revenue H1 42,773", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "LLY-KPI-09", "name": "PP&E capex / revenue", "period_end": "2026-06-30", "value": 0.123, "value_raw": "Purchases of property and equipment (5,259); Revenue H1 42,773", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
+    {"kpi_id": "LLY-KPI-10", "name": "Validated next-generation incretin milestones", "period_end": "2026-06-30", "value": 2, "value_raw": "FDA approved orforglipron for treatment of obesity; Phase 3 trials for retatrutide for obesity met their primary endpoints", "unit": "count", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"}
   ],
   "calc_runs": []
 }

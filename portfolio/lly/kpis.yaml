@@ -1,4 +1,5 @@
 # KPI LLY с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: LLY KPI Dashboard
 as_of: '2026-09-21'
@@ -19,6 +20,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: LLY-KPI-01
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Total revenue YoY
   unit: fraction
   period: quarterly
@@ -32,6 +36,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm
   verified: false
 - id: LLY-KPI-02
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Tirzepatide quarterly revenue
   unit: USD B
   period: quarterly
@@ -46,6 +53,9 @@ critical_kpis:
   verified: false
   formula: 9.943 Mounjaro + 4.928 Zepbound = 14.871
 - id: LLY-KPI-03
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Tirzepatide revenue YoY
   unit: fraction
   period: quarterly
@@ -60,6 +70,9 @@ critical_kpis:
   verified: false
   formula: (9.943 + 4.928) / (5.199 + 3.381) - 1 = 0.7332
 - id: LLY-KPI-04
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Tirzepatide share of total revenue
   unit: fraction
   period: quarterly
@@ -75,6 +88,9 @@ critical_kpis:
   formula: (9.943 + 4.928) / 22.974 = 0.6473
   note: 'Risk/concentration KPI: higher is worse despite strong product demand.'
 - id: LLY-KPI-05
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Consolidated realized-price contribution
   unit: fraction
   period: quarterly
@@ -88,6 +104,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
   verified: false
 - id: LLY-KPI-06
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Consolidated volume contribution
   unit: fraction
   period: quarterly
@@ -101,6 +120,9 @@ critical_kpis:
   source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
   verified: false
 - id: LLY-KPI-07
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Gross margin
   unit: fraction
   period: quarterly
@@ -115,6 +137,9 @@ critical_kpis:
   verified: false
   formula: 19.706 / 22.974 = 0.8578; company reports 85.8%
 - id: LLY-KPI-08
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Simple FCF margin
   unit: fraction
   period: semiannual
@@ -129,6 +154,9 @@ critical_kpis:
   verified: false
   formula: (16.023 OCF - 5.259 PP&E capex) / 42.773 revenue = 0.2517
 - id: LLY-KPI-09
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: PP&E capex / revenue
   unit: fraction
   period: semiannual
@@ -144,6 +172,9 @@ critical_kpis:
   formula: 5.259 / 42.773 = 0.1230
   note: Risk KPI; elevated capex may be value-creating if demand and FCF remain strong.
 - id: LLY-KPI-10
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Validated next-generation incretin milestones
   unit: count
   period: event_driven

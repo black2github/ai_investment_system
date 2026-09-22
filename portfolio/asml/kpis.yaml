@@ -1,4 +1,5 @@
 # KPI ASML с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: ASML KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: ASML-KPI-01
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Quarterly total net sales
   unit: EUR B
   period: quarterly
@@ -31,6 +35,9 @@ critical_kpis:
   source_channel: ASML_IR
   sec_mirror: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm
 - id: ASML-KPI-02
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: FY2026 revenue guidance midpoint
   unit: EUR B
   period: quarterly
@@ -48,6 +55,9 @@ critical_kpis:
   source_channel: ASML_IR
   sec_mirror: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/form6-kquarterlyfilings.htm
 - id: ASML-KPI-03
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Gross margin
   unit: fraction
   period: quarterly
@@ -62,6 +72,9 @@ critical_kpis:
   verified: false
   source_channel: SEC_6K_EX99_3_US_GAAP
 - id: ASML-KPI-04
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Operating margin
   unit: fraction
   period: quarterly
@@ -77,6 +90,9 @@ critical_kpis:
   formula: 3.4561 / 9.3265 = 0.3706; company summary reports 37.1%
   source_channel: SEC_6K_EX99_3_US_GAAP
 - id: ASML-KPI-05
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: EUV share of H1 net system sales
   unit: fraction
   period: semiannual
@@ -94,6 +110,9 @@ critical_kpis:
   ir_document: Statutory Interim Report 2026, available from ASML IR Q2 results package
   ir_landing_page: https://www.asml.com/en/investors/financial-results/q2-2026
 - id: ASML-KPI-06
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Installed Base Management sales YoY
   unit: fraction
   period: semiannual
@@ -111,6 +130,9 @@ critical_kpis:
   ir_document: Statutory Interim Report 2026
   ir_landing_page: https://www.asml.com/en/investors/financial-results/q2-2026
 - id: ASML-KPI-07
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Installed Base Management share of total sales
   unit: fraction
   period: semiannual
@@ -128,6 +150,9 @@ critical_kpis:
   ir_document: Statutory Interim Report 2026
   ir_landing_page: https://www.asml.com/en/investors/financial-results/q2-2026
 - id: ASML-KPI-08
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: China share of total net sales
   unit: fraction
   period: semiannual
@@ -146,6 +171,9 @@ critical_kpis:
   ir_document: Statutory Interim Report 2026
   ir_landing_page: https://www.asml.com/en/investors/financial-results/q2-2026
 - id: ASML-KPI-09
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Memory share of H1 net system sales
   unit: fraction
   period: semiannual
@@ -164,6 +192,9 @@ critical_kpis:
   ir_document: Statutory Interim Report 2026
   ir_landing_page: https://www.asml.com/en/investors/financial-results/q2-2026
 - id: ASML-KPI-10
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
   name: Cash + short-term investments
   unit: EUR B
   period: quarterly

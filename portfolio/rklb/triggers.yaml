@@ -2,6 +2,8 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+schema_version: '1.0.1'
+profile: full_model
 meta:
   ticker: RKLB
   company: Rocket Lab Corporation
@@ -12,8 +14,7 @@ meta:
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/RKLB?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 64.57
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
-automations:
-  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+automations: {}
 route:
   steps:
   - id: vector
@@ -25,6 +26,7 @@ rules:
   trigger_not_decision: true
 triggers:
 - id: RKLB-E-01
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Electron_Cadence
@@ -43,6 +45,7 @@ triggers:
   status: planned
   fired: []
 - id: RKLB-E-02
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Electron_Cadence
@@ -61,6 +64,7 @@ triggers:
   status: planned
   fired: []
 - id: RKLB-E-03
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Electron_Cadence
@@ -79,6 +83,7 @@ triggers:
   status: planned
   fired: []
 - id: RKLB-E-04
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Neutron_Development
@@ -97,6 +102,7 @@ triggers:
   status: planned
   fired: []
 - id: RKLB-E-05
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Neutron_Development
@@ -115,6 +121,7 @@ triggers:
   status: planned
   fired: []
 - id: RKLB-E-06
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Space_Systems_Scale
@@ -134,6 +141,7 @@ triggers:
   status: planned
   fired: []
 - id: RKLB-E-07
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Space_Systems_Scale
@@ -153,6 +161,7 @@ triggers:
   status: planned
   fired: []
 - id: RKLB-E-08
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Backlog_Visibility
@@ -171,6 +180,7 @@ triggers:
   status: planned
   fired: []
 - id: RKLB-E-09
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Backlog_Visibility
@@ -190,6 +200,7 @@ triggers:
   status: planned
   fired: []
 - id: RKLB-E-10
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capital_and_Integration
@@ -206,3 +217,4 @@ triggers:
   automation: null
   status: planned
   fired: []
+automations_note: 'дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку'

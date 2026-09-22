@@ -2,6 +2,8 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+schema_version: '1.0.1'
+profile: full_model
 meta:
   ticker: CRWV
   company: CoreWeave, Inc.
@@ -12,8 +14,7 @@ meta:
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/CRWV?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 81.36
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
-automations:
-  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+automations: {}
 route:
   steps:
   - id: vector
@@ -25,6 +26,7 @@ rules:
   trigger_not_decision: true
 triggers:
 - id: CRWV-E-01
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Demand_Contracting
@@ -44,6 +46,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-02
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Demand_Contracting
@@ -63,6 +66,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-03
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Unit_Economics
@@ -82,6 +86,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-04
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Unit_Economics
@@ -101,6 +106,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-05
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capacity_Secured
@@ -120,6 +126,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-06
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capacity_Secured
@@ -139,6 +146,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-07
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capital_Intensity
@@ -157,6 +165,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-08
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capital_Intensity
@@ -176,6 +185,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-09
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capital_Intensity
@@ -196,6 +206,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-10
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Funding_Liquidity
@@ -215,6 +226,7 @@ triggers:
   status: planned
   fired: []
 - id: CRWV-E-11
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Funding_Liquidity
@@ -233,3 +245,4 @@ triggers:
   automation: null
   status: planned
   fired: []
+automations_note: 'дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку'

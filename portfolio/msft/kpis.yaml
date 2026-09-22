@@ -1,4 +1,5 @@
 # KPI MSFT с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: MSFT KPI Dashboard
 as_of: '2026-09-21'
@@ -16,6 +17,9 @@ source_policy:
   rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
 critical_kpis:
 - id: MSFT-KPI-01
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Azure and other cloud services revenue YoY
   unit: fraction
   period: quarterly
@@ -29,6 +33,9 @@ critical_kpis:
   source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
   verified: false
 - id: MSFT-KPI-02
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Microsoft Cloud revenue
   unit: USD B
   period: quarterly
@@ -42,6 +49,9 @@ critical_kpis:
   source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
   verified: false
 - id: MSFT-KPI-03
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Microsoft Cloud revenue YoY
   unit: fraction
   period: quarterly
@@ -55,6 +65,9 @@ critical_kpis:
   source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
   verified: false
 - id: MSFT-KPI-04
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Microsoft Cloud gross margin
   unit: fraction
   period: quarterly
@@ -68,6 +81,9 @@ critical_kpis:
   source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
   verified: false
 - id: MSFT-KPI-05
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Commercial RPO
   unit: USD B
   period: quarterly
@@ -81,6 +97,9 @@ critical_kpis:
   source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
   verified: false
 - id: MSFT-KPI-06
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Commercial RPO YoY ex-OpenAI
   unit: fraction
   period: quarterly
@@ -94,6 +113,9 @@ critical_kpis:
   source_url: https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4
   verified: false
 - id: MSFT-KPI-07
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Cash capex / revenue
   unit: fraction
   period: quarterly
@@ -108,6 +130,9 @@ critical_kpis:
   verified: false
   formula: 35.8 / 90.0 = 0.3978
 - id: MSFT-KPI-08
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Quarterly FCF margin
   unit: fraction
   period: quarterly
@@ -122,6 +147,9 @@ critical_kpis:
   verified: false
   formula: 19.6 / 90.0 = 0.2178
 - id: MSFT-KPI-09
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: M365 Commercial cloud revenue YoY
   unit: fraction
   period: quarterly
@@ -135,6 +163,9 @@ critical_kpis:
   source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
   verified: false
 - id: MSFT-KPI-10
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
   name: Operating margin
   unit: fraction
   period: quarterly

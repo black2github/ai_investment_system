@@ -2,6 +2,8 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/NVDA_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+schema_version: '1.0.1'
+profile: full_model
 meta:
   ticker: NVDA
   company: NVIDIA Corporation
@@ -43,6 +45,7 @@ rules:
   trigger_not_decision: true
 triggers:
 - id: NVDA-E-01
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: AI_Demand
@@ -61,6 +64,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-02
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: AI_Demand
@@ -79,6 +83,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-03
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Gross_Margin
@@ -97,6 +102,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-04
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Gross_Margin
@@ -115,6 +121,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-05
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Customer_Breadth
@@ -133,6 +140,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-06
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Customer_Breadth
@@ -152,6 +160,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-07
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Supply_Commitment
@@ -170,6 +179,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-08
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Supply_Commitment
@@ -188,6 +198,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-09
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Supply_Commitment
@@ -207,6 +218,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-10
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: China_Access
@@ -225,6 +237,7 @@ triggers:
   status: planned
   fired: []
 - id: NVDA-E-11
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: China_Access

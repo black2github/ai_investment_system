@@ -8,7 +8,9 @@
   "fired": [],
   "events_reported": [],
   "pending_verification": [],
-  "notes": "Папка создана 2026-09-21 по партии моделей компаний; значения KPI сверены заданием batch04-facts-verify 2026-09-21.",
+  "notes": [
+    "Папка создана 2026-09-21 по партии моделей компаний; значения KPI сверены заданием batch04-facts-verify 2026-09-21."
+  ],
   "route": {
     "current": "vector",
     "done_steps": [],
@@ -104,7 +106,9 @@
       "value_raw": "BlueBird 8-13 marks six spacecraft launched within 50 days, increasing network to 13 in-orbit spacecraft",
       "unit": "satellites",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-02",
@@ -116,7 +120,9 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
       "verified": true,
       "note": "источник называет период «50 days», не «90 days»; число спутников совпадает",
-      "observation_window_days": 50
+      "observation_window_days": 50,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-03",
@@ -126,7 +132,9 @@
       "value_raw": "BlueBird 17 through BlueBird 46 in various stages of production and assembly",
       "unit": "satellites",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-04",
@@ -136,7 +144,9 @@
       "value_raw": "Revenue backlog increased to approximately $1.30 billion in aggregate contracted revenue with commercial partners and contract awards with the United States Government",
       "unit": "USD B",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-05",
@@ -146,7 +156,9 @@
       "value_raw": "We currently have partnerships with over 60 MNOs with over 3 billion subscribers",
       "unit": "MNOs",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-06",
@@ -156,7 +168,9 @@
       "value_raw": "Second quarter revenue of $31.5 million driven by gateway deliveries and U.S. Government milestones met",
       "unit": "USD M",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-07",
@@ -166,7 +180,9 @@
       "value_raw": "To date, the Company has not recognized any revenues from the SpaceMobile Service",
       "unit": "USD M",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-08",
@@ -176,7 +192,9 @@
       "value_raw": "Over $3.7 billion in pro forma cash, cash equivalents, restricted cash as of June 30, 2026",
       "unit": "USD B",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-09",
@@ -186,7 +204,9 @@
       "value_raw": "Cash used in operating activities was $145.2 million for the six months ended June 30, 2026 (145,212 thousand); Purchase of property and equipment (859,215 thousand)",
       "unit": "USD B/year",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-10",
@@ -196,7 +216,9 @@
       "value_raw": "raised $1.150 billion of gross proceeds from a new 1.625% convertible senior notes offering, with an effective conversion price of $149.20 per share and effective dilution of less than 2%",
       "unit": "fraction",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "ASTS-KPI-11",
@@ -206,8 +228,11 @@
       "value_raw": "We have received FCC authorization to deploy our 248 satellite network including operating in the low-band International Mobile Telecommunications terrestrial frequencies domestically and internationally, as well as Q/V band feeder links in the V band.",
       "unit": "binary",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm",
-      "verified": true
+      "verified": true,
+      "value_type": "actual",
+      "provenance": "verified_fact"
     }
   ],
-  "calc_runs": []
+  "calc_runs": [],
+  "schema_version": "1.0.1"
 }

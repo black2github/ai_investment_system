@@ -8,7 +8,9 @@
   "fired": [],
   "events_reported": [],
   "pending_verification": [],
-  "notes": "Папка создана 2026-09-21 по партии моделей компаний; значения KPI ждут сверки (задание facts-verify).",
+  "notes": [
+    "Папка создана 2026-09-21 по партии моделей компаний; значения KPI ждут сверки (задание facts-verify)."
+  ],
   "route": {
     "current": "vector",
     "done_steps": [],
@@ -92,7 +94,9 @@
       "unit": "fraction",
       "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "MSFT-KPI-02",
@@ -103,7 +107,9 @@
       "unit": "USD B",
       "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "MSFT-KPI-03",
@@ -114,7 +120,9 @@
       "unit": "fraction",
       "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "MSFT-KPI-04",
@@ -125,7 +133,9 @@
       "unit": "fraction",
       "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "MSFT-KPI-05",
@@ -136,7 +146,9 @@
       "unit": "USD B",
       "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "MSFT-KPI-06",
@@ -147,7 +159,9 @@
       "unit": "fraction",
       "source_url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "MSFT-KPI-07",
@@ -158,7 +172,9 @@
       "unit": "fraction",
       "source_url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "MSFT-KPI-08",
@@ -169,7 +185,9 @@
       "unit": "fraction",
       "source_url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "MSFT-KPI-09",
@@ -180,7 +198,9 @@
       "unit": "fraction",
       "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     },
     {
       "kpi_id": "MSFT-KPI-10",
@@ -191,8 +211,11 @@
       "unit": "fraction",
       "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast",
       "verified": true,
-      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "actual",
+      "provenance": "verified_fact"
     }
   ],
-  "calc_runs": []
+  "calc_runs": [],
+  "schema_version": "1.0.1"
 }

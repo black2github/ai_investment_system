@@ -2,6 +2,8 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/NBIS_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+schema_version: '1.0.1'
+profile: full_model
 meta:
   ticker: NBIS
   company: Nebius Group N.V.
@@ -42,6 +44,7 @@ rules:
   trigger_not_decision: true
 triggers:
 - id: NBIS-E-01
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Demand_Monetization
@@ -61,6 +64,7 @@ triggers:
   status: planned
   fired: []
 - id: NBIS-E-02
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Demand_Monetization
@@ -80,6 +84,7 @@ triggers:
   status: planned
   fired: []
 - id: NBIS-E-03
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Unit_Economics
@@ -99,6 +104,7 @@ triggers:
   status: planned
   fired: []
 - id: NBIS-E-04
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Unit_Economics
@@ -117,6 +123,7 @@ triggers:
   status: planned
   fired: []
 - id: NBIS-E-05
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capacity_Secured
@@ -137,6 +144,7 @@ triggers:
   fired: []
   note: Переходы оси — только по NBIS-KPI-11 (факт); KPI-08 (guidance) — поддерживающее свидетельство (поправка LLM 21.09)
 - id: NBIS-E-06
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capacity_Secured
@@ -157,6 +165,7 @@ triggers:
   fired: []
   note: Переходы оси — только по NBIS-KPI-11 (факт); KPI-08 (guidance) — поддерживающее свидетельство (поправка LLM 21.09)
 - id: NBIS-E-07
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capital_Intensity
@@ -176,6 +185,7 @@ triggers:
   status: planned
   fired: []
 - id: NBIS-E-08
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Capital_Intensity
@@ -196,6 +206,7 @@ triggers:
   status: planned
   fired: []
 - id: NBIS-E-09
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Funding_Liquidity
@@ -216,6 +227,7 @@ triggers:
   status: planned
   fired: []
 - id: NBIS-E-10
+  condition_provenance: model_assumption
   class: event
   step: vector
   axis: Funding_Liquidity

@@ -1,4 +1,5 @@
 # Вектор состояний ETN (оси и состояния). Переходы — triggers.yaml (ETN-E-04..ETN-E-10 + привязка legacy ETN-E-*/X-* к осям), текущий вектор — state.json.
+schema_version: '1.0.1'
 version: '1.0'
 artifact: ETN State Vector
 as_of: '2026-09-21'
@@ -7,8 +8,9 @@ source_artifact: inbox/received/ETN_company_state_v1.0.yaml (другая LLM, 2
 purpose: 'Оси и состояния компании поверх реестра владельца от 17.09: legacy-триггеры сохранены и привязаны к осям (поле axis),
   переходы состояний — ETN-E-04..ETN-E-10.'
 semantics:
+  evidence_required: true
   primary_only: true
-  thresholds_provenance: model_assumption
+  numeric_thresholds_provenance: model_assumption
   pending_verification_blocks_transition: true
   trigger_not_decision: true
   existing_trigger_policy: 'Existing owner ETN-E-* and ETN-X-* triggers are not replaced or renumbered. Bind them to the axes/KPIs
@@ -17,12 +19,18 @@ semantics:
     '
 sources:
   ETN_Q2_2026_10Q:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
     type: SEC 10-Q
   ETN_Q2_2026_RELEASE:
+    source_class: regulatory_filing
+    as_of: '2026-09-21'
     url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm
     type: SEC earnings-release exhibit
   ETN_Q2_2026_IR:
+    source_class: issuer_ir_release
+    as_of: '2026-09-21'
     url: https://www.eaton.com/de/en-gb/company/news-insights/news-releases/2026/eaton-reports-record-second-quarter-2026-results.html
     type: Eaton IR earnings release
 axes:

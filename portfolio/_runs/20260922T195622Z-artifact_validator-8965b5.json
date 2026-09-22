@@ -1,0 +1,648 @@
+{
+  "run_id": "20260922T195622Z-artifact_validator-8965b5",
+  "model": "artifact_validator",
+  "version": "1.0.0",
+  "seed": 0,
+  "inputs": {
+    "folders": "all"
+  },
+  "outputs": {
+    "model_version": "1.0.0",
+    "schema_version": "1.0.1",
+    "mode": "workspace",
+    "workspace": "/data/workspace-invest",
+    "folders": {
+      "6324": {
+        "profile": "registry_only",
+        "files": {
+          "triggers.yaml": {
+            "schema_errors": [
+              {
+                "path": "meta",
+                "message": "Additional properties are not allowed ('lot', 'target_weight' were unexpected)"
+              },
+              {
+                "path": "triggers/0/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/1/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/10",
+                "message": "Additional properties are not allowed ('priority' was unexpected)"
+              },
+              {
+                "path": "triggers/10/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/2/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/3/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/4/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/5/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/6/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/7/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/8/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/9",
+                "message": "Additional properties are not allowed ('priority' was unexpected)"
+              },
+              {
+                "path": "triggers/9/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              }
+            ]
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 14,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": false
+      },
+      "6506": {
+        "profile": "registry_only",
+        "files": {
+          "triggers.yaml": {
+            "schema_errors": [
+              {
+                "path": "meta",
+                "message": "Additional properties are not allowed ('lot', 'target_weight' were unexpected)"
+              },
+              {
+                "path": "triggers/0/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/1/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/2/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/3/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/4/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/5/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/7/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              }
+            ]
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 8,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": false
+      },
+      "asml": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "asts": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "crwd": {
+        "profile": "registry_only",
+        "files": {
+          "triggers.yaml": {
+            "schema_errors": [
+              {
+                "path": "meta",
+                "message": "Additional properties are not allowed ('target_weight' was unexpected)"
+              }
+            ]
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 1,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": false
+      },
+      "crwv": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "etn": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": [
+              {
+                "path": "meta",
+                "message": "Additional properties are not allowed ('target_weight' was unexpected)"
+              },
+              {
+                "path": "triggers/0/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/1/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/2/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/4/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/5/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              }
+            ]
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 6,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": false
+      },
+      "hood": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "lly": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "meta": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "msft": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "nbis": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "net": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": [
+              {
+                "path": "meta",
+                "message": "Additional properties are not allowed ('target_weight' was unexpected)"
+              },
+              {
+                "path": "triggers/0/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/1/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/2/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/4/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/5/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/6/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              }
+            ]
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 7,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": false
+      },
+      "nvda": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "pltr": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "rklb": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      },
+      "su": {
+        "profile": "registry_only",
+        "files": {
+          "triggers.yaml": {
+            "schema_errors": [
+              {
+                "path": "meta",
+                "message": "Additional properties are not allowed ('target_weight' was unexpected)"
+              },
+              {
+                "path": "triggers/0/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/1/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/2/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/3/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              },
+              {
+                "path": "triggers/4/status",
+                "message": "'paused' is not one of ['active', 'planned', 'due', 'done', 'dropped']"
+              }
+            ]
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 6,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": false
+      }
+    },
+    "summary": {
+      "folders": 17,
+      "pass": 11,
+      "fail": 6,
+      "failed": [
+        "6324",
+        "6506",
+        "crwd",
+        "etn",
+        "net",
+        "su"
+      ]
+    },
+    "rules": {
+      "implemented": [
+        "ART-REF-001",
+        "ART-REF-002",
+        "ART-REF-003",
+        "ART-REF-004",
+        "ART-REF-005",
+        "ART-REF-007",
+        "ART-REF-008",
+        "ART-REF-009",
+        "ART-REF-010",
+        "ART-REF-011",
+        "ART-REF-012",
+        "ART-REF-014",
+        "ART-REF-015",
+        "ART-REF-016",
+        "ART-REF-017",
+        "ART-REF-018",
+        "ART-REF-019",
+        "ART-REF-020",
+        "ART-REF-021",
+        "ART-REF-022",
+        "ART-REF-023",
+        "ART-REF-024",
+        "CAND-REF-001",
+        "CAND-REF-002",
+        "CAND-REF-003",
+        "CAND-REF-004",
+        "CAND-REF-005",
+        "CAND-REF-006",
+        "CAND-REF-007",
+        "CAND-REF-008",
+        "CAND-REF-009",
+        "CAND-REF-010",
+        "CAND-REF-012",
+        "CAND-REF-013",
+        "CAND-REF-014",
+        "CAND-REF-015",
+        "CAND-REF-016",
+        "CAND-REF-017"
+      ],
+      "partial_or_not_implemented": {
+        "ART-REF-005": "класс источника проверяется по enum схемы; иерархия/допустимость по типу факта — Source Policy v1.0 (партия 2)",
+        "ART-REF-006": "provenance проверяется у KPI/наблюдений/вектора драйверов (обязательные поля схемы); «каждое материальное число» в свободных полях не трассируется",
+        "ART-REF-013": "авторитет присвоения ID — свойство интегратора (процесс), статически не проверяется; проверяется только уникальность и шаблон <TK>-...",
+        "ART-REF-023": "качественные оси: проверяется наличие source/evidence при evidence_type=qualitative_primary_source; декларация бинарной деривации — semantic review (IMA-08)",
+        "CAND-REF-011": "как ART-REF-006"
+      }
+    },
+    "decision": "none"
+  },
+  "elapsed_ms": 1568.1,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

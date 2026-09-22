@@ -268,7 +268,17 @@ Decision Request (сигнал к действию для перехода) — 
 7. **Итог прогона:** `PASS` (все KPI подтверждены или корректно `not_disclosed`), `PASS_WITH_DECLARED_PENDING`
    (нерешённые KPI уже записаны как null + pending_verification), `PATCH_REQUIRED`, `BLOCKED_TECHNICAL`,
    `BLOCKED_SOURCE_CONFLICT` (два разрешённых источника расходятся — не выбирать удобный, спросить владельца).
-8. **Область v1.0 — только KPI.** Подтверждение текущих состояний осей (`scenario_state[axis].verified`) и
+8. **Русские названия статусов в сообщениях владельцу (замечание владельца 22.09).** В Telegram статус пишется
+   по-русски, оригинал протокола — в скобках, например `подтверждено (verified_match)`. Словарь:
+   verified_match — «подтверждено»; verified_match_with_normalization — «подтверждено с пересчётом единиц»;
+   mismatch_value — «расхождение значения»; mismatch_period — «расхождение периода»; mismatch_semantics —
+   «расхождение смысла (прогноз ≠ факт)»; formula_mismatch — «формула не сходится»; source_not_allowed —
+   «источник не допускается»; source_unavailable_technical — «источник недоступен технически»; source_conflict —
+   «источники противоречат»; not_disclosed — «компания не раскрывает»; not_found — «в источнике не найдено».
+   Итоги прогона: PASS — «пройдено»; PASS_WITH_DECLARED_PENDING — «пройдено, есть заявленные ожидания»;
+   PATCH_REQUIRED — «нужна правка»; BLOCKED_TECHNICAL — «заблокировано технически»; BLOCKED_SOURCE_CONFLICT —
+   «заблокировано: источники противоречат». В файлах отчёта и state.json — только оригинальные коды.
+9. **Область v1.0 — только KPI.** Подтверждение текущих состояний осей (`scenario_state[axis].verified`) и
    событий E-/X-триггеров пока ведётся по прежним правилам (раздел «Вектор состояний»); протокол v1.1 добавит
    `axis_items[]` и `event_items[]` в тот же отчёт после первого живого прогона по NBIS.
 

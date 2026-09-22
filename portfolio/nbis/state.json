@@ -356,7 +356,7 @@
       "name": "Actually secured contracted power as of reporting date",
       "period_end": "2026-06-30",
       "value": null,
-      "value_type": null,
+      "value_type": "actual",
       "observation_qualifier": "pending_verification",
       "unit": "GW",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
@@ -379,5 +379,5 @@
     "exception": "Capacity_Secured pending_verification (нераскрытие факта)",
     "provenance": "owner_judgment"
   },
-  "schema_version": "1.0.3"
+  "schema_version": "1.0.4"
 }

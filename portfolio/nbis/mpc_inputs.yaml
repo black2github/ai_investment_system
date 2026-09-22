@@ -1,5 +1,5 @@
 # Входы MPC для NBIS: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
-schema_version: '1.0.3'
+schema_version: '1.0.4'
 version: '1.0'
 ticker: NBIS
 artifact: mpc_inputs

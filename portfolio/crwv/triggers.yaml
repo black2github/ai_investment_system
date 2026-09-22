@@ -2,7 +2,7 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
-schema_version: '1.0.3'
+schema_version: '1.0.4'
 profile: full_model
 meta:
   ticker: CRWV

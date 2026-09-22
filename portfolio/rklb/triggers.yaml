@@ -2,7 +2,7 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
-schema_version: '1.0.3'
+schema_version: '1.0.4'
 profile: full_model
 meta:
   ticker: RKLB

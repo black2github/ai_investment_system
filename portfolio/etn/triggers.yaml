@@ -3,7 +3,7 @@
 # (ChatGPT, 17.09.2026), разделы B–D. Классы/статусы — как в portfolio/spacex/triggers.yaml.
 # Цифры-предпосылки проверены 17.09 по пресс-релизу Q2 2026 Eaton: organic +14%, EA orders +41%, backlog +43%, guidance 11–13% — совпадают.
 
-schema_version: '1.0.3'
+schema_version: '1.0.4'
 profile: full_model
 meta:
   ticker: ETN

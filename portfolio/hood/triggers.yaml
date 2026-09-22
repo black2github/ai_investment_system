@@ -2,7 +2,7 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
-schema_version: '1.0.3'
+schema_version: '1.0.4'
 profile: full_model
 meta:
   ticker: HOOD

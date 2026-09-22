@@ -1,4 +1,4 @@
-schema_package_version: 1.0.3
+schema_package_version: 1.0.4
 artifact: Company Artifact Schema
 json_schema_dialect: https://json-schema.org/draft/2020-12/schema
 as_of: '2026-09-22'
@@ -23,7 +23,7 @@ files:
     - axes
     properties:
       schema_version:
-        const: 1.0.3
+        const: 1.0.4
       version:
         type: string
       artifact:
@@ -127,6 +127,12 @@ files:
                 type:
                 - string
                 - 'null'
+              recorded_at:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                description: Timestamp when this source link/record was recorded in the workspace registry. Distinct from as_of, which is document publication/filing date.
           - type: string
             format: uri
             deprecated: true
@@ -225,7 +231,7 @@ files:
     - critical_kpis
     properties:
       schema_version:
-        const: 1.0.3
+        const: 1.0.4
       version:
         type: string
       artifact:
@@ -516,7 +522,7 @@ files:
     - triggers
     properties:
       schema_version:
-        const: 1.0.3
+        const: 1.0.4
       meta:
         type: object
         additionalProperties: false
@@ -591,8 +597,7 @@ files:
             type:
             - string
             - 'null'
-            description: Owner strategy target-weight expression preserved verbatim, e.g. '5%' or '0% (при подтверждении — до 5% + добавления)'. Not a normalized optimizer
-              target.
+            description: Owner strategy target-weight expression preserved verbatim, e.g. '5%' or '0% (при подтверждении — до 5% + добавления)'. Not a normalized optimizer target.
           lot:
             type:
             - integer
@@ -847,7 +852,7 @@ files:
     - driver_taxonomy_version
     properties:
       schema_version:
-        const: 1.0.3
+        const: 1.0.4
       version:
         type: string
       ticker:
@@ -1007,7 +1012,7 @@ files:
     - calc_runs
     properties:
       schema_version:
-        const: 1.0.3
+        const: 1.0.4
       updated:
         type: string
         format: date-time
@@ -1054,10 +1059,26 @@ files:
             - 'null'
       fired:
         type: array
-        items: {}
+        items:
+          type: object
+          additionalProperties: true
+          properties:
+            verification_run_id:
+              type:
+              - string
+              - 'null'
+              description: Dozor v1.1+ verification report run_id for the event fact underlying this runtime record.
       events_reported:
         type: array
-        items: {}
+        items:
+          type: object
+          additionalProperties: true
+          properties:
+            verification_run_id:
+              type:
+              - string
+              - 'null'
+              description: Dozor v1.1+ verification report run_id for the event fact underlying this runtime record.
       pending_verification:
         type: array
         items: {}
@@ -1154,6 +1175,11 @@ files:
               - mixed
               - derived_binary
               - null
+            verification_run_id:
+              type:
+              - string
+              - 'null'
+              description: Dozor v1.1+ run that protocol-verified the current axis state. Legacy verified flags without run_id are not protocol-verified.
       state_transitions:
         type: array
         items:
@@ -1393,14 +1419,13 @@ integrity_rules:
   message: Driver vector must match declared taxonomy.
 - id: ART-REF-015
   severity: error
-  rule: 'if triggers.rules exists: triggers.rules.trigger_not_decision == true; for triggers with status in {active, planned, due}, action text must not encode an executable
-    trade instruction. For status in {paused, dropped, done}, action-text trade-language validation is skipped because the trigger is non-executing/non-notifying; trigger_not_decision
-    remains true globally.'
+  rule: 'if triggers.rules exists: triggers.rules.trigger_not_decision == true; for triggers with status in {active, planned, due}, action text must not encode an executable trade instruction.
+    For status in {paused, dropped, done}, action-text trade-language validation is skipped because the trigger is non-executing/non-notifying; trigger_not_decision remains true globally.'
   message: Active/planned/due triggers must remain monitoring/Decision-Request semantics. Paused/dropped/done triggers are exempt from action-text validation but cannot execute.
 - id: ART-REF-016
   severity: error
-  rule: all present canonical company files schema_version == 1.0.3
-  message: All canonical files in schema profile must declare schema version 1.0.3.
+  rule: all present canonical company files schema_version == 1.0.4
+  message: All canonical files in schema profile must declare schema version 1.0.4.
 - id: ART-REF-017
   severity: error
   rule: ticker identity agrees across states.yaml, kpis.yaml, triggers.yaml.meta, mpc_inputs.yaml
@@ -1436,13 +1461,25 @@ integrity_rules:
   message: Registry-only trigger files are valid without a company model.
 - id: ART-REF-025
   severity: error
-  rule: if state.json.verification != null then state.json.verification.run_id identifies an immutable Dozor report at portfolio/<ticker>/_verify/<run_id>.json and overall_status
-    equals that report summary.overall_status
+  rule: if state.json.verification != null then state.json.verification.run_id identifies an immutable Dozor report at portfolio/<ticker>/_verify/<run_id>.json and overall_status equals
+    that report summary.overall_status
   message: state.json verification summary must match its immutable Dozor report.
 - id: ART-REF-026
   severity: error
   rule: if state.json.kpi_observations[*].verification_run_id != null then the referenced run_id must exist and contain an item for the same kpi_id
   message: KPI runtime verification link must resolve to a report that verified the same KPI.
+- id: ART-REF-027
+  severity: warning
+  rule: scenario_state.*.verified == true AND verification_run_id is absent is legacy_unlinked and MUST NOT be treated as Dozor-protocol-verified
+  message: Legacy axis verified flag without run_id is informational only until first v1.1 axis verification.
+- id: ART-REF-028
+  severity: error
+  rule: if scenario_state.*.verification_run_id != null then referenced immutable Dozor report contains axis_items entry for same axis_id
+  message: Axis runtime verification link must resolve to same-axis item in Dozor report.
+- id: ART-REF-029
+  severity: error
+  rule: if events_reported[*].verification_run_id or fired[*].verification_run_id != null then referenced Dozor report contains event_items entry for the same trigger_id/event fact
+  message: Runtime event verification link must resolve to corresponding Dozor event item.
 field_catalog:
 - file: kpis.yaml
   path: artifact
@@ -2159,12 +2196,28 @@ field_catalog:
   type: array
   enum: null
 - file: state.json
+  path: events_reported[].verification_run_id
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Link from reported event runtime record to immutable Dozor report.
+  type: string|null
+  enum: null
+- file: state.json
   path: fired
   classification: required
   value_source: dozor_runtime
   mutation_authority: dozor_runtime
   note: null
   type: array
+  enum: null
+- file: state.json
+  path: fired[].verification_run_id
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Link only; G8 does not itself create/execute a fired trigger.
+  type: string|null
   enum: null
 - file: state.json
   path: info_log
@@ -2571,6 +2624,14 @@ field_catalog:
   type: string
   enum: null
 - file: state.json
+  path: scenario_state.*.verification_run_id
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Required to treat scenario_state.*.verified as protocol-linked verification under Dozor v1.1+.
+  type: string|null
+  enum: null
+- file: state.json
   path: scenario_state.*.verified
   classification: optional
   value_source: dozor_runtime
@@ -2947,6 +3008,14 @@ field_catalog:
   mutation_authority: integrator
   note: null
   type: string|null
+  enum: null
+- file: states.yaml
+  path: sources.*.recorded_at
+  classification: optional
+  value_source: integrator
+  mutation_authority: integrator
+  note: Workspace source-record timestamp; distinct from source document as_of date.
+  type: date-time-string|null
   enum: null
 - file: states.yaml
   path: sources.*.source_class
@@ -3513,9 +3582,10 @@ legacy_reference_coverage:
     models_in_patch_report: 13
     spcx_included: false
     report_ref: ima-party1.validation-report.md
-title: Company Artifact Schema Package v1.0.3
-supersedes: Company Artifact Schema v1.0.2
-patch_scope: 'Minimal additive patch only: trigger status ''paused''; runtime linkage from state.json to immutable Dozor verification reports. Candidate Schema remains v1.0.1.'
+title: Company Artifact Schema Package v1.0.4
+supersedes: Company Artifact Schema v1.0.3
+patch_scope: 'Minimal companion patch for Dozor Verification Protocol v1.1: source recorded_at and verification_run_id links for scenario_state, events_reported and fired. Candidate
+  Schema remains v1.0.1.'
 known_migrations_v1_0_to_v1_0_1:
 - id: MIG-101-SCHEMA-VERSION
   action: set_schema_version
@@ -3586,11 +3656,32 @@ known_migrations_v1_0_2_to_v1_0_3:
 - id: MIG-115-PAUSED-STATUS
   action: preserve_existing_enum_value
   scope: triggers.yaml.triggers[].status
-  rule: Existing status=paused is retained verbatim; no transition, ID, condition, note or previous-status text is changed. Paused trigger remains monitored/logged but does
-    not emit action notification or execute action.
+  rule: Existing status=paused is retained verbatim; no transition, ID, condition, note or previous-status text is changed. Paused trigger remains monitored/logged but does not emit
+    action notification or execute action.
 - id: MIG-116-VERIFICATION-LINKAGE
   action: no_backfill_required
   scope:
   - state.json.verification
   - state.json.kpi_observations[].verification_run_id
   rule: Fields are optional runtime outputs. Do not fabricate historical run_id values. Populate only for verification runs performed under Dozor Verification Protocol v1.0+.
+known_migrations_v1_0_3_to_v1_0_4:
+- id: MIG-117-SCHEMA-VERSION
+  action: set_schema_version
+  from: 1.0.3
+  to: 1.0.4
+  scope: all canonical company files
+- id: MIG-118-SOURCE-RECORDED-AT
+  action: no_fabricated_backfill
+  scope: states.yaml.sources.*.recorded_at
+  rule: Field is optional. For future source registry writes, set the actual workspace-record timestamp. Do not reuse source as_of. Historical backfill only if deterministically recoverable
+    from repository history.
+- id: MIG-119-AXIS-VERIFICATION-LINK
+  action: legacy_unlinked
+  scope: state.json.scenario_state.*
+  rule: Existing verified flags without verification_run_id are preserved but are not considered Dozor-protocol-verified until a v1.1 axis_item is run.
+- id: MIG-120-EVENT-VERIFICATION-LINK
+  action: no_backfill_required
+  scope:
+  - state.json.events_reported[]
+  - state.json.fired[]
+  rule: Add verification_run_id only for events verified by Dozor v1.1+; do not invent historical run IDs.

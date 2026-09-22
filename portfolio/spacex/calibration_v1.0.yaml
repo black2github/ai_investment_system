@@ -1,0 +1,46 @@
+# Калибровка reverse valuation SpaceX (SPCX) v1.0 — для вектора состояний A2 + B2 + C1 + D3.
+# Источник: другая LLM (ChatGPT-проект), 20.09.2026, принята владельцем 20.09.2026. Обоснования по осям — в
+# inbox/received/SPCX_calibration_v1.0.md. Действует ТОЛЬКО для этого вектора: переход любой оси требует проверки
+# допущений; D3→D4 отменяет автоматическую нормализацию FCF; C1→C2→C3 сами по себе не повышают маржу/мультипликатор.
+calibration_v1.0:
+  ticker: SPCX
+  as_of: "2026-09-20"
+  model: reverse_valuation_v1.0
+  scenario_state: { AI: A2, Starlink: B2, Starship: C1, Capital_Intensity: D3 }
+
+  discount_rate: { base: 0.11, stress: { min: 0.09, max: 0.14 } }
+  terminal_fcf_margin: { min: 0.20, base: 0.27, max: 0.34 }
+  terminal_fcf_multiple: { unit: "x FCF", min: 25.0, base: 32.0, max: 40.0 }
+
+  margin_transition:
+    type: two_phase_capex_normalization
+    # Y0 = фактическая маржа из 10-Q (наблюдение, НЕ якорь интерполяции); узлы Y1..Y3 — модельные допущения;
+    # Y4 = 70% терминальной маржи; Y5 = терминальная. Между узлами — только линейная интерполяция (годовой шаг).
+    path:
+      1: -0.75
+      2: -0.15
+      3: 0.10
+      4: { factor_of_terminal: 0.70 }
+      5: terminal
+    critical_assumption:
+      linked_state: D3
+      description: "Прекращение режима экстремального capex: FCF глубоко отрицателен в Y1, около нуля в Y2, положителен в Y3."
+      falsification: "Если к концу Y2 capex остаётся на уровне D3 без сопоставимого роста операционных потоков — траекторию перекалибровать; переход к +10% в Y3 не продолжать автоматически."
+
+  external_inputs:
+    net_debt: { source: "state.json → calc_inputs.reverse_valuation (10-Q Q2 2026)", expected_sign: net_cash, estimation_by_model: false }
+    current_fcf_margin: { source: "state.json → calc_inputs.reverse_valuation (H1 2026: −200%)", estimation_by_model: false }
+    price: { source: "Yahoo chart на дату прогона" }
+    shares_outstanding: { source: "kpis.yaml → SPCX-KPI-10.inputs (10-Q, 13 181 779 945)" }
+    revenue_ttm: { source: "kpis.yaml → SPCX-KPI-10.inputs ($23.044 млрд)" }
+
+  sensitivity_grid:
+    discount_rate: [0.09, 0.11, 0.14]
+    terminal_fcf_margin: [0.20, 0.27, 0.34]
+    terminal_fcf_multiple: [25.0, 32.0, 40.0]
+
+  base_case:
+    discount_rate: 0.11
+    terminal_fcf_margin: 0.27
+    terminal_fcf_multiple: 32.0
+    margin_path: { Y0: actual_from_10Q, Y1: -0.75, Y2: -0.15, Y3: 0.10, Y4: 0.189, Y5: 0.27 }

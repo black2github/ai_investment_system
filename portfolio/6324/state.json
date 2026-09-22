@@ -1,0 +1,113 @@
+{
+  "updated": "2026-09-17T12:25:54Z",
+  "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
+  "price": {
+    "symbol": "6324.T",
+    "last": 6030,
+    "last_at": "2026-09-17",
+    "zone": null,
+    "note": "zone ведёт скрипт aiinfra-price-watch в trigger.state"
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [
+    {
+      "fact": "Q1 FY2027 orders",
+      "value_in_discussion": "+55.7% г/г, ¥24.1 млрд",
+      "where_to_verify": "HDS Q1 FY2027 report",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "mismatch",
+      "actual_value": "受注高（連結） 24,128百万円 (сумма подтверждена); рост г/г ≈ +36.95% (25_1Q=17,617 → 26_1Q=24,128), не +55.7%",
+      "source_url": "https://contents.xj-storage.jp/xcontents/AS06879/b045fd4d/ec48/4539/8d39/4b66e7a74f0a/140120260807515115.pdf",
+      "checked_at": "2026-09-17T12:25:54Z"
+    },
+    {
+      "fact": "Q1 FY2027 sales",
+      "value_in_discussion": "+23.6% г/г",
+      "where_to_verify": "HDS Q1 FY2027 report",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "売上高（連結）16,681百万円, +23.6% г/г (前年同期 13,496百万円)",
+      "source_url": "https://contents.xj-storage.jp/xcontents/AS06879/b045fd4d/ec48/4539/8d39/4b66e7a74f0a/140120260807515115.pdf",
+      "checked_at": "2026-09-17T12:25:54Z"
+    },
+    {
+      "fact": "Q1 FY2027 AI robotics orders",
+      "value_in_discussion": "¥1.25 млрд",
+      "where_to_verify": "HDS Q1 FY2027 report",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "not_found",
+      "actual_value": "Таблица受注高по применениям (стр.7 презентации) извлеклась из PDF с потерей выравнивания столбцов — строку AIロボット нельзя надёжно вычленить из текстового дампа; требуется визуальная проверка PDF",
+      "source_url": "https://contents.xj-storage.jp/xcontents/AS06879/b045fd4d/ec48/4539/8d39/4b66e7a74f0a/140120260807515115.pdf",
+      "checked_at": "2026-09-17T12:25:54Z"
+    },
+    {
+      "fact": "Q1 FY2027 industrial robot orders",
+      "value_in_discussion": "¥6.1 млрд",
+      "where_to_verify": "HDS Q1 FY2027 report",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "産業用ロボット向け受注高（連結）6,123百万円 ≈ ¥6.1 млрд",
+      "source_url": "https://contents.xj-storage.jp/xcontents/AS06879/b045fd4d/ec48/4539/8d39/4b66e7a74f0a/140120260807515115.pdf",
+      "checked_at": "2026-09-17T12:25:54Z"
+    },
+    {
+      "fact": "6324-E-05: Unitree поставки роботов",
+      "value_in_discussion": "Unitree shipped 15,000th robot (June 2026), 10,000th (March 2026)",
+      "where_to_verify": "официальная отчётность Unitree / пресс-релиз",
+      "found_at": "2026-09-18T06:05:35Z",
+      "status": "not_verified_condition",
+      "why_pending": "Условие 6324-E-05 требует ≥10 000 поставленных роботов В ГОД и явно официального подтверждения производителя; найденные цифры (Unitree 10 000-й/15 000-й робот) относятся к суммарным поставкам за несколько месяцев и включают колёсные/четырёхногие модели, а не только гуманоидов, и не подтверждены первоисточником Unitree в рамках поиска (только вторичные обзоры/LinkedIn). Не засчитывается.",
+      "checked_at": "2026-09-18T06:05:35Z"
+    },
+    {
+      "fact": "6324-E-04: Tesla Optimus производство",
+      "value_in_discussion": "100 000 Optimus в год (условие триггера)",
+      "where_to_verify": "Tesla shareholder letter / официальное заявление",
+      "found_at": "2026-09-18T06:05:35Z",
+      "status": "not_met",
+      "why_pending": "По найденным данным (вторичные источники, не Tesla первоисточник) на 2026 фигурирует ориентир ~50 000 единиц, а не 100 000; серийные поставки клиентам ожидаются с 2027. Условие не выполнено, не уведомлять.",
+      "checked_at": "2026-09-18T06:05:35Z"
+    },
+    {
+      "fact": "KODEN Holdings ownership",
+      "value_in_discussion": "35.37%",
+      "where_to_verify": "HDS shareholder composition",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified"
+    },
+    {
+      "fact": "перевод на TSE Prime",
+      "value_in_discussion": "февраль 2026",
+      "where_to_verify": "TSE / HDS IR",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified"
+    },
+    {
+      "fact": "дата следующего отчёта",
+      "value_in_discussion": "неизвестно",
+      "where_to_verify": "HDS IR calendar",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified"
+    },
+    {
+      "fact": "доля рынка в редукторах для роботов",
+      "value_in_discussion": "неизвестно",
+      "where_to_verify": "HDS annual report, IFR",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified"
+    }
+  ],
+  "owner_decisions": [],
+  "notes": [
+    "2026-09-17: реестр заведён по финальному блоку обсуждения; предпосылки не проверены — разовое задание aiinfra-facts-verify",
+    "2026-09-17: разовая проверка facts-verify-6324 по 決算説明資料 Q1 FY2027 (первоисточник, PDF с hds.co.jp IR). Sales +23.6% и industrial robot orders ¥6.1bn подтверждены; orders growth не совпал (реально ≈+37.0%, не +55.7%, сумма ¥24.1bn верна); AI robotics orders не удалось извлечь из таблицы PDF (проблема экстракции текста, не факта)."
+  ],
+  "route": {
+    "current": "watch",
+    "done_steps": [],
+    "changed_at": "2026-09-17",
+    "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
+  },
+  "info_log": []
+}

@@ -1,0 +1,48 @@
+version: "1.1"
+artifact: mc_calibration_archetypes_schema_patch
+supersedes_common_schema_version: "1.0"
+as_of: "2026-09-21"
+
+common_schema_patch:
+  required_add:
+    - joint_simulation
+    - driver_parameter_mapping
+
+joint_simulation:
+  required:
+    - layer_version
+    - active_drivers
+    - company_idiosyncratic_factors
+    - path_alignment
+  active_drivers_ref: MPC_Driver_Taxonomy_v1.1
+  path_alignment:
+    use_global_path_id: true
+
+driver_parameter_mapping:
+  required_per_material_driver:
+    - driver_id
+    - material
+    - stochastic_targets
+    - structural_support
+    - stability
+  allowed_transforms:
+    - additive_pp
+    - multiplicative_pct
+    - log_multiplier
+    - probability_logit_shift
+    - timing_quarters_shift
+    - categorical_transition_probability_shift
+  stochastic_target_required:
+    - path
+    - transform
+    - effect_per_plus_1sigma
+    - lag_quarters
+  stability_required:
+    - knockout
+    - adverse_driver_stress
+
+rules:
+  scenario_probabilities_live_in_company_calibration: false
+  common_factor_paths_generated_by: Joint_Simulation_Layer_v1.0
+  stochastic_sensitivity_equals_knockout_shift: false
+  material_driver_mapping_required: true

@@ -1,0 +1,151 @@
+# Вектор состояний LLY (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+version: '1.0'
+artifact: LLY State Vector
+as_of: '2026-09-21'
+ticker: LLY
+source_artifact: inbox/received/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
+semantics:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+sources:
+  LLY_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+    type: SEC 10-Q
+  LLY_Q2_2026_RELEASE_SEC:
+    url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm
+    type: SEC 8-K exhibit / earnings release
+  LLY_Q2_2026_RELEASE_IR:
+    url: https://investor.lilly.com/news-releases/news-release-details/lilly-reports-second-quarter-2026-financial-results-raises-full
+    type: IR earnings release
+axes:
+  Incretin_Demand:
+    name: Incretin Demand
+    name_ru: спрос на инкретины (Mounjaro/Zepbound)
+    states:
+      D0:
+        name: early_or_stalled
+        criteria: tirzepatide quarterly revenue < $5B OR tirzepatide YoY growth < 10%
+      D1:
+        name: scaled
+        criteria: tirzepatide quarterly revenue >= $5B AND YoY growth >= 10%
+      D2:
+        name: strong_growth
+        criteria: tirzepatide quarterly revenue >= $8B AND YoY growth >= 25%
+      D3:
+        name: hypergrowth
+        criteria: tirzepatide quarterly revenue >= $12B AND YoY growth >= 50%
+      D4:
+        name: durable_hypergrowth
+        criteria: latest-quarter tirzepatide revenue >= $12B AND H1/two-quarter aggregate tirzepatide YoY growth >= 50%
+    current: D4
+    current_evidence:
+    - Q2 Mounjaro revenue $9.943B + Zepbound revenue $4.928B = $14.871B.
+    - 'Q2 combined tirzepatide revenue grew 73.3% YoY: ($14.871B / $8.580B) - 1.'
+    - H1 2026 combined Mounjaro + Zepbound revenue was $27.693B versus $14.734B in H1 2025.
+    source_refs:
+    - LLY_Q2_2026_10Q
+  Pricing_Access:
+    name: Pricing Access
+    name_ru: цены и доступ (возмещение)
+    states:
+      P0:
+        name: stable_or_positive_price
+        criteria: consolidated price contribution >= 0%
+      P1:
+        name: mild_pressure
+        criteria: price contribution < 0% and >= -5%
+      P2:
+        name: moderate_pressure
+        criteria: price contribution < -5% and >= -10%
+      P3:
+        name: high_pressure_offset_by_volume
+        criteria: price contribution < -10% and >= -20% AND volume contribution >= 30%
+      P4:
+        name: severe_pricing_pressure
+        criteria: price contribution < -20% OR revenue growth < 20% while volume growth remains positive
+    current: P3
+    current_evidence:
+    - 'Q2 2026 consolidated revenue change: volume +60%, price -13%, FX +1%.'
+    - 10-Q attributes U.S. lower realized prices primarily to Zepbound and Mounjaro; outside the U.S. lower prices were driven
+      primarily by Mounjaro's China NRDL inclusion.
+    source_refs:
+    - LLY_Q2_2026_10Q
+  Manufacturing_Expansion:
+    name: Manufacturing Expansion
+    name_ru: расширение производства
+    states:
+      M0:
+        name: normalized
+        criteria: H1/TTM PP&E capex / revenue < 5%
+      M1:
+        name: expansion
+        criteria: capex/revenue >= 5% and < 10%
+      M2:
+        name: aggressive_expansion
+        criteria: capex/revenue >= 10% and < 15%
+      M3:
+        name: extreme_expansion
+        criteria: capex/revenue >= 15% and < 25%
+      M4:
+        name: supply_execution_stress
+        criteria: capex/revenue >= 25% OR company discloses manufacturing/supply disruption causing >=5% revenue impact
+    current: M2
+    current_evidence:
+    - H1 2026 purchases of property and equipment were $5.259B on revenue of $42.773B = 12.30%.
+    - Q2 earnings release states Lilly committed an additional $4.5B to expand Indiana manufacturing sites.
+    source_refs:
+    - LLY_Q2_2026_10Q
+    - LLY_Q2_2026_RELEASE_SEC
+  Pipeline_Diversification:
+    name: Pipeline Diversification
+    name_ru: диверсификация пайплайна
+    states:
+      R0:
+        name: tirzepatide_only
+        criteria: no next-generation obesity/metabolic asset has Phase 3 success or regulatory approval
+      R1:
+        name: late_stage_optionality
+        criteria: at least one next-generation obesity/metabolic asset has entered Phase 3
+      R2:
+        name: one_validated_next_gen_asset
+        criteria: at least one next-generation asset has Phase 3 primary-endpoint success OR regulatory approval
+      R3:
+        name: multiple_validated_next_gen_assets
+        criteria: orforglipron approved for obesity AND retatrutide Phase 3 obesity trials met primary endpoints
+      R4:
+        name: commercial_multi_asset_platform
+        criteria: at least two next-generation obesity/metabolic assets are commercially approved in a major market
+    current: R3
+    current_evidence:
+    - 10-Q states FDA approved orforglipron (Foundayo) for obesity and Lilly launched it in Q2.
+    - 10-Q states Phase 3 retatrutide obesity trials met primary endpoints.
+    source_refs:
+    - LLY_Q2_2026_10Q
+  Cash_Economics:
+    name: Cash Economics
+    name_ru: денежная экономика (OCF, capex, FCF)
+    states:
+      F0:
+        name: negative_fcf
+        criteria: simple FCF margin < 0%
+      F1:
+        name: low_positive
+        criteria: FCF margin >= 0% and < 10%
+      F2:
+        name: healthy
+        criteria: FCF margin >= 10% and < 20%
+      F3:
+        name: strong
+        criteria: FCF margin >= 20% and < 30%
+      F4:
+        name: exceptional
+        criteria: FCF margin >= 30% for 2 consecutive reporting periods
+    current: F3
+    current_evidence:
+    - H1 2026 OCF $16.023B less PP&E capex $5.259B = simple FCF $10.764B.
+    - H1 simple FCF margin = $10.764B / $42.773B = 25.17%.
+    source_refs:
+    - LLY_Q2_2026_10Q

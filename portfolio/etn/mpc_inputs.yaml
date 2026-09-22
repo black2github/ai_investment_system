@@ -1,0 +1,78 @@
+# Входы MPC для ETN: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: ETN
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/ETN_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 1
+  HYPERSCALER_CAPEX: 2
+  SEMICONDUCTOR_WFE: 1
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 0
+  DATA_CENTER_POWER: 2
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 1
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 0
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 2
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 2
+  UTILITY_CAPEX: 2
+  INDUSTRIAL_RESHORING: 2
+  AEROSPACE_CYCLE: 1
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+taxonomy_gap:
+- ELECTRIFICATION_GRID
+- UTILITY_CAPEX
+- INDUSTRIAL_RESHORING
+- AEROSPACE_CYCLE
+taxonomy_gap_note: Current 16-driver MPC taxonomy does not fully represent Eaton's grid/electrification drivers.
+failure_modes:
+- failure_id: ETN-FM-01
+  name: Hyperscaler/data-center capex slowdown reduces Electrical demand
+  common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN
+  severity: high
+- failure_id: ETN-FM-02
+  name: Grid/utility electrification capex slows
+  common_cause_id: ELECTRIFICATION_GRID_SLOWDOWN
+  severity: high
+- failure_id: ETN-FM-03
+  name: Boyd/Ultra integration fails to deliver expected economics
+  common_cause_id: ACQUISITION_INTEGRATION_FAILURE
+  severity: high
+- failure_id: ETN-FM-04
+  name: Higher acquisition-funded leverage constrains flexibility
+  common_cause_id: CAPITAL_MARKETS_TIGHTENING
+  severity: medium
+- failure_id: ETN-FM-05
+  name: Mobility separation execution/timing failure
+  common_cause_id: PORTFOLIO_SEPARATION_EXECUTION
+  severity: medium
+- failure_id: ETN-FM-06
+  name: Electrical capacity expansion cannot meet backlog on time
+  common_cause_id: INDUSTRIAL_CAPACITY_EXECUTION
+  severity: high
+- failure_id: ETN-FM-07
+  name: Data-center power buildout bottlenecks shift/delay customer projects
+  common_cause_id: DATA_CENTER_POWER_CONSTRAINT
+  severity: high
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

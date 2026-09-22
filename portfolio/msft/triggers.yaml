@@ -1,0 +1,210 @@
+# Реестр триггеров: Microsoft Corporation (MSFT)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: MSFT
+  company: Microsoft Corporation
+  exchange: NASDAQ
+  yahoo_symbol: MSFT
+  registry_updated: '2026-09-21'
+  source_artifact: inbox/received/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/MSFT?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 493.78
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+triggers:
+- id: MSFT-E-01
+  class: event
+  step: vector
+  axis: Cloud_AI_Demand
+  transition:
+    from: A4
+    to: A3
+  level: E2
+  kpis:
+  - MSFT-KPI-01
+  condition: Azure YoY <40% but >=30% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Cloud_AI_Demand A4→A3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: MSFT-E-02
+  class: event
+  step: vector
+  axis: Cloud_AI_Demand
+  transition:
+    from: A4
+    to: A2
+  level: E2
+  kpis:
+  - MSFT-KPI-01
+  condition: Azure YoY <30% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Cloud_AI_Demand A4→A2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: MSFT-E-03
+  class: event
+  step: vector
+  axis: Software_Monetization
+  transition:
+    from: S1
+    to: S2
+  level: E2
+  kpis:
+  - MSFT-KPI-09
+  condition: M365 Commercial cloud revenue YoY >=15% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Software_Monetization S1→S2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: MSFT-E-04
+  class: event
+  step: vector
+  axis: Software_Monetization
+  transition:
+    from: S1
+    to: S0
+  level: E2
+  kpis:
+  - MSFT-KPI-09
+  condition: M365 Commercial cloud revenue YoY <10% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Software_Monetization S1→S0 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: MSFT-E-05
+  class: event
+  step: vector
+  axis: AI_Capital_Intensity
+  transition:
+    from: C3
+    to: C2
+  level: E2
+  kpis:
+  - MSFT-KPI-07
+  - MSFT-KPI-08
+  condition: cash capex/revenue <35% AND FCF margin >=20% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход AI_Capital_Intensity C3→C2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: MSFT-E-06
+  class: event
+  step: vector
+  axis: AI_Capital_Intensity
+  transition:
+    from: C3
+    to: C4
+  level: E2
+  kpis:
+  - MSFT-KPI-07
+  - MSFT-KPI-08
+  condition: cash capex/revenue >=40% AND FCF margin <10% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход AI_Capital_Intensity C3→C4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: MSFT-E-07
+  class: event
+  step: vector
+  axis: Cloud_Margin
+  transition:
+    from: M3
+    to: M2
+  level: E2
+  kpis:
+  - MSFT-KPI-04
+  condition: Microsoft Cloud gross margin <65% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Cloud_Margin M3→M2 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: MSFT-E-08
+  class: event
+  step: vector
+  axis: Cloud_Margin
+  transition:
+    from: M3
+    to: M4
+  level: E2
+  kpis:
+  - MSFT-KPI-04
+  condition: Microsoft Cloud gross margin >=70% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Cloud_Margin M3→M4 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: MSFT-E-09
+  class: event
+  step: vector
+  axis: Contracted_Demand
+  transition:
+    from: R3
+    to: R4
+  level: E2
+  kpis:
+  - MSFT-KPI-05
+  - MSFT-KPI-06
+  condition: RPO >=$600B AND ex-OpenAI RPO YoY >=25% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Contracted_Demand R3→R4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: MSFT-E-10
+  class: event
+  step: vector
+  axis: Contracted_Demand
+  transition:
+    from: R3
+    to: R2
+  level: E2
+  kpis:
+  - MSFT-KPI-05
+  - MSFT-KPI-06
+  condition: RPO < $600B OR ex-OpenAI RPO YoY <15% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Contracted_Demand R3→R2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []

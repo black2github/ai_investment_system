@@ -1,0 +1,378 @@
+version: "1.0"
+ticker: ASML
+as_of: "2026-09-21"
+artifact: "company_state_bundle"
+
+source_policy:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  accounting_note: >
+    ASML states that its primary accounting standard for quarterly earnings releases
+    and annual reports is US GAAP. The Statutory Interim Report is prepared under IAS 34
+    as adopted by the EU. This bundle explicitly marks the source channel for each KPI.
+
+sources:
+  ASML_IR_Q2_RESULTS:
+    url: "https://www.asml.com/en/investors/financial-results/q2-2026"
+    type: "ASML IR results package landing page"
+  ASML_IR_Q2_RELEASE:
+    url: "https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results"
+    type: "ASML IR press release; US GAAP headline results"
+  ASML_SEC_Q2_6K:
+    url: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/form6-kquarterlyfilings.htm"
+    type: "SEC Form 6-K"
+  ASML_SEC_Q2_USGAAP:
+    url: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm"
+    type: "SEC 6-K Exhibit 99.3; Summary US GAAP financial statements"
+  ASML_SEC_Q2_INTERIM:
+    url: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+    type: "SEC 6-K Exhibit 99.4; Statutory Interim Report under IAS 34 / EU-IFRS"
+  ASML_SEC_Q2_PRESENTATION:
+    url: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/presentationinvestorrela.htm"
+    type: "SEC 6-K Exhibit 99.2; investor presentation"
+
+states:
+  axes:
+    Demand_Visibility:
+      states:
+        D0: {name: contraction, criteria: "FY revenue guidance midpoint < €32.7B OR latest-quarter revenue YoY < 0%"}
+        D1: {name: low_growth, criteria: "FY guidance midpoint >= €32.7B and < €36B"}
+        D2: {name: healthy_growth, criteria: "FY guidance midpoint >= €36B and < €43B"}
+        D3: {name: strong_expansion, criteria: "FY guidance midpoint >= €43B AND management describes order intake/customer commitments as strong or better"}
+        D4: {name: booking_supercycle, criteria: "net bookings >=1.5x quarterly sales for 2 consecutive quarters AND FY guidance midpoint >= €45B"}
+      current: D3
+      current_evidence:
+        - "Q2 2026 sales €9.326B; FY2026 revenue guidance raised to €43-45B."
+        - "Management says order intake remained extremely strong in H1 and customer commitments increased visibility."
+      source_refs: [ASML_IR_Q2_RELEASE, ASML_SEC_Q2_6K]
+
+    EUV_Adoption:
+      states:
+        E0: {name: low, criteria: "H1/TTM EUV system-sales share < 30%"}
+        E1: {name: developing, criteria: "share >=30% and <45%"}
+        E2: {name: major, criteria: "share >=45% and <60%"}
+        E3: {name: dominant, criteria: "share >=60% and <70%"}
+        E4: {name: very_high, criteria: "share >=70% for 2 reporting periods"}
+      current: E3
+      current_evidence:
+        - "H1 2026 NXE sales €6.7085B + EXE €1.1889B = €7.8974B of €12.8442B net system sales = 61.49%."
+      source_refs: [ASML_SEC_Q2_INTERIM]
+
+    Margin_Execution:
+      states:
+        M0: {name: compressed, criteria: "gross margin <45%"}
+        M1: {name: recovering, criteria: "gross margin >=45% and <50%"}
+        M2: {name: normal, criteria: "gross margin >=50% and <53%"}
+        M3: {name: high, criteria: "gross margin >=53% and <56%"}
+        M4: {name: structural_high, criteria: "gross margin >=56% for 2 consecutive quarters"}
+      current: M3
+      current_evidence:
+        - "Q2 2026 gross margin 54.0%; operating margin 37.1%."
+      source_refs: [ASML_SEC_Q2_USGAAP, ASML_IR_Q2_RELEASE]
+
+    China_Export_Exposure:
+      states:
+        X0: {name: low, criteria: "H1/TTM China revenue share <10%"}
+        X1: {name: moderate, criteria: "China revenue share >=10% and <20%"}
+        X2: {name: elevated, criteria: "China revenue share >=20% and <30%"}
+        X3: {name: high, criteria: "China revenue share >=30%"}
+        X4: {name: restriction_shock, criteria: "export-control change causes disclosed >=5% revenue/guidance impairment regardless of China share"}
+      current: X1
+      current_evidence:
+        - "H1 2026 China revenue €2.8833B of €18.0934B = 15.94%."
+        - "ASML disclosures identify shipment restrictions/export controls as material risks."
+      source_refs: [ASML_SEC_Q2_INTERIM, ASML_IR_Q2_RELEASE]
+
+    Installed_Base_Resilience:
+      states:
+        I0: {name: weak, criteria: "IBM sales YoY growth <0%"}
+        I1: {name: stable, criteria: "IBM growth >=0% and <10%"}
+        I2: {name: healthy, criteria: "IBM growth >=10% and <20%"}
+        I3: {name: strong, criteria: "IBM growth >=20% AND IBM share of total sales >=25%"}
+        I4: {name: durable_resilience, criteria: "IBM growth >=25% AND IBM share >=30% for 2 reporting periods"}
+      current: I3
+      current_evidence:
+        - "H1 2026 IBM/service and field option sales €5.2492B versus €4.0967B, +28.13%."
+        - "IBM represented 29.01% of H1 total net sales."
+      source_refs: [ASML_SEC_Q2_INTERIM]
+
+kpis:
+  zone_semantics:
+    thresholds_provenance: model_assumption
+  items:
+    - id: ASML-KPI-01
+      name: "Quarterly total net sales"
+      period: quarterly
+      current_value: 9.3265
+      unit: "EUR B"
+      source: "https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results"
+      source_channel: "ASML_IR"
+      sec_mirror: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm"
+      zones: {green: ">= 9.0", yellow: ">= 7.5 and < 9.0", red: "< 7.5"}
+
+    - id: ASML-KPI-02
+      name: "FY2026 revenue guidance midpoint"
+      period: quarterly
+      current_value: 44.0
+      unit: "EUR B"
+      formula: "(43 + 45) / 2 = 44"
+      source: "https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results"
+      source_channel: "ASML_IR"
+      sec_mirror: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/form6-kquarterlyfilings.htm"
+      zones: {green: ">= 43", yellow: ">= 38 and < 43", red: "< 38"}
+      note: "Forward-looking company guidance, not realized revenue."
+
+    - id: ASML-KPI-03
+      name: "Gross margin"
+      period: quarterly
+      current_value: 0.54
+      unit: fraction
+      source: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm"
+      source_channel: "SEC_6K_EX99_3_US_GAAP"
+      ir_mirror: "https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results"
+      zones: {green: ">= 0.53", yellow: ">= 0.50 and < 0.53", red: "< 0.50"}
+
+    - id: ASML-KPI-04
+      name: "Operating margin"
+      period: quarterly
+      current_value: 0.371
+      unit: fraction
+      formula: "3.4561 / 9.3265 = 0.3706; company summary reports 37.1%"
+      source: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm"
+      source_channel: "SEC_6K_EX99_3_US_GAAP"
+      zones: {green: ">= 0.35", yellow: ">= 0.30 and < 0.35", red: "< 0.30"}
+
+    - id: ASML-KPI-05
+      name: "EUV share of H1 net system sales"
+      period: semiannual
+      current_value: 0.6149
+      unit: fraction
+      formula: "(6.7085 NXE + 1.1889 EXE) / 12.8442 net system sales = 0.6149"
+      source: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+      source_channel: "SEC_6K_EX99_4_IAS34_EU_IFRS"
+      ir_document: "Statutory Interim Report 2026, available from ASML IR Q2 results package"
+      ir_landing_page: "https://www.asml.com/en/investors/financial-results/q2-2026"
+      zones: {green: ">= 0.60", yellow: ">= 0.45 and < 0.60", red: "< 0.45"}
+
+    - id: ASML-KPI-06
+      name: "Installed Base Management sales YoY"
+      period: semiannual
+      current_value: 0.2813
+      unit: fraction
+      formula: "5.2492 / 4.0967 - 1 = 0.2813"
+      source: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+      source_channel: "SEC_6K_EX99_4_IAS34_EU_IFRS"
+      ir_document: "Statutory Interim Report 2026"
+      ir_landing_page: "https://www.asml.com/en/investors/financial-results/q2-2026"
+      zones: {green: ">= 0.20", yellow: ">= 0.10 and < 0.20", red: "< 0.10"}
+
+    - id: ASML-KPI-07
+      name: "Installed Base Management share of total sales"
+      period: semiannual
+      current_value: 0.2901
+      unit: fraction
+      formula: "5.2492 / 18.0934 = 0.2901"
+      source: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+      source_channel: "SEC_6K_EX99_4_IAS34_EU_IFRS"
+      ir_document: "Statutory Interim Report 2026"
+      ir_landing_page: "https://www.asml.com/en/investors/financial-results/q2-2026"
+      zones: {green: ">= 0.25", yellow: ">= 0.20 and < 0.25", red: "< 0.20"}
+
+    - id: ASML-KPI-08
+      name: "China share of total net sales"
+      period: semiannual
+      current_value: 0.1594
+      unit: fraction
+      formula: "2.8833 / 18.0934 = 0.1594"
+      source: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+      source_channel: "SEC_6K_EX99_4_IAS34_EU_IFRS"
+      ir_document: "Statutory Interim Report 2026"
+      ir_landing_page: "https://www.asml.com/en/investors/financial-results/q2-2026"
+      zones: {green: "< 0.15", yellow: ">= 0.15 and < 0.25", red: ">= 0.25"}
+      note: "Risk/exposure KPI: lower China share reduces direct revenue exposure but does not eliminate export-control risk."
+
+    - id: ASML-KPI-09
+      name: "Memory share of H1 net system sales"
+      period: semiannual
+      current_value: 0.4984
+      unit: fraction
+      formula: "6.4015 / 12.8442 = 0.4984"
+      source: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+      source_channel: "SEC_6K_EX99_4_IAS34_EU_IFRS"
+      ir_document: "Statutory Interim Report 2026"
+      ir_landing_page: "https://www.asml.com/en/investors/financial-results/q2-2026"
+      zones: {green: ">= 0.30 and <= 0.70", yellow: "(>= 0.20 and < 0.30) OR (> 0.70 and <= 0.80)", red: "< 0.20 OR > 0.80"}
+      note: "Balance KPI, not 'higher is better'."
+
+    - id: ASML-KPI-10
+      name: "Cash + short-term investments"
+      period: quarterly
+      current_value: 7.5815
+      unit: "EUR B"
+      formula: "6.6719 cash + 0.9096 short-term investments = 7.5815"
+      source: "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm"
+      source_channel: "SEC_6K_EX99_3_US_GAAP"
+      zones: {green: ">= 5.0", yellow: ">= 3.0 and < 5.0", red: "< 3.0"}
+
+triggers:
+  rules:
+    evidence_required: true
+    pending_verification_blocks_transition: true
+    trigger_not_decision: true
+    all_numeric_thresholds_provenance: model_assumption
+  items:
+    - id: ASML-E-01
+      step: vector
+      status: planned
+      axis: Demand_Visibility
+      transition: {from: D3, to: D4}
+      kpis: [ASML-KPI-01, ASML-KPI-02]
+      condition: "reported net bookings >=1.5x quarterly total net sales for 2 consecutive quarters AND FY revenue-guidance midpoint >= €45B"
+      period: "2 quarters"
+      level: E2
+      note: "Q2 2026 release did not provide a numeric Q2 booking value in the selected machine-readable source; trigger remains future-observable."
+
+    - id: ASML-E-02
+      step: vector
+      status: planned
+      axis: Demand_Visibility
+      transition: {from: D3, to: D2}
+      kpis: [ASML-KPI-01, ASML-KPI-02]
+      condition: "FY revenue-guidance midpoint < €43B OR quarterly total-net-sales YoY growth <10% for 2 consecutive quarters"
+      period: "2 quarters or one company guidance cut"
+      level: E2
+
+    - id: ASML-E-03
+      step: vector
+      status: planned
+      axis: EUV_Adoption
+      transition: {from: E3, to: E4}
+      kpis: [ASML-KPI-05]
+      condition: "EUV share of net system sales >=70% for 2 consecutive reporting periods"
+      period: "2 reporting periods"
+      level: E2
+
+    - id: ASML-E-04
+      step: vector
+      status: planned
+      axis: EUV_Adoption
+      transition: {from: E3, to: E2}
+      kpis: [ASML-KPI-05]
+      condition: "EUV share of net system sales <55% for 2 consecutive reporting periods"
+      period: "2 reporting periods"
+      level: E2
+
+    - id: ASML-E-05
+      step: vector
+      status: planned
+      axis: Margin_Execution
+      transition: {from: M3, to: M4}
+      kpis: [ASML-KPI-03]
+      condition: "gross margin >=56% for 2 consecutive quarters"
+      period: "2 quarters"
+      level: E2
+
+    - id: ASML-E-06
+      step: vector
+      status: planned
+      axis: Margin_Execution
+      transition: {from: M3, to: M2}
+      kpis: [ASML-KPI-03]
+      condition: "gross margin <53% for 2 consecutive quarters"
+      period: "2 quarters"
+      level: E2
+
+    - id: ASML-E-07
+      step: vector
+      status: planned
+      axis: China_Export_Exposure
+      transition: {from: X1, to: X0}
+      kpis: [ASML-KPI-08]
+      condition: "China revenue share <10% for 2 consecutive reporting periods AND no disclosed material export-control impact on guidance"
+      period: "2 reporting periods"
+      level: E2
+
+    - id: ASML-E-08
+      step: vector
+      status: planned
+      axis: China_Export_Exposure
+      transition: {from: X1, to: X2}
+      kpis: [ASML-KPI-08]
+      condition: "China revenue share >=20% for 2 consecutive reporting periods"
+      period: "2 reporting periods"
+      level: E2
+
+    - id: ASML-E-09
+      step: vector
+      status: planned
+      axis: China_Export_Exposure
+      transition: {from: X1, to: X4}
+      kpis: [ASML-KPI-08]
+      condition: "new export-control restrictions cause a disclosed >=5% reduction in revenue guidance or realized revenue relative to prior guidance"
+      period: "one verified regulatory/company disclosure"
+      level: E3
+
+    - id: ASML-E-10
+      step: vector
+      status: planned
+      axis: Installed_Base_Resilience
+      transition: {from: I3, to: I4}
+      kpis: [ASML-KPI-06, ASML-KPI-07]
+      condition: "IBM sales YoY >=25% AND IBM share of total sales >=30% for 2 consecutive reporting periods"
+      period: "2 reporting periods"
+      level: E2
+
+    - id: ASML-E-11
+      step: vector
+      status: planned
+      axis: Installed_Base_Resilience
+      transition: {from: I3, to: I2}
+      kpis: [ASML-KPI-06]
+      condition: "IBM sales YoY <20% for 2 consecutive reporting periods"
+      period: "2 reporting periods"
+      level: E2
+
+mpc_inputs:
+  driver_exposure_semantics:
+    scale: {-2: strong_negative, -1: negative, 0: immaterial, 1: positive, 2: strong_positive}
+    provenance: model_assumption
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 2
+    HYPERSCALER_CAPEX: 2
+    SEMICONDUCTOR_WFE: 2
+    ADVANCED_PACKAGING: 1
+    HBM_MEMORY: 2
+    EDA_DESIGN_COMPLEXITY: 1
+    CLOUD_SOFTWARE_DEMAND: 0
+    DATA_CENTER_POWER: 1
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 0
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: 0
+    CHINA_REVENUE: 1
+    TAIWAN_SUPPLY: 2
+    ACQUISITION_INTEGRATION: 0
+  driver_interpretation:
+    TAIWAN_SUPPLY:
+      vector_score: 2
+      exposure_type: "demand/customer-geography rather than primary own-supply-chain exposure"
+      explanation: >
+        Healthy Taiwan leading-edge production and foundry capex are strongly positive for ASML demand.
+        A Taiwan disruption would primarily hit ASML through customer fabs, shipment/service access and
+        global semiconductor demand/capex. Do not interpret this score as saying ASML itself is fabricated in Taiwan.
+    HYPERSCALER_CAPEX:
+      vector_score: 2
+      exposure_type: "indirect positive demand"
+      explanation: "Hyperscaler AI capex drives leading-edge logic/HBM demand, which drives foundry/memory WFE and lithography intensity."
+  failure_modes:
+    - {failure_id: ASML-FM-01, name: "Global wafer-fab equipment downturn / customer capex cuts", common_cause_id: SEMICONDUCTOR_WFE_DOWNTURN, severity: high}
+    - {failure_id: ASML-FM-02, name: "Taiwan foundry disruption reduces shipments, service access and leading-edge customer capex", common_cause_id: TAIWAN_SUPPLY_DISRUPTION, severity: critical}
+    - {failure_id: ASML-FM-03, name: "Export controls further restrict China shipments/service", common_cause_id: EXPORT_CONTROLS_CHINA, severity: high}
+    - {failure_id: ASML-FM-04, name: "TSMC/Samsung/Intel or major-memory customer capex concentration shock", common_cause_id: CUSTOMER_CAPEX_CONCENTRATION, severity: high}
+    - {failure_id: ASML-FM-05, name: "Critical single-source supplier disruption", common_cause_id: SINGLE_SOURCE_SUPPLIER_DISRUPTION, severity: critical}
+    - {failure_id: ASML-FM-06, name: "EUV/High-NA technology or industrialization delay", common_cause_id: LITHOGRAPHY_TECHNOLOGY_EXECUTION, severity: high}
+    - {failure_id: ASML-FM-07, name: "AI capex slowdown reduces advanced logic/HBM fab demand", common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN, severity: high}
+    - {failure_id: ASML-FM-08, name: "Memory-cycle downturn reduces lithography demand", common_cause_id: MEMORY_CYCLE_DOWNTURN, severity: medium}

@@ -1,0 +1,175 @@
+# KPI NBIS с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.1'
+artifact: NBIS KPI Dashboard
+as_of: '2026-09-21'
+ticker: NBIS
+max_critical_kpis: 11
+source_artifact: inbox/received/NBIS_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - Nebius Group N.V. Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: NBIS-KPI-01
+  name: AI cloud revenue YoY
+  unit: YoY fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=1.00'
+    yellow: '>=0.40 and <1.00'
+    red: <0.40
+  last_value: 5.14
+  last_date: null
+  source_url: null
+  verified: false
+- id: NBIS-KPI-02
+  name: AI cloud quarterly revenue
+  unit: USD B
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.50'
+    yellow: '>=0.30 and <0.50'
+    red: <0.30
+  last_value: 0.5749
+  last_date: null
+  source_url: null
+  verified: false
+- id: NBIS-KPI-03
+  name: AI cloud ARR
+  unit: USD B
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=3.0'
+    yellow: '>=1.5 and <3.0'
+    red: <1.5
+  last_value: 3.0
+  last_date: null
+  source_url: null
+  verified: false
+- id: NBIS-KPI-04
+  name: AI cloud adjusted EBITDA margin
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.35'
+    yellow: '>=0.15 and <0.35'
+    red: <0.15
+  last_value: 0.497
+  last_date: null
+  source_url: null
+  verified: false
+- id: NBIS-KPI-05
+  name: Quarterly capex
+  unit: USD B
+  period: quarterly
+  source: IR
+  thresholds:
+    green: <3.0
+    yellow: '>=3.0 and <5.0'
+    red: '>=5.0'
+  last_value: 5.7
+  last_date: null
+  source_url: null
+  verified: false
+  note: risk KPI; interpret with monetization/funding
+- id: NBIS-KPI-06
+  name: Customer prepayment coverage of associated capex
+  unit: fraction
+  period: deal_cohort
+  source: IR
+  thresholds:
+    green: '>=0.50'
+    yellow: '>=0.30 and <0.50'
+    red: <0.30
+  last_value:
+  - 0.5
+  - 0.6
+  last_date: null
+  source_url: null
+  verified: false
+- id: NBIS-KPI-07
+  name: Disclosed customer commitments
+  unit: USD B
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=30'
+    yellow: '>=15 and <30'
+    red: <15
+  last_value: '>40'
+  last_date: null
+  source_url: null
+  verified: false
+- id: NBIS-KPI-08
+  name: Year-end contracted power target
+  unit: GW
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=5'
+    yellow: '>=3 and <5'
+    red: <3
+  last_value: 5.0
+  last_date: null
+  source_url: null
+  verified: true
+  note: Прогноз компании (guidance), не realized contracted power; для переходов оси — поддерживающее свидетельство, не основание
+    (поправка LLM 21.09)
+  value_type: company_guidance
+  target_date: '2026-12-31'
+  verified_note: 'host-check 21.09: «raising our year-end contracted power target again to 5 GW» — guidance, не факт'
+- id: NBIS-KPI-09
+  name: Cash and cash equivalents
+  unit: USD B
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=8'
+    yellow: '>=4 and <8'
+    red: <4
+  last_value: 8.0421
+  last_date: null
+  source_url: null
+  verified: false
+- id: NBIS-KPI-10
+  name: Group adjusted EBITDA margin
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.35'
+    yellow: '>=0.15 and <0.35'
+    red: <0.15
+  last_value: 0.41
+  last_date: null
+  source_url: null
+  verified: false
+- id: NBIS-KPI-11
+  name: Actually secured contracted power as of reporting date
+  unit: GW
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>= 5'
+    yellow: '>= 3 and < 5'
+    red: < 3
+  last_value: null
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm
+  verified: false
+  verification_status: pending_verification
+  note: Письмо акционерам Q2 не квантифицирует фактически законтрактованную мощность на 30.06/12.08 отдельно от цели YE2026.
+    Основание для переходов оси Capacity_Secured (поправка LLM 21.09)
+changelog:
+- version: '1.1'
+  date: '2026-09-21'
+  change: KPI-08 → guidance (5.0 GW, YE2026); добавлен KPI-11 (факт, pending); источник — batch_01_source_corrections_v1.0.yaml

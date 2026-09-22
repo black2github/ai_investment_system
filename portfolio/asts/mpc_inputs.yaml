@@ -1,0 +1,89 @@
+# Входы MPC для ASTS: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: ASTS
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 0
+  HYPERSCALER_CAPEX: 0
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 0
+  DATA_CENTER_POWER: 0
+  LAUNCH_ECONOMICS: 2
+  SATELLITE_CONNECTIVITY: 2
+  GOVERNMENT_DEFENSE: 1
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 2
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 0
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 1
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: -2
+failure_modes:
+- failure_id: ASTS-FM-01
+  name: Launch delay/failure slows constellation deployment
+  common_cause_id: LAUNCH_OPERATIONS_FAILURE
+  severity: critical
+- failure_id: ASTS-FM-02
+  name: Satellite manufacturing/in-orbit failure prevents required coverage
+  common_cause_id: SPACE_SYSTEMS_EXECUTION
+  severity: critical
+- failure_id: ASTS-FM-03
+  name: Launch-provider availability/cost deteriorates
+  common_cause_id: LAUNCH_ECONOMICS_DOWNSIDE
+  severity: high
+- failure_id: ASTS-FM-04
+  name: FCC/international spectrum approval is delayed or narrowed
+  common_cause_id: SPACE_REGULATORY_SPECTRUM_DELAY
+  severity: critical
+- failure_id: ASTS-FM-05
+  name: MNO agreements fail to convert into recurring service revenue
+  common_cause_id: SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE
+  severity: high
+- failure_id: ASTS-FM-06
+  name: Capital burn requires materially dilutive financing
+  common_cause_id: CAPITAL_MARKETS_TIGHTENING
+  severity: high
+- failure_id: ASTS-FM-07
+  name: Government awards/backlog fail to convert
+  common_cause_id: GOVERNMENT_SPACE_BUDGET
+  severity: medium
+- failure_id: ASTS-FM-08
+  name: Shared SPACE sector launch/range/regulatory bottleneck
+  common_cause_id: SPACE_REGULATORY_RANGE_DELAY
+  severity: high
+cross_portfolio_common_causes:
+  RKLB:
+    shared:
+    - LAUNCH_OPERATIONS_FAILURE
+    - SPACE_SYSTEMS_EXECUTION
+    - GOVERNMENT_SPACE_BUDGET
+    - SPACE_REGULATORY_RANGE_DELAY
+  SPCX:
+    shared:
+    - LAUNCH_OPERATIONS_FAILURE
+    - LAUNCH_ECONOMICS_DOWNSIDE
+    - GOVERNMENT_SPACE_BUDGET
+    - SPACE_REGULATORY_RANGE_DELAY
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

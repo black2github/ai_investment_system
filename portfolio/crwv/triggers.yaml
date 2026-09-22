@@ -1,0 +1,235 @@
+# Реестр триггеров: CoreWeave, Inc. (CRWV)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: CRWV
+  company: CoreWeave, Inc.
+  exchange: NASDAQ
+  yahoo_symbol: CRWV
+  registry_updated: '2026-09-21'
+  source_artifact: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/CRWV?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 81.36
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+triggers:
+- id: CRWV-E-01
+  class: event
+  step: vector
+  axis: Demand_Contracting
+  transition:
+    from: D3
+    to: D4
+  level: E2
+  kpis:
+  - CRWV-KPI-01
+  - CRWV-KPI-02
+  condition: revenue YoY >=100% AND backlog/annualized-revenue >=8x for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Demand_Contracting D3→D4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-02
+  class: event
+  step: vector
+  axis: Demand_Contracting
+  transition:
+    from: D3
+    to: D2
+  level: E2
+  kpis:
+  - CRWV-KPI-01
+  - CRWV-KPI-02
+  condition: revenue YoY <100% OR backlog/annualized-revenue <8x for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Demand_Contracting D3→D2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-03
+  class: event
+  step: vector
+  axis: Unit_Economics
+  transition:
+    from: E3
+    to: E4
+  level: E2
+  kpis:
+  - CRWV-KPI-04
+  - CRWV-KPI-05
+  condition: adjusted operating margin >=10% AND adjusted EBITDA margin >=55% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Unit_Economics E3→E4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-04
+  class: event
+  step: vector
+  axis: Unit_Economics
+  transition:
+    from: E3
+    to: E2
+  level: E2
+  kpis:
+  - CRWV-KPI-04
+  - CRWV-KPI-05
+  condition: adjusted operating margin <5% OR adjusted EBITDA margin <50% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Unit_Economics E3→E2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-05
+  class: event
+  step: vector
+  axis: Capacity_Secured
+  transition:
+    from: C2
+    to: C3
+  level: E2
+  kpis:
+  - CRWV-KPI-06
+  - CRWV-KPI-07
+  condition: active power >=2.5 GW AND contracted power >=5.0 GW
+  period: one verified company update
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Capacity_Secured C2→C3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-06
+  class: event
+  step: vector
+  axis: Capacity_Secured
+  transition:
+    from: C2
+    to: C1
+  level: E2
+  kpis:
+  - CRWV-KPI-06
+  - CRWV-KPI-07
+  condition: active power <1.5 GW OR contracted power <3.5 GW for 2 consecutive observations
+  period: 2 observations
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Capacity_Secured C2→C1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-07
+  class: event
+  step: vector
+  axis: Capital_Intensity
+  transition:
+    from: K2
+    to: K1
+  level: E2
+  kpis:
+  - CRWV-KPI-08
+  condition: capex/revenue <2x for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Capital_Intensity K2→K1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-08
+  class: event
+  step: vector
+  axis: Capital_Intensity
+  transition:
+    from: K2
+    to: K3
+  level: E2
+  kpis:
+  - CRWV-KPI-02
+  - CRWV-KPI-08
+  condition: capex/revenue >=4x AND backlog/annualized-revenue >=8x for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Capital_Intensity K2→K3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-09
+  class: event
+  step: vector
+  axis: Capital_Intensity
+  transition:
+    from: K2
+    to: K4
+  level: E2
+  kpis:
+  - CRWV-KPI-02
+  - CRWV-KPI-05
+  - CRWV-KPI-08
+  condition: capex/revenue >=4x AND (backlog/annualized-revenue <5x OR adjusted operating margin <=0%) for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Capital_Intensity K2→K4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-10
+  class: event
+  step: vector
+  axis: Funding_Liquidity
+  transition:
+    from: F2
+    to: F1
+  level: E2
+  kpis:
+  - CRWV-KPI-09
+  - CRWV-KPI-10
+  condition: debt/backlog <0.25x AND liquidity/latest-quarter-capex >=1.5x for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Funding_Liquidity F2→F1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: CRWV-E-11
+  class: event
+  step: vector
+  axis: Funding_Liquidity
+  transition:
+    from: F2
+    to: F3
+  level: E2
+  kpis:
+  - CRWV-KPI-09
+  - CRWV-KPI-10
+  condition: debt/backlog >0.50x OR liquidity/latest-quarter-capex <1.0x for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Funding_Liquidity F2→F3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []

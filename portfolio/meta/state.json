@@ -1,0 +1,95 @@
+{
+  "updated": "2026-09-21T06:06:02Z",
+  "price": {
+    "last": 665.75,
+    "last_at": "2026-09-18",
+    "zone": null
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [],
+  "notes": "Папка создана 2026-09-21 по партии моделей компаний; KPI сверены по 10-Q и exhibit пресс-релиза (задание facts-verify, партия 2).",
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-21",
+    "note": "фазы стратегии владельца не заданы; ведётся только вектор состояний"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T06:30:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании META v1.0 принята от другой LLM; вектор Ad_Monetization=A3 + User_Engagement=U2 + FoA_Profitability=P2 + AI_Capital_Intensity=C3 + Reality_Labs_Drag=R3; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-21T06:06:02Z",
+      "kind": "facts_verify",
+      "summary": "Сверка по 10-Q (meta-20260630.htm) и exhibit 99.1 пресс-релиза Q2 2026: все 10 KPI подтверждены, расхождений нет. Все 5 осей вектора получили verified: true."
+    }
+  ],
+  "scenario_state": {
+    "Ad_Monetization": {
+      "state": "A3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 advertising revenue $59.363B versus $46.563B, +27% YoY.",
+        "Ad impressions +14% YoY and average price per ad +12% YoY."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "User_Engagement": {
+      "state": "U2",
+      "since": "2026-09-21",
+      "evidence": [
+        "Family daily active people averaged 3.60B in June 2026, +3% YoY."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true
+    },
+    "FoA_Profitability": {
+      "state": "P2",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 FoA operating income $23.394B on FoA revenue $60.370B = 38.75%."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "AI_Capital_Intensity": {
+      "state": "C3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 capex including finance-lease principal $31.08B on revenue $60.801B = 51.12%.",
+        "Q2 FCF remained positive at $0.784B, margin 1.29%.",
+        "Non-cancelable contractual commitments were $349.31B at June 30, 2026, ~1.44x annualized Q2 revenue; lease obligations not yet commenced were $278.99B."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm', 'type': 'SEC 10-Q'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true
+    },
+    "Reality_Labs_Drag": {
+      "state": "R3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 RL operating loss $4.619B on revenue $0.431B.",
+        "Meta expects full-year 2026 RL operating losses to remain similar to 2025; 2025 RL reduced operating profit by ~$19.19B."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {"kpi_id": "META-KPI-01", "name": "Total revenue YoY", "period_end": "2026-06-30", "value": 0.28, "value_raw": "Revenue — Revenue was $60.80 billion, an increase of 28% year-over-year.", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm", "verified": true},
+    {"kpi_id": "META-KPI-02", "name": "Advertising revenue YoY", "period_end": "2026-06-30", "value": 0.27, "value_raw": "Advertising $59,363 $46,563 27 %", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "verified": true},
+    {"kpi_id": "META-KPI-03", "name": "Ad impressions YoY", "period_end": "2026-06-30", "value": 0.14, "value_raw": "Ad impressions delivered across our Family of Apps in the second quarter of 2026 increased 14% year-over-year", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm", "verified": true},
+    {"kpi_id": "META-KPI-04", "name": "Average price per ad YoY", "period_end": "2026-06-30", "value": 0.12, "value_raw": "Average price per ad — Average price per ad increased by 12% year-over-year.", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm", "verified": true},
+    {"kpi_id": "META-KPI-05", "name": "Family daily active people YoY", "period_end": "2026-06-30", "value": 0.03, "value_raw": "Family daily active people (DAP) was 3.60 billion on average for June 2026, an increase of 3% year-over-year.", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm", "verified": true},
+    {"kpi_id": "META-KPI-06", "name": "FoA operating margin", "period_end": "2026-06-30", "value": 0.3875, "value_raw": "Family of Apps: Revenue $60,370; Income from operations $23,394", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "verified": true},
+    {"kpi_id": "META-KPI-07", "name": "Capex / revenue", "period_end": "2026-06-30", "value": 0.5112, "value_raw": "Capital expenditures, including principal payments on finance leases, were $31.08 billion; Total revenue $60,801 (в млн $)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm", "verified": true},
+    {"kpi_id": "META-KPI-08", "name": "Free cash flow margin", "period_end": "2026-06-30", "value": 0.0129, "value_raw": "Cash flow from operating activities was $31.86 billion, and free cash flow was $784 million; Total revenue $60,801", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm", "verified": true},
+    {"kpi_id": "META-KPI-09", "name": "Non-cancelable commitments / annualized latest-quarter revenue", "period_end": "2026-06-30", "value": 1.4363, "value_raw": "we had $349.31 billion of non-cancelable contractual commitments; Total revenue $60,801 (в млн $) за квартал", "unit": "x", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "verified": true},
+    {"kpi_id": "META-KPI-10", "name": "Reality Labs operating loss", "period_end": "2026-06-30", "value": 4.619, "value_raw": "Loss from operations $(4,619) $(4,530); Reality Labs: Revenue $431", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "verified": true}
+  ],
+  "calc_runs": []
+}

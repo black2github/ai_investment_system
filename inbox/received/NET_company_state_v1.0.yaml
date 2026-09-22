@@ -1,0 +1,126 @@
+version: "1.0"
+ticker: NET
+as_of: "2026-09-21"
+artifact: company_state_bundle
+source_policy:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  existing_trigger_policy: "Existing owner NET-E-* triggers are not replaced or renumbered."
+sources:
+  NET_Q2_2026_10Q:
+    url: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm"
+    type: "SEC 10-Q"
+  NET_Q2_2026_RELEASE:
+    url: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm"
+    type: "SEC earnings-release exhibit"
+states:
+  axes:
+    Revenue_Growth:
+      states:
+        G0: {name: mature, criteria: "revenue YoY <20%"}
+        G1: {name: healthy, criteria: "YoY >=20% and <30%"}
+        G2: {name: strong, criteria: "YoY >=30% and <35%"}
+        G3: {name: accelerating, criteria: "YoY >=35% and <45%"}
+        G4: {name: hypergrowth, criteria: "YoY >=45% for 2 consecutive quarters"}
+      current: G3
+      current_evidence:
+        - "Q2 2026 revenue $696.1M, +36% YoY."
+      source_refs: [NET_Q2_2026_RELEASE]
+    Expansion_Retention:
+      states:
+        N0: {name: weak, criteria: "DBNRR <105%"}
+        N1: {name: stable, criteria: "DBNRR >=105% and <110%"}
+        N2: {name: healthy, criteria: "DBNRR >=110% and <115%"}
+        N3: {name: strong, criteria: "DBNRR >=115% and <125%"}
+        N4: {name: exceptional, criteria: "DBNRR >=125% for 2 consecutive quarters"}
+      current: N3
+      current_evidence:
+        - "Q2 DBNRR 120%, versus 114% a year earlier."
+      source_refs: [NET_Q2_2026_10Q]
+    Contracted_Demand:
+      states:
+        R0: {name: weak, criteria: "current RPO YoY growth <20%"}
+        R1: {name: healthy, criteria: "growth >=20% and <30%"}
+        R2: {name: strong, criteria: "growth >=30% and <35%"}
+        R3: {name: accelerating, criteria: "growth >=35% and <45%"}
+        R4: {name: exceptional, criteria: "growth >=45% for 2 quarters"}
+      current: R3
+      current_evidence:
+        - "Q2 Current RPO YoY growth 35%."
+      source_refs: [NET_Q2_2026_RELEASE]
+    Profitability_Cash:
+      states:
+        P0: {name: cash_negative, criteria: "FCF margin <=0%"}
+        P1: {name: low_positive, criteria: "FCF margin >0% and <10%"}
+        P2: {name: scaled, criteria: "FCF margin >=10% and <20%"}
+        P3: {name: strong, criteria: "FCF margin >=20%"}
+        P4: {name: GAAP_operating_profitability, criteria: "GAAP operating margin >0% for 2 quarters AND FCF margin >=20%"}
+      current: P1
+      current_evidence:
+        - "Q2 GAAP operating margin -29.6%; non-GAAP operating margin 13.8%."
+      source_refs: [NET_Q2_2026_RELEASE]
+    AI_Edge_Monetization:
+      states:
+        A0: {name: optionality, criteria: "no material AI/Workers usage or commercial evidence"}
+        A1: {name: usage_validation, criteria: "material AI/Workers platform usage narrative but no separately quantified revenue/ARR"}
+        A2: {name: commercial_validation, criteria: "AI/Workers ARR or annualized revenue >=$100M OR >=5% of company revenue"}
+        A3: {name: scaled_monetization, criteria: "AI/Workers annualized revenue >=$500M and YoY growth >=50%"}
+        A4: {name: platform_core, criteria: "AI/Workers >=15% of company revenue for 2 quarters"}
+      current: A1
+      current_evidence:
+        - "Management explicitly frames AI answer engines, agents and machine-to-machine traffic as a major platform shift."
+        - "Selected Q2 primary sources do not separately disclose Workers AI / edge-inference revenue or ARR."
+      source_refs: [NET_Q2_2026_RELEASE]
+kpis:
+  items:
+    - {id: NET-KPI-01, name: "Revenue YoY", period: quarterly, current_value: 0.36, unit: fraction, source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm", zones: {green: ">=0.30", yellow: ">=0.20 and <0.30", red: "<0.20"}}
+    - {id: NET-KPI-02, name: "Dollar-based net retention rate", period: quarterly, current_value: 1.20, unit: x, source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm", zones: {green: ">=1.15", yellow: ">=1.10 and <1.15", red: "<1.10"}}
+    - {id: NET-KPI-03, name: "Current RPO YoY growth", period: quarterly, current_value: 0.35, unit: fraction, source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm", zones: {green: ">=0.30", yellow: ">=0.20 and <0.30", red: "<0.20"}}
+    - {id: NET-KPI-04, name: "GAAP gross margin", period: quarterly, current_value: 0.718, unit: fraction, formula: "499.5 / 696.1 = 0.7176", source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm", zones: {green: ">=0.72", yellow: ">=0.68 and <0.72", red: "<0.68"}}
+    - {id: NET-KPI-05, name: "Non-GAAP operating margin", period: quarterly, current_value: 0.138, unit: fraction, formula: "96.1 / 696.1 = 0.138", source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm", zones: {green: ">=0.15", yellow: ">=0.10 and <0.15", red: "<0.10"}}
+    - {id: NET-KPI-06, name: "GAAP operating margin", period: quarterly, current_value: -0.296, unit: fraction, formula: "-205.7 / 696.1 = -0.2955", source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm", zones: {green: ">=0", yellow: ">=-0.15 and <0", red: "<-0.15"}}
+    - {id: NET-KPI-07, name: "Large-customer growth", period: quarterly, current_value: null, unit: "YoY fraction", verification_status: pending_verification, source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm", zones: {green: ">=0.25", yellow: ">=0.10 and <0.25", red: "<0.10"}}
+    - {id: NET-KPI-08, name: "AI/Workers annualized revenue or ARR", period: quarterly, current_value: null, unit: USD, verification_status: not_separately_disclosed, source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm", zones: {green: ">=500M", yellow: ">=100M and <500M", red: "<100M"}}
+    - {id: NET-KPI-09, name: "AI/Workers share of company revenue", period: quarterly, current_value: null, unit: fraction, verification_status: not_separately_disclosed, source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm", zones: {green: ">=0.15", yellow: ">=0.05 and <0.15", red: "<0.05"}}
+    - {id: NET-KPI-10, name: "DBNRR change YoY", period: quarterly, current_value: 0.06, unit: "absolute ratio points", formula: "1.20 - 1.14 = 0.06", source: "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm", zones: {green: ">=0.03", yellow: ">=0 and <0.03", red: "<0"}}
+triggers:
+  preserve_existing_NET_E_ids: true
+  binding_guidance:
+    - "Existing Workers AI / edge-inference NET-E-* -> AI_Edge_Monetization + NET-KPI-08/09."
+    - "Existing ARR/RPO NET-E-* -> Contracted_Demand + NET-KPI-03 or original ARR metric if different."
+    - "Existing NRR/DBNRR NET-E-* -> Expansion_Retention + NET-KPI-02/10."
+  proposed_transitions_without_ids:
+    - {axis: Revenue_Growth, transition: {from: G3, to: G2}, kpis: [NET-KPI-01], condition: "revenue YoY <35% but >=30% for 2 quarters", period: "2 quarters", level: E2}
+    - {axis: Revenue_Growth, transition: {from: G3, to: G4}, kpis: [NET-KPI-01], condition: "revenue YoY >=45% for 2 quarters", period: "2 quarters", level: E2}
+    - {axis: Expansion_Retention, transition: {from: N3, to: N2}, kpis: [NET-KPI-02], condition: "DBNRR <115% for 2 quarters", period: "2 quarters", level: E2}
+    - {axis: Expansion_Retention, transition: {from: N3, to: N4}, kpis: [NET-KPI-02], condition: "DBNRR >=125% for 2 quarters", period: "2 quarters", level: E2}
+    - {axis: Contracted_Demand, transition: {from: R3, to: R2}, kpis: [NET-KPI-03], condition: "Current RPO YoY growth <35% for 2 quarters", period: "2 quarters", level: E2}
+    - {axis: AI_Edge_Monetization, transition: {from: A1, to: A2}, kpis: [NET-KPI-08, NET-KPI-09], condition: "AI/Workers annualized revenue or ARR >=$100M OR AI/Workers revenue share >=5%", period: "one verified company disclosure", level: E2}
+mpc_inputs:
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 2
+    HYPERSCALER_CAPEX: 1
+    SEMICONDUCTOR_WFE: 0
+    ADVANCED_PACKAGING: 0
+    HBM_MEMORY: 0
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 2
+    DATA_CENTER_POWER: 1
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 0
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: 1
+    CHINA_REVENUE: 0
+    TAIWAN_SUPPLY: 0
+    ACQUISITION_INTEGRATION: 0
+  failure_modes:
+    - {failure_id: NET-FM-01, name: "Enterprise/cloud software spending slowdown", common_cause_id: CLOUD_SOFTWARE_DEMAND_SLOWDOWN, severity: high}
+    - {failure_id: NET-FM-02, name: "AI edge inference/agent monetization fails to become material", common_cause_id: AI_MONETIZATION_FAILURE, severity: high}
+    - {failure_id: NET-FM-03, name: "Hyperscaler/cloud-platform competition", common_cause_id: CLOUD_PLATFORM_COMPETITION, severity: high}
+    - {failure_id: NET-FM-04, name: "Network outage/security incident", common_cause_id: INTERNET_INFRASTRUCTURE_OUTAGE, severity: critical}
+    - {failure_id: NET-FM-05, name: "Large-customer expansion/NRR decelerates", common_cause_id: ENTERPRISE_EXPANSION_SLOWDOWN, severity: high}
+    - {failure_id: NET-FM-06, name: "AI traffic cost grows faster than monetization", common_cause_id: AI_OVERBUILD, severity: medium}
+    - {failure_id: NET-FM-07, name: "Valuation sensitivity under higher rates", common_cause_id: CAPITAL_MARKETS_TIGHTENING, severity: medium}

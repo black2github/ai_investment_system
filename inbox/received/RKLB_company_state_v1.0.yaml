@@ -1,0 +1,127 @@
+version: "1.0"
+ticker: RKLB
+as_of: "2026-09-21"
+artifact: company_state_bundle
+source_policy:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+sources:
+  RKLB_Q2_2026_10Q:
+    url: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm"
+    type: "SEC 10-Q"
+  RKLB_Q2_2026_RELEASE:
+    url: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm"
+    type: "SEC earnings-release exhibit"
+states:
+  axes:
+    Electron_Cadence:
+      states:
+        E0: {name: subscale, criteria: "Electron/HASTE launches trailing 6m < 8"}
+        E1: {name: established, criteria: "launches trailing 6m >=8 and <12"}
+        E2: {name: scaled, criteria: "launches trailing 6m >=12 and <18"}
+        E3: {name: high_cadence, criteria: "launches trailing 6m >=18"}
+        E4: {name: cadence_stress, criteria: "launch success rate <90% or launches trailing 6m decline >=30% YoY"}
+      current: E2
+      current_evidence:
+        - "Rocket Lab completed 12 Electron missions in H1 2026 versus 10 in H1 2025."
+      source_refs: [RKLB_Q2_2026_10Q]
+    Neutron_Development:
+      states:
+        N0: {name: development, criteria: "first-flight hardware not in integrated qualification/readiness phase"}
+        N1: {name: integrated_preflight, criteria: "first-flight hardware integration/readiness ongoing and first-stage qualification in progress"}
+        N2: {name: orbital_validation, criteria: "one successful orbital Neutron mission meeting >=80% declared objectives"}
+        N3: {name: reuse_validation, criteria: "same flight-capable Neutron first-stage architecture reused successfully >=2 times"}
+        N4: {name: operational_cadence, criteria: ">=4 successful Neutron missions rolling 12m"}
+      current: N1
+      current_evidence:
+        - "Q2 10-Q: first-flight hardware integration/readiness ongoing; Archimedes testing and second-stage/reusable-fairing work progressing."
+        - "Stage 1 tank production aligned with target delivery to pad in Q4 2026; company says year-end launch window is narrowing."
+      source_refs: [RKLB_Q2_2026_10Q]
+    Space_Systems_Scale:
+      states:
+        S0: {name: secondary, criteria: "Space Systems share of quarterly revenue <40%"}
+        S1: {name: balanced, criteria: "share >=40% and <60%"}
+        S2: {name: dominant, criteria: "share >=60% and <75%"}
+        S3: {name: platform_core, criteria: "share >=75% AND Space Systems YoY growth >=40%"}
+        S4: {name: durable_platform, criteria: "share >=75% AND YoY growth >=40% for 2 consecutive quarters"}
+      current: S3
+      current_evidence:
+        - "Q2 Space Systems revenue $189.5M of $234.2M total, ~80.9%."
+        - "Q2 Space Systems revenue +94% YoY."
+      source_refs: [RKLB_Q2_2026_10Q]
+    Backlog_Visibility:
+      states:
+        B0: {name: low_visibility, criteria: "backlog < $1.0B"}
+        B1: {name: established, criteria: "backlog >= $1.0B and < $1.5B"}
+        B2: {name: strong, criteria: "backlog >= $1.5B and < $2.0B"}
+        B3: {name: very_strong, criteria: "backlog >= $2.0B and < $3.0B"}
+        B4: {name: exceptional, criteria: "backlog >= $3.0B"}
+      current: B3
+      current_evidence:
+        - "Q2 2026 backlog $2.36B, +137% YoY."
+        - "Launch backlog exceeded 90 missions after Q2/post-quarter signings."
+      source_refs: [RKLB_Q2_2026_RELEASE]
+    Capital_and_Integration:
+      states:
+        C0: {name: disciplined, criteria: "no material acquisition pending and operating cash burn < $50M/quarter"}
+        C1: {name: active_investment, criteria: "material development spend or acquisitions but liquidity > $1.0B"}
+        C2: {name: integration_heavy, criteria: "multiple acquisitions closed/pending AND liquidity > $1.0B"}
+        C3: {name: balance_sheet_strain, criteria: "liquidity < $1.0B OR acquisition/development cash commitments >50% of liquidity"}
+        C4: {name: funding_stress, criteria: "liquidity < $0.5B and negative operating cash flow for 2 quarters"}
+      current: C2
+      current_evidence:
+        - "Rocket Lab closed Mynaric and Motiv acquisitions and announced agreement to acquire Iridium."
+        - "Company previously disclosed access to >$2B total liquidity."
+      source_refs: [RKLB_Q2_2026_RELEASE]
+kpis:
+  items:
+    - {id: RKLB-KPI-01, name: "Total revenue YoY", period: quarterly, current_value: 0.62, unit: fraction, formula: "234.2 / 144.6 - 1 ≈ 0.62", source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm", zones: {green: ">=0.40", yellow: ">=0.20 and <0.40", red: "<0.20"}}
+    - {id: RKLB-KPI-02, name: "Space Systems revenue YoY", period: quarterly, current_value: 0.94, unit: fraction, formula: "189.5 / 97.9 - 1 ≈ 0.94", source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm", zones: {green: ">=0.40", yellow: ">=0.15 and <0.40", red: "<0.15"}}
+    - {id: RKLB-KPI-03, name: "Space Systems share of quarterly revenue", period: quarterly, current_value: 0.809, unit: fraction, formula: "189.5 / 234.2 = 0.809", source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm", zones: {green: ">=0.70", yellow: ">=0.50 and <0.70", red: "<0.50"}}
+    - {id: RKLB-KPI-04, name: "Electron/HASTE launches trailing 6 months", period: quarterly, current_value: 12, unit: launches, source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm", zones: {green: ">=12", yellow: ">=8 and <12", red: "<8"}}
+    - {id: RKLB-KPI-05, name: "Launch services revenue YoY", period: quarterly, current_value: -0.04, unit: fraction, formula: "44.6 / 46.7 - 1 ≈ -0.045", source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm", zones: {green: ">=0.20", yellow: ">=0 and <0.20", red: "<0"}}
+    - {id: RKLB-KPI-06, name: "Backlog", period: quarterly, current_value: 2.36, unit: "USD B", source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm", zones: {green: ">=2.0", yellow: ">=1.5 and <2.0", red: "<1.5"}}
+    - {id: RKLB-KPI-07, name: "Backlog YoY", period: quarterly, current_value: 1.37, unit: fraction, source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm", zones: {green: ">=0.50", yellow: ">=0.20 and <0.50", red: "<0.20"}}
+    - {id: RKLB-KPI-08, name: "Launch backlog count", period: quarterly, current_value: ">90", unit: contracted_launches, source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm", zones: {green: ">=80", yellow: ">=50 and <80", red: "<50"}}
+    - {id: RKLB-KPI-09, name: "Neutron milestone state", period: event_driven, current_value: 1, unit: ordinal, formula: "1=integrated preflight; 2=orbital validation; 3=reuse validation; 4=operational cadence", source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm", zones: {green: ">=2", yellow: "=1", red: "=0"}}
+    - {id: RKLB-KPI-10, name: "Space Systems H1 growth", period: semiannual, current_value: 0.763, unit: fraction, formula: "326.2 / 184.9 - 1 = 0.763", source: "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm", zones: {green: ">=0.40", yellow: ">=0.15 and <0.40", red: "<0.15"}}
+triggers:
+  items:
+    - {id: RKLB-E-01, step: vector, status: planned, axis: Electron_Cadence, transition: {from: E2, to: E3}, kpis: [RKLB-KPI-04], condition: "Electron/HASTE launches trailing 6m >=18", period: "rolling 6 months", level: E2}
+    - {id: RKLB-E-02, step: vector, status: planned, axis: Electron_Cadence, transition: {from: E2, to: E1}, kpis: [RKLB-KPI-04], condition: "Electron/HASTE launches trailing 6m <12 for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: RKLB-E-03, step: vector, status: planned, axis: Electron_Cadence, transition: {from: E2, to: E4}, kpis: [RKLB-KPI-04], condition: "launch success rate <90% OR launches trailing 6m decline >=30% YoY", period: "one failure cluster or one quarter", level: E3}
+    - {id: RKLB-E-04, step: vector, status: planned, axis: Neutron_Development, transition: {from: N1, to: N2}, kpis: [RKLB-KPI-09], condition: "one successful orbital Neutron mission meeting >=80% declared objectives", period: "one mission", level: E2}
+    - {id: RKLB-E-05, step: vector, status: planned, axis: Neutron_Development, transition: {from: N2, to: N3}, kpis: [RKLB-KPI-09], condition: "same flight-capable Neutron first-stage architecture successfully reused >=2 times", period: "event driven", level: E2}
+    - {id: RKLB-E-06, step: vector, status: planned, axis: Space_Systems_Scale, transition: {from: S3, to: S4}, kpis: [RKLB-KPI-02, RKLB-KPI-03], condition: "Space Systems share >=75% AND YoY growth >=40% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: RKLB-E-07, step: vector, status: planned, axis: Space_Systems_Scale, transition: {from: S3, to: S2}, kpis: [RKLB-KPI-02, RKLB-KPI-03], condition: "Space Systems share <75% OR YoY growth <40% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: RKLB-E-08, step: vector, status: planned, axis: Backlog_Visibility, transition: {from: B3, to: B4}, kpis: [RKLB-KPI-06], condition: "backlog >= $3.0B", period: "one quarter", level: E2}
+    - {id: RKLB-E-09, step: vector, status: planned, axis: Backlog_Visibility, transition: {from: B3, to: B2}, kpis: [RKLB-KPI-06, RKLB-KPI-07], condition: "backlog < $2.0B OR backlog YoY growth <20% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: RKLB-E-10, step: vector, status: planned, axis: Capital_and_Integration, transition: {from: C2, to: C3}, kpis: [], condition: "liquidity < $1.0B OR acquisition/development cash commitments >50% of disclosed liquidity", period: "one verified report", level: E2}
+mpc_inputs:
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 0
+    HYPERSCALER_CAPEX: 0
+    SEMICONDUCTOR_WFE: 0
+    ADVANCED_PACKAGING: 0
+    HBM_MEMORY: 0
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 0
+    DATA_CENTER_POWER: 0
+    LAUNCH_ECONOMICS: 2
+    SATELLITE_CONNECTIVITY: 2
+    GOVERNMENT_DEFENSE: 2
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: 1
+    CHINA_REVENUE: 0
+    TAIWAN_SUPPLY: 0
+    ACQUISITION_INTEGRATION: 2
+  failure_modes:
+    - {failure_id: RKLB-FM-01, name: "Neutron development/first-flight delay or failure", common_cause_id: LAUNCH_VEHICLE_DEVELOPMENT_FAILURE, severity: critical}
+    - {failure_id: RKLB-FM-02, name: "Electron launch failure/cadence disruption", common_cause_id: LAUNCH_OPERATIONS_FAILURE, severity: high}
+    - {failure_id: RKLB-FM-03, name: "Government space procurement slowdown", common_cause_id: GOVERNMENT_SPACE_BUDGET, severity: high}
+    - {failure_id: RKLB-FM-04, name: "Space-systems program execution failure", common_cause_id: SPACE_SYSTEMS_EXECUTION, severity: high}
+    - {failure_id: RKLB-FM-05, name: "Mynaric/Motiv/Iridium integration complexity", common_cause_id: ACQUISITION_INTEGRATION_FAILURE, severity: high}
+    - {failure_id: RKLB-FM-06, name: "Capital-market dependence during development", common_cause_id: CAPITAL_MARKETS_TIGHTENING, severity: medium}
+    - {failure_id: RKLB-FM-07, name: "Launch regulatory/range delay", common_cause_id: SPACE_REGULATORY_RANGE_DELAY, severity: medium}

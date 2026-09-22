@@ -1,0 +1,63 @@
+version: "1.1"
+artifact: "_portfolio"
+as_of: "2026-09-20"
+change_from: "1.0"
+change_type: "additive_patch"
+
+initial_portfolio_hypothesis:
+  status: "pre_system_prior"
+  recorded_as_historical_fact: true
+  approved_target_portfolio: false
+  use_as_optimizer_input: false
+  use_as_target_weights: false
+
+  purpose:
+    - "Сохранить первоначальную гипотезу портфеля до полного прогона инвестиционной системы."
+    - "Позволить ex-post сравнить первоначальный человеческий выбор с результатом Company Model → Conditional MC → Marginal Portfolio Contribution → Portfolio Optimizer → Stability Test."
+    - "Выявлять anchoring: система не должна рационализировать прежние веса."
+
+  candidates:
+    - {ticker: AVGO, prior_weight: 0.15, role: candidate}
+    - {ticker: NVDA, prior_weight: 0.15, role: candidate}
+    - {ticker: KLAC, prior_weight: 0.14, role: candidate}
+    - {ticker: ASML, prior_weight: 0.11, role: candidate}
+    - {ticker: SPCX, prior_weight: 0.10, role: candidate}
+    - {ticker: SNPS, prior_weight: 0.08, role: candidate}
+    - {ticker: RKLB, prior_weight: 0.08, role: candidate}
+    - {ticker: CDNS, prior_weight: 0.07, role: candidate}
+    - {ticker: MSFT, prior_weight: 0.07, role: candidate}
+    - {ticker: NBIS, prior_weight: 0.05, role: candidate}
+
+  prior_weight_sum: 1.00
+
+  anti_anchoring_rule: >
+    initial_portfolio_hypothesis является только исторической записью prior.
+    Тикер, prior_weight и прежняя роль не передаются как признаки или ограничения
+    в valuation, conditional Monte Carlo, Marginal Portfolio Contribution,
+    Portfolio Optimizer или Portfolio Stability Test. Компания должна заново
+    конкурировать за капитал на одинаковых правилах с другими кандидатами.
+
+  comparison_after_system_run:
+    enabled: true
+    outputs:
+      - prior_weight
+      - model_proposed_weight
+      - absolute_weight_delta
+      - inclusion_changed
+      - primary_reason_codes
+    rule: >
+      Сравнение выполняется только после завершения расчёта, чтобы prior не мог
+      повлиять на оптимизацию.
+
+target_weights:
+  version: null
+  approved_at: null
+  effective_from: null
+  status: draft
+  weights: []
+  sum_check: null
+
+positions:
+  rule: >
+    Фактические позиции остаются отдельными от initial_portfolio_hypothesis.
+    До предоставления владельцем фактического состава они не выводятся из prior.

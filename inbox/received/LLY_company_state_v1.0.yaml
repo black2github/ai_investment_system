@@ -1,0 +1,340 @@
+version: "1.0"
+ticker: LLY
+as_of: "2026-09-21"
+artifact: "company_state_bundle"
+
+source_policy:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+
+sources:
+  LLY_Q2_2026_10Q:
+    url: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+    type: "SEC 10-Q"
+  LLY_Q2_2026_RELEASE_SEC:
+    url: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm"
+    type: "SEC 8-K exhibit / earnings release"
+  LLY_Q2_2026_RELEASE_IR:
+    url: "https://investor.lilly.com/news-releases/news-release-details/lilly-reports-second-quarter-2026-financial-results-raises-full"
+    type: "IR earnings release"
+
+states:
+  axes:
+    Incretin_Demand:
+      states:
+        D0: {name: early_or_stalled, criteria: "tirzepatide quarterly revenue < $5B OR tirzepatide YoY growth < 10%"}
+        D1: {name: scaled, criteria: "tirzepatide quarterly revenue >= $5B AND YoY growth >= 10%"}
+        D2: {name: strong_growth, criteria: "tirzepatide quarterly revenue >= $8B AND YoY growth >= 25%"}
+        D3: {name: hypergrowth, criteria: "tirzepatide quarterly revenue >= $12B AND YoY growth >= 50%"}
+        D4: {name: durable_hypergrowth, criteria: "latest-quarter tirzepatide revenue >= $12B AND H1/two-quarter aggregate tirzepatide YoY growth >= 50%"}
+      current: D4
+      current_evidence:
+        - "Q2 Mounjaro revenue $9.943B + Zepbound revenue $4.928B = $14.871B."
+        - "Q2 combined tirzepatide revenue grew 73.3% YoY: ($14.871B / $8.580B) - 1."
+        - "H1 2026 combined Mounjaro + Zepbound revenue was $27.693B versus $14.734B in H1 2025."
+      source_refs: [LLY_Q2_2026_10Q]
+
+    Pricing_Access:
+      states:
+        P0: {name: stable_or_positive_price, criteria: "consolidated price contribution >= 0%"}
+        P1: {name: mild_pressure, criteria: "price contribution < 0% and >= -5%"}
+        P2: {name: moderate_pressure, criteria: "price contribution < -5% and >= -10%"}
+        P3: {name: high_pressure_offset_by_volume, criteria: "price contribution < -10% and >= -20% AND volume contribution >= 30%"}
+        P4: {name: severe_pricing_pressure, criteria: "price contribution < -20% OR revenue growth < 20% while volume growth remains positive"}
+      current: P3
+      current_evidence:
+        - "Q2 2026 consolidated revenue change: volume +60%, price -13%, FX +1%."
+        - "10-Q attributes U.S. lower realized prices primarily to Zepbound and Mounjaro; outside the U.S. lower prices were driven primarily by Mounjaro's China NRDL inclusion."
+      source_refs: [LLY_Q2_2026_10Q]
+
+    Manufacturing_Expansion:
+      states:
+        M0: {name: normalized, criteria: "H1/TTM PP&E capex / revenue < 5%"}
+        M1: {name: expansion, criteria: "capex/revenue >= 5% and < 10%"}
+        M2: {name: aggressive_expansion, criteria: "capex/revenue >= 10% and < 15%"}
+        M3: {name: extreme_expansion, criteria: "capex/revenue >= 15% and < 25%"}
+        M4: {name: supply_execution_stress, criteria: "capex/revenue >= 25% OR company discloses manufacturing/supply disruption causing >=5% revenue impact"}
+      current: M2
+      current_evidence:
+        - "H1 2026 purchases of property and equipment were $5.259B on revenue of $42.773B = 12.30%."
+        - "Q2 earnings release states Lilly committed an additional $4.5B to expand Indiana manufacturing sites."
+      source_refs: [LLY_Q2_2026_10Q, LLY_Q2_2026_RELEASE_SEC]
+
+    Pipeline_Diversification:
+      states:
+        R0: {name: tirzepatide_only, criteria: "no next-generation obesity/metabolic asset has Phase 3 success or regulatory approval"}
+        R1: {name: late_stage_optionality, criteria: "at least one next-generation obesity/metabolic asset has entered Phase 3"}
+        R2: {name: one_validated_next_gen_asset, criteria: "at least one next-generation asset has Phase 3 primary-endpoint success OR regulatory approval"}
+        R3: {name: multiple_validated_next_gen_assets, criteria: "orforglipron approved for obesity AND retatrutide Phase 3 obesity trials met primary endpoints"}
+        R4: {name: commercial_multi_asset_platform, criteria: "at least two next-generation obesity/metabolic assets are commercially approved in a major market"}
+      current: R3
+      current_evidence:
+        - "10-Q states FDA approved orforglipron (Foundayo) for obesity and Lilly launched it in Q2."
+        - "10-Q states Phase 3 retatrutide obesity trials met primary endpoints."
+      source_refs: [LLY_Q2_2026_10Q]
+
+    Cash_Economics:
+      states:
+        F0: {name: negative_fcf, criteria: "simple FCF margin < 0%"}
+        F1: {name: low_positive, criteria: "FCF margin >= 0% and < 10%"}
+        F2: {name: healthy, criteria: "FCF margin >= 10% and < 20%"}
+        F3: {name: strong, criteria: "FCF margin >= 20% and < 30%"}
+        F4: {name: exceptional, criteria: "FCF margin >= 30% for 2 consecutive reporting periods"}
+      current: F3
+      current_evidence:
+        - "H1 2026 OCF $16.023B less PP&E capex $5.259B = simple FCF $10.764B."
+        - "H1 simple FCF margin = $10.764B / $42.773B = 25.17%."
+      source_refs: [LLY_Q2_2026_10Q]
+
+kpis:
+  zone_semantics:
+    green: "поддерживает thesis/state"
+    yellow: "требует наблюдения"
+    red: "указывает на ухудшение/риск"
+    thresholds_provenance: model_assumption
+  items:
+    - id: LLY-KPI-01
+      name: "Total revenue YoY"
+      period: quarterly
+      current_value: 0.48
+      unit: fraction
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm"
+      zones: {green: ">= 0.30", yellow: ">= 0.15 and < 0.30", red: "< 0.15"}
+
+    - id: LLY-KPI-02
+      name: "Tirzepatide quarterly revenue"
+      period: quarterly
+      current_value: 14.871
+      unit: "USD B"
+      formula: "9.943 Mounjaro + 4.928 Zepbound = 14.871"
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+      zones: {green: ">= 12", yellow: ">= 8 and < 12", red: "< 8"}
+
+    - id: LLY-KPI-03
+      name: "Tirzepatide revenue YoY"
+      period: quarterly
+      current_value: 0.7332
+      unit: fraction
+      formula: "(9.943 + 4.928) / (5.199 + 3.381) - 1 = 0.7332"
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+      zones: {green: ">= 0.50", yellow: ">= 0.20 and < 0.50", red: "< 0.20"}
+
+    - id: LLY-KPI-04
+      name: "Tirzepatide share of total revenue"
+      period: quarterly
+      current_value: 0.6473
+      unit: fraction
+      formula: "(9.943 + 4.928) / 22.974 = 0.6473"
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+      zones: {green: "< 0.50", yellow: ">= 0.50 and <= 0.65", red: "> 0.65"}
+      note: "Risk/concentration KPI: higher is worse despite strong product demand."
+
+    - id: LLY-KPI-05
+      name: "Consolidated realized-price contribution"
+      period: quarterly
+      current_value: -0.13
+      unit: fraction
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+      zones: {green: ">= -0.05", yellow: ">= -0.15 and < -0.05", red: "< -0.15"}
+
+    - id: LLY-KPI-06
+      name: "Consolidated volume contribution"
+      period: quarterly
+      current_value: 0.60
+      unit: fraction
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+      zones: {green: ">= 0.40", yellow: ">= 0.20 and < 0.40", red: "< 0.20"}
+
+    - id: LLY-KPI-07
+      name: "Gross margin"
+      period: quarterly
+      current_value: 0.858
+      unit: fraction
+      formula: "19.706 / 22.974 = 0.8578; company reports 85.8%"
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+      zones: {green: ">= 0.82", yellow: ">= 0.75 and < 0.82", red: "< 0.75"}
+
+    - id: LLY-KPI-08
+      name: "Simple FCF margin"
+      period: semiannual
+      current_value: 0.2517
+      unit: fraction
+      formula: "(16.023 OCF - 5.259 PP&E capex) / 42.773 revenue = 0.2517"
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+      zones: {green: ">= 0.20", yellow: ">= 0.10 and < 0.20", red: "< 0.10"}
+
+    - id: LLY-KPI-09
+      name: "PP&E capex / revenue"
+      period: semiannual
+      current_value: 0.1230
+      unit: fraction
+      formula: "5.259 / 42.773 = 0.1230"
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+      zones: {green: "< 0.10", yellow: ">= 0.10 and < 0.15", red: ">= 0.15"}
+      note: "Risk KPI; elevated capex may be value-creating if demand and FCF remain strong."
+
+    - id: LLY-KPI-10
+      name: "Validated next-generation incretin milestones"
+      period: event_driven
+      current_value: 2
+      unit: count
+      formula: "1 = orforglipron obesity FDA approval; 1 = retatrutide Phase 3 obesity primary-endpoint success"
+      source: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+      zones: {green: ">= 2", yellow: "= 1", red: "= 0"}
+
+triggers:
+  rules:
+    evidence_required: true
+    pending_verification_blocks_transition: true
+    trigger_not_decision: true
+    all_numeric_thresholds_provenance: model_assumption
+  items:
+    - id: LLY-E-01
+      step: vector
+      status: planned
+      axis: Incretin_Demand
+      transition: {from: D4, to: D3}
+      kpis: [LLY-KPI-02, LLY-KPI-03]
+      condition: "tirzepatide quarterly revenue >= $12B AND YoY growth < 50% but >= 20% for 2 consecutive quarters"
+      period: "2 quarters"
+      level: E2
+
+    - id: LLY-E-02
+      step: vector
+      status: planned
+      axis: Incretin_Demand
+      transition: {from: D4, to: D2}
+      kpis: [LLY-KPI-03]
+      condition: "tirzepatide revenue YoY < 20% for 2 consecutive quarters"
+      period: "2 quarters"
+      level: E2
+
+    - id: LLY-E-03
+      step: vector
+      status: planned
+      axis: Pricing_Access
+      transition: {from: P3, to: P2}
+      kpis: [LLY-KPI-05, LLY-KPI-06]
+      condition: "price contribution >= -10% AND volume contribution >= 30% for 2 consecutive quarters"
+      period: "2 quarters"
+      level: E2
+
+    - id: LLY-E-04
+      step: vector
+      status: planned
+      axis: Pricing_Access
+      transition: {from: P3, to: P4}
+      kpis: [LLY-KPI-05, LLY-KPI-06]
+      condition: "price contribution < -20% OR (price contribution < -15% AND volume contribution < 20%) for 2 consecutive quarters"
+      period: "2 quarters"
+      level: E2
+
+    - id: LLY-E-05
+      step: vector
+      status: planned
+      axis: Manufacturing_Expansion
+      transition: {from: M2, to: M1}
+      kpis: [LLY-KPI-09]
+      condition: "PP&E capex / revenue < 10% for 2 consecutive reporting periods AND no material supply shortage disclosed"
+      period: "2 reporting periods"
+      level: E2
+
+    - id: LLY-E-06
+      step: vector
+      status: planned
+      axis: Manufacturing_Expansion
+      transition: {from: M2, to: M3}
+      kpis: [LLY-KPI-09]
+      condition: "PP&E capex / revenue >= 15% for 2 consecutive reporting periods"
+      period: "2 reporting periods"
+      level: E2
+
+    - id: LLY-E-07
+      step: vector
+      status: planned
+      axis: Manufacturing_Expansion
+      transition: {from: M2, to: M4}
+      kpis: []
+      condition: "company discloses manufacturing/supply disruption causing >=5% revenue impact or equivalent withdrawal of revenue guidance"
+      period: "one verified company disclosure"
+      level: E3
+
+    - id: LLY-E-08
+      step: vector
+      status: planned
+      axis: Pipeline_Diversification
+      transition: {from: R3, to: R4}
+      kpis: [LLY-KPI-10]
+      condition: "retatrutide receives commercial regulatory approval in a major market while orforglipron obesity approval remains in force"
+      period: "one verified regulatory event"
+      level: E2
+
+    - id: LLY-E-09
+      step: vector
+      status: planned
+      axis: Pipeline_Diversification
+      transition: {from: R3, to: R2}
+      kpis: [LLY-KPI-10]
+      condition: "material regulatory/clinical setback removes either orforglipron obesity approval or retatrutide Phase 3 validation from the active thesis"
+      period: "one verified regulatory/clinical event"
+      level: E3
+
+    - id: LLY-E-10
+      step: vector
+      status: planned
+      axis: Cash_Economics
+      transition: {from: F3, to: F2}
+      kpis: [LLY-KPI-08]
+      condition: "simple FCF margin < 20% for 2 consecutive reporting periods"
+      period: "2 reporting periods"
+      level: E2
+
+    - id: LLY-E-11
+      step: vector
+      status: planned
+      axis: Cash_Economics
+      transition: {from: F3, to: F4}
+      kpis: [LLY-KPI-08]
+      condition: "simple FCF margin >= 30% for 2 consecutive reporting periods"
+      period: "2 reporting periods"
+      level: E2
+
+mpc_inputs:
+  driver_exposure_semantics:
+    scale: {-2: strong_negative, -1: negative, 0: immaterial, 1: positive, 2: strong_positive}
+    provenance: model_assumption
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 0
+    HYPERSCALER_CAPEX: 0
+    SEMICONDUCTOR_WFE: 0
+    ADVANCED_PACKAGING: 0
+    HBM_MEMORY: 0
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 0
+    DATA_CENTER_POWER: 0
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 0
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: 0
+    CHINA_REVENUE: 1
+    TAIWAN_SUPPLY: 0
+    ACQUISITION_INTEGRATION: 1
+  taxonomy_gap:
+    - "HEALTHCARE_DEMAND"
+    - "DRUG_PIPELINE"
+    - "REIMBURSEMENT_PRICING"
+    - "MANUFACTURING_CAPACITY"
+    - "PHARMA_REGULATION"
+    - "PATENT_EXCLUSIVITY"
+  taxonomy_gap_note: "MPC 16-driver taxonomy intentionally understates LLY-specific healthcare drivers; do not interpret zeros as absence of business risk."
+  failure_modes:
+    - {failure_id: LLY-FM-01, name: "Incretin pricing/reimbursement pressure outpaces volume", common_cause_id: GLP1_PRICING_REIMBURSEMENT, severity: high}
+    - {failure_id: LLY-FM-02, name: "Manufacturing expansion fails to meet demand or creates quality/supply disruption", common_cause_id: PHARMA_MANUFACTURING_CAPACITY, severity: high}
+    - {failure_id: LLY-FM-03, name: "Next-generation obesity/metabolic pipeline clinical or regulatory failure", common_cause_id: CLINICAL_REGULATORY_FAILURE, severity: high}
+    - {failure_id: LLY-FM-04, name: "Tirzepatide concentration amplifies a product-specific safety/competitive shock", common_cause_id: PRODUCT_CONCENTRATION, severity: critical}
+    - {failure_id: LLY-FM-05, name: "Competing obesity therapies erode share or pricing power", common_cause_id: GLP1_COMPETITIVE_INTENSITY, severity: high}
+    - {failure_id: LLY-FM-06, name: "Acquisition/integration and IPR&D spending destroys expected pipeline value", common_cause_id: ACQUISITION_INTEGRATION_FAILURE, severity: medium}
+    - {failure_id: LLY-FM-07, name: "Incretin product-liability litigation creates material financial/label impact", common_cause_id: PHARMA_LITIGATION, severity: medium}

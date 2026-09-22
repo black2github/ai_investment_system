@@ -1,0 +1,156 @@
+# Реестр триггеров: Yaskawa Electric (6506, TSE Prime)
+# Источник: финальный блок (ChatGPT, 17.09.2026). Предпосылки проверены 17.09 по отчёту Q1 FY (до 28.02.2027): orders ¥163.8 млрд +29%, Robotics revenue ¥56.7 млрд +2.0% — совпадают; дата Q2 на IR — «Oct. 2026» без дня.
+
+meta:
+  ticker: "6506"
+  exchange: TSE Prime
+  yahoo_symbol: 6506.T
+  currency: JPY
+  lot: 100
+  company: Yaskawa Electric
+  status_in_basket: наблюдать до триггера (покупка только после 6506-E-01 или E-02)
+  target_weight: "20%"
+  horizon: 2030
+  strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
+  strategy_date: 2026-09-17
+  registry_updated: 2026-09-17
+  price_at_strategy: 4378
+  fiscal_year: "март – конец февраля (FY2026 до 28.02.2027)"
+  scenario: portfolio/_scenarios/taiwan.yaml
+
+automations:
+  aiinfra-report-check: { covers: [6506-E-01, 6506-E-02, 6506-E-03, 6506-E-05, 6506-X-01, 6506-X-02, 6506-X-03], cadence: "после отчёта 09.10.2026 (6506-C-01)" }
+  aiinfra-news-watch:   { covers: [6506-E-04], cadence: "ежедневно" }
+  aiinfra-price-watch:  { covers: [], note: "6506-P-01..03 подключить ТОЛЬКО после срабатывания E-01/E-02" }
+
+route:
+  # Маршрут компании (степпер). current ведёт state.json → route.current; kind: stage | scenario.
+  steps:
+    - { id: watch, kind: stage, name: "Наблюдение: ждём подтверждающий триггер по отчёту" }
+    - { id: entry, kind: stage, name: "Вход траншами ¥4 400 / ¥4 000 / ¥3 600 (7% / 7% / 6%) после подтверждения Robotics" }
+    - { id: confirm, kind: stage, name: "Подтверждение тезиса по квартальным отчётам (условия -E-) и контроль поломки (-X-)" }
+    - { id: hold, kind: stage, name: "Удержание до горизонта" }
+    - { id: exit, kind: stage, name: "Фиксация и выход при капитализации ¥4 трлн / ¥5 трлн; горизонт 2030" }
+    - { id: taiwan, kind: scenario, name: "Сценарий «Тайвань» (portfolio/_scenarios/taiwan.yaml)", ref: portfolio/_scenarios/taiwan.yaml }
+
+triggers:
+
+  # ---------- price: вход (условный, после подтверждения Robotics) ----------
+  - id: 6506-P-01
+    class: price
+    step: entry
+    condition: "6506 ≤ ¥4 400 — только после срабатывания 6506-E-01 или 6506-E-02"
+    action: "Купить 7% портфеля (транш 1 из 3)"
+    automation: null
+    status: planned
+    notes: "Не подключать к сторожу до подтверждения; иначе сторож сработает сразу (цена ¥4 299 на 17.09)"
+  - id: 6506-P-02
+    class: price
+    step: entry
+    condition: "6506 ≤ ¥4 000 — после триггера"
+    action: "Купить 7% (транш 2 из 3)"
+    automation: null
+    status: planned
+  - id: 6506-P-03
+    class: price
+    step: entry
+    condition: "6506 ≤ ¥3 600 — после триггера"
+    action: "Купить 6% (транш 3 из 3)"
+    automation: null
+    status: planned
+
+  - id: 6506-F-01
+    class: price
+    step: exit
+    condition: "market cap ≥ ¥4 трлн"
+    action: "Продать 20% позиции"
+    automation: null
+    status: planned
+  - id: 6506-F-02
+    class: price
+    step: exit
+    condition: "market cap ≥ ¥5 трлн"
+    action: "Продать ещё 30% позиции"
+    automation: null
+    status: planned
+
+  # ---------- event: подтверждение (снимают статус «наблюдать») ----------
+  - id: 6506-E-01
+    class: event
+    step: watch
+    condition: "Robotics segment revenue ≥ +10% г/г два квартала подряд"
+    action: "Перевести в статус «покупать»: подключить 6506-P-01..03; купить 7% при цене ≤ ¥4 400"
+    source: "Yaskawa quarterly report (segment data)"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Q1 FY2027 по данным обсуждения: +2% — условие не выполнено; ближайшая проверка 09.10.2026"
+  - id: 6506-E-02
+    class: event
+    step: confirm
+    condition: "Robotics orders ≥ +15% г/г два квартала подряд"
+    action: "То же, что 6506-E-01 (более сильный сигнал)"
+    source: "Yaskawa quarterly report"
+    automation: aiinfra-report-check
+    status: active
+  - id: 6506-E-03
+    class: event
+    step: watch
+    condition: "Orders компании ≥ +15% г/г два квартала подряд"
+    action: "Купить 6%"
+    source: "Yaskawa quarterly report"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Q1 FY2027 по данным обсуждения: orders +29% — первый квартал условия"
+  - id: 6506-E-04
+    class: event
+    step: confirm
+    condition: "Гуманоиды: официальные данные о поставках ≥ сотен тысяч в год (Tesla / Figure / Agility / Unitree / IFR)"
+    action: "Сообщить владельцу; усиливает тезис"
+    source: "отчёты Tesla, официальные раскрытия Figure AI / Agility / Unitree, IFR World Robotics"
+    automation: aiinfra-news-watch
+    status: active
+    notes: "Единой статистики нет; по пресс-релизу «сотни тысяч» не засчитывать"
+  - id: 6506-E-05
+    class: event
+    step: confirm
+    condition: "Robotics orders/revenue в Китае ≥ +15% г/г два квартала подряд; отдельно China semiconductor/automation orders ≥ +20%"
+    action: "Сообщить владельцу; усиливает тезис"
+    source: "Yaskawa quarterly report (по регионам)"
+    automation: aiinfra-report-check
+    status: active
+
+  # ---------- event: что ломает тезис ----------
+  - id: 6506-X-01
+    class: event
+    step: confirm
+    condition: "Robotics revenue < 0% г/г два квартала подряд"
+    action: "При одновременном 6506-X-02 — выйти"
+    source: "Yaskawa quarterly report"
+    automation: aiinfra-report-check
+    status: active
+  - id: 6506-X-02
+    class: event
+    step: confirm
+    condition: "Robotics orders < 0% г/г два квартала подряд"
+    action: "При одновременном 6506-X-01 — выйти"
+    source: "Yaskawa quarterly report"
+    automation: aiinfra-report-check
+    status: active
+  - id: 6506-X-03
+    class: event
+    step: confirm
+    condition: "Orders компании < +5% г/г два квартала подряд"
+    action: "Сократить на 50%"
+    source: "Yaskawa quarterly report"
+    automation: aiinfra-report-check
+    status: active
+
+  # ---------- calendar ----------
+  - id: 6506-C-01
+    class: calendar
+    step: confirm
+    condition: "Q2 FY2027 report — 09.10.2026"
+    action: "Проверить 6506-E-01..03, E-05, X-01..03"
+    window: { from: 2026-10-09, to: 2026-10-10 }
+    automation: aiinfra-report-check
+    status: active

@@ -1,0 +1,147 @@
+version: "1.0"
+ticker: ASTS
+as_of: "2026-09-21"
+artifact: company_state_bundle
+
+source_policy:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+
+sources:
+  ASTS_Q2_2026_10Q:
+    url: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm"
+    type: "SEC 10-Q"
+  ASTS_Q2_2026_RELEASE:
+    url: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm"
+    type: "SEC earnings-release exhibit"
+
+states:
+  axes:
+    Constellation_Deployment:
+      states:
+        D0: {name: prototype, criteria: "in-orbit BlueBird spacecraft <5"}
+        D1: {name: initial_network, criteria: "in-orbit spacecraft >=5 and <10"}
+        D2: {name: deployment_acceleration, criteria: "in-orbit spacecraft >=10 and <25 AND >=3 spacecraft launched in trailing 90 days"}
+        D3: {name: partial_commercial_constellation, criteria: "in-orbit spacecraft >=25 and <50"}
+        D4: {name: scaled_constellation, criteria: "in-orbit spacecraft >=50 AND initial continuous service coverage disclosed in at least one major market"}
+      current: D2
+      current_evidence:
+        - "After BlueBird 8-13 launches, AST reported 13 in-orbit spacecraft."
+        - "Six spacecraft were launched within 50 days."
+        - "BlueBird 17-46 were in various stages of production/assembly."
+      source_refs: [ASTS_Q2_2026_RELEASE, ASTS_Q2_2026_10Q]
+
+    Commercial_Contracting:
+      states:
+        C0: {name: pilot_partnerships, criteria: "contracted commercial/government backlog < $0.25B"}
+        C1: {name: initial_contracts, criteria: "backlog >=$0.25B and < $0.75B"}
+        C2: {name: validated_contracting, criteria: "backlog >=$0.75B and < $1.25B AND >=3 definitive MNO commercial agreements"}
+        C3: {name: scaled_contracting, criteria: "backlog >=$1.25B AND >=4 definitive major-market MNO agreements"}
+        C4: {name: broad_contracted_network, criteria: "backlog >=$2B AND definitive commercial agreements cover >=2B potential MNO subscribers"}
+      current: C3
+      current_evidence:
+        - "Revenue backlog approximately $1.30B."
+        - "Definitive agreements include AT&T, Verizon, Vodafone/SatCo and STC."
+        - "Partnerships with >60 MNOs covering >3B subscribers globally."
+      source_refs: [ASTS_Q2_2026_RELEASE, ASTS_Q2_2026_10Q]
+
+    Service_Monetization:
+      states:
+        M0: {name: pre_revenue, criteria: "total company revenue = 0"}
+        M1: {name: pre_service_revenue, criteria: "company revenue >0 but SpaceMobile Service revenue = 0"}
+        M2: {name: initial_service_revenue, criteria: "SpaceMobile Service revenue >0 and < $25M/quarter"}
+        M3: {name: scaled_service, criteria: "SpaceMobile Service revenue >=$25M and < $100M/quarter"}
+        M4: {name: commercial_scale, criteria: "SpaceMobile Service revenue >=$100M/quarter for 2 consecutive quarters"}
+      current: M1
+      current_evidence:
+        - "Q2 revenue $31.5M from gateway deliveries and U.S. government milestones."
+        - "10-Q explicitly states SpaceMobile Service has not launched and has generated no revenue to date."
+      source_refs: [ASTS_Q2_2026_RELEASE, ASTS_Q2_2026_10Q]
+
+    Regulatory_Spectrum:
+      states:
+        R0: {name: experimental_only, criteria: "no authorization for planned commercial constellation"}
+        R1: {name: partial_US, criteria: "some U.S. operational/spectrum approvals but no full planned-network authorization"}
+        R2: {name: US_network_authorized, criteria: "FCC authorization for planned satellite network and commercial-service spectrum framework"}
+        R3: {name: multi_market_authorized, criteria: "commercial operating approvals in U.S. plus at least 3 additional major markets"}
+        R4: {name: broad_global_authorization, criteria: "commercial authorization covers markets representing >=1B partner subscribers"}
+      current: R2
+      current_evidence:
+        - "FCC authorization received to deploy the planned 248-satellite network, including low-band IMT frequencies and Q/V feeder links."
+        - "Company received certain regulatory approvals for SpaceMobile Service in April 2026."
+      source_refs: [ASTS_Q2_2026_10Q]
+
+    Funding_Dilution:
+      states:
+        F0: {name: stressed, criteria: "available cash <0.5x annualized H1 operating + PP&E cash use"}
+        F1: {name: tight, criteria: "ratio >=0.5x and <1.0x"}
+        F2: {name: funded_expansion, criteria: "ratio >=1.0x and <2.0x AND latest financing effective dilution <=5%"}
+        F3: {name: ample, criteria: "ratio >=2.0x AND effective dilution <=5%"}
+        F4: {name: self_funding, criteria: "operating cash flow >=0 for 2 consecutive quarters and ratio >=2x"}
+      current: F2
+      current_evidence:
+        - "Pro forma cash/cash equivalents/restricted cash after July financing >$3.7B."
+        - "H1 OCF use $145.2M and PP&E purchases $859.2M; annualized combined use ~2.009B."
+        - "July 2026 convertible offering $1.15B gross; company reports effective dilution <2%."
+      source_refs: [ASTS_Q2_2026_RELEASE, ASTS_Q2_2026_10Q]
+
+kpis:
+  items:
+    - {id: ASTS-KPI-01, name: "In-orbit spacecraft", period: event_driven, current_value: 13, unit: satellites, source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", zones: {green: ">=13", yellow: ">=8 and <13", red: "<8"}}
+    - {id: ASTS-KPI-02, name: "Spacecraft launched in trailing 90 days", period: event_driven, current_value: 6, unit: satellites, source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", zones: {green: ">=6", yellow: ">=3 and <6", red: "<3"}}
+    - {id: ASTS-KPI-03, name: "BlueBird satellites in production/assembly pipeline", period: quarterly, current_value: 30, unit: satellites, formula: "BlueBird 17 through 46 inclusive = 46 - 17 + 1 = 30", source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", zones: {green: ">=30", yellow: ">=15 and <30", red: "<15"}}
+    - {id: ASTS-KPI-04, name: "Contracted revenue backlog", period: quarterly, current_value: 1.30, unit: "USD B", source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", zones: {green: ">=1.25", yellow: ">=0.75 and <1.25", red: "<0.75"}}
+    - {id: ASTS-KPI-05, name: "MNO partnership count lower bound", period: quarterly, current_value: 60, value_type: lower_bound, unit: MNOs, source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm", zones: {green: ">=60", yellow: ">=40 and <60", red: "<40"}}
+    - {id: ASTS-KPI-06, name: "Quarterly revenue", period: quarterly, current_value: 31.5, unit: "USD M", source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", zones: {green: ">=30", yellow: ">=10 and <30", red: "<10"}}
+    - {id: ASTS-KPI-07, name: "SpaceMobile Service quarterly revenue", period: quarterly, current_value: 0, unit: "USD M", source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm", zones: {green: ">=25", yellow: ">0 and <25", red: "=0"}}
+    - {id: ASTS-KPI-08, name: "Pro forma liquidity", period: event_driven, current_value: 3.7, value_type: lower_bound, unit: "USD B", source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", zones: {green: ">=3.0", yellow: ">=2.0 and <3.0", red: "<2.0"}}
+    - {id: ASTS-KPI-09, name: "Annualized H1 OCF + PP&E cash use", period: semiannual, current_value: 2.008854, unit: "USD B/year", formula: "2 * (0.145212 operating cash use + 0.859215 PP&E purchases) = 2.008854", source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm", zones: {green: "<1.5", yellow: ">=1.5 and <2.5", red: ">=2.5"}}
+    - {id: ASTS-KPI-10, name: "Latest financing effective dilution", period: event_driven, current_value: 0.02, value_type: upper_bound, unit: fraction, source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", zones: {green: "<=0.05", yellow: ">0.05 and <=0.10", red: ">0.10"}}
+
+triggers:
+  items:
+    - {id: ASTS-E-01, step: vector, status: planned, axis: Constellation_Deployment, transition: {from: D2, to: D3}, kpis: [ASTS-KPI-01, ASTS-KPI-02], condition: "in-orbit spacecraft >=25", period: "one verified deployment update", level: E2}
+    - {id: ASTS-E-02, step: vector, status: planned, axis: Constellation_Deployment, transition: {from: D2, to: D1}, kpis: [ASTS-KPI-01, ASTS-KPI-02], condition: "in-orbit spacecraft <10 because of failures/de-orbits OR no successful deployment for >180 days", period: "event/180-day window", level: E3}
+    - {id: ASTS-E-03, step: vector, status: planned, axis: Commercial_Contracting, transition: {from: C3, to: C4}, kpis: [ASTS-KPI-04, ASTS-KPI-05], condition: "contracted backlog >=$2B AND definitive commercial agreements cover >=2B potential subscribers", period: "one verified company report", level: E2}
+    - {id: ASTS-E-04, step: vector, status: planned, axis: Commercial_Contracting, transition: {from: C3, to: C2}, kpis: [ASTS-KPI-04], condition: "contracted backlog < $1.25B for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: ASTS-E-05, step: vector, status: planned, axis: Service_Monetization, transition: {from: M1, to: M2}, kpis: [ASTS-KPI-07], condition: "SpaceMobile Service quarterly revenue > $0", period: "one quarter", level: E2}
+    - {id: ASTS-E-06, step: vector, status: planned, axis: Service_Monetization, transition: {from: M2, to: M3}, kpis: [ASTS-KPI-07], condition: "SpaceMobile Service quarterly revenue >=$25M", period: "one quarter", level: E2}
+    - {id: ASTS-E-07, step: vector, status: planned, axis: Regulatory_Spectrum, transition: {from: R2, to: R3}, kpis: [], condition: "commercial operating approvals confirmed in U.S. plus at least 3 additional major markets", period: "event driven", level: E2}
+    - {id: ASTS-E-08, step: vector, status: planned, axis: Regulatory_Spectrum, transition: {from: R2, to: R1}, kpis: [], condition: "FCC or another required U.S. authority materially narrows/suspends authorization needed for planned commercial service", period: "one verified regulatory event", level: E3}
+    - {id: ASTS-E-09, step: vector, status: planned, axis: Funding_Dilution, transition: {from: F2, to: F3}, kpis: [ASTS-KPI-08, ASTS-KPI-09, ASTS-KPI-10], condition: "pro forma liquidity / annualized H1-style OCF+PP&E cash use >=2.0x AND latest financing effective dilution <=5%", period: "one reporting period after financing", level: E2}
+    - {id: ASTS-E-10, step: vector, status: planned, axis: Funding_Dilution, transition: {from: F2, to: F1}, kpis: [ASTS-KPI-08, ASTS-KPI-09, ASTS-KPI-10], condition: "liquidity / annualized cash use <1.0x OR new financing effective dilution >10%", period: "one reporting/financing event", level: E2}
+
+mpc_inputs:
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 0
+    HYPERSCALER_CAPEX: 0
+    SEMICONDUCTOR_WFE: 0
+    ADVANCED_PACKAGING: 0
+    HBM_MEMORY: 0
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 0
+    DATA_CENTER_POWER: 0
+    LAUNCH_ECONOMICS: 2
+    SATELLITE_CONNECTIVITY: 2
+    GOVERNMENT_DEFENSE: 1
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: 2
+    CHINA_REVENUE: 0
+    TAIWAN_SUPPLY: 0
+    ACQUISITION_INTEGRATION: 0
+  failure_modes:
+    - {failure_id: ASTS-FM-01, name: "Launch delay/failure slows constellation deployment", common_cause_id: LAUNCH_OPERATIONS_FAILURE, severity: critical}
+    - {failure_id: ASTS-FM-02, name: "Satellite manufacturing/in-orbit failure prevents required coverage", common_cause_id: SPACE_SYSTEMS_EXECUTION, severity: critical}
+    - {failure_id: ASTS-FM-03, name: "Launch-provider availability/cost deteriorates", common_cause_id: LAUNCH_ECONOMICS_DOWNSIDE, severity: high}
+    - {failure_id: ASTS-FM-04, name: "FCC/international spectrum approval is delayed or narrowed", common_cause_id: SPACE_REGULATORY_SPECTRUM_DELAY, severity: critical}
+    - {failure_id: ASTS-FM-05, name: "MNO agreements fail to convert into recurring service revenue", common_cause_id: SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE, severity: high}
+    - {failure_id: ASTS-FM-06, name: "Capital burn requires materially dilutive financing", common_cause_id: CAPITAL_MARKETS_TIGHTENING, severity: high}
+    - {failure_id: ASTS-FM-07, name: "Government awards/backlog fail to convert", common_cause_id: GOVERNMENT_SPACE_BUDGET, severity: medium}
+    - {failure_id: ASTS-FM-08, name: "Shared SPACE sector launch/range/regulatory bottleneck", common_cause_id: SPACE_REGULATORY_RANGE_DELAY, severity: high}
+  cross_portfolio_common_causes:
+    RKLB:
+      shared: [LAUNCH_OPERATIONS_FAILURE, SPACE_SYSTEMS_EXECUTION, GOVERNMENT_SPACE_BUDGET, SPACE_REGULATORY_RANGE_DELAY]
+    SPCX:
+      shared: [LAUNCH_OPERATIONS_FAILURE, LAUNCH_ECONOMICS_DOWNSIDE, GOVERNMENT_SPACE_BUDGET, SPACE_REGULATORY_RANGE_DELAY]

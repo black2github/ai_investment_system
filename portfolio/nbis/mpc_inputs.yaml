@@ -1,0 +1,74 @@
+# Входы MPC для NBIS: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: NBIS
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/NBIS_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 2
+  HYPERSCALER_CAPEX: 1
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 1
+  HBM_MEMORY: 1
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 2
+  DATA_CENTER_POWER: 2
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 2
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 2
+  ACQUISITION_INTEGRATION: 1
+  AI_CLOUD_PRICING: 2
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 1
+  UTILITY_CAPEX: 1
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+driver_vector_provenance: model_assumption
+failure_modes:
+- failure_id: NBIS-FM-01
+  common_cause_id: AI_OVERBUILD
+  severity: high
+  name: AI capacity overbuild / pricing compression
+- failure_id: NBIS-FM-02
+  common_cause_id: DATA_CENTER_POWER_CONSTRAINT
+  severity: high
+  name: Power/site buildout delays
+- failure_id: NBIS-FM-03
+  common_cause_id: TAIWAN_SUPPLY_DISRUPTION
+  severity: high
+  name: GPU/component supply disruption
+- failure_id: NBIS-FM-04
+  common_cause_id: CAPITAL_MARKETS_TIGHTENING
+  severity: high
+  name: External financing unavailable/expensive
+- failure_id: NBIS-FM-05
+  common_cause_id: AI_CLOUD_CUSTOMER_FINANCING_STRESS
+  severity: high
+  name: Customer prepayment/commitment conversion weakens
+- failure_id: NBIS-FM-06
+  common_cause_id: ACQUISITION_INTEGRATION_FAILURE
+  severity: medium
+  name: Acquisition integration distracts platform execution
+benchmark:
+  sector_id: AI_COMPUTE
+  recommendation: NO_EXTERNAL_BENCHMARK_V1
+  reason: IGV, semiconductor indices and broad-AI ETFs mix different economics; keep benchmark coverage false until a dedicated
+    AI_COMPUTE basket/index methodology is approved.
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

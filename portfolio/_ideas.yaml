@@ -1,0 +1,26 @@
+# Лист наблюдения и идей (статусы watch / idea / rejected) — общий для портфеля.
+# Компании без собственной папки. Цены — Yahoo chart на 17.09.2026 (закрытие 16.09 для США, утро 17.09 для Европы/Японии).
+# Источник статусов: финальный блок «Инвестиции в ИИ-инфраструктуру» (ChatGPT, 17.09.2026), разделы A, H, I.
+# Ретро-дозор идей: еженедельно сравнивать текущую цену с price_at_idea (задание planned).
+
+registry_updated: 2026-09-17
+
+watch:   # «наблюдать», без действий, вернуться при появлении катализатора
+  - { ticker: DDOG,    exchange: NASDAQ, yahoo: DDOG,    currency: USD, price_at_idea: 230.79, idea_date: 2026-09-17, note: "нужен устойчивый AI-agent/observability катализатор при приемлемой оценке" }
+  - { ticker: OKTA,    exchange: NASDAQ, yahoo: OKTA,    currency: USD, price_at_idea: 188.12, idea_date: 2026-09-17, note: "identity-бенефициар, но нет преимущества перед CRWD/NET" }
+  - { ticker: "6481",  exchange: TSE,    yahoo: 6481.T,  currency: JPY, price_at_idea: 5999,   idea_date: 2026-09-17, note: "THK: компоненты автоматизации, катализатор менее чистый, чем у Yaskawa/Harmonic" }
+  - { ticker: "6268",  exchange: TSE,    yahoo: 6268.T,  currency: JPY, price_at_idea: 4581,   idea_date: 2026-09-17, note: "Nabtesco: редукторы; нужно подтверждение ускорения orders" }
+  - { ticker: ABBN,    exchange: SIX,    yahoo: ABBN.SW, currency: CHF, price_at_idea: 79.44,  idea_date: 2026-09-17, note: "ABB: качественная электрификация, ниже асимметрия, чем ETN/SU" }
+
+ideas:   # «лист ожидания» с условием возврата
+  - { ticker: HPS.A,      exchange: TSX,   yahoo: HPS-A.TO,      currency: CAD, price_at_idea: 232.89, idea_date: 2026-09-17, return_condition: "backlog + orders ≥ 20% г/г И valuation ≤ 20x forward earnings", note: "Hammond Power Solutions: чистая ставка на дефицит трансформаторов" }
+  - { ticker: POWERINDIA, exchange: NSE,   yahoo: POWERINDIA.NS, currency: INR, price_at_idea: 31230,  idea_date: 2026-09-17, return_condition: "orders ≥ 20% г/г + valuation trigger", note: "Hitachi Energy India" }
+  - { ticker: GEV,        exchange: NYSE,  yahoo: GEV,           currency: USD, price_at_idea: 925.09, idea_date: 2026-09-17, return_condition: "Grid orders/backlog ≥ 20% г/г И valuation ≤ 35x forward earnings", note: "GE Vernova" }
+  - { ticker: ENR,        exchange: Xetra, yahoo: ENR.DE,        currency: EUR, price_at_idea: 141.30, idea_date: 2026-09-17, return_condition: "Grid Technologies orders ≥ 15% г/г И valuation ≤ 25x forward earnings", note: "Siemens Energy (обсуждение: €137.12 на 16.09)" }
+  - { ticker: PWR,        exchange: NYSE,  yahoo: PWR,           currency: USD, price_at_idea: 619.28, idea_date: 2026-09-17, return_condition: "backlog ≥ 15% г/г И valuation ≤ 30x forward earnings", note: "Quanta Services" }
+  - { ticker: VRT,        exchange: NYSE,  yahoo: VRT,           currency: USD, price_at_idea: 239.41, idea_date: 2026-09-17, return_condition: "valuation trigger: EV/EBITDA существенно ниже ~35x", note: "Vertiv: отклонён по оценке (~$92 млрд), вернуть только по valuation trigger" }
+
+rejected:
+  - { ticker: TEM,  name: "Tempus AI",                reason: "AI-biotech тезис без проверяемого катализатора; отдельный research track" }
+  - { ticker: RXRX, name: "Recursion Pharmaceuticals", reason: "бинарность биотеха; нет количественного катализатора в рамках AI-infra тезиса" }
+  - { ticker: SDGR, name: "Schrödinger",               reason: "drug-discovery тезис требует отдельного анализа pipeline / clinical milestones" }

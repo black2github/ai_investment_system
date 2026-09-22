@@ -1,0 +1,87 @@
+version: "1.0"
+artifact: team_execution_axis
+axis_id: Team_Execution
+as_of: "2026-09-21"
+status: proposed_normative
+
+kpis:
+  TEAM-KPI-01: {name: guidance_hit_rate, formula: "hit_or_beat / valid_guidance_observations"}
+  TEAM-KPI-02: {name: consecutive_guidance_misses}
+  TEAM-KPI-03: {name: major_milestone_on_time_rate, formula: "on_time / completed_due_milestones"}
+  TEAM-KPI-04: {name: key_team_retention_24m, formula: "retained_key_people / key_people_at_window_start"}
+  TEAM-KPI-05: {name: insider_beneficial_ownership, monotonic_better: false}
+  TEAM-KPI-06: {name: diluted_share_CAGR}
+  TEAM-KPI-07: {name: capital_allocation_adverse_events_36m}
+  TEAM-KPI-08: {name: founder_prior_operating_outcome, state_threshold_input: false}
+
+states:
+  T0:
+    name: insufficient_or_unproven
+    criteria:
+      any:
+        - "valid_guidance_observations < 4 AND due_milestone_observations < 2"
+        - "materially_new_team_age_months < 12"
+  T1:
+    name: mixed_execution
+    criteria:
+      any:
+        - "guidance_hit_rate < 0.60"
+        - "milestone_on_time_rate < 0.50"
+        - "consecutive_guidance_misses >= 2"
+        - "key_team_retention_24m < 0.60"
+  T2:
+    name: reliable
+    criteria:
+      all:
+        - "combined_valid_guidance_and_milestone_observations >= 6"
+        - "guidance_hit_rate >= 0.70 OR not_applicable"
+        - "milestone_on_time_rate >= 0.60 OR not_applicable"
+        - "consecutive_guidance_misses < 2"
+        - "key_team_retention_24m >= 0.70"
+        - "capital_allocation_adverse_events_36m <= 1"
+  T3:
+    name: strong_execution
+    criteria:
+      all:
+        - "combined_valid_guidance_and_milestone_observations >= 8"
+        - "guidance_hit_rate >= 0.80 OR not_applicable"
+        - "milestone_on_time_rate >= 0.75 OR not_applicable"
+        - "key_team_retention_24m >= 0.80"
+        - "capital_allocation_adverse_events_24m == 0"
+        - "no_material_reporting_or_control_failure"
+  T4:
+    name: repeated_exceptional_execution
+    criteria:
+      all:
+        - "combined_valid_guidance_and_milestone_observations >= 12"
+        - "observation_coverage_months >= 24"
+        - "guidance_hit_rate >= 0.85 OR not_applicable"
+        - "milestone_on_time_rate >= 0.85 OR not_applicable"
+        - "key_team_retention_24m >= 0.80"
+        - "capital_allocation_adverse_events_36m == 0"
+        - "major_milestones_on_or_before_schedule >= 2"
+        - "T3_or_higher_consecutive_reporting_periods >= 4"
+
+guidance_gaming_guard:
+  block_T3_T4_if: "guidance_midpoint_reduced_by_at_least_10pct_in_at_least_2_of_last_8_observations"
+  provenance: model_assumption
+
+mc_integration:
+  target: company_idiosyncratic_execution_sigma
+  verified_multiplier: {T0: 1.10, T1: 1.05, T2: 1.00, T3: 0.95, T4: 0.90}
+  owner_judgment:
+    allowed_range: [0.90, 1.10]
+    provenance: owner_judgment
+    max_validity_months: 12
+  combined_bounds: [0.80, 1.20]
+  formula: "clamp(verified_multiplier * owner_judgment_multiplier, 0.80, 1.20)"
+  expected_return_shift_allowed: false
+  terminal_multiple_shift_allowed: false
+
+automatic_review_events:
+  - CEO_CFO_CTO_departure
+  - material_restatement
+  - guidance_withdrawal
+  - two_consecutive_guidance_misses
+  - material_impairment
+  - major_milestone_delay

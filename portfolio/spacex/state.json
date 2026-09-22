@@ -1,0 +1,413 @@
+{
+  "updated": "2026-09-22T06:25:00Z",
+  "price": {
+    "last": 150.88,
+    "last_at": "2026-09-16",
+    "zone": null,
+    "note": "zone ведёт скрипт spacex-price-watch в trigger.state; здесь — копия после срабатываний"
+  },
+  "fired": [
+    {
+      "trigger_id": "SPCX-C-02",
+      "timestamp": "2026-09-16T22:01:00Z",
+      "price": 150.88,
+      "action": "Очередной транш 8–12%. Корректировка: цена <$100 — удвоить, <$80 — утроить. Цена $150.88 выше порогов, поэтому стандартный транш 8–12%.",
+      "status": "pending_owner",
+      "note": "тестовый прогон при заведении автоматизации, доставлено в Telegram",
+      "owner_decision": "сделано частично: 17.09.2026 куплено 8 акций (4 × $155.05, 4 × $155.02); лоты записаны в _portfolio.yaml",
+      "decided_at": "2026-09-20"
+    },
+    {
+      "trigger_id": "SPCX-C-01",
+      "timestamp": "2026-09-17T18:54:54Z",
+      "price": 150.88,
+      "action": "Первый транш (8–12% выделенного капитала). НЕ входить lump-sum.",
+      "status": "pending_owner",
+      "owner_decision": "сделано: первый транш = покупка 17.09.2026, 8 акций (4 × $155.05, 4 × $155.02); та же покупка закрывает SPCX-C-02 частично",
+      "decided_at": "2026-09-21"
+    }
+  ],
+  "events_reported": [
+    {
+      "trigger_id": "SPCX-E-01",
+      "timestamp": "2026-09-17T09:06:16Z",
+      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm (Exhibit 99.1 к 10-Q, filed 2026-08-04, acc-no 0001628280-26-052535); индекс: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/0001628280-26-052535-index.htm",
+      "summary": "Отчёт за Q2 2026 (Space Exploration Technologies Corp., 10-Q от 04.08.2026): GAAP net loss за three months ended June 30, 2026 = $541 млн (< $3 млрд). За six months ended June 30, 2026 net loss = $4,817 млн. Revenue за квартал = $7,814 млн",
+      "action": "Подтверждение тренда — держать план",
+      "confirmation": "strong",
+      "note": "заменено с weak на strong по итогам разовой сверки с первоисточником (SEC EDGAR, Exhibit 99.1 earnings release к 10-Q). Предыдущие слабые источники (247wallst, mitrade) заменены. Повторно не сообщать"
+    },
+    {
+      "trigger_id": "SPCX-E-04",
+      "timestamp": "2026-09-17T06:03:37Z",
+      "source": "https://www.spacex.com/launches/starship-flight-13 ; https://www.reuters.com/business/media-telecom/spacexs-starship-rocket-lifts-off-texas-13th-test-flight-2026-07-24/",
+      "summary": "IFT-13 (Starship V3) успешен: запуск 24 июля 2026, 20 спутников Starlink V3 успешно выведены, верхняя ступень мягко приводнилась",
+      "action": "Добавить Starship-опцион через колл-опционы",
+      "confirmation": "strong"
+    },
+    {
+      "trigger_id": "SPCX-E-06",
+      "timestamp": "2026-09-17T06:03:37Z",
+      "source": "https://ir.nasdaq.com/news-releases/news-release-details/space-exploration-technologies-corporation-join-nasdaq-100 ; https://www.reuters.com/business/media-telecom/spacex-set-join-nasdaq-100-paving-way-wave-passive-buying-2026-06-27/",
+      "summary": "SpaceX включена в Nasdaq-100 с 7 июля 2026 после изменения правил биржи для крупных новых публичных компаний",
+      "action": "Ожидать притоки $22–27 млрд — пол цены; план DCA не менять",
+      "confirmation": "strong"
+    }
+  ],
+  "pending_verification": [
+    {
+      "trigger_id": "SPCX-E-05",
+      "found_at": "2026-09-16T22:04:00Z",
+      "source": "https://finance.yahoo.com/markets/stocks/article/spacex-signs-another-ai-computing-deal-with-100-billion-in-arr-on-track-cfo-says-152933886.html",
+      "summary": "Контракты AI-вычислений с Alphabet (~$920M/мес) и Anthropic (~$1.25B/мес); CFO: $100B ARR on track",
+      "why_pending": "условие триггера — покрытие >60% burn rate xAI по итогам Q3/Q4 2026; факт подписания контрактов условие НЕ подтверждает. Владельцу не доставлено"
+    },
+    {
+      "fact": "число акций в обращении SPCX",
+      "value_in_discussion": "~13.55 млрд (выведено из market cap)",
+      "where_to_verify": "титульная страница 10-Q за Q2 2026 (SEC)",
+      "found_at": "2026-09-20",
+      "status": "verified",
+      "actual_value": "13 181 779 945 (Class A 7 696 293 669 + Class B 5 485 486 276) на 28.07.2026",
+      "source_url": "SEC 10-Q Q2 2026, титульная страница",
+      "checked_at": "2026-09-20"
+    },
+    {
+      "fact": "TTM revenue SPCX",
+      "value_in_discussion": "~$23.04 млрд",
+      "where_to_verify": "сумма выручки Q3 2025 – Q2 2026 из отчётов",
+      "found_at": "2026-09-20",
+      "status": "verified",
+      "actual_value": "$23.044 млрд = FY2025 18.674 + H1 2026 12.508 − H1 2025 8.138",
+      "source_url": "SEC 10-K FY2025; SEC 10-Q Q2 2026",
+      "checked_at": "2026-09-20"
+    }
+  ],
+  "gaap_profit_quarters": [],
+  "notes": [
+    "2026-09-17: реестр составлен по стратегии июля 2026; окно SPCX-C-01 (первый транш) уже открыто — статус due",
+    "2026-09-17: тестовые прогоны news-watch — модель не соблюдает правило «первоисточник или два СМИ первого ряда» и не записала событие в state.json; решение о сильной модели за владельцем",
+    "2026-09-17: по данным поиска Starship Flight 14 назначен на 2026-09-22, SpaceX уже в Nasdaq-100 — триггеры SPCX-E-04 (IFT-13) и SPCX-E-06 требуют актуализации в реестре",
+    "2026-09-17T06:03:37Z: события SPCX-E-04 и SPCX-E-06 подтверждены (первоисточники + СМИ первого ряда), добавлены в events_reported",
+    "2026-09-17T09:06:16Z: разовая сверка SPCX-E-01 с первоисточником (SEC EDGAR 10-Q Exhibit 99.1) — цифра $541 млн net loss подтверждена, confirmation weak→strong",
+    "2026-09-17T18:54:54Z: владелец отложил транш SPCX-C-01 до 18.09.2026",
+    "2026-09-20: вектор состояний A2/B2/C1/D3/V4 по SPCX_states_v1.0; KPI Q2 2026 по SEC; переходы E-10..E-33 в triggers.yaml",
+    "2026-09-20: KPI-10 пересчитан сайдкаром по проверенным входам: 87.35x (red), run 20260920T150722Z-valuation_multiple-b55b3b",
+    "2026-09-20T18:27:03Z: разовая проверка балансовых и денежных потоков (balance-verify) по 10-Q Q2 2026 (SEC EDGAR) — записано в calc_inputs.reverse_valuation. 10-Q раскрывает денежные потоки только за полугодие (six months ended June 30, 2026), поэтому квартальные OCF/capex/FCF за Q2 не вычислялись (запрет на подсчёт по разности) — поля *_q2 = null",
+    "2026-09-20: калибровка calibration_v1.0 принята владельцем; первый нормативный прогон reverse valuation — см. calc_runs",
+    "2026-09-20: приняты Rules v1.1 (устойчивость модели, переходы по базовому случаю); заведены E-34..E-38 (фальсификация D3, planned до контрольных точек Y1 30.06.2027 / Y2 30.06.2028); прогон …-ab1fb7 классифицирован model_fragile",
+    "2026-09-20: приняты схема портфеля v1.0 и правила просадок/режимов; MC-калибровка v1.0 SPCX; первый нормативный прогон conditional_mc — см. calc_runs"
+  ],
+  "calc_inputs": {
+    "reverse_valuation": {
+      "as_of": "2026-06-30",
+      "cash_usd": 93522000000,
+      "marketable_securities_usd": 6487000000,
+      "debt_usd": 38433000000,
+      "net_debt_usd": -55089000000,
+      "ocf_q2_usd": null,
+      "capex_q2_usd": null,
+      "fcf_q2_usd": null,
+      "fcf_margin_q2": null,
+      "ocf_h1_usd": 3466000000,
+      "capex_h1_usd": 28476000000,
+      "fcf_h1_usd": -25010000000,
+      "fcf_margin_h1": -1.9997,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm (10-Q Q2 2026, filed 2026-08-04); индекс https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/0001628280-26-052535-index.htm",
+      "verified": true,
+      "checked_at": "2026-09-20T18:27:03Z",
+      "note": "cash_usd — Cash and cash equivalents на балансе (Note 2, тождественно балансовому отчёту). debt_usd — Total debt (принципал, Note 9 «Debt»: SpaceX Notes 25,000 + X 2027/2030 Notes 27 + Other financings 13,406 = 38,433 млн; чистый учётный номинал за вычетом deferred financing costs = 38,285 млн, не использован для net_debt). Finance lease liability ($1,079 млн) в debt_usd НЕ включён — в 10-Q показан отдельной строкой от Total debt; при необходимости Total debt and finance leases = 39,512 млн. net_debt_usd = debt_usd − cash_usd (без учёта marketable_securities_usd по методологии) = 38,433 − 93,522 = −55,089 млн, т.е. чистая денежная позиция (net cash) $55.089 млрd. ocf_h1/capex_h1 — из Consolidated Statements of Cash Flows, six months ended June 30, 2026 (стр. 9 10-Q): Net cash provided by operating activities = 3,466; Purchases of property, plant, and equipment = 28,476 (включает related party $329 млн, без capitalized interest $20 млн — отдельная строка). fcf_h1 = 3,466 − 28,476 = −25,010. fcf_margin_h1 = fcf_h1 / выручка H1 2026 ($12,508 млн, Note 3 Revenue — задание указало '2.508B', это опечатка задания: фактическая выручка H1 2026 по 10-Q = $12,508 млн, использована фактическая цифра) = −199.97%. Квартальный (Q2) операционный/инвестиционный денежный поток и capex в 10-Q не раскрываются отдельно — только консолидированный отчёт за six months; вычислять Q2 как разность (H1 минус Q1) запрещено заданием, поэтому ocf_q2/capex_q2/fcf_q2/fcf_margin_q2 = null."
+    }
+  },
+  "route": {
+    "current": "opening",
+    "done_steps": [],
+    "changed_at": "2026-09-17",
+    "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-20T18:39:13Z",
+      "trigger_id": "SPCX-E-31/E-33",
+      "text": "Обратная оценка (run 20260920T183913Z-reverse_valuation-ab1fb7): цена $152.71 требует роста выручки 76% в год 5 лет (сетка 61–97%); переходов оси Valuation нет, V4 сохраняется; действий не требуется",
+      "level": "E1"
+    },
+    {
+      "timestamp": "2026-09-20T19:13:46Z",
+      "trigger_id": "MC-SPCX",
+      "text": "Условный Монте-Карло (run …-861006, 500k путей): медианный CAGR 5 лет −14.9%, P(потеря >30%) 97%, медианная стоимость 2031 $0.9 трлн против $2.0 трлн сегодня; reverse valuation требует 76% роста в год. Расхождение моделей — сигнал к обсуждению, действий по правилам нет",
+      "level": "E1"
+    },
+    {
+      "timestamp": "2026-09-20T20:10:00Z",
+      "kind": "owner_input",
+      "summary": "Владелец: фактическая позиция SPCX 8 акций (сделки 17.09.2026), записана в _portfolio.yaml; лимит числа бумаг отложен; ограничение хеджа — лот пут-опциона 100 акций"
+    },
+    {
+      "timestamp": "2026-09-21T00:05:00Z",
+      "kind": "owner_input",
+      "summary": "Владелец: фактический портфель (два счёта, 16 бумаг) записан в _portfolio.yaml; первый прогон portfolio_regime — режим Stress; SPCX-C-01 закрыт (done в triggers.yaml)"
+    },
+    {
+      "timestamp": "2026-09-22T06:25:00Z",
+      "kind": "calc",
+      "summary": "Сравнительный прогон SPCX на company_mc 2.3.0 (run …-e169f2): совпадает с нормативным в пределах 0.6 п.п.; добавлены gap-метрики (RV_Growth_Gap +49.3 п.п., Price_Expectation_Gap 3.78×) и файл путей для будущего MPC. Перевод на v2 — решение владельца"
+    }
+  ],
+  "scenario_state": {
+    "AI": {
+      "state": "A2",
+      "since": "2026-09-20",
+      "evidence": [
+        "AI revenue Q2 2026 = $2.561B, +247% YoY.",
+        "AI adjusted EBITDA Q2 2026 = +$1.146B.",
+        "AI operating loss Q2 2026 = -$1.257B.",
+        "Nameplate compute = 1.4 GW.",
+        "Cloud Service Agreements = $14.1B contracted sales."
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+    },
+    "Starlink": {
+      "state": "B2",
+      "since": "2026-09-20",
+      "evidence": [
+        "Starlink subscribers = 12.0M, +100% YoY.",
+        "Connectivity revenue = $4.291B, +66% YoY.",
+        "Connectivity operating income = $1.656B; operating margin ~38.6%.",
+        "ARPU = $66/month vs $85 a year earlier."
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+    },
+    "Starship": {
+      "state": "C1",
+      "since": "2026-09-20",
+      "evidence": [
+        "Flight 12: successful suborbital mission.",
+        "Flight 13: company reported all flight objectives achieved.",
+        "FAA operational plan dated 2026-09-18 listed Starship Flight 14 primary 2026-09-22 and backup 2026-09-23."
+      ],
+      "source": "SEC earnings release; FAA ATCSCC operational plan"
+    },
+    "Capital_Intensity": {
+      "state": "D3",
+      "since": "2026-09-20",
+      "evidence": [
+        "Total Q2 capex = $18.369B.",
+        "AI Q2 capex = $15.828B.",
+        "AI capex H1 2026 = $23.551B.",
+        "AI revenue Q2 = $2.561B."
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+    },
+    "Valuation": {
+      "state": "V4",
+      "since": "2026-09-20",
+      "evidence": [
+        "Close 2026-09-18 = $152.71.",
+        "Market cap = ~$2.07T.",
+        "TTM revenue = ~$23.04B.",
+        "Price/Sales (ttm) = 70.49x; EV/Revenue = 84.74x (Yahoo Finance).",
+        "Reverse valuation has not yet been approved as a calculation-engine version.",
+        "Reverse valuation 20.09.2026 (run 20260920T183913Z-reverse_valuation-ab1fb7): implied 5Y revenue CAGR 76.3% при базе 11% / 27% / 32x; сетка 61–97%; V4 сохраняется"
+      ],
+      "source": "https://finance.yahoo.com/quote/SPCX/; https://stockanalysis.com/stocks/spcx/market-cap/"
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {
+      "kpi_id": "SPCX-KPI-01",
+      "name": "AI revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 247,
+      "value_raw": "$2.561B",
+      "unit": "%",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "SPCX-KPI-02",
+      "name": "AI revenue",
+      "period_end": "2026-06-30",
+      "value": 2.561,
+      "value_raw": "$2.561B",
+      "unit": "USD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "SPCX-KPI-03",
+      "name": "AI adjusted EBITDA",
+      "period_end": "2026-06-30",
+      "value": 1.146,
+      "value_raw": "+$1.146B",
+      "unit": "USD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "SPCX-KPI-04",
+      "name": "AI nameplate compute",
+      "period_end": "2026-06-30",
+      "value": 1.4,
+      "value_raw": "1.4 GW",
+      "unit": "GW",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "SPCX-KPI-05",
+      "name": "Starlink subscribers",
+      "period_end": "2026-06-30",
+      "value": 12,
+      "value_raw": "12.0M",
+      "unit": "million subscribers",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "SPCX-KPI-06",
+      "name": "Starlink ARPU",
+      "period_end": "2026-06-30",
+      "value": 66,
+      "value_raw": "$66/month",
+      "unit": "USD/month",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "SPCX-KPI-07",
+      "name": "Connectivity operating margin",
+      "period_end": "2026-06-30",
+      "value": 38.59,
+      "value_raw": "$1.656B / $4.291B",
+      "unit": "%",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "SPCX-KPI-08",
+      "name": "Total capex",
+      "period_end": "2026-06-30",
+      "value": 18.369,
+      "value_raw": "$18.369B",
+      "unit": "USD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "SPCX-KPI-09",
+      "name": "AI capex",
+      "period_end": "2026-06-30",
+      "value": 15.828,
+      "value_raw": "$15.828B",
+      "unit": "USD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "SPCX-KPI-10",
+      "name": "SPCX valuation multiple: market cap / TTM revenue",
+      "period_end": "2026-09-18",
+      "value": 87.35,
+      "value_raw": "invest-calc valuation_multiple",
+      "unit": "x",
+      "source_url": "SEC 10-Q (акции), SEC 10-K/10-Q (выручка), Yahoo chart (цена)",
+      "verified": true,
+      "run_id": "20260920T150722Z-valuation_multiple-b55b3b"
+    }
+  ],
+  "calc_runs": [
+    {
+      "run_id": "20260920T183913Z-reverse_valuation-ab1fb7",
+      "model": "reverse_valuation 1.1.0",
+      "spec": "Reverse_Valuation_Specification_v1.0",
+      "calibration": "calibration_v1.0 (A2+B2+C1+D3)",
+      "valuation_date": "2026-09-20",
+      "price": 152.71,
+      "implied_revenue_cagr_5y": 0.763,
+      "terminal_revenue_usd_b": 392.4,
+      "terminal_fcf_usd_b": 106,
+      "terminal_value_share_of_pv": 0.9996,
+      "grid_cagr_range": [
+        0.61,
+        0.966
+      ],
+      "discount_grid": {
+        "0.09": 0.731,
+        "0.11": 0.763,
+        "0.14": 0.811
+      },
+      "valuation_state": {
+        "previous": "V4",
+        "candidate": "V4",
+        "transition_trigger": null,
+        "transition_allowed": false,
+        "evaluation_case": "calibration_base_case"
+      },
+      "note": "Первый нормативный прогон. Переходы E-31/E-33 из V4 не выполнены при базовых допущениях (E-31 требует CAGR ≤25%; E-33 — маржу >30%, база 27%). При крайних допущениях (маржа 34%, мультипликатор 40) условие E-33 выполнялось бы (61% >35%, 34% >30%, 40 >35) — переходы оцениваются только по базовому случаю.",
+      "model_stability": {
+        "class": "model_fragile",
+        "terminal_value_share_of_pv": 0.9996,
+        "rule": "Reverse_Valuation_Rules_v1.1 §1",
+        "valuation_transition_allowed": true,
+        "require_sensitivity_evidence": true,
+        "require_explicit_model_risk_flag": true
+      }
+    },
+    {
+      "run_id": "20260920T191346Z-conditional_mc-861006",
+      "model": "conditional_mc 1.0.0",
+      "spec": "SPCX_Conditional_Monte_Carlo_Specification_v1.0",
+      "calibration": "mc_calibration_v1.0 (A2+B2+C1+D3)",
+      "valuation_date": "2026-09-20",
+      "equity_value_0_b": 2013,
+      "paths": 500000,
+      "seed": 20260920,
+      "median_CAGR": {
+        "3Y": -0.227,
+        "5Y": -0.149,
+        "8Y": -0.038
+      },
+      "CAGR_5Y_q05_q95": [
+        -0.216,
+        -0.076
+      ],
+      "P_2x_5Y": 0,
+      "P_5x_5Y": 0,
+      "P_loss_gt_30pct_5Y": 0.97,
+      "P_loss_gt_50pct_5Y": 0.67,
+      "ES5_5Y": -0.73,
+      "maxDD_5Y_median": -0.78,
+      "median_equity_5Y_b": 900.9,
+      "persistence_ratio": null,
+      "convergence_stable": true,
+      "robustness_pass": true,
+      "robustness_note": "все 8 возмущений сохраняют отрицательный знак: −20.9…−8.9%",
+      "interpretation": "Расхождение двух моделей: reverse valuation требует 76% роста выручки в год, условный MC при допущениях состояния A2+B2+C1+D3 даёт медианную стоимость 2031 ≈ $0.9 трлн против $2.0 трлн сегодня. Не торговый сигнал; состояние осей не меняется. Интерпретации движка I1–I4 требуют подтверждения автором спецификации."
+    },
+    {
+      "run_id": "20260922T062152Z-company_mc-e169f2",
+      "model": "company_mc",
+      "version": "2.3.0",
+      "timestamp": "2026-09-22T06:21:52Z",
+      "purpose": "сравнительный прогон на обобщённом движке v2 (адаптер калибровки v1.0); НЕ нормативный — норматив остаётся 20260920T191346Z-conditional_mc-861006 до решения владельца",
+      "summary": {
+        "median_CAGR_3Y": -0.2272,
+        "median_CAGR_5Y": -0.1492,
+        "median_CAGR_8Y": -0.0387,
+        "P_2x_5Y": 0.0,
+        "P_loss_gt_30pct_5Y": 0.9633,
+        "P_loss_gt_50pct_5Y": 0.6698,
+        "ES5": -0.7361,
+        "median_equity_value_5Y_b": 897.2,
+        "RV_Growth_Gap": 0.4925,
+        "Price_Expectation_Gap": 3.7806,
+        "convergence_stable": true,
+        "robustness_pass": true
+      },
+      "paths_file": "portfolio/_runs/20260922T062152Z-company_mc-e169f2-paths.npz",
+      "comparison_vs_normative": "CAGR5 −14.92 vs −14.86%; P(loss>30%) 0.963 vs 0.966; ES5 −0.736 vs −0.731; medE5 $897.2 vs $900.6 млрд — расхождения в пределах 0.6 п.п."
+    }
+  ]
+}

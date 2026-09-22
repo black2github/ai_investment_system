@@ -1,0 +1,151 @@
+version: "1.0"
+artifact: "SPCX State Vector Registry"
+as_of: "2026-09-20"
+ticker: "SPCX"
+purpose: >
+  Машиночитаемый реестр многомерного состояния SPCX. Trigger фиксирует факт,
+  transition меняет состояние оси, решение принимает владелец. E-01...E-09
+  сохраняются; новые state-transition triggers начинаются с E-10.
+
+source_policy:
+  primary: ["SEC", "SPCX Investor Relations", "FAA"]
+  secondary: ["Yahoo Finance", "StockAnalysis"]
+  rule: >
+    Числовые условия перехода должны проверяться по первичному источнику.
+    Рыночные цены и котировки допускается брать из Yahoo Finance/StockAnalysis.
+    Неподтвержденные факты не переводят состояние и попадают в pending_verification.
+
+axes:
+  AI:
+    name: "AI compute"
+    states:
+      A0: {name: "AI optionality", definition: "AI-направление существует, но коммерческий спрос и масштаб еще не подтверждены."}
+      A1: {name: "AI demand validation", definition: "Есть подтвержденный спрос/контракты и растущая AI-выручка, но экономика еще не доказана."}
+      A2: {name: "AI monetization", definition: "AI-инфраструктура генерирует существенную выручку и достигнута положительная скорректированная EBITDA."}
+      A3: {name: "AI scale acceleration", definition: "Масштаб вычислений и AI-выручки одновременно ускоряются при подтвержденной экономике."}
+      A4: {name: "AI overbuild / deterioration", definition: "Рост AI-бизнеса существенно замедляется или экономика ухудшается на фоне высокой капиталоемкости."}
+    current:
+      state: A2
+      date: "2026-09-20"
+      evidence:
+        - "AI revenue Q2 2026 = $2.561B, +247% YoY."
+        - "AI adjusted EBITDA Q2 2026 = +$1.146B."
+        - "AI operating loss Q2 2026 = -$1.257B."
+        - "Nameplate compute = 1.4 GW."
+        - "Cloud Service Agreements = $14.1B contracted sales."
+      source: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+    transitions:
+      - {trigger_id: "SPCX-E-10", axis: "AI", from: A0, to: A1, condition: "AI revenue >= $0.5B за квартал ИЛИ подписанные non-cancellable cloud contracts >= $1B", period: "один квартал", source: "SEC Q2 2026 10-Q / earnings release", event_level: E2}
+      - {trigger_id: "SPCX-E-11", axis: "AI", from: A1, to: A2, condition: "AI revenue >= $1B за квартал И AI adjusted EBITDA >= $0", period: "один квартал", source: "SEC earnings release", event_level: E2}
+      - {trigger_id: "SPCX-E-12", axis: "AI", from: A2, to: A3, condition: "AI revenue >= $3B за квартал И nameplate compute >= 2.0 GW И AI adjusted EBITDA >= $0", period: "два квартала подряд", source: "SEC earnings release / 10-Q", event_level: E2}
+      - {trigger_id: "SPCX-E-13", axis: "AI", from: A2, to: A4, condition: "AI revenue YoY < 20% ИЛИ AI adjusted EBITDA < $0", period: "два квартала подряд", source: "SEC earnings release / 10-Q", event_level: E2}
+      - {trigger_id: "SPCX-E-14", axis: "AI", from: A3, to: A4, condition: "AI revenue YoY < 20% ИЛИ AI adjusted EBITDA < $0 при AI capex >= $10B за квартал", period: "два квартала подряд", source: "SEC earnings release / 10-Q", event_level: E1}
+
+  Starlink:
+    name: "Starlink"
+    states:
+      B0: {name: "Early growth", definition: "Раннее масштабирование абонентской базы."}
+      B1: {name: "Subscriber acceleration", definition: "Быстрый рост числа абонентов."}
+      B2: {name: "Scale economics", definition: "Большая база абонентов сочетается с устойчивой операционной рентабельностью Connectivity."}
+      B3: {name: "Mature growth", definition: "Рост продолжается, но темп прироста абонентов заметно снижается."}
+      B4: {name: "Saturation / ARPU pressure", definition: "Замедление роста сопровождается существенным снижением ARPU и/или ухудшением рентабельности."}
+    current:
+      state: B2
+      date: "2026-09-20"
+      evidence:
+        - "Starlink subscribers = 12.0M, +100% YoY."
+        - "Connectivity revenue = $4.291B, +66% YoY."
+        - "Connectivity operating income = $1.656B; operating margin ~38.6%."
+        - "ARPU = $66/month vs $85 a year earlier."
+      source: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+    transitions:
+      - {trigger_id: "SPCX-E-15", axis: "Starlink", from: B0, to: B1, condition: "Starlink subscribers YoY growth >= 50%", period: "один квартал", source: "SEC earnings release / 10-Q", event_level: E2}
+      - {trigger_id: "SPCX-E-16", axis: "Starlink", from: B1, to: B2, condition: "Subscribers >= 12M И Connectivity operating margin >= 30%", period: "два квартала подряд", source: "SEC earnings release / 10-Q", event_level: E2}
+      - {trigger_id: "SPCX-E-17", axis: "Starlink", from: B2, to: B3, condition: "Subscriber YoY growth < 20% И >= 12M subscribers", period: "два квартала подряд", source: "SEC earnings release / 10-Q", event_level: E2}
+      - {trigger_id: "SPCX-E-18", axis: "Starlink", from: B3, to: B4, condition: "Subscriber YoY growth < 10% И ARPU YoY decline <= -10% И Connectivity operating margin < 25%", period: "два квартала подряд", source: "SEC earnings release / 10-Q", event_level: E1}
+      - {trigger_id: "SPCX-E-19", axis: "Starlink", from: B4, to: B3, condition: "Subscriber YoY growth >= 20% И ARPU YoY >= 0% И Connectivity operating margin >= 30%", period: "два квартала подряд", source: "SEC earnings release / 10-Q", event_level: E2}
+
+  Starship:
+    name: "Starship"
+    states:
+      C0: {name: "Development", definition: "Разработка без подтвержденного flight-test milestone."}
+      C1: {name: "Successful suborbital validation", definition: "Есть успешная суборбитальная миссия с выполнением существенных целей."}
+      C2: {name: "Orbital validation", definition: "Успешная орбитальная миссия с выполнением заявленных mission objectives."}
+      C3: {name: "Reusability validation", definition: "Подтверждена повторная эксплуатация летного железа с ограниченным интервалом."}
+      C4: {name: "High-frequency operations", definition: "Система демонстрирует регулярную эксплуатацию с высокой частотой."}
+      C5: {name: "Cost-to-orbit disruption", definition: "Подтверждено существенное снижение стоимости вывода относительно исторической базы."}
+    current:
+      state: C1
+      date: "2026-09-20"
+      evidence:
+        - "Flight 12: successful suborbital mission."
+        - "Flight 13: company reported all flight objectives achieved."
+        - "FAA operational plan dated 2026-09-18 listed Starship Flight 14 primary 2026-09-22 and backup 2026-09-23."
+      source: "SEC earnings release; FAA ATCSCC operational plan"
+    transitions:
+      - {trigger_id: "SPCX-E-20", axis: "Starship", from: C0, to: C1, condition: "Одна миссия Starship V3 завершена с выполнением >= 80% заранее заявленных mission objectives", period: "одна миссия", source: "SPCX/SEC filing or release", event_level: E2}
+      - {trigger_id: "SPCX-E-21", axis: "Starship", from: C1, to: C2, condition: "Успешно завершена орбитальная миссия Starship с выполнением >= 80% заявленных mission objectives", period: "одна миссия", source: "SPCX/FAA/SEC", event_level: E1}
+      - {trigger_id: "SPCX-E-22", axis: "Starship", from: C2, to: C3, condition: "Один и тот же flight-capable элемент Starship/booster успешно повторно использован >= 2 раз с интервалом <= 90 дней", period: "до 90 дней между reuse", source: "SPCX/FAA/SEC", event_level: E1}
+      - {trigger_id: "SPCX-E-23", axis: "Starship", from: C3, to: C4, condition: ">= 4 успешных Starship orbital/relevant operational flights за rolling 12 месяцев И median interval between flights <= 90 дней", period: "rolling 12 месяцев", source: "SPCX/FAA", event_level: E1}
+      - {trigger_id: "SPCX-E-24", axis: "Starship", from: C4, to: C5, condition: "Компания раскрывает measured cost-to-orbit <= 10% исторической базы И >= 4 operational flights за rolling 12 месяцев", period: "rolling 12 месяцев", source: "SPCX filing/release", event_level: E1}
+
+  Capital_Intensity:
+    name: "Capital intensity"
+    states:
+      D0: {name: "Capital discipline", definition: "Capex контролируем относительно роста бизнеса."}
+      D1: {name: "Investment expansion", definition: "Capex ускоряется вместе с ростом подтвержденного спроса."}
+      D2: {name: "Aggressive expansion", definition: "Высокий capex необходим для быстрого масштабирования."}
+      D3: {name: "Extreme expansion", definition: "Capex становится системообразующим фактором инвестиционной истории."}
+      D4: {name: "Overinvestment risk", definition: "Capex остается очень высоким при ухудшении роста/экономики."}
+    current:
+      state: D3
+      date: "2026-09-20"
+      evidence:
+        - "Total Q2 capex = $18.369B."
+        - "AI Q2 capex = $15.828B."
+        - "AI capex H1 2026 = $23.551B."
+        - "AI revenue Q2 = $2.561B."
+      source: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+    transitions:
+      - {trigger_id: "SPCX-E-25", axis: "Capital_Intensity", from: D0, to: D1, condition: "Total capex YoY growth >= 20% И company revenue YoY growth >= 20%", period: "один квартал", source: "SEC 10-Q", event_level: E2}
+      - {trigger_id: "SPCX-E-26", axis: "Capital_Intensity", from: D1, to: D2, condition: "Total capex >= $10B за квартал И capex/revenue >= 100%", period: "один квартал", source: "SEC 10-Q", event_level: E2}
+      - {trigger_id: "SPCX-E-27", axis: "Capital_Intensity", from: D2, to: D3, condition: "Total capex >= $15B за квартал И AI capex >= $10B за квартал", period: "два квартала подряд", source: "SEC 10-Q", event_level: E1}
+      - {trigger_id: "SPCX-E-28", axis: "Capital_Intensity", from: D3, to: D4, condition: "Total capex >= $15B за квартал И AI revenue YoY < 20%", period: "два квартала подряд", source: "SEC 10-Q", event_level: E1}
+      - {trigger_id: "SPCX-E-29", axis: "Capital_Intensity", from: D4, to: D3, condition: "AI revenue YoY >= 50% И AI adjusted EBITDA >= $0 И total capex < $15B", period: "два квартала подряд", source: "SEC 10-Q", event_level: E2}
+
+  Valuation:
+    name: "Valuation"
+    states:
+      V0: {name: "Not assessed", definition: "Reverse valuation не рассчитана."}
+      V1: {name: "Low implied expectations", definition: "Текущая цена требует умеренных будущих операционных показателей."}
+      V2: {name: "Reasonable implied expectations", definition: "Цена совместима с центральным диапазоном операционной модели."}
+      V3: {name: "Demanding", definition: "Цена требует высокой устойчивости роста/маржи."}
+      V4: {name: "Very demanding", definition: "Цена требует исключительного сочетания роста, масштаба и длительности."}
+      V5: {name: "Speculative / thesis-dependent", definition: "Цена преимущественно зависит от еще не подтвержденных будущих бизнес-моделей."}
+    current:
+      state: V4
+      date: "2026-09-20"
+      evidence:
+        - "Close 2026-09-18 = $152.71."
+        - "Market cap = ~$2.07T."
+        - "TTM revenue = ~$23.04B."
+        - "Price/Sales (ttm) = 70.49x; EV/Revenue = 84.74x (Yahoo Finance)."
+        - "Reverse valuation has not yet been approved as a calculation-engine version."
+      source: "https://finance.yahoo.com/quote/SPCX/; https://stockanalysis.com/stocks/spcx/market-cap/"
+    transitions:
+      - {trigger_id: "SPCX-E-30", axis: "Valuation", from: V0, to: V4, condition: "Market cap / TTM revenue >= 60x", period: "одна дата наблюдения", source: "Yahoo Finance / StockAnalysis", event_level: E2}
+      - {trigger_id: "SPCX-E-31", axis: "Valuation", from: V4, to: V3, condition: "Reverse valuation: implied 5Y revenue CAGR <= 25% И terminal FCF margin >= 20% И terminal multiple <= 35x FCF", period: "после утверждения valuation model version", source: "Deterministic calculation engine", event_level: E2}
+      - {trigger_id: "SPCX-E-32", axis: "Valuation", from: V3, to: V2, condition: "Reverse valuation: implied 5Y revenue CAGR <= 20% И terminal FCF margin >= 20% И terminal multiple <= 30x FCF", period: "после утверждения valuation model version", source: "Deterministic calculation engine", event_level: E2}
+      - {trigger_id: "SPCX-E-33", axis: "Valuation", from: V4, to: V5, condition: "Reverse valuation требует одновременно revenue CAGR > 35% И terminal FCF margin > 30% И terminal multiple > 35x FCF", period: "после утверждения valuation model version", source: "Deterministic calculation engine", event_level: E1}
+
+transition_semantics:
+  trigger: "Наблюдаемый факт, прошедший проверку источника."
+  transition: "Машинное изменение state axis."
+  decision: "Отдельное решение владельца; не является частью transition."
+  rollback: "Разрешен только отдельным transition с явно заданным condition."
+  evidence_required: true
+  pending_verification_blocks_transition: true
+
+legacy_compatibility:
+  unchanged_ids: [SPCX-E-01, SPCX-E-02, SPCX-E-03, SPCX-E-04, SPCX-E-05, SPCX-E-06, SPCX-E-07, SPCX-E-08, SPCX-E-09]
+  note: "Существующие E-01...E-09 не переименовываются и не переписываются; новые state-transition IDs начинаются с E-10."

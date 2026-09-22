@@ -1,0 +1,647 @@
+{
+  "run_id": "20260921T221042Z-conviction_overlay-69c949",
+  "model": "conviction_overlay",
+  "version": "1.0.0",
+  "seed": 0,
+  "inputs": {
+    "positions": [
+      {
+        "ticker": "RKLB",
+        "sector_id": "SPACE",
+        "market_value": 4132.48,
+        "cost_basis": 5850.639999999999,
+        "conviction": false,
+        "archetype": "pre_service_or_milestone_driven"
+      },
+      {
+        "ticker": "NVDA",
+        "sector_id": "SEMICONDUCTORS",
+        "market_value": 38932.324206000005,
+        "cost_basis": 15501.47,
+        "conviction": false,
+        "archetype": "mature_positive_margin"
+      },
+      {
+        "ticker": "NET",
+        "sector_id": "SOFTWARE",
+        "market_value": 3236.0,
+        "cost_basis": 2236.6,
+        "conviction": false,
+        "archetype": "mature_positive_margin"
+      },
+      {
+        "ticker": "NBIS",
+        "sector_id": "AI_COMPUTE",
+        "market_value": 60355.8,
+        "cost_basis": 20967.510000000002,
+        "conviction": true,
+        "archetype": "capital_intensive_transition"
+      },
+      {
+        "ticker": "MSFT",
+        "sector_id": "SOFTWARE",
+        "market_value": 3466.58249,
+        "cost_basis": 1906.63,
+        "conviction": false,
+        "archetype": "mature_positive_margin"
+      },
+      {
+        "ticker": "META",
+        "sector_id": "INTERNET_PLATFORMS",
+        "market_value": 9992.974075,
+        "cost_basis": 5145.91,
+        "conviction": false,
+        "archetype": "mature_positive_margin"
+      },
+      {
+        "ticker": "LLY",
+        "sector_id": "HEALTHCARE",
+        "market_value": 15019.910868,
+        "cost_basis": 10062.78,
+        "conviction": false,
+        "archetype": "mature_positive_margin"
+      },
+      {
+        "ticker": "HOOD",
+        "sector_id": "FINTECH",
+        "market_value": 26000.94,
+        "cost_basis": 11422.11,
+        "conviction": false,
+        "archetype": "mature_positive_margin"
+      },
+      {
+        "ticker": "GLD",
+        "sector_id": "GOLD",
+        "market_value": 4011.7,
+        "cost_basis": 4283.58,
+        "conviction": false
+      },
+      {
+        "ticker": "ETN",
+        "sector_id": "ELECTRIFICATION",
+        "market_value": 2128.182654,
+        "cost_basis": 2038.35,
+        "conviction": false,
+        "archetype": "mature_positive_margin"
+      },
+      {
+        "ticker": "ASML",
+        "sector_id": "SEMICONDUCTORS",
+        "market_value": 5054.039320000001,
+        "cost_basis": 4159.76,
+        "conviction": false,
+        "archetype": "mature_positive_margin"
+      },
+      {
+        "ticker": "UFO",
+        "sector_id": "SPACE",
+        "market_value": 302.47,
+        "cost_basis": 385.91,
+        "conviction": false
+      },
+      {
+        "ticker": "ASTS",
+        "sector_id": "SPACE",
+        "market_value": 1872.64,
+        "cost_basis": 2475.52,
+        "conviction": false,
+        "archetype": "pre_service_or_milestone_driven"
+      },
+      {
+        "ticker": "CRWV",
+        "sector_id": "AI_COMPUTE",
+        "market_value": 894.96,
+        "cost_basis": 1682.23,
+        "conviction": false,
+        "archetype": "capital_intensive_transition"
+      },
+      {
+        "ticker": "PLTR",
+        "sector_id": "SOFTWARE",
+        "market_value": 3197.5199999999995,
+        "cost_basis": 2343.6,
+        "conviction": false,
+        "archetype": "mature_positive_margin"
+      },
+      {
+        "ticker": "SPCX",
+        "sector_id": "SPACE",
+        "market_value": 1221.68,
+        "cost_basis": 1243.28,
+        "conviction": false,
+        "archetype": "capital_intensive_transition"
+      },
+      {
+        "ticker": "SPOT",
+        "sector_id": "INTERNET_PLATFORMS",
+        "market_value": 2037.8,
+        "cost_basis": 1047.88,
+        "conviction": false
+      }
+    ],
+    "cash": 897.91,
+    "params": {
+      "L_max_standard": 0.1,
+      "L_max_conviction": 0.25,
+      "target_safety_buffer": 0.75,
+      "plausible_drawdown_floor": 0.25,
+      "plausible_drawdown_ceiling": 0.9,
+      "standard_hard_cap_floor": 0.05,
+      "standard_hard_cap_ceiling": 0.3,
+      "conviction_hard_cap_floor": 0.05,
+      "conviction_hard_cap_ceiling": 0.45,
+      "invested_capital": {
+        "standard_name_limit": 0.12,
+        "conviction_name_limit": 0.2,
+        "sector_limit": 0.3
+      },
+      "sector_market": {
+        "soft_limit": 0.35,
+        "hard_limit": 0.45
+      },
+      "conviction": {
+        "max_active_tags": 3,
+        "monitor_missed_runs_before_suspend": 2
+      },
+      "team_execution": {
+        "owner_judgment_multiplier_bounds": [
+          0.9,
+          1.1
+        ],
+        "combined_bounds": [
+          0.8,
+          1.2
+        ]
+      },
+      "prospective_review": {
+        "horizon_months": 12
+      },
+      "archetype_fallback": {
+        "mature_positive_margin": 0.55,
+        "capital_intensive_transition": 0.75,
+        "pre_service_or_milestone_driven": 0.85
+      }
+    },
+    "as_of": "2026-09-18",
+    "note": "прогон по утверждённым параметрам с активной пометкой NBIS (журнал CONV-2026-09-22-NBIS-01)"
+  },
+  "outputs": {
+    "model_version": "1.0.0",
+    "spec_version": "1.0",
+    "nav_base": 182755.91,
+    "risk_capital_basis": 93651.67,
+    "cash_weight": 0.0049,
+    "assets": [
+      {
+        "ticker": "RKLB",
+        "sector_id": "SPACE",
+        "conviction": false,
+        "market_weight": 0.0226,
+        "invested_share": 0.0625,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 5387.56,
+        "plausible_drawdown": 0.85,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1176,
+        "target_cap": 0.0882,
+        "expected_loss_at_dd_NAV": 0.0192,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "NVDA",
+        "sector_id": "SEMICONDUCTORS",
+        "conviction": false,
+        "market_weight": 0.213,
+        "invested_share": 0.1655,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0455,
+        "incremental_buy_capacity_usd": 0.0,
+        "plausible_drawdown": 0.55,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1818,
+        "target_cap": 0.1364,
+        "expected_loss_at_dd_NAV": 0.1172,
+        "concentration_gap": "hard_loss_budget_breach",
+        "block_new_buys": true,
+        "decision_request": "MANDATORY_RISK_REDUCTION_REVIEW",
+        "weight_to_restore_budget": 0.1818
+      },
+      {
+        "ticker": "NET",
+        "sector_id": "SOFTWARE",
+        "conviction": false,
+        "market_weight": 0.0177,
+        "invested_share": 0.0239,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 9001.6,
+        "plausible_drawdown": 0.55,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1818,
+        "target_cap": 0.1364,
+        "expected_loss_at_dd_NAV": 0.0097,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "NBIS",
+        "sector_id": "AI_COMPUTE",
+        "conviction": true,
+        "market_weight": 0.3303,
+        "invested_share": 0.2239,
+        "invested_limit": 0.2,
+        "invested_gap": 0.0239,
+        "incremental_buy_capacity_usd": 0.0,
+        "plausible_drawdown": 0.75,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.25,
+        "hard_cap": 0.3333,
+        "target_cap": 0.25,
+        "expected_loss_at_dd_NAV": 0.2477,
+        "concentration_gap": "soft",
+        "block_new_buys": true,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "MSFT",
+        "sector_id": "SOFTWARE",
+        "conviction": false,
+        "market_weight": 0.019,
+        "invested_share": 0.0204,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 9331.57,
+        "plausible_drawdown": 0.55,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1818,
+        "target_cap": 0.1364,
+        "expected_loss_at_dd_NAV": 0.0104,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "META",
+        "sector_id": "INTERNET_PLATFORMS",
+        "conviction": false,
+        "market_weight": 0.0547,
+        "invested_share": 0.0549,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 6092.29,
+        "plausible_drawdown": 0.55,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1818,
+        "target_cap": 0.1364,
+        "expected_loss_at_dd_NAV": 0.0301,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "LLY",
+        "sector_id": "HEALTHCARE",
+        "conviction": false,
+        "market_weight": 0.0822,
+        "invested_share": 0.1074,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 1175.42,
+        "plausible_drawdown": 0.55,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1818,
+        "target_cap": 0.1364,
+        "expected_loss_at_dd_NAV": 0.0452,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "HOOD",
+        "sector_id": "FINTECH",
+        "conviction": false,
+        "market_weight": 0.1423,
+        "invested_share": 0.122,
+        "invested_limit": 0.12,
+        "invested_gap": 0.002,
+        "incremental_buy_capacity_usd": 0.0,
+        "plausible_drawdown": 0.55,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1818,
+        "target_cap": 0.1364,
+        "expected_loss_at_dd_NAV": 0.0782,
+        "concentration_gap": "soft",
+        "block_new_buys": true,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "GLD",
+        "sector_id": "GOLD",
+        "market_weight": 0.022,
+        "invested_share": 0.0457,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 6954.62,
+        "plausible_drawdown": null,
+        "note": "нет архетипа/просадки — потолок не считается (не компания?)",
+        "conviction": false,
+        "concentration_gap": "not_applicable",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      {
+        "ticker": "ETN",
+        "sector_id": "ELECTRIFICATION",
+        "conviction": false,
+        "market_weight": 0.0116,
+        "invested_share": 0.0218,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 9199.85,
+        "plausible_drawdown": 0.55,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1818,
+        "target_cap": 0.1364,
+        "expected_loss_at_dd_NAV": 0.0064,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "ASML",
+        "sector_id": "SEMICONDUCTORS",
+        "conviction": false,
+        "market_weight": 0.0277,
+        "invested_share": 0.0444,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 7078.44,
+        "plausible_drawdown": 0.55,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1818,
+        "target_cap": 0.1364,
+        "expected_loss_at_dd_NAV": 0.0152,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "UFO",
+        "sector_id": "SPACE",
+        "market_weight": 0.0017,
+        "invested_share": 0.0041,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 10852.29,
+        "plausible_drawdown": null,
+        "note": "нет архетипа/просадки — потолок не считается (не компания?)",
+        "conviction": false,
+        "concentration_gap": "not_applicable",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      {
+        "ticker": "ASTS",
+        "sector_id": "SPACE",
+        "conviction": false,
+        "market_weight": 0.0102,
+        "invested_share": 0.0264,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 8762.68,
+        "plausible_drawdown": 0.85,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1176,
+        "target_cap": 0.0882,
+        "expected_loss_at_dd_NAV": 0.0087,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "CRWV",
+        "sector_id": "AI_COMPUTE",
+        "conviction": false,
+        "market_weight": 0.0049,
+        "invested_share": 0.018,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 9555.97,
+        "plausible_drawdown": 0.75,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1333,
+        "target_cap": 0.1,
+        "expected_loss_at_dd_NAV": 0.0037,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "PLTR",
+        "sector_id": "SOFTWARE",
+        "conviction": false,
+        "market_weight": 0.0175,
+        "invested_share": 0.025,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 8894.6,
+        "plausible_drawdown": 0.55,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1818,
+        "target_cap": 0.1364,
+        "expected_loss_at_dd_NAV": 0.0096,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "SPCX",
+        "sector_id": "SPACE",
+        "conviction": false,
+        "market_weight": 0.0067,
+        "invested_share": 0.0133,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 9994.92,
+        "plausible_drawdown": 0.75,
+        "plausible_drawdown_source": "archetype_fallback",
+        "L_max": 0.1,
+        "hard_cap": 0.1333,
+        "target_cap": 0.1,
+        "expected_loss_at_dd_NAV": 0.005,
+        "concentration_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null,
+        "weight_to_restore_budget": null
+      },
+      {
+        "ticker": "SPOT",
+        "sector_id": "INTERNET_PLATFORMS",
+        "market_weight": 0.0112,
+        "invested_share": 0.0112,
+        "invested_limit": 0.12,
+        "invested_gap": 0.0,
+        "incremental_buy_capacity_usd": 10190.32,
+        "plausible_drawdown": null,
+        "note": "нет архетипа/просадки — потолок не считается (не компания?)",
+        "conviction": false,
+        "concentration_gap": "not_applicable",
+        "block_new_buys": false,
+        "decision_request": null
+      }
+    ],
+    "sectors": {
+      "SPACE": {
+        "invested_share": 0.1063,
+        "invested_limit": 0.3,
+        "invested_gap": 0.0,
+        "market_weight": 0.0412,
+        "market_soft_limit": 0.35,
+        "market_hard_limit": 0.45,
+        "market_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      "FINTECH": {
+        "invested_share": 0.122,
+        "invested_limit": 0.3,
+        "invested_gap": 0.0,
+        "market_weight": 0.1423,
+        "market_soft_limit": 0.35,
+        "market_hard_limit": 0.45,
+        "market_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      "SEMICONDUCTORS": {
+        "invested_share": 0.2099,
+        "invested_limit": 0.3,
+        "invested_gap": 0.0,
+        "market_weight": 0.2407,
+        "market_soft_limit": 0.35,
+        "market_hard_limit": 0.45,
+        "market_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      "AI_COMPUTE": {
+        "invested_share": 0.2419,
+        "invested_limit": 0.3,
+        "invested_gap": 0.0,
+        "market_weight": 0.3352,
+        "market_soft_limit": 0.35,
+        "market_hard_limit": 0.45,
+        "market_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      "ELECTRIFICATION": {
+        "invested_share": 0.0218,
+        "invested_limit": 0.3,
+        "invested_gap": 0.0,
+        "market_weight": 0.0116,
+        "market_soft_limit": 0.35,
+        "market_hard_limit": 0.45,
+        "market_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      "GOLD": {
+        "invested_share": 0.0457,
+        "invested_limit": 0.3,
+        "invested_gap": 0.0,
+        "market_weight": 0.022,
+        "market_soft_limit": 0.35,
+        "market_hard_limit": 0.45,
+        "market_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      "INTERNET_PLATFORMS": {
+        "invested_share": 0.0661,
+        "invested_limit": 0.3,
+        "invested_gap": 0.0,
+        "market_weight": 0.0658,
+        "market_soft_limit": 0.35,
+        "market_hard_limit": 0.45,
+        "market_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      "SOFTWARE": {
+        "invested_share": 0.0693,
+        "invested_limit": 0.3,
+        "invested_gap": 0.0,
+        "market_weight": 0.0542,
+        "market_soft_limit": 0.35,
+        "market_hard_limit": 0.45,
+        "market_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null
+      },
+      "HEALTHCARE": {
+        "invested_share": 0.1074,
+        "invested_limit": 0.3,
+        "invested_gap": 0.0,
+        "market_weight": 0.0822,
+        "market_soft_limit": 0.35,
+        "market_hard_limit": 0.45,
+        "market_gap": "none",
+        "block_new_buys": false,
+        "decision_request": null
+      }
+    },
+    "summary": {
+      "hard_loss_budget_breaches": [
+        "NVDA"
+      ],
+      "soft_concentration_gaps": [
+        "NBIS",
+        "HOOD"
+      ],
+      "new_buys_blocked": [
+        "NVDA",
+        "NBIS",
+        "HOOD"
+      ],
+      "conviction_active": [
+        "NBIS"
+      ]
+    },
+    "decision": "none",
+    "note": "trigger ≠ decision: разрывы и запросы — материал для Decision Request владельцу, не сделки (спецификация §1.3, §5)"
+  },
+  "elapsed_ms": 0.3,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

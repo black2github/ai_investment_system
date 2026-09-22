@@ -1,0 +1,31 @@
+{
+  "run_id": "20260920T150722Z-valuation_multiple-b55b3b",
+  "model": "valuation_multiple",
+  "version": "0.1.0",
+  "seed": 0,
+  "inputs": {
+    "price": 152.71,
+    "shares_outstanding": 13181779945,
+    "ttm_revenue_usd": 23044000000
+  },
+  "outputs": {
+    "market_cap_usd": 2012989615400.9502,
+    "market_cap_usd_b": 2012.99,
+    "ps_multiple": 87.35,
+    "color": "red",
+    "thresholds": {
+      "green_below": 30.0,
+      "yellow_below": 60.0
+    },
+    "inputs": {
+      "price": 152.71,
+      "shares_outstanding": 13181779945.0,
+      "ttm_revenue_usd": 23044000000.0
+    }
+  },
+  "elapsed_ms": 0.1,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

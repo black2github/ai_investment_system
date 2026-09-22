@@ -1,0 +1,85 @@
+# ВНИМАНИЕ: раздел driver_taxonomy (16 драйверов v1.0) заменён methodology/MPC_Driver_Taxonomy_v1.1.yaml (32 драйвера, additive, 21.09.2026); схема сохранена как v1.0.
+version: "1.0"
+artifact: "Marginal Portfolio Contribution Schema"
+as_of: "2026-09-20"
+
+pipeline:
+  - Candidate
+  - Company_Model
+  - Valuation
+  - Conditional_MC
+  - Marginal_Portfolio_Contribution
+  - Portfolio_Optimizer
+  - Portfolio_Stability_Test
+  - Core_Challenger_Decision
+  - Target_Weights
+
+principles:
+  standalone_not_equal_portfolio_attractiveness: true
+  single_score_allowed: false
+  initial_portfolio_hypothesis_as_input: false
+  trigger_not_decision: true
+
+driver_taxonomy:
+  version: "1.0"
+  exposure_scale: [-2, -1, 0, 1, 2]
+  drivers:
+    - AI_COMPUTE_DEMAND
+    - HYPERSCALER_CAPEX
+    - SEMICONDUCTOR_WFE
+    - ADVANCED_PACKAGING
+    - HBM_MEMORY
+    - EDA_DESIGN_COMPLEXITY
+    - CLOUD_SOFTWARE_DEMAND
+    - DATA_CENTER_POWER
+    - LAUNCH_ECONOMICS
+    - SATELLITE_CONNECTIVITY
+    - GOVERNMENT_DEFENSE
+    - INTEREST_RATES
+    - CAPITAL_MARKETS
+    - CHINA_REVENUE
+    - TAIWAN_SUPPLY
+    - ACQUISITION_INTEGRATION
+
+inputs:
+  standalone_mc_ref: null
+  portfolio_state_hash: null
+  market_correlation:
+    weekly_3y: null
+    weekly_1y_sensitivity: null
+    stress_correlation: null
+  driver_exposures: {}
+  failure_modes: []
+  scenario_returns: {}
+  implementation_constraints: {}
+
+calculation:
+  counterfactual:
+    base: "P0_without_candidate"
+    candidate: "P1_equals_P0_plus_candidate_at_test_weight"
+  tested_weights_source: "portfolio_optimizer_allowed_range"
+  metrics:
+    - median_cagr_5y
+    - es5
+    - p_loss_gt_30
+    - p_loss_gt_50
+    - max_drawdown
+    - scenario_concentration
+    - driver_concentration
+    - failure_mode_concentration
+  driver_overlap:
+    method: weighted_cosine_similarity_absolute_exposures
+  failure_mode_overlap:
+    method: common_cause_severity_weighted_overlap
+
+outputs:
+  return_contribution: null
+  downside_contribution: null
+  diversification_contribution: null
+  robustness_contribution: null
+  unique_positive_drivers: []
+  duplicated_drivers: []
+  helps_weak_scenarios: []
+  worsens_weak_scenarios: []
+  redundant_exposure: null
+  decision: none

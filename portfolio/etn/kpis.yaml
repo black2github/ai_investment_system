@@ -1,0 +1,152 @@
+# KPI ETN с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.0'
+artifact: ETN KPI Dashboard
+as_of: '2026-09-21'
+ticker: ETN
+max_critical_kpis: 10
+source_artifact: inbox/received/ETN_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - Eaton Corporation plc Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: ETN-KPI-01
+  name: Total organic sales growth
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.10'
+    yellow: '>=0.05 and <0.10'
+    red: <0.05
+  last_value: 0.14
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm
+  verified: false
+- id: ETN-KPI-02
+  name: FY organic-growth guidance midpoint
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.11'
+    yellow: '>=0.08 and <0.11'
+    red: <0.08
+  last_value: 0.12
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm
+  verified: false
+  formula: (0.11 + 0.13) / 2 = 0.12
+- id: ETN-KPI-03
+  name: Electrical Americas organic sales growth
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.12'
+    yellow: '>=0.06 and <0.12'
+    red: <0.06
+  last_value: 0.18
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+  verified: false
+- id: ETN-KPI-04
+  name: Electrical Americas TTM organic orders growth
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.25'
+    yellow: '>=0.10 and <0.25'
+    red: <0.10
+  last_value: 0.41
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+  verified: false
+- id: ETN-KPI-05
+  name: Electrical Americas backlog
+  unit: USD B
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=14'
+    yellow: '>=11 and <14'
+    red: <11
+  last_value: 15.175
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+  verified: false
+- id: ETN-KPI-06
+  name: Electrical Americas backlog YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.25'
+    yellow: '>=0.10 and <0.25'
+    red: <0.10
+  last_value: 0.33
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+  verified: false
+  formula: 15.175 / 11.377 - 1 = 0.3338
+- id: ETN-KPI-07
+  name: Electrical Americas operating margin
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.27'
+    yellow: '>=0.23 and <0.27'
+    red: <0.23
+  last_value: 0.275
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+  verified: false
+  formula: 1.088 / 3.951 = 0.2754
+- id: ETN-KPI-08
+  name: Electrical Global TTM organic orders growth
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.25'
+    yellow: '>=0.10 and <0.25'
+    red: <0.10
+  last_value: 0.33
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+  verified: false
+- id: ETN-KPI-09
+  name: Total Electrical backlog
+  unit: USD B
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=18'
+    yellow: '>=14 and <18'
+    red: <14
+  last_value: 18.777
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+  verified: false
+  formula: 15.175 Electrical Americas + 3.602 Electrical Global = 18.777
+- id: ETN-KPI-10
+  name: Total debt
+  unit: USD B
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: <15
+    yellow: '>=15 and <25'
+    red: '>=25'
+  last_value: 20.611
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+  verified: false
+  formula: 2.091 short-term + 0.011 current LT + 18.509 long-term = 20.611

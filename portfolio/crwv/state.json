@@ -1,0 +1,193 @@
+{
+  "updated": "2026-09-21T13:53:30Z",
+  "price": {
+    "last": 81.36,
+    "last_at": "2026-09-18",
+    "zone": null
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [],
+  "notes": "Папка создана 2026-09-21 по партии моделей компаний; все critical_kpis сверены заданием batch05-facts-verify 2026-09-21.",
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-21",
+    "note": "фазы стратегии владельца не заданы; ведётся только вектор состояний"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T06:30:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании CRWV v1.0 принята от другой LLM; вектор Demand_Contracting=D3 + Unit_Economics=E3 + Capacity_Secured=C2 + Capital_Intensity=K2 + Funding_Liquidity=F2; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-21T13:53:30Z",
+      "kind": "facts_verify",
+      "summary": "batch05-facts-verify: все 10 critical_kpis подтверждены по SEC-документам (Q2 2026 press release exhibit 99.1, SEC-filed convert presentation и 10-Q crwv-20260630); расхождений не найдено. Все пять осей scenario_state помечены verified: true."
+    }
+  ],
+  "scenario_state": {
+    "Demand_Contracting": {
+      "state": "D3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 revenue $2.575B versus $1.212B, +112.5% YoY.",
+        "Revenue backlog $104.2B; backlog / annualized Q2 revenue = 104.2 / (2.575*4) = 10.12x.",
+        "Backlog excludes >$25B of net new customer commitments added in early Q3."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm', 'type': 'SEC earnings-release exhibit'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm', 'type': 'SEC-filed investor presentation', 'note': 'Used only for figures explicitly dated in the presentation, including contracted power as of 2026-08-11.'}",
+      "verified": true
+    },
+    "Unit_Economics": {
+      "state": "E3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 adjusted EBITDA $1.510B, margin 59%.",
+        "Q2 adjusted operating income $128M, margin 5%.",
+        "GAAP operating margin remained -2%; this axis tracks adjusted unit economics and must be read with financing/capital axes."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true
+    },
+    "Capacity_Secured": {
+      "state": "C2",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 release: active power reached 1.5 GW.",
+        "SEC-filed September presentation: contracted power approximately 4.2 GW as of the August 11 earnings call.",
+        "Q2-end release had contracted power at approximately 3.7 GW; 4.2 GW is the later observation."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm', 'type': 'SEC earnings-release exhibit'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm', 'type': 'SEC-filed investor presentation', 'note': 'Used only for figures explicitly dated in the presentation, including contracted power as of 2026-08-11.'}",
+      "verified": true
+    },
+    "Capital_Intensity": {
+      "state": "K2",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 capex $9.4B on revenue $2.575B = 3.65x.",
+        "Backlog / annualized Q2 revenue = 10.12x."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm', 'type': 'SEC-filed investor presentation', 'note': 'Used only for figures explicitly dated in the presentation, including contracted power as of 2026-08-11.'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true
+    },
+    "Funding_Liquidity": {
+      "state": "F2",
+      "since": "2026-09-21",
+      "evidence": [
+        "Total debt $35.6B at June 30, 2026.",
+        "Revenue backlog $104.2B; debt/backlog = 0.342x.",
+        "Total liquidity $15.553B: $5.524B cash + $15M securities + $10.014B availability under existing facilities.",
+        "Liquidity/latest-quarter capex = 15.553/9.4 = 1.65x."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm', 'type': 'SEC 10-Q'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm', 'type': 'SEC-filed investor presentation', 'note': 'Used only for figures explicitly dated in the presentation, including contracted power as of 2026-08-11.'}",
+      "verified": true
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {
+      "kpi_id": "CRWV-KPI-01",
+      "name": "Revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 1.1246,
+      "value_raw": "Revenue $2,575 (Three Months Ended June 30, 2026) vs $1,212 (2025)",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "CRWV-KPI-02",
+      "name": "Revenue backlog",
+      "period_end": "2026-06-30",
+      "value": 104.2,
+      "value_raw": "Revenue Backlog 1 $104.2B +246% YoY",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "CRWV-KPI-03",
+      "name": "Top-3 customer revenue share",
+      "period_end": "2026-06-30",
+      "value": 0.72,
+      "value_raw": "We recognized an aggregate of approximately 36%, 26%, and 10% of our revenue from our top three customers for the three months ended June 30, 2026",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "CRWV-KPI-04",
+      "name": "Adjusted EBITDA margin",
+      "period_end": "2026-06-30",
+      "value": 0.59,
+      "value_raw": "Adjusted EBITDA $1,510; Adjusted EBITDA margin 59%",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "CRWV-KPI-05",
+      "name": "Adjusted operating income margin",
+      "period_end": "2026-06-30",
+      "value": 0.05,
+      "value_raw": "Adjusted operating income $128; Adjusted operating income margin 5%",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "CRWV-KPI-06",
+      "name": "Active power",
+      "period_end": "2026-06-30",
+      "value": 1.5,
+      "value_raw": "Expanded active power by nearly 500 MWs to reach 1.5 GW",
+      "unit": "GW",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm",
+      "verified": true,
+      "value_type": "approximate"
+    },
+    {
+      "kpi_id": "CRWV-KPI-07",
+      "name": "Contracted power",
+      "period_end": "2026-08-11",
+      "value": 4.2,
+      "value_raw": "As of Q2 2026 earnings call on August 11, 2026 ... Total Contracted Power ~4.2 GW",
+      "unit": "GW",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm",
+      "verified": true,
+      "value_type": "approximate"
+    },
+    {
+      "kpi_id": "CRWV-KPI-08",
+      "name": "Quarterly capex / revenue",
+      "period_end": "2026-06-30",
+      "value": 3.6505,
+      "value_raw": "$2.6B Up 112% YoY Revenue; $104.2B Revenue Backlog; $9.4B Capital Expenditures",
+      "unit": "x",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "CRWV-KPI-09",
+      "name": "Total liquidity / latest-quarter capex",
+      "period_end": "2026-06-30",
+      "value": 1.6546,
+      "value_raw": "Cash and cash equivalents 5,524; Marketable securities 15; Availability under existing facilities 10,014; Total liquidity $15,553",
+      "unit": "x",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "CRWV-KPI-10",
+      "name": "Total debt / revenue backlog",
+      "period_end": "2026-06-30",
+      "value": 0.3417,
+      "value_raw": "Total Debt ($Billion) ... $35.6 (Q2'26); Total Debt / Revenue Backlog 0.3x",
+      "unit": "x",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+      "verified": true
+    }
+  ],
+  "calc_runs": []
+}

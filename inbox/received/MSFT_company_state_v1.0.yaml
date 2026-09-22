@@ -1,0 +1,138 @@
+version: "1.0"
+ticker: MSFT
+as_of: "2026-09-21"
+artifact: company_state_bundle
+source_policy:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+sources:
+  MSFT_FY2026_10K:
+    url: "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+    type: "SEC 10-K"
+  MSFT_FY2026_Q4_RELEASE:
+    url: "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast"
+    type: "Microsoft IR earnings release"
+  MSFT_FY2026_Q4_METRICS:
+    url: "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics"
+    type: "Microsoft IR metrics"
+  MSFT_FY2026_Q4_CALL:
+    url: "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4"
+    type: "Microsoft IR earnings call"
+states:
+  axes:
+    Cloud_AI_Demand:
+      states:
+        A0: {name: mature, criteria: "Azure YoY <20%"}
+        A1: {name: strong, criteria: "Azure YoY >=20% and <30%"}
+        A2: {name: very_strong, criteria: "Azure YoY >=30% and <40%"}
+        A3: {name: hypergrowth, criteria: "Azure YoY >=40% AND Microsoft Cloud YoY >=20%"}
+        A4: {name: durable_hypergrowth, criteria: "Azure YoY >=40% for 2 quarters AND demand continues to exceed available capacity"}
+      current: A4
+      current_evidence:
+        - "FY2026 Q4 Azure and other cloud services grew 43% YoY."
+        - "Management stated demand continues to exceed available capacity."
+      source_refs: [MSFT_FY2026_Q4_METRICS, MSFT_FY2026_Q4_CALL]
+    Software_Monetization:
+      states:
+        S0: {name: low_growth, criteria: "M365 Commercial cloud revenue YoY <10%"}
+        S1: {name: mature, criteria: "growth >=10% and <15%"}
+        S2: {name: healthy, criteria: "growth >=15% and <20%"}
+        S3: {name: strong, criteria: "growth >=20% and commercial RPO YoY >=20%"}
+        S4: {name: exceptional, criteria: "growth >=25% and commercial RPO YoY >=30% for 2 quarters"}
+      current: S1
+      current_evidence:
+        - "Q4 M365 Commercial cloud revenue grew 14% reported."
+        - "Commercial RPO reached $678B."
+      source_refs: [MSFT_FY2026_Q4_RELEASE, MSFT_FY2026_Q4_METRICS]
+    AI_Capital_Intensity:
+      states:
+        C0: {name: normalized, criteria: "cash capex/revenue <15%"}
+        C1: {name: elevated, criteria: "cash capex/revenue >=15% and <25%"}
+        C2: {name: aggressive, criteria: "cash capex/revenue >=25% and <35%"}
+        C3: {name: extreme_but_cash_generative, criteria: "cash capex/revenue >=35% AND quarterly FCF >0"}
+        C4: {name: cash_conversion_stress, criteria: "cash capex/revenue >=40% AND quarterly FCF margin <10% for 2 quarters"}
+      current: C3
+      current_evidence:
+        - "Q4 cash PP&E $35.8B on $90.0B revenue = 39.8%; FCF $19.6B."
+      source_refs: [MSFT_FY2026_Q4_CALL, MSFT_FY2026_Q4_RELEASE]
+    Cloud_Margin:
+      states:
+        M0: {name: compressed, criteria: "Microsoft Cloud gross margin <55%"}
+        M1: {name: moderate, criteria: "margin >=55% and <60%"}
+        M2: {name: healthy, criteria: "margin >=60% and <65%"}
+        M3: {name: strong, criteria: "margin >=65% and <70%"}
+        M4: {name: exceptional, criteria: "margin >=70% for 2 quarters"}
+      current: M3
+      current_evidence:
+        - "Microsoft Cloud gross margin was 65%."
+      source_refs: [MSFT_FY2026_Q4_METRICS]
+    Contracted_Demand:
+      states:
+        R0: {name: low_visibility, criteria: "commercial RPO < $300B"}
+        R1: {name: strong, criteria: "RPO >=$300B and < $450B"}
+        R2: {name: very_strong, criteria: "RPO >=$450B and < $600B"}
+        R3: {name: exceptional, criteria: "RPO >=$600B"}
+        R4: {name: diversified_exceptional, criteria: "RPO >=$600B AND ex-OpenAI RPO YoY >=25% for 2 quarters"}
+      current: R3
+      current_evidence:
+        - "Commercial RPO $678B, +84% YoY; ex-OpenAI +25%."
+      source_refs: [MSFT_FY2026_Q4_CALL, MSFT_FY2026_Q4_METRICS]
+kpis:
+  items:
+    - {id: MSFT-KPI-01, name: "Azure and other cloud services revenue YoY", period: quarterly, current_value: 0.43, unit: fraction, source: "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics", zones: {green: ">=0.35", yellow: ">=0.20 and <0.35", red: "<0.20"}}
+    - {id: MSFT-KPI-02, name: "Microsoft Cloud revenue", period: quarterly, current_value: 59.3, unit: "USD B", source: "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics", zones: {green: ">=55", yellow: ">=45 and <55", red: "<45"}}
+    - {id: MSFT-KPI-03, name: "Microsoft Cloud revenue YoY", period: quarterly, current_value: 0.27, unit: fraction, source: "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics", zones: {green: ">=0.20", yellow: ">=0.10 and <0.20", red: "<0.10"}}
+    - {id: MSFT-KPI-04, name: "Microsoft Cloud gross margin", period: quarterly, current_value: 0.65, unit: fraction, source: "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics", zones: {green: ">=0.65", yellow: ">=0.60 and <0.65", red: "<0.60"}}
+    - {id: MSFT-KPI-05, name: "Commercial RPO", period: quarterly, current_value: 678, unit: "USD B", source: "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics", zones: {green: ">=600", yellow: ">=450 and <600", red: "<450"}}
+    - {id: MSFT-KPI-06, name: "Commercial RPO YoY ex-OpenAI", period: quarterly, current_value: 0.25, unit: fraction, source: "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4", zones: {green: ">=0.20", yellow: ">=0.10 and <0.20", red: "<0.10"}}
+    - {id: MSFT-KPI-07, name: "Cash capex / revenue", period: quarterly, current_value: 0.3978, unit: fraction, formula: "35.8 / 90.0 = 0.3978", source: "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4", zones: {green: "<0.25", yellow: ">=0.25 and <0.40", red: ">=0.40"}}
+    - {id: MSFT-KPI-08, name: "Quarterly FCF margin", period: quarterly, current_value: 0.2178, unit: fraction, formula: "19.6 / 90.0 = 0.2178", source: "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4", zones: {green: ">=0.20", yellow: ">=0.10 and <0.20", red: "<0.10"}}
+    - {id: MSFT-KPI-09, name: "M365 Commercial cloud revenue YoY", period: quarterly, current_value: 0.14, unit: fraction, source: "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics", zones: {green: ">=0.15", yellow: ">=0.10 and <0.15", red: "<0.10"}}
+    - {id: MSFT-KPI-10, name: "Operating margin", period: quarterly, current_value: 0.4511, unit: fraction, formula: "40.6 / 90.0 = 0.4511", source: "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast", zones: {green: ">=0.40", yellow: ">=0.30 and <0.40", red: "<0.30"}}
+triggers:
+  items:
+    - {id: MSFT-E-01, step: vector, status: planned, axis: Cloud_AI_Demand, transition: {from: A4, to: A3}, kpis: [MSFT-KPI-01], condition: "Azure YoY <40% but >=30% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: MSFT-E-02, step: vector, status: planned, axis: Cloud_AI_Demand, transition: {from: A4, to: A2}, kpis: [MSFT-KPI-01], condition: "Azure YoY <30% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: MSFT-E-03, step: vector, status: planned, axis: Software_Monetization, transition: {from: S1, to: S2}, kpis: [MSFT-KPI-09], condition: "M365 Commercial cloud revenue YoY >=15% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: MSFT-E-04, step: vector, status: planned, axis: Software_Monetization, transition: {from: S1, to: S0}, kpis: [MSFT-KPI-09], condition: "M365 Commercial cloud revenue YoY <10% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: MSFT-E-05, step: vector, status: planned, axis: AI_Capital_Intensity, transition: {from: C3, to: C2}, kpis: [MSFT-KPI-07, MSFT-KPI-08], condition: "cash capex/revenue <35% AND FCF margin >=20% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: MSFT-E-06, step: vector, status: planned, axis: AI_Capital_Intensity, transition: {from: C3, to: C4}, kpis: [MSFT-KPI-07, MSFT-KPI-08], condition: "cash capex/revenue >=40% AND FCF margin <10% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: MSFT-E-07, step: vector, status: planned, axis: Cloud_Margin, transition: {from: M3, to: M2}, kpis: [MSFT-KPI-04], condition: "Microsoft Cloud gross margin <65% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: MSFT-E-08, step: vector, status: planned, axis: Cloud_Margin, transition: {from: M3, to: M4}, kpis: [MSFT-KPI-04], condition: "Microsoft Cloud gross margin >=70% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: MSFT-E-09, step: vector, status: planned, axis: Contracted_Demand, transition: {from: R3, to: R4}, kpis: [MSFT-KPI-05, MSFT-KPI-06], condition: "RPO >=$600B AND ex-OpenAI RPO YoY >=25% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: MSFT-E-10, step: vector, status: planned, axis: Contracted_Demand, transition: {from: R3, to: R2}, kpis: [MSFT-KPI-05, MSFT-KPI-06], condition: "RPO < $600B OR ex-OpenAI RPO YoY <15% for 2 consecutive quarters", period: "2 quarters", level: E2}
+mpc_inputs:
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 2
+    HYPERSCALER_CAPEX: -2
+    SEMICONDUCTOR_WFE: 0
+    ADVANCED_PACKAGING: -1
+    HBM_MEMORY: -1
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 2
+    DATA_CENTER_POWER: -2
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 1
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: 0
+    CHINA_REVENUE: 0
+    TAIWAN_SUPPLY: -1
+    ACQUISITION_INTEGRATION: 1
+  driver_interpretation:
+    HYPERSCALER_CAPEX:
+      directionality: dual
+      vector_score: -2
+      positive_channel: "AI infrastructure enables Azure/Copilot growth."
+      negative_channel: "Microsoft is itself a large infrastructure buyer; higher capex reduces near-term FCF and cloud gross margin."
+      net_rule_v1: "Encode cost channel as -2; monetization separately as AI_COMPUTE_DEMAND +2 and CLOUD_SOFTWARE_DEMAND +2."
+  failure_modes:
+    - {failure_id: MSFT-FM-01, name: "AI capex outruns monetization", common_cause_id: AI_OVERBUILD, severity: high}
+    - {failure_id: MSFT-FM-02, name: "Azure capacity/power constraints limit revenue capture", common_cause_id: DATA_CENTER_POWER_CONSTRAINT, severity: high}
+    - {failure_id: MSFT-FM-03, name: "GPU/HBM supply disruption delays cloud capacity", common_cause_id: TAIWAN_SUPPLY_DISRUPTION, severity: high}
+    - {failure_id: MSFT-FM-04, name: "Enterprise/cloud software demand decelerates", common_cause_id: CLOUD_SOFTWARE_DEMAND_SLOWDOWN, severity: high}
+    - {failure_id: MSFT-FM-05, name: "Frontier-model/OpenAI concentration or contract-economics risk", common_cause_id: AI_CLOUD_CUSTOMER_FINANCING_STRESS, severity: high}
+    - {failure_id: MSFT-FM-06, name: "AI infrastructure structurally compresses cloud margins", common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN, severity: medium}
+    - {failure_id: MSFT-FM-07, name: "Regulatory/antitrust pressure", common_cause_id: PLATFORM_REGULATORY_PRESSURE, severity: medium}

@@ -1,0 +1,157 @@
+# Вектор состояний ETN (оси и состояния). Переходы — triggers.yaml (ETN-E-04..ETN-E-10 + привязка legacy ETN-E-*/X-* к осям), текущий вектор — state.json.
+version: '1.0'
+artifact: ETN State Vector
+as_of: '2026-09-21'
+ticker: ETN
+source_artifact: inbox/received/ETN_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+purpose: 'Оси и состояния компании поверх реестра владельца от 17.09: legacy-триггеры сохранены и привязаны к осям (поле axis),
+  переходы состояний — ETN-E-04..ETN-E-10.'
+semantics:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  existing_trigger_policy: 'Existing owner ETN-E-* and ETN-X-* triggers are not replaced or renumbered. Bind them to the axes/KPIs
+    below where semantics overlap.
+
+    '
+sources:
+  ETN_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+    type: SEC 10-Q
+  ETN_Q2_2026_RELEASE:
+    url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm
+    type: SEC earnings-release exhibit
+  ETN_Q2_2026_IR:
+    url: https://www.eaton.com/de/en-gb/company/news-insights/news-releases/2026/eaton-reports-record-second-quarter-2026-results.html
+    type: Eaton IR earnings release
+axes:
+  Electrical_Americas_Demand:
+    name: Electrical Americas Demand
+    name_ru: спрос Electrical Americas (заказы, backlog)
+    states:
+      A0:
+        name: weak
+        criteria: orders YoY <5% OR backlog YoY <5%
+      A1:
+        name: healthy
+        criteria: orders >=5% and <15% AND backlog >=5%
+      A2:
+        name: strong
+        criteria: orders >=15% and <30% AND backlog >=15%
+      A3:
+        name: very_strong
+        criteria: orders >=30% AND backlog >=25% AND organic sales growth >=10%
+      A4:
+        name: durable_supercycle
+        criteria: orders >=30% AND backlog >=25% AND organic sales growth >=10% for 2 consecutive quarters
+    current: A3
+    current_evidence:
+    - Q2 Electrical Americas organic sales growth 18%.
+    - TTM organic orders +41%; backlog $15.175B, +33% YoY; book-to-bill 1.3.
+    source_refs:
+    - ETN_Q2_2026_10Q
+  Electrical_Global_Demand:
+    name: Electrical Global Demand
+    name_ru: спрос Electrical Global
+    states:
+      G0:
+        name: weak
+        criteria: orders YoY <5% OR backlog YoY <5%
+      G1:
+        name: healthy
+        criteria: orders >=5% and <15%
+      G2:
+        name: strong
+        criteria: orders >=15% and <25% AND backlog YoY >=20%
+      G3:
+        name: very_strong
+        criteria: orders >=25% AND organic backlog growth >=40% AND organic sales growth >=10%
+      G4:
+        name: durable_very_strong
+        criteria: G3 criteria for 2 consecutive quarters
+    current: G3
+    current_evidence:
+    - Q2 Electrical Global organic sales growth 18%.
+    - TTM organic orders +33%; backlog $3.602B, +103% reported and +54% organic YoY.
+    source_refs:
+    - ETN_Q2_2026_10Q
+    - ETN_Q2_2026_RELEASE
+  Organic_Growth:
+    name: Organic Growth
+    name_ru: органический рост и guidance
+    states:
+      O0:
+        name: mature
+        criteria: quarterly organic growth <5%
+      O1:
+        name: healthy
+        criteria: growth >=5% and <9%
+      O2:
+        name: strong
+        criteria: growth >=9% and <12%
+      O3:
+        name: accelerating
+        criteria: quarterly organic growth >=12% AND FY guidance midpoint >=11%
+      O4:
+        name: durable_acceleration
+        criteria: quarterly organic growth >=12% for 2 quarters AND FY guidance midpoint >=12%
+    current: O3
+    current_evidence:
+    - Q2 organic sales growth 14%.
+    - FY2026 organic-growth guidance raised to 11-13%, midpoint 12%.
+    source_refs:
+    - ETN_Q2_2026_RELEASE
+  Margin_Execution:
+    name: Margin Execution
+    name_ru: маржа и исполнение
+    states:
+      M0:
+        name: compressed
+        criteria: total segment margin <20%
+      M1:
+        name: normal
+        criteria: margin >=20% and <22%
+      M2:
+        name: healthy
+        criteria: margin >=22% and <24%
+      M3:
+        name: high
+        criteria: margin >=24% OR Electrical Americas margin >=27%
+      M4:
+        name: durable_high
+        criteria: total segment margin >=24% AND Electrical Americas margin >=27% for 2 quarters
+    current: M3
+    current_evidence:
+    - Q2 total segment margin 23.1%.
+    - Electrical Americas operating margin 27.5%.
+    source_refs:
+    - ETN_Q2_2026_RELEASE
+    - ETN_Q2_2026_10Q
+  Portfolio_Integration:
+    name: Portfolio Integration
+    name_ru: интеграция поглощений и долг
+    states:
+      I0:
+        name: normalized
+        criteria: no material acquisition/separation program underway
+      I1:
+        name: moderate
+        criteria: one material acquisition or separation program underway
+      I2:
+        name: integration_heavy
+        criteria: multiple material portfolio actions AND total debt >=$15B
+      I3:
+        name: leverage_integration_stress
+        criteria: total debt >=$25B OR acquisition charges/synergy misses cause FY guidance reduction
+      I4:
+        name: execution_failure
+        criteria: material impairment or transaction failure with >=5% effect on FY EPS/FCF outlook
+    current: I2
+    current_evidence:
+    - Boyd Thermal acquired for $9.55B; Ultra PCS also acquired.
+    - Mobility separation via Reverse Morris Trust targeted for Q1 2027.
+    - 'June 30 debt: $2.091B short-term + $0.011B current long-term + $18.509B long-term = $20.611B.'
+    source_refs:
+    - ETN_Q2_2026_10Q
+    - ETN_Q2_2026_RELEASE

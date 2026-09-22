@@ -1,0 +1,159 @@
+# KPI RKLB с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.1'
+artifact: RKLB KPI Dashboard
+as_of: '2026-09-21'
+ticker: RKLB
+max_critical_kpis: 10
+source_artifact: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - Rocket Lab Corporation Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: RKLB-KPI-01
+  name: Total revenue YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.40'
+    yellow: '>=0.20 and <0.40'
+    red: <0.20
+  last_value: 0.62
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+  verified: false
+  formula: 234.2 / 144.6 - 1 ≈ 0.62
+- id: RKLB-KPI-02
+  name: Space Systems revenue YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.40'
+    yellow: '>=0.15 and <0.40'
+    red: <0.15
+  last_value: 0.94
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+  verified: false
+  formula: 189.5 / 97.9 - 1 ≈ 0.94
+- id: RKLB-KPI-03
+  name: Space Systems share of quarterly revenue
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.70'
+    yellow: '>=0.50 and <0.70'
+    red: <0.50
+  last_value: 0.809
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+  verified: false
+  formula: 189.5 / 234.2 = 0.809
+- id: RKLB-KPI-04
+  name: Electron/HASTE launches trailing 6 months
+  unit: launches
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=12'
+    yellow: '>=8 and <12'
+    red: <8
+  last_value: 12
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+  verified: false
+- id: RKLB-KPI-05
+  name: Launch services revenue YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.20'
+    yellow: '>=0 and <0.20'
+    red: <0
+  last_value: -0.04
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+  verified: false
+  formula: 44.6 / 46.7 - 1 ≈ -0.045
+- id: RKLB-KPI-06
+  name: Backlog
+  unit: USD B
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=2.0'
+    yellow: '>=1.5 and <2.0'
+    red: <1.5
+  last_value: 2.36
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm
+  verified: false
+- id: RKLB-KPI-07
+  name: Backlog YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.50'
+    yellow: '>=0.20 and <0.50'
+    red: <0.20
+  last_value: 1.37
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm
+  verified: false
+- id: RKLB-KPI-08
+  name: Launch backlog count
+  unit: contracted_launches
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=80'
+    yellow: '>=50 and <80'
+    red: <50
+  last_value: 90
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm
+  verified: false
+  value_type: lower_bound
+  note: «90+ launches» в релизе Q2 2026; хранится числом как нижняя граница (поправка LLM, README партии 4)
+- id: RKLB-KPI-09
+  name: Neutron milestone state
+  unit: ordinal
+  period: event_driven
+  source: SEC
+  thresholds:
+    green: '>=2'
+    yellow: =1
+    red: =0
+  last_value: 1
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+  verified: false
+  formula: 1=integrated preflight; 2=orbital validation; 3=reuse validation; 4=operational cadence
+- id: RKLB-KPI-10
+  name: Space Systems H1 growth
+  unit: fraction
+  period: semiannual
+  source: SEC
+  thresholds:
+    green: '>=0.40'
+    yellow: '>=0.15 and <0.40'
+    red: <0.15
+  last_value: 0.763
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+  verified: false
+  formula: 326.2 / 184.9 - 1 = 0.763
+changelog:
+- version: '1.1'
+  date: '2026-09-21'
+  change: 'KPI-08: строка ''>90'' → 90 + value_type lower_bound'

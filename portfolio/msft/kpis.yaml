@@ -1,0 +1,150 @@
+# KPI MSFT с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.0'
+artifact: MSFT KPI Dashboard
+as_of: '2026-09-21'
+ticker: MSFT
+max_critical_kpis: 10
+source_artifact: inbox/received/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - Microsoft Corporation Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: MSFT-KPI-01
+  name: Azure and other cloud services revenue YoY
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.35'
+    yellow: '>=0.20 and <0.35'
+    red: <0.20
+  last_value: 0.43
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
+  verified: false
+- id: MSFT-KPI-02
+  name: Microsoft Cloud revenue
+  unit: USD B
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=55'
+    yellow: '>=45 and <55'
+    red: <45
+  last_value: 59.3
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
+  verified: false
+- id: MSFT-KPI-03
+  name: Microsoft Cloud revenue YoY
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.20'
+    yellow: '>=0.10 and <0.20'
+    red: <0.10
+  last_value: 0.27
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
+  verified: false
+- id: MSFT-KPI-04
+  name: Microsoft Cloud gross margin
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.65'
+    yellow: '>=0.60 and <0.65'
+    red: <0.60
+  last_value: 0.65
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
+  verified: false
+- id: MSFT-KPI-05
+  name: Commercial RPO
+  unit: USD B
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=600'
+    yellow: '>=450 and <600'
+    red: <450
+  last_value: 678
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
+  verified: false
+- id: MSFT-KPI-06
+  name: Commercial RPO YoY ex-OpenAI
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.20'
+    yellow: '>=0.10 and <0.20'
+    red: <0.10
+  last_value: 0.25
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4
+  verified: false
+- id: MSFT-KPI-07
+  name: Cash capex / revenue
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: <0.25
+    yellow: '>=0.25 and <0.40'
+    red: '>=0.40'
+  last_value: 0.3978
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4
+  verified: false
+  formula: 35.8 / 90.0 = 0.3978
+- id: MSFT-KPI-08
+  name: Quarterly FCF margin
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.20'
+    yellow: '>=0.10 and <0.20'
+    red: <0.10
+  last_value: 0.2178
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4
+  verified: false
+  formula: 19.6 / 90.0 = 0.2178
+- id: MSFT-KPI-09
+  name: M365 Commercial cloud revenue YoY
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.15'
+    yellow: '>=0.10 and <0.15'
+    red: <0.10
+  last_value: 0.14
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics
+  verified: false
+- id: MSFT-KPI-10
+  name: Operating margin
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.40'
+    yellow: '>=0.30 and <0.40'
+    red: <0.30
+  last_value: 0.4511
+  last_date: null
+  source_url: https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast
+  verified: false
+  formula: 40.6 / 90.0 = 0.4511

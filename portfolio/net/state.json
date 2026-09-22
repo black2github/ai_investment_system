@@ -1,0 +1,269 @@
+{
+  "updated": "2026-09-21T07:40:00Z",
+  "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
+  "price": {
+    "symbol": "NET",
+    "last": 324.65,
+    "last_at": "2026-09-16",
+    "zone": null,
+    "note": "zone ведёт скрипт aiinfra-price-watch в trigger.state"
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [
+    {
+      "fact": "market cap",
+      "value_in_discussion": "~$115.6 млрд, forward P/E ~220x",
+      "where_to_verify": "NYSE / Cloudflare filings",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "not_found",
+      "actual_value": null,
+      "source_url": null,
+      "checked_at": "2026-09-17T12:24:03Z",
+      "note": "Market cap и forward P/E — рыночные производные (цена x акции, консенсус-прогноз), не цифра из отчёта компании. Первоисточник (10-Q/пресс-релиз) их не публикует; проверка вне рамок report-check по первоисточникам."
+    },
+    {
+      "fact": "Q2 2026 revenue growth",
+      "value_in_discussion": "+36% г/г",
+      "where_to_verify": "Cloudflare Q2 2026 earnings",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "Revenue $696.1 млн, +36% г/г (Q2 2026 vs Q2 2025)",
+      "source_url": "https://www.cloudflare.com/press/press-releases/2026/cloudflare-announces-second-quarter-2026-financial-results/",
+      "checked_at": "2026-09-17T12:24:03Z"
+    },
+    {
+      "fact": "Q2 2026 клиенты >$100k",
+      "value_in_discussion": "4 698, +27% г/г",
+      "where_to_verify": "Cloudflare Q2 2026 earnings",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "4 698 крупных клиентов (>$100k annualized revenue), y-y growth 27%",
+      "source_url": "https://www.cloudflare.net/files/doc_financials/2026/q2/Q2-26-Supplemental-Financial-Information.pdf",
+      "checked_at": "2026-09-17T12:24:03Z"
+    },
+    {
+      "fact": "разработчики",
+      "value_in_discussion": "> 7.4 млн",
+      "where_to_verify": "Cloudflare Q2 2026 earnings",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "более 7.4 млн разработчиков на платформе (почти 2 млн добавлено за Q2 2026)",
+      "source_url": "https://www.cloudflare.net/files/doc_financials/2026/q2/NET-US-CORRECTED-TRANSCRIPT-Cloudflare-IncNETUS-Q2-2026-Earnings-Call-6August2026-500-ET-PM-07-08-2026-2026-08-07-0.pdf",
+      "checked_at": "2026-09-17T12:24:03Z"
+    },
+    {
+      "fact": "доля AI в выручке",
+      "value_in_discussion": "не раскрывается",
+      "where_to_verify": "Cloudflare 10-Q / earnings releases",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "Компания не раскрывает долю AI в выручке отдельной строкой (не найдено в 10-Q Q2 2026, пресс-релизе, supplemental financial info)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm",
+      "checked_at": "2026-09-17T12:24:03Z"
+    },
+    {
+      "fact": "founder voting power",
+      "value_in_discussion": "Matthew Prince 39.0%, Michelle Zatlyn 13.4%",
+      "where_to_verify": "Cloudflare 2026 proxy",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified",
+      "note": "Пункт исключён из проверки по заданию (insider voting concentration — пропустить)"
+    },
+    {
+      "fact": "дата Q3 2026 earnings",
+      "value_in_discussion": "29.10.2026 (рыночный календарь)",
+      "where_to_verify": "Cloudflare IR",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified",
+      "note": "Пункт исключён из проверки по заданию (дата отчёта — пропустить)"
+    }
+  ],
+  "owner_decisions": [],
+  "notes": [
+    "2026-09-17: реестр заведён по финальному блоку обсуждения; предпосылки не проверены — разовое задание aiinfra-facts-verify",
+    "2026-09-17: report-check по Q2 2026 (задание aiinfra-facts-verify-net) — проверены revenue growth, large customers, developers, AI revenue disclosure. Также обнаружено (не в pending_verification изначально, но релевантно тезису): NRR (Dollar-Based Net Retention Rate) Q2 2026 = 120%, Total Headcount 4700, RPO $2,732.0 млн; источник — Q2-26-Supplemental-Financial-Information.pdf"
+  ],
+  "route": {
+    "current": "watch",
+    "done_steps": [],
+    "changed_at": "2026-09-17",
+    "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T07:10:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании NET v1.0 (партия 3) встроена в реестр владельца: вектор Revenue_Growth=G3 + Expansion_Retention=N3 + Contracted_Demand=R3 + Profitability_Cash=P1 + AI_Edge_Monetization=A1; legacy NET-E/X привязаны к осям; добавлены NET-E-06..E-11; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-21T07:40:00Z",
+      "kind": "verification",
+      "summary": "Сверка NET с хоста: 7 KPI подтверждены, 3 не раскрываются; все оси verified (задание агента упало: OpenRouter 402)"
+    }
+  ],
+  "scenario_state": {
+    "Revenue_Growth": {
+      "state": "G3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 2026 revenue $696.1M, +36% YoY."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Expansion_Retention": {
+      "state": "N3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 DBNRR 120%, versus 114% a year earlier."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Contracted_Demand": {
+      "state": "R3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 Current RPO YoY growth 35%."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Profitability_Cash": {
+      "state": "P1",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 GAAP operating margin -29.6%; non-GAAP operating margin 13.8%."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "AI_Edge_Monetization": {
+      "state": "A1",
+      "since": "2026-09-21",
+      "evidence": [
+        "Management explicitly frames AI answer engines, agents and machine-to-machine traffic as a major platform shift.",
+        "Selected Q2 primary sources do not separately disclose Workers AI / edge-inference revenue or ARR."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {
+      "kpi_id": "NET-KPI-01",
+      "name": "Revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 0.36,
+      "value_raw": "«Second quarter revenue totaled $696.1 million, representing an increase of 36% year-over-year»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "NET-KPI-02",
+      "name": "Dollar-based net retention rate",
+      "period_end": "2026-06-30",
+      "value": 1.2,
+      "value_raw": "«Our dollar-based net retention rates were 120% and 114% for the three months ended June 30, 2026 and 2025»",
+      "unit": "x",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "NET-KPI-03",
+      "name": "Current RPO YoY growth",
+      "period_end": "2026-06-30",
+      "value": 0.35,
+      "value_raw": "«Delivered Current RPO year-over-year growth of 35%»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "NET-KPI-04",
+      "name": "GAAP gross margin",
+      "period_end": "2026-06-30",
+      "value": 0.718,
+      "value_raw": "«GAAP gross profit was $499.5 million, or 71.8% gross margin»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "NET-KPI-05",
+      "name": "Non-GAAP operating margin",
+      "period_end": "2026-06-30",
+      "value": 0.138,
+      "value_raw": "«Non-GAAP income from operations was $96.1 million, or 13.8% of revenue»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "NET-KPI-06",
+      "name": "GAAP operating margin",
+      "period_end": "2026-06-30",
+      "value": -0.296,
+      "value_raw": "«GAAP loss from operations of $205.7 million, or 30% of total revenue»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "NET-KPI-07",
+      "name": "Large-customer growth",
+      "period_end": "2026-06-30",
+      "value": null,
+      "unit": "YoY fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm",
+      "verified": null,
+      "why": "компания показатель не раскрывает (not_separately_disclosed) — не искать, не выдумывать"
+    },
+    {
+      "kpi_id": "NET-KPI-08",
+      "name": "AI/Workers annualized revenue or ARR",
+      "period_end": "2026-06-30",
+      "value": null,
+      "unit": "USD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
+      "verified": null,
+      "why": "компания показатель не раскрывает (not_separately_disclosed) — не искать, не выдумывать"
+    },
+    {
+      "kpi_id": "NET-KPI-09",
+      "name": "AI/Workers share of company revenue",
+      "period_end": "2026-06-30",
+      "value": null,
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm",
+      "verified": null,
+      "why": "компания показатель не раскрывает (not_separately_disclosed) — не искать, не выдумывать"
+    },
+    {
+      "kpi_id": "NET-KPI-10",
+      "name": "DBNRR change YoY",
+      "period_end": "2026-06-30",
+      "value": 0.06,
+      "value_raw": "DBNRR 120% (2026) − 114% (2025) = 6 п.п. (10-Q)",
+      "unit": "absolute ratio points",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    }
+  ],
+  "calc_runs": []
+}

@@ -1,0 +1,109 @@
+# Журнал пометок «доверяю» (Conviction Journal). Проспективная проверка суждений владельца.
+version: '1.0'
+artifact: conviction_journal
+schema_ref: methodology/Conviction_Journal_Schema_v1.0.yaml
+rules: Запись создаётся ДО применения пометки; контрфакт замораживается; обзор через 12 месяцев; лестница навык/удача — спецификация
+  §8.
+entries:
+- decision_id: CONV-2026-09-22-NBIS-01
+  ticker: NBIS
+  status: active
+  activated_at: '2026-09-22'
+  market_snapshot:
+    price: 223.54
+    price_source: Yahoo chart, закрытие 2026-09-18
+    portfolio_nav: 182755.91
+    market_weight: 0.3303
+    sector_weight: 0.3352
+    portfolio_regime: Stress
+  basis_snapshot:
+    consolidated_open_cost_basis: 20967.51
+    invested_capital_share: 0.2239
+    legacy_basis_share: 0.2239
+    post_system_incremental_basis_share: 0.0
+  model_snapshot:
+    scenario_state_hash: null
+    all_axes_verified: false
+    axes:
+      Demand_Monetization:
+        state: N3
+        verified: true
+      Unit_Economics:
+        state: E3
+        verified: true
+      Capacity_Secured:
+        state: pending_verification
+        verified: false
+      Capital_Intensity:
+        state: K3
+        verified: true
+      Funding_Liquidity:
+        state: F2
+        verified: true
+    critical_kpis:
+    - NBIS-KPI-01
+    - NBIS-KPI-02
+    - NBIS-KPI-03
+    - NBIS-KPI-04
+    - NBIS-KPI-05
+    - NBIS-KPI-06
+    - NBIS-KPI-07
+    - NBIS-KPI-08
+    - NBIS-KPI-09
+    - NBIS-KPI-10
+    - NBIS-KPI-11
+    active_negative_triggers:
+    - NBIS-E-06
+    planned_negative_triggers:
+    - NBIS-E-02
+    - NBIS-E-04
+    - NBIS-E-07
+    - NBIS-E-10
+    active_X_triggers: []
+    company_MC_run_id: null
+    plausible_drawdown: 0.75
+    plausible_drawdown_source: archetype_fallback capital_intensive_transition
+    team_execution_state: null
+  conviction_parameters:
+    L_max_standard: 0.1
+    L_max_conviction: 0.25
+    target_market_cap_standard: 0.1
+    target_market_cap_conviction: 0.25
+    hard_loss_budget_cap_standard: 0.1333
+    hard_loss_budget_cap_conviction: 0.3333
+    owner_judgment_multiplier: 1.0
+  rationale:
+    owner_text: 'Решение владельца 22.09.2026: NBIS — пометка «доверяю». Основание: основатель построил Яндекс с нуля, ключевая
+      команда сохранена; вход с $45 вопреки консенсусу «дорого», сейчас +181%; готовность на больший риск по этой бумаге.'
+    falsifiable_claims:
+    - AI cloud revenue растёт ≥100% г/г (KPI-01 green) минимум ещё 2 квартала
+    - AI cloud adjusted EBITDA margin ≥35% (KPI-04)
+    - финансирование расширения без liquidity stress (ось Funding_Liquidity не хуже F2)
+    what_would_change_my_mind:
+    - подтверждённый переход вниз по любой оси (E2/E3)
+    - два подряд квартала ухудшения Critical KPI
+    - срабатывание X-триггера / thesis break
+    - превышение бюджета потери 25% NAV
+  exception:
+    rule_waived: 'qualification_required: all_state_axes_verified / no_pending_verification_material_axis'
+    axis: Capacity_Secured
+    current: pending_verification (prior C3)
+    reason: Компания раскрыла только цель 5 GW на конец 2026 (KPI-08, guidance); факт законтрактованной мощности на дату (KPI-11)
+      не раскрыт. Это пробел раскрытия, а не ухудшение бизнеса (поправка LLM 21.09). Владелец сознательно принимает исключение.
+    expires: при раскрытии факта KPI-11 (ожидается в отчёте Q3 2026) — исключение снимается автоматически; если факт < 3 GW
+      → ось C1/C2 и пересмотр пометки
+    approved_by: owner
+    approved_at: '2026-09-22'
+  coverage_caveats:
+  - квартальные негативные переходы NBIS-E-02/E-04/E-06/E-08/E-09 — status planned (models-report-check не заведён); дозор
+    новостей models-news-watch активен (E-06)
+  - standalone MC NBIS ещё нет — просадка по резерву архетипа 75%
+  counterfactual:
+    optimizer_run_without_override: null
+    weight_without_override: null
+    portfolio_metrics_without_override: {}
+    frozen_at_activation: true
+    note: 'Optimizer ещё не реализован; контрфакт для сравнения — прогон conviction_overlay без пометки (run 20260921T220020Z-conviction_overlay-ad4f40:
+      hard breach, weight_to_restore 13.3%)'
+  review_due_at: '2027-09-22'
+reviews_12m: []

@@ -1,0 +1,176 @@
+{
+  "updated": "2026-09-21T06:51:25Z",
+  "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
+  "price": {
+    "symbol": "ETN",
+    "last": 413.29,
+    "last_at": "2026-09-17",
+    "zone": null,
+    "note": "zone ведёт скрипт aiinfra-price-watch в trigger.state"
+  },
+  "fired": [
+    {
+      "trigger_id": "ETN-P-01",
+      "timestamp": "2026-09-16T12:18:00Z",
+      "price": 397.8,
+      "status": "pending_owner"
+    }
+  ],
+  "events_reported": [],
+  "pending_verification": [
+    {
+      "fact": "market cap",
+      "value_in_discussion": "~$154.5 млрд",
+      "where_to_verify": "NYSE / Eaton filings",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "not_found",
+      "actual_value": "не раскрывается в пресс-релизе Q2 2026 (market cap не является метрикой отчёта); проверено по eaton.com/news-releases, отдельного расчёта из первоисточника нет",
+      "source_url": "https://www.eaton.com/us/en-us/company/news-insights/news-releases/2026/eaton-reports-record-second-quarter-2026-results.html",
+      "checked_at": "2026-09-17T12:17:16Z"
+    },
+    {
+      "fact": "Q2 2026 organic growth",
+      "value_in_discussion": "+14%",
+      "where_to_verify": "Eaton Q2 2026 earnings release",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "organic sales growth 14% (Q2 2026, above high end of guidance)",
+      "source_url": "https://www.eaton.com/us/en-us/company/news-insights/news-releases/2026/eaton-reports-record-second-quarter-2026-results.html",
+      "checked_at": "2026-09-17T12:17:16Z"
+    },
+    {
+      "fact": "Q2 2026 Electrical Americas orders",
+      "value_in_discussion": "+41% г/г",
+      "where_to_verify": "Eaton Q2 2026 earnings release",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "twelve-month rolling average orders in Electrical Americas up 41% organically (Q2 2026)",
+      "source_url": "https://www.eaton.com/us/en-us/company/news-insights/news-releases/2026/eaton-reports-record-second-quarter-2026-results.html",
+      "checked_at": "2026-09-17T12:17:16Z"
+    },
+    {
+      "fact": "Q2 2026 Electrical backlog",
+      "value_in_discussion": "+43% г/г",
+      "where_to_verify": "Eaton Q2 2026 earnings release",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "total backlog growth of 43% year-over-year in Electrical sector (Q2 2026 release headline); внутри сегментов: Electrical Americas backlog +33%, Electrical Global backlog +103% над июнем 2025",
+      "source_url": "https://www.eaton.com/us/en-us/company/news-insights/news-releases/2026/eaton-reports-record-second-quarter-2026-results.html",
+      "checked_at": "2026-09-17T12:17:16Z"
+    },
+    {
+      "fact": "FY2026 organic growth guidance",
+      "value_in_discussion": "11–13%",
+      "where_to_verify": "Eaton Q2 2026 guidance",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "FY2026 guidance: organic growth 11-13%",
+      "source_url": "https://www.eaton.com/us/en-us/company/news-insights/news-releases/2026/eaton-reports-record-second-quarter-2026-results.html",
+      "checked_at": "2026-09-17T12:17:16Z"
+    },
+    {
+      "fact": "insider voting concentration",
+      "value_in_discussion": "неизвестно",
+      "where_to_verify": "Eaton 2026 proxy statement",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified"
+    },
+    {
+      "fact": "дата отчёта Q3 2026",
+      "value_in_discussion": "неизвестно",
+      "where_to_verify": "Eaton IR calendar",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified"
+    }
+  ],
+  "owner_decisions": [],
+  "notes": [
+    "2026-09-17: реестр заведён по финальному блоку обсуждения; предпосылки не проверены — разовое задание aiinfra-facts-verify",
+    "2026-09-17: FACTS-VERIFY-etn — 4 из 5 проверяемых пунктов подтверждены по пресс-релизу Eaton Q2 2026 (eaton.com/news-releases); market cap в отчёте не раскрывается — not_found. insider voting и дата отчёта Q3 пропущены по заданию."
+  ],
+  "route": {
+    "current": "entry",
+    "done_steps": [],
+    "changed_at": "2026-09-17",
+    "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T08:10:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании ETN v1.0 встроена в реестр владельца: вектор Electrical_Americas_Demand=A3 + Electrical_Global_Demand=G3 + Organic_Growth=O3 + Margin_Execution=M3 + Portfolio_Integration=I2; legacy -E/-X привязаны к осям; добавлены ETN-E-04..ETN-E-10; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-21T06:51:25Z",
+      "kind": "facts_verify",
+      "summary": "batch04-facts-verify: сверены только critical_kpis из kpis.yaml (legacy-триггеры реестра владельца не трогали). Все 10 KPI подтверждены по SEC-документам (Q2 2026 press release exhibit 99 и 10-Q etn-20260630); расхождений не найдено. Все пять осей scenario_state помечены verified: true."
+    }
+  ],
+  "scenario_state": {
+    "Electrical_Americas_Demand": {
+      "state": "A3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 Electrical Americas organic sales growth 18%.",
+        "TTM organic orders +41%; backlog $15.175B, +33% YoY; book-to-bill 1.3."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "Electrical_Global_Demand": {
+      "state": "G3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 Electrical Global organic sales growth 18%.",
+        "TTM organic orders +33%; backlog $3.602B, +103% reported and +54% organic YoY."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm', 'type': 'SEC 10-Q'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true
+    },
+    "Organic_Growth": {
+      "state": "O3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 organic sales growth 14%.",
+        "FY2026 organic-growth guidance raised to 11-13%, midpoint 12%."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true
+    },
+    "Margin_Execution": {
+      "state": "M3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 total segment margin 23.1%.",
+        "Electrical Americas operating margin 27.5%."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm', 'type': 'SEC earnings-release exhibit'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "Portfolio_Integration": {
+      "state": "I2",
+      "since": "2026-09-21",
+      "evidence": [
+        "Boyd Thermal acquired for $9.55B; Ultra PCS also acquired.",
+        "Mobility separation via Reverse Morris Trust targeted for Q1 2027.",
+        "June 30 debt: $2.091B short-term + $0.011B current long-term + $18.509B long-term = $20.611B."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm', 'type': 'SEC 10-Q'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {"kpi_id": "ETN-KPI-01", "name": "Total organic sales growth", "period_end": "2026-06-30", "value": 0.14, "value_raw": "Second quarter sales were up 21%, with organic sales growth of 14%, above the high end of guidance", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm", "verified": true},
+    {"kpi_id": "ETN-KPI-02", "name": "FY organic-growth guidance midpoint", "period_end": "2026-06-30", "value": 0.12, "value_raw": "For the full year 2026, the company anticipates: Organic growth of 11-13%", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm", "verified": true},
+    {"kpi_id": "ETN-KPI-03", "name": "Electrical Americas organic sales growth", "period_end": "2026-06-30", "value": 0.18, "value_raw": "Sales for the Electrical Americas segment were a record $4.0 billion, up 18% organically from the second quarter of 2025", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", "verified": true},
+    {"kpi_id": "ETN-KPI-04", "name": "Electrical Americas TTM organic orders growth", "period_end": "2026-06-30", "value": 0.41, "value_raw": "Electrical Americas: Organic change in customer orders 41%", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", "verified": true},
+    {"kpi_id": "ETN-KPI-05", "name": "Electrical Americas backlog", "period_end": "2026-06-30", "value": 15.175, "value_raw": "Electrical Americas Backlog $15,175 (June 30, 2026) $11,377 (June 30, 2025)", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", "verified": true},
+    {"kpi_id": "ETN-KPI-06", "name": "Electrical Americas backlog YoY", "period_end": "2026-06-30", "value": 0.33, "value_raw": "Electrical Americas Backlog $15,175 vs $11,377, 33% increase", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", "verified": true},
+    {"kpi_id": "ETN-KPI-07", "name": "Electrical Americas operating margin", "period_end": "2026-06-30", "value": 0.275, "value_raw": "Electrical Americas Operating margin 27.5% (Net sales $3,951, Operating profit $1,088)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", "verified": true},
+    {"kpi_id": "ETN-KPI-08", "name": "Electrical Global TTM organic orders growth", "period_end": "2026-06-30", "value": 0.33, "value_raw": "Electrical Global: Organic change in customer orders 33%", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", "verified": true},
+    {"kpi_id": "ETN-KPI-09", "name": "Total Electrical backlog", "period_end": "2026-06-30", "value": 18.777, "value_raw": "Electrical Americas backlog $15,175M + Electrical Global backlog $3,602M = $18,777M", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", "verified": true},
+    {"kpi_id": "ETN-KPI-10", "name": "Total debt", "period_end": "2026-06-30", "value": 20.611, "value_raw": "At June 30, 2026, the Company had Short-term debt of $2,091 million, Current portion of long-term debt of $11 million, and Long-term debt of $18,509 million", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", "verified": true}
+  ],
+  "calc_runs": []
+}

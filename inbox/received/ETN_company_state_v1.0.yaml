@@ -1,0 +1,150 @@
+version: "1.0"
+ticker: ETN
+as_of: "2026-09-21"
+artifact: company_state_bundle
+
+source_policy:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  existing_trigger_policy: >
+    Existing owner ETN-E-* and ETN-X-* triggers are not replaced or renumbered.
+    Bind them to the axes/KPIs below where semantics overlap.
+
+sources:
+  ETN_Q2_2026_10Q:
+    url: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm"
+    type: "SEC 10-Q"
+  ETN_Q2_2026_RELEASE:
+    url: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm"
+    type: "SEC earnings-release exhibit"
+  ETN_Q2_2026_IR:
+    url: "https://www.eaton.com/de/en-gb/company/news-insights/news-releases/2026/eaton-reports-record-second-quarter-2026-results.html"
+    type: "Eaton IR earnings release"
+
+states:
+  axes:
+    Electrical_Americas_Demand:
+      states:
+        A0: {name: weak, criteria: "orders YoY <5% OR backlog YoY <5%"}
+        A1: {name: healthy, criteria: "orders >=5% and <15% AND backlog >=5%"}
+        A2: {name: strong, criteria: "orders >=15% and <30% AND backlog >=15%"}
+        A3: {name: very_strong, criteria: "orders >=30% AND backlog >=25% AND organic sales growth >=10%"}
+        A4: {name: durable_supercycle, criteria: "orders >=30% AND backlog >=25% AND organic sales growth >=10% for 2 consecutive quarters"}
+      current: A3
+      current_evidence:
+        - "Q2 Electrical Americas organic sales growth 18%."
+        - "TTM organic orders +41%; backlog $15.175B, +33% YoY; book-to-bill 1.3."
+      source_refs: [ETN_Q2_2026_10Q]
+
+    Electrical_Global_Demand:
+      states:
+        G0: {name: weak, criteria: "orders YoY <5% OR backlog YoY <5%"}
+        G1: {name: healthy, criteria: "orders >=5% and <15%"}
+        G2: {name: strong, criteria: "orders >=15% and <25% AND backlog YoY >=20%"}
+        G3: {name: very_strong, criteria: "orders >=25% AND organic backlog growth >=40% AND organic sales growth >=10%"}
+        G4: {name: durable_very_strong, criteria: "G3 criteria for 2 consecutive quarters"}
+      current: G3
+      current_evidence:
+        - "Q2 Electrical Global organic sales growth 18%."
+        - "TTM organic orders +33%; backlog $3.602B, +103% reported and +54% organic YoY."
+      source_refs: [ETN_Q2_2026_10Q, ETN_Q2_2026_RELEASE]
+
+    Organic_Growth:
+      states:
+        O0: {name: mature, criteria: "quarterly organic growth <5%"}
+        O1: {name: healthy, criteria: "growth >=5% and <9%"}
+        O2: {name: strong, criteria: "growth >=9% and <12%"}
+        O3: {name: accelerating, criteria: "quarterly organic growth >=12% AND FY guidance midpoint >=11%"}
+        O4: {name: durable_acceleration, criteria: "quarterly organic growth >=12% for 2 quarters AND FY guidance midpoint >=12%"}
+      current: O3
+      current_evidence:
+        - "Q2 organic sales growth 14%."
+        - "FY2026 organic-growth guidance raised to 11-13%, midpoint 12%."
+      source_refs: [ETN_Q2_2026_RELEASE]
+
+    Margin_Execution:
+      states:
+        M0: {name: compressed, criteria: "total segment margin <20%"}
+        M1: {name: normal, criteria: "margin >=20% and <22%"}
+        M2: {name: healthy, criteria: "margin >=22% and <24%"}
+        M3: {name: high, criteria: "margin >=24% OR Electrical Americas margin >=27%"}
+        M4: {name: durable_high, criteria: "total segment margin >=24% AND Electrical Americas margin >=27% for 2 quarters"}
+      current: M3
+      current_evidence:
+        - "Q2 total segment margin 23.1%."
+        - "Electrical Americas operating margin 27.5%."
+      source_refs: [ETN_Q2_2026_RELEASE, ETN_Q2_2026_10Q]
+
+    Portfolio_Integration:
+      states:
+        I0: {name: normalized, criteria: "no material acquisition/separation program underway"}
+        I1: {name: moderate, criteria: "one material acquisition or separation program underway"}
+        I2: {name: integration_heavy, criteria: "multiple material portfolio actions AND total debt >=$15B"}
+        I3: {name: leverage_integration_stress, criteria: "total debt >=$25B OR acquisition charges/synergy misses cause FY guidance reduction"}
+        I4: {name: execution_failure, criteria: "material impairment or transaction failure with >=5% effect on FY EPS/FCF outlook"}
+      current: I2
+      current_evidence:
+        - "Boyd Thermal acquired for $9.55B; Ultra PCS also acquired."
+        - "Mobility separation via Reverse Morris Trust targeted for Q1 2027."
+        - "June 30 debt: $2.091B short-term + $0.011B current long-term + $18.509B long-term = $20.611B."
+      source_refs: [ETN_Q2_2026_10Q, ETN_Q2_2026_RELEASE]
+
+kpis:
+  items:
+    - {id: ETN-KPI-01, name: "Total organic sales growth", period: quarterly, current_value: 0.14, unit: fraction, source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm", zones: {green: ">=0.10", yellow: ">=0.05 and <0.10", red: "<0.05"}}
+    - {id: ETN-KPI-02, name: "FY organic-growth guidance midpoint", period: quarterly, current_value: 0.12, unit: fraction, formula: "(0.11 + 0.13) / 2 = 0.12", source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000027/etn06302026exhibit99.htm", zones: {green: ">=0.11", yellow: ">=0.08 and <0.11", red: "<0.08"}}
+    - {id: ETN-KPI-03, name: "Electrical Americas organic sales growth", period: quarterly, current_value: 0.18, unit: fraction, source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", zones: {green: ">=0.12", yellow: ">=0.06 and <0.12", red: "<0.06"}}
+    - {id: ETN-KPI-04, name: "Electrical Americas TTM organic orders growth", period: quarterly, current_value: 0.41, unit: fraction, source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", zones: {green: ">=0.25", yellow: ">=0.10 and <0.25", red: "<0.10"}}
+    - {id: ETN-KPI-05, name: "Electrical Americas backlog", period: quarterly, current_value: 15.175, unit: "USD B", source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", zones: {green: ">=14", yellow: ">=11 and <14", red: "<11"}}
+    - {id: ETN-KPI-06, name: "Electrical Americas backlog YoY", period: quarterly, current_value: 0.33, unit: fraction, formula: "15.175 / 11.377 - 1 = 0.3338", source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", zones: {green: ">=0.25", yellow: ">=0.10 and <0.25", red: "<0.10"}}
+    - {id: ETN-KPI-07, name: "Electrical Americas operating margin", period: quarterly, current_value: 0.275, unit: fraction, formula: "1.088 / 3.951 = 0.2754", source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", zones: {green: ">=0.27", yellow: ">=0.23 and <0.27", red: "<0.23"}}
+    - {id: ETN-KPI-08, name: "Electrical Global TTM organic orders growth", period: quarterly, current_value: 0.33, unit: fraction, source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", zones: {green: ">=0.25", yellow: ">=0.10 and <0.25", red: "<0.10"}}
+    - {id: ETN-KPI-09, name: "Total Electrical backlog", period: quarterly, current_value: 18.777, unit: "USD B", formula: "15.175 Electrical Americas + 3.602 Electrical Global = 18.777", source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", zones: {green: ">=18", yellow: ">=14 and <18", red: "<14"}}
+    - {id: ETN-KPI-10, name: "Total debt", period: quarterly, current_value: 20.611, unit: "USD B", formula: "2.091 short-term + 0.011 current LT + 18.509 long-term = 20.611", source: "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm", zones: {green: "<15", yellow: ">=15 and <25", red: ">=25"}}
+
+triggers:
+  preserve_existing_ETN_ids: true
+  binding_guidance:
+    - "Existing ETN-E-* Electrical orders/backlog triggers -> Electrical_Americas_Demand and ETN-KPI-04/05/06; where trigger is global Electrical, also ETN-KPI-08/09."
+    - "Existing ETN-E-* organic-guidance triggers -> Organic_Growth and ETN-KPI-01/02."
+    - "Existing price/fixation ETN-P/F/X triggers remain outside state transitions unless their original semantics explicitly represent thesis failure."
+    - "Do not renumber or replace existing ETN-E-* / ETN-X-* IDs."
+  proposed_transitions_without_ids:
+    - {axis: Electrical_Americas_Demand, transition: {from: A3, to: A4}, kpis: [ETN-KPI-03, ETN-KPI-04, ETN-KPI-06], condition: "EA orders >=30% AND backlog growth >=25% AND organic sales growth >=10% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {axis: Electrical_Americas_Demand, transition: {from: A3, to: A2}, kpis: [ETN-KPI-04, ETN-KPI-06], condition: "EA orders growth <30% OR backlog growth <25% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {axis: Electrical_Global_Demand, transition: {from: G3, to: G4}, kpis: [ETN-KPI-08], condition: "Electrical Global orders >=25% AND organic backlog growth >=40% AND organic sales growth >=10% for 2 quarters", period: "2 quarters", level: E2}
+    - {axis: Organic_Growth, transition: {from: O3, to: O4}, kpis: [ETN-KPI-01, ETN-KPI-02], condition: "organic growth >=12% for 2 quarters AND FY guidance midpoint >=12%", period: "2 quarters", level: E2}
+    - {axis: Organic_Growth, transition: {from: O3, to: O2}, kpis: [ETN-KPI-01, ETN-KPI-02], condition: "quarterly organic growth <12% OR FY guidance midpoint <11% for 2 observations", period: "2 quarters", level: E2}
+    - {axis: Margin_Execution, transition: {from: M3, to: M4}, kpis: [ETN-KPI-07], condition: "total segment margin >=24% AND EA margin >=27% for 2 quarters", period: "2 quarters", level: E2}
+    - {axis: Portfolio_Integration, transition: {from: I2, to: I3}, kpis: [ETN-KPI-10], condition: "total debt >=$25B OR acquisition/integration effects cause a company reduction in FY guidance", period: "one verified report/update", level: E2}
+
+mpc_inputs:
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 1
+    HYPERSCALER_CAPEX: 2
+    SEMICONDUCTOR_WFE: 1
+    ADVANCED_PACKAGING: 0
+    HBM_MEMORY: 0
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 0
+    DATA_CENTER_POWER: 2
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 1
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: 0
+    CHINA_REVENUE: 0
+    TAIWAN_SUPPLY: 0
+    ACQUISITION_INTEGRATION: 2
+  taxonomy_gap: [ELECTRIFICATION_GRID, UTILITY_CAPEX, INDUSTRIAL_RESHORING, AEROSPACE_CYCLE]
+  taxonomy_gap_note: "Current 16-driver MPC taxonomy does not fully represent Eaton's grid/electrification drivers."
+  failure_modes:
+    - {failure_id: ETN-FM-01, name: "Hyperscaler/data-center capex slowdown reduces Electrical demand", common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN, severity: high}
+    - {failure_id: ETN-FM-02, name: "Grid/utility electrification capex slows", common_cause_id: ELECTRIFICATION_GRID_SLOWDOWN, severity: high}
+    - {failure_id: ETN-FM-03, name: "Boyd/Ultra integration fails to deliver expected economics", common_cause_id: ACQUISITION_INTEGRATION_FAILURE, severity: high}
+    - {failure_id: ETN-FM-04, name: "Higher acquisition-funded leverage constrains flexibility", common_cause_id: CAPITAL_MARKETS_TIGHTENING, severity: medium}
+    - {failure_id: ETN-FM-05, name: "Mobility separation execution/timing failure", common_cause_id: PORTFOLIO_SEPARATION_EXECUTION, severity: medium}
+    - {failure_id: ETN-FM-06, name: "Electrical capacity expansion cannot meet backlog on time", common_cause_id: INDUSTRIAL_CAPACITY_EXECUTION, severity: high}
+    - {failure_id: ETN-FM-07, name: "Data-center power buildout bottlenecks shift/delay customer projects", common_cause_id: DATA_CENTER_POWER_CONSTRAINT, severity: high}

@@ -1,0 +1,94 @@
+{
+  "updated": "2026-09-21T06:06:02Z",
+  "price": {
+    "last": 1679.92,
+    "last_at": "2026-09-18",
+    "zone": null
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [],
+  "notes": "Папка создана 2026-09-21 по партии моделей компаний; KPI сверены по SEC 6-K Exhibits 99.3/99.4 (задание facts-verify, партия 2).",
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-21",
+    "note": "фазы стратегии владельца не заданы; ведётся только вектор состояний"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T06:30:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании ASML v1.0 принята от другой LLM; вектор Demand_Visibility=D3 + EUV_Adoption=E3 + Margin_Execution=M3 + China_Export_Exposure=X1 + Installed_Base_Resilience=I3; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-21T06:06:02Z",
+      "kind": "facts_verify",
+      "summary": "Сверка по SEC 6-K Exhibit 99.3 (Summary US GAAP) и Exhibit 99.4 (Statutory Interim Report IAS 34) и Exhibit 99.1 (press release, guidance): все 10 KPI подтверждены, расхождений нет. Все 5 осей вектора получили verified: true."
+    }
+  ],
+  "scenario_state": {
+    "Demand_Visibility": {
+      "state": "D3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 2026 sales €9.326B; FY2026 revenue guidance raised to €43-45B.",
+        "Management says order intake remained extremely strong in H1 and customer commitments increased visibility."
+      ],
+      "source": "{'url': 'https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results', 'type': 'ASML IR press release; US GAAP headline results'}, {'url': 'https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/form6-kquarterlyfilings.htm', 'type': 'SEC Form 6-K'}",
+      "verified": true
+    },
+    "EUV_Adoption": {
+      "state": "E3",
+      "since": "2026-09-21",
+      "evidence": [
+        "H1 2026 NXE sales €6.7085B + EXE €1.1889B = €7.8974B of €12.8442B net system sales = 61.49%."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm', 'type': 'SEC 6-K Exhibit 99.4; Statutory Interim Report under IAS 34 / EU-IFRS'}",
+      "verified": true
+    },
+    "Margin_Execution": {
+      "state": "M3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 2026 gross margin 54.0%; operating margin 37.1%."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm', 'type': 'SEC 6-K Exhibit 99.3; Summary US GAAP financial statements'}, {'url': 'https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results', 'type': 'ASML IR press release; US GAAP headline results'}",
+      "verified": true
+    },
+    "China_Export_Exposure": {
+      "state": "X1",
+      "since": "2026-09-21",
+      "evidence": [
+        "H1 2026 China revenue €2.8833B of €18.0934B = 15.94%.",
+        "ASML disclosures identify shipment restrictions/export controls as material risks."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm', 'type': 'SEC 6-K Exhibit 99.4; Statutory Interim Report under IAS 34 / EU-IFRS'}, {'url': 'https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results', 'type': 'ASML IR press release; US GAAP headline results'}",
+      "verified": true
+    },
+    "Installed_Base_Resilience": {
+      "state": "I3",
+      "since": "2026-09-21",
+      "evidence": [
+        "H1 2026 IBM/service and field option sales €5.2492B versus €4.0967B, +28.13%.",
+        "IBM represented 29.01% of H1 total net sales."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm', 'type': 'SEC 6-K Exhibit 99.4; Statutory Interim Report under IAS 34 / EU-IFRS'}",
+      "verified": true
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {"kpi_id": "ASML-KPI-01", "name": "Quarterly total net sales", "period_end": "2026-06-28", "value": 9.3265, "value_raw": "Total net sales 7,691.7 9,326.5 (в млн €, Q2 2025 vs Q2 2026)", "unit": "EUR B", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm", "verified": true},
+    {"kpi_id": "ASML-KPI-02", "name": "FY2026 revenue guidance midpoint", "period_end": "2026-06-28", "value": 44.0, "value_raw": "ASML reports €9.3 billion total net sales ... expects 2026 total net sales to be between €43 billion and €45 billion", "unit": "EUR B", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/form6-kquarterlyfilings.htm", "verified": true},
+    {"kpi_id": "ASML-KPI-03", "name": "Gross margin", "period_end": "2026-06-28", "value": 0.54, "value_raw": "Gross margin 53.7 % 54.0 % (Q2 2025 vs Q2 2026)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm", "verified": true},
+    {"kpi_id": "ASML-KPI-04", "name": "Operating margin", "period_end": "2026-06-28", "value": 0.371, "value_raw": "Income from operations as a percentage of net sales 34.6 % 37.1 %", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm", "verified": true},
+    {"kpi_id": "ASML-KPI-05", "name": "EUV share of H1 net system sales", "period_end": "2026-06-28", "value": 0.6149, "value_raw": "NXE 6,708.9; EXE 1,188.9; Total net system sales 12,844.2 (в млн €, H1 2026)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm", "verified": true},
+    {"kpi_id": "ASML-KPI-06", "name": "Installed Base Management sales YoY", "period_end": "2026-06-28", "value": 0.2813, "value_raw": "Net service and field option sales 4,096.7 5,249.2 (H1 2025 vs H1 2026, в млн €)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm", "verified": true},
+    {"kpi_id": "ASML-KPI-07", "name": "Installed Base Management share of total sales", "period_end": "2026-06-28", "value": 0.2901, "value_raw": "Net service and field option sales 5,249.2 / Total net sales 18,093.4 (H1 2026, в млн €)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm", "verified": true},
+    {"kpi_id": "ASML-KPI-08", "name": "China share of total net sales", "period_end": "2026-06-28", "value": 0.1594, "value_raw": "China 3,712.3 2,883.3 (H1 2025 vs H1 2026); Total 15,433.2 18,093.4 (в млн €)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm", "verified": true},
+    {"kpi_id": "ASML-KPI-09", "name": "Memory share of H1 net system sales", "period_end": "2026-06-28", "value": 0.4984, "value_raw": "Memory 84 4,178.9 94 6,401.5; Total 241 11,336.5 274 12,844.2 (в млн €, H1 2026)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm", "verified": true},
+    {"kpi_id": "ASML-KPI-10", "name": "Cash + short-term investments", "period_end": "2026-06-28", "value": 7.5815, "value_raw": "Cash and cash equivalents 6,671.9; Short-term investments 909.6 (в млн €, на 28.06.2026)", "unit": "EUR B", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm", "verified": true}
+  ],
+  "calc_runs": []
+}

@@ -1,0 +1,132 @@
+# Вектор состояний HOOD (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+version: '1.0'
+artifact: HOOD State Vector
+as_of: '2026-09-21'
+ticker: HOOD
+source_artifact: inbox/received/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
+semantics:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  numeric_thresholds_provenance: model_assumption
+sources:
+  HOOD_Q2_10Q: https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+  HOOD_Q2_RELEASE: https://investors.robinhood.com/news-releases/news-release-details/robinhood-reports-second-quarter-2026-results
+  HOOD_AUG_OPS: https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data
+axes:
+  Customer_Asset_Scale:
+    name: Customer Asset Scale
+    name_ru: масштаб клиентов и активов
+    states:
+      S0:
+        name: subscale
+        criteria: Funded Customers <20M OR Total Platform Assets < $150B
+      S1:
+        name: established
+        criteria: Funded Customers >=20M AND TPA >=$150B
+      S2:
+        name: scaled
+        criteria: Funded Customers >=25M AND TPA >=$250B
+      S3:
+        name: scaled_with_inflows
+        criteria: Funded Customers >=28M AND TPA >=$350B AND LTM Net Deposit growth >=20%
+      S4:
+        name: broad_financial_platform
+        criteria: Funded Customers >=30M AND TPA >=$450B AND LTM Net Deposit growth >=20% for 2 months
+    current: S3
+    current_evidence: []
+    source_refs:
+    - HOOD_AUG_OPS
+  Revenue_Diversification:
+    name: Revenue Diversification
+    name_ru: диверсификация выручки
+    states:
+      R0:
+        name: transaction_dominant
+        criteria: transaction-based revenue >75% of total net revenue
+      R1:
+        name: partially_diversified
+        criteria: '>65% and <=75%'
+      R2:
+        name: balanced
+        criteria: '>60% and <=65%'
+      R3:
+        name: diversified
+        criteria: transaction share <=60% AND no single transaction category >30% of total net revenue
+      R4:
+        name: recurring_majority
+        criteria: transaction share <50% for 2 quarters
+    current: R3
+    current_evidence: []
+    source_refs:
+    - HOOD_Q2_10Q
+  Profitability:
+    name: Profitability
+    name_ru: прибыльность
+    states:
+      P0:
+        name: loss_making
+        criteria: Adjusted EBITDA margin <0%
+      P1:
+        name: positive_low
+        criteria: 0%-<25%
+      P2:
+        name: scaled
+        criteria: 25%-<45%
+      P3:
+        name: high
+        criteria: '>=45%'
+      P4:
+        name: durable_high
+        criteria: '>=55% for 2 quarters'
+    current: P3
+    current_evidence: []
+    source_refs:
+    - HOOD_Q2_10Q
+  Credit_Risk:
+    name: Credit Risk
+    name_ru: кредитный риск
+    states:
+      C0:
+        name: low
+        criteria: credit-loss provision <2% of revenue
+      C1:
+        name: manageable
+        criteria: 2%-<5%
+      C2:
+        name: elevated
+        criteria: 5%-<8%
+      C3:
+        name: stressed
+        criteria: 8%-<12%
+      C4:
+        name: severe
+        criteria: '>=12%'
+    current: C1
+    current_evidence: []
+    source_refs:
+    - HOOD_Q2_10Q
+  Regulatory_Product:
+    name: Regulatory Product
+    name_ru: регуляторные ограничения продуктов
+    states:
+      G0:
+        name: normal
+        criteria: no forced suspension/termination of material product offering
+      G1:
+        name: elevated_scrutiny
+        criteria: formal legal/regulatory challenge exists but no forced product suspension
+      G2:
+        name: partial_restriction
+        criteria: specific product offering required to cease/suspend in at least one jurisdiction
+      G3:
+        name: material_restriction
+        criteria: federal or multi-jurisdiction restriction affects product category >=10% of trailing-quarter revenue
+      G4:
+        name: core_platform_impairment
+        criteria: regulatory action materially impairs brokerage/clearing/custody authorization
+    current: G2
+    current_evidence: []
+    source_refs:
+    - HOOD_Q2_10Q

@@ -1,0 +1,175 @@
+# Реестр триггеров: Harmonic Drive Systems (6324, TSE Prime)
+# Источник: финальный блок «Инвестиции в ИИ-инфраструктуру» (ChatGPT, 17.09.2026). Предпосылки проверены 17.09 по квартальному отчёту компании (tanshin) за Q1 FY2027: sales +23.6% и robot orders ¥6.1 млрд верны, рост orders +37%, а не +55.7%.
+
+meta:
+  ticker: "6324"
+  exchange: TSE Prime
+  yahoo_symbol: 6324.T
+  currency: JPY
+  lot: 100
+  company: Harmonic Drive Systems
+  status_in_basket: наблюдать до триггера
+  target_weight: "5%"
+  horizon: "конец 2028 (дедлайн тезиса)"
+  strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
+  strategy_date: 2026-09-17
+  registry_updated: 2026-09-17
+  price_at_strategy: 6030
+  fiscal_year: "до 31 марта (FY2027 до 31.03.2027)"
+  scenario: portfolio/_scenarios/taiwan.yaml
+
+automations:
+  aiinfra-report-check: { covers: [6324-E-01, 6324-E-02, 6324-E-03, 6324-X-01, 6324-X-02, 6324-X-03], cadence: "после квартального отчёта (дата — 6324-C-01)" }
+  aiinfra-news-watch:   { covers: [6324-E-04, 6324-E-05], cadence: "ежедневно" }
+  aiinfra-price-watch:  { covers: [], note: "6324-P-01..03 подключить после срабатывания любого E-триггера" }
+
+route:
+  # Маршрут компании (степпер). current ведёт state.json → route.current; kind: stage | scenario.
+  steps:
+    - { id: watch, kind: stage, name: "Наблюдение: ждём подтверждающий триггер по отчёту" }
+    - { id: entry, kind: stage, name: "Вход траншами ¥5 500 / ¥5 000 / ¥4 500 (2% / 2% / 1%) после E-триггера" }
+    - { id: confirm, kind: stage, name: "Подтверждение тезиса по квартальным отчётам (условия -E-) и контроль поломки (-X-)" }
+    - { id: hold, kind: stage, name: "Удержание до горизонта" }
+    - { id: exit, kind: stage, name: "Фиксация и выход при капитализации ¥1 / 1.5 / 2 трлн; дедлайн конец 2028" }
+    - { id: taiwan, kind: scenario, name: "Сценарий «Тайвань» (portfolio/_scenarios/taiwan.yaml)", ref: portfolio/_scenarios/taiwan.yaml }
+
+triggers:
+
+  - id: 6324-P-01
+    class: price
+    step: entry
+    condition: "6324 ≤ ¥5 500 — после срабатывания E-триггера"
+    action: "Купить 2% портфеля"
+    automation: null
+    status: planned
+    notes: "Цена 17.09: ¥5 970 (Yahoo) / ¥6 030 (обсуждение)"
+  - id: 6324-P-02
+    class: price
+    step: entry
+    condition: "6324 ≤ ¥5 000 — после триггера"
+    action: "Купить 2%"
+    automation: null
+    status: planned
+  - id: 6324-P-03
+    class: price
+    step: entry
+    condition: "6324 ≤ ¥4 500 — после триггера"
+    action: "Купить 1%"
+    automation: null
+    status: planned
+
+  - id: 6324-F-01
+    class: price
+    step: exit
+    condition: "market cap ≥ ¥1 трлн"
+    action: "Продать 25% позиции"
+    automation: null
+    status: planned
+  - id: 6324-F-02
+    class: price
+    step: exit
+    condition: "market cap ≥ ¥1.5 трлн"
+    action: "Продать ещё 25%"
+    automation: null
+    status: planned
+  - id: 6324-F-03
+    class: price
+    step: exit
+    condition: "market cap ≥ ¥2 трлн"
+    action: "Продать ещё 25%"
+    automation: null
+    status: planned
+
+  - id: 6324-E-01
+    class: event
+    step: watch
+    condition: "Orders ≥ +30% г/г два квартала подряд"
+    action: "Купить 2% (подключить 6324-P-01..03)"
+    source: "HDS quarterly report"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Q1 FY2027 ПО ОТЧЁТУ (проверено 17.09): orders ¥24 128 млн, +37% г/г (в обсуждении ошибочно +55.7%) — первый квартал условия ≥30% выполнен"
+  - id: 6324-E-02
+    class: event
+    step: watch
+    condition: "Book-to-bill ≥ 1.2 два квартала подряд"
+    action: "Купить 2%"
+    source: "HDS quarterly report (orders / sales)"
+    automation: aiinfra-report-check
+    status: active
+  - id: 6324-E-03
+    class: event
+    step: watch
+    condition: "AI robotics orders ≥ ¥2 млрд за квартал"
+    action: "Купить 1%"
+    source: "HDS quarterly report"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Q1 FY2027 по данным обсуждения: ¥1.25 млрд — из PDF презентации не извлекается текстом, нужна визуальная проверка стр. 7"
+  - id: 6324-E-04
+    class: event
+    step: watch
+    condition: "Tesla официально подтверждает производство ≥ 100 000 Optimus в год (цифра, не слова «массовое производство»)"
+    action: "Купить 2%"
+    source: "Tesla quarterly/annual report, shareholder letter, официальное заявление руководства"
+    automation: aiinfra-news-watch
+    status: active
+    priority: очень высокий
+  - id: 6324-E-05
+    class: event
+    step: watch
+    condition: "Любой из Figure / Agility / Unitree официально сообщает ≥ 10 000 поставленных роботов в год (два производителя — сильный сигнал)"
+    action: "Купить 2%"
+    source: "официальная отчётность / пресс-релиз производителя / проверяемый контракт"
+    automation: aiinfra-news-watch
+    status: active
+    priority: очень высокий
+
+  - id: 6324-X-01
+    class: event
+    step: confirm
+    condition: "Orders < +10% г/г два квартала подряд"
+    action: "При одновременном 6324-X-02 — выйти"
+    source: "HDS quarterly report"
+    automation: aiinfra-report-check
+    status: active
+  - id: 6324-X-02
+    class: event
+    step: confirm
+    condition: "Book-to-bill < 1.0 два квартала подряд"
+    action: "При одновременном 6324-X-01 — выйти"
+    source: "HDS quarterly report"
+    automation: aiinfra-report-check
+    status: active
+  - id: 6324-X-03
+    class: event
+    step: confirm
+    condition: "Robotics orders < 0% г/г два квартала подряд"
+    action: "Сократить на 50%"
+    source: "HDS quarterly report"
+    automation: aiinfra-report-check
+    status: active
+
+  - id: 6324-C-01
+    class: calendar
+    step: confirm
+    condition: "Q2 FY2027 report — на IR (hds.co.jp/ir/event/accounts) дата не объявлена на 17.09; Q1 FY2027 опубликован 07.08.2026, ожидаемо начало ноября"
+    action: "Проверить E-01..03 и X-01..03"
+    automation: null
+    status: planned
+  - id: 6324-C-02
+    class: calendar
+    step: confirm
+    condition: "Конец FY2027 — 31.03.2027; годовые результаты в мае 2027"
+    action: "Проверить годовые результаты"
+    window: { from: 2027-05-01, to: 2027-05-31 }
+    automation: null
+    status: planned
+  - id: 6324-C-03
+    class: calendar
+    step: confirm
+    condition: "Дедлайн тезиса — конец 2028"
+    action: "Если к 31.12.2028 ни один E-триггер не сработал — выйти из позиции / снять с наблюдения"
+    window: { from: 2028-12-01, to: 2028-12-31 }
+    automation: null
+    status: planned

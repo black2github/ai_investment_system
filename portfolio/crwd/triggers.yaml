@@ -1,0 +1,72 @@
+# Реестр триггеров: CrowdStrike (CRWD, NASDAQ) — статус «наблюдать», в основной корзине нет
+# Источник: финальный блок «Инвестиции в ИИ-инфраструктуру» (ChatGPT, 17.09.2026).
+
+meta:
+  ticker: CRWD
+  exchange: NASDAQ
+  yahoo_symbol: CRWD
+  currency: USD
+  company: CrowdStrike
+  status_in_basket: наблюдать
+  target_weight: "0% (при подтверждении — до 5% + добавления)"
+  strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
+  strategy_date: 2026-09-17
+  registry_updated: 2026-09-17
+  price_at_strategy: 241.36
+  fiscal_year: "до 31 января"
+
+automations:
+  aiinfra-report-check: { covers: [CRWD-E-01, CRWD-E-02, CRWD-E-03], cadence: "после квартального отчёта (дата — CRWD-C-01)" }
+  aiinfra-news-watch:   { covers: [CRWD-E-04], cadence: "ежедневно" }
+
+route:
+  # Маршрут компании (степпер). current ведёт state.json → route.current; kind: stage | scenario.
+  steps:
+    - { id: watch, kind: stage, name: "Наблюдение: ждём подтверждающий триггер по отчёту" }
+    - { id: entry, kind: stage, name: "Вход траншами уровень не задан (вопрос владельцу)" }
+    - { id: confirm, kind: stage, name: "Подтверждение тезиса по квартальным отчётам (условия -E-) и контроль поломки (-X-)" }
+    - { id: hold, kind: stage, name: "Удержание до горизонта" }
+    - { id: exit, kind: stage, name: "Фиксация и выход не задано" }
+
+triggers:
+  - id: CRWD-E-01
+    class: event
+    step: confirm
+    condition: "ARR growth ≥ 25% г/г"
+    action: "Перейти к покупке 5% при ценовом триггере (уровень входа не задан — вопрос владельцу)"
+    source: "CRWD quarterly report"
+    automation: aiinfra-report-check
+    status: active
+  - id: CRWD-E-02
+    class: event
+    step: confirm
+    condition: "Net new ARR ≥ $200 млн за квартал"
+    action: "Добавить 5%"
+    source: "CRWD earnings"
+    automation: aiinfra-report-check
+    status: active
+  - id: CRWD-E-03
+    class: event
+    step: confirm
+    condition: "Cloud Security ARR/revenue growth ≥ 30% г/г (если раскрывается)"
+    action: "Добавить 3%"
+    source: "CRWD earnings presentation"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Если не раскрывается — сообщить об этом, не выдумывать"
+  - id: CRWD-E-04
+    class: event
+    step: confirm
+    condition: "≥ 3 публично объявленных production-развёртываний AI-security у крупных enterprise/AI-клиентов + количественное раскрытие выручки AI Security"
+    action: "Добавить 3%"
+    source: "пресс-релизы компании"
+    automation: aiinfra-news-watch
+    status: active
+  - id: CRWD-C-01
+    class: calendar
+    step: confirm
+    condition: "Ближайший квартальный отчёт — дата неизвестна (обычно конец ноября / начало декабря для Q3 FY)"
+    action: "Проверить E-01..03"
+    automation: null
+    status: planned
+    notes: "dates-verify 17.09: на ir.crowdstrike.com дата не объявлена (пресс-релиз выходит позже); ожидаемо конец ноября — начало декабря"

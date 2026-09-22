@@ -1,0 +1,212 @@
+# Реестр триггеров: Palantir Technologies Inc. (PLTR)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/PLTR_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: PLTR
+  company: Palantir Technologies Inc.
+  exchange: NASDAQ
+  yahoo_symbol: PLTR
+  registry_updated: '2026-09-21'
+  source_artifact: inbox/received/PLTR_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/PLTR?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 177.64
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+triggers:
+- id: PLTR-E-01
+  class: event
+  step: vector
+  axis: US_Commercial_AIP_Monetization
+  transition:
+    from: C3
+    to: C4
+  level: E2
+  kpis:
+  - PLTR-KPI-02
+  - PLTR-KPI-05
+  condition: U.S. commercial revenue YoY >=100% AND U.S. commercial RDV YoY >=100% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход US_Commercial_AIP_Monetization C3→C4 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: PLTR-E-02
+  class: event
+  step: vector
+  axis: US_Commercial_AIP_Monetization
+  transition:
+    from: C3
+    to: C2
+  level: E2
+  kpis:
+  - PLTR-KPI-02
+  - PLTR-KPI-05
+  condition: U.S. commercial revenue YoY <100% OR RDV YoY <50% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход US_Commercial_AIP_Monetization C3→C2 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: PLTR-E-03
+  class: event
+  step: vector
+  axis: US_Government_Demand
+  transition:
+    from: G3
+    to: G4
+  level: E2
+  kpis:
+  - PLTR-KPI-03
+  condition: U.S. government revenue YoY >=90% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход US_Government_Demand G3→G4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: PLTR-E-04
+  class: event
+  step: vector
+  axis: US_Government_Demand
+  transition:
+    from: G3
+    to: G2
+  level: E2
+  kpis:
+  - PLTR-KPI-03
+  condition: U.S. government revenue YoY <60% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход US_Government_Demand G3→G2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: PLTR-E-05
+  class: event
+  step: vector
+  axis: Geographic_Concentration
+  transition:
+    from: I1
+    to: I2
+  level: E2
+  kpis:
+  - PLTR-KPI-09
+  condition: U.S. share of H1/TTM revenue <75%
+  period: one semiannual/annual observation
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Geographic_Concentration I1→I2 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: PLTR-E-06
+  class: event
+  step: vector
+  axis: Geographic_Concentration
+  transition:
+    from: I1
+    to: I0
+  level: E2
+  kpis:
+  - PLTR-KPI-09
+  condition: U.S. share of H1/TTM revenue >=85%
+  period: one semiannual/annual observation
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Geographic_Concentration I1→I0 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: PLTR-E-07
+  class: event
+  step: vector
+  axis: Profitability_Cash
+  transition:
+    from: P3
+    to: P4
+  level: E2
+  kpis:
+  - PLTR-KPI-07
+  - PLTR-KPI-08
+  condition: GAAP operating margin >=40% AND adjusted FCF margin >=50% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Profitability_Cash P3→P4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: PLTR-E-08
+  class: event
+  step: vector
+  axis: Profitability_Cash
+  transition:
+    from: P3
+    to: P2
+  level: E2
+  kpis:
+  - PLTR-KPI-07
+  - PLTR-KPI-08
+  condition: GAAP operating margin <40% OR adjusted FCF margin <50% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Profitability_Cash P3→P2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: PLTR-E-09
+  class: event
+  step: vector
+  axis: Contracted_Demand
+  transition:
+    from: R3
+    to: R4
+  level: E2
+  kpis:
+  - PLTR-KPI-04
+  - PLTR-KPI-06
+  condition: U.S. commercial RDV >=$6B AND total quarterly TCV >=$3B for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Contracted_Demand R3→R4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: PLTR-E-10
+  class: event
+  step: vector
+  axis: Contracted_Demand
+  transition:
+    from: R3
+    to: R2
+  level: E2
+  kpis:
+  - PLTR-KPI-04
+  - PLTR-KPI-06
+  condition: U.S. commercial RDV < $6B OR quarterly TCV < $3B for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Contracted_Demand R3→R2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []

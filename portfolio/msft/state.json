@@ -1,0 +1,198 @@
+{
+  "updated": "2026-09-21T07:40:00Z",
+  "price": {
+    "last": 493.78,
+    "last_at": "2026-09-18",
+    "zone": null
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [],
+  "notes": "Папка создана 2026-09-21 по партии моделей компаний; значения KPI ждут сверки (задание facts-verify).",
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-21",
+    "note": "фазы стратегии владельца не заданы; ведётся только вектор состояний"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T06:30:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании MSFT v1.0 принята от другой LLM; вектор Cloud_AI_Demand=A4 + Software_Monetization=S1 + AI_Capital_Intensity=C3 + Cloud_Margin=M3 + Contracted_Demand=R3; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-21T07:40:00Z",
+      "kind": "verification",
+      "summary": "Сверка MSFT с хоста: 10 KPI подтверждены, 0 не раскрываются; все оси verified (задание агента упало: OpenRouter 402)"
+    }
+  ],
+  "scenario_state": {
+    "Cloud_AI_Demand": {
+      "state": "A4",
+      "since": "2026-09-21",
+      "evidence": [
+        "FY2026 Q4 Azure and other cloud services grew 43% YoY.",
+        "Management stated demand continues to exceed available capacity."
+      ],
+      "source": "{'url': 'https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics', 'type': 'Microsoft IR metrics'}, {'url': 'https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4', 'type': 'Microsoft IR earnings call'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Software_Monetization": {
+      "state": "S1",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q4 M365 Commercial cloud revenue grew 14% reported.",
+        "Commercial RPO reached $678B."
+      ],
+      "source": "{'url': 'https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast', 'type': 'Microsoft IR earnings release'}, {'url': 'https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics', 'type': 'Microsoft IR metrics'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "AI_Capital_Intensity": {
+      "state": "C3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q4 cash PP&E $35.8B on $90.0B revenue = 39.8%; FCF $19.6B."
+      ],
+      "source": "{'url': 'https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4', 'type': 'Microsoft IR earnings call'}, {'url': 'https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast', 'type': 'Microsoft IR earnings release'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Cloud_Margin": {
+      "state": "M3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Microsoft Cloud gross margin was 65%."
+      ],
+      "source": "{'url': 'https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics', 'type': 'Microsoft IR metrics'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Contracted_Demand": {
+      "state": "R3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Commercial RPO $678B, +84% YoY; ex-OpenAI +25%."
+      ],
+      "source": "{'url': 'https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4', 'type': 'Microsoft IR earnings call'}, {'url': 'https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics', 'type': 'Microsoft IR metrics'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {
+      "kpi_id": "MSFT-KPI-01",
+      "name": "Azure and other cloud services revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 0.43,
+      "value_raw": "Azure and other cloud services growth 43% / 43% cc (financial summary slide deck)",
+      "unit": "fraction",
+      "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "MSFT-KPI-02",
+      "name": "Microsoft Cloud revenue",
+      "period_end": "2026-06-30",
+      "value": 59.3,
+      "value_raw": "Microsoft Cloud revenue $59.3B (slide deck)",
+      "unit": "USD B",
+      "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "MSFT-KPI-03",
+      "name": "Microsoft Cloud revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 0.27,
+      "value_raw": "Microsoft Cloud revenue growth 27% / 25% cc (slide deck)",
+      "unit": "fraction",
+      "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "MSFT-KPI-04",
+      "name": "Microsoft Cloud gross margin",
+      "period_end": "2026-06-30",
+      "value": 0.65,
+      "value_raw": "Microsoft Cloud gross margin percentage 65% (slide deck)",
+      "unit": "fraction",
+      "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "MSFT-KPI-05",
+      "name": "Commercial RPO",
+      "period_end": "2026-06-30",
+      "value": 678,
+      "value_raw": "Commercial RPO $678B (slide deck); транскрипт: «Commercial remaining performance obligation grew 84% to $678 billion»",
+      "unit": "USD B",
+      "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "MSFT-KPI-06",
+      "name": "Commercial RPO YoY ex-OpenAI",
+      "period_end": "2026-06-30",
+      "value": 0.25,
+      "value_raw": "«RPO increased 25% when excluding OpenAI» (транскрипт FY26 Q4)",
+      "unit": "fraction",
+      "source_url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "MSFT-KPI-07",
+      "name": "Cash capex / revenue",
+      "period_end": "2026-06-30",
+      "value": 0.3978,
+      "value_raw": "«cash paid for P, P, and E was $35.8 billion»; Revenue $90.0B",
+      "unit": "fraction",
+      "source_url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "MSFT-KPI-08",
+      "name": "Quarterly FCF margin",
+      "period_end": "2026-06-30",
+      "value": 0.2178,
+      "value_raw": "«free cash flow was $19.6 billion reflecting higher capital expenditures»; Revenue $90.0B",
+      "unit": "fraction",
+      "source_url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "MSFT-KPI-09",
+      "name": "M365 Commercial cloud revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 0.14,
+      "value_raw": "Microsoft 365 Commercial cloud revenue growth 14% / 14% cc (slide deck)",
+      "unit": "fraction",
+      "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/metrics",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "MSFT-KPI-10",
+      "name": "Operating margin",
+      "period_end": "2026-06-30",
+      "value": 0.4511,
+      "value_raw": "«Operating income was $40.6 billion»; «Revenue was $90.0 billion»",
+      "unit": "fraction",
+      "source_url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    }
+  ],
+  "calc_runs": []
+}

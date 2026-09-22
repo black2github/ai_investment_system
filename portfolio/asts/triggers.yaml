@@ -1,0 +1,214 @@
+# Реестр триггеров: AST SpaceMobile, Inc. (ASTS)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: ASTS
+  company: AST SpaceMobile, Inc.
+  exchange: NASDAQ
+  yahoo_symbol: ASTS
+  registry_updated: '2026-09-21 (patch v1.1: E-08 по KPI-11)'
+  source_artifact: inbox/received/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/ASTS?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 58.52
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+triggers:
+- id: ASTS-E-01
+  class: event
+  step: vector
+  axis: Constellation_Deployment
+  transition:
+    from: D2
+    to: D3
+  level: E2
+  kpis:
+  - ASTS-KPI-01
+  - ASTS-KPI-02
+  condition: in-orbit spacecraft >=25
+  period: one verified deployment update
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Constellation_Deployment D2→D3 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: ASTS-E-02
+  class: event
+  step: vector
+  axis: Constellation_Deployment
+  transition:
+    from: D2
+    to: D1
+  level: E3
+  kpis:
+  - ASTS-KPI-01
+  - ASTS-KPI-02
+  condition: in-orbit spacecraft <10 because of failures/de-orbits OR no successful deployment for >180 days
+  period: event/180-day window
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Constellation_Deployment D2→D1 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: ASTS-E-03
+  class: event
+  step: vector
+  axis: Commercial_Contracting
+  transition:
+    from: C3
+    to: C4
+  level: E2
+  kpis:
+  - ASTS-KPI-04
+  - ASTS-KPI-05
+  condition: contracted backlog >=$2B AND definitive commercial agreements cover >=2B potential subscribers
+  period: one verified company report
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Commercial_Contracting C3→C4 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: ASTS-E-04
+  class: event
+  step: vector
+  axis: Commercial_Contracting
+  transition:
+    from: C3
+    to: C2
+  level: E2
+  kpis:
+  - ASTS-KPI-04
+  condition: contracted backlog < $1.25B for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Commercial_Contracting C3→C2 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: ASTS-E-05
+  class: event
+  step: vector
+  axis: Service_Monetization
+  transition:
+    from: M1
+    to: M2
+  level: E2
+  kpis:
+  - ASTS-KPI-07
+  condition: SpaceMobile Service quarterly revenue > $0
+  period: one quarter
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Service_Monetization M1→M2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: ASTS-E-06
+  class: event
+  step: vector
+  axis: Service_Monetization
+  transition:
+    from: M2
+    to: M3
+  level: E2
+  kpis:
+  - ASTS-KPI-07
+  condition: SpaceMobile Service quarterly revenue >=$25M
+  period: one quarter
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Service_Monetization M2→M3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: ASTS-E-07
+  class: event
+  step: vector
+  axis: Regulatory_Spectrum
+  transition:
+    from: R2
+    to: R3
+  level: E2
+  kpis: []
+  condition: commercial operating approvals confirmed in U.S. plus at least 3 additional major markets
+  period: event driven
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Regulatory_Spectrum R2→R3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: ASTS-E-08
+  class: event
+  step: vector
+  axis: Regulatory_Spectrum
+  transition:
+    from: R2
+    to: R1
+  level: E3
+  kpis:
+  - ASTS-KPI-11
+  condition: ASTS-KPI-11 changes from 1 to 0 because FCC materially narrows/suspends authorization needed for planned commercial
+    service
+  period: one verified regulatory event
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Regulatory_Spectrum R2→R1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+  notes: 'patch v1.1: условие переведено на ASTS-KPI-11'
+- id: ASTS-E-09
+  class: event
+  step: vector
+  axis: Funding_Dilution
+  transition:
+    from: F2
+    to: F3
+  level: E2
+  kpis:
+  - ASTS-KPI-08
+  - ASTS-KPI-09
+  - ASTS-KPI-10
+  condition: pro forma liquidity / annualized H1-style OCF+PP&E cash use >=2.0x AND latest financing effective dilution <=5%
+  period: one reporting period after financing
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Funding_Dilution F2→F3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: ASTS-E-10
+  class: event
+  step: vector
+  axis: Funding_Dilution
+  transition:
+    from: F2
+    to: F1
+  level: E2
+  kpis:
+  - ASTS-KPI-08
+  - ASTS-KPI-09
+  - ASTS-KPI-10
+  condition: liquidity / annualized cash use <1.0x OR new financing effective dilution >10%
+  period: one reporting/financing event
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Funding_Dilution F2→F1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []

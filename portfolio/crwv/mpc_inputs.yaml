@@ -1,0 +1,80 @@
+# Входы MPC для CRWV: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: CRWV
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 2
+  HYPERSCALER_CAPEX: 2
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 1
+  HBM_MEMORY: 1
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 2
+  DATA_CENTER_POWER: 2
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -2
+  CAPITAL_MARKETS: 2
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 2
+  ACQUISITION_INTEGRATION: 1
+  AI_CLOUD_PRICING: 2
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 1
+  UTILITY_CAPEX: 1
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+failure_modes:
+- failure_id: CRWV-FM-01
+  name: AI-cloud demand/price compression or overbuild
+  common_cause_id: AI_OVERBUILD
+  severity: high
+- failure_id: CRWV-FM-02
+  name: Top-customer concentration causes abrupt revenue/backlog loss
+  common_cause_id: CUSTOMER_CONCENTRATION
+  severity: critical
+- failure_id: CRWV-FM-03
+  name: Power/site delivery delays prevent committed-capacity availability
+  common_cause_id: DATA_CENTER_POWER_CONSTRAINT
+  severity: high
+- failure_id: CRWV-FM-04
+  name: GPU/HBM/component supply disruption delays clusters
+  common_cause_id: TAIWAN_SUPPLY_DISRUPTION
+  severity: high
+- failure_id: CRWV-FM-05
+  name: Debt/refinancing cost or access deteriorates
+  common_cause_id: CAPITAL_MARKETS_TIGHTENING
+  severity: critical
+- failure_id: CRWV-FM-06
+  name: Customer commitments fail to convert because delivery/availability conditions are not met
+  common_cause_id: CONTRACT_CONVERSION_FAILURE
+  severity: high
+- failure_id: CRWV-FM-07
+  name: Interest burden consumes operating cash flow despite EBITDA growth
+  common_cause_id: LEVERAGE_DEBT_SERVICE
+  severity: high
+- failure_id: CRWV-FM-08
+  name: Integration/platform expansion creates execution drag
+  common_cause_id: ACQUISITION_INTEGRATION_FAILURE
+  severity: medium
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'
+benchmark:
+  sector_id: AI_COMPUTE
+  benchmark_id: AI_COMPUTE_BASKET_V1
+  methodology_ref: AI_COMPUTE_Sector_Benchmark_Specification_v1.0.md

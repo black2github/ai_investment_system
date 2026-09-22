@@ -1,0 +1,156 @@
+# Вектор состояний PLTR (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+version: '1.0'
+artifact: PLTR State Vector
+as_of: '2026-09-21'
+ticker: PLTR
+source_artifact: inbox/received/PLTR_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
+semantics:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+sources:
+  PLTR_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+    type: SEC 10-Q
+  PLTR_Q2_2026_RELEASE:
+    url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
+    type: SEC earnings-release exhibit
+  PLTR_Q2_2026_PRESENTATION:
+    url: https://investors.palantir.com/files/Palantir%20-%20Q2%202026%20Business%20Update.pdf
+    type: Palantir IR investor presentation
+axes:
+  US_Commercial_AIP_Monetization:
+    name: US Commercial AIP Monetization
+    name_ru: монетизация AIP в коммерческом сегменте США
+    states:
+      C0:
+        name: unvalidated
+        criteria: U.S. commercial revenue YoY <20%
+      C1:
+        name: healthy
+        criteria: YoY >=20% and <50%
+      C2:
+        name: strong
+        criteria: YoY >=50% and <100%
+      C3:
+        name: hypergrowth
+        criteria: YoY >=100% AND U.S. commercial RDV YoY >=50%
+      C4:
+        name: durable_hypergrowth
+        criteria: U.S. commercial revenue YoY >=100% AND RDV YoY >=100% for 2 consecutive quarters
+    current: C3
+    current_evidence:
+    - Q2 U.S. commercial revenue $764M, +149% YoY.
+    - U.S. commercial RDV $6.238B, +124% YoY.
+    - U.S. commercial TCV $2.132B, +153% YoY.
+    source_refs:
+    - PLTR_Q2_2026_RELEASE
+    - PLTR_Q2_2026_PRESENTATION
+    note: 'Palantir does not disclose AIP revenue separately. U.S. commercial revenue, TCV and RDV are used as observable
+      proxies for AIP-led commercial monetization; the axis must not be described as directly measured AIP revenue.
+
+      '
+  US_Government_Demand:
+    name: US Government Demand
+    name_ru: спрос госзаказчиков США
+    states:
+      G0:
+        name: weak
+        criteria: U.S. government revenue YoY <10%
+      G1:
+        name: healthy
+        criteria: YoY >=10% and <30%
+      G2:
+        name: strong
+        criteria: YoY >=30% and <60%
+      G3:
+        name: very_strong
+        criteria: YoY >=60% and <90%
+      G4:
+        name: hypergrowth
+        criteria: YoY >=90% for 2 consecutive quarters
+    current: G3
+    current_evidence:
+    - Q2 U.S. government revenue $809M versus $426M, +90% YoY.
+    - A single quarter meets the 90% boundary; G4 requires two consecutive quarters.
+    source_refs:
+    - PLTR_Q2_2026_10Q
+  Geographic_Concentration:
+    name: Geographic Concentration
+    name_ru: географическая концентрация (доля США / международный сегмент)
+    states:
+      I0:
+        name: highly_US_concentrated
+        criteria: U.S. share of H1/TTM revenue >=85%
+      I1:
+        name: US_concentrated
+        criteria: U.S. share >=75% and <85%
+      I2:
+        name: moderately_diversified
+        criteria: U.S. share >=60% and <75%
+      I3:
+        name: diversified
+        criteria: U.S. share >=45% and <60%
+      I4:
+        name: broadly_diversified
+        criteria: U.S. share <45%
+    current: I1
+    current_evidence:
+    - 80% of H1 2026 revenue came from U.S. customers; 20% from non-U.S. customers.
+    source_refs:
+    - PLTR_Q2_2026_10Q
+  Profitability_Cash:
+    name: Profitability Cash
+    name_ru: прибыльность и денежный поток
+    states:
+      P0:
+        name: subscale
+        criteria: GAAP operating margin <10% OR adjusted FCF margin <10%
+      P1:
+        name: profitable
+        criteria: GAAP operating margin >=10% and <25%
+      P2:
+        name: high_profitability
+        criteria: GAAP operating margin >=25% and <40% AND adjusted FCF margin >=30%
+      P3:
+        name: exceptional
+        criteria: GAAP operating margin >=40% AND adjusted FCF margin >=50%
+      P4:
+        name: durable_exceptional
+        criteria: GAAP operating margin >=40% AND adjusted FCF margin >=50% for 2 consecutive quarters
+    current: P3
+    current_evidence:
+    - Q2 GAAP operating margin 47%.
+    - Q2 adjusted FCF $1.220B, margin 63%.
+    - Cash, cash equivalents and short-term U.S. Treasuries $9.2B.
+    source_refs:
+    - PLTR_Q2_2026_RELEASE
+  Contracted_Demand:
+    name: Contracted Demand
+    name_ru: законтрактованный спрос (RPO)
+    states:
+      R0:
+        name: low
+        criteria: U.S. commercial RDV < $2B OR total quarterly TCV < $1B
+      R1:
+        name: established
+        criteria: RDV >=$2B and < $4B
+      R2:
+        name: strong
+        criteria: RDV >=$4B and < $6B AND total TCV >=$2B
+      R3:
+        name: very_strong
+        criteria: RDV >=$6B AND total TCV >=$3B
+      R4:
+        name: durable_very_strong
+        criteria: RDV >=$6B AND total TCV >=$3B for 2 consecutive quarters
+    current: R3
+    current_evidence:
+    - Q2 U.S. commercial RDV $6.238B.
+    - Q2 total TCV $3.373B.
+    - Company warns RDV/TCV can include options and contracts subject to termination provisions.
+    source_refs:
+    - PLTR_Q2_2026_RELEASE
+    - PLTR_Q2_2026_10Q

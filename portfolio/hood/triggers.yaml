@@ -1,0 +1,247 @@
+# Реестр триггеров: Robinhood Markets, Inc. (HOOD)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: HOOD
+  company: Robinhood Markets, Inc.
+  exchange: NASDAQ
+  yahoo_symbol: HOOD
+  registry_updated: '2026-09-21 (дозор новостей заведён: models-news-watch)'
+  source_artifact: inbox/received/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/HOOD?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 119.82
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  models-news-watch:
+    covers:
+    - HOOD-E-09
+    - HOOD-E-11
+    cadence: ежедневно 09:10 Europe/Moscow (NBIS, NVDA, HOOD)
+    note: событийные переходы по новостям и раскрытиям компании
+  models-report-check:
+    covers:
+    - HOOD-E-01
+    - HOOD-E-02
+    - HOOD-E-03
+    - HOOD-E-04
+    - HOOD-E-05
+    - HOOD-E-06
+    - HOOD-E-07
+    - HOOD-E-08
+    - HOOD-E-10
+    cadence: после квартального отчёта (не заведено)
+    note: переходы по KPI «N кварталов подряд» — по отчёту
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+triggers:
+- id: HOOD-E-01
+  class: event
+  step: vector
+  axis: Customer_Asset_Scale
+  transition:
+    from: S3
+    to: S4
+  level: E2
+  kpis:
+  - HOOD-KPI-01
+  - HOOD-KPI-02
+  - HOOD-KPI-03
+  condition: Funded Customers >=30M AND TPA >=$450B AND LTM Net Deposit growth >=20% for 2 months
+  period: 2 months
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Customer_Asset_Scale S3→S4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: HOOD-E-02
+  class: event
+  step: vector
+  axis: Customer_Asset_Scale
+  transition:
+    from: S3
+    to: S2
+  level: E2
+  kpis:
+  - HOOD-KPI-01
+  - HOOD-KPI-02
+  - HOOD-KPI-03
+  condition: Funded Customers <27M OR TPA <$300B OR LTM Net Deposit growth <10% for 2 months
+  period: 2 months
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Customer_Asset_Scale S3→S2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: HOOD-E-03
+  class: event
+  step: vector
+  axis: Revenue_Diversification
+  transition:
+    from: R3
+    to: R4
+  level: E2
+  kpis:
+  - HOOD-KPI-08
+  condition: transaction-based revenue share <50% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Revenue_Diversification R3→R4 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: HOOD-E-04
+  class: event
+  step: vector
+  axis: Revenue_Diversification
+  transition:
+    from: R3
+    to: R2
+  level: E2
+  kpis:
+  - HOOD-KPI-08
+  condition: transaction-based revenue share >60% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Revenue_Diversification R3→R2 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: HOOD-E-05
+  class: event
+  step: vector
+  axis: Profitability
+  transition:
+    from: P3
+    to: P4
+  level: E2
+  kpis:
+  - HOOD-KPI-07
+  condition: Adjusted EBITDA margin >=55% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Profitability P3→P4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: HOOD-E-06
+  class: event
+  step: vector
+  axis: Profitability
+  transition:
+    from: P3
+    to: P2
+  level: E2
+  kpis:
+  - HOOD-KPI-07
+  condition: Adjusted EBITDA margin <45% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Profitability P3→P2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: HOOD-E-07
+  class: event
+  step: vector
+  axis: Credit_Risk
+  transition:
+    from: C1
+    to: C2
+  level: E2
+  kpis:
+  - HOOD-KPI-10
+  condition: credit-loss provision >=5% of revenue for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Credit_Risk C1→C2 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: HOOD-E-08
+  class: event
+  step: vector
+  axis: Credit_Risk
+  transition:
+    from: C1
+    to: C0
+  level: E2
+  kpis:
+  - HOOD-KPI-10
+  condition: credit-loss provision <2% of revenue for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Credit_Risk C1→C0 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: HOOD-E-09
+  class: event
+  step: vector
+  axis: Regulatory_Product
+  transition:
+    from: G2
+    to: G3
+  level: E3
+  kpis:
+  - HOOD-KPI-09
+  condition: federal or multi-jurisdiction restriction requires suspension/termination of a product category representing
+    >=10% of trailing-quarter revenue
+  period: one verified event
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Regulatory_Product G2→G3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-news-watch
+  status: active
+  fired: []
+- id: HOOD-E-10
+  class: event
+  step: vector
+  axis: Regulatory_Product
+  transition:
+    from: G2
+    to: G1
+  level: E2
+  kpis:
+  - HOOD-KPI-09
+  condition: previous forced restriction is removed/resolved AND no other forced product suspension remains material for 2
+    quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Regulatory_Product G2→G1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: HOOD-E-11
+  class: event
+  step: vector
+  axis: Regulatory_Product
+  transition:
+    from: G2
+    to: G4
+  level: E3
+  kpis: []
+  condition: regulatory action materially suspends or impairs a core brokerage, clearing or custody authorization
+  period: one verified event
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Regulatory_Product G2→G4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-news-watch
+  status: active
+  fired: []

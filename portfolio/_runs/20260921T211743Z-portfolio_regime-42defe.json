@@ -1,0 +1,429 @@
+{
+  "run_id": "20260921T211743Z-portfolio_regime-42defe",
+  "model": "portfolio_regime",
+  "version": "1.1.0",
+  "seed": 0,
+  "inputs": {
+    "positions": [
+      {
+        "ticker": "RKLB",
+        "sector_id": "SPACE",
+        "quantity": 64.0,
+        "price": 64.57,
+        "price_12m_max": 150.23
+      },
+      {
+        "ticker": "NVDA",
+        "sector_id": "SEMICONDUCTORS",
+        "quantity": 175.1578,
+        "price": 222.27,
+        "price_12m_max": 235.74
+      },
+      {
+        "ticker": "NET",
+        "sector_id": "SOFTWARE",
+        "quantity": 10.0,
+        "price": 323.6,
+        "price_12m_max": 333.94
+      },
+      {
+        "ticker": "NBIS",
+        "sector_id": "AI_COMPUTE",
+        "quantity": 270.0,
+        "price": 223.54,
+        "price_12m_max": 286.69
+      },
+      {
+        "ticker": "MSFT",
+        "sector_id": "SOFTWARE",
+        "quantity": 7.0205,
+        "price": 493.78,
+        "price_12m_max": 542.07
+      },
+      {
+        "ticker": "META",
+        "sector_id": "INTERNET_PLATFORMS",
+        "quantity": 15.0101,
+        "price": 665.75,
+        "price_12m_max": 778.38
+      },
+      {
+        "ticker": "LLY",
+        "sector_id": "HEALTHCARE",
+        "quantity": 13.0276,
+        "price": 1152.93,
+        "price_12m_max": 1280.34
+      },
+      {
+        "ticker": "HOOD",
+        "sector_id": "FINTECH",
+        "quantity": 217.0,
+        "price": 119.82,
+        "price_12m_max": 152.46
+      },
+      {
+        "ticker": "GLD",
+        "sector_id": "GOLD",
+        "quantity": 10.0,
+        "price": 401.17,
+        "price_12m_max": 495.9
+      },
+      {
+        "ticker": "ETN",
+        "sector_id": "ELECTRIFICATION",
+        "quantity": 5.0102,
+        "price": 424.77,
+        "price_12m_max": 459.96
+      },
+      {
+        "ticker": "ASML",
+        "sector_id": "SEMICONDUCTORS",
+        "quantity": 3.0085,
+        "price": 1679.92,
+        "price_12m_max": 1989.4399
+      },
+      {
+        "ticker": "UFO",
+        "sector_id": "SPACE",
+        "quantity": 7.0,
+        "price": 43.21,
+        "price_12m_max": 67.805
+      },
+      {
+        "ticker": "ASTS",
+        "sector_id": "SPACE",
+        "quantity": 32.0,
+        "price": 58.52,
+        "price_12m_max": 133.09
+      },
+      {
+        "ticker": "CRWV",
+        "sector_id": "AI_COMPUTE",
+        "quantity": 11.0,
+        "price": 81.36,
+        "price_12m_max": 143.08
+      },
+      {
+        "ticker": "PLTR",
+        "sector_id": "SOFTWARE",
+        "quantity": 18.0,
+        "price": 177.64,
+        "price_12m_max": 207.18
+      },
+      {
+        "ticker": "SPCX",
+        "sector_id": "SPACE",
+        "quantity": 8.0,
+        "price": 152.71,
+        "price_12m_max": 211.39
+      },
+      {
+        "ticker": "SPOT",
+        "sector_id": "INTERNET_PLATFORMS",
+        "quantity": 4.0,
+        "price": 509.45,
+        "price_12m_max": 738.53
+      }
+    ],
+    "cash": [
+      {
+        "amount": 897.91
+      },
+      {
+        "amount": 0.0
+      }
+    ],
+    "nav_running_max": null,
+    "sector_benchmarks": {
+      "SEMICONDUCTORS": {
+        "index": 11921.686,
+        "index_12m_max": 14634.7197,
+        "quality": "external"
+      },
+      "SOFTWARE": {
+        "index": 104.35,
+        "index_12m_max": 117.79,
+        "quality": "external"
+      },
+      "SPACE": {
+        "index": 43.21,
+        "index_12m_max": 67.805,
+        "quality": "external"
+      },
+      "ELECTRIFICATION": {
+        "index": 178.25,
+        "index_12m_max": 199.8,
+        "quality": "external"
+      },
+      "ROBOTICS": {
+        "index": 78.5,
+        "index_12m_max": 90.34,
+        "quality": "external"
+      },
+      "INTERNET_PLATFORMS": {
+        "index": 110.81,
+        "index_12m_max": 120.08,
+        "quality": "external"
+      },
+      "HEALTHCARE": {
+        "index": 168.39,
+        "index_12m_max": 175.68,
+        "quality": "external"
+      },
+      "FINTECH": {
+        "index": 45.75,
+        "index_12m_max": 58.82,
+        "quality": "external"
+      },
+      "AI_COMPUTE": {
+        "index": 1222.6995,
+        "index_12m_max": 1641.3701,
+        "quality": "provisional_low_breadth",
+        "benchmark_id": "AI_COMPUTE_BASKET_V1",
+        "basket_run_id": "20260921T135229Z-synthetic_basket-95de5e"
+      }
+    },
+    "sector_overrides": [
+      {
+        "sector_id": "AI_COMPUTE",
+        "min_weight": 0.2,
+        "dd_threshold": -0.25,
+        "regime_floor": "Stress",
+        "provenance": "model_assumption"
+      },
+      {
+        "sector_id": "AI_COMPUTE",
+        "min_weight": 0.25,
+        "dd_threshold": -0.4,
+        "regime_floor": "Shock",
+        "provenance": "model_assumption"
+      }
+    ],
+    "as_of": "2026-09-18",
+    "note": "прогон 4: добавлена позиция SPOT (P1), обнаруженная по списку средних цен 22.09; цены 18.09; running max сброшен — состав изменился"
+  },
+  "outputs": {
+    "nav_base": 182755.91,
+    "positions_value_base": 181858.0,
+    "cash_value_base": 897.91,
+    "cash_weight": 0.0049,
+    "nav_running_max": 182755.91,
+    "positions": [
+      {
+        "ticker": "RKLB",
+        "sector_id": "SPACE",
+        "value_base": 4132.48,
+        "drawdown_12m": -0.5702,
+        "severity": "SHOCK",
+        "role": null,
+        "weight_nav": 0.0226
+      },
+      {
+        "ticker": "NVDA",
+        "sector_id": "SEMICONDUCTORS",
+        "value_base": 38932.32,
+        "drawdown_12m": -0.0571,
+        "severity": "NONE",
+        "role": null,
+        "weight_nav": 0.213
+      },
+      {
+        "ticker": "NET",
+        "sector_id": "SOFTWARE",
+        "value_base": 3236.0,
+        "drawdown_12m": -0.031,
+        "severity": "NONE",
+        "role": null,
+        "weight_nav": 0.0177
+      },
+      {
+        "ticker": "NBIS",
+        "sector_id": "AI_COMPUTE",
+        "value_base": 60355.8,
+        "drawdown_12m": -0.2203,
+        "severity": "WATCH",
+        "role": null,
+        "weight_nav": 0.3303
+      },
+      {
+        "ticker": "MSFT",
+        "sector_id": "SOFTWARE",
+        "value_base": 3466.58,
+        "drawdown_12m": -0.0891,
+        "severity": "NONE",
+        "role": null,
+        "weight_nav": 0.019
+      },
+      {
+        "ticker": "META",
+        "sector_id": "INTERNET_PLATFORMS",
+        "value_base": 9992.97,
+        "drawdown_12m": -0.1447,
+        "severity": "NONE",
+        "role": null,
+        "weight_nav": 0.0547
+      },
+      {
+        "ticker": "LLY",
+        "sector_id": "HEALTHCARE",
+        "value_base": 15019.91,
+        "drawdown_12m": -0.0995,
+        "severity": "NONE",
+        "role": null,
+        "weight_nav": 0.0822
+      },
+      {
+        "ticker": "HOOD",
+        "sector_id": "FINTECH",
+        "value_base": 26000.94,
+        "drawdown_12m": -0.2141,
+        "severity": "WATCH",
+        "role": null,
+        "weight_nav": 0.1423
+      },
+      {
+        "ticker": "GLD",
+        "sector_id": "GOLD",
+        "value_base": 4011.7,
+        "drawdown_12m": -0.191,
+        "severity": "WATCH",
+        "role": null,
+        "weight_nav": 0.022
+      },
+      {
+        "ticker": "ETN",
+        "sector_id": "ELECTRIFICATION",
+        "value_base": 2128.18,
+        "drawdown_12m": -0.0765,
+        "severity": "NONE",
+        "role": null,
+        "weight_nav": 0.0116
+      },
+      {
+        "ticker": "ASML",
+        "sector_id": "SEMICONDUCTORS",
+        "value_base": 5054.04,
+        "drawdown_12m": -0.1556,
+        "severity": "WATCH",
+        "role": null,
+        "weight_nav": 0.0277
+      },
+      {
+        "ticker": "UFO",
+        "sector_id": "SPACE",
+        "value_base": 302.47,
+        "drawdown_12m": -0.3627,
+        "severity": "STRESS",
+        "role": null,
+        "weight_nav": 0.0017
+      },
+      {
+        "ticker": "ASTS",
+        "sector_id": "SPACE",
+        "value_base": 1872.64,
+        "drawdown_12m": -0.5603,
+        "severity": "SHOCK",
+        "role": null,
+        "weight_nav": 0.0102
+      },
+      {
+        "ticker": "CRWV",
+        "sector_id": "AI_COMPUTE",
+        "value_base": 894.96,
+        "drawdown_12m": -0.4314,
+        "severity": "SHOCK",
+        "role": null,
+        "weight_nav": 0.0049
+      },
+      {
+        "ticker": "PLTR",
+        "sector_id": "SOFTWARE",
+        "value_base": 3197.52,
+        "drawdown_12m": -0.1426,
+        "severity": "NONE",
+        "role": null,
+        "weight_nav": 0.0175
+      },
+      {
+        "ticker": "SPCX",
+        "sector_id": "SPACE",
+        "value_base": 1221.68,
+        "drawdown_12m": -0.2776,
+        "severity": "STRESS",
+        "role": null,
+        "weight_nav": 0.0067
+      },
+      {
+        "ticker": "SPOT",
+        "sector_id": "INTERNET_PLATFORMS",
+        "value_base": 2037.8,
+        "drawdown_12m": -0.3102,
+        "severity": "STRESS",
+        "role": null,
+        "weight_nav": 0.0112
+      }
+    ],
+    "sector_weights": {
+      "SPACE": 0.0412,
+      "SEMICONDUCTORS": 0.2407,
+      "SOFTWARE": 0.0542,
+      "AI_COMPUTE": 0.3352,
+      "INTERNET_PLATFORMS": 0.0658,
+      "HEALTHCARE": 0.0822,
+      "FINTECH": 0.1423,
+      "GOLD": 0.022,
+      "ELECTRIFICATION": 0.0116
+    },
+    "drawdowns": {
+      "portfolio": 0.0,
+      "portfolio_severity": "NONE",
+      "sectors": {
+        "SPACE": -0.3627,
+        "SEMICONDUCTORS": -0.1854,
+        "SOFTWARE": -0.1141,
+        "AI_COMPUTE": -0.2551,
+        "INTERNET_PLATFORMS": -0.0772,
+        "HEALTHCARE": -0.0415,
+        "FINTECH": -0.2222,
+        "GOLD": null,
+        "ELECTRIFICATION": -0.1079
+      },
+      "weighted_sector": -0.1979,
+      "benchmark_coverage": 0.9779
+    },
+    "breadth": {
+      "fraction_positions_dd_le_stress": 0.3529,
+      "fraction_positions_dd_le_shock": 0.1765,
+      "n_positions_with_dd": 17
+    },
+    "regime": "Stress",
+    "regime_base": "Stress",
+    "regime_floors_applied": [
+      {
+        "sector_id": "AI_COMPUTE",
+        "weight": 0.3352,
+        "drawdown": -0.2551,
+        "regime_floor": "Stress",
+        "provenance": "model_assumption"
+      }
+    ],
+    "regime_rules_provenance": "model_assumption v1.0",
+    "benchmark_quality": {
+      "SEMICONDUCTORS": "external",
+      "SOFTWARE": "external",
+      "SPACE": "external",
+      "ELECTRIFICATION": "external",
+      "ROBOTICS": "external",
+      "INTERNET_PLATFORMS": "external",
+      "HEALTHCARE": "external",
+      "FINTECH": "external",
+      "AI_COMPUTE": "provisional_low_breadth"
+    },
+    "constraint_breaches": []
+  },
+  "elapsed_ms": 1.0,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

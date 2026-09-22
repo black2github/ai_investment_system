@@ -1,0 +1,150 @@
+# Вектор состояний META (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+version: '1.0'
+artifact: META State Vector
+as_of: '2026-09-21'
+ticker: META
+source_artifact: inbox/received/META_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
+semantics:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+sources:
+  META_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm
+    type: SEC 10-Q
+  META_Q2_2026_RELEASE_SEC:
+    url: https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm
+    type: SEC earnings-release exhibit
+  META_Q2_2026_RELEASE_IR:
+    url: https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/
+    type: IR earnings release
+axes:
+  Ad_Monetization:
+    name: Ad Monetization
+    name_ru: монетизация рекламы
+    states:
+      A0:
+        name: stalled
+        criteria: advertising revenue YoY < 5%
+      A1:
+        name: moderate
+        criteria: advertising revenue YoY >= 5% and < 15%
+      A2:
+        name: strong
+        criteria: advertising revenue YoY >= 15% and < 25%
+      A3:
+        name: very_strong
+        criteria: advertising revenue YoY >= 25% AND (ad impressions YoY >= 10% OR average price per ad YoY >= 10%)
+      A4:
+        name: durable_dual_driver
+        criteria: advertising revenue YoY >= 25% AND ad impressions YoY >= 10% AND average price per ad YoY >= 10% for 2 consecutive
+          quarters
+    current: A3
+    current_evidence:
+    - Q2 advertising revenue $59.363B versus $46.563B, +27% YoY.
+    - Ad impressions +14% YoY and average price per ad +12% YoY.
+    source_refs:
+    - META_Q2_2026_10Q
+  User_Engagement:
+    name: User Engagement
+    name_ru: аудитория и вовлечённость
+    states:
+      U0:
+        name: contracting
+        criteria: Family DAP YoY < 0%
+      U1:
+        name: flat
+        criteria: Family DAP YoY >= 0% and < 2%
+      U2:
+        name: mature_growth
+        criteria: Family DAP YoY >= 2% and < 5%
+      U3:
+        name: reaccelerating
+        criteria: Family DAP YoY >= 5% and < 8%
+      U4:
+        name: exceptional_scale_growth
+        criteria: Family DAP YoY >= 8% for 2 consecutive quarters
+    current: U2
+    current_evidence:
+    - Family daily active people averaged 3.60B in June 2026, +3% YoY.
+    source_refs:
+    - META_Q2_2026_RELEASE_SEC
+  FoA_Profitability:
+    name: FoA Profitability
+    name_ru: прибыльность Family of Apps
+    states:
+      P0:
+        name: compressed
+        criteria: FoA operating margin < 20%
+      P1:
+        name: moderate
+        criteria: FoA operating margin >= 20% and < 30%
+      P2:
+        name: healthy
+        criteria: FoA operating margin >= 30% and < 40%
+      P3:
+        name: high
+        criteria: FoA operating margin >= 40% and < 50%
+      P4:
+        name: exceptional
+        criteria: FoA operating margin >= 50% for 2 consecutive quarters
+    current: P2
+    current_evidence:
+    - Q2 FoA operating income $23.394B on FoA revenue $60.370B = 38.75%.
+    source_refs:
+    - META_Q2_2026_10Q
+  AI_Capital_Intensity:
+    name: AI Capital Intensity
+    name_ru: капиталоёмкость ИИ (capex к выручке)
+    states:
+      C0:
+        name: normalized
+        criteria: quarterly capex/revenue < 15%
+      C1:
+        name: elevated
+        criteria: capex/revenue >= 15% and < 25%
+      C2:
+        name: aggressive
+        criteria: capex/revenue >= 25% and < 40%
+      C3:
+        name: extreme_but_cash_positive
+        criteria: capex/revenue >= 40% AND quarterly FCF > 0
+      C4:
+        name: cash_flow_stress
+        criteria: capex/revenue >= 50% AND quarterly FCF <= 0 for 2 quarters OR commitments/annualized revenue >= 2x
+    current: C3
+    current_evidence:
+    - Q2 capex including finance-lease principal $31.08B on revenue $60.801B = 51.12%.
+    - Q2 FCF remained positive at $0.784B, margin 1.29%.
+    - Non-cancelable contractual commitments were $349.31B at June 30, 2026, ~1.44x annualized Q2 revenue; lease obligations
+      not yet commenced were $278.99B.
+    source_refs:
+    - META_Q2_2026_10Q
+    - META_Q2_2026_RELEASE_SEC
+  Reality_Labs_Drag:
+    name: Reality Labs Drag
+    name_ru: убытки Reality Labs
+    states:
+      R0:
+        name: contained
+        criteria: quarterly RL operating loss < $1B
+      R1:
+        name: material
+        criteria: loss >= $1B and < $3B
+      R2:
+        name: high
+        criteria: loss >= $3B and < $4B
+      R3:
+        name: persistent_severe
+        criteria: loss >= $4B and < $6B AND company expects full-year RL loss >= $15B
+      R4:
+        name: escalating
+        criteria: loss >= $6B for 2 consecutive quarters OR full-year RL loss guidance/expectation > $25B
+    current: R3
+    current_evidence:
+    - Q2 RL operating loss $4.619B on revenue $0.431B.
+    - Meta expects full-year 2026 RL operating losses to remain similar to 2025; 2025 RL reduced operating profit by ~$19.19B.
+    source_refs:
+    - META_Q2_2026_10Q

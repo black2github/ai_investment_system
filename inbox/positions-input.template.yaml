@@ -1,0 +1,30 @@
+# Шаблон для владельца: фактический портфель «как есть». Заполнить и вернуть; дозор перенесёт в portfolio/_portfolio.yaml (positions, cash)
+# и запишет решения по триггерам (например, SPCX-C-02 «сделано частично» с датой и количеством).
+# Цена и дата покупки — факт истории, не якорь оценки (source_policy.purchase_history). Точность до цента не нужна:
+# достаточно количества, валюты и даты; текущие цены дозор возьмёт сам.
+as_of: "2026-09-__"
+currency_base: USD               # базовая валюта отчёта NAV; если другая — указать
+broker_note: ""                  # брокер / рынок доступа (влияет на лоты и доступность бумаг), по желанию
+
+positions:
+  - ticker: SPCX
+    exchange: NASDAQ
+    quantity: null               # всего акций на счёте сейчас
+    currency: USD
+    lots:                        # покупки; можно одной строкой с общим количеством, если история не нужна
+      - {date: "2026-09-__", quantity: null, price: null, note: "докупка по SPCX-C-02 (частично)"}
+    trigger_decisions:           # какие сигналы дозора исполнены этой покупкой (id из triggers.yaml)
+      - {id: SPCX-C-02, decision: "сделано частично", date: "2026-09-__"}
+  - ticker: ""
+    exchange: ""
+    quantity: null
+    currency: ""
+    lots:
+      - {date: "", quantity: null, price: null}
+
+cash:
+  - {account: "основной", currency: USD, amount: null}
+  - {account: "", currency: "", amount: null}
+
+dry_powder_note: ""              # какая часть кэша — резерв под просадки (если выделен)
+non_portfolio_assets_note: ""    # внешние активы в NAV не входят; упомянуть только если влияют на лимиты риска

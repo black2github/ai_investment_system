@@ -1,0 +1,337 @@
+# Выдержка из portfolio/spacex/triggers.yaml: переходы состояний E-10..E-33 (нормативный дом условий). Сгенерировано 20.09.2026.
+  # ---------- event: переходы состояний по осям (states.yaml; источник — SPCX_states_v1.0 от 20.09.2026) ----------
+  - id: SPCX-E-10
+    class: event
+    step: vector
+    axis: AI
+    transition: { from: A0, to: A1 }
+    level: E2
+    condition: "AI revenue >= $0.5B за квартал ИЛИ подписанные non-cancellable cloud contracts >= $1B"
+    period: "один квартал"
+    source: "SEC Q2 2026 10-Q / earnings release"
+    action: "Зафиксировать переход AI compute A0→A1 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси AI compute: A0→A1. Период подтверждения: один квартал."
+
+  - id: SPCX-E-11
+    class: event
+    step: vector
+    axis: AI
+    transition: { from: A1, to: A2 }
+    level: E2
+    condition: "AI revenue >= $1B за квартал И AI adjusted EBITDA >= $0"
+    period: "один квартал"
+    source: "SEC earnings release"
+    action: "Зафиксировать переход AI compute A1→A2 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси AI compute: A1→A2. Период подтверждения: один квартал."
+
+  - id: SPCX-E-12
+    class: event
+    step: vector
+    axis: AI
+    transition: { from: A2, to: A3 }
+    level: E2
+    condition: "AI revenue >= $3B за квартал И nameplate compute >= 2.0 GW И AI adjusted EBITDA >= $0"
+    period: "два квартала подряд"
+    source: "SEC earnings release / 10-Q"
+    action: "Зафиксировать переход AI compute A2→A3 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси AI compute: A2→A3. Период подтверждения: два квартала подряд."
+
+  - id: SPCX-E-13
+    class: event
+    step: vector
+    axis: AI
+    transition: { from: A2, to: A4 }
+    level: E2
+    condition: "AI revenue YoY < 20% ИЛИ AI adjusted EBITDA < $0"
+    period: "два квартала подряд"
+    source: "SEC earnings release / 10-Q"
+    action: "Зафиксировать переход AI compute A2→A4 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси AI compute: A2→A4. Период подтверждения: два квартала подряд."
+
+  - id: SPCX-E-14
+    class: event
+    step: vector
+    axis: AI
+    transition: { from: A3, to: A4 }
+    level: E2
+    condition: "AI revenue YoY < 20% ИЛИ AI adjusted EBITDA < $0 при AI capex >= $10B за квартал"
+    period: "два квартала подряд"
+    source: "SEC earnings release / 10-Q"
+    action: "Зафиксировать переход AI compute A3→A4 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси AI compute: A3→A4. Период подтверждения: два квартала подряд. Уровень исправлен E1→E2 при интеграции 20.09 (смена состояния оси — минимум E2 по Constitution §9); вопрос автору."
+
+  - id: SPCX-E-15
+    class: event
+    step: vector
+    axis: Starlink
+    transition: { from: B0, to: B1 }
+    level: E2
+    condition: "Starlink subscribers YoY growth >= 50%"
+    period: "один квартал"
+    source: "SEC earnings release / 10-Q"
+    action: "Зафиксировать переход Starlink B0→B1 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси Starlink: B0→B1. Период подтверждения: один квартал."
+
+  - id: SPCX-E-16
+    class: event
+    step: vector
+    axis: Starlink
+    transition: { from: B1, to: B2 }
+    level: E2
+    condition: "Subscribers >= 12M И Connectivity operating margin >= 30%"
+    period: "два квартала подряд"
+    source: "SEC earnings release / 10-Q"
+    action: "Зафиксировать переход Starlink B1→B2 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси Starlink: B1→B2. Период подтверждения: два квартала подряд."
+
+  - id: SPCX-E-17
+    class: event
+    step: vector
+    axis: Starlink
+    transition: { from: B2, to: B3 }
+    level: E2
+    condition: "Subscriber YoY growth < 20% И >= 12M subscribers"
+    period: "два квартала подряд"
+    source: "SEC earnings release / 10-Q"
+    action: "Зафиксировать переход Starlink B2→B3 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси Starlink: B2→B3. Период подтверждения: два квартала подряд."
+
+  - id: SPCX-E-18
+    class: event
+    step: vector
+    axis: Starlink
+    transition: { from: B3, to: B4 }
+    level: E2
+    condition: "Subscriber YoY growth < 10% И ARPU YoY decline <= -10% И Connectivity operating margin < 25%"
+    period: "два квартала подряд"
+    source: "SEC earnings release / 10-Q"
+    action: "Зафиксировать переход Starlink B3→B4 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси Starlink: B3→B4. Период подтверждения: два квартала подряд. Уровень исправлен E1→E2 при интеграции 20.09 (смена состояния оси — минимум E2 по Constitution §9); вопрос автору."
+
+  - id: SPCX-E-19
+    class: event
+    step: vector
+    axis: Starlink
+    transition: { from: B4, to: B3 }
+    level: E2
+    condition: "Subscriber YoY growth >= 20% И ARPU YoY >= 0% И Connectivity operating margin >= 30%"
+    period: "два квартала подряд"
+    source: "SEC earnings release / 10-Q"
+    action: "Зафиксировать переход Starlink B4→B3 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси Starlink: B4→B3. Период подтверждения: два квартала подряд."
+
+  - id: SPCX-E-20
+    class: event
+    step: vector
+    axis: Starship
+    transition: { from: C0, to: C1 }
+    level: E2
+    condition: "Одна миссия Starship V3 завершена с выполнением >= 80% заранее заявленных mission objectives"
+    period: "одна миссия"
+    source: "SPCX/SEC filing or release"
+    action: "Зафиксировать переход Starship C0→C1 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-news-watch
+    status: active
+    notes: "Переход состояния оси Starship: C0→C1. Период подтверждения: одна миссия."
+
+  - id: SPCX-E-21
+    class: event
+    step: vector
+    axis: Starship
+    transition: { from: C1, to: C2 }
+    level: E2
+    condition: "Успешно завершена орбитальная миссия Starship с выполнением >= 80% заявленных mission objectives"
+    period: "одна миссия"
+    source: "SPCX/FAA/SEC"
+    action: "Зафиксировать переход Starship C1→C2 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-news-watch
+    status: active
+    notes: "Переход состояния оси Starship: C1→C2. Период подтверждения: одна миссия. Уровень исправлен E1→E2 при интеграции 20.09 (смена состояния оси — минимум E2 по Constitution §9); вопрос автору."
+
+  - id: SPCX-E-22
+    class: event
+    step: vector
+    axis: Starship
+    transition: { from: C2, to: C3 }
+    level: E2
+    condition: "Один и тот же flight-capable элемент Starship/booster успешно повторно использован >= 2 раз с интервалом <= 90 дней"
+    period: "до 90 дней между reuse"
+    source: "SPCX/FAA/SEC"
+    action: "Зафиксировать переход Starship C2→C3 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-news-watch
+    status: active
+    notes: "Переход состояния оси Starship: C2→C3. Период подтверждения: до 90 дней между reuse. Уровень исправлен E1→E2 при интеграции 20.09 (смена состояния оси — минимум E2 по Constitution §9); вопрос автору."
+
+  - id: SPCX-E-23
+    class: event
+    step: vector
+    axis: Starship
+    transition: { from: C3, to: C4 }
+    level: E2
+    condition: ">= 4 успешных Starship orbital/relevant operational flights за rolling 12 месяцев И median interval between flights <= 90 дней"
+    period: "rolling 12 месяцев"
+    source: "SPCX/FAA"
+    action: "Зафиксировать переход Starship C3→C4 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-news-watch
+    status: active
+    notes: "Переход состояния оси Starship: C3→C4. Период подтверждения: rolling 12 месяцев. Уровень исправлен E1→E2 при интеграции 20.09 (смена состояния оси — минимум E2 по Constitution §9); вопрос автору."
+
+  - id: SPCX-E-24
+    class: event
+    step: vector
+    axis: Starship
+    transition: { from: C4, to: C5 }
+    level: E2
+    condition: "Компания раскрывает measured cost-to-orbit <= 10% исторической базы И >= 4 operational flights за rolling 12 месяцев"
+    period: "rolling 12 месяцев"
+    source: "SPCX filing/release"
+    action: "Зафиксировать переход Starship C4→C5 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-news-watch
+    status: active
+    notes: "Переход состояния оси Starship: C4→C5. Период подтверждения: rolling 12 месяцев. Уровень исправлен E1→E2 при интеграции 20.09 (смена состояния оси — минимум E2 по Constitution §9); вопрос автору."
+
+  - id: SPCX-E-25
+    class: event
+    step: vector
+    axis: Capital_Intensity
+    transition: { from: D0, to: D1 }
+    level: E2
+    condition: "Total capex YoY growth >= 20% И company revenue YoY growth >= 20%"
+    period: "один квартал"
+    source: "SEC 10-Q"
+    action: "Зафиксировать переход капиталоёмкость D0→D1 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси капиталоёмкость: D0→D1. Период подтверждения: один квартал."
+
+  - id: SPCX-E-26
+    class: event
+    step: vector
+    axis: Capital_Intensity
+    transition: { from: D1, to: D2 }
+    level: E2
+    condition: "Total capex >= $10B за квартал И capex/revenue >= 100%"
+    period: "один квартал"
+    source: "SEC 10-Q"
+    action: "Зафиксировать переход капиталоёмкость D1→D2 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси капиталоёмкость: D1→D2. Период подтверждения: один квартал."
+
+  - id: SPCX-E-27
+    class: event
+    step: vector
+    axis: Capital_Intensity
+    transition: { from: D2, to: D3 }
+    level: E2
+    condition: "Total capex >= $15B за квартал И AI capex >= $10B за квартал"
+    period: "два квартала подряд"
+    source: "SEC 10-Q"
+    action: "Зафиксировать переход капиталоёмкость D2→D3 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси капиталоёмкость: D2→D3. Период подтверждения: два квартала подряд. Уровень исправлен E1→E2 при интеграции 20.09 (смена состояния оси — минимум E2 по Constitution §9); вопрос автору."
+
+  - id: SPCX-E-28
+    class: event
+    step: vector
+    axis: Capital_Intensity
+    transition: { from: D3, to: D4 }
+    level: E2
+    condition: "Total capex >= $15B за квартал И AI revenue YoY < 20%"
+    period: "два квартала подряд"
+    source: "SEC 10-Q"
+    action: "Зафиксировать переход капиталоёмкость D3→D4 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси капиталоёмкость: D3→D4. Период подтверждения: два квартала подряд. Уровень исправлен E1→E2 при интеграции 20.09 (смена состояния оси — минимум E2 по Constitution §9); вопрос автору."
+
+  - id: SPCX-E-29
+    class: event
+    step: vector
+    axis: Capital_Intensity
+    transition: { from: D4, to: D3 }
+    level: E2
+    condition: "AI revenue YoY >= 50% И AI adjusted EBITDA >= $0 И total capex < $15B"
+    period: "два квартала подряд"
+    source: "SEC 10-Q"
+    action: "Зафиксировать переход капиталоёмкость D4→D3 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: spacex-report-check
+    status: active
+    notes: "Переход состояния оси капиталоёмкость: D4→D3. Период подтверждения: два квартала подряд."
+
+  - id: SPCX-E-30
+    class: event
+    step: vector
+    axis: Valuation
+    transition: { from: V0, to: V4 }
+    level: E2
+    condition: "Market cap / TTM revenue >= 60x"
+    period: "одна дата наблюдения"
+    source: "Yahoo Finance / StockAnalysis"
+    action: "Зафиксировать переход valuation V0→V4 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: null
+    status: planned
+    notes: "Переход состояния оси valuation: V0→V4. Период подтверждения: одна дата наблюдения. Требует модели reverse valuation в расчётном движке (invest-calc) — до её появления не оценивается."
+
+  - id: SPCX-E-31
+    class: event
+    step: vector
+    axis: Valuation
+    transition: { from: V4, to: V3 }
+    level: E2
+    condition: "Reverse valuation: implied 5Y revenue CAGR <= 25% И terminal FCF margin >= 20% И terminal multiple <= 35x FCF"
+    period: "после утверждения valuation model version"
+    source: "Deterministic calculation engine"
+    action: "Зафиксировать переход valuation V4→V3 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: null
+    status: planned
+    notes: "Переход состояния оси valuation: V4→V3. Период подтверждения: после утверждения valuation model version. Требует модели reverse valuation в расчётном движке (invest-calc) — до её появления не оценивается."
+
+  - id: SPCX-E-32
+    class: event
+    step: vector
+    axis: Valuation
+    transition: { from: V3, to: V2 }
+    level: E2
+    condition: "Reverse valuation: implied 5Y revenue CAGR <= 20% И terminal FCF margin >= 20% И terminal multiple <= 30x FCF"
+    period: "после утверждения valuation model version"
+    source: "Deterministic calculation engine"
+    action: "Зафиксировать переход valuation V3→V2 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: null
+    status: planned
+    notes: "Переход состояния оси valuation: V3→V2. Период подтверждения: после утверждения valuation model version. Требует модели reverse valuation в расчётном движке (invest-calc) — до её появления не оценивается."
+
+  - id: SPCX-E-33
+    class: event
+    step: vector
+    axis: Valuation
+    transition: { from: V4, to: V5 }
+    level: E2
+    condition: "Reverse valuation требует одновременно revenue CAGR > 35% И terminal FCF margin > 30% И terminal multiple > 35x FCF"
+    period: "после утверждения valuation model version"
+    source: "Deterministic calculation engine"
+    action: "Зафиксировать переход valuation V4→V5 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу; инвестиционное действие не предопределено"
+    automation: null
+    status: planned
+    notes: "Переход состояния оси valuation: V4→V5. Период подтверждения: после утверждения valuation model version. Уровень исправлен E1→E2 при интеграции 20.09 (смена состояния оси — минимум E2 по Constitution §9); вопрос автору. Требует модели reverse valuation в расчётном движке (invest-calc) — до её появления не оценивается."

@@ -1,0 +1,11 @@
+# workspace-invest: снимки для conformance/replay/patch lineage (решение владельца 22.09.2026)
+# массивы путей MC (7+ МБ на прогон) — воспроизводимы по run_id/seed через сайдкар
+portfolio/_runs/*-paths.npz
+*.npz
+# служебные файлы хоста и архивы для передачи LLM
+*.lnk
+*.zip
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

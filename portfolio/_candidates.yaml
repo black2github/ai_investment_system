@@ -1,0 +1,52 @@
+# Пул кандидатов в портфель: кто на какой стадии конвейера
+# Candidate → Company Model → Valuation → Conditional MC → MPC → Optimizer → Stability Test → Core/Challenger → target weights
+# (methodology/Marginal_Portfolio_Contribution_Specification_v1.0.md, §1).
+# Один дом у факта: веса prior — portfolio/_portfolio.yaml (initial_portfolio_hypothesis); тезисы и триггеры — portfolio/<папка>/;
+# лист наблюдения и идей — portfolio/_ideas.yaml. Здесь только состав пула, происхождение и стадия.
+# Решение владельца 20.09.2026: (1) сначала фактический портфель как есть — по тем же правилам; (2) затем пул кандидатов
+# = prior Core-10 + корзина ИИ-инфраструктуры (онбординг 17.09) + ideas/watch; число бумаг в портфеле ограничено
+# (лимит задаёт владелец), остальное интересное — постоянный мониторинг (stage watch).
+version: "1.0"
+as_of: "2026-09-21"
+owner_limit_positions: null        # решение владельца отложено (20.09); ограничения см. _portfolio.yaml → constraints.owner_constraints
+
+stages: [candidate, company_model, valuation, conditional_mc, mpc, optimizer, stability_test, decided, watch, rejected]
+
+pool:
+  # --- prior Core-10 (portfolio/_portfolio.yaml → initial_portfolio_hypothesis; подтверждён владельцем 20.09) ---
+  - {ticker: AVGO, exchange: NASDAQ, yahoo: AVGO,   currency: USD, sector_id: SEMICONDUCTORS,    origin: prior_core10, stage: candidate}
+  - {ticker: NVDA, exchange: NASDAQ, yahoo: NVDA,   currency: USD, sector_id: SEMICONDUCTORS,    origin: prior_core10, stage: company_model, folder: nvda, model_received: "2026-09-21", held: true, weight_nav: 0.2154, mc_archetype: mature_positive_margin, theme: AI}
+  - {ticker: KLAC, exchange: NASDAQ, yahoo: KLAC,   currency: USD, sector_id: SEMICONDUCTORS,    origin: prior_core10, stage: candidate}
+  - {ticker: ASML, exchange: NASDAQ, yahoo: ASML,   currency: USD, sector_id: SEMICONDUCTORS,    origin: prior_core10, stage: company_model, folder: asml, model_received: "2026-09-21", held: true, weight_nav: 0.028, mc_archetype: mature_positive_margin, theme: AI}
+  - {ticker: SPCX, exchange: NASDAQ, yahoo: SPCX,   currency: USD, sector_id: SPACE,             origin: prior_core10, stage: conditional_mc, held: true, weight_nav: 0.0068, mc_archetype: capital_intensive_transition, theme: AI,
+     folder: spacex, note: "единственный полигон: states/kpis v1.3, RV run …-ab1fb7, MC run …-861006; MPC — после MC v1.1"}
+  - {ticker: SNPS, exchange: NASDAQ, yahoo: SNPS,   currency: USD, sector_id: SOFTWARE,          origin: prior_core10, stage: candidate,
+     note: "парный эксперимент с CDNS после Flight 14; ось интеграции Ansys — слой состояния (LLM 20.09)"}
+  - {ticker: RKLB, exchange: NASDAQ, yahoo: RKLB,   currency: USD, sector_id: SPACE,             origin: prior_core10, stage: company_model, model_received: "2026-09-21", folder: rklb, held: true, weight_nav: 0.0229, mc_archetype: pre_service_or_milestone_driven}
+  - {ticker: CDNS, exchange: NASDAQ, yahoo: CDNS,   currency: USD, sector_id: SOFTWARE,          origin: prior_core10, stage: candidate,
+     note: "парный эксперимент с SNPS"}
+  - {ticker: MSFT, exchange: NASDAQ, yahoo: MSFT,   currency: USD, sector_id: SOFTWARE,          origin: prior_core10, stage: company_model, model_received: "2026-09-21", folder: msft, held: true, weight_nav: 0.0192, mc_archetype: mature_positive_margin, theme: AI}
+  - {ticker: NBIS, exchange: NASDAQ, yahoo: NBIS,   currency: USD, sector_id: AI_INFRASTRUCTURE, origin: prior_core10, stage: company_model, folder: nbis, model_received: "2026-09-21", held: true, weight_nav: 0.334, mc_archetype: capital_intensive_transition, theme: AI}
+  # --- корзина «ИИ-инфраструктура» (онбординг 17.09, папки с тезисом/триггерами/дозором) ---
+  - {ticker: ETN,  exchange: NYSE,   yahoo: ETN,    currency: USD, sector_id: AI_INFRASTRUCTURE, origin: aiinfra_basket, stage: company_model, model_received: "2026-09-21", folder: etn, held: true, weight_nav: 0.0118, mc_archetype: mature_positive_margin, theme: AI}
+  - {ticker: SU,   exchange: EPA,    yahoo: SU.PA,  currency: EUR, sector_id: AI_INFRASTRUCTURE, origin: aiinfra_basket, stage: candidate, folder: su}
+  - {ticker: NET,  exchange: NYSE,   yahoo: NET,    currency: USD, sector_id: SOFTWARE,          origin: aiinfra_basket, stage: company_model, model_received: "2026-09-21", folder: net, held: true, weight_nav: 0.0179, mc_archetype: mature_positive_margin, theme: AI}
+  - {ticker: "6506", exchange: TSE,  yahoo: 6506.T, currency: JPY, sector_id: AI_INFRASTRUCTURE, origin: aiinfra_basket, stage: candidate, folder: "6506", name: "Yaskawa", theme: AI}
+  - {ticker: "6324", exchange: TSE,  yahoo: 6324.T, currency: JPY, sector_id: AI_INFRASTRUCTURE, origin: aiinfra_basket, stage: candidate, folder: "6324", name: "Harmonic Drive", theme: AI}
+  - {ticker: CRWD, exchange: NASDAQ, yahoo: CRWD,   currency: USD, sector_id: SOFTWARE,          origin: aiinfra_basket, stage: candidate, folder: crwd, theme: AI}
+  # --- фактические позиции владельца вне prior/корзины (21.09.2026): в пул как held; модель компании требуется ---
+  - {ticker: META, exchange: NASDAQ, yahoo: META, currency: USD, sector_id: INTERNET_PLATFORMS, origin: actual_holding, stage: company_model, folder: meta, model_received: "2026-09-21", held: true, weight_nav: 0.0553, mc_archetype: mature_positive_margin, theme: AI}
+  - {ticker: LLY,  exchange: NYSE,   yahoo: LLY,  currency: USD, sector_id: HEALTHCARE,         origin: actual_holding, stage: company_model, folder: lly, model_received: "2026-09-21", held: true, weight_nav: 0.0831, mc_archetype: mature_positive_margin}
+  - {ticker: HOOD, exchange: NASDAQ, yahoo: HOOD, currency: USD, sector_id: FINTECH,            origin: actual_holding, stage: company_model, folder: hood, model_received: "2026-09-21", held: true, weight_nav: 0.1439, mc_archetype: mature_positive_margin}
+  - {ticker: PLTR, exchange: NASDAQ, yahoo: PLTR, currency: USD, sector_id: SOFTWARE,           origin: actual_holding, stage: company_model, model_received: "2026-09-21", folder: pltr, held: true, weight_nav: 0.0177, mc_archetype: mature_positive_margin, theme: AI}
+  - {ticker: ASTS, exchange: NASDAQ, yahoo: ASTS, currency: USD, sector_id: SPACE,              origin: actual_holding, stage: company_model, model_received: "2026-09-21", folder: asts, held: true, weight_nav: 0.0104, mc_archetype: pre_service_or_milestone_driven}
+  - {ticker: CRWV, exchange: NASDAQ, yahoo: CRWV, currency: USD, sector_id: AI_COMPUTE,         origin: actual_holding, stage: company_model, model_received: "2026-09-21", held: true, weight_nav: 0.005, mc_archetype: capital_intensive_transition, theme: AI}
+  - {ticker: GLD,  exchange: NYSE,   yahoo: GLD,  currency: USD, sector_id: GOLD,               origin: actual_holding, stage: candidate, held: true, weight_nav: 0.0222, asset_class: commodity_etf, note: "не компания — модель компании не нужна; роль резерва/хеджа решает владелец"}
+  - {ticker: UFO,  exchange: NASDAQ, yahoo: UFO,  currency: USD, sector_id: SPACE,              origin: actual_holding, stage: candidate, held: true, weight_nav: 0.0017, asset_class: sector_etf, note: "секторный ETF, он же benchmark SPACE"}
+  - {ticker: SPOT, exchange: NYSE, yahoo: SPOT, currency: USD, sector_id: INTERNET_PLATFORMS, origin: actual_holding, stage: candidate, held: true, weight_nav: 0.0112, note: "обнаружена 22.09 по списку средних цен; модели компании нет — заказать"}
+  # --- лист наблюдения и идей: portfolio/_ideas.yaml (watch: DDOG, OKTA, 6481, 6268, ABBN; ideas: HPS.A, POWERINDIA, GEV, ENR, PWR, VRT) ---
+  - {ref: portfolio/_ideas.yaml, origin: ideas_registry, stage: watch,
+     note: "в конвейер входят при выполнении return_condition или по решению владельца; до этого — мониторинг"}
+
+owner_policy_ai_theme: "с 21.09.2026 позиции темы AI (theme: AI) не наращиваются — сигналы докупки помечаются строкой политики (AGENTS.md); список темы подтверждён владельцем 22.09"
+sector_id_provenance: provisional   # привязка к секторам benchmark_registry сделана дозором, не владельцем; уточняется при выборе индексов

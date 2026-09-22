@@ -1,0 +1,133 @@
+{
+  "run_id": "20260920T183913Z-reverse_valuation-ab1fb7",
+  "model": "reverse_valuation",
+  "version": "1.1.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "SPCX",
+    "valuation_date": "2026-09-20",
+    "calibration": "calibration_v1.0 (A2+B2+C1+D3)",
+    "market": {
+      "price": 152.71,
+      "shares_outstanding": 13181779945,
+      "shares_source": "SEC 10-Q Q2 2026 cover"
+    },
+    "balance_sheet": {
+      "net_debt": -55089000000,
+      "cash": 93522000000,
+      "debt": 38433000000,
+      "source": "SEC 10-Q Q2 2026"
+    },
+    "base_period": {
+      "revenue_ttm": 23044000000,
+      "revenue_source": "FY2025 + H1 2026 - H1 2025 (SEC)",
+      "current_fcf_margin": -2.0,
+      "source": "H1 2026: OCF 3.466 - capex 28.476 / revenue 12.508"
+    },
+    "discounting": {
+      "discount_rate": 0.11,
+      "stress_rates": [
+        0.09,
+        0.14
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.2,
+        "base": 0.27,
+        "max": 0.34
+      },
+      "multiple_range": {
+        "min": 25,
+        "base": 32,
+        "max": 40
+      }
+    },
+    "margin_transition": {
+      "type": "two_phase_capex_normalization",
+      "path": {
+        "1": -0.75,
+        "2": -0.15,
+        "3": 0.1,
+        "4": {
+          "factor_of_terminal": 0.7
+        },
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "AI": "A2",
+      "Starlink": "B2",
+      "Starship": "C1",
+      "Capital_Intensity": "D3"
+    },
+    "current_valuation_state": "V4"
+  },
+  "outputs": {
+    "model_version": "1.1.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0",
+    "inputs_hash": "6f5d29ae145e6d39",
+    "scenario_state": {
+      "AI": "A2",
+      "Starlink": "B2",
+      "Starship": "C1",
+      "Capital_Intensity": "D3"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 2012989615400.9502,
+      "enterprise_value": 1957900615400.9502,
+      "terminal_fcf_margin": 0.27,
+      "terminal_multiple": 32.0,
+      "discount_rate": 0.11,
+      "current_fcf_margin": -2.0,
+      "revenue_ttm": 23044000000.0,
+      "implied_revenue_cagr_5y": 0.762964,
+      "terminal_revenue": 392441515687.05,
+      "terminal_fcf": 105959209235.5,
+      "pv_interim_fcf": 777345380.67,
+      "pv_terminal_value": 2012212270107.0,
+      "terminal_value_share_of_pv": 0.9996,
+      "control_cagr": 0.762964
+    },
+    "validation": {
+      "converged": true,
+      "residual": 86.7197265625,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.2|multiple=25": 0.9663,
+        "margin=0.2|multiple=32": 0.8725,
+        "margin=0.2|multiple=40": 0.7914,
+        "margin=0.27|multiple=25": 0.8512,
+        "margin=0.27|multiple=32": 0.763,
+        "margin=0.27|multiple=40": 0.6866,
+        "margin=0.34|multiple=25": 0.7674,
+        "margin=0.34|multiple=32": 0.6832,
+        "margin=0.34|multiple=40": 0.6103
+      },
+      "discount_rate_grid": {
+        "r=0.09": 0.7312,
+        "r=0.14": 0.8106
+      }
+    },
+    "valuation_state": {
+      "previous": "V4",
+      "candidate": "V4",
+      "transition_trigger": null,
+      "transition_allowed": false
+    }
+  },
+  "elapsed_ms": 1.9,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

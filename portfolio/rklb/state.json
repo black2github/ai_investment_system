@@ -1,0 +1,206 @@
+{
+  "updated": "2026-09-21T08:15:00Z",
+  "price": {
+    "last": 64.57,
+    "last_at": "2026-09-18",
+    "zone": null
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [],
+  "notes": "Папка создана 2026-09-21 по партии моделей компаний; значения KPI ждут сверки (задание facts-verify).",
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-21",
+    "note": "фазы стратегии владельца не заданы; ведётся только вектор состояний"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T06:30:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании RKLB v1.0 принята от другой LLM; вектор Electron_Cadence=E2 + Neutron_Development=N1 + Space_Systems_Scale=S3 + Backlog_Visibility=B3 + Capital_and_Integration=C2; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-21T07:40:00Z",
+      "kind": "verification",
+      "summary": "Сверка RKLB с хоста: 10 KPI подтверждены, 0 не раскрываются; все оси verified (задание агента упало: OpenRouter 402)"
+    },
+    {
+      "timestamp": "2026-09-21T08:15:00Z",
+      "kind": "correction",
+      "summary": "RKLB-KPI-08: '>90' → 90 (lower_bound) по README партии 4"
+    }
+  ],
+  "scenario_state": {
+    "Electron_Cadence": {
+      "state": "E2",
+      "since": "2026-09-21",
+      "evidence": [
+        "Rocket Lab completed 12 Electron missions in H1 2026 versus 10 in H1 2025."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Neutron_Development": {
+      "state": "N1",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 10-Q: first-flight hardware integration/readiness ongoing; Archimedes testing and second-stage/reusable-fairing work progressing.",
+        "Stage 1 tank production aligned with target delivery to pad in Q4 2026; company says year-end launch window is narrowing."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Space_Systems_Scale": {
+      "state": "S3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 Space Systems revenue $189.5M of $234.2M total, ~80.9%.",
+        "Q2 Space Systems revenue +94% YoY."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Backlog_Visibility": {
+      "state": "B3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 2026 backlog $2.36B, +137% YoY.",
+        "Launch backlog exceeded 90 missions after Q2/post-quarter signings."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    },
+    "Capital_and_Integration": {
+      "state": "C2",
+      "since": "2026-09-21",
+      "evidence": [
+        "Rocket Lab closed Mynaric and Motiv acquisitions and announced agreement to acquire Iridium.",
+        "Company previously disclosed access to >$2B total liquidity."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm', 'type': 'SEC earnings-release exhibit'}",
+      "verified": true,
+      "verified_note": "host-check 21.09: все KPI осей подтверждены по первоисточникам"
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {
+      "kpi_id": "RKLB-KPI-01",
+      "name": "Total revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 0.62,
+      "value_raw": "«representing a year-on-year increase in revenue of approximately 62%»; Total revenues 234,066 vs 144,498 (тыс. $)",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "RKLB-KPI-02",
+      "name": "Space Systems revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 0.94,
+      "value_raw": "«Space systems revenue was $189.5 million … an increase of $91.6 million, or 94%»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "RKLB-KPI-03",
+      "name": "Space Systems share of quarterly revenue",
+      "period_end": "2026-06-30",
+      "value": 0.809,
+      "value_raw": "189.5 / 234.1 (Total revenues 234,066 тыс. $)",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "RKLB-KPI-04",
+      "name": "Electron/HASTE launches trailing 6 months",
+      "period_end": "2026-06-30",
+      "value": 12,
+      "value_raw": "«12 Electron launch missions completed for the six months ended June 30, 2026, versus 10»",
+      "unit": "launches",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "RKLB-KPI-05",
+      "name": "Launch services revenue YoY",
+      "period_end": "2026-06-30",
+      "value": -0.04,
+      "value_raw": "«Launch services revenue was $44.6 million … a decrease of $2.1 million, or 4%, primarily due to revenue recognition timing»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "RKLB-KPI-06",
+      "name": "Backlog",
+      "period_end": "2026-06-30",
+      "value": 2.36,
+      "value_raw": "«Q2 2026 saw our backlog grow to $2.36 billion – another record»",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "RKLB-KPI-07",
+      "name": "Backlog YoY",
+      "period_end": "2026-06-30",
+      "value": 1.37,
+      "value_raw": "«Record backlog of $2.36 billion a 137% increase YoY»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "RKLB-KPI-08",
+      "name": "Launch backlog count",
+      "period_end": "2026-06-30",
+      "value": 90,
+      "value_raw": "«expanding Rocket Lab's total launch backlog to its highest in history with 90+ launches»",
+      "unit": "contracted_launches",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter",
+      "value_type": "lower_bound"
+    },
+    {
+      "kpi_id": "RKLB-KPI-09",
+      "name": "Neutron milestone state",
+      "period_end": "2026-06-30",
+      "value": 1,
+      "value_raw": "«ongoing integration and readiness of first-flight hardware … Neutron qualification testing … is ongoing … window for an end-of-year launch date is narrowing» — состояние 1 (integrated preflight)",
+      "unit": "ordinal",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    },
+    {
+      "kpi_id": "RKLB-KPI-10",
+      "name": "Space Systems H1 growth",
+      "period_end": "2026-06-30",
+      "value": 0.763,
+      "value_raw": "«Space systems revenue was $326.2 million for the six months … an increase of $141.3 million, or 76%»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm",
+      "verified": true,
+      "verified_by": "host-check: документ по source_url целиком (curl -A), число найдено (Claude, 21.09.2026); задание batch03-facts-verify упало по биллингу OpenRouter"
+    }
+  ],
+  "calc_runs": []
+}

@@ -1,0 +1,360 @@
+version: "1.0"
+ticker: SPCX
+as_of: "2026-09-21"
+artifact: mpc_inputs
+
+methodology_refs:
+  mpc_schema: "Marginal_Portfolio_Contribution_Schema_v1.0"
+  driver_taxonomy: "MPC_Driver_Taxonomy_v1.1"
+  states: "SPCX states/kpis v1.3"
+  reverse_valuation: "reverse_valuation v1.0"
+  conditional_mc: "conditional_mc v1.0"
+
+semantics:
+  driver_scale:
+    "-2": strong_negative
+    "-1": negative
+    "0": immaterial
+    "1": positive
+    "2": strong_positive
+  provenance: model_assumption
+  rule: >
+    Знак показывает влияние усиления соответствующего драйвера на экономику SPCX.
+    Failure modes являются отдельными механизмами отказа и не заменяют driver exposures.
+    Trigger != Decision.
+
+driver_exposure_vector:
+  # Original v1.0 taxonomy
+  AI_COMPUTE_DEMAND: 2
+  HYPERSCALER_CAPEX: 1
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 1
+  HBM_MEMORY: 1
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 1
+  DATA_CENTER_POWER: 2
+  LAUNCH_ECONOMICS: 2
+  SATELLITE_CONNECTIVITY: 2
+  GOVERNMENT_DEFENSE: 2
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 2
+  ACQUISITION_INTEGRATION: 0
+
+  # Added by MPC Driver Taxonomy v1.1
+  AI_CLOUD_PRICING: 1
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 1
+  UTILITY_CAPEX: 1
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 2
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: -2
+
+driver_interpretation:
+  AI_COMPUTE_DEMAND:
+    vector_score: 2
+    exposure_type: "direct_positive_demand"
+    explanation: >
+      Рост спроса на AI compute непосредственно поддерживает загрузку,
+      выручку и экономику AI-направления SPCX.
+
+  HYPERSCALER_CAPEX:
+    vector_score: 1
+    directionality: dual
+    positive_channel: >
+      Рост инфраструктурных расходов крупных AI/cloud-заказчиков является
+      индикатором более сильного спроса на compute capacity и cloud services.
+    negative_channel: >
+      Одновременно собственное расширение hyperscalers может увеличивать
+      self-supply и конкурентное давление на сторонних AI-cloud providers.
+    net_rule_v1: >
+      Для MPC используется умеренно положительная итоговая экспозиция +1;
+      прямой спрос на compute отдельно отражён AI_COMPUTE_DEMAND=+2.
+
+  ADVANCED_PACKAGING:
+    vector_score: 1
+    exposure_type: "input_supply_enabler"
+    explanation: >
+      Рост доступности advanced packaging повышает предложение современных
+      AI-ускорителей и снижает риск задержки ввода compute capacity.
+
+  HBM_MEMORY:
+    vector_score: 1
+    exposure_type: "input_supply_enabler"
+    explanation: >
+      Улучшение доступности HBM поддерживает развертывание AI-кластеров;
+      это не самостоятельный источник спроса SPCX.
+
+  CLOUD_SOFTWARE_DEMAND:
+    vector_score: 1
+    exposure_type: "direct_positive_demand"
+    explanation: >
+      Более высокий cloud/software workload demand повышает потенциальное
+      использование AI cloud, но не является основным драйвером Starlink/Space.
+
+  DATA_CENTER_POWER:
+    vector_score: 2
+    exposure_type: "critical_input"
+    explanation: >
+      Доступность электроэнергии является непосредственным ограничителем
+      скорости ввода AI compute. Улучшение power availability сильно положительно.
+
+  LAUNCH_ECONOMICS:
+    vector_score: 2
+    exposure_type: "direct_core_economics"
+    explanation: >
+      Снижение стоимости запуска и рост надежности/каденции напрямую улучшают
+      Space/Starlink economics и optionality Starship.
+
+  SATELLITE_CONNECTIVITY:
+    vector_score: 2
+    exposure_type: "direct_positive_demand"
+    explanation: >
+      Рост спроса на спутниковую связь прямо поддерживает Starlink,
+      который является одним из основных действующих денежных бизнесов SPCX.
+
+  GOVERNMENT_DEFENSE:
+    vector_score: 2
+    exposure_type: "direct_positive_demand"
+    explanation: >
+      Рост оборонных/государственных расходов на space/communications
+      поддерживает Starshield и другие государственные контракты.
+
+  INTEREST_RATES:
+    vector_score: -1
+    exposure_type: "cost_of_capital"
+    explanation: >
+      Более высокие ставки увеличивают стоимость капитала и снижают
+      приведенную стоимость дальних денежных потоков, несмотря на текущий net cash.
+
+  CAPITAL_MARKETS:
+    vector_score: 1
+    exposure_type: "funding_flexibility"
+    explanation: >
+      Более благоприятные рынки капитала повышают гибкость при D3 capex,
+      но SPCX менее зависим от внешнего финансирования, чем NBIS/CRWV.
+
+  TAIWAN_SUPPLY:
+    vector_score: 2
+    exposure_type: "input_supply_dependency"
+    explanation: >
+      Нормальная работа тайваньской leading-edge semiconductor supply chain
+      критична для поставок AI accelerators. Это input-side exposure,
+      а не revenue geography.
+
+  AI_CLOUD_PRICING:
+    vector_score: 1
+    exposure_type: "direct_unit_economics"
+    explanation: >
+      Более благоприятная цена AI-cloud capacity повышает монетизацию A2,
+      но контрактная структура и собственная cost curve ограничивают чувствительность.
+
+  ELECTRIFICATION_GRID:
+    vector_score: 1
+    exposure_type: "infrastructure_enabler"
+    explanation: >
+      Расширение энергосетей и подключения новых мощностей облегчает
+      строительство/ввод AI infrastructure.
+
+  UTILITY_CAPEX:
+    vector_score: 1
+    exposure_type: "infrastructure_enabler"
+    explanation: >
+      Рост utility capex положителен через ускорение power delivery,
+      transmission and interconnection capacity.
+
+  AEROSPACE_CYCLE:
+    vector_score: 2
+    exposure_type: "direct_sector_demand"
+    explanation: >
+      Более сильный aerospace/space cycle поддерживает коммерческий,
+      государственный и инфраструктурный спрос SPCX.
+
+  SPACE_REGULATION:
+    vector_score: -2
+    exposure_type: "regulatory_constraint"
+    explanation: >
+      Ужесточение launch, range, spectrum и orbital regulation может
+      задерживать Starship, запуски и спутниковое развертывание.
+
+failure_modes:
+  - failure_id: SPCX-FM-01
+    name: "AI compute overbuild / demand or pricing compression"
+    common_cause_id: AI_OVERBUILD
+    severity: high
+    axis_refs: [AI, Capital_Intensity]
+    shared_with: [NBIS, CRWV, META, MSFT, NET]
+    rationale: >
+      A2+D3 предполагают крупную текущую монетизацию при экстремальном
+      инвестиционном цикле; слабая загрузка или pricing compression
+      нарушают механизм будущей FCF-нормализации.
+
+  - failure_id: SPCX-FM-02
+    name: "Data-center power or interconnection delays"
+    common_cause_id: DATA_CENTER_POWER_CONSTRAINT
+    severity: high
+    axis_refs: [AI, Capital_Intensity]
+    shared_with: [NBIS, CRWV, META, MSFT, ETN]
+    rationale: >
+      Ограничение power delivery способно задержать ввод compute capacity
+      даже при сохранении контрактного спроса.
+
+  - failure_id: SPCX-FM-03
+    name: "Leading-edge GPU/HBM supply disruption"
+    common_cause_id: TAIWAN_SUPPLY_DISRUPTION
+    severity: high
+    axis_refs: [AI]
+    shared_with: [NBIS, CRWV, NVDA, META, MSFT]
+    rationale: >
+      AI-направление зависит от поставок передовых accelerators, HBM
+      и связанных компонентов.
+
+  - failure_id: SPCX-FM-04
+    name: "AI cloud contract conversion / customer financing stress"
+    common_cause_id: AI_CLOUD_CUSTOMER_FINANCING_STRESS
+    severity: high
+    axis_refs: [AI]
+    shared_with: [NBIS, CRWV, NVDA, MSFT]
+    rationale: >
+      Крупные cloud commitments не эквивалентны гарантированному cash flow;
+      клиентский funding stress или задержка ввода capacity может замедлить
+      conversion contracted demand into revenue.
+
+  - failure_id: SPCX-FM-05
+    name: "Starship development or orbital-validation failure"
+    common_cause_id: LAUNCH_VEHICLE_DEVELOPMENT_FAILURE
+    severity: critical
+    axis_refs: [Starship]
+    shared_with: [RKLB]
+    rationale: >
+      C1 означает, что orbital validation, reuse и cost economics еще не доказаны.
+
+  - failure_id: SPCX-FM-06
+    name: "Launch failure or sustained cadence disruption"
+    common_cause_id: LAUNCH_OPERATIONS_FAILURE
+    severity: critical
+    axis_refs: [Starship, Starlink]
+    shared_with: [RKLB, ASTS]
+    rationale: >
+      Аварии или длительные паузы ухудшают вывод Starlink, Starship validation,
+      customer launches и government missions.
+
+  - failure_id: SPCX-FM-07
+    name: "Launch/range/spectrum regulatory delay"
+    common_cause_id: SPACE_REGULATORY_RANGE_DELAY
+    severity: high
+    axis_refs: [Starship, Starlink]
+    shared_with: [RKLB, ASTS]
+    rationale: >
+      Regulatory approvals are gating factors for launch cadence,
+      test progression and satellite/network deployment.
+
+  - failure_id: SPCX-FM-08
+    name: "Government/defense space procurement slowdown or contract loss"
+    common_cause_id: GOVERNMENT_SPACE_BUDGET
+    severity: high
+    axis_refs: [Starlink, Starship]
+    shared_with: [RKLB, ASTS]
+    rationale: >
+      Starshield and other government programs create meaningful exposure
+      to defense/space budgets and procurement cycles.
+
+  - failure_id: SPCX-FM-09
+    name: "Starlink subscriber saturation / ARPU compression"
+    common_cause_id: SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE
+    severity: high
+    axis_refs: [Starlink]
+    shared_with: [ASTS]
+    rationale: >
+      B2 currently combines scale and strong operating margin,
+      but ARPU pressure and slower subscriber growth can move Starlink
+      toward mature/saturation states.
+
+  - failure_id: SPCX-FM-10
+    name: "Extreme capex persists without corresponding monetization"
+    common_cause_id: CAPITAL_INTENSITY_OVERBUILD
+    severity: critical
+    axis_refs: [Capital_Intensity, AI]
+    shared_with: [NBIS, CRWV, META, MSFT]
+    rationale: >
+      D3 is acceptable only if investment converts into utilization,
+      revenue and future FCF. Persistent D3 with weak monetization
+      is a direct thesis failure mechanism.
+
+  - failure_id: SPCX-FM-11
+    name: "Capital-market conditions reduce flexibility during sustained D3 investment"
+    common_cause_id: CAPITAL_MARKETS_TIGHTENING
+    severity: medium
+    axis_refs: [Capital_Intensity]
+    shared_with: [NBIS, CRWV, RKLB, ASTS, NET]
+    rationale: >
+      Current net cash reduces immediate refinancing risk, but prolonged
+      extreme investment still benefits from broad funding flexibility.
+
+  - failure_id: SPCX-FM-12
+    name: "Starlink/space network regulatory or spectrum impairment"
+    common_cause_id: SPACE_REGULATORY_SPECTRUM_DELAY
+    severity: high
+    axis_refs: [Starlink]
+    shared_with: [ASTS]
+    rationale: >
+      Spectrum/market-access restrictions can impair connectivity deployment
+      even if launch execution remains strong.
+
+cross_portfolio_common_causes:
+  RKLB:
+    shared:
+      - LAUNCH_VEHICLE_DEVELOPMENT_FAILURE
+      - LAUNCH_OPERATIONS_FAILURE
+      - GOVERNMENT_SPACE_BUDGET
+      - SPACE_REGULATORY_RANGE_DELAY
+
+  ASTS:
+    shared:
+      - LAUNCH_OPERATIONS_FAILURE
+      - GOVERNMENT_SPACE_BUDGET
+      - SPACE_REGULATORY_RANGE_DELAY
+      - SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE
+      - SPACE_REGULATORY_SPECTRUM_DELAY
+
+  NBIS:
+    shared:
+      - AI_OVERBUILD
+      - DATA_CENTER_POWER_CONSTRAINT
+      - TAIWAN_SUPPLY_DISRUPTION
+      - AI_CLOUD_CUSTOMER_FINANCING_STRESS
+      - CAPITAL_MARKETS_TIGHTENING
+      - CAPITAL_INTENSITY_OVERBUILD
+
+  CRWV:
+    shared:
+      - AI_OVERBUILD
+      - DATA_CENTER_POWER_CONSTRAINT
+      - TAIWAN_SUPPLY_DISRUPTION
+      - AI_CLOUD_CUSTOMER_FINANCING_STRESS
+      - CAPITAL_MARKETS_TIGHTENING
+      - CAPITAL_INTENSITY_OVERBUILD
+
+model_notes:
+  - >
+    HYPERSCALER_CAPEX is intentionally only +1: it is partly a demand signal,
+    but hyperscaler self-build also increases competitive supply.
+  - >
+    CAPITAL_MARKETS is +1 rather than +2 because SPCX currently has net cash
+    and established cash-generating businesses; it is less financing-dependent
+    than NBIS/CRWV.
+  - >
+    TAIWAN_SUPPLY=+2 is an input-supply exposure for AI compute, not geographic revenue exposure.
+  - >
+    SPACE_REGULATION=-2 follows taxonomy v1.1 sign semantics:
+    stricter regulation is strongly negative.

@@ -1,0 +1,186 @@
+{
+  "updated": "2026-09-21T00:50:00Z",
+  "price": {
+    "last": 222.27,
+    "last_at": "2026-09-18",
+    "zone": null
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [],
+  "notes": "Папка создана 2026-09-21 по партии 1 моделей компаний; сверка фактов по отчёту выполнена 2026-09-20 (задание facts-verify, батч 1).",
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-21",
+    "note": "фазы стратегии владельца не заданы; ведётся только вектор состояний"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T00:30:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании NVDA v1.0 принята от другой LLM (партия 1); вектор AI_Demand=D4 + Gross_Margin=M3 + Customer_Breadth=B4 + Supply_Commitment=S2 + China_Access=X2; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-20T21:33:57Z",
+      "kind": "facts_verify",
+      "summary": "Сверка по отчёту (Q2 FY2027, релиз Ex-99.1 и 10-Q): подтверждено 4 из 10 KPI (revenue YoY, Data Center revenue YoY, gross margin, operating margin). Остальные 6 KPI (H1 operating cash flow margin, supply commitments, inventory provisions, доля ACIE, доля выручки из Китая, концентрация дебиторки) не найдены — доступный текст 10-Q обрезан (SEC блокирует автоматический curl, web_fetch вернул документ частично, без нужных разделов MD&A/примечаний). Ось Gross_Margin подтверждена; остальные оси не подтверждены (недостаточно данных)."
+    },
+    {
+      "timestamp": "2026-09-21T00:50:00Z",
+      "kind": "verification",
+      "summary": "Досверка NVDA с хоста: 6 KPI (05–10) подтверждены по 10-Q (curl с User-Agent); все 5 осей verified. Итог NVDA 10/10"
+    }
+  ],
+  "scenario_state": {
+    "AI_Demand": {
+      "state": "D4",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q"
+    },
+    "Gross_Margin": {
+      "state": "M3",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true
+    },
+    "Customer_Breadth": {
+      "state": "B4",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q"
+    },
+    "Supply_Commitment": {
+      "state": "S2",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q"
+    },
+    "China_Access": {
+      "state": "X2",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q"
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {
+      "kpi_id": "NVDA-KPI-01",
+      "name": "Total revenue YoY",
+      "period_end": "2026-07-26",
+      "value": 1.06,
+      "value_raw": "NVIDIA today reported revenue for the second quarter ended July 26, 2026, of $96.2 billion, up 18% from the previous quarter and up 106% from a year ago",
+      "unit": "YoY fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NVDA-KPI-02",
+      "name": "Data Center revenue YoY",
+      "period_end": "2026-07-26",
+      "value": 1.17,
+      "value_raw": "Second-quarter revenue was $89.0 billion, up 18% from the previous quarter and up 117% from a year ago",
+      "unit": "YoY fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NVDA-KPI-03",
+      "name": "Gross margin",
+      "period_end": "2026-07-26",
+      "value": 0.75,
+      "value_raw": "For the quarter, GAAP and non-GAAP gross margins were both 75.0%",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NVDA-KPI-04",
+      "name": "Operating margin",
+      "period_end": "2026-07-26",
+      "value": 0.6624,
+      "value_raw": "Revenue$96,221 ... Operating income63,734 (Three Months Ended Jul 26, 2026)",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NVDA-KPI-05",
+      "name": "H1 operating cash flow margin",
+      "period_end": "2026-07-26",
+      "value": 0.4185,
+      "value_raw": "Net cash provided by operating activities $74,421 / Revenue $177,837 (Six Months Ended Jul 26, 2026, In millions)",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+    },
+    {
+      "kpi_id": "NVDA-KPI-06",
+      "name": "Supply commitments / annualized latest-quarter revenue",
+      "period_end": "2026-07-26",
+      "value": 0.725,
+      "value_raw": "«We have significantly increased our supply and capacity commitments from $119 billion last quarter to $279 billion as of July 26, 2026»; 279 / (96.221 × 4)",
+      "unit": "x",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+    },
+    {
+      "kpi_id": "NVDA-KPI-07",
+      "name": "Inventory/excess-purchase provisions / quarterly revenue",
+      "period_end": "2026-07-26",
+      "value": 0.0102,
+      "value_raw": "inventory provisions $784 million (Q2 FY2027, Cost of revenue) + $201 million excess inventory purchase obligations (Q2) = $985M; / 96,221",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+    },
+    {
+      "kpi_id": "NVDA-KPI-08",
+      "name": "ACIE share of Data Center revenue",
+      "period_end": "2026-07-26",
+      "value": 0.4528,
+      "value_raw": "AI Clouds, Industrial, & Enterprise $40,313 of Data Center $89,023 (Three Months Ended Jul 26, 2026)",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+    },
+    {
+      "kpi_id": "NVDA-KPI-09",
+      "name": "China Data Center revenue share",
+      "period_end": "2026-07-26",
+      "value": "<0.01",
+      "value_raw": "«Shipments of Data Center Hopper products to China during the second quarter of fiscal year 2027 were less than 1% of Data Center revenue»; «we were effectively foreclosed from competing in China's data center computing/compute market»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+    },
+    {
+      "kpi_id": "NVDA-KPI-10",
+      "name": "Top-5 direct customer share of accounts receivable",
+      "period_end": "2026-07-26",
+      "value": 0.7,
+      "value_raw": "«Five direct customers accounted for 22%, 14%, 13%, 11%, and 10% of our accounts receivable balance as of July 26, 2026»",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "verified": true,
+      "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)"
+    }
+  ],
+  "calc_runs": []
+}

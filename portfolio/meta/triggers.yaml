@@ -1,0 +1,214 @@
+# Реестр триггеров: Meta Platforms, Inc. (META)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/META_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: META
+  company: Meta Platforms, Inc.
+  exchange: NASDAQ
+  yahoo_symbol: META
+  registry_updated: '2026-09-21'
+  source_artifact: inbox/received/META_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/META?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 665.75
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  all_numeric_thresholds_provenance: model_assumption
+triggers:
+- id: META-E-01
+  class: event
+  step: vector
+  axis: Ad_Monetization
+  transition:
+    from: A3
+    to: A4
+  level: E2
+  kpis:
+  - META-KPI-02
+  - META-KPI-03
+  - META-KPI-04
+  condition: advertising revenue YoY >=25% AND ad impressions YoY >=10% AND average price per ad YoY >=10% for 2 consecutive
+    quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Ad_Monetization A3→A4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: META-E-02
+  class: event
+  step: vector
+  axis: Ad_Monetization
+  transition:
+    from: A3
+    to: A2
+  level: E2
+  kpis:
+  - META-KPI-02
+  condition: advertising revenue YoY <20% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Ad_Monetization A3→A2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: META-E-03
+  class: event
+  step: vector
+  axis: User_Engagement
+  transition:
+    from: U2
+    to: U3
+  level: E2
+  kpis:
+  - META-KPI-05
+  condition: Family DAP YoY >=5% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход User_Engagement U2→U3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: META-E-04
+  class: event
+  step: vector
+  axis: User_Engagement
+  transition:
+    from: U2
+    to: U1
+  level: E2
+  kpis:
+  - META-KPI-05
+  condition: Family DAP YoY <2% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход User_Engagement U2→U1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: META-E-05
+  class: event
+  step: vector
+  axis: FoA_Profitability
+  transition:
+    from: P2
+    to: P3
+  level: E2
+  kpis:
+  - META-KPI-06
+  condition: FoA operating margin >=40% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход FoA_Profitability P2→P3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: META-E-06
+  class: event
+  step: vector
+  axis: FoA_Profitability
+  transition:
+    from: P2
+    to: P1
+  level: E2
+  kpis:
+  - META-KPI-06
+  condition: FoA operating margin <30% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход FoA_Profitability P2→P1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: META-E-07
+  class: event
+  step: vector
+  axis: AI_Capital_Intensity
+  transition:
+    from: C3
+    to: C2
+  level: E2
+  kpis:
+  - META-KPI-07
+  - META-KPI-08
+  condition: capex/revenue <40% AND FCF margin >=15% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход AI_Capital_Intensity C3→C2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: META-E-08
+  class: event
+  step: vector
+  axis: AI_Capital_Intensity
+  transition:
+    from: C3
+    to: C4
+  level: E2
+  kpis:
+  - META-KPI-07
+  - META-KPI-08
+  - META-KPI-09
+  condition: (capex/revenue >=50% AND FCF margin <=0 for 2 consecutive quarters) OR commitments/annualized revenue >=2.0x
+  period: 2 quarters or one balance-sheet observation for commitments
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход AI_Capital_Intensity C3→C4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: META-E-09
+  class: event
+  step: vector
+  axis: Reality_Labs_Drag
+  transition:
+    from: R3
+    to: R2
+  level: E2
+  kpis:
+  - META-KPI-10
+  condition: Reality Labs quarterly operating loss < $4B for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Reality_Labs_Drag R3→R2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: META-E-10
+  class: event
+  step: vector
+  axis: Reality_Labs_Drag
+  transition:
+    from: R3
+    to: R4
+  level: E2
+  kpis:
+  - META-KPI-10
+  condition: Reality Labs quarterly operating loss >= $6B for 2 consecutive quarters OR company expects full-year RL loss
+    > $25B
+  period: 2 quarters or one verified company outlook
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Reality_Labs_Drag R3→R4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []

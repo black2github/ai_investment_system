@@ -1,0 +1,189 @@
+version: "1.0"
+artifact: "_portfolio"
+as_of: "2026-09-20"
+purpose: "Машинная схема портфеля, NAV, целевых весов, ограничений, просадок и режимов."
+currency_base: USD
+
+source_policy:
+  facts: "Цена, количество, FX, NAV и индексные уровни должны иметь источник и дату."
+  assumptions: "Любой числовой порог методологии помечается model_assumption."
+  purchase_history: "Цена и дата покупки хранятся как факт и не используются как valuation anchor."
+
+portfolio:
+  portfolio_id: "MAIN"
+  positions:
+    - ticker: null
+      exchange: null
+      company: null
+      asset_class: equity
+      sector_id: null
+      quantity: null
+      quantity_unit: shares
+      currency: null
+      acquisition_lots:
+        - date: null
+          quantity: null
+          price: null
+          currency: null
+          source: "owner/broker"
+      market:
+        price: null
+        price_date: null
+        price_source: null
+        fx_to_base: null
+        fx_date: null
+        fx_source: null
+      calculated:
+        market_value_base: null
+        weight_nav: null
+        unrealized_pnl: null
+      role:
+        current: null
+        allowed: [Core, Challenger, Watch, Legacy]
+      target:
+        weight: null
+        target_version: null
+        effective_from: null
+      state_vector_ref: null
+      company_rules_ref: null
+
+  cash:
+    accounts:
+      - id: null
+        currency: null
+        amount: null
+        fx_to_base: null
+        source: null
+    dry_powder:
+      amount_base: null
+      target_weight: null
+      target_version: null
+      instruments_allowed:
+        - cash
+        - treasury_bills
+        - money_market
+      note: "Конкретный размер резерва задаётся владельцем; схема его не предполагает."
+
+  nav_history:
+    - date: null
+      positions_value_base: null
+      cash_value_base: null
+      nav_base: null
+      source_snapshot: null
+
+  target_weights:
+    version: null
+    approved_at: null
+    status: draft
+    weights: []
+    sum_check: 1.0
+
+constraints:
+  constitution_refs: ["§28", "§30"]
+  rule: "Числовые лимиты не придумываются схемой; после утверждения владельцем хранятся версионно."
+  limits:
+    single_name_max_weight: null
+    sector_max_weight: null
+    challenger_max_weight: null
+    illiquid_max_weight: null
+    minimum_dry_powder_weight: null
+    maximum_dry_powder_weight: null
+  total_wealth_context:
+    enabled: true
+    include_nonportfolio_assets_in_nav: false
+    note: "Внешнее имущество влияет на policy/constraints, но не включается в NAV инвестиционного портфеля."
+
+benchmark_registry:
+  portfolio:
+    benchmark_id: PORTFOLIO_NAV
+    type: internal_nav
+  sectors:
+    SEMICONDUCTORS:
+      benchmark_id: SOX
+      name: "PHLX Semiconductor Sector Index"
+      source: "Nasdaq"
+    SOFTWARE:
+      benchmark_id: SOFTWARE_BENCHMARK_PENDING
+      status: pending_owner_selection
+    SPACE:
+      benchmark_id: SPACE_BENCHMARK_PENDING
+      status: pending_owner_selection
+    AI_INFRASTRUCTURE:
+      benchmark_id: AI_INFRA_BENCHMARK_PENDING
+      status: pending_owner_selection
+  rule: "Не подменять отсутствующий секторный индекс ETF без отдельного решения владельца."
+
+drawdowns:
+  equity:
+    lookback: "12M rolling"
+    formula: "price / rolling_12m_max_price - 1"
+    benchmark: "own_security"
+  portfolio:
+    lookback: "since_inception"
+    formula: "NAV / running_max_NAV - 1"
+    benchmark: "PORTFOLIO_NAV"
+  sector:
+    lookback: "12M rolling"
+    formula: "sector_index / rolling_12m_max_sector_index - 1"
+    benchmark: "benchmark_registry.sectors[sector_id]"
+
+  severity:
+    WATCH:
+      threshold: -0.15
+      provenance: model_assumption
+    STRESS:
+      threshold: -0.25
+      provenance: model_assumption
+    SHOCK:
+      threshold: -0.40
+      provenance: model_assumption
+
+regime_engine:
+  evaluation_frequency: daily
+  inputs:
+    - portfolio_drawdown
+    - weighted_sector_drawdown
+    - breadth_of_position_drawdowns
+    - cross_asset_correlation
+  regimes:
+    Normal:
+      condition: >
+        portfolio_drawdown > -0.15
+        AND weighted_sector_drawdown > -0.20
+        AND fraction_positions_drawdown_le_-0.25 < 0.25
+      provenance: model_assumption
+
+    Stress:
+      condition: >
+        (portfolio_drawdown <= -0.15 AND portfolio_drawdown > -0.30)
+        OR (weighted_sector_drawdown <= -0.20 AND weighted_sector_drawdown > -0.35)
+        OR fraction_positions_drawdown_le_-0.25 >= 0.25
+      provenance: model_assumption
+
+    Shock:
+      condition: >
+        portfolio_drawdown <= -0.30
+        OR weighted_sector_drawdown <= -0.35
+        OR fraction_positions_drawdown_le_-0.40 >= 0.25
+      provenance: model_assumption
+
+  precedence: [Shock, Stress, Normal]
+  rule: "Если выполнены условия нескольких режимов, применяется наиболее тяжёлый."
+
+war_economy_interface:
+  enabled: true
+  rule: >
+    WAR-ECONOMY и иные тематические сценарии не определяются одной ценовой просадкой.
+    Они передают в портфельный движок отдельный scenario_id и проверенные события;
+    режим рынка Normal/Stress/Shock хранится независимо.
+  scenario_id: null
+  evidence_refs: []
+
+machine_outputs:
+  current_nav: null
+  current_weights: {}
+  drawdowns: {}
+  regime: null
+  constraint_breaches: []
+  dry_powder_status: null
+  timestamp: null

@@ -1,0 +1,304 @@
+# Реестр триггеров: Cloudflare (NET, NYSE)
+# Источник: финальный блок (ChatGPT, 17.09.2026). Предпосылки проверены 17.09 по релизу/10-Q Q2 2026: revenue $696.1 млн +36%, клиенты >$100k 4 698 (+27%), >7.4 млн разработчиков, AI-доля не раскрывается — совпадают.
+
+meta:
+  ticker: NET
+  exchange: NYSE
+  yahoo_symbol: NET
+  currency: USD
+  company: Cloudflare
+  status_in_basket: наблюдать до ценового триггера
+  target_weight: "25% (максимум)"
+  horizon: 2030
+  strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
+  strategy_date: 2026-09-17
+  registry_updated: 2026-09-21  # 17.09: реестр владельца; 21.09: вектор состояний (states.yaml), legacy-триггеры привязаны к осям, добавлены NET-E-06..E-11
+  price_at_strategy: 324.65
+  fiscal_year: календарный
+  scenario: portfolio/_scenarios/taiwan.yaml
+
+automations:
+  aiinfra-price-watch:  { covers: [NET-P-01, NET-P-02, NET-P-03], cadence: "каждые 30 мин" }
+  aiinfra-report-check: { covers: [NET-E-01, NET-E-02, NET-E-04, NET-X-01, NET-X-02, NET-X-03], cadence: "после отчёта (NET-C-01)" }
+  aiinfra-news-watch:   { covers: [NET-E-03], cadence: "ежедневно 09:05 Europe/Moscow" }
+
+route:
+  # Маршрут компании (степпер). current ведёт state.json → route.current; kind: stage | scenario.
+  steps:
+    - { id: watch, kind: stage, name: "Наблюдение: ждём подтверждающий триггер по отчёту" }
+    - { id: entry, kind: stage, name: "Вход траншами $275 / $250 / $225 по 5% (+10% по триггеру)" }
+    - { id: confirm, kind: stage, name: "Подтверждение тезиса по квартальным отчётам (условия -E-) и контроль поломки (-X-)" }
+    - { id: hold, kind: stage, name: "Удержание до горизонта" }
+    - { id: exit, kind: stage, name: "Фиксация и выход при капитализации $250B / $350B / $400B; горизонт 2030" }
+    - { id: taiwan, kind: scenario, name: "Сценарий «Тайвань» (portfolio/_scenarios/taiwan.yaml)", ref: portfolio/_scenarios/taiwan.yaml }
+    - { id: vector, kind: axis, name: "Вектор состояний по осям states.yaml (Revenue_Growth / Expansion_Retention / Contracted_Demand / Profitability_Cash / AI_Edge_Monetization) — независим от фазы" }
+
+triggers:
+
+  - id: NET-P-01
+    class: price
+    step: entry
+    condition: "NET ≤ $275"
+    action: "Купить 5% портфеля (транш 1 из 3)"
+    window: { from: 2026-09-17 }
+    automation: aiinfra-price-watch
+    status: active
+  - id: NET-P-02
+    class: price
+    step: entry
+    condition: "NET ≤ $250"
+    action: "Купить 5% портфеля (транш 2 из 3)"
+    window: { from: 2026-09-17 }
+    automation: aiinfra-price-watch
+    status: active
+  - id: NET-P-03
+    class: price
+    step: entry
+    condition: "NET ≤ $225"
+    action: "Купить 5% портфеля (транш 3 из 3)"
+    window: { from: 2026-09-17 }
+    automation: aiinfra-price-watch
+    status: active
+  - id: NET-P-04
+    class: price
+    step: entry
+    condition: "падение на 20% от цены последней покупки"
+    action: "Правило «Cloudflare-2021»: проверить revenue growth, large customers, NRR, guidance. Рост не упал >5 п.п., large customers ≥ 25%, guidance не понижен → добавить 25% от текущей позиции; нарушены два условия → не докупать; revenue growth упал ≥ 10 п.п. или guidance снижен → сократить на 25%"
+    automation: null
+    status: planned
+    notes: "Активируется после первой покупки: нужна цена последней покупки от владельца"
+
+  - id: NET-F-01
+    class: price
+    step: exit
+    condition: "market cap ≥ $250 млрд"
+    action: "Продать 15% позиции"
+    automation: null
+    status: planned
+  - id: NET-F-02
+    class: price
+    step: exit
+    condition: "market cap ≥ $350 млрд"
+    action: "Продать ещё 25% позиции"
+    automation: null
+    status: planned
+  - id: NET-F-03
+    class: price
+    step: exit
+    condition: "market cap ≥ $400 млрд"
+    action: "Продать ещё 25%; остаток 35% держать только при revenue growth ≥ 25%"
+    automation: null
+    status: planned
+
+  - id: NET-E-01
+    class: event
+    step: confirm
+    axis: Revenue_Growth
+    kpis: [NET-KPI-01]
+    condition: "Revenue growth ≥ 35% г/г два квартала подряд"
+    action: "Добавить 10% портфеля (при выполненном ценовом триггере)"
+    source: "Cloudflare quarterly earnings"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Q2 2026 по данным обсуждения: +36% — первый квартал условия; нужен Q3"
+  - id: NET-E-02
+    class: event
+    step: confirm
+    axis: Revenue_Growth
+    kpis: [NET-KPI-07]
+    condition: "Клиенты >$100k: рост ≥ 25% г/г два квартала подряд"
+    action: "Добавить 5% портфеля"
+    source: "Cloudflare quarterly earnings"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Q2 2026 по данным обсуждения: 4 698, +27%"
+  - id: NET-E-03
+    class: event
+    step: confirm
+    axis: AI_Edge_Monetization
+    kpis: [NET-KPI-08, NET-KPI-09]
+    condition: "≥ 3 крупных AI-компаний / агентных платформ публично объявили production-развёртывание агентных нагрузок на Cloudflare Workers; И разработчиков > 7.5 млн; И revenue ≥ 35% два квартала"
+    action: "Добавить 5% портфеля"
+    source: "пресс-релизы Cloudflare, объявления клиентов, квартальный отчёт"
+    automation: aiinfra-news-watch
+    status: active
+    notes: "Операционное определение «Workers — стандарт для агентов». По обсуждению: >7.4 млн разработчиков, >80% крупных AI-компаний — клиенты"
+  - id: NET-E-04
+    class: event
+    step: confirm
+    axis: Expansion_Retention
+    kpis: [NET-KPI-02, NET-KPI-10]
+    condition: "NRR ≥ 115% два квартала подряд"
+    action: "Сохранить / добавить 5%"
+    source: "Cloudflare quarterly earnings"
+    automation: aiinfra-report-check
+    status: active
+  - id: NET-E-05
+    class: event
+    step: confirm
+    axis: AI_Edge_Monetization
+    kpis: [NET-KPI-08, NET-KPI-09]
+    condition: "Компания начала раскрывать долю AI в выручке"
+    action: "Сообщить владельцу цифру; порога нет"
+    source: "Cloudflare 10-Q / earnings release"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Сейчас не раскрывает — не выдумывать процент"
+
+  - id: NET-X-01
+    class: event
+    step: confirm
+    axis: Revenue_Growth
+    kpis: [NET-KPI-01]
+    condition: "Revenue growth < 25% два квартала подряд"
+    action: "Одно условие из X-01..03 — не докупать; два — сократить 25%; три — выйти"
+    source: "Cloudflare quarterly earnings"
+    automation: aiinfra-report-check
+    status: active
+  - id: NET-X-02
+    class: event
+    step: confirm
+    axis: Revenue_Growth
+    kpis: [NET-KPI-07]
+    condition: "Рост клиентов >$100k < 20% два квартала подряд"
+    action: "См. NET-X-01"
+    source: "Cloudflare quarterly earnings"
+    automation: aiinfra-report-check
+    status: active
+  - id: NET-X-03
+    class: event
+    step: confirm
+    axis: Expansion_Retention
+    kpis: [NET-KPI-02]
+    condition: "NRR < 110% два квартала подряд"
+    action: "См. NET-X-01"
+    source: "Cloudflare quarterly earnings"
+    automation: aiinfra-report-check
+    status: active
+
+
+  # ---------- переходы вектора состояний (states.yaml), партия 3 от другой LLM, 21.09.2026 ----------
+  - id: NET-E-06
+    class: event
+    step: vector
+    axis: Revenue_Growth
+    transition:
+      from: G3
+      to: G2
+    level: E2
+    kpis:
+    - NET-KPI-01
+    condition: revenue YoY <35% but >=30% for 2 quarters
+    period: 2 quarters
+    source: Cloudflare 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Revenue_Growth G3→G2 в state.json (state_transitions, scenario_state) и отправить Decision Request
+      владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: NET-E-07
+    class: event
+    step: vector
+    axis: Revenue_Growth
+    transition:
+      from: G3
+      to: G4
+    level: E2
+    kpis:
+    - NET-KPI-01
+    condition: revenue YoY >=45% for 2 quarters
+    period: 2 quarters
+    source: Cloudflare 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Revenue_Growth G3→G4 в state.json (state_transitions, scenario_state) и отправить Decision Request
+      владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: NET-E-08
+    class: event
+    step: vector
+    axis: Expansion_Retention
+    transition:
+      from: N3
+      to: N2
+    level: E2
+    kpis:
+    - NET-KPI-02
+    condition: DBNRR <115% for 2 quarters
+    period: 2 quarters
+    source: Cloudflare 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Expansion_Retention N3→N2 в state.json (state_transitions, scenario_state) и отправить Decision
+      Request владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: NET-E-09
+    class: event
+    step: vector
+    axis: Expansion_Retention
+    transition:
+      from: N3
+      to: N4
+    level: E2
+    kpis:
+    - NET-KPI-02
+    condition: DBNRR >=125% for 2 quarters
+    period: 2 quarters
+    source: Cloudflare 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Expansion_Retention N3→N4 в state.json (state_transitions, scenario_state) и отправить Decision
+      Request владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: NET-E-10
+    class: event
+    step: vector
+    axis: Contracted_Demand
+    transition:
+      from: R3
+      to: R2
+    level: E2
+    kpis:
+    - NET-KPI-03
+    condition: Current RPO YoY growth <35% for 2 quarters
+    period: 2 quarters
+    source: Cloudflare 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Contracted_Demand R3→R2 в state.json (state_transitions, scenario_state) и отправить Decision
+      Request владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: NET-E-11
+    class: event
+    step: vector
+    axis: AI_Edge_Monetization
+    transition:
+      from: A1
+      to: A2
+    level: E2
+    kpis:
+    - NET-KPI-08
+    - NET-KPI-09
+    condition: AI/Workers annualized revenue or ARR >=$100M OR AI/Workers revenue share >=5%
+    period: one verified company disclosure
+    source: Cloudflare 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход AI_Edge_Monetization A1→A2 в state.json (state_transitions, scenario_state) и отправить Decision
+      Request владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+
+  - id: NET-C-01
+    class: calendar
+    step: confirm
+    condition: "Q3 2026 earnings — 29.10.2026 по рыночному календарю, подтвердить на IR"
+    action: "Проверить NET-E-01, E-02, E-04, E-05 и X-01..03"
+    window: { from: 2026-10-29, to: 2026-10-30 }
+    automation: aiinfra-report-check
+    status: active

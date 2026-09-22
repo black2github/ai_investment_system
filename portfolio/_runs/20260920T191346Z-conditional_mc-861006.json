@@ -1,0 +1,568 @@
+{
+  "run_id": "20260920T191346Z-conditional_mc-861006",
+  "model": "conditional_mc",
+  "version": "1.0.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "SPCX",
+    "valuation_date": "2026-09-20",
+    "equity_value_0": 2012989615400.9502,
+    "calibration": {
+      "version": "1.0",
+      "artifact": "SPCX Conditional Monte Carlo Calibration",
+      "as_of": "2026-09-20",
+      "ticker": "SPCX",
+      "state_vector": {
+        "AI": "A2",
+        "Starlink": "B2",
+        "Starship": "C1",
+        "Capital_Intensity": "D3"
+      },
+      "source_facts": {
+        "q2_2026": {
+          "Space_revenue_b": {
+            "value": 0.962,
+            "source": "SEC Q2 2026 earnings release"
+          },
+          "Connectivity_revenue_b": {
+            "value": 4.291,
+            "source": "SEC Q2 2026 earnings release"
+          },
+          "AI_revenue_b": {
+            "value": 2.561,
+            "source": "SEC Q2 2026 earnings release"
+          },
+          "AI_adjusted_EBITDA_b": {
+            "value": 1.146,
+            "source": "SEC Q2 2026 earnings release"
+          },
+          "total_capex_b": {
+            "value": 18.369,
+            "source": "SEC Q2 2026 earnings release"
+          },
+          "AI_capex_b": {
+            "value": 15.828,
+            "source": "SEC Q2 2026 earnings release"
+          },
+          "nameplate_compute_GW": {
+            "value": 1.4,
+            "source": "SEC Q2 2026 earnings release"
+          },
+          "Starlink_subscribers_m": {
+            "value": 12.0,
+            "source": "SEC Q2 2026 earnings release"
+          },
+          "Connectivity_operating_income_b": {
+            "value": 1.656,
+            "source": "SEC Q2 2026 earnings release"
+          }
+        },
+        "links": {
+          "SEC_Q2_2026": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+        }
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_provenance": "model_assumption",
+        "seed": 20260920,
+        "seed_provenance": "model_assumption",
+        "timestep": "quarterly",
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "antithetic_variates": true,
+        "store_full_paths": false,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ]
+      },
+      "revenue_model": {
+        "method": "segment_growth_with_mean_reversion",
+        "segments": {
+          "AI": {
+            "state_driver": "A2",
+            "annual_growth_initial": {
+              "distribution": "triangular",
+              "min": 0.35,
+              "mode": 0.6,
+              "max": 0.9,
+              "provenance": "model_assumption",
+              "rationale": "A2: монетизация доказана, но 247% YoY Q2 не экстраполируется."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.12,
+              "mode": 0.25,
+              "max": 0.4,
+              "provenance": "model_assumption"
+            },
+            "mean_reversion_half_life_years": 2.5,
+            "provenance": "model_assumption"
+          },
+          "Connectivity": {
+            "state_driver": "B2",
+            "annual_growth_initial": {
+              "distribution": "triangular",
+              "min": 0.12,
+              "mode": 0.25,
+              "max": 0.4,
+              "provenance": "model_assumption",
+              "rationale": "B2: масштабная экономика доказана; 66% YoY не экстраполируется."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.06,
+              "mode": 0.12,
+              "max": 0.2,
+              "provenance": "model_assumption"
+            },
+            "mean_reversion_half_life_years": 2.0,
+            "provenance": "model_assumption"
+          },
+          "Space": {
+            "state_driver": "C1",
+            "annual_growth_initial": {
+              "distribution": "triangular",
+              "min": 0.05,
+              "mode": 0.18,
+              "max": 0.35,
+              "provenance": "model_assumption",
+              "rationale": "C1 не капитализирует C2-C5; рост до подтверждения orbital/reuse ограничен."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.05,
+              "mode": 0.12,
+              "max": 0.25,
+              "provenance": "model_assumption"
+            },
+            "mean_reversion_half_life_years": 3.0,
+            "provenance": "model_assumption"
+          }
+        }
+      },
+      "margin_model": {
+        "method": "two_phase_nodes_with_uncertainty",
+        "state_driver": "D3",
+        "nodes": {
+          "Y1": {
+            "distribution": "triangular",
+            "min": -1.1,
+            "mode": -0.75,
+            "max": -0.45,
+            "provenance": "model_assumption"
+          },
+          "Y2": {
+            "distribution": "triangular",
+            "min": -0.35,
+            "mode": -0.15,
+            "max": 0.05,
+            "provenance": "model_assumption"
+          },
+          "Y3": {
+            "distribution": "triangular",
+            "min": 0.0,
+            "mode": 0.1,
+            "max": 0.18,
+            "provenance": "model_assumption"
+          },
+          "Y4_terminal_fraction": {
+            "distribution": "triangular",
+            "min": 0.55,
+            "mode": 0.7,
+            "max": 0.85,
+            "provenance": "model_assumption"
+          },
+          "Y5_terminal_margin": {
+            "distribution": "triangular",
+            "min": 0.2,
+            "mode": 0.27,
+            "max": 0.34,
+            "provenance": "normative calibration_v1.0"
+          },
+          "Y8_terminal_margin": {
+            "formula": "clip(Y5_terminal_margin + Normal(0,0.03), 0.15, 0.40)",
+            "provenance": "model_assumption"
+          }
+        },
+        "constraints": [
+          "Y2 >= Y1",
+          "Y3 >= Y2",
+          "Y4 = Y4_terminal_fraction * Y5",
+          "Y5 >= Y4"
+        ],
+        "interpolation": "linear_between_nodes"
+      },
+      "terminal_multiple": {
+        "Y5": {
+          "distribution": "triangular",
+          "min": 25.0,
+          "mode": 32.0,
+          "max": 40.0,
+          "unit": "x FCF",
+          "provenance": "normative calibration_v1.0"
+        },
+        "Y8": {
+          "distribution": "triangular",
+          "min": 20.0,
+          "mode": 27.0,
+          "max": 35.0,
+          "unit": "x FCF",
+          "provenance": "model_assumption",
+          "rationale": "Дополнительное созревание бизнеса к 8Y."
+        },
+        "Y3": {
+          "method": "revenue_multiple_bridge",
+          "distribution": "triangular",
+          "min": 8.0,
+          "mode": 14.0,
+          "max": 22.0,
+          "unit": "x revenue",
+          "provenance": "model_assumption",
+          "rationale": "На Y3 FCF только выходит в плюс; FCF multiple нестабилен."
+        }
+      },
+      "dependencies": {
+        "latent_factors": {
+          "demand": {
+            "affects": [
+              "AI_growth",
+              "Connectivity_growth"
+            ]
+          },
+          "execution": {
+            "affects": [
+              "AI_growth",
+              "Space_growth",
+              "margin_nodes"
+            ]
+          },
+          "capital_efficiency": {
+            "affects": [
+              "margin_nodes",
+              "terminal_margin"
+            ]
+          }
+        },
+        "rank_correlations": {
+          "AI_growth__Connectivity_growth": {
+            "rho": 0.3,
+            "provenance": "model_assumption"
+          },
+          "AI_growth__Space_growth": {
+            "rho": 0.15,
+            "provenance": "model_assumption"
+          },
+          "AI_growth__margin_improvement": {
+            "rho": 0.45,
+            "provenance": "model_assumption"
+          },
+          "Connectivity_growth__margin_improvement": {
+            "rho": 0.35,
+            "provenance": "model_assumption"
+          },
+          "Space_growth__margin_improvement": {
+            "rho": 0.15,
+            "provenance": "model_assumption"
+          },
+          "terminal_margin__terminal_multiple": {
+            "rho": 0.35,
+            "provenance": "model_assumption"
+          }
+        }
+      },
+      "state_transition_effects": {
+        "rule": "Это условные эффекты при подтверждённом переходе; текущий прогон остаётся A2+B2+C1+D3.",
+        "C1_to_C2": {
+          "AI_growth_shift_pp": {
+            "min": 0.0,
+            "mode": 0.0,
+            "max": 0.03,
+            "provenance": "model_assumption"
+          },
+          "Space_growth_shift_pp": {
+            "min": 0.02,
+            "mode": 0.05,
+            "max": 0.1,
+            "provenance": "model_assumption"
+          },
+          "note": "C2 сам по себе не даёт margin/multiple premium."
+        },
+        "C2_to_C3": {
+          "Space_growth_shift_pp": {
+            "min": 0.03,
+            "mode": 0.07,
+            "max": 0.12,
+            "provenance": "model_assumption"
+          },
+          "margin_shift_pp_from_Y3": {
+            "min": 0.0,
+            "mode": 0.02,
+            "max": 0.05,
+            "provenance": "model_assumption"
+          }
+        },
+        "D3_to_D4": {
+          "margin_node_shift_pp": {
+            "Y2": {
+              "min": -0.25,
+              "mode": -0.15,
+              "max": -0.05,
+              "provenance": "model_assumption"
+            },
+            "Y3": {
+              "min": -0.2,
+              "mode": -0.1,
+              "max": -0.05,
+              "provenance": "model_assumption"
+            }
+          },
+          "terminal_margin_shift_pp": {
+            "min": -0.08,
+            "mode": -0.05,
+            "max": -0.02,
+            "provenance": "model_assumption"
+          }
+        }
+      },
+      "market_path_model": {
+        "purpose": "Нужен только для max drawdown; фундаментальные terminal outcomes считаются отдельно.",
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.55,
+          "provenance": "model_assumption"
+        },
+        "valuation_mean_reversion_half_life_years": 2.0,
+        "provenance": "model_assumption",
+        "rule": "Max drawdown маркируется model-dependent; он не является историческим прогнозом волатильности."
+      },
+      "outputs": {
+        "return": [
+          "median_CAGR_3Y",
+          "median_CAGR_5Y",
+          "median_CAGR_8Y",
+          "P_2x_3Y",
+          "P_2x_5Y",
+          "P_2x_8Y",
+          "P_5x_5Y",
+          "P_5x_8Y"
+        ],
+        "downside": [
+          "P_loss_gt_30pct",
+          "P_loss_gt_50pct",
+          "expected_shortfall_5pct",
+          "max_drawdown_distribution"
+        ],
+        "scenario": [
+          "variance_between_state_scenarios",
+          "variance_within_state_scenario",
+          "persistence_ratio",
+          "scenario_robustness",
+          "scenario_concentration"
+        ]
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.1,
+              0.1
+            ],
+            "margin_nodes_pp": [
+              -0.05,
+              0.05
+            ],
+            "terminal_multiple_pct": [
+              -0.2,
+              0.2
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "provenance": "model_assumption",
+          "pass_rule": "Знак median_CAGR_5Y не меняется более чем в 25% perturbation runs.",
+          "pass_rule_provenance": "model_assumption"
+        },
+        "Scenario_Concentration": {
+          "metric": "share_of_expected_terminal_value_from_top_scenario_state",
+          "warning": 0.6,
+          "fail": 0.8,
+          "provenance": "model_assumption"
+        }
+      },
+      "persistence_ratio": {
+        "formula": "median_CAGR_8Y / median_CAGR_5Y",
+        "interpretation": {
+          "strong": {
+            "condition": ">= 0.75",
+            "provenance": "model_assumption"
+          },
+          "moderate": {
+            "condition": ">= 0.50 and < 0.75",
+            "provenance": "model_assumption"
+          },
+          "weak": {
+            "condition": "< 0.50",
+            "provenance": "model_assumption"
+          }
+        }
+      }
+    },
+    "convergence_check": true,
+    "robustness": true,
+    "robustness_paths": 50000
+  },
+  "outputs": {
+    "model_version": "1.0.0",
+    "spec_version": "SPCX_Conditional_Monte_Carlo_Specification_v1.0",
+    "state_vector": {
+      "AI": "A2",
+      "Starlink": "B2",
+      "Starship": "C1",
+      "Capital_Intensity": "D3"
+    },
+    "inputs_hash": "165df927a4c7d666",
+    "seed": 20260920,
+    "paths": 500000,
+    "equity_value_0": 2012989615400.9502,
+    "correlation_matrix_psd_fixed": false,
+    "engine_interpretations": [
+      "I1 g_init/g_long из одного ранга",
+      "I2 общий ранг мультипликатора Y3/Y5/Y8",
+      "I3 margin_improvement — общий ранг Y1..Y3; доля Y4 независима",
+      "I4 путь цены: лог-интерполяция якорей 0/Y3/Y5/Y8 + OU-шум, окно 5Y"
+    ],
+    "base": {
+      "paths": 500000,
+      "return": {
+        "median_CAGR_3Y": -0.22671115764207678,
+        "median_CAGR_5Y": -0.1485427985023905,
+        "median_CAGR_8Y": -0.037816257992904945,
+        "P_2x_3Y": 0.0,
+        "P_2x_5Y": 0.0,
+        "P_2x_8Y": 0.002138,
+        "P_5x_5Y": 0.0,
+        "P_5x_8Y": 0.0,
+        "CAGR_5Y_quantiles": {
+          "0.01": -0.24042791894349927,
+          "0.05": -0.21604221196728574,
+          "0.1": -0.20194515737251556,
+          "0.25": -0.17739172211676826,
+          "0.5": -0.1485427985023905,
+          "0.75": -0.11884406704917258,
+          "0.9": -0.09210591596511117,
+          "0.95": -0.0764101766099254,
+          "0.99": -0.04866484986341998
+        }
+      },
+      "downside": {
+        "P_loss_gt_30pct_5Y": 0.96602,
+        "P_loss_gt_50pct_5Y": 0.668278,
+        "expected_shortfall_5pct_5Y": -0.7301622957351693,
+        "max_drawdown_5Y_quantiles": {
+          "0.05": -0.915257136050297,
+          "0.25": -0.8490321100586874,
+          "0.5": -0.7803526272023356,
+          "0.75": -0.6906890019742616,
+          "0.95": -0.5402084646132632
+        },
+        "max_drawdown_model_dependent": true
+      },
+      "scenario": {
+        "variance_within_state_CAGR_5Y": 0.0017888954837890682,
+        "variance_between_state_scenarios": null,
+        "persistence_ratio": null,
+        "persistence_class": null,
+        "scenario_concentration": null,
+        "scenario_concentration_note": "единственное условное состояние — не интерпретируется (§11)"
+      },
+      "median_equity_value_5Y_b": 900.8565687342209,
+      "median_terminal_revenue_5Y_note": "см. calibration revenue_model"
+    },
+    "convergence": {
+      "runs": {
+        "100000": {
+          "median_CAGR_5Y": -0.14855431889084564,
+          "ES5": -0.7300769276073308
+        },
+        "250000": {
+          "median_CAGR_5Y": -0.14855895467514002,
+          "ES5": -0.7299638663489673
+        },
+        "500000": {
+          "median_CAGR_5Y": -0.1485427985023905,
+          "ES5": -0.7301622957351693
+        }
+      },
+      "stable": true,
+      "tolerance": {
+        "median_CAGR_5Y": 0.005,
+        "ES5": 0.01
+      }
+    },
+    "robustness": {
+      "runs": [
+        {
+          "perturbation": "growth_modes_pp",
+          "value": -0.1,
+          "median_CAGR_5Y": -0.20855283379074702
+        },
+        {
+          "perturbation": "growth_modes_pp",
+          "value": 0.1,
+          "median_CAGR_5Y": -0.08862803307805256
+        },
+        {
+          "perturbation": "margin_nodes_pp",
+          "value": -0.05,
+          "median_CAGR_5Y": -0.1829308888679239
+        },
+        {
+          "perturbation": "margin_nodes_pp",
+          "value": 0.05,
+          "median_CAGR_5Y": -0.11894312786356986
+        },
+        {
+          "perturbation": "terminal_multiple_pct",
+          "value": -0.2,
+          "median_CAGR_5Y": -0.18571424076842014
+        },
+        {
+          "perturbation": "terminal_multiple_pct",
+          "value": 0.2,
+          "median_CAGR_5Y": -0.11693008042506581
+        },
+        {
+          "perturbation": "correlation_rho",
+          "value": -0.15,
+          "median_CAGR_5Y": -0.14839166181077568
+        },
+        {
+          "perturbation": "correlation_rho",
+          "value": 0.15,
+          "median_CAGR_5Y": -0.14877324037858436
+        }
+      ],
+      "paths_per_run": 50000,
+      "same_sign_share": 1.0,
+      "pass": true,
+      "pass_rule": "Знак median_CAGR_5Y не меняется более чем в 25% perturbation runs."
+    }
+  },
+  "elapsed_ms": 12703.0,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

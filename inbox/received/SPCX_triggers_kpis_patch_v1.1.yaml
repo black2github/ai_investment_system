@@ -1,0 +1,110 @@
+# SPCX — дополнение к triggers.yaml: KPI-связи переходов
+# Версия: 1.1-kpis
+# Дата: 2026-09-20
+# Назначение: добавить поле `kpis` в нормативные SPCX-E-10…SPCX-E-33.
+# Все остальные поля существующих записей triggers.yaml сохраняются без изменений.
+#
+# Правило:
+# - kpis содержит только KPI из kpis.yaml, непосредственно используемые condition.
+# - [] означает, что переход основан на событии/расчётной метрике, которой нет в kpis.yaml.
+# - calculated_metrics не являются KPI и указаны отдельно там, где это нужно для однозначности.
+
+trigger_kpi_patch:
+
+  SPCX-E-10:
+    kpis: [SPCX-KPI-02]
+    notes_kpi: "Вторая ветвь OR — non-cancellable cloud contracts >= $1B — не представлена отдельным KPI в kpis.yaml."
+
+  SPCX-E-11:
+    kpis: [SPCX-KPI-02, SPCX-KPI-03]
+
+  SPCX-E-12:
+    kpis: [SPCX-KPI-02, SPCX-KPI-03, SPCX-KPI-04]
+
+  SPCX-E-13:
+    kpis: [SPCX-KPI-01, SPCX-KPI-03]
+
+  SPCX-E-14:
+    kpis: [SPCX-KPI-01, SPCX-KPI-03, SPCX-KPI-09]
+
+  SPCX-E-15:
+    kpis: [SPCX-KPI-05]
+
+  SPCX-E-16:
+    kpis: [SPCX-KPI-05, SPCX-KPI-07]
+    notes_kpi: "SPCX-KPI-05 хранит subscriber count и YoY; condition использует абсолютное число subscribers >= 12M."
+
+  SPCX-E-17:
+    kpis: [SPCX-KPI-05]
+
+  SPCX-E-18:
+    kpis: [SPCX-KPI-05, SPCX-KPI-06, SPCX-KPI-07]
+
+  SPCX-E-19:
+    kpis: [SPCX-KPI-05, SPCX-KPI-06, SPCX-KPI-07]
+
+  SPCX-E-20:
+    kpis: []
+    notes_kpi: "Событийный переход: результат миссии Starship и доля выполненных objectives не определены KPI в kpis.yaml."
+
+  SPCX-E-21:
+    kpis: []
+    notes_kpi: "Событийный переход: orbital mission success и доля выполненных objectives не определены KPI в kpis.yaml."
+
+  SPCX-E-22:
+    kpis: []
+    notes_kpi: "Событийный переход: повторное использование того же flight-capable hardware и интервал <=90 дней не определены KPI в kpis.yaml."
+
+  SPCX-E-23:
+    kpis: []
+    notes_kpi: "Событийный переход: число успешных полётов rolling 12m и median interval не определены KPI в kpis.yaml."
+
+  SPCX-E-24:
+    kpis: []
+    notes_kpi: "Событийный переход: measured cost-to-orbit и число operational flights не определены KPI в kpis.yaml."
+
+  SPCX-E-25:
+    kpis: [SPCX-KPI-08]
+    notes_kpi: "Condition также использует company revenue YoY >=20%; отдельного KPI общей выручки/YoY в текущем kpis.yaml нет."
+
+  SPCX-E-26:
+    kpis: [SPCX-KPI-08]
+    notes_kpi: "Condition также использует capex/revenue >=100%; отдельного KPI отношения capex/revenue в текущем kpis.yaml нет."
+
+  SPCX-E-27:
+    kpis: [SPCX-KPI-08, SPCX-KPI-09]
+
+  SPCX-E-28:
+    kpis: [SPCX-KPI-01, SPCX-KPI-08]
+
+  SPCX-E-29:
+    kpis: [SPCX-KPI-01, SPCX-KPI-03, SPCX-KPI-08]
+
+  SPCX-E-30:
+    kpis: [SPCX-KPI-10]
+    calculated_metrics: []
+    notes_kpi: "Market cap / TTM revenue. Переход остаётся planned до разрешения оценки после утверждения reverse valuation."
+
+  SPCX-E-31:
+    kpis: []
+    calculated_metrics:
+      - implied_revenue_cagr_5y
+      - terminal_fcf_margin
+      - terminal_multiple
+    notes_kpi: "Метрики являются выходами deterministic reverse valuation engine, а не KPI из kpis.yaml."
+
+  SPCX-E-32:
+    kpis: []
+    calculated_metrics:
+      - implied_revenue_cagr_5y
+      - terminal_fcf_margin
+      - terminal_multiple
+    notes_kpi: "Метрики являются выходами deterministic reverse valuation engine, а не KPI из kpis.yaml."
+
+  SPCX-E-33:
+    kpis: []
+    calculated_metrics:
+      - implied_revenue_cagr_5y
+      - terminal_fcf_margin
+      - terminal_multiple
+    notes_kpi: "Метрики являются выходами deterministic reverse valuation engine, а не KPI из kpis.yaml."

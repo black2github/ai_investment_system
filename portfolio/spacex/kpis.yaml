@@ -1,0 +1,252 @@
+# KPI SpaceX с порогами Green/Yellow/Red. Последние значения — Q2 2026 по релизу/10-Q. История — state.json → kpi_observations.
+version: '1.3'
+artifact: SPCX KPI Dashboard
+as_of: '2026-09-20'
+ticker: SPCX
+max_critical_kpis: 10
+source_policy:
+  primary:
+  - SEC
+  - SPCX Investor Relations
+  - FAA
+  secondary:
+  - Yahoo Finance
+  - StockAnalysis
+  rule: Last value без подтвержденного источника не используется для state transition.
+critical_kpis:
+- id: SPCX-KPI-01
+  name: AI revenue YoY
+  unit: '%'
+  period: quarter
+  source: SEC
+  formula: (AI revenue_t / AI revenue_t-4 - 1) * 100
+  thresholds:
+    green: '>= 50%'
+    yellow: 20% to <50%
+    red: <20%
+  last_value: 247
+  last_date: '2026-06-30'
+  last_value_raw: $2.561B
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+- id: SPCX-KPI-02
+  name: AI revenue
+  unit: USD
+  period: quarter
+  source: SEC
+  formula: AI segment revenue for quarter
+  thresholds:
+    green: '>= $3.0B'
+    yellow: $1.0B to <$3.0B
+    red: <$1.0B
+  last_value: 2.561
+  last_date: '2026-06-30'
+  last_value_raw: $2.561B
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+- id: SPCX-KPI-03
+  name: AI adjusted EBITDA
+  unit: USD
+  period: quarter
+  source: SEC
+  formula: AI segment adjusted EBITDA
+  thresholds:
+    green: '>= $0'
+    yellow: '>= -$1.0B and <$0'
+    red: <-$1.0B
+  last_value: 1.146
+  last_date: '2026-06-30'
+  last_value_raw: +$1.146B
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+- id: SPCX-KPI-04
+  name: AI nameplate compute
+  unit: GW
+  period: quarter-end
+  source: SEC
+  formula: Nameplate compute draw at period end
+  thresholds:
+    green: '>= 2.0 GW'
+    yellow: 1.0 to <2.0 GW
+    red: <1.0 GW
+  last_value: 1.4
+  last_date: '2026-06-30'
+  last_value_raw: 1.4 GW
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm
+- id: SPCX-KPI-05
+  name: Starlink subscribers
+  unit: million subscribers
+  period: quarter-end
+  source: SEC
+  formula: Subscribers at period end
+  thresholds:
+    green: YoY growth >= 50%
+    yellow: 20% to <50%
+    red: <20%
+  last_value: 12.0
+  last_date: '2026-06-30'
+  last_value_raw: 12.0M
+  last_yoy_growth: 100
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+- id: SPCX-KPI-06
+  name: Starlink ARPU
+  unit: USD/month
+  period: quarter
+  source: SEC
+  formula: Connectivity segment average revenue per user per month
+  thresholds:
+    green: YoY >= 0%
+    yellow: YoY -10% to <0%
+    red: YoY < -10%
+  last_value: 66
+  last_date: '2026-06-30'
+  last_value_raw: $66/month
+  last_yoy_change: -22.35
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+- id: SPCX-KPI-07
+  name: Connectivity operating margin
+  unit: '%'
+  period: quarter
+  source: SEC
+  formula: Connectivity operating income / Connectivity revenue * 100
+  thresholds:
+    green: '>= 30%'
+    yellow: 20% to <30%
+    red: <20%
+  last_value: 38.59
+  last_date: '2026-06-30'
+  last_value_raw: $1.656B / $4.291B
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+- id: SPCX-KPI-08
+  name: Total capex
+  unit: USD
+  period: quarter
+  source: SEC
+  formula: Total capital expenditures for quarter
+  thresholds:
+    green: < $10B
+    yellow: $10B to <$15B
+    red: '>= $15B'
+  last_value: 18.369
+  last_date: '2026-06-30'
+  last_value_raw: $18.369B
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+- id: SPCX-KPI-09
+  name: AI capex
+  unit: USD
+  period: quarter
+  source: SEC
+  formula: AI segment capital expenditures for quarter
+  thresholds:
+    green: < $5B
+    yellow: $5B to <$10B
+    red: '>= $10B'
+  last_value: 15.828
+  last_date: '2026-06-30'
+  last_value_raw: $15.828B
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+- id: SPCX-KPI-10
+  name: 'SPCX valuation multiple: market cap / TTM revenue'
+  unit: x
+  period: daily
+  source: 'invest-calc: model valuation_multiple (цена — Yahoo chart; число акций — титульная страница 10-Q; TTM
+    revenue — сумма 4 кварталов из отчётов)'
+  formula: Market capitalization / trailing twelve-month revenue
+  thresholds:
+    green: < 30x
+    yellow: 30x to <60x
+    red: '>= 60x'
+  last_value: 87.35
+  last_date: '2026-09-18'
+  last_value_raw: $152.71 × 13.1818 млрд / $23.044 млрд (invest-calc valuation_multiple)
+  source_url: https://finance.yahoo.com/quote/SPCX/; https://stockanalysis.com/stocks/spcx/statistics/
+  notes: Считается сайдкаром; прежние 70x/90x провайдеров различались базой выручки и числом акций. Расхождение
+    с 89.9x v1.0 — из-за оценочного числа акций 13.55 млрд.
+  inputs:
+    price_source: https://query1.finance.yahoo.com/v8/finance/chart/SPCX
+    shares_outstanding:
+      value: 13181779945
+      as_of: '2026-07-28'
+      source: 'SEC 10-Q Q2 2026, титульная страница: Class A 7 696 293 669 + Class B 5 485 486 276'
+      verified: true
+      note: сумма классов A и B — для капитализации всей компании
+    ttm_revenue_usd_b:
+      value: 23.044
+      formula: FY2025 18.674 + H1 2026 12.508 − H1 2025 8.138
+      sources:
+        fy_2025: SEC 10-K FY2025
+        h1_2026: SEC 10-Q Q2 2026
+        h1_2025: SEC 10-Q Q2 2026 (сравнительный период)
+      verified: true
+derived_checks:
+  revenue_q2_2026:
+    value: 7.814
+    unit: USD B
+    source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  AI_contract_sales:
+    value: 14.1
+    unit: USD B
+    source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  starship_next_scheduled_event:
+    event: Starship Flight 14
+    primary_date: '2026-09-22'
+    backup_date: '2026-09-23'
+    event_level: E1
+    source_url: https://www.fly.faa.gov/adv/adv_otherdis?adv_date=09182026&advn=20&facId=ATCSCC&title=ATCSCC+ADVZY+020+DCC+09%2F18%2F2026+OPERATIONS+PLAN&titleDate=09%2F18%2F2026
+data_quality:
+  current_state_date: '2026-09-20'
+  latest_financial_observation: '2026-06-30'
+  market_observation: '2026-09-18'
+  rule: До публикации Q3 финансовые KPI остаются на Q2; календарные события могут обновляться отдельно.
+source_artifact: inbox/received/SPCX_kpis_v1.0.yaml (другая LLM, 20.09.2026)
+kpi_observation_rule: Каждое новое значение записывается в state.json → kpi_observations (kpi_id, period_end, value,
+  source_url, verified). Цвет KPI = сравнение last_value с thresholds.
+supporting_metrics:
+- id: SPCX-METRIC-01
+  name: Contracted cloud sales (Cloud Services Agreements, non-cancellable)
+  unit: USD B
+  period: quarter-end
+  source: SEC
+  formula: Сумма законтрактованных продаж по CSA на конец периода
+  used_by:
+  - SPCX-E-10
+  last_value: 14.1
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  note: 'из derived_checks.AI_contract_sales; порог перехода E-10: >= $1B'
+- id: SPCX-METRIC-02
+  name: Company revenue YoY
+  unit: '%'
+  period: quarter
+  source: SEC
+  formula: (Revenue_t / Revenue_t-4 - 1) * 100
+  used_by:
+  - SPCX-E-25
+  last_value: 91.9
+  last_date: '2026-06-30'
+  last_value_raw: $7.814B vs год назад
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  note: значение +91.9% — из сценарной сессии другой LLM со ссылкой на релиз Q2; проверить по релизу при report-check
+    Q3
+- id: SPCX-METRIC-03
+  name: Capex / revenue
+  unit: '%'
+  period: quarter
+  source: SEC (расчёт из KPI-08 и выручки)
+  formula: Total capex_t / Revenue_t * 100
+  used_by:
+  - SPCX-E-26
+  last_value: 235.1
+  last_date: '2026-06-30'
+  last_value_raw: $18.369B / $7.814B
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  note: производная от KPI-08 и derived_checks.revenue_q2_2026
+calculated_metrics:
+  owner: 'invest-calc: model reverse_valuation (Investment_System_Reverse_Valuation_Specification_v1.0)'
+  metrics:
+  - implied_revenue_cagr_5y
+  - terminal_fcf_margin
+  - terminal_multiple
+  used_by:
+  - SPCX-E-31
+  - SPCX-E-32
+  - SPCX-E-33
+  note: 'Не KPI: вычисляются движком по проверенным входам; без утверждённой калибровки допущений для A2+B2+C1+D3
+    нормативно не рассчитываются'

@@ -1,0 +1,230 @@
+# Реестр триггеров: Eli Lilly and Company (LLY)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: LLY
+  company: Eli Lilly and Company
+  exchange: NYSE
+  yahoo_symbol: LLY
+  registry_updated: '2026-09-21'
+  source_artifact: inbox/received/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/LLY?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 1152.93
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  all_numeric_thresholds_provenance: model_assumption
+triggers:
+- id: LLY-E-01
+  class: event
+  step: vector
+  axis: Incretin_Demand
+  transition:
+    from: D4
+    to: D3
+  level: E2
+  kpis:
+  - LLY-KPI-02
+  - LLY-KPI-03
+  condition: tirzepatide quarterly revenue >= $12B AND YoY growth < 50% but >= 20% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Incretin_Demand D4→D3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-02
+  class: event
+  step: vector
+  axis: Incretin_Demand
+  transition:
+    from: D4
+    to: D2
+  level: E2
+  kpis:
+  - LLY-KPI-03
+  condition: tirzepatide revenue YoY < 20% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Incretin_Demand D4→D2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-03
+  class: event
+  step: vector
+  axis: Pricing_Access
+  transition:
+    from: P3
+    to: P2
+  level: E2
+  kpis:
+  - LLY-KPI-05
+  - LLY-KPI-06
+  condition: price contribution >= -10% AND volume contribution >= 30% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Pricing_Access P3→P2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-04
+  class: event
+  step: vector
+  axis: Pricing_Access
+  transition:
+    from: P3
+    to: P4
+  level: E2
+  kpis:
+  - LLY-KPI-05
+  - LLY-KPI-06
+  condition: price contribution < -20% OR (price contribution < -15% AND volume contribution < 20%) for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Pricing_Access P3→P4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-05
+  class: event
+  step: vector
+  axis: Manufacturing_Expansion
+  transition:
+    from: M2
+    to: M1
+  level: E2
+  kpis:
+  - LLY-KPI-09
+  condition: PP&E capex / revenue < 10% for 2 consecutive reporting periods AND no material supply shortage disclosed
+  period: 2 reporting periods
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Manufacturing_Expansion M2→M1 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-06
+  class: event
+  step: vector
+  axis: Manufacturing_Expansion
+  transition:
+    from: M2
+    to: M3
+  level: E2
+  kpis:
+  - LLY-KPI-09
+  condition: PP&E capex / revenue >= 15% for 2 consecutive reporting periods
+  period: 2 reporting periods
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Manufacturing_Expansion M2→M3 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-07
+  class: event
+  step: vector
+  axis: Manufacturing_Expansion
+  transition:
+    from: M2
+    to: M4
+  level: E3
+  kpis: []
+  condition: company discloses manufacturing/supply disruption causing >=5% revenue impact or equivalent withdrawal of revenue
+    guidance
+  period: one verified company disclosure
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Manufacturing_Expansion M2→M4 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-08
+  class: event
+  step: vector
+  axis: Pipeline_Diversification
+  transition:
+    from: R3
+    to: R4
+  level: E2
+  kpis:
+  - LLY-KPI-10
+  condition: retatrutide receives commercial regulatory approval in a major market while orforglipron obesity approval remains
+    in force
+  period: one verified regulatory event
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Pipeline_Diversification R3→R4 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-09
+  class: event
+  step: vector
+  axis: Pipeline_Diversification
+  transition:
+    from: R3
+    to: R2
+  level: E3
+  kpis:
+  - LLY-KPI-10
+  condition: material regulatory/clinical setback removes either orforglipron obesity approval or retatrutide Phase 3 validation
+    from the active thesis
+  period: one verified regulatory/clinical event
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Pipeline_Diversification R3→R2 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-10
+  class: event
+  step: vector
+  axis: Cash_Economics
+  transition:
+    from: F3
+    to: F2
+  level: E2
+  kpis:
+  - LLY-KPI-08
+  condition: simple FCF margin < 20% for 2 consecutive reporting periods
+  period: 2 reporting periods
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Cash_Economics F3→F2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: LLY-E-11
+  class: event
+  step: vector
+  axis: Cash_Economics
+  transition:
+    from: F3
+    to: F4
+  level: E2
+  kpis:
+  - LLY-KPI-08
+  condition: simple FCF margin >= 30% for 2 consecutive reporting periods
+  period: 2 reporting periods
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Cash_Economics F3→F4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []

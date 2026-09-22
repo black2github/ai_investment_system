@@ -1,0 +1,163 @@
+# Вектор состояний ASML (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+version: '1.0'
+artifact: ASML State Vector
+as_of: '2026-09-21'
+ticker: ASML
+source_artifact: inbox/received/ASML_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
+semantics:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  accounting_note: 'ASML states that its primary accounting standard for quarterly earnings releases and annual reports is
+    US GAAP. The Statutory Interim Report is prepared under IAS 34 as adopted by the EU. This bundle explicitly marks the
+    source channel for each KPI.
+
+    '
+sources:
+  ASML_IR_Q2_RESULTS:
+    url: https://www.asml.com/en/investors/financial-results/q2-2026
+    type: ASML IR results package landing page
+  ASML_IR_Q2_RELEASE:
+    url: https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results
+    type: ASML IR press release; US GAAP headline results
+  ASML_SEC_Q2_6K:
+    url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/form6-kquarterlyfilings.htm
+    type: SEC Form 6-K
+  ASML_SEC_Q2_USGAAP:
+    url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm
+    type: SEC 6-K Exhibit 99.3; Summary US GAAP financial statements
+  ASML_SEC_Q2_INTERIM:
+    url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm
+    type: SEC 6-K Exhibit 99.4; Statutory Interim Report under IAS 34 / EU-IFRS
+  ASML_SEC_Q2_PRESENTATION:
+    url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/presentationinvestorrela.htm
+    type: SEC 6-K Exhibit 99.2; investor presentation
+axes:
+  Demand_Visibility:
+    name: Demand Visibility
+    name_ru: видимость спроса (guidance, заказы)
+    states:
+      D0:
+        name: contraction
+        criteria: FY revenue guidance midpoint < €32.7B OR latest-quarter revenue YoY < 0%
+      D1:
+        name: low_growth
+        criteria: FY guidance midpoint >= €32.7B and < €36B
+      D2:
+        name: healthy_growth
+        criteria: FY guidance midpoint >= €36B and < €43B
+      D3:
+        name: strong_expansion
+        criteria: FY guidance midpoint >= €43B AND management describes order intake/customer commitments as strong or better
+      D4:
+        name: booking_supercycle
+        criteria: net bookings >=1.5x quarterly sales for 2 consecutive quarters AND FY guidance midpoint >= €45B
+    current: D3
+    current_evidence:
+    - Q2 2026 sales €9.326B; FY2026 revenue guidance raised to €43-45B.
+    - Management says order intake remained extremely strong in H1 and customer commitments increased visibility.
+    source_refs:
+    - ASML_IR_Q2_RELEASE
+    - ASML_SEC_Q2_6K
+  EUV_Adoption:
+    name: EUV Adoption
+    name_ru: доля EUV в продажах систем
+    states:
+      E0:
+        name: low
+        criteria: H1/TTM EUV system-sales share < 30%
+      E1:
+        name: developing
+        criteria: share >=30% and <45%
+      E2:
+        name: major
+        criteria: share >=45% and <60%
+      E3:
+        name: dominant
+        criteria: share >=60% and <70%
+      E4:
+        name: very_high
+        criteria: share >=70% for 2 reporting periods
+    current: E3
+    current_evidence:
+    - H1 2026 NXE sales €6.7085B + EXE €1.1889B = €7.8974B of €12.8442B net system sales = 61.49%.
+    source_refs:
+    - ASML_SEC_Q2_INTERIM
+  Margin_Execution:
+    name: Margin Execution
+    name_ru: маржа и исполнение
+    states:
+      M0:
+        name: compressed
+        criteria: gross margin <45%
+      M1:
+        name: recovering
+        criteria: gross margin >=45% and <50%
+      M2:
+        name: normal
+        criteria: gross margin >=50% and <53%
+      M3:
+        name: high
+        criteria: gross margin >=53% and <56%
+      M4:
+        name: structural_high
+        criteria: gross margin >=56% for 2 consecutive quarters
+    current: M3
+    current_evidence:
+    - Q2 2026 gross margin 54.0%; operating margin 37.1%.
+    source_refs:
+    - ASML_SEC_Q2_USGAAP
+    - ASML_IR_Q2_RELEASE
+  China_Export_Exposure:
+    name: China Export Exposure
+    name_ru: экспозиция к Китаю и экспортные ограничения
+    states:
+      X0:
+        name: low
+        criteria: H1/TTM China revenue share <10%
+      X1:
+        name: moderate
+        criteria: China revenue share >=10% and <20%
+      X2:
+        name: elevated
+        criteria: China revenue share >=20% and <30%
+      X3:
+        name: high
+        criteria: China revenue share >=30%
+      X4:
+        name: restriction_shock
+        criteria: export-control change causes disclosed >=5% revenue/guidance impairment regardless of China share
+    current: X1
+    current_evidence:
+    - H1 2026 China revenue €2.8833B of €18.0934B = 15.94%.
+    - ASML disclosures identify shipment restrictions/export controls as material risks.
+    source_refs:
+    - ASML_SEC_Q2_INTERIM
+    - ASML_IR_Q2_RELEASE
+  Installed_Base_Resilience:
+    name: Installed Base Resilience
+    name_ru: устойчивость сервисного слоя (Installed Base)
+    states:
+      I0:
+        name: weak
+        criteria: IBM sales YoY growth <0%
+      I1:
+        name: stable
+        criteria: IBM growth >=0% and <10%
+      I2:
+        name: healthy
+        criteria: IBM growth >=10% and <20%
+      I3:
+        name: strong
+        criteria: IBM growth >=20% AND IBM share of total sales >=25%
+      I4:
+        name: durable_resilience
+        criteria: IBM growth >=25% AND IBM share >=30% for 2 reporting periods
+    current: I3
+    current_evidence:
+    - H1 2026 IBM/service and field option sales €5.2492B versus €4.0967B, +28.13%.
+    - IBM represented 29.01% of H1 total net sales.
+    source_refs:
+    - ASML_SEC_Q2_INTERIM

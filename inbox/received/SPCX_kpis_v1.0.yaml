@@ -1,0 +1,157 @@
+version: "1.0"
+artifact: "SPCX KPI Dashboard"
+as_of: "2026-09-20"
+ticker: "SPCX"
+max_critical_kpis: 10
+
+source_policy:
+  primary: ["SEC", "SPCX Investor Relations", "FAA"]
+  secondary: ["Yahoo Finance", "StockAnalysis"]
+  rule: "Last value без подтвержденного источника не используется для state transition."
+
+critical_kpis:
+
+  - id: SPCX-KPI-01
+    name: "AI revenue YoY"
+    unit: "%"
+    period: "quarter"
+    source: "SEC"
+    formula: "(AI revenue_t / AI revenue_t-4 - 1) * 100"
+    thresholds: {green: ">= 50%", yellow: "20% to <50%", red: "<20%"}
+    last_value: 247
+    last_date: "2026-06-30"
+    last_value_raw: "$2.561B"
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+
+  - id: SPCX-KPI-02
+    name: "AI revenue"
+    unit: "USD"
+    period: "quarter"
+    source: "SEC"
+    formula: "AI segment revenue for quarter"
+    thresholds: {green: ">= $3.0B", yellow: "$1.0B to <$3.0B", red: "<$1.0B"}
+    last_value: 2.561
+    last_date: "2026-06-30"
+    last_value_raw: "$2.561B"
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+
+  - id: SPCX-KPI-03
+    name: "AI adjusted EBITDA"
+    unit: "USD"
+    period: "quarter"
+    source: "SEC"
+    formula: "AI segment adjusted EBITDA"
+    thresholds: {green: ">= $0", yellow: ">= -$1.0B and <$0", red: "<-$1.0B"}
+    last_value: 1.146
+    last_date: "2026-06-30"
+    last_value_raw: "+$1.146B"
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+
+  - id: SPCX-KPI-04
+    name: "AI nameplate compute"
+    unit: "GW"
+    period: "quarter-end"
+    source: "SEC"
+    formula: "Nameplate compute draw at period end"
+    thresholds: {green: ">= 2.0 GW", yellow: "1.0 to <2.0 GW", red: "<1.0 GW"}
+    last_value: 1.4
+    last_date: "2026-06-30"
+    last_value_raw: "1.4 GW"
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm"
+
+  - id: SPCX-KPI-05
+    name: "Starlink subscribers"
+    unit: "million subscribers"
+    period: "quarter-end"
+    source: "SEC"
+    formula: "Subscribers at period end"
+    thresholds: {green: "YoY growth >= 50%", yellow: "20% to <50%", red: "<20%"}
+    last_value: 12.0
+    last_date: "2026-06-30"
+    last_value_raw: "12.0M"
+    last_yoy_growth: 100
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+
+  - id: SPCX-KPI-06
+    name: "Starlink ARPU"
+    unit: "USD/month"
+    period: "quarter"
+    source: "SEC"
+    formula: "Connectivity segment average revenue per user per month"
+    thresholds: {green: "YoY >= 0%", yellow: "YoY -10% to <0%", red: "YoY < -10%"}
+    last_value: 66
+    last_date: "2026-06-30"
+    last_value_raw: "$66/month"
+    last_yoy_change: -22.35
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+
+  - id: SPCX-KPI-07
+    name: "Connectivity operating margin"
+    unit: "%"
+    period: "quarter"
+    source: "SEC"
+    formula: "Connectivity operating income / Connectivity revenue * 100"
+    thresholds: {green: ">= 30%", yellow: "20% to <30%", red: "<20%"}
+    last_value: 38.59
+    last_date: "2026-06-30"
+    last_value_raw: "$1.656B / $4.291B"
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+
+  - id: SPCX-KPI-08
+    name: "Total capex"
+    unit: "USD"
+    period: "quarter"
+    source: "SEC"
+    formula: "Total capital expenditures for quarter"
+    thresholds: {green: "< $10B", yellow: "$10B to <$15B", red: ">= $15B"}
+    last_value: 18.369
+    last_date: "2026-06-30"
+    last_value_raw: "$18.369B"
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+
+  - id: SPCX-KPI-09
+    name: "AI capex"
+    unit: "USD"
+    period: "quarter"
+    source: "SEC"
+    formula: "AI segment capital expenditures for quarter"
+    thresholds: {green: "< $5B", yellow: "$5B to <$10B", red: ">= $10B"}
+    last_value: 15.828
+    last_date: "2026-06-30"
+    last_value_raw: "$15.828B"
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+
+  - id: SPCX-KPI-10
+    name: "SPCX valuation multiple: market cap / TTM revenue"
+    unit: "x"
+    period: "daily"
+    source: "Yahoo Finance / StockAnalysis"
+    formula: "Market capitalization / trailing twelve-month revenue"
+    thresholds: {green: "< 30x", yellow: "30x to <60x", red: ">= 60x"}
+    last_value: 89.9
+    last_date: "2026-09-18"
+    last_value_raw: "Yahoo Finance P/S 70.49x; StockAnalysis P/S 89.89x"
+    source_url: "https://finance.yahoo.com/quote/SPCX/; https://stockanalysis.com/stocks/spcx/statistics/"
+    notes: "Разница между провайдерами существенна; этот KPI используется как valuation warning, а не как единственный valuation model."
+
+derived_checks:
+  revenue_q2_2026:
+    value: 7.814
+    unit: "USD B"
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+  AI_contract_sales:
+    value: 14.1
+    unit: "USD B"
+    source_url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+  starship_next_scheduled_event:
+    event: "Starship Flight 14"
+    primary_date: "2026-09-22"
+    backup_date: "2026-09-23"
+    event_level: E1
+    source_url: "https://www.fly.faa.gov/adv/adv_otherdis?adv_date=09182026&advn=20&facId=ATCSCC&title=ATCSCC+ADVZY+020+DCC+09%2F18%2F2026+OPERATIONS+PLAN&titleDate=09%2F18%2F2026"
+
+data_quality:
+  current_state_date: "2026-09-20"
+  latest_financial_observation: "2026-06-30"
+  market_observation: "2026-09-18"
+  rule: "До публикации Q3 финансовые KPI остаются на Q2; календарные события могут обновляться отдельно."

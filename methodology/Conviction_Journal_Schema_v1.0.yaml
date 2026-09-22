@@ -1,0 +1,81 @@
+version: "1.0"
+artifact: conviction_journal_schema
+as_of: "2026-09-21"
+
+entry:
+  required: [decision_id, ticker, activated_at, market_snapshot, basis_snapshot, model_snapshot, conviction_parameters, rationale, counterfactual, review_due_at]
+  fields:
+    decision_id: null
+    ticker: null
+    status: active
+    activated_at: null
+    market_snapshot:
+      price: null
+      price_source: null
+      portfolio_nav: null
+      market_weight: null
+      sector_weight: null
+      portfolio_regime: null
+    basis_snapshot:
+      consolidated_open_cost_basis: null
+      invested_capital_share: null
+      legacy_basis_share: null
+      post_system_incremental_basis_share: null
+    model_snapshot:
+      scenario_state_hash: null
+      all_axes_verified: null
+      critical_kpis: []
+      active_negative_triggers: []
+      active_X_triggers: []
+      company_MC_run_id: null
+      plausible_drawdown: null
+      plausible_drawdown_source: null
+      team_execution_state: null
+    conviction_parameters:
+      L_max_standard: null
+      L_max_conviction: null
+      target_market_cap_standard: null
+      target_market_cap_conviction: null
+      hard_loss_budget_cap_standard: null
+      hard_loss_budget_cap_conviction: null
+      owner_judgment_multiplier: 1.0
+    rationale:
+      owner_text: null
+      falsifiable_claims: []
+      what_would_change_my_mind: []
+    counterfactual:
+      optimizer_run_without_override: null
+      weight_without_override: null
+      portfolio_metrics_without_override: {}
+      frozen_at_activation: true
+    review_due_at: null
+
+review_12m:
+  fields:
+    decision_id: null
+    review_date: null
+    actual:
+      total_return_12m: null
+      max_drawdown_12m: null
+      NAV_contribution: null
+      loss_budget_breach_days: null
+      state_downgrades: null
+      critical_KPI_deterioration_events: null
+    counterfactual:
+      optimizer_weight_at_activation: null
+      NAV_contribution: null
+      total_return_equivalent: null
+    paired_metrics:
+      excess_NAV_contribution: null
+      outperformed_counterfactual: null
+      return_vs_non_conviction_portfolio: null
+      return_vs_sector_benchmark: null
+    evidence_classification:
+      sample_completed_episodes: null
+      distinct_companies: null
+      calendar_coverage_months: null
+      median_paired_excess: null
+      outperformance_rate: null
+      bootstrap_90pct_CI_mean_paired_excess: null
+      hard_loss_budget_breach_rate: null
+      class: null

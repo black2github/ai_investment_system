@@ -1,0 +1,156 @@
+version: "1.0"
+artifact: conviction_overlay
+as_of: "2026-09-21"
+status: proposed_normative_additive
+
+principles:
+  trigger_not_decision: true
+  winner_appreciation_not_sell_trigger: true
+  conviction_is_weight_constraint_override_only: true
+  conviction_changes_expected_return: false
+  prior_weight_anchor_allowed: false
+
+cost_basis:
+  base_currency: USD
+  lot_level_required: true
+  consolidated_across_accounts: true
+  transfer_between_accounts_is_new_investment: false
+  dividend_reinvestment_creates_new_basis: true
+  cash_dividend_before_reinvestment_increases_security_basis: false
+  stock_split_is_new_investment: false
+  legacy_positions:
+    snapshot_on_system_inception: true
+    forced_sale_for_invested_capital_breach: false
+    new_buys_may_increase_gap: false
+
+proposed_parameters:
+  status: pending_owner_approval
+  provenance: model_assumption
+  invested_capital:
+    standard_name_limit: 0.12
+    conviction_name_limit: 0.20
+    sector_limit: 0.30
+  loss_budget:
+    standard_L_max_NAV: 0.08
+    conviction_L_max_NAV: 0.15
+    plausible_drawdown_floor: 0.25
+    plausible_drawdown_ceiling: 0.90
+    target_safety_buffer: 0.75
+    standard_hard_cap_floor: 0.05
+    standard_hard_cap_ceiling: 0.30
+    conviction_hard_cap_floor: 0.05
+    conviction_hard_cap_ceiling: 0.45
+  sector_market:
+    soft_limit: 0.35
+    hard_limit: 0.45
+    conviction_auto_relaxation: false
+  conviction:
+    max_active_tags: 3
+    monitor_missed_runs_before_suspend: 2
+
+plausible_drawdown:
+  primary_formula: "max(abs(ES5_terminal_return_5Y), abs(Q25_max_drawdown_5Y))"
+  fallback_if_maxdd_missing: "abs(ES5_terminal_return_5Y)"
+  archetype_fallback_before_MC:
+    mature_positive_margin: 0.55
+    capital_intensive_transition: 0.75
+    pre_service_or_milestone_driven: 0.85
+  fallback_is_temporary: true
+
+per_asset_caps:
+  hard_loss_budget_cap_formula: "clamp(L_max / plausible_drawdown, hard_cap_floor, hard_cap_ceiling)"
+  optimizer_target_cap_formula: "target_safety_buffer * hard_loss_budget_cap"
+  optimizer_input_field: single_name_max_i
+  actual_weight_above_target_but_below_hard:
+    concentration_gap: soft
+    block_new_buys: true
+    forced_sale: false
+  actual_weight_above_hard:
+    concentration_gap: hard_loss_budget_breach
+    block_new_buys: true
+    decision_request: MANDATORY_RISK_REDUCTION_REVIEW
+    auto_trade: false
+
+conviction_tag:
+  statuses: [active, suspended, revoked, expired, under_review]
+  qualification_required:
+    - all_state_axes_verified
+    - no_pending_verification_material_axis
+    - negative_transition_triggers_active
+    - thesis_break_X_triggers_active
+    - daily_news_watch_active
+    - standalone_MC_or_explicit_temporary_fallback
+    - owner_journal_entry_before_override
+    - active_count_within_limit
+  automatic_suspend:
+    - confirmed_downward_E2_or_E3_transition
+    - two_reporting_periods_critical_KPI_deterioration
+    - hard_loss_budget_breach
+    - more_than_two_missed_daily_watch_runs
+    - incomplete_critical_negative_trigger_coverage
+    - pending_verification_material_axis
+  automatic_revoke:
+    - thesis_break_X_trigger
+    - E3_transition_marked_thesis_break
+  reinstatement_requires_new_owner_entry: true
+
+state_based_rebalancing:
+  market_weight_above_target_only:
+    sell_request: false
+    block_new_buys: true
+    enhanced_monitoring: true
+  decision_request_triggers:
+    - confirmed_material_axis_downshift
+    - two_consecutive_periods_critical_KPI_deterioration
+    - thesis_break_X_trigger
+    - conviction_suspended_or_revoked
+  hard_loss_budget_exception:
+    formula: "actual_weight * plausible_drawdown > L_max_active"
+    decision_request: MANDATORY_RISK_REDUCTION_REVIEW
+    auto_trade: false
+
+team_execution_integration:
+  verified_multiplier:
+    T0: 1.10
+    T1: 1.05
+    T2: 1.00
+    T3: 0.95
+    T4: 0.90
+  owner_judgment_multiplier_bounds: [0.90, 1.10]
+  combined_multiplier_bounds: [0.80, 1.20]
+  formula: "clamp(verified_multiplier * owner_judgment_multiplier, 0.80, 1.20)"
+  applies_to: company_idiosyncratic_execution_sigma
+  expected_return_shift_allowed: false
+
+prospective_review:
+  horizon_months: 12
+  counterfactual_frozen_at_decision_time: true
+  evidence_levels:
+    insufficient_evidence:
+      completed_episodes_lt: 8
+    provisional_signal:
+      completed_episodes_min: 8
+      distinct_companies_min: 3
+      calendar_coverage_months_min: 24
+      median_paired_excess_gt: 0
+      outperformance_rate_min: 0.60
+    supported_repeatability:
+      completed_episodes_min: 15
+      distinct_companies_min: 3
+      calendar_coverage_months_min: 36
+      median_paired_excess_gt: 0
+      outperformance_rate_min: 0.60
+      bootstrap_CI: "90% CI of mean paired excess entirely > 0"
+      hard_loss_budget_breach_rate_max: 0.10
+    not_supported:
+      completed_episodes_min: 15
+      any_of:
+        - "90% bootstrap CI of mean paired excess entirely < 0"
+        - "hard_loss_budget_breach_rate > 0.20"
+
+parameter_update:
+  automatic: false
+  annual_review_only: true
+  max_L_max_conviction_change_NAV_pp_per_review: 1
+  max_active_tags_change_per_review: 1
+  owner_judgment_bounds_can_expand_in_v1_x: false

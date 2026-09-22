@@ -1,0 +1,89 @@
+# Входы MPC для LLY: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: LLY
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+driver_exposure_semantics:
+  scale:
+    -2: strong_negative
+    -1: negative
+    0: immaterial
+    1: positive
+    2: strong_positive
+  provenance: model_assumption
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 0
+  HYPERSCALER_CAPEX: 0
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 0
+  DATA_CENTER_POWER: 0
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 0
+  CHINA_REVENUE: 1
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 1
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 2
+  DRUG_PIPELINE: 2
+  REIMBURSEMENT_PRICING: 2
+  BIOPHARMA_MANUFACTURING_CAPACITY: 2
+  PHARMA_REGULATION: -2
+  PATENT_EXCLUSIVITY: 2
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+taxonomy_gap:
+- HEALTHCARE_DEMAND
+- DRUG_PIPELINE
+- REIMBURSEMENT_PRICING
+- MANUFACTURING_CAPACITY
+- PHARMA_REGULATION
+- PATENT_EXCLUSIVITY
+taxonomy_gap_note: MPC 16-driver taxonomy intentionally understates LLY-specific healthcare drivers; do not interpret zeros
+  as absence of business risk.
+failure_modes:
+- failure_id: LLY-FM-01
+  name: Incretin pricing/reimbursement pressure outpaces volume
+  common_cause_id: GLP1_PRICING_REIMBURSEMENT
+  severity: high
+- failure_id: LLY-FM-02
+  name: Manufacturing expansion fails to meet demand or creates quality/supply disruption
+  common_cause_id: PHARMA_MANUFACTURING_CAPACITY
+  severity: high
+- failure_id: LLY-FM-03
+  name: Next-generation obesity/metabolic pipeline clinical or regulatory failure
+  common_cause_id: CLINICAL_REGULATORY_FAILURE
+  severity: high
+- failure_id: LLY-FM-04
+  name: Tirzepatide concentration amplifies a product-specific safety/competitive shock
+  common_cause_id: PRODUCT_CONCENTRATION
+  severity: critical
+- failure_id: LLY-FM-05
+  name: Competing obesity therapies erode share or pricing power
+  common_cause_id: GLP1_COMPETITIVE_INTENSITY
+  severity: high
+- failure_id: LLY-FM-06
+  name: Acquisition/integration and IPR&D spending destroys expected pipeline value
+  common_cause_id: ACQUISITION_INTEGRATION_FAILURE
+  severity: medium
+- failure_id: LLY-FM-07
+  name: Incretin product-liability litigation creates material financial/label impact
+  common_cause_id: PHARMA_LITIGATION
+  severity: medium
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

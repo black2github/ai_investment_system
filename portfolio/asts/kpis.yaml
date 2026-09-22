@@ -1,0 +1,174 @@
+# KPI ASTS с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.1'
+artifact: ASTS KPI Dashboard
+as_of: '2026-09-21'
+ticker: ASTS
+max_critical_kpis: 11
+source_artifact: inbox/received/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - AST SpaceMobile, Inc. Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: ASTS-KPI-01
+  name: In-orbit spacecraft
+  unit: satellites
+  period: event_driven
+  source: SEC
+  thresholds:
+    green: '>=13'
+    yellow: '>=8 and <13'
+    red: <8
+  last_value: 13
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
+  verified: false
+- id: ASTS-KPI-02
+  name: Spacecraft launched within disclosed 50-day window
+  unit: satellites
+  period: event_driven
+  source: SEC
+  last_value: 6
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
+  verified: false
+  note: 'Replaces the previous label ''trailing 90 days''. The state criterion can still use individual launch dates to evaluate
+    a trailing-90-day condition, but this aggregate KPI preserves the source''s exact 50-day wording.
+
+    '
+  observation_window_days: 50
+  thresholds:
+    green: '>=6'
+    yellow: '>=3 and <6'
+    red: <3
+  last_date: null
+- id: ASTS-KPI-03
+  name: BlueBird satellites in production/assembly pipeline
+  unit: satellites
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=30'
+    yellow: '>=15 and <30'
+    red: <15
+  last_value: 30
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
+  verified: false
+  formula: BlueBird 17 through 46 inclusive = 46 - 17 + 1 = 30
+- id: ASTS-KPI-04
+  name: Contracted revenue backlog
+  unit: USD B
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=1.25'
+    yellow: '>=0.75 and <1.25'
+    red: <0.75
+  last_value: 1.3
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
+  verified: false
+- id: ASTS-KPI-05
+  name: MNO partnership count lower bound
+  unit: MNOs
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=60'
+    yellow: '>=40 and <60'
+    red: <40
+  last_value: 60
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
+  verified: false
+  value_type: lower_bound
+- id: ASTS-KPI-06
+  name: Quarterly revenue
+  unit: USD M
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=30'
+    yellow: '>=10 and <30'
+    red: <10
+  last_value: 31.5
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
+  verified: false
+- id: ASTS-KPI-07
+  name: SpaceMobile Service quarterly revenue
+  unit: USD M
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=25'
+    yellow: '>0 and <25'
+    red: =0
+  last_value: 0
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
+  verified: false
+- id: ASTS-KPI-08
+  name: Pro forma liquidity
+  unit: USD B
+  period: event_driven
+  source: SEC
+  thresholds:
+    green: '>=3.0'
+    yellow: '>=2.0 and <3.0'
+    red: <2.0
+  last_value: 3.7
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
+  verified: false
+  value_type: lower_bound
+- id: ASTS-KPI-09
+  name: Annualized H1 OCF + PP&E cash use
+  unit: USD B/year
+  period: semiannual
+  source: SEC
+  thresholds:
+    green: <1.5
+    yellow: '>=1.5 and <2.5'
+    red: '>=2.5'
+  last_value: 2.008854
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
+  verified: false
+  formula: 2 * (0.145212 operating cash use + 0.859215 PP&E purchases) = 2.008854
+- id: ASTS-KPI-10
+  name: Latest financing effective dilution
+  unit: fraction
+  period: event_driven
+  source: SEC
+  thresholds:
+    green: <=0.05
+    yellow: '>0.05 and <=0.10'
+    red: '>0.10'
+  last_value: 0.02
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm
+  verified: false
+  value_type: upper_bound
+- id: ASTS-KPI-11
+  name: FCC planned-constellation authorization status
+  unit: binary
+  period: event_driven
+  source: SEC
+  thresholds:
+    green: =1
+    red: =0
+  last_value: 1
+  last_date: '2026-08-12'
+  source_url: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
+  verified: false
+  note: Derived machine status from a qualitative primary-source regulatory fact.
+  formula: 1 = FCC authorization for the planned 248-satellite network disclosed; 0 = absent/revoked
+changelog:
+- date: '2026-09-21'
+  change: KPI-02 переименован (окно 50 дней по источнику); добавлен KPI-11 (бинарный статус FCC-авторизации) — patch v1.1

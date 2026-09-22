@@ -1,0 +1,39 @@
+version: "1.1"
+ticker: ASTS
+artifact: source_semantics_patch
+as_of: "2026-09-21"
+
+states_patch:
+  Regulatory_Spectrum:
+    evidence_type: qualitative_primary_source
+    verification_rule: >
+      Machine confirmation is allowed through ASTS-KPI-11 binary authorization status;
+      narrative remains source evidence, not a numeric count of globally authorized markets.
+
+kpis_patch:
+  - id: ASTS-KPI-02
+    name: "Spacecraft launched within disclosed 50-day window"
+    period: event_driven
+    observation_window_days: 50
+    current_value: 6
+    unit: satellites
+    source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm"
+    note: >
+      Replaces the previous label 'trailing 90 days'. The state criterion can still use
+      individual launch dates to evaluate a trailing-90-day condition, but this aggregate KPI
+      preserves the source's exact 50-day wording.
+
+  - id: ASTS-KPI-11
+    name: "FCC planned-constellation authorization status"
+    period: event_driven
+    current_value: 1
+    unit: binary
+    formula: "1 = FCC authorization for the planned 248-satellite network disclosed; 0 = absent/revoked"
+    source: "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm"
+    zones: {green: "=1", red: "=0"}
+    note: "Derived machine status from a qualitative primary-source regulatory fact."
+
+triggers_patch:
+  ASTS-E-08:
+    kpis: [ASTS-KPI-11]
+    condition: "ASTS-KPI-11 changes from 1 to 0 because FCC materially narrows/suspends authorization needed for planned commercial service"

@@ -1,0 +1,245 @@
+# Реестр триггеров: NVIDIA Corporation (NVDA)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/NVDA_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: NVDA
+  company: NVIDIA Corporation
+  exchange: NASDAQ
+  yahoo_symbol: NVDA
+  registry_updated: '2026-09-21 (дозор новостей заведён: models-news-watch)'
+  source_artifact: inbox/received/NVDA_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/NVDA?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 222.27
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  models-news-watch:
+    covers:
+    - NVDA-E-11
+    cadence: ежедневно 09:10 Europe/Moscow (NBIS, NVDA, HOOD)
+    note: событийные переходы по новостям и раскрытиям компании
+  models-report-check:
+    covers:
+    - NVDA-E-01
+    - NVDA-E-02
+    - NVDA-E-03
+    - NVDA-E-04
+    - NVDA-E-05
+    - NVDA-E-06
+    - NVDA-E-07
+    - NVDA-E-08
+    - NVDA-E-09
+    - NVDA-E-10
+    cadence: после квартального отчёта (не заведено)
+    note: переходы по KPI «N кварталов подряд» — по отчёту
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+triggers:
+- id: NVDA-E-01
+  class: event
+  step: vector
+  axis: AI_Demand
+  transition:
+    from: D4
+    to: D3
+  level: E2
+  kpis:
+  - NVDA-KPI-02
+  condition: Data Center revenue YoY <100% but >=50% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход AI_Demand D4→D3 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-02
+  class: event
+  step: vector
+  axis: AI_Demand
+  transition:
+    from: D4
+    to: D2
+  level: E2
+  kpis:
+  - NVDA-KPI-02
+  condition: Data Center revenue YoY <50% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход AI_Demand D4→D2 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-03
+  class: event
+  step: vector
+  axis: Gross_Margin
+  transition:
+    from: M3
+    to: M4
+  level: E2
+  kpis:
+  - NVDA-KPI-03
+  condition: gross margin >=78% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Gross_Margin M3→M4 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-04
+  class: event
+  step: vector
+  axis: Gross_Margin
+  transition:
+    from: M3
+    to: M2
+  level: E2
+  kpis:
+  - NVDA-KPI-03
+  condition: gross margin <72% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Gross_Margin M3→M2 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-05
+  class: event
+  step: vector
+  axis: Customer_Breadth
+  transition:
+    from: B4
+    to: B3
+  level: E2
+  kpis:
+  - NVDA-KPI-08
+  condition: ACIE share <40% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Customer_Breadth B4→B3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-06
+  class: event
+  step: vector
+  axis: Customer_Breadth
+  transition:
+    from: B4
+    to: B2
+  level: E2
+  kpis:
+  - NVDA-KPI-08
+  - NVDA-KPI-10
+  condition: ACIE share <30% for 2 quarters OR top-5 AR concentration >75% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Customer_Breadth B4→B2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-07
+  class: event
+  step: vector
+  axis: Supply_Commitment
+  transition:
+    from: S2
+    to: S3
+  level: E2
+  kpis:
+  - NVDA-KPI-06
+  condition: commitment ratio >1.0x for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Supply_Commitment S2→S3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-08
+  class: event
+  step: vector
+  axis: Supply_Commitment
+  transition:
+    from: S2
+    to: S4
+  level: E2
+  kpis:
+  - NVDA-KPI-07
+  condition: inventory/excess-purchase provisions >=2% of quarterly revenue for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Supply_Commitment S2→S4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-09
+  class: event
+  step: vector
+  axis: Supply_Commitment
+  transition:
+    from: S2
+    to: S1
+  level: E2
+  kpis:
+  - NVDA-KPI-06
+  - NVDA-KPI-07
+  condition: commitment ratio <0.50x AND provision ratio <1% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Supply_Commitment S2→S1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-10
+  class: event
+  step: vector
+  axis: China_Access
+  transition:
+    from: X2
+    to: X1
+  level: E2
+  kpis:
+  - NVDA-KPI-09
+  condition: lawfully permitted China Data Center shipments >=5% of Data Center revenue for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход China_Access X2→X1 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NVDA-E-11
+  class: event
+  step: vector
+  axis: China_Access
+  transition:
+    from: X2
+    to: X3
+  level: E3
+  kpis:
+  - NVDA-KPI-09
+  condition: new export restrictions outside current China foreclosure produce disclosed revenue loss/charge >=5% of quarterly
+    revenue
+  period: 1 quarter
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход China_Access X2→X3 в state.json (state_transitions, scenario_state) и отправить Decision Request
+    владельцу; инвестиционное действие не предопределено
+  automation: models-news-watch
+  status: active
+  fired: []

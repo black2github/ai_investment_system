@@ -1,0 +1,78 @@
+version: "1.0"
+artifact: AI_COMPUTE_Benchmark
+benchmark_id: AI_COMPUTE_BASKET_V1
+as_of: "2026-09-21"
+status: provisional_internal_synthetic
+purpose: "Секторный индикатор просадки AI_COMPUTE для portfolio_regime; не benchmark alpha/valuation."
+
+constituent_eligibility:
+  all_required:
+    - "Публичная акция с ежедневной ценой в Yahoo chart."
+    - "Компания непосредственно продаёт AI/HPC compute cloud capacity, а не только чипы, ПО или colocation."
+    - "AI/HPC cloud является основным бизнесом либо >50% последней квартальной выручки."
+    - "Есть первичная квартальная отчётность и минимум 60 торговых дней ценовой истории."
+  entry_rule: "После initial constituents критерии должны выполняться два последовательных квартальных review."
+  exit_rule: "Удаление после двух последовательных review с нарушением eligibility или немедленно при delisting/acquisition."
+
+constituents:
+  - {ticker: NBIS, weight: 0.50, status: eligible_initial}
+  - {ticker: CRWV, weight: 0.50, status: eligible_initial}
+
+weighting:
+  method: equal_weight
+  rebalance_frequency: quarterly
+  rebalance_date_rule: "Первый торговый день после конца календарного квартала."
+  corporate_actions: "Использовать split-adjusted close из Yahoo chart."
+  reason: "Не использует Yahoo market cap и не превращает benchmark в proxy одной крупной компании."
+
+price_source:
+  provider: Yahoo_chart
+  field: adjusted_close
+  fallback: close_if_adjusted_unavailable_with_split_adjustment
+  currency: USD
+
+index:
+  initial_level: 1000
+  inception_rule: "Первая дата, на которой у всех initial constituents есть валидная цена."
+  formula_between_rebalances: >
+    Index_t = Index_rebalance *
+    SUM_i(weight_i_rebalance * AdjustedClose_i,t / AdjustedClose_i,rebalance)
+  missing_price_rule: >
+    Carry-forward допустим максимум на один торговый день. При более длинном
+    пропуске benchmark_status=degraded и сектор временно исключается из regime aggregation.
+  constituent_change_rule: "Chain-link index at rebalance; history is not retroactively rewritten."
+
+drawdown:
+  lookback: "12M rolling"
+  formula: "DD_AI_COMPUTE(t) = Index_t / max(Index_s over prior 365 calendar days) - 1"
+
+quality:
+  benchmark_coverage: true
+  benchmark_quality: provisional_low_breadth
+  constituent_count: 2
+  minimum_constituents_for_full_quality: 4
+  note: "Два компонента лучше, чем отсутствие покрытия, но это не широкий независимый индекс."
+
+regime_engine_integration:
+  include_in_weighted_sector_drawdown: true
+  sector_id: AI_COMPUTE
+  normal_weighting_rule: "Использовать текущий вес AI_COMPUTE в NAV, как в §6 Portfolio_Drawdown_and_Regime_Rules v1.0."
+  quality_flag_output: true
+  concentration_override:
+    enabled: true
+    provenance: model_assumption
+    stress_floor:
+      condition: "AI_COMPUTE_NAV_weight >= 0.20 AND DD_AI_COMPUTE <= -0.25"
+      regime_floor: Stress
+    shock_floor:
+      condition: "AI_COMPUTE_NAV_weight >= 0.25 AND DD_AI_COMPUTE <= -0.40"
+      regime_floor: Shock
+  no_double_count_rule: "Override задаёт только floor режима; просадка не добавляется второй раз в weighted_sector_drawdown."
+
+alternative_rejected:
+  proxy_mix_SOX_IGV:
+    status: rejected_v1
+    reason: "SOX=semiconductor suppliers, IGV=software; смесь плохо отражает leverage, power, backlog и capex GPU-cloud."
+  uncovered_sector:
+    status: rejected_v1
+    reason: "Оставлять около трети NAV без секторной диагностики — слишком большая слепая зона."

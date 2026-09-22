@@ -1,0 +1,227 @@
+version: "1.0"
+ticker: CRWV
+as_of: "2026-09-21"
+artifact: company_state_bundle
+
+source_policy:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+
+sources:
+  CRWV_Q2_2026_10Q:
+    url: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm"
+    type: "SEC 10-Q"
+  CRWV_Q2_2026_RELEASE:
+    url: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm"
+    type: "SEC earnings-release exhibit"
+  CRWV_2026_CONVERT_PRESENTATION:
+    url: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm"
+    type: "SEC-filed investor presentation"
+    note: "Used only for figures explicitly dated in the presentation, including contracted power as of 2026-08-11."
+
+states:
+  axes:
+    Demand_Contracting:
+      states:
+        D0: {name: weak, criteria: "revenue YoY <25% OR backlog/annualized-revenue <2x"}
+        D1: {name: validated, criteria: "revenue YoY >=25% AND backlog/annualized-revenue >=2x"}
+        D2: {name: strong, criteria: "revenue YoY >=50% AND backlog/annualized-revenue >=5x"}
+        D3: {name: hypergrowth_contracted, criteria: "revenue YoY >=100% AND backlog/annualized-revenue >=8x"}
+        D4: {name: durable_hypergrowth_contracted, criteria: "D3 criteria for 2 consecutive quarters"}
+      current: D3
+      current_evidence:
+        - "Q2 revenue $2.575B versus $1.212B, +112.5% YoY."
+        - "Revenue backlog $104.2B; backlog / annualized Q2 revenue = 104.2 / (2.575*4) = 10.12x."
+        - "Backlog excludes >$25B of net new customer commitments added in early Q3."
+      source_refs: [CRWV_Q2_2026_RELEASE, CRWV_2026_CONVERT_PRESENTATION]
+
+    Unit_Economics:
+      states:
+        E0: {name: negative, criteria: "adjusted operating margin <0%"}
+        E1: {name: early_positive, criteria: "adjusted operating margin >=0% and <3% AND adjusted EBITDA margin >=40%"}
+        E2: {name: scaling, criteria: "adjusted operating margin >=3% and <5% AND adjusted EBITDA margin >=50%"}
+        E3: {name: positive_scale, criteria: "adjusted operating margin >=5% AND adjusted EBITDA margin >=55%"}
+        E4: {name: durable_operating_leverage, criteria: "adjusted operating margin >=10% AND adjusted EBITDA margin >=55% for 2 consecutive quarters"}
+      current: E3
+      current_evidence:
+        - "Q2 adjusted EBITDA $1.510B, margin 59%."
+        - "Q2 adjusted operating income $128M, margin 5%."
+        - "GAAP operating margin remained -2%; this axis tracks adjusted unit economics and must be read with financing/capital axes."
+      source_refs: [CRWV_Q2_2026_RELEASE]
+
+    Capacity_Secured:
+      states:
+        C0: {name: subscale, criteria: "active power <0.5 GW"}
+        C1: {name: initial_scale, criteria: "active power >=0.5 GW and <1.5 GW"}
+        C2: {name: scaled, criteria: "active power >=1.5 GW AND contracted power >=3.5 GW"}
+        C3: {name: hyperscale_secured, criteria: "active power >=2.5 GW AND contracted power >=5.0 GW"}
+        C4: {name: hyperscale_active, criteria: "active power >=4.0 GW AND contracted power >=6.0 GW"}
+      current: C2
+      current_evidence:
+        - "Q2 release: active power reached 1.5 GW."
+        - "SEC-filed September presentation: contracted power approximately 4.2 GW as of the August 11 earnings call."
+        - "Q2-end release had contracted power at approximately 3.7 GW; 4.2 GW is the later observation."
+      source_refs: [CRWV_Q2_2026_RELEASE, CRWV_2026_CONVERT_PRESENTATION]
+
+    Capital_Intensity:
+      states:
+        K0: {name: normalized, criteria: "quarterly capex/revenue <1x"}
+        K1: {name: elevated, criteria: "capex/revenue >=1x and <2x"}
+        K2: {name: aggressive_expansion, criteria: "capex/revenue >=2x and <4x"}
+        K3: {name: extreme_contract_backed, criteria: "capex/revenue >=4x AND backlog/annualized-revenue >=8x"}
+        K4: {name: overbuild_risk, criteria: "capex/revenue >=4x AND (backlog/annualized-revenue <5x OR adjusted operating margin <=0%) for 2 quarters"}
+      current: K2
+      current_evidence:
+        - "Q2 capex $9.4B on revenue $2.575B = 3.65x."
+        - "Backlog / annualized Q2 revenue = 10.12x."
+      source_refs: [CRWV_2026_CONVERT_PRESENTATION, CRWV_Q2_2026_RELEASE]
+
+    Funding_Liquidity:
+      states:
+        F0: {name: low_leverage, criteria: "debt/backlog <0.10x AND liquidity/latest-quarter-capex >=2x"}
+        F1: {name: strong_funding, criteria: "debt/backlog <0.25x AND liquidity/latest-quarter-capex >=1.5x"}
+        F2: {name: funded_leveraged_expansion, criteria: "debt/backlog <=0.50x AND liquidity/latest-quarter-capex >=1x"}
+        F3: {name: leverage_dependence, criteria: "debt/backlog >0.50x OR liquidity/latest-quarter-capex <1x"}
+        F4: {name: funding_stress, criteria: "debt/backlog >0.75x AND liquidity/latest-quarter-capex <0.5x"}
+      current: F2
+      current_evidence:
+        - "Total debt $35.6B at June 30, 2026."
+        - "Revenue backlog $104.2B; debt/backlog = 0.342x."
+        - "Total liquidity $15.553B: $5.524B cash + $15M securities + $10.014B availability under existing facilities."
+        - "Liquidity/latest-quarter capex = 15.553/9.4 = 1.65x."
+      source_refs: [CRWV_Q2_2026_10Q, CRWV_2026_CONVERT_PRESENTATION]
+
+kpis:
+  items:
+    - id: CRWV-KPI-01
+      name: "Revenue YoY"
+      period: quarterly
+      current_value: 1.1246
+      unit: fraction
+      formula: "2.575 / 1.212 - 1 = 1.1246"
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm"
+      zones: {green: ">=1.00", yellow: ">=0.50 and <1.00", red: "<0.50"}
+    - id: CRWV-KPI-02
+      name: "Revenue backlog"
+      period: quarterly
+      current_value: 104.2
+      unit: "USD B"
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm"
+      zones: {green: ">=100", yellow: ">=50 and <100", red: "<50"}
+      note: "Company-defined backlog includes RPO plus other expected revenue under committed contracts, subject to delivery/availability."
+    - id: CRWV-KPI-03
+      name: "Top-3 customer revenue share"
+      period: quarterly
+      current_value: 0.72
+      unit: fraction
+      formula: "0.36 + 0.26 + 0.10 = 0.72"
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm"
+      zones: {green: "<0.50", yellow: ">=0.50 and <0.70", red: ">=0.70"}
+      note: "Risk/concentration KPI: lower is better."
+    - id: CRWV-KPI-04
+      name: "Adjusted EBITDA margin"
+      period: quarterly
+      current_value: 0.59
+      unit: fraction
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm"
+      zones: {green: ">=0.55", yellow: ">=0.40 and <0.55", red: "<0.40"}
+    - id: CRWV-KPI-05
+      name: "Adjusted operating income margin"
+      period: quarterly
+      current_value: 0.05
+      unit: fraction
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm"
+      zones: {green: ">=0.05", yellow: ">=0 and <0.05", red: "<0"}
+    - id: CRWV-KPI-06
+      name: "Active power"
+      period: quarterly
+      current_value: 1.5
+      value_type: approximate
+      unit: GW
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm"
+      zones: {green: ">=1.5", yellow: ">=1.0 and <1.5", red: "<1.0"}
+    - id: CRWV-KPI-07
+      name: "Contracted power"
+      period: event_driven
+      current_value: 4.2
+      value_type: approximate
+      unit: GW
+      as_of: "2026-08-11"
+      formula: "Later observation supersedes Q2-end ~3.7 GW for current snapshot."
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm"
+      zones: {green: ">=4.0", yellow: ">=3.0 and <4.0", red: "<3.0"}
+    - id: CRWV-KPI-08
+      name: "Quarterly capex / revenue"
+      period: quarterly
+      current_value: 3.6505
+      unit: x
+      formula: "9.4 / 2.575 = 3.6505"
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm"
+      zones: {green: "<2.0", yellow: ">=2.0 and <4.0", red: ">=4.0"}
+      note: "Risk KPI; high capex can be contract-backed and value-creating."
+    - id: CRWV-KPI-09
+      name: "Total liquidity / latest-quarter capex"
+      period: quarterly
+      current_value: 1.6546
+      unit: x
+      formula: "15.553 / 9.4 = 1.6546"
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm"
+      zones: {green: ">=1.5", yellow: ">=1.0 and <1.5", red: "<1.0"}
+      note: "Total liquidity includes undrawn secured facilities; it is not cash."
+    - id: CRWV-KPI-10
+      name: "Total debt / revenue backlog"
+      period: quarterly
+      current_value: 0.3417
+      unit: x
+      formula: "35.6 / 104.2 = 0.3417"
+      source: "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm"
+      zones: {green: "<0.25", yellow: ">=0.25 and <=0.50", red: ">0.50"}
+
+triggers:
+  items:
+    - {id: CRWV-E-01, step: vector, status: planned, axis: Demand_Contracting, transition: {from: D3, to: D4}, kpis: [CRWV-KPI-01, CRWV-KPI-02], condition: "revenue YoY >=100% AND backlog/annualized-revenue >=8x for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: CRWV-E-02, step: vector, status: planned, axis: Demand_Contracting, transition: {from: D3, to: D2}, kpis: [CRWV-KPI-01, CRWV-KPI-02], condition: "revenue YoY <100% OR backlog/annualized-revenue <8x for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: CRWV-E-03, step: vector, status: planned, axis: Unit_Economics, transition: {from: E3, to: E4}, kpis: [CRWV-KPI-04, CRWV-KPI-05], condition: "adjusted operating margin >=10% AND adjusted EBITDA margin >=55% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: CRWV-E-04, step: vector, status: planned, axis: Unit_Economics, transition: {from: E3, to: E2}, kpis: [CRWV-KPI-04, CRWV-KPI-05], condition: "adjusted operating margin <5% OR adjusted EBITDA margin <50% for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: CRWV-E-05, step: vector, status: planned, axis: Capacity_Secured, transition: {from: C2, to: C3}, kpis: [CRWV-KPI-06, CRWV-KPI-07], condition: "active power >=2.5 GW AND contracted power >=5.0 GW", period: "one verified company update", level: E2}
+    - {id: CRWV-E-06, step: vector, status: planned, axis: Capacity_Secured, transition: {from: C2, to: C1}, kpis: [CRWV-KPI-06, CRWV-KPI-07], condition: "active power <1.5 GW OR contracted power <3.5 GW for 2 consecutive observations", period: "2 observations", level: E2}
+    - {id: CRWV-E-07, step: vector, status: planned, axis: Capital_Intensity, transition: {from: K2, to: K1}, kpis: [CRWV-KPI-08], condition: "capex/revenue <2x for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: CRWV-E-08, step: vector, status: planned, axis: Capital_Intensity, transition: {from: K2, to: K3}, kpis: [CRWV-KPI-02, CRWV-KPI-08], condition: "capex/revenue >=4x AND backlog/annualized-revenue >=8x for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: CRWV-E-09, step: vector, status: planned, axis: Capital_Intensity, transition: {from: K2, to: K4}, kpis: [CRWV-KPI-02, CRWV-KPI-05, CRWV-KPI-08], condition: "capex/revenue >=4x AND (backlog/annualized-revenue <5x OR adjusted operating margin <=0%) for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: CRWV-E-10, step: vector, status: planned, axis: Funding_Liquidity, transition: {from: F2, to: F1}, kpis: [CRWV-KPI-09, CRWV-KPI-10], condition: "debt/backlog <0.25x AND liquidity/latest-quarter-capex >=1.5x for 2 consecutive quarters", period: "2 quarters", level: E2}
+    - {id: CRWV-E-11, step: vector, status: planned, axis: Funding_Liquidity, transition: {from: F2, to: F3}, kpis: [CRWV-KPI-09, CRWV-KPI-10], condition: "debt/backlog >0.50x OR liquidity/latest-quarter-capex <1.0x for 2 consecutive quarters", period: "2 quarters", level: E2}
+
+mpc_inputs:
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 2
+    HYPERSCALER_CAPEX: 2
+    SEMICONDUCTOR_WFE: 0
+    ADVANCED_PACKAGING: 1
+    HBM_MEMORY: 1
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 2
+    DATA_CENTER_POWER: 2
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 0
+    INTEREST_RATES: -2
+    CAPITAL_MARKETS: 2
+    CHINA_REVENUE: 0
+    TAIWAN_SUPPLY: 2
+    ACQUISITION_INTEGRATION: 1
+  failure_modes:
+    - {failure_id: CRWV-FM-01, name: "AI-cloud demand/price compression or overbuild", common_cause_id: AI_OVERBUILD, severity: high}
+    - {failure_id: CRWV-FM-02, name: "Top-customer concentration causes abrupt revenue/backlog loss", common_cause_id: CUSTOMER_CONCENTRATION, severity: critical}
+    - {failure_id: CRWV-FM-03, name: "Power/site delivery delays prevent committed-capacity availability", common_cause_id: DATA_CENTER_POWER_CONSTRAINT, severity: high}
+    - {failure_id: CRWV-FM-04, name: "GPU/HBM/component supply disruption delays clusters", common_cause_id: TAIWAN_SUPPLY_DISRUPTION, severity: high}
+    - {failure_id: CRWV-FM-05, name: "Debt/refinancing cost or access deteriorates", common_cause_id: CAPITAL_MARKETS_TIGHTENING, severity: critical}
+    - {failure_id: CRWV-FM-06, name: "Customer commitments fail to convert because delivery/availability conditions are not met", common_cause_id: CONTRACT_CONVERSION_FAILURE, severity: high}
+    - {failure_id: CRWV-FM-07, name: "Interest burden consumes operating cash flow despite EBITDA growth", common_cause_id: LEVERAGE_DEBT_SERVICE, severity: high}
+    - {failure_id: CRWV-FM-08, name: "Integration/platform expansion creates execution drag", common_cause_id: ACQUISITION_INTEGRATION_FAILURE, severity: medium}
+
+benchmark:
+  sector_id: AI_COMPUTE
+  benchmark_id: AI_COMPUTE_BASKET_V1
+  methodology_ref: "AI_COMPUTE_Sector_Benchmark_Specification_v1.0.md"

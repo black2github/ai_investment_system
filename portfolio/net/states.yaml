@@ -1,0 +1,143 @@
+# Вектор состояний NET (оси и состояния). Переходы — triggers.yaml (NET-E-06..E-11 + привязка legacy NET-E-*/X-* к осям), текущий вектор — state.json.
+version: '1.0'
+artifact: NET State Vector
+as_of: '2026-09-21'
+ticker: NET
+source_artifact: inbox/received/NET_company_state_v1.0.yaml (другая LLM, партия 3, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+purpose: 'Оси и состояния компании поверх реестра владельца от 17.09: legacy-триггеры NET-E-01..05 / X-01..03 сохранены и
+  привязаны к осям (поле axis), переходы состояний — NET-E-06..E-11.'
+semantics:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  existing_trigger_policy: Existing owner NET-E-* triggers are not replaced or renumbered.
+sources:
+  NET_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm
+    type: SEC 10-Q
+  NET_Q2_2026_RELEASE:
+    url: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm
+    type: SEC earnings-release exhibit
+axes:
+  Revenue_Growth:
+    name: Revenue Growth
+    name_ru: рост выручки
+    states:
+      G0:
+        name: mature
+        criteria: revenue YoY <20%
+      G1:
+        name: healthy
+        criteria: YoY >=20% and <30%
+      G2:
+        name: strong
+        criteria: YoY >=30% and <35%
+      G3:
+        name: accelerating
+        criteria: YoY >=35% and <45%
+      G4:
+        name: hypergrowth
+        criteria: YoY >=45% for 2 consecutive quarters
+    current: G3
+    current_evidence:
+    - Q2 2026 revenue $696.1M, +36% YoY.
+    source_refs:
+    - NET_Q2_2026_RELEASE
+  Expansion_Retention:
+    name: Expansion Retention
+    name_ru: расширение и удержание (NRR)
+    states:
+      N0:
+        name: weak
+        criteria: DBNRR <105%
+      N1:
+        name: stable
+        criteria: DBNRR >=105% and <110%
+      N2:
+        name: healthy
+        criteria: DBNRR >=110% and <115%
+      N3:
+        name: strong
+        criteria: DBNRR >=115% and <125%
+      N4:
+        name: exceptional
+        criteria: DBNRR >=125% for 2 consecutive quarters
+    current: N3
+    current_evidence:
+    - Q2 DBNRR 120%, versus 114% a year earlier.
+    source_refs:
+    - NET_Q2_2026_10Q
+  Contracted_Demand:
+    name: Contracted Demand
+    name_ru: законтрактованный спрос (RPO)
+    states:
+      R0:
+        name: weak
+        criteria: current RPO YoY growth <20%
+      R1:
+        name: healthy
+        criteria: growth >=20% and <30%
+      R2:
+        name: strong
+        criteria: growth >=30% and <35%
+      R3:
+        name: accelerating
+        criteria: growth >=35% and <45%
+      R4:
+        name: exceptional
+        criteria: growth >=45% for 2 quarters
+    current: R3
+    current_evidence:
+    - Q2 Current RPO YoY growth 35%.
+    source_refs:
+    - NET_Q2_2026_RELEASE
+  Profitability_Cash:
+    name: Profitability Cash
+    name_ru: прибыльность и денежный поток
+    states:
+      P0:
+        name: cash_negative
+        criteria: FCF margin <=0%
+      P1:
+        name: low_positive
+        criteria: FCF margin >0% and <10%
+      P2:
+        name: scaled
+        criteria: FCF margin >=10% and <20%
+      P3:
+        name: strong
+        criteria: FCF margin >=20%
+      P4:
+        name: GAAP_operating_profitability
+        criteria: GAAP operating margin >0% for 2 quarters AND FCF margin >=20%
+    current: P1
+    current_evidence:
+    - Q2 GAAP operating margin -29.6%; non-GAAP operating margin 13.8%.
+    source_refs:
+    - NET_Q2_2026_RELEASE
+  AI_Edge_Monetization:
+    name: AI Edge Monetization
+    name_ru: монетизация ИИ на edge (Workers AI)
+    states:
+      A0:
+        name: optionality
+        criteria: no material AI/Workers usage or commercial evidence
+      A1:
+        name: usage_validation
+        criteria: material AI/Workers platform usage narrative but no separately quantified revenue/ARR
+      A2:
+        name: commercial_validation
+        criteria: AI/Workers ARR or annualized revenue >=$100M OR >=5% of company revenue
+      A3:
+        name: scaled_monetization
+        criteria: AI/Workers annualized revenue >=$500M and YoY growth >=50%
+      A4:
+        name: platform_core
+        criteria: AI/Workers >=15% of company revenue for 2 quarters
+    current: A1
+    current_evidence:
+    - Management explicitly frames AI answer engines, agents and machine-to-machine traffic as a major platform shift.
+    - Selected Q2 primary sources do not separately disclose Workers AI / edge-inference revenue or ARR.
+    source_refs:
+    - NET_Q2_2026_RELEASE

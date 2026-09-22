@@ -1,0 +1,236 @@
+# Реестр триггеров: Nebius Group N.V. (NBIS)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/NBIS_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: NBIS
+  company: Nebius Group N.V.
+  exchange: NASDAQ
+  yahoo_symbol: NBIS
+  registry_updated: '2026-09-21 (дозор новостей заведён: models-news-watch)'
+  source_artifact: inbox/received/NBIS_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/NBIS?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 223.54
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  models-news-watch:
+    covers:
+    - NBIS-E-06
+    cadence: ежедневно 09:10 Europe/Moscow (NBIS, NVDA, HOOD)
+    note: событийные переходы по новостям и раскрытиям компании
+  models-report-check:
+    covers:
+    - NBIS-E-01
+    - NBIS-E-02
+    - NBIS-E-03
+    - NBIS-E-04
+    - NBIS-E-05
+    - NBIS-E-07
+    - NBIS-E-08
+    - NBIS-E-09
+    - NBIS-E-10
+    cadence: после квартального отчёта (не заведено)
+    note: переходы по KPI «N кварталов подряд» — по отчёту
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+triggers:
+- id: NBIS-E-01
+  class: event
+  step: vector
+  axis: Demand_Monetization
+  transition:
+    from: N3
+    to: N4
+  level: E2
+  kpis:
+  - NBIS-KPI-02
+  - NBIS-KPI-03
+  condition: AI cloud quarterly revenue >= $1.0B AND ARR >= $5.0B for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Demand_Monetization N3→N4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NBIS-E-02
+  class: event
+  step: vector
+  axis: Demand_Monetization
+  transition:
+    from: N3
+    to: N2
+  level: E2
+  kpis:
+  - NBIS-KPI-01
+  - NBIS-KPI-03
+  condition: AI cloud revenue YoY <50% for 2 quarters OR ARR declines sequentially for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Demand_Monetization N3→N2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NBIS-E-03
+  class: event
+  step: vector
+  axis: Unit_Economics
+  transition:
+    from: E3
+    to: E4
+  level: E2
+  kpis:
+  - NBIS-KPI-04
+  - NBIS-KPI-10
+  condition: AI cloud adjusted EBITDA margin >=45% AND group adjusted EBITDA margin >=35% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Unit_Economics E3→E4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NBIS-E-04
+  class: event
+  step: vector
+  axis: Unit_Economics
+  transition:
+    from: E3
+    to: E2
+  level: E2
+  kpis:
+  - NBIS-KPI-04
+  condition: AI cloud adjusted EBITDA margin <30% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Unit_Economics E3→E2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NBIS-E-05
+  class: event
+  step: vector
+  axis: Capacity_Secured
+  transition:
+    from: C3
+    to: C4
+  level: E2
+  kpis:
+  - NBIS-KPI-11
+  - NBIS-KPI-08
+  condition: contracted power >=6 GW AND >=1 GW capacity brought online in trailing 12 months
+  period: rolling 12m
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Capacity_Secured C3→C4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+  note: Переходы оси — только по NBIS-KPI-11 (факт); KPI-08 (guidance) — поддерживающее свидетельство (поправка LLM 21.09)
+- id: NBIS-E-06
+  class: event
+  step: vector
+  axis: Capacity_Secured
+  transition:
+    from: C3
+    to: C2
+  level: E2
+  kpis:
+  - NBIS-KPI-11
+  - NBIS-KPI-08
+  condition: contracted-power guidance <4 GW OR planned next-12m capacity additions reduced/delayed >=25%
+  period: one verified update
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Capacity_Secured C3→C2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-news-watch
+  status: active
+  fired: []
+  note: Переходы оси — только по NBIS-KPI-11 (факт); KPI-08 (guidance) — поддерживающее свидетельство (поправка LLM 21.09)
+- id: NBIS-E-07
+  class: event
+  step: vector
+  axis: Capital_Intensity
+  transition:
+    from: K3
+    to: K2
+  level: E2
+  kpis:
+  - NBIS-KPI-04
+  - NBIS-KPI-05
+  condition: quarterly capex/revenue <6x AND AI cloud adjusted EBITDA margin >=35% for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Capital_Intensity K3→K2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NBIS-E-08
+  class: event
+  step: vector
+  axis: Capital_Intensity
+  transition:
+    from: K3
+    to: K4
+  level: E2
+  kpis:
+  - NBIS-KPI-04
+  - NBIS-KPI-05
+  - NBIS-KPI-06
+  condition: capex/revenue >=8x AND (prepayment coverage <30% OR AI cloud adjusted EBITDA margin <15%) for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Capital_Intensity K3→K4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NBIS-E-09
+  class: event
+  step: vector
+  axis: Funding_Liquidity
+  transition:
+    from: F2
+    to: F3
+  level: E2
+  kpis:
+  - NBIS-KPI-05
+  - NBIS-KPI-09
+  - NBIS-KPI-10
+  condition: cash <1x latest quarterly capex OR interest expense >50% of group adjusted EBITDA for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Funding_Liquidity F2→F3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []
+- id: NBIS-E-10
+  class: event
+  step: vector
+  axis: Funding_Liquidity
+  transition:
+    from: F2
+    to: F1
+  level: E2
+  kpis:
+  - NBIS-KPI-05
+  - NBIS-KPI-09
+  condition: cash >=2x latest quarterly capex for 2 quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K, пресс-релизы IR)
+  action: Зафиксировать переход Funding_Liquidity F2→F1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: models-report-check
+  status: planned
+  fired: []

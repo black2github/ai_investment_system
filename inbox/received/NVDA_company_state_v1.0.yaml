@@ -1,0 +1,118 @@
+version: "1.0"
+ticker: NVDA
+as_of: "2026-09-21"
+artifact: company_state_kpi_trigger_mpc
+semantics:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  numeric_thresholds_provenance: model_assumption
+sources:
+  NVDA_Q2_10Q: "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+  NVDA_Q2_RELEASE: "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm"
+
+states:
+  AI_Demand:
+    states:
+      D0: {name: mature_growth, criteria: "Data Center revenue YoY <20%"}
+      D1: {name: strong_growth, criteria: "YoY >=20% and <50%"}
+      D2: {name: hypergrowth, criteria: "YoY >=50% and <100%"}
+      D3: {name: extreme_hypergrowth, criteria: "latest-quarter YoY >=100%"}
+      D4: {name: durable_extreme_hypergrowth, criteria: "latest-quarter YoY >=100% AND 2-quarter aggregate YoY >=100%"}
+    current: D4
+    evidence: ["Q2 FY2027 Data Center revenue $89.023B (+117% YoY)", "H1 FY2027 Data Center $164.269B vs $80.208B (+104.8%)"]
+    source_refs: [NVDA_Q2_10Q]
+  Gross_Margin:
+    states:
+      M0: {name: compressed, criteria: "gross margin <55%"}
+      M1: {name: recovering, criteria: "55%-<65%"}
+      M2: {name: strong, criteria: "65%-<72%"}
+      M3: {name: premium, criteria: "72%-<78%"}
+      M4: {name: exceptional, criteria: ">=78% for 2 quarters"}
+    current: M3
+    evidence: ["Q2 FY2027 GAAP gross margin 75.0%"]
+    source_refs: [NVDA_Q2_10Q]
+  Customer_Breadth:
+    states:
+      B0: {name: narrow, criteria: "ACIE share of Data Center revenue <20%"}
+      B1: {name: hyperscale_dominant, criteria: "ACIE share 20%-<30%"}
+      B2: {name: broadening, criteria: "ACIE share 30%-<40%"}
+      B3: {name: broad, criteria: "ACIE share >=40% AND latest-quarter ACIE YoY growth >=50%"}
+      B4: {name: durable_broad, criteria: "ACIE share >=40% AND 2-quarter aggregate ACIE YoY growth >=50%"}
+    current: B4
+    evidence: ["Q2 ACIE $40.313B / Data Center $89.023B = 45.3%", "H1 ACIE $72.508B vs $33.780B = +114.6%"]
+    source_refs: [NVDA_Q2_10Q]
+  Supply_Commitment:
+    states:
+      S0: {name: light, criteria: "supply commitments / annualized latest-quarter revenue <0.25x"}
+      S1: {name: moderate, criteria: "0.25x-<0.50x"}
+      S2: {name: elevated, criteria: "0.50x-<1.00x"}
+      S3: {name: extreme, criteria: ">=1.00x"}
+      S4: {name: mismatch, criteria: "inventory/excess-purchase provision >2% of quarterly revenue for 2 quarters"}
+    current: S2
+    evidence: ["supply commitments $279B", "annualized Q2 revenue $384.884B => ratio ~0.725x", "Q2 provisions $985M = ~1.02% revenue"]
+    source_refs: [NVDA_Q2_10Q]
+  China_Access:
+    states:
+      X0: {name: unrestricted, criteria: "competitive Data Center products broadly saleable in China"}
+      X1: {name: restricted_but_material, criteria: "China Data Center shipments >=5% of Data Center revenue"}
+      X2: {name: effectively_foreclosed, criteria: "China Data Center shipments <1% and company states effective foreclosure"}
+      X3: {name: broader_export_impairment, criteria: "new restrictions outside current China foreclosure cause >=5% quarterly revenue loss/charge"}
+      X4: {name: systemic_trade_impairment, criteria: "restrictions materially impair both sales and critical supply chain"}
+    current: X2
+    evidence: ["China Data Center shipments <1% of Data Center revenue", "10-Q states effective foreclosure from China data-center compute market"]
+    source_refs: [NVDA_Q2_10Q]
+
+kpis:
+  - {id: NVDA-KPI-01, name: "Total revenue YoY", period: quarterly, current_value: 1.06, unit: "YoY fraction", zones: {green: ">=0.40", yellow: ">=0.20 and <0.40", red: "<0.20"}, source_ref: NVDA_Q2_10Q}
+  - {id: NVDA-KPI-02, name: "Data Center revenue YoY", period: quarterly, current_value: 1.17, unit: "YoY fraction", zones: {green: ">=0.50", yellow: ">=0.20 and <0.50", red: "<0.20"}, source_ref: NVDA_Q2_10Q}
+  - {id: NVDA-KPI-03, name: "Gross margin", period: quarterly, current_value: 0.75, unit: fraction, zones: {green: ">=0.72", yellow: ">=0.65 and <0.72", red: "<0.65"}, source_ref: NVDA_Q2_10Q}
+  - {id: NVDA-KPI-04, name: "Operating margin", period: quarterly, current_value: 0.6624, unit: fraction, formula: "63.734/96.221", zones: {green: ">=0.55", yellow: ">=0.40 and <0.55", red: "<0.40"}, source_ref: NVDA_Q2_10Q}
+  - {id: NVDA-KPI-05, name: "H1 operating cash flow margin", period: semiannual, current_value: 0.4185, unit: fraction, formula: "74.421/177.837", zones: {green: ">=0.35", yellow: ">=0.25 and <0.35", red: "<0.25"}, source_ref: NVDA_Q2_10Q}
+  - {id: NVDA-KPI-06, name: "Supply commitments / annualized latest-quarter revenue", period: quarterly, current_value: 0.725, unit: x, formula: "279/(96.221*4)", zones: {green: "<0.50", yellow: ">=0.50 and <=1.00", red: ">1.00"}, source_ref: NVDA_Q2_10Q}
+  - {id: NVDA-KPI-07, name: "Inventory/excess-purchase provisions / quarterly revenue", period: quarterly, current_value: 0.0102, unit: fraction, formula: "0.985/96.221", zones: {green: "<0.01", yellow: ">=0.01 and <0.02", red: ">=0.02"}, source_ref: NVDA_Q2_10Q}
+  - {id: NVDA-KPI-08, name: "ACIE share of Data Center revenue", period: quarterly, current_value: 0.4528, unit: fraction, formula: "40.313/89.023", zones: {green: ">=0.35", yellow: ">=0.20 and <0.35", red: "<0.20"}, source_ref: NVDA_Q2_10Q}
+  - {id: NVDA-KPI-09, name: "China Data Center revenue share", period: quarterly, current_value: "<0.01", unit: fraction, zones: {green: ">=0.10", yellow: ">=0.01 and <0.10", red: "<0.01"}, source_ref: NVDA_Q2_10Q, note: "market-access KPI"}
+  - {id: NVDA-KPI-10, name: "Top-5 direct customer share of accounts receivable", period: quarterly, current_value: 0.70, unit: fraction, formula: "(22+14+13+11+10)%", zones: {green: "<0.50", yellow: ">=0.50 and <=0.70", red: ">0.70"}, source_ref: NVDA_Q2_10Q}
+
+triggers:
+  - {id: NVDA-E-01, axis: AI_Demand, transition: {from: D4, to: D3}, kpis: [NVDA-KPI-02], condition: "Data Center revenue YoY <100% but >=50% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-02, axis: AI_Demand, transition: {from: D4, to: D2}, kpis: [NVDA-KPI-02], condition: "Data Center revenue YoY <50% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-03, axis: Gross_Margin, transition: {from: M3, to: M4}, kpis: [NVDA-KPI-03], condition: "gross margin >=78% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-04, axis: Gross_Margin, transition: {from: M3, to: M2}, kpis: [NVDA-KPI-03], condition: "gross margin <72% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-05, axis: Customer_Breadth, transition: {from: B4, to: B3}, kpis: [NVDA-KPI-08], condition: "ACIE share <40% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-06, axis: Customer_Breadth, transition: {from: B4, to: B2}, kpis: [NVDA-KPI-08, NVDA-KPI-10], condition: "ACIE share <30% for 2 quarters OR top-5 AR concentration >75% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-07, axis: Supply_Commitment, transition: {from: S2, to: S3}, kpis: [NVDA-KPI-06], condition: "commitment ratio >1.0x for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-08, axis: Supply_Commitment, transition: {from: S2, to: S4}, kpis: [NVDA-KPI-07], condition: "inventory/excess-purchase provisions >=2% of quarterly revenue for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-09, axis: Supply_Commitment, transition: {from: S2, to: S1}, kpis: [NVDA-KPI-06, NVDA-KPI-07], condition: "commitment ratio <0.50x AND provision ratio <1% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-10, axis: China_Access, transition: {from: X2, to: X1}, kpis: [NVDA-KPI-09], condition: "lawfully permitted China Data Center shipments >=5% of Data Center revenue for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NVDA-E-11, axis: China_Access, transition: {from: X2, to: X3}, kpis: [NVDA-KPI-09], condition: "new export restrictions outside current China foreclosure produce disclosed revenue loss/charge >=5% of quarterly revenue", period: "1 quarter", level: E3}
+
+mpc_inputs:
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 2
+    HYPERSCALER_CAPEX: 2
+    SEMICONDUCTOR_WFE: 1
+    ADVANCED_PACKAGING: 2
+    HBM_MEMORY: 2
+    EDA_DESIGN_COMPLEXITY: 1
+    CLOUD_SOFTWARE_DEMAND: 1
+    DATA_CENTER_POWER: 2
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 1
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: 1
+    CHINA_REVENUE: 1
+    TAIWAN_SUPPLY: 2
+    ACQUISITION_INTEGRATION: 0
+  driver_vector_provenance: model_assumption
+  failure_modes:
+    - {failure_id: NVDA-FM-01, common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN, severity: high, name: "Hyperscaler/AI-lab capex slowdown"}
+    - {failure_id: NVDA-FM-02, common_cause_id: AI_OVERBUILD, severity: high, name: "AI infrastructure overbuild / demand normalization"}
+    - {failure_id: NVDA-FM-03, common_cause_id: TAIWAN_SUPPLY_DISRUPTION, severity: critical, name: "Taiwan/foundry supply disruption"}
+    - {failure_id: NVDA-FM-04, common_cause_id: ADVANCED_PACKAGING_HBM_BOTTLENECK, severity: high, name: "Advanced packaging/HBM bottleneck or cost shock"}
+    - {failure_id: NVDA-FM-05, common_cause_id: EXPORT_CONTROLS_CHINA, severity: high, name: "Export-control / China exclusion broadens"}
+    - {failure_id: NVDA-FM-06, common_cause_id: AI_CLOUD_CUSTOMER_FINANCING_STRESS, severity: high, name: "Large customer financing/default stress"}
+    - {failure_id: NVDA-FM-07, common_cause_id: ARCHITECTURE_TRANSITION_EXECUTION, severity: high, name: "Architecture transition or supply mismatch"}
+    - {failure_id: NVDA-FM-08, common_cause_id: CUSTOMER_CONCENTRATION, severity: medium, name: "Customer concentration amplifies demand shock"}

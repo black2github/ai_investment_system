@@ -1,0 +1,118 @@
+version: "1.0"
+ticker: HOOD
+as_of: "2026-09-21"
+artifact: company_state_kpi_trigger_mpc
+semantics:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  numeric_thresholds_provenance: model_assumption
+sources:
+  HOOD_Q2_10Q: "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm"
+  HOOD_Q2_RELEASE: "https://investors.robinhood.com/news-releases/news-release-details/robinhood-reports-second-quarter-2026-results"
+  HOOD_AUG_OPS: "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data"
+
+states:
+  Customer_Asset_Scale:
+    states:
+      S0: {name: subscale, criteria: "Funded Customers <20M OR Total Platform Assets < $150B"}
+      S1: {name: established, criteria: "Funded Customers >=20M AND TPA >=$150B"}
+      S2: {name: scaled, criteria: "Funded Customers >=25M AND TPA >=$250B"}
+      S3: {name: scaled_with_inflows, criteria: "Funded Customers >=28M AND TPA >=$350B AND LTM Net Deposit growth >=20%"}
+      S4: {name: broad_financial_platform, criteria: "Funded Customers >=30M AND TPA >=$450B AND LTM Net Deposit growth >=20% for 2 months"}
+    current: S3
+    evidence: ["August Funded Customers 28.6M", "TPA $383.7B", "LTM Net Deposit growth 24%"]
+    source_refs: [HOOD_AUG_OPS]
+  Revenue_Diversification:
+    states:
+      R0: {name: transaction_dominant, criteria: "transaction-based revenue >75% of total net revenue"}
+      R1: {name: partially_diversified, criteria: ">65% and <=75%"}
+      R2: {name: balanced, criteria: ">60% and <=65%"}
+      R3: {name: diversified, criteria: "transaction share <=60% AND no single transaction category >30% of total net revenue"}
+      R4: {name: recurring_majority, criteria: "transaction share <50% for 2 quarters"}
+    current: R3
+    evidence: ["Q2 transaction-based revenue 59%", "options 26%, event contracts 12%, crypto 8%, equities 10% of total net revenue"]
+    source_refs: [HOOD_Q2_10Q]
+  Profitability:
+    states:
+      P0: {name: loss_making, criteria: "Adjusted EBITDA margin <0%"}
+      P1: {name: positive_low, criteria: "0%-<25%"}
+      P2: {name: scaled, criteria: "25%-<45%"}
+      P3: {name: high, criteria: ">=45%"}
+      P4: {name: durable_high, criteria: ">=55% for 2 quarters"}
+    current: P3
+    evidence: ["Q2 Adjusted EBITDA $741M / revenue $1.308B = 56.7%", "Q2 GAAP net income attributable to Robinhood $561M"]
+    source_refs: [HOOD_Q2_10Q]
+  Credit_Risk:
+    states:
+      C0: {name: low, criteria: "credit-loss provision <2% of revenue"}
+      C1: {name: manageable, criteria: "2%-<5%"}
+      C2: {name: elevated, criteria: "5%-<8%"}
+      C3: {name: stressed, criteria: "8%-<12%"}
+      C4: {name: severe, criteria: ">=12%"}
+    current: C1
+    evidence: ["Q2 provision $56M = 4.3% of revenue", "credit-card provision $51M vs $19M YoY"]
+    source_refs: [HOOD_Q2_10Q]
+  Regulatory_Product:
+    states:
+      G0: {name: normal, criteria: "no forced suspension/termination of material product offering"}
+      G1: {name: elevated_scrutiny, criteria: "formal legal/regulatory challenge exists but no forced product suspension"}
+      G2: {name: partial_restriction, criteria: "specific product offering required to cease/suspend in at least one jurisdiction"}
+      G3: {name: material_restriction, criteria: "federal or multi-jurisdiction restriction affects product category >=10% of trailing-quarter revenue"}
+      G4: {name: core_platform_impairment, criteria: "regulatory action materially impairs brokerage/clearing/custody authorization"}
+    current: G2
+    evidence: ["10-Q states Robinhood agreed to cease new sports-related event contracts in Nevada", "event-contract revenue was 12% of Q2 total net revenue; Nevada is only a subset"]
+    source_refs: [HOOD_Q2_10Q]
+
+kpis:
+  - {id: HOOD-KPI-01, name: "Funded Customers", period: monthly, current_value: 28.6, unit: million, zones: {green: ">=28", yellow: ">=26 and <28", red: "<26"}, source_ref: HOOD_AUG_OPS}
+  - {id: HOOD-KPI-02, name: "Total Platform Assets", period: monthly, current_value: 383.7, unit: "USD B", zones: {green: ">=350", yellow: ">=300 and <350", red: "<300"}, source_ref: HOOD_AUG_OPS}
+  - {id: HOOD-KPI-03, name: "LTM Net Deposit growth rate", period: monthly, current_value: 0.24, unit: fraction, zones: {green: ">=0.20", yellow: ">=0.10 and <0.20", red: "<0.10"}, source_ref: HOOD_AUG_OPS}
+  - {id: HOOD-KPI-04, name: "ARPU", period: quarterly, current_value: 187, unit: "USD annualized", zones: {green: ">=180", yellow: ">=140 and <180", red: "<140"}, source_ref: HOOD_Q2_10Q}
+  - {id: HOOD-KPI-05, name: "Robinhood Gold Subscribers", period: quarterly, current_value: 4.84, unit: million, zones: {green: ">=4.5", yellow: ">=3.5 and <4.5", red: "<3.5"}, source_ref: HOOD_Q2_10Q}
+  - {id: HOOD-KPI-06, name: "Total net revenue YoY", period: quarterly, current_value: 0.32, unit: "YoY fraction", zones: {green: ">=0.25", yellow: ">=0.10 and <0.25", red: "<0.10"}, source_ref: HOOD_Q2_10Q}
+  - {id: HOOD-KPI-07, name: "Adjusted EBITDA margin", period: quarterly, current_value: 0.5665, unit: fraction, formula: "741/1308", zones: {green: ">=0.45", yellow: ">=0.25 and <0.45", red: "<0.25"}, source_ref: HOOD_Q2_10Q}
+  - {id: HOOD-KPI-08, name: "Transaction-based revenue share", period: quarterly, current_value: 0.59, unit: fraction, zones: {green: "<=0.60", yellow: ">0.60 and <=0.70", red: ">0.70"}, source_ref: HOOD_Q2_10Q}
+  - {id: HOOD-KPI-09, name: "Event-contract revenue share", period: quarterly, current_value: 0.12, unit: fraction, zones: {green: "<0.10", yellow: ">=0.10 and <0.20", red: ">=0.20"}, source_ref: HOOD_Q2_10Q, note: "risk/concentration KPI"}
+  - {id: HOOD-KPI-10, name: "Credit-loss provision / revenue", period: quarterly, current_value: 0.0428, unit: fraction, formula: "56/1308", zones: {green: "<0.03", yellow: ">=0.03 and <0.05", red: ">=0.05"}, source_ref: HOOD_Q2_10Q}
+
+triggers:
+  - {id: HOOD-E-01, axis: Customer_Asset_Scale, transition: {from: S3, to: S4}, kpis: [HOOD-KPI-01, HOOD-KPI-02, HOOD-KPI-03], condition: "Funded Customers >=30M AND TPA >=$450B AND LTM Net Deposit growth >=20% for 2 months", period: "2 months", level: E2}
+  - {id: HOOD-E-02, axis: Customer_Asset_Scale, transition: {from: S3, to: S2}, kpis: [HOOD-KPI-01, HOOD-KPI-02, HOOD-KPI-03], condition: "Funded Customers <27M OR TPA <$300B OR LTM Net Deposit growth <10% for 2 months", period: "2 months", level: E2}
+  - {id: HOOD-E-03, axis: Revenue_Diversification, transition: {from: R3, to: R4}, kpis: [HOOD-KPI-08], condition: "transaction-based revenue share <50% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: HOOD-E-04, axis: Revenue_Diversification, transition: {from: R3, to: R2}, kpis: [HOOD-KPI-08], condition: "transaction-based revenue share >60% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: HOOD-E-05, axis: Profitability, transition: {from: P3, to: P4}, kpis: [HOOD-KPI-07], condition: "Adjusted EBITDA margin >=55% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: HOOD-E-06, axis: Profitability, transition: {from: P3, to: P2}, kpis: [HOOD-KPI-07], condition: "Adjusted EBITDA margin <45% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: HOOD-E-07, axis: Credit_Risk, transition: {from: C1, to: C2}, kpis: [HOOD-KPI-10], condition: "credit-loss provision >=5% of revenue for 2 quarters", period: "2 quarters", level: E2}
+  - {id: HOOD-E-08, axis: Credit_Risk, transition: {from: C1, to: C0}, kpis: [HOOD-KPI-10], condition: "credit-loss provision <2% of revenue for 2 quarters", period: "2 quarters", level: E2}
+  - {id: HOOD-E-09, axis: Regulatory_Product, transition: {from: G2, to: G3}, kpis: [HOOD-KPI-09], condition: "federal or multi-jurisdiction restriction requires suspension/termination of a product category representing >=10% of trailing-quarter revenue", period: "one verified event", level: E3}
+  - {id: HOOD-E-10, axis: Regulatory_Product, transition: {from: G2, to: G1}, kpis: [HOOD-KPI-09], condition: "previous forced restriction is removed/resolved AND no other forced product suspension remains material for 2 quarters", period: "2 quarters", level: E2}
+  - {id: HOOD-E-11, axis: Regulatory_Product, transition: {from: G2, to: G4}, kpis: [], condition: "regulatory action materially suspends or impairs a core brokerage, clearing or custody authorization", period: "one verified event", level: E3}
+
+mpc_inputs:
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 0
+    HYPERSCALER_CAPEX: 0
+    SEMICONDUCTOR_WFE: 0
+    ADVANCED_PACKAGING: 0
+    HBM_MEMORY: 0
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 1
+    DATA_CENTER_POWER: 0
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 0
+    INTEREST_RATES: 1
+    CAPITAL_MARKETS: 2
+    CHINA_REVENUE: 0
+    TAIWAN_SUPPLY: 0
+    ACQUISITION_INTEGRATION: 1
+  driver_vector_provenance: model_assumption
+  failure_modes:
+    - {failure_id: HOOD-FM-01, common_cause_id: CAPITAL_MARKETS_RISK_OFF, severity: high, name: "Risk-off market reduces trading/activity and asset values"}
+    - {failure_id: HOOD-FM-02, common_cause_id: REGULATORY_PREDICTION_MARKETS, severity: high, name: "Prediction-market product restrictions broaden"}
+    - {failure_id: HOOD-FM-03, common_cause_id: CRYPTO_CYCLE_DOWNTURN, severity: medium, name: "Crypto-cycle contraction"}
+    - {failure_id: HOOD-FM-04, common_cause_id: INTEREST_RATE_DECLINE, severity: medium, name: "Lower rates compress net interest revenue"}
+    - {failure_id: HOOD-FM-05, common_cause_id: CONSUMER_CREDIT_DETERIORATION, severity: high, name: "Credit-card losses scale faster than revenue"}
+    - {failure_id: HOOD-FM-06, common_cause_id: ACQUISITION_INTEGRATION_FAILURE, severity: medium, name: "Acquisition integration / product sprawl execution risk"}
+    - {failure_id: HOOD-FM-07, common_cause_id: MARKET_STRUCTURE_COUNTERPARTY_CONCENTRATION, severity: medium, name: "Market-maker/exchange concentration shock"}

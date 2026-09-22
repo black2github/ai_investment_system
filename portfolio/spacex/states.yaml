@@ -1,0 +1,222 @@
+# Вектор состояний SpaceX (оси и состояния). Условия переходов — в triggers.yaml. Текущий вектор — state.json.
+version: '1.1'
+artifact: SPCX State Vector
+as_of: '2026-09-20'
+ticker: SPCX
+source_artifact: inbox/received/SPCX_states_v1.0.yaml (другая LLM, 20.09.2026)
+purpose: 'Оси и состояния компании. Условия переходов НЕ здесь: нормативный дом — triggers.yaml (SPCX-E-10..E-33,
+  поле transition). Текущий вектор ведётся в state.json → scenario_state; здесь — снимок на дату.'
+source_policy:
+  primary:
+  - SEC
+  - SPCX Investor Relations
+  - FAA
+  secondary:
+  - Yahoo Finance
+  - StockAnalysis
+  rule: 'Числовые условия перехода должны проверяться по первичному источнику. Рыночные цены и котировки допускается
+    брать из Yahoo Finance/StockAnalysis. Неподтвержденные факты не переводят состояние и попадают в pending_verification.
+
+    '
+axes:
+  AI:
+    name: AI compute
+    name_ru: AI compute
+    states:
+      A0:
+        name: AI optionality
+        definition: AI-направление существует, но коммерческий спрос и масштаб еще не подтверждены.
+      A1:
+        name: AI demand validation
+        definition: Есть подтвержденный спрос/контракты и растущая AI-выручка, но экономика еще не доказана.
+      A2:
+        name: AI monetization
+        definition: AI-инфраструктура генерирует существенную выручку и достигнута положительная скорректированная
+          EBITDA.
+      A3:
+        name: AI scale acceleration
+        definition: Масштаб вычислений и AI-выручки одновременно ускоряются при подтвержденной экономике.
+      A4:
+        name: AI overbuild / deterioration
+        definition: Рост AI-бизнеса существенно замедляется или экономика ухудшается на фоне высокой капиталоемкости.
+    current_snapshot:
+      state: A2
+      date: '2026-09-20'
+      evidence:
+      - AI revenue Q2 2026 = $2.561B, +247% YoY.
+      - AI adjusted EBITDA Q2 2026 = +$1.146B.
+      - AI operating loss Q2 2026 = -$1.257B.
+      - Nameplate compute = 1.4 GW.
+      - Cloud Service Agreements = $14.1B contracted sales.
+      source: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+    transition_triggers:
+    - SPCX-E-10
+    - SPCX-E-11
+    - SPCX-E-12
+    - SPCX-E-13
+    - SPCX-E-14
+  Starlink:
+    name: Starlink
+    name_ru: Starlink
+    states:
+      B0:
+        name: Early growth
+        definition: Раннее масштабирование абонентской базы.
+      B1:
+        name: Subscriber acceleration
+        definition: Быстрый рост числа абонентов.
+      B2:
+        name: Scale economics
+        definition: Большая база абонентов сочетается с устойчивой операционной рентабельностью Connectivity.
+      B3:
+        name: Mature growth
+        definition: Рост продолжается, но темп прироста абонентов заметно снижается.
+      B4:
+        name: Saturation / ARPU pressure
+        definition: Замедление роста сопровождается существенным снижением ARPU и/или ухудшением рентабельности.
+    current_snapshot:
+      state: B2
+      date: '2026-09-20'
+      evidence:
+      - Starlink subscribers = 12.0M, +100% YoY.
+      - Connectivity revenue = $4.291B, +66% YoY.
+      - Connectivity operating income = $1.656B; operating margin ~38.6%.
+      - ARPU = $66/month vs $85 a year earlier.
+      source: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+    transition_triggers:
+    - SPCX-E-15
+    - SPCX-E-16
+    - SPCX-E-17
+    - SPCX-E-18
+    - SPCX-E-19
+  Starship:
+    name: Starship
+    name_ru: Starship
+    states:
+      C0:
+        name: Development
+        definition: Разработка без подтвержденного flight-test milestone.
+      C1:
+        name: Successful suborbital validation
+        definition: Есть успешная суборбитальная миссия с выполнением существенных целей.
+      C2:
+        name: Orbital validation
+        definition: Успешная орбитальная миссия с выполнением заявленных mission objectives.
+      C3:
+        name: Reusability validation
+        definition: Подтверждена повторная эксплуатация летного железа с ограниченным интервалом.
+      C4:
+        name: High-frequency operations
+        definition: Система демонстрирует регулярную эксплуатацию с высокой частотой.
+      C5:
+        name: Cost-to-orbit disruption
+        definition: Подтверждено существенное снижение стоимости вывода относительно исторической базы.
+    current_snapshot:
+      state: C1
+      date: '2026-09-20'
+      evidence:
+      - 'Flight 12: successful suborbital mission.'
+      - 'Flight 13: company reported all flight objectives achieved.'
+      - FAA operational plan dated 2026-09-18 listed Starship Flight 14 primary 2026-09-22 and backup 2026-09-23.
+      source: SEC earnings release; FAA ATCSCC operational plan
+    transition_triggers:
+    - SPCX-E-20
+    - SPCX-E-21
+    - SPCX-E-22
+    - SPCX-E-23
+    - SPCX-E-24
+  Capital_Intensity:
+    name: Capital intensity
+    name_ru: капиталоёмкость
+    states:
+      D0:
+        name: Capital discipline
+        definition: Capex контролируем относительно роста бизнеса.
+      D1:
+        name: Investment expansion
+        definition: Capex ускоряется вместе с ростом подтвержденного спроса.
+      D2:
+        name: Aggressive expansion
+        definition: Высокий capex необходим для быстрого масштабирования.
+      D3:
+        name: Extreme expansion
+        definition: Capex становится системообразующим фактором инвестиционной истории.
+      D4:
+        name: Overinvestment risk
+        definition: Capex остается очень высоким при ухудшении роста/экономики.
+    current_snapshot:
+      state: D3
+      date: '2026-09-20'
+      evidence:
+      - Total Q2 capex = $18.369B.
+      - AI Q2 capex = $15.828B.
+      - AI capex H1 2026 = $23.551B.
+      - AI revenue Q2 = $2.561B.
+      source: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+    transition_triggers:
+    - SPCX-E-25
+    - SPCX-E-26
+    - SPCX-E-27
+    - SPCX-E-28
+    - SPCX-E-29
+  Valuation:
+    name: Valuation
+    name_ru: valuation
+    states:
+      V0:
+        name: Not assessed
+        definition: Reverse valuation не рассчитана.
+      V1:
+        name: Low implied expectations
+        definition: Текущая цена требует умеренных будущих операционных показателей.
+      V2:
+        name: Reasonable implied expectations
+        definition: Цена совместима с центральным диапазоном операционной модели.
+      V3:
+        name: Demanding
+        definition: Цена требует высокой устойчивости роста/маржи.
+      V4:
+        name: Very demanding
+        definition: Цена требует исключительного сочетания роста, масштаба и длительности.
+      V5:
+        name: Speculative / thesis-dependent
+        definition: Цена преимущественно зависит от еще не подтвержденных будущих бизнес-моделей.
+    current_snapshot:
+      state: V4
+      date: '2026-09-20'
+      evidence:
+      - Close 2026-09-18 = $152.71.
+      - Market cap = ~$2.07T.
+      - TTM revenue = ~$23.04B.
+      - Price/Sales (ttm) = 70.49x; EV/Revenue = 84.74x (Yahoo Finance).
+      - Reverse valuation has not yet been approved as a calculation-engine version.
+      source: https://finance.yahoo.com/quote/SPCX/; https://stockanalysis.com/stocks/spcx/market-cap/
+    transition_triggers:
+    - SPCX-E-30
+    - SPCX-E-31
+    - SPCX-E-32
+    - SPCX-E-33
+    note: V4 — предварительное состояние по мультипликатору (KPI-10), не результат reverse valuation.
+transition_semantics:
+  trigger: Наблюдаемый факт, прошедший проверку источника.
+  transition: Машинное изменение state axis.
+  decision: Отдельное решение владельца; не является частью transition.
+  rollback: Разрешен только отдельным transition с явно заданным condition.
+  evidence_required: true
+  pending_verification_blocks_transition: true
+evaluation_rule: Оцениваются только переходы, у которых from совпадает с текущим состоянием оси (включая откаты).
+  Условия «N кварталов подряд» считаются по state.json → kpi_observations, не по памяти модели. Неподтверждённый
+  факт → pending_verification, перехода нет.
+legacy_compatibility:
+  unchanged_ids:
+  - SPCX-E-01
+  - SPCX-E-02
+  - SPCX-E-03
+  - SPCX-E-04
+  - SPCX-E-05
+  - SPCX-E-06
+  - SPCX-E-07
+  - SPCX-E-08
+  - SPCX-E-09
+  note: Существующие E-01...E-09 не переименовываются и не переписываются; новые state-transition IDs начинаются
+    с E-10.

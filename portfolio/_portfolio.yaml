@@ -1,0 +1,744 @@
+version: "1.1"
+artifact: "_portfolio"
+as_of: "2026-09-20"
+changelog:
+  - {version: "1.1", date: "2026-09-20", change: "additive patch: initial_portfolio_hypothesis (prior, не вход оптимизатора), positions_rule, target_weights.effective_from; источник — другая LLM, share 6ab03704"}
+  - {version: "1.0", date: "2026-09-20", change: "исходная схема"}
+purpose: "Машинная схема портфеля, NAV, целевых весов, ограничений, просадок и режимов."
+currency_base: USD
+
+source_policy:
+  facts: "Цена, количество, FX, NAV и индексные уровни должны иметь источник и дату."
+  assumptions: "Любой числовой порог методологии помечается model_assumption."
+  purchase_history: "Цена и дата покупки хранятся как факт и не используются как valuation anchor."
+
+portfolio:
+  portfolio_id: "MAIN"
+  accounts:                     # владелец 21.09.2026: де-факто два портфеля через разных брокеров (разные страны); NAV считается совокупно
+    - {id: P1, note: "брокер 1"}
+    - {id: P2, note: "брокер 2"}
+  positions:
+    - ticker: RKLB
+      account: P1
+      exchange: NASDAQ
+      company: "Rocket Lab Corporation"
+      asset_class: equity
+      sector_id: SPACE
+      quantity: 40
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 64.57, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 150.23, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 3341.20, avg_price: 83.53, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/rklb/states.yaml
+      company_rules_ref: portfolio/rklb/triggers.yaml
+    - ticker: NVDA
+      account: P1
+      exchange: NASDAQ
+      company: "NVIDIA Corporation"
+      asset_class: equity
+      sector_id: SEMICONDUCTORS
+      quantity: 175.1578
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 222.27, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 235.74, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 15501.47, avg_price: 88.5, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/nvda/states.yaml
+      company_rules_ref: portfolio/nvda/triggers.yaml
+    - ticker: NET
+      account: P1
+      exchange: NYSE
+      company: "Cloudflare, Inc."
+      asset_class: equity
+      sector_id: SOFTWARE
+      quantity: 10
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 323.6, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 333.94, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 2236.60, avg_price: 223.66, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/net/states.yaml
+      company_rules_ref: portfolio/net/triggers.yaml
+    - ticker: NBIS
+      account: P1
+      exchange: NASDAQ
+      company: "Nebius Group N.V."
+      asset_class: equity
+      sector_id: AI_COMPUTE
+      quantity: 80
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 223.54, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 286.69, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 5876.00, avg_price: 73.45, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/nbis/states.yaml
+      company_rules_ref: portfolio/nbis/triggers.yaml
+    - ticker: MSFT
+      account: P1
+      exchange: NASDAQ
+      company: "Microsoft Corporation"
+      asset_class: equity
+      sector_id: SOFTWARE
+      quantity: 7.0205
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 493.78, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 542.07, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 1906.63, avg_price: 271.58, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/msft/states.yaml
+      company_rules_ref: portfolio/msft/triggers.yaml
+    - ticker: META
+      account: P1
+      exchange: NASDAQ
+      company: "Meta Platforms, Inc."
+      asset_class: equity
+      sector_id: INTERNET_PLATFORMS
+      quantity: 15.0101
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 665.75, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 778.38, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 5145.91, avg_price: 342.83, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/meta/states.yaml
+      company_rules_ref: portfolio/meta/triggers.yaml
+    - ticker: LLY
+      account: P1
+      exchange: NYSE
+      company: "Eli Lilly and Company"
+      asset_class: equity
+      sector_id: HEALTHCARE
+      quantity: 13.0276
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 1152.93, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 1280.34, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 10062.78, avg_price: 772.42, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/lly/states.yaml
+      company_rules_ref: portfolio/lly/triggers.yaml
+    - ticker: HOOD
+      account: P1
+      exchange: NASDAQ
+      company: "Robinhood Markets, Inc."
+      asset_class: equity
+      sector_id: FINTECH
+      quantity: 105
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 119.82, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 152.46, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 5202.75, avg_price: 49.55, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/hood/states.yaml
+      company_rules_ref: portfolio/hood/triggers.yaml
+    - ticker: GLD
+      account: P1
+      exchange: NYSE
+      company: "SPDR Gold Shares"
+      asset_class: commodity_etf
+      sector_id: GOLD
+      quantity: 4
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 401.17, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 495.9, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 1650.00, avg_price: 412.5, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+    - ticker: ETN
+      account: P1
+      exchange: NYSE
+      company: "Eaton Corporation plc"
+      asset_class: equity
+      sector_id: ELECTRIFICATION
+      quantity: 5.0102
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 424.77, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 459.96, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 2038.35, avg_price: 406.84, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/etn/states.yaml
+      company_rules_ref: portfolio/etn/triggers.yaml
+    - ticker: ASML
+      account: P1
+      exchange: NASDAQ
+      company: "ASML Holding N.V."
+      asset_class: equity
+      sector_id: SEMICONDUCTORS
+      quantity: 3.0085
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 1679.92, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 1989.4399, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 4159.76, avg_price: 1382.67, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/asml/states.yaml
+      company_rules_ref: portfolio/asml/triggers.yaml
+    - ticker: RKLB
+      account: P2
+      exchange: NASDAQ
+      company: "Rocket Lab Corporation"
+      asset_class: equity
+      sector_id: SPACE
+      quantity: 24
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 64.57, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 150.23, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 2509.44, avg_price: 104.56, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/rklb/states.yaml
+      company_rules_ref: portfolio/rklb/triggers.yaml
+    - ticker: UFO
+      account: P2
+      exchange: NASDAQ
+      company: "Procure Space ETF"
+      asset_class: sector_etf
+      sector_id: SPACE
+      quantity: 7
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 43.21, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 67.805, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 385.91, avg_price: 55.13, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+    - ticker: ASTS
+      account: P2
+      exchange: NASDAQ
+      company: "AST SpaceMobile, Inc."
+      asset_class: equity
+      sector_id: SPACE
+      quantity: 32
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 58.52, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 133.09, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 2475.52, avg_price: 77.36, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/asts/states.yaml
+      company_rules_ref: portfolio/asts/triggers.yaml
+    - ticker: GLD
+      account: P2
+      exchange: NYSE
+      company: "SPDR Gold Shares"
+      asset_class: commodity_etf
+      sector_id: GOLD
+      quantity: 6
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 401.17, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 495.9, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 2633.58, avg_price: 438.93, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+    - ticker: CRWV
+      account: P2
+      exchange: NASDAQ
+      company: "CoreWeave, Inc."
+      asset_class: equity
+      sector_id: AI_COMPUTE
+      quantity: 11
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 81.36, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 143.08, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 1682.23, avg_price: 152.93, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/crwv/states.yaml
+      company_rules_ref: portfolio/crwv/triggers.yaml
+    - ticker: PLTR
+      account: P2
+      exchange: NASDAQ
+      company: "Palantir Technologies Inc."
+      asset_class: equity
+      sector_id: SOFTWARE
+      quantity: 18
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 177.64, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 207.18, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 2343.60, avg_price: 130.2, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/pltr/states.yaml
+      company_rules_ref: portfolio/pltr/triggers.yaml
+    - ticker: NBIS
+      account: P2
+      exchange: NASDAQ
+      company: "Nebius Group N.V."
+      asset_class: equity
+      sector_id: AI_COMPUTE
+      quantity: 190
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots:            # 18 лотов, даты владелец не передал (порядок — как в выписке); все legacy_at_system_start
+        - {date: null, quantity: 7, price: 30.31, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 10, price: 35.2, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 7, price: 40.22, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 30, price: 39.3, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 20, price: 47.2, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 5, price: 51.8, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 15, price: 52.32, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 30, price: 51.38, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 19, price: 51.35, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 2, price: 51.3, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 4, price: 74.9, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 6, price: 74.6, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 4, price: 109.762, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 10, price: 236.7, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 1, price: 237.5, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 9, price: 237.5, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 10, price: 230.1, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+        - {date: null, quantity: 1, price: 230.1, currency: USD, source: "owner (выписка, сообщение 21.09.2026)", legacy_at_system_start: true}
+      cost_basis: {total_usd: 15091.51, avg_price: 79.4290, quantity_check: 190, as_of: "2026-09-21", note: "без комиссий; FX не применим (USD)"}
+      market: {price: 223.54, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 286.69, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      state_vector_ref: portfolio/nbis/states.yaml
+      company_rules_ref: portfolio/nbis/triggers.yaml
+    - ticker: HOOD
+      account: P2
+      exchange: NASDAQ
+      company: "Robinhood Markets, Inc."
+      asset_class: equity
+      sector_id: FINTECH
+      quantity: 112
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # владелец: портфель формировался много лет, история покупок не нужна — важна доля (21.09.2026)
+      market: {price: 119.82, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 152.46, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 6219.36, avg_price: 55.53, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты не переданы; средняя цена брокера, вероятно с комиссиями"}
+      state_vector_ref: portfolio/hood/states.yaml
+      company_rules_ref: portfolio/hood/triggers.yaml
+    - ticker: SPCX
+      account: P1                   # владелец 21.09.2026
+      exchange: NASDAQ
+      company: "Space Exploration Technologies Corp."
+      asset_class: equity
+      sector_id: SPACE
+      quantity: 8
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots:
+        - {date: "2026-09-17", quantity: 4, price: 155.05, currency: USD, source: "owner (сообщение 20.09.2026), сигналы SPCX-C-01/C-02"}
+        - {date: "2026-09-17", quantity: 4, price: 155.02, currency: USD, source: "owner (сообщение 20.09.2026), сигналы SPCX-C-01/C-02"}
+      market: {price: 152.71, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 211.39, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      cost_basis: {total_usd: 1243.28, avg_price: 155.41, source: "owner (средняя цена брокера, сообщение 22.09.2026)", legacy_at_system_start: true, note: "лоты 4×155.05 + 4×155.02 (средняя 155.035); брокерская средняя 155.41 — с комиссиями"}
+      state_vector_ref: portfolio/spacex/states.yaml
+      company_rules_ref: portfolio/spacex/triggers.yaml
+
+    - ticker: SPOT
+      account: P1
+      exchange: NYSE
+      company: "Spotify Technology S.A."
+      asset_class: equity
+      sector_id: INTERNET_PLATFORMS   # provisional — стриминг/платформа, ориентир XLC как у META
+      quantity: 4
+      quantity_unit: shares
+      currency: USD
+      acquisition_lots: []          # средняя цена брокера, лоты не переданы
+      cost_basis: {total_usd: 1047.88, avg_price: 261.97, source: "owner (сообщение 22.09.2026)", legacy_at_system_start: true}
+      market: {price: 509.45, price_date: "2026-09-18", price_source: "Yahoo chart", price_12m_max: 738.53, fx_to_base: 1.0}
+      role: {current: null, allowed: [Core, Challenger, Watch, Legacy]}
+      target: {weight: null, target_version: null, effective_from: null}
+      note: "не было в составе портфеля, переданном 21.09; добавлена по списку средних цен 22.09; модели компании нет"
+
+  positions_rule: >
+    Фактические позиции остаются отдельными от initial_portfolio_hypothesis.
+    До предоставления владельцем фактического состава они не выводятся из prior.
+
+  cash:
+    accounts:
+      - {id: P1, currency: USD, amount: 897.91, fx_to_base: 1.0, source: "owner 2026-09-21"}
+      - {id: P2, currency: USD, amount: 0.0, fx_to_base: 1.0, source: "owner 2026-09-21: кэш второго счёта — ноль"}
+    dry_powder:
+      amount_base: null
+      target_weight: null
+      target_version: null
+      instruments_allowed:
+        - cash
+        - treasury_bills
+        - money_market
+      note: "Конкретный размер резерва задаётся владельцем; схема его не предполагает."
+
+  nav_history:
+    - date: "2026-09-18"
+      positions_value_base: 179820.2
+      cash_value_base: 897.91
+      nav_base: 180718.11
+      source_snapshot: "20260921T211743Z-portfolio_regime-42defe"
+      note: "первый снимок (пересчитан 21.09 дважды: кэш P2 = 0 и 8 benchmark'ов — …-fe89a2; корзина AI_COMPUTE + override — 20260921T135230Z-portfolio_regime-28b2b3; первичный прогон …-b472bc)"
+
+  target_weights:
+    version: null
+    approved_at: null
+    effective_from: null
+    status: draft
+    weights: []
+    sum_check: null
+
+initial_portfolio_hypothesis:
+  status: "pre_system_prior"
+  recorded_as_historical_fact: true
+  approved_target_portfolio: false
+  use_as_optimizer_input: false
+  use_as_target_weights: false
+  owner_confirmation: {status: confirmed, date: "2026-09-20", note: "список и веса воспроизведены другой LLM по прежней переписке, владелец подтвердил"}
+
+  purpose:
+    - "Сохранить первоначальную гипотезу портфеля до полного прогона инвестиционной системы."
+    - "Позволить ex-post сравнить первоначальный человеческий выбор с результатом Company Model → Conditional MC → Marginal Portfolio Contribution → Portfolio Optimizer → Stability Test."
+    - "Выявлять anchoring: система не должна рационализировать прежние веса."
+
+  candidates:
+    - {ticker: AVGO, prior_weight: 0.15, role: candidate}
+    - {ticker: NVDA, prior_weight: 0.15, role: candidate}
+    - {ticker: KLAC, prior_weight: 0.14, role: candidate}
+    - {ticker: ASML, prior_weight: 0.11, role: candidate}
+    - {ticker: SPCX, prior_weight: 0.10, role: candidate}
+    - {ticker: SNPS, prior_weight: 0.08, role: candidate}
+    - {ticker: RKLB, prior_weight: 0.08, role: candidate}
+    - {ticker: CDNS, prior_weight: 0.07, role: candidate}
+    - {ticker: MSFT, prior_weight: 0.07, role: candidate}
+    - {ticker: NBIS, prior_weight: 0.05, role: candidate}
+
+  prior_weight_sum: 1.00
+
+  anti_anchoring_rule: >
+    initial_portfolio_hypothesis является только исторической записью prior.
+    Тикер, prior_weight и прежняя роль не передаются как признаки или ограничения
+    в valuation, conditional Monte Carlo, Marginal Portfolio Contribution,
+    Portfolio Optimizer или Portfolio Stability Test. Компания должна заново
+    конкурировать за капитал на одинаковых правилах с другими кандидатами.
+
+  comparison_after_system_run:
+    enabled: true
+    outputs:
+      - prior_weight
+      - model_proposed_weight
+      - absolute_weight_delta
+      - inclusion_changed
+      - primary_reason_codes
+    rule: >
+      Сравнение выполняется только после завершения расчёта, чтобы prior не мог
+      повлиять на оптимизацию.
+
+constraints:
+  constitution_refs: ["§28", "§30"]
+  rule: "Числовые лимиты не придумываются схемой; после утверждения владельцем хранятся версионно."
+  limits:
+    single_name_max_weight: null
+    sector_max_weight: null
+    challenger_max_weight: null
+    illiquid_max_weight: null
+    minimum_dry_powder_weight: null
+    maximum_dry_powder_weight: null
+  owner_constraints:            # вход владельца 20.09.2026; числовой лимит числа бумаг — решение отложено
+    positions_count_limit: null
+    positions_count_note: >
+      Субъективно: частному инвестору сложно ментально следить за большим числом бумаг; число может вырасти,
+      когда система докажет работоспособность. Объективно: ограниченный капитал не позволяет грамотно хеджировать
+      (например, пут-опцион — лот 100 акций, а выделенная на SPCX сумма может не позволить купить 100 акций);
+      рост числа бумаг усугубляет это. Учитывать в MPC §3.7 (implementation constraints) и в Portfolio Optimizer.
+    options_hedging:
+      min_lot_shares: 100
+      feasible_note: "хедж опционами доступен только по позициям ≥ 100 акций; иначе — только через размер позиции/кэш"
+  proposed_limits_v1_0:            # рекомендация другой LLM (Portfolio_Optimizer_Specification_v1.0 §3–4), 21.09.2026; model_assumption
+    status: pending_owner_approval # пока не утверждено — поле limits выше остаётся пустым; движок лимиты не применяет
+    source: methodology/Portfolio_Optimizer_Schema_v1.0.yaml
+    concentration: {single_name_max: 0.20, sector_max: 0.30, top3_aggregate_max: 0.50, common_cause_effective_max: 0.35, unmodeled_target_weight: 0.00}
+    roles: {Core_max_per_name: 0.20, Challenger_max_per_name: 0.08, Challenger_aggregate_max: 0.25, Watch_target_weight: 0.00}
+    dry_powder: {Normal: {min: 0.05, preferred_max: 0.10, hard_max: 0.15}, Stress: {min: 0.05, preferred_max: 0.15, hard_max: 0.20}, Shock: {min: 0.10, preferred_max: 0.20, hard_max: 0.30}}
+    illiquidity: {aggregate_max: 0.10, single_name_max: 0.05}
+    risk_5y: {p_loss_gt_30_max: 0.20, p_loss_gt_50_max: 0.10, es5_min: -0.55, scenario_concentration_max: 0.60}
+    constraint_gap_vs_current:     # фактический портфель на 18.09.2026 (run 20260921T135230Z-portfolio_regime-28b2b3); нарушение ≠ приказ продавать (спецификация §3.1)
+      single_name: "NBIS 33.4% и NVDA 21.5% выше 20%"
+      top3: "69.3% выше 50% (NBIS, NVDA, HOOD)"
+      sector: "AI_COMPUTE 33.9% выше 30% (LLM намеренно предложила 30, а не 35, чтобы текущая концентрация не стала нормой автоматически)"
+      dry_powder: "кэш 0.5% ниже минимума 5% (режим Stress: минимум 5%, предпочтительно до 15%)"
+  conviction_overlay_v1_0:         # пакет другой LLM 21.09 (Conviction_Overlay_Schema_v1.0); все параметры model_assumption, pending_owner_approval
+    status: approved_2026_09_22    # владелец утвердил пп. 1–10 (L_max 10% / 25%, буфер 0.75, лимиты вложенного капитала 12/20/30%, сектор 35/45%, теги ≤3, судейский множитель 0.9–1.1, обзор 12 мес.); резервные просадки 55/75/85% — "начнём с этого"
+    approved_params: {"L_max_standard": 0.1, "L_max_conviction": 0.25, "target_safety_buffer": 0.75, "plausible_drawdown_floor": 0.25, "plausible_drawdown_ceiling": 0.9, "standard_hard_cap_floor": 0.05, "standard_hard_cap_ceiling": 0.3, "conviction_hard_cap_floor": 0.05, "conviction_hard_cap_ceiling": 0.45, "invested_capital": {"standard_name_limit": 0.12, "conviction_name_limit": 0.2, "sector_limit": 0.3}, "sector_market": {"soft_limit": 0.35, "hard_limit": 0.45}, "conviction": {"max_active_tags": 3, "monitor_missed_runs_before_suspend": 2}, "team_execution": {"owner_judgment_multiplier_bounds": [0.9, 1.1], "combined_bounds": [0.8, 1.2]}, "prospective_review": {"horizon_months": 12}, "archetype_fallback": {"mature_positive_margin": 0.55, "capital_intensive_transition": 0.75, "pre_service_or_milestone_driven": 0.85}}
+    engine_model: conviction_overlay   # invest-calc 1.0.0; расчёт по утверждённым параметрам — machine_outputs.conviction_overlay
+    active_conviction_tags: [NBIS]      # владелец 22.09.2026, с исключением по оси Capacity_Secured — portfolio/_conviction_journal.yaml CONV-2026-09-22-NBIS-01
+    source: methodology/Conviction_Overlay_Schema_v1.0.yaml
+    invested_capital_limits: {"standard_name_limit": 0.12, "conviction_name_limit": 0.2, "sector_limit": 0.3}
+    loss_budget: {"standard_L_max_NAV": 0.08, "conviction_L_max_NAV": 0.15, "plausible_drawdown_floor": 0.25, "plausible_drawdown_ceiling": 0.9, "target_safety_buffer": 0.75, "standard_hard_cap_floor": 0.05, "standard_hard_cap_ceiling": 0.3, "conviction_hard_cap_floor": 0.05, "conviction_hard_cap_ceiling": 0.45}
+    sector_market: {"soft_limit": 0.35, "hard_limit": 0.45, "conviction_auto_relaxation": false}
+    conviction: {"max_active_tags": 3, "monitor_missed_runs_before_suspend": 2}
+    plausible_drawdown_fallback_by_archetype: {"mature_positive_margin": 0.55, "capital_intensive_transition": 0.75, "pre_service_or_milestone_driven": 0.85}   # до первого нормативного MC компании
+    cost_basis_status: "22.09.2026: cost basis известен по ВСЕМ позициям (NBIS P2 — лоты; остальное — средние цены брокера); все legacy_at_system_start"
+    risk_capital_basis_usd: 93651.67     # Σ cost basis + кэш, на 22.09.2026
+    invested_capital_preview_2026_09_22:   # доля вложенного капитала по бумагам vs предложенные лимиты 12/20%%; не решение
+      - {"ticker": "NBIS", "invested_share": 0.2239, "basis_usd": 20967.51, "market_share": 0.3303, "gain": 1.8785, "status_vs_proposed": "выше 20%"}
+      - {"ticker": "NVDA", "invested_share": 0.1655, "basis_usd": 15501.47, "market_share": 0.213, "gain": 1.5115, "status_vs_proposed": "выше 12%"}
+      - {"ticker": "HOOD", "invested_share": 0.122, "basis_usd": 11422.11, "market_share": 0.1423, "gain": 1.2764, "status_vs_proposed": "выше 12%"}
+      - {"ticker": "LLY", "invested_share": 0.1074, "basis_usd": 10062.78, "market_share": 0.0822, "gain": 0.4926, "status_vs_proposed": "ok"}
+      - {"ticker": "RKLB", "invested_share": 0.0625, "basis_usd": 5850.64, "market_share": 0.0226, "gain": -0.2937, "status_vs_proposed": "ok"}
+      - {"ticker": "META", "invested_share": 0.0549, "basis_usd": 5145.91, "market_share": 0.0547, "gain": 0.9419, "status_vs_proposed": "ok"}
+      - {"ticker": "GLD", "invested_share": 0.0457, "basis_usd": 4283.58, "market_share": 0.022, "gain": -0.0635, "status_vs_proposed": "ok"}
+      - {"ticker": "ASML", "invested_share": 0.0444, "basis_usd": 4159.76, "market_share": 0.0277, "gain": 0.215, "status_vs_proposed": "ok"}
+      - {"ticker": "ASTS", "invested_share": 0.0264, "basis_usd": 2475.52, "market_share": 0.0102, "gain": -0.2435, "status_vs_proposed": "ok"}
+      - {"ticker": "PLTR", "invested_share": 0.025, "basis_usd": 2343.6, "market_share": 0.0175, "gain": 0.3644, "status_vs_proposed": "ok"}
+      - {"ticker": "NET", "invested_share": 0.0239, "basis_usd": 2236.6, "market_share": 0.0177, "gain": 0.4468, "status_vs_proposed": "ok"}
+      - {"ticker": "ETN", "invested_share": 0.0218, "basis_usd": 2038.35, "market_share": 0.0116, "gain": 0.0441, "status_vs_proposed": "ok"}
+      - {"ticker": "MSFT", "invested_share": 0.0204, "basis_usd": 1906.63, "market_share": 0.019, "gain": 0.8182, "status_vs_proposed": "ok"}
+      - {"ticker": "CRWV", "invested_share": 0.018, "basis_usd": 1682.23, "market_share": 0.0049, "gain": -0.468, "status_vs_proposed": "ok"}
+      - {"ticker": "SPCX", "invested_share": 0.0133, "basis_usd": 1243.28, "market_share": 0.0067, "gain": -0.0174, "status_vs_proposed": "ok"}
+      - {"ticker": "SPOT", "invested_share": 0.0112, "basis_usd": 1047.88, "market_share": 0.0112, "gain": 0.9447, "status_vs_proposed": "ok"}
+      - {"ticker": "UFO", "invested_share": 0.0041, "basis_usd": 385.91, "market_share": 0.0017, "gain": -0.2162, "status_vs_proposed": "ok"}
+    invested_capital_by_sector: {"SPACE": 0.1063, "SEMICONDUCTORS": 0.2099, "SOFTWARE": 0.0693, "AI_COMPUTE": 0.2419, "INTERNET_PLATFORMS": 0.0661, "HEALTHCARE": 0.1074, "FINTECH": 0.122, "GOLD": 0.0457, "ELECTRIFICATION": 0.0218}
+    preview_on_actual_portfolio_2026_09_18:   # расчёт дозора по предложенным параметрам и fallback-просадкам; не решение
+      - {"ticker": "NBIS", "weight": 0.334, "archetype": "capital_intensive_transition", "plausible_dd_fallback": 0.75, "expected_loss_at_dd_NAV": 0.2505, "standard": {"target_cap": 0.08, "hard_cap": 0.1067, "status": "hard_breach"}, "conviction": {"target_cap": 0.15, "hard_cap": 0.2, "status": "hard_breach"}}
+      - {"ticker": "NVDA", "weight": 0.2154, "archetype": "mature_positive_margin", "plausible_dd_fallback": 0.55, "expected_loss_at_dd_NAV": 0.1185, "standard": {"target_cap": 0.1091, "hard_cap": 0.1455, "status": "hard_breach"}, "conviction": {"target_cap": 0.2045, "hard_cap": 0.2727, "status": "soft_gap"}}
+      - {"ticker": "HOOD", "weight": 0.1439, "archetype": "mature_positive_margin", "plausible_dd_fallback": 0.55, "expected_loss_at_dd_NAV": 0.0791, "standard": {"target_cap": 0.1091, "hard_cap": 0.1455, "status": "soft_gap"}, "conviction": {"target_cap": 0.2045, "hard_cap": 0.2727, "status": "ok"}}
+      - {"ticker": "LLY", "weight": 0.0831, "archetype": "mature_positive_margin", "plausible_dd_fallback": 0.55, "expected_loss_at_dd_NAV": 0.0457, "standard": {"target_cap": 0.1091, "hard_cap": 0.1455, "status": "ok"}, "conviction": {"target_cap": 0.2045, "hard_cap": 0.2727, "status": "ok"}}
+      - {"ticker": "META", "weight": 0.0553, "archetype": "mature_positive_margin", "plausible_dd_fallback": 0.55, "expected_loss_at_dd_NAV": 0.0304, "standard": {"target_cap": 0.1091, "hard_cap": 0.1455, "status": "ok"}, "conviction": {"target_cap": 0.2045, "hard_cap": 0.2727, "status": "ok"}}
+      - {"ticker": "ASML", "weight": 0.028, "archetype": "mature_positive_margin", "plausible_dd_fallback": 0.55, "expected_loss_at_dd_NAV": 0.0154, "standard": {"target_cap": 0.1091, "hard_cap": 0.1455, "status": "ok"}, "conviction": {"target_cap": 0.2045, "hard_cap": 0.2727, "status": "ok"}}
+      - {"ticker": "RKLB", "weight": 0.0229, "archetype": "pre_service_or_milestone_driven", "plausible_dd_fallback": 0.85, "expected_loss_at_dd_NAV": 0.0195, "standard": {"target_cap": 0.0706, "hard_cap": 0.0941, "status": "ok"}, "conviction": {"target_cap": 0.1324, "hard_cap": 0.1765, "status": "ok"}}
+      - {"ticker": "GLD", "weight": 0.0222, "archetype": "n/a", "note": "не компания — слой не применяется"}
+      - {"ticker": "MSFT", "weight": 0.0192, "archetype": "mature_positive_margin", "plausible_dd_fallback": 0.55, "expected_loss_at_dd_NAV": 0.0106, "standard": {"target_cap": 0.1091, "hard_cap": 0.1455, "status": "ok"}, "conviction": {"target_cap": 0.2045, "hard_cap": 0.2727, "status": "ok"}}
+      - {"ticker": "NET", "weight": 0.0179, "archetype": "mature_positive_margin", "plausible_dd_fallback": 0.55, "expected_loss_at_dd_NAV": 0.0098, "standard": {"target_cap": 0.1091, "hard_cap": 0.1455, "status": "ok"}, "conviction": {"target_cap": 0.2045, "hard_cap": 0.2727, "status": "ok"}}
+      - {"ticker": "PLTR", "weight": 0.0177, "archetype": "mature_positive_margin", "plausible_dd_fallback": 0.55, "expected_loss_at_dd_NAV": 0.0097, "standard": {"target_cap": 0.1091, "hard_cap": 0.1455, "status": "ok"}, "conviction": {"target_cap": 0.2045, "hard_cap": 0.2727, "status": "ok"}}
+      - {"ticker": "ETN", "weight": 0.0118, "archetype": "mature_positive_margin", "plausible_dd_fallback": 0.55, "expected_loss_at_dd_NAV": 0.0065, "standard": {"target_cap": 0.1091, "hard_cap": 0.1455, "status": "ok"}, "conviction": {"target_cap": 0.2045, "hard_cap": 0.2727, "status": "ok"}}
+      - {"ticker": "ASTS", "weight": 0.0104, "archetype": "pre_service_or_milestone_driven", "plausible_dd_fallback": 0.85, "expected_loss_at_dd_NAV": 0.0088, "standard": {"target_cap": 0.0706, "hard_cap": 0.0941, "status": "ok"}, "conviction": {"target_cap": 0.1324, "hard_cap": 0.1765, "status": "ok"}}
+      - {"ticker": "SPCX", "weight": 0.0068, "archetype": "capital_intensive_transition", "plausible_dd_fallback": 0.75, "expected_loss_at_dd_NAV": 0.0051, "standard": {"target_cap": 0.08, "hard_cap": 0.1067, "status": "ok"}, "conviction": {"target_cap": 0.15, "hard_cap": 0.2, "status": "ok"}}
+      - {"ticker": "CRWV", "weight": 0.005, "archetype": "capital_intensive_transition", "plausible_dd_fallback": 0.75, "expected_loss_at_dd_NAV": 0.0037, "standard": {"target_cap": 0.08, "hard_cap": 0.1067, "status": "ok"}, "conviction": {"target_cap": 0.15, "hard_cap": 0.2, "status": "ok"}}
+      - {"ticker": "UFO", "weight": 0.0017, "archetype": "n/a", "note": "не компания — слой не применяется"}
+  total_wealth_context:
+    enabled: true
+    include_nonportfolio_assets_in_nav: false
+    note: "Внешнее имущество влияет на policy/constraints, но не включается в NAV инвестиционного портфеля."
+
+benchmark_registry:
+  portfolio:
+    benchmark_id: PORTFOLIO_NAV
+    type: internal_nav
+  sectors:
+    # Сектор здесь = с чем движется цена (benchmark просадки), а НЕ инвестиционная тема. Темы (ИИ-инфраструктура и т. п.)
+    # живут в driver_exposure_vector MPC (methodology/Marginal_Portfolio_Contribution_Schema_v1.0.yaml → driver_taxonomy).
+    SEMICONDUCTORS:
+      benchmark_id: SOX
+      yahoo: "^SOX"
+      name: "PHLX Semiconductor Sector Index"
+      source: "Nasdaq"
+    SOFTWARE:
+      benchmark_id: IGV
+      yahoo: IGV
+      name: "iShares Expanded Tech-Software Sector ETF"
+      type: proxy_etf
+      approved_by_owner: "2026-09-21"
+    SPACE:
+      benchmark_id: UFO
+      yahoo: UFO
+      name: "Procure Space ETF"
+      type: proxy_etf
+      approved_by_owner: "2026-09-21"
+      note: "UFO одновременно есть в портфеле (P2) — для этой позиции секторная просадка совпадает с собственной"
+    ELECTRIFICATION:
+      benchmark_id: GRID
+      yahoo: GRID
+      name: "First Trust NASDAQ Clean Edge Smart Grid Infrastructure Index Fund"
+      type: proxy_etf
+      approved_by_owner: "2026-09-21"
+      note: "бывший AI_INFRASTRUCTURE разбит на ELECTRIFICATION и ROBOTICS (решение владельца)"
+    ROBOTICS:
+      benchmark_id: ROBO
+      yahoo: ROBO
+      name: "Robo Global Robotics and Automation Index ETF"
+      type: proxy_etf
+      approved_by_owner: "2026-09-21"
+    AI_COMPUTE:                     # NBIS, CRWV — «неооблака» ИИ-вычислений; чистого индекса нет
+      benchmark_id: AI_COMPUTE_BASKET_V1
+      type: internal_synthetic_basket           # NBIS 50% + CRWV 50%, равные веса, квартальная ребалансировка, chain-link
+      methodology_ref: methodology/AI_COMPUTE_Sector_Benchmark_Specification_v1.0.md
+      definition_ref: methodology/AI_COMPUTE_Benchmark_v1.0.yaml
+      engine_model: synthetic_basket            # invest-calc: индекс по adjusted close Yahoo chart
+      benchmark_quality: provisional_low_breadth   # 2 компонента; полное качество — от 4
+      benchmark_coverage: true
+      approved: "2026-09-21 (партия 5 другой LLM); прежнее решение v1 «внешнего benchmark нет» заменено"
+      concentration_override: {stress_floor: "вес AI_COMPUTE >= 20% NAV И просадка <= -25% → режим не мягче Stress", shock_floor: "вес >= 25% И просадка <= -40% → не мягче Shock", provenance: model_assumption, no_double_count: true}
+    INTERNET_PLATFORMS:             # META
+      benchmark_id: XLC
+      yahoo: XLC
+      name: "Communication Services Select Sector SPDR"
+      type: proxy_etf
+      approved_by_owner: "2026-09-21"
+    HEALTHCARE:                     # LLY
+      benchmark_id: XLV
+      yahoo: XLV
+      name: "Health Care Select Sector SPDR"
+      type: proxy_etf
+      approved_by_owner: "2026-09-21"
+    FINTECH:                        # HOOD
+      benchmark_id: ARKF
+      yahoo: ARKF
+      name: "ARK Fintech Innovation ETF"
+      type: proxy_etf
+      approved_by_owner: "2026-09-21"
+    GOLD:                           # GLD — не акция; в секторный слой просадок не входит, собственная просадка считается
+      benchmark_id: none
+      excluded_from_sector_layer: true
+  rule: "Не подменять отсутствующий секторный индекс ETF без отдельного решения владельца."
+
+drawdowns:
+  equity:
+    lookback: "12M rolling"
+    formula: "price / rolling_12m_max_price - 1"
+    benchmark: "own_security"
+  portfolio:
+    lookback: "since_inception"
+    formula: "NAV / running_max_NAV - 1"
+    benchmark: "PORTFOLIO_NAV"
+  sector:
+    lookback: "12M rolling"
+    formula: "sector_index / rolling_12m_max_sector_index - 1"
+    benchmark: "benchmark_registry.sectors[sector_id]"
+
+  severity:
+    WATCH:
+      threshold: -0.15
+      provenance: model_assumption
+    STRESS:
+      threshold: -0.25
+      provenance: model_assumption
+    SHOCK:
+      threshold: -0.40
+      provenance: model_assumption
+
+regime_engine:
+  evaluation_frequency: daily
+  inputs:
+    - portfolio_drawdown
+    - weighted_sector_drawdown
+    - breadth_of_position_drawdowns
+    - cross_asset_correlation
+  regimes:
+    Normal:
+      condition: >
+        portfolio_drawdown > -0.15
+        AND weighted_sector_drawdown > -0.20
+        AND fraction_positions_drawdown_le_-0.25 < 0.25
+      provenance: model_assumption
+
+    Stress:
+      condition: >
+        (portfolio_drawdown <= -0.15 AND portfolio_drawdown > -0.30)
+        OR (weighted_sector_drawdown <= -0.20 AND weighted_sector_drawdown > -0.35)
+        OR fraction_positions_drawdown_le_-0.25 >= 0.25
+      provenance: model_assumption
+
+    Shock:
+      condition: >
+        portfolio_drawdown <= -0.30
+        OR weighted_sector_drawdown <= -0.35
+        OR fraction_positions_drawdown_le_-0.40 >= 0.25
+      provenance: model_assumption
+
+  precedence: [Shock, Stress, Normal]
+  rule: "Если выполнены условия нескольких режимов, применяется наиболее тяжёлый."
+
+war_economy_interface:
+  enabled: true
+  rule: >
+    WAR-ECONOMY и иные тематические сценарии не определяются одной ценовой просадкой.
+    Они передают в портфельный движок отдельный scenario_id и проверенные события;
+    режим рынка Normal/Stress/Shock хранится независимо.
+  scenario_id: null
+  evidence_refs: []
+
+machine_outputs:                 # последний прогон portfolio_regime 1.1.0 (portfolio/_runs/20260921T211743Z-portfolio_regime-42defe.json); корзина AI_COMPUTE — 20260921T135229Z-synthetic_basket-95de5e
+  run_id: "20260921T211743Z-portfolio_regime-42defe"
+  model_version: "1.1.0"
+  basket_run_id: "20260921T135229Z-synthetic_basket-95de5e"
+  as_of_prices: "2026-09-18"
+  current_nav: 182755.91
+  positions_value_base: 181858.0
+  cash_value_base: 897.91
+  current_weights:
+    NBIS: 0.3303
+    NVDA: 0.213
+    HOOD: 0.1423
+    LLY: 0.0822
+    META: 0.0547
+    ASML: 0.0277
+    RKLB: 0.0226
+    GLD: 0.022
+    MSFT: 0.019
+    NET: 0.0177
+    PLTR: 0.0175
+    ETN: 0.0116
+    SPOT: 0.0112
+    ASTS: 0.0102
+    SPCX: 0.0067
+    CRWV: 0.0049
+    UFO: 0.0017
+  drawdowns:
+    portfolio: 0.0          # первый снимок; running max = текущий NAV (состав дополнен SPOT 22.09)
+    weighted_sector: -0.1979
+    benchmark_coverage: 0.9779
+    sectors: {"SPACE": -0.3627, "SEMICONDUCTORS": -0.1854, "SOFTWARE": -0.1141, "AI_COMPUTE": -0.2551, "INTERNET_PLATFORMS": -0.0772, "HEALTHCARE": -0.0415, "FINTECH": -0.2222, "ELECTRIFICATION": -0.1079}
+  benchmark_quality: {"SEMICONDUCTORS": "external", "SOFTWARE": "external", "SPACE": "external", "ELECTRIFICATION": "external", "ROBOTICS": "external", "INTERNET_PLATFORMS": "external", "HEALTHCARE": "external", "FINTECH": "external", "AI_COMPUTE": "provisional_low_breadth"}
+  breadth: {"fraction_positions_dd_le_stress": 0.3529, "fraction_positions_dd_le_shock": 0.1765, "n_positions_with_dd": 17}
+  regime_base: Stress
+  regime: Stress
+  regime_floors_applied: [{"sector_id": "AI_COMPUTE", "weight": 0.3352, "drawdown": -0.2551, "regime_floor": "Stress", "provenance": "model_assumption"}]
+  regime_reason: "база: широта 35% бумаг с просадкой >=25% (порог 25%), взвешенная секторная -19.8%; floor по AI_COMPUTE (вес 34%, просадка корзины -25.5%)"
+  constraint_breaches: []
+  dry_powder_status: null
+  conviction_overlay:            # прогон conviction_overlay 1.0.0 по утверждённым параметрам, пометка NBIS активна (portfolio/_runs/20260921T221042Z-conviction_overlay-69c949.json)
+    run_id: "20260921T221042Z-conviction_overlay-69c949"
+    active_conviction_tags: ["NBIS"]
+    hard_loss_budget_breaches: ["NVDA"]
+    soft_concentration_gaps: ["NBIS", "HOOD"]
+    new_buys_blocked: ["NVDA", "NBIS", "HOOD"]
+    sectors: {"SPACE": {"market_gap": "none", "market_weight": 0.0412, "invested_share": 0.1063}, "FINTECH": {"market_gap": "none", "market_weight": 0.1423, "invested_share": 0.122}, "SEMICONDUCTORS": {"market_gap": "none", "market_weight": 0.2407, "invested_share": 0.2099}, "AI_COMPUTE": {"market_gap": "none", "market_weight": 0.3352, "invested_share": 0.2419}, "ELECTRIFICATION": {"market_gap": "none", "market_weight": 0.0116, "invested_share": 0.0218}, "GOLD": {"market_gap": "none", "market_weight": 0.022, "invested_share": 0.0457}, "INTERNET_PLATFORMS": {"market_gap": "none", "market_weight": 0.0658, "invested_share": 0.0661}, "SOFTWARE": {"market_gap": "none", "market_weight": 0.0542, "invested_share": 0.0693}, "HEALTHCARE": {"market_gap": "none", "market_weight": 0.0822, "invested_share": 0.1074}}
+    assets:
+      - {"ticker": "NBIS", "conviction": true, "market_weight": 0.3303, "target_cap": 0.25, "hard_cap": 0.3333, "concentration_gap": "soft", "invested_share": 0.2239, "invested_limit": 0.2, "incremental_buy_capacity_usd": 0.0, "decision_request": null}
+      - {"ticker": "NVDA", "conviction": false, "market_weight": 0.213, "target_cap": 0.1364, "hard_cap": 0.1818, "concentration_gap": "hard_loss_budget_breach", "invested_share": 0.1655, "invested_limit": 0.12, "incremental_buy_capacity_usd": 0.0, "decision_request": "MANDATORY_RISK_REDUCTION_REVIEW"}
+      - {"ticker": "HOOD", "conviction": false, "market_weight": 0.1423, "target_cap": 0.1364, "hard_cap": 0.1818, "concentration_gap": "soft", "invested_share": 0.122, "invested_limit": 0.12, "incremental_buy_capacity_usd": 0.0, "decision_request": null}
+      - {"ticker": "LLY", "conviction": false, "market_weight": 0.0822, "target_cap": 0.1364, "hard_cap": 0.1818, "concentration_gap": "none", "invested_share": 0.1074, "invested_limit": 0.12, "incremental_buy_capacity_usd": 1175.42, "decision_request": null}
+      - {"ticker": "META", "conviction": false, "market_weight": 0.0547, "target_cap": 0.1364, "hard_cap": 0.1818, "concentration_gap": "none", "invested_share": 0.0549, "invested_limit": 0.12, "incremental_buy_capacity_usd": 6092.29, "decision_request": null}
+      - {"ticker": "ASML", "conviction": false, "market_weight": 0.0277, "target_cap": 0.1364, "hard_cap": 0.1818, "concentration_gap": "none", "invested_share": 0.0444, "invested_limit": 0.12, "incremental_buy_capacity_usd": 7078.44, "decision_request": null}
+      - {"ticker": "RKLB", "conviction": false, "market_weight": 0.0226, "target_cap": 0.0882, "hard_cap": 0.1176, "concentration_gap": "none", "invested_share": 0.0625, "invested_limit": 0.12, "incremental_buy_capacity_usd": 5387.56, "decision_request": null}
+      - {"ticker": "GLD", "conviction": false, "market_weight": 0.022, "concentration_gap": "not_applicable", "invested_share": 0.0457, "invested_limit": 0.12, "incremental_buy_capacity_usd": 6954.62, "decision_request": null}
+      - {"ticker": "MSFT", "conviction": false, "market_weight": 0.019, "target_cap": 0.1364, "hard_cap": 0.1818, "concentration_gap": "none", "invested_share": 0.0204, "invested_limit": 0.12, "incremental_buy_capacity_usd": 9331.57, "decision_request": null}
+      - {"ticker": "NET", "conviction": false, "market_weight": 0.0177, "target_cap": 0.1364, "hard_cap": 0.1818, "concentration_gap": "none", "invested_share": 0.0239, "invested_limit": 0.12, "incremental_buy_capacity_usd": 9001.6, "decision_request": null}
+      - {"ticker": "PLTR", "conviction": false, "market_weight": 0.0175, "target_cap": 0.1364, "hard_cap": 0.1818, "concentration_gap": "none", "invested_share": 0.025, "invested_limit": 0.12, "incremental_buy_capacity_usd": 8894.6, "decision_request": null}
+      - {"ticker": "ETN", "conviction": false, "market_weight": 0.0116, "target_cap": 0.1364, "hard_cap": 0.1818, "concentration_gap": "none", "invested_share": 0.0218, "invested_limit": 0.12, "incremental_buy_capacity_usd": 9199.85, "decision_request": null}
+      - {"ticker": "SPOT", "conviction": false, "market_weight": 0.0112, "concentration_gap": "not_applicable", "invested_share": 0.0112, "invested_limit": 0.12, "incremental_buy_capacity_usd": 10190.32, "decision_request": null}
+      - {"ticker": "ASTS", "conviction": false, "market_weight": 0.0102, "target_cap": 0.0882, "hard_cap": 0.1176, "concentration_gap": "none", "invested_share": 0.0264, "invested_limit": 0.12, "incremental_buy_capacity_usd": 8762.68, "decision_request": null}
+      - {"ticker": "SPCX", "conviction": false, "market_weight": 0.0067, "target_cap": 0.1, "hard_cap": 0.1333, "concentration_gap": "none", "invested_share": 0.0133, "invested_limit": 0.12, "incremental_buy_capacity_usd": 9994.92, "decision_request": null}
+      - {"ticker": "CRWV", "conviction": false, "market_weight": 0.0049, "target_cap": 0.1, "hard_cap": 0.1333, "concentration_gap": "none", "invested_share": 0.018, "invested_limit": 0.12, "incremental_buy_capacity_usd": 9555.97, "decision_request": null}
+      - {"ticker": "UFO", "conviction": false, "market_weight": 0.0017, "concentration_gap": "not_applicable", "invested_share": 0.0041, "invested_limit": 0.12, "incremental_buy_capacity_usd": 10852.29, "decision_request": null}
+  timestamp: "2026-09-22T06:30:00Z"
+  caveats:
+    - "без секторного benchmark: только GLD (не акция)"
+    - "AI_COMPUTE_BASKET_V1 — provisional_low_breadth (2 компонента, совпадают с позициями)"
+    - "просадка портфеля = 0 по построению; SPOT добавлен 22.09 по списку средних цен"

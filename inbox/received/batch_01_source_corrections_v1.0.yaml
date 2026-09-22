@@ -1,0 +1,42 @@
+version: "1.0"
+artifact: "batch_01_source_corrections"
+as_of: "2026-09-21"
+
+NBIS:
+  issue: "KPI-08 Contracted power guidance was recorded as >5 GW/current; primary source supports a YE2026 target of 5 GW."
+  decision_recommendation:
+    KPI_08:
+      name: "Year-end contracted power target"
+      last_value: 5.0
+      unit: GW
+      as_of: "2026-Q2"
+      value_type: company_guidance
+      target_date: "2026-12-31"
+      source: "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm"
+      source_text_summary: "Nebius says it is raising its year-end contracted-power target to 5 GW and anticipates ending 2026 with 5 GW."
+    add_KPI_11:
+      id: NBIS-KPI-11
+      name: "Actually secured contracted power as of reporting date"
+      last_value: null
+      verification_status: pending_verification
+      source: "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm"
+      note: "Selected prose does not separately quantify actual secured contracted power at June 30/August 12 distinct from YE2026 guidance."
+    Capacity_Secured_axis:
+      rule: "Use NBIS-KPI-11 actual secured contracted power for state transitions; guidance KPI-08 is supporting evidence only."
+      current: pending_verification
+      prior_snapshot: C3
+      reason: "Do not treat forward guidance as realized state."
+  thresholds: model_assumption
+
+HOOD:
+  issue: "Exact location of KPI-03 LTM Net Deposit growth 24%."
+  verification:
+    status: confirmed
+    value: 0.24
+    source: "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data"
+    pdf_source: "https://investors.robinhood.com/static-files/5980b367-8c3d-486b-b38d-99fad8d6da70"
+    exact_location_summary: >
+      August 2026 operating release: over the last twelve months Net Deposits were $74.1B,
+      an annual growth rate of 24% relative to August 2025 Total Platform Assets.
+    dashboard_source: "https://investors.robinhood.com/static-files/e5f896c8-b439-4524-9662-0f5ffd961c52"
+    dashboard_label: "24% LTM Growth"

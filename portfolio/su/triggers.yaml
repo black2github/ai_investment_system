@@ -1,0 +1,137 @@
+# Реестр триггеров: Schneider Electric (SU, Euronext Paris)
+# Источник: финальный блок (ChatGPT, 17.09.2026). Предпосылки проверены 17.09 по H1 2026 release: H1 +14.0%, Q2 +17% (точно +16.5%), Energy Management +18%, дата Q3 29.10.2026 — совпадают.
+
+meta:
+  ticker: SU
+  exchange: Euronext Paris
+  yahoo_symbol: SU.PA
+  currency: EUR
+  company: Schneider Electric
+  status_in_basket: покупать
+  target_weight: "20%"
+  horizon: 2030
+  strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
+  strategy_date: 2026-09-17
+  registry_updated: 2026-09-17
+  price_at_strategy: 279.40
+  fiscal_year: календарный
+  scenario: portfolio/_scenarios/taiwan.yaml
+
+automations:
+  aiinfra-price-watch:  { covers: [SU-P-01, SU-P-02, SU-P-03], cadence: "каждые 30 мин" }
+  aiinfra-report-check: { covers: [SU-E-01, SU-E-02, SU-X-01, SU-X-02, SU-X-03], cadence: "после отчёта 29.10.2026 (SU-C-01)" }
+
+route:
+  # Маршрут компании (степпер). current ведёт state.json → route.current; kind: stage | scenario.
+  steps:
+    - { id: entry, kind: stage, name: "Вход траншами €280 / €260 / €240 (5% / 7.5% / 7.5%)" }
+    - { id: confirm, kind: stage, name: "Подтверждение тезиса по квартальным отчётам (условия -E-) и контроль поломки (-X-)" }
+    - { id: hold, kind: stage, name: "Удержание до горизонта" }
+    - { id: exit, kind: stage, name: "Фиксация и выход при €400 / €450; горизонт 2030" }
+    - { id: taiwan, kind: scenario, name: "Сценарий «Тайвань» (portfolio/_scenarios/taiwan.yaml)", ref: portfolio/_scenarios/taiwan.yaml }
+
+triggers:
+
+  - id: SU-P-01
+    class: price
+    step: entry
+    condition: "SU ≤ €280"
+    action: "Купить 5% портфеля (транш 1 из 3)"
+    window: { from: 2026-09-17 }
+    automation: aiinfra-price-watch
+    status: active
+    notes: "На 17.09.2026 цена €279.40 (по обсуждению) / €284.40 (Yahoo, 17.09 утро) — условие на границе"
+  - id: SU-P-02
+    class: price
+    step: entry
+    condition: "SU ≤ €260"
+    action: "Купить 7.5% портфеля (транш 2 из 3)"
+    window: { from: 2026-09-17 }
+    automation: aiinfra-price-watch
+    status: active
+  - id: SU-P-03
+    class: price
+    step: entry
+    condition: "SU ≤ €240"
+    action: "Купить 7.5% портфеля (транш 3 из 3)"
+    window: { from: 2026-09-17 }
+    automation: aiinfra-price-watch
+    status: active
+
+  - id: SU-F-01
+    class: price
+    step: exit
+    condition: "SU ≥ €400"
+    action: "Продать 20% позиции"
+    automation: null
+    status: planned
+    notes: "Заводить в price-watch после первой покупки"
+  - id: SU-F-02
+    class: price
+    step: exit
+    condition: "SU ≥ €450"
+    action: "Продать ещё 25% позиции"
+    automation: null
+    status: planned
+
+  - id: SU-E-01
+    class: event
+    step: confirm
+    condition: "Group organic growth ≥ 12% (квартал)"
+    action: "Сохранять позицию"
+    source: "Schneider quarterly results"
+    automation: aiinfra-report-check
+    status: active
+    notes: "H1 2026 по данным обсуждения: +14%"
+  - id: SU-E-02
+    class: event
+    step: confirm
+    condition: "Energy Management organic growth ≥ 15%"
+    action: "Добавить 5% портфеля"
+    source: "Schneider quarterly results"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Q2 2026 по данным обсуждения: +18%"
+  - id: SU-E-03
+    class: event
+    step: confirm
+    condition: "Data Center остаётся крупнейшим драйвером роста И group organic ≥ 10% в Q3 2026"
+    action: "Сохранять позицию"
+    source: "Schneider Q3 2026 results"
+    automation: aiinfra-report-check
+    status: active
+
+  - id: SU-X-01
+    class: event
+    step: confirm
+    condition: "Group organic growth < 8% два квартала подряд"
+    action: "Сократить на 50%; при одновременном SU-X-02 — выйти полностью"
+    source: "Schneider quarterly results"
+    automation: aiinfra-report-check
+    status: active
+  - id: SU-X-02
+    class: event
+    step: confirm
+    condition: "Energy Management growth < 8% два квартала подряд"
+    action: "Сократить на 50%; при одновременном SU-X-01 — выйти полностью"
+    source: "Schneider quarterly results"
+    automation: aiinfra-report-check
+    status: active
+  - id: SU-X-03
+    class: event
+    step: confirm
+    condition: "Data Center перестаёт быть одним из главных драйверов роста (по комментарию менеджмента)"
+    action: "Сократить на 50%"
+    source: "Schneider results / call"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Качественный критерий; агент сообщает цитату менеджмента, решение за владельцем"
+
+  - id: SU-C-01
+    class: calendar
+    step: confirm
+    condition: "Q3 2026 results — 29.10.2026"
+    action: "Проверить SU-E-01..03 и SU-X-01..03 по отчёту"
+    window: { from: 2026-10-29, to: 2026-10-30 }
+    automation: aiinfra-report-check
+    status: active

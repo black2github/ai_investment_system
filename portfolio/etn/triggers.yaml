@@ -1,0 +1,307 @@
+# Реестр триггеров: Eaton (ETN, NYSE)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: финальный блок «Инвестиции в ИИ-инфраструктуру»
+# (ChatGPT, 17.09.2026), разделы B–D. Классы/статусы — как в portfolio/spacex/triggers.yaml.
+# Цифры-предпосылки проверены 17.09 по пресс-релизу Q2 2026 Eaton: organic +14%, EA orders +41%, backlog +43%, guidance 11–13% — совпадают.
+
+meta:
+  ticker: ETN
+  exchange: NYSE
+  yahoo_symbol: ETN
+  currency: USD
+  company: Eaton
+  status_in_basket: покупать
+  target_weight: "30%"
+  horizon: 2030
+  strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
+  strategy_date: 2026-09-17
+  registry_updated: 2026-09-21  # 17.09: реестр владельца; 21.09: вектор состояний (states.yaml), legacy-триггеры привязаны к осям, добавлены ETN-E-04..ETN-E-10
+  price_at_strategy: 397.80
+  fiscal_year: календарный
+  scenario: portfolio/_scenarios/taiwan.yaml
+
+automations:
+  aiinfra-price-watch:  { covers: [ETN-P-01, ETN-P-02, ETN-P-03], cadence: "каждые 30 мин, скрипт без модели" }
+  aiinfra-report-check: { covers: [ETN-E-01, ETN-E-02, ETN-E-03, ETN-X-01, ETN-X-02, ETN-X-03], cadence: "после квартального отчёта (дата — ETN-C-01)" }
+
+route:
+  # Маршрут компании (степпер). current ведёт state.json → route.current; kind: stage | scenario.
+  steps:
+    - { id: entry, kind: stage, name: "Вход траншами $400 / $375 / $350 по 10%" }
+    - { id: confirm, kind: stage, name: "Подтверждение тезиса по квартальным отчётам (условия -E-) и контроль поломки (-X-)" }
+    - { id: hold, kind: stage, name: "Удержание до горизонта" }
+    - { id: exit, kind: stage, name: "Фиксация и выход при капитализации $250B / $300B; горизонт 2030" }
+    - { id: taiwan, kind: scenario, name: "Сценарий «Тайвань» (portfolio/_scenarios/taiwan.yaml)", ref: portfolio/_scenarios/taiwan.yaml }
+    - { id: vector, kind: axis, name: "Вектор состояний по осям states.yaml (Electrical_Americas_Demand / Electrical_Global_Demand / Organic_Growth / Margin_Execution / Portfolio_Integration) — независим от фазы" }
+
+triggers:
+
+  # ---------- price: вход ----------
+  - id: ETN-P-01
+    class: price
+    step: entry
+    condition: "ETN ≤ $400"
+    action: "Купить 10% портфеля (транш 1 из 3)"
+    window: { from: 2026-09-17 }
+    automation: aiinfra-price-watch
+    status: active
+    notes: "На 17.09.2026 цена $397.80 — условие уже выполнено на момент заведения; первая оценка сторожа сообщит об этом"
+  - id: ETN-P-02
+    class: price
+    step: entry
+    condition: "ETN ≤ $375"
+    action: "Купить 10% портфеля (транш 2 из 3)"
+    window: { from: 2026-09-17 }
+    automation: aiinfra-price-watch
+    status: active
+  - id: ETN-P-03
+    class: price
+    step: entry
+    condition: "ETN ≤ $350"
+    action: "Купить 10% портфеля (транш 3 из 3)"
+    window: { from: 2026-09-17 }
+    automation: aiinfra-price-watch
+    status: active
+  - id: ETN-P-04
+    class: price
+    step: entry
+    condition: "альтернатива входу по цене: forward adjusted P/E ≤ 30x"
+    action: "Считать уровень входа достигнутым"
+    automation: null
+    status: planned
+    notes: "Нужен источник forward P/E; пока проверяется вручную при отчёте"
+
+  # ---------- price: фиксация ----------
+  - id: ETN-F-01
+    class: price
+    step: exit
+    condition: "market cap ≥ $250 млрд"
+    action: "Продать 15% позиции"
+    automation: null
+    status: planned
+    notes: "Нужна капитализация = цена × акции в обращении; заводить после первой покупки"
+  - id: ETN-F-02
+    class: price
+    step: exit
+    condition: "market cap ≥ $300 млрд"
+    action: "Продать ещё 25% позиции"
+    automation: null
+    status: planned
+
+  # ---------- event: подтверждение тезиса (по квартальному отчёту) ----------
+  - id: ETN-E-01
+    class: event
+    step: confirm
+    axis: Electrical_Americas_Demand
+    kpis: [ETN-KPI-04]
+    condition: "Electrical Americas orders ≥ +30% г/г (в квартальном отчёте)"
+    action: "Сохранять позицию"
+    source: "Eaton quarterly earnings release / presentation"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Q2 2026 по данным обсуждения: +41%"
+  - id: ETN-E-02
+    class: event
+    step: confirm
+    axis: Electrical_Americas_Demand
+    kpis: [ETN-KPI-06, ETN-KPI-09]
+    condition: "Electrical backlog ≥ +30% г/г"
+    action: "Сохранять позицию"
+    source: "Eaton quarterly earnings release"
+    automation: aiinfra-report-check
+    status: active
+    notes: "Q2 2026 по данным обсуждения: +43%"
+  - id: ETN-E-03
+    class: event
+    step: confirm
+    axis: Organic_Growth
+    kpis: [ETN-KPI-02]
+    condition: "FY organic-growth guidance ≥ 10%"
+    action: "Добавить 5% портфеля"
+    source: "Eaton earnings guidance"
+    automation: aiinfra-report-check
+    status: active
+    notes: "FY2026 по данным обсуждения: 11–13%"
+
+  # ---------- event: что ломает тезис ----------
+  - id: ETN-X-01
+    class: event
+    step: confirm
+    axis: Electrical_Americas_Demand
+    kpis: [ETN-KPI-04, ETN-KPI-08]
+    condition: "Electrical orders < +10% г/г два квартала подряд"
+    action: "Сократить позицию на 50%; при одновременном ETN-X-02 — выйти полностью"
+    source: "Eaton quarterly earnings"
+    automation: aiinfra-report-check
+    status: active
+  - id: ETN-X-02
+    class: event
+    step: confirm
+    axis: Electrical_Americas_Demand
+    kpis: [ETN-KPI-06, ETN-KPI-09]
+    condition: "Electrical backlog < +15% г/г два квартала подряд"
+    action: "Сократить позицию на 50%; при одновременном ETN-X-01 — выйти полностью"
+    source: "Eaton quarterly earnings"
+    automation: aiinfra-report-check
+    status: active
+  - id: ETN-X-03
+    class: event
+    step: confirm
+    axis: Organic_Growth
+    kpis: [ETN-KPI-02]
+    condition: "FY guidance organic growth < 7%"
+    action: "Сократить позицию на 50%"
+    source: "Eaton earnings guidance"
+    automation: aiinfra-report-check
+    status: active
+
+  # ---------- calendar ----------
+
+  # ---------- переходы вектора состояний (states.yaml), от другой LLM, 2026-09-21 ----------
+  - id: ETN-E-04
+    class: event
+    step: vector
+    axis: Electrical_Americas_Demand
+    transition:
+      from: A3
+      to: A4
+    level: E2
+    kpis:
+    - ETN-KPI-03
+    - ETN-KPI-04
+    - ETN-KPI-06
+    condition: EA orders >=30% AND backlog growth >=25% AND organic sales growth >=10% for 2 consecutive quarters
+    period: 2 quarters
+    source: Eaton Corporation plc 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Electrical_Americas_Demand A3→A4 в state.json (state_transitions, scenario_state) и отправить
+      Decision Request владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: ETN-E-05
+    class: event
+    step: vector
+    axis: Electrical_Americas_Demand
+    transition:
+      from: A3
+      to: A2
+    level: E2
+    kpis:
+    - ETN-KPI-04
+    - ETN-KPI-06
+    condition: EA orders growth <30% OR backlog growth <25% for 2 consecutive quarters
+    period: 2 quarters
+    source: Eaton Corporation plc 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Electrical_Americas_Demand A3→A2 в state.json (state_transitions, scenario_state) и отправить
+      Decision Request владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: ETN-E-06
+    class: event
+    step: vector
+    axis: Electrical_Global_Demand
+    transition:
+      from: G3
+      to: G4
+    level: E2
+    kpis:
+    - ETN-KPI-08
+    condition: Electrical Global orders >=25% AND organic backlog growth >=40% AND organic sales growth >=10% for 2 quarters
+    period: 2 quarters
+    source: Eaton Corporation plc 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Electrical_Global_Demand G3→G4 в state.json (state_transitions, scenario_state) и отправить
+      Decision Request владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: ETN-E-07
+    class: event
+    step: vector
+    axis: Organic_Growth
+    transition:
+      from: O3
+      to: O4
+    level: E2
+    kpis:
+    - ETN-KPI-01
+    - ETN-KPI-02
+    condition: organic growth >=12% for 2 quarters AND FY guidance midpoint >=12%
+    period: 2 quarters
+    source: Eaton Corporation plc 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Organic_Growth O3→O4 в state.json (state_transitions, scenario_state) и отправить Decision Request
+      владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: ETN-E-08
+    class: event
+    step: vector
+    axis: Organic_Growth
+    transition:
+      from: O3
+      to: O2
+    level: E2
+    kpis:
+    - ETN-KPI-01
+    - ETN-KPI-02
+    condition: quarterly organic growth <12% OR FY guidance midpoint <11% for 2 observations
+    period: 2 quarters
+    source: Eaton Corporation plc 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Organic_Growth O3→O2 в state.json (state_transitions, scenario_state) и отправить Decision Request
+      владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: ETN-E-09
+    class: event
+    step: vector
+    axis: Margin_Execution
+    transition:
+      from: M3
+      to: M4
+    level: E2
+    kpis:
+    - ETN-KPI-07
+    condition: total segment margin >=24% AND EA margin >=27% for 2 quarters
+    period: 2 quarters
+    source: Eaton Corporation plc 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Margin_Execution M3→M4 в state.json (state_transitions, scenario_state) и отправить Decision
+      Request владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+  - id: ETN-E-10
+    class: event
+    step: vector
+    axis: Portfolio_Integration
+    transition:
+      from: I2
+      to: I3
+    level: E2
+    kpis:
+    - ETN-KPI-10
+    condition: total debt >=$25B OR acquisition/integration effects cause a company reduction in FY guidance
+    period: one verified report/update
+    source: Eaton Corporation plc 10-Q / earnings release (первичный источник по kpis.yaml)
+    action: Зафиксировать переход Portfolio_Integration I2→I3 в state.json (state_transitions, scenario_state) и отправить Decision
+      Request владельцу; инвестиционное действие не предопределено
+    automation: null
+    status: planned
+    fired: []
+    notes: ID присвоен дозором 21.09 (LLM дала переход без ID, чтобы не конфликтовать с реестром владельца)
+
+  - id: ETN-C-01
+    class: calendar
+    step: confirm
+    condition: "Q3 2026 results — официально не объявлена; консенсус-оценка 03.11.2026 до открытия торгов (dates-verify 17.09, Eaton IR)"
+    action: "Проверить ETN-E-01..03 и ETN-X-01..03 по отчёту"
+    automation: null
+    status: planned
+    window: { from: 2026-11-03, to: 2026-11-04 }
+    notes: "One-shot report-check заводить на 04.11.2026 09:00 МСК после подтверждения даты на IR"

@@ -1,0 +1,86 @@
+{
+  "updated": "2026-09-17T12:00:00Z",
+  "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
+  "price": {
+    "symbol": "SU.PA",
+    "last": 279.4,
+    "last_at": "2026-09-17",
+    "zone": null,
+    "note": "zone ведёт скрипт aiinfra-price-watch в trigger.state"
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [
+    {
+      "fact": "market cap",
+      "value_in_discussion": "~€157 млрд, P/E ~33x",
+      "where_to_verify": "Euronext / Schneider IR",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "not_found",
+      "actual_value": null,
+      "source_url": "https://www.se.com/ww/en/assets/pdf/release-hy-results-2026",
+      "checked_at": "2026-09-17T12:20:47Z",
+      "note": "H1 2026 release не раскрывает market cap/P/E — это не отчётная метрика; проверено по PDF пресс-релиза, показателя нет"
+    },
+    {
+      "fact": "H1 2026 organic growth",
+      "value_in_discussion": "+14%",
+      "where_to_verify": "Schneider H1 2026 results",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "Revenues €21,226m, +14.0% organic (+9.8% reported) H1 2026 vs H1 2025",
+      "source_url": "https://www.se.com/ww/en/assets/pdf/release-hy-results-2026",
+      "checked_at": "2026-09-17T12:20:47Z"
+    },
+    {
+      "fact": "Q2 2026 organic growth",
+      "value_in_discussion": "+17%",
+      "where_to_verify": "Schneider H1 2026 results",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "Headline +17% organic (release highlights); precise figure +16.5% organic, revenues €11,459m, +14.5% reported",
+      "source_url": "https://www.se.com/ww/en/assets/pdf/release-hy-results-2026",
+      "checked_at": "2026-09-17T12:20:47Z"
+    },
+    {
+      "fact": "Q2 2026 Energy Management organic",
+      "value_in_discussion": "+18%",
+      "where_to_verify": "Schneider H1 2026 results",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "Energy Management up +18% organic in Q2 2026",
+      "source_url": "https://www.se.com/ww/en/assets/pdf/release-hy-results-2026",
+      "checked_at": "2026-09-17T12:20:47Z"
+    },
+    {
+      "fact": "дата Q3 2026 results",
+      "value_in_discussion": "29.10.2026",
+      "where_to_verify": "Schneider IR calendar",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "\"Q3 2026 Revenues will be presented on October 29, 2026\" (в тексте H1 2026 release)",
+      "source_url": "https://www.se.com/ww/en/assets/pdf/release-hy-results-2026",
+      "checked_at": "2026-09-17T12:20:47Z"
+    },
+    {
+      "fact": "insider/family voting concentration",
+      "value_in_discussion": "неизвестно",
+      "where_to_verify": "Schneider URD",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified",
+      "note": "пропущено по заданию (не проверяется в этом прогоне)"
+    }
+  ],
+  "owner_decisions": [],
+  "notes": [
+    "2026-09-17: реестр заведён по финальному блоку обсуждения; предпосылки не проверены — разовое задание aiinfra-facts-verify",
+    "2026-09-17: разовая проверка facts-verify по H1 2026 press release (se.com PDF, дата релиза 30.07.2026); market cap не раскрывается отчётом, insider voting пропущен по заданию"
+  ],
+  "route": {
+    "current": "entry",
+    "done_steps": [],
+    "changed_at": "2026-09-17",
+    "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
+  },
+  "info_log": []
+}

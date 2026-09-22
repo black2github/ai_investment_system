@@ -1,0 +1,73 @@
+# Входы MPC для HOOD: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: HOOD
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 0
+  HYPERSCALER_CAPEX: 0
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 1
+  DATA_CENTER_POWER: 0
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: 1
+  CAPITAL_MARKETS: 2
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 1
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 2
+  CRYPTO_CYCLE: 2
+  FINTECH_REGULATION: -2
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+driver_vector_provenance: model_assumption
+failure_modes:
+- failure_id: HOOD-FM-01
+  common_cause_id: CAPITAL_MARKETS_RISK_OFF
+  severity: high
+  name: Risk-off market reduces trading/activity and asset values
+- failure_id: HOOD-FM-02
+  common_cause_id: REGULATORY_PREDICTION_MARKETS
+  severity: high
+  name: Prediction-market product restrictions broaden
+- failure_id: HOOD-FM-03
+  common_cause_id: CRYPTO_CYCLE_DOWNTURN
+  severity: medium
+  name: Crypto-cycle contraction
+- failure_id: HOOD-FM-04
+  common_cause_id: INTEREST_RATE_DECLINE
+  severity: medium
+  name: Lower rates compress net interest revenue
+- failure_id: HOOD-FM-05
+  common_cause_id: CONSUMER_CREDIT_DETERIORATION
+  severity: high
+  name: Credit-card losses scale faster than revenue
+- failure_id: HOOD-FM-06
+  common_cause_id: ACQUISITION_INTEGRATION_FAILURE
+  severity: medium
+  name: Acquisition integration / product sprawl execution risk
+- failure_id: HOOD-FM-07
+  common_cause_id: MARKET_STRUCTURE_COUNTERPARTY_CONCENTRATION
+  severity: medium
+  name: Market-maker/exchange concentration shock
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

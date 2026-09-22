@@ -1,0 +1,158 @@
+version: "1.0"
+artifact: joint_simulation_mapping_examples
+as_of: "2026-09-21"
+status: illustrative_only_not_calibration
+
+examples:
+
+  NVDA:
+    archetype: mature_positive_margin
+    note: "Формат-пример; числа не являются принятой калибровкой NVDA."
+    joint_simulation:
+      layer_version: "1.0"
+      active_drivers: [AI_COMPUTE_DEMAND, TAIWAN_SUPPLY, HBM_MEMORY, HYPERSCALER_CAPEX, INTEREST_RATES]
+      company_idiosyncratic_factors:
+        - id: ARCHITECTURE_EXECUTION
+          distribution: standard_normal
+          persistence: 0.50
+      path_alignment: {use_global_path_id: true}
+    driver_parameter_mapping:
+      - driver_id: AI_COMPUTE_DEMAND
+        material: true
+        stochastic_targets:
+          - path: revenue_model.segments.DataCenter.initial_growth
+            transform: additive_pp
+            effect_per_plus_1sigma: 0.10
+            lag_quarters: 0
+            decay_half_life_quarters: 4
+          - path: margin_model.terminal_margin_Y5
+            transform: additive_pp
+            effect_per_plus_1sigma: 0.015
+            lag_quarters: 1
+            decay_half_life_quarters: 6
+        structural_support:
+          - path: revenue_model.segments.DataCenter.initial_growth.mode
+            contribution: 0.08
+        stability:
+          knockout:
+            mode: remove_structural_support
+            shifts:
+              - {path: revenue_model.segments.DataCenter.initial_growth.mode, delta: -0.08}
+          adverse_driver_stress: {driver_sigma: -1.0}
+
+      - driver_id: INTEREST_RATES
+        material: true
+        stochastic_targets:
+          - path: valuation.terminal_multiple_Y5
+            transform: multiplicative_pct
+            effect_per_plus_1sigma: -0.10
+            lag_quarters: 0
+            decay_half_life_quarters: 8
+        structural_support: []
+        stability:
+          knockout: {mode: not_applicable}
+          adverse_driver_stress: {driver_sigma: 1.0}
+
+  NBIS:
+    archetype: capital_intensive_transition
+    note: "Формат-пример; числа не являются принятой калибровкой NBIS."
+    joint_simulation:
+      layer_version: "1.0"
+      active_drivers: [AI_COMPUTE_DEMAND, DATA_CENTER_POWER, AI_CLOUD_PRICING, CAPITAL_MARKETS, TAIWAN_SUPPLY]
+      company_idiosyncratic_factors:
+        - id: SITE_COMMISSIONING_EXECUTION
+          distribution: standard_normal
+          persistence: 0.70
+      path_alignment: {use_global_path_id: true}
+    driver_parameter_mapping:
+      - driver_id: AI_COMPUTE_DEMAND
+        material: true
+        stochastic_targets:
+          - path: revenue_model.segments.AI.initial_growth
+            transform: additive_pp
+            effect_per_plus_1sigma: 0.15
+            lag_quarters: 0
+            decay_half_life_quarters: 6
+          - path: margin_model.direct_fcf_nodes.Y3
+            transform: additive_pp
+            effect_per_plus_1sigma: 0.03
+            lag_quarters: 2
+            decay_half_life_quarters: 8
+        structural_support:
+          - path: revenue_model.segments.AI.initial_growth.mode
+            contribution: 0.12
+          - path: margin_model.direct_fcf_nodes.Y3.mode
+            contribution: 0.02
+        stability:
+          knockout:
+            mode: remove_structural_support
+            shifts:
+              - {path: revenue_model.segments.AI.initial_growth.mode, delta: -0.12}
+              - {path: margin_model.direct_fcf_nodes.Y3.mode, delta: -0.02}
+          adverse_driver_stress: {driver_sigma: -1.0}
+
+      - driver_id: DATA_CENTER_POWER
+        material: true
+        stochastic_targets:
+          - path: capacity_model.online_capacity_growth
+            transform: multiplicative_pct
+            effect_per_plus_1sigma: 0.15
+            lag_quarters: 1
+            decay_half_life_quarters: 8
+        structural_support:
+          - path: capacity_model.online_capacity_growth.mode
+            contribution: 0.10
+        stability:
+          knockout:
+            mode: remove_structural_support
+            shifts:
+              - {path: capacity_model.online_capacity_growth.mode, delta: -0.10}
+          adverse_driver_stress: {driver_sigma: -1.0}
+
+  ASTS:
+    archetype: pre_service_or_milestone_driven
+    note: "Формат-пример; числа не являются принятой калибровкой ASTS."
+    joint_simulation:
+      layer_version: "1.0"
+      active_drivers: [LAUNCH_ECONOMICS, SATELLITE_CONNECTIVITY, SPACE_REGULATION, CAPITAL_MARKETS]
+      company_idiosyncratic_factors:
+        - id: SATELLITE_TECHNICAL_EXECUTION
+          distribution: standard_normal
+          persistence: 0.60
+      path_alignment: {use_global_path_id: true}
+    driver_parameter_mapping:
+      - driver_id: SPACE_REGULATION
+        material: true
+        stochastic_targets:
+          - path: milestone_model.regulatory_approval.probability
+            transform: probability_logit_shift
+            effect_per_plus_1sigma: -0.40
+            lag_quarters: 0
+            decay_half_life_quarters: 8
+          - path: milestone_model.service_onset.timing
+            transform: timing_quarters_shift
+            effect_per_plus_1sigma: 1.0
+            lag_quarters: 0
+            decay_half_life_quarters: 8
+        structural_support: []
+        stability:
+          knockout: {mode: not_applicable}
+          adverse_driver_stress: {driver_sigma: 1.0}
+
+      - driver_id: SATELLITE_CONNECTIVITY
+        material: true
+        stochastic_targets:
+          - path: revenue_model.segments.SpaceMobile.post_service_growth
+            transform: additive_pp
+            effect_per_plus_1sigma: 0.08
+            lag_quarters: 1
+            decay_half_life_quarters: 8
+        structural_support:
+          - path: revenue_model.segments.SpaceMobile.post_service_growth.mode
+            contribution: 0.06
+        stability:
+          knockout:
+            mode: remove_structural_support
+            shifts:
+              - {path: revenue_model.segments.SpaceMobile.post_service_growth.mode, delta: -0.06}
+          adverse_driver_stress: {driver_sigma: -1.0}

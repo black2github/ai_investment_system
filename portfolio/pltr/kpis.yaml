@@ -1,0 +1,152 @@
+# KPI PLTR с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.0'
+artifact: PLTR KPI Dashboard
+as_of: '2026-09-21'
+ticker: PLTR
+max_critical_kpis: 10
+source_artifact: inbox/received/PLTR_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - Palantir Technologies Inc. Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: PLTR-KPI-01
+  name: Total revenue YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.50'
+    yellow: '>=0.25 and <0.50'
+    red: <0.25
+  last_value: 0.93
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
+  verified: false
+- id: PLTR-KPI-02
+  name: U.S. commercial revenue YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=1.00'
+    yellow: '>=0.50 and <1.00'
+    red: <0.50
+  last_value: 1.49
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
+  verified: false
+- id: PLTR-KPI-03
+  name: U.S. government revenue YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.50'
+    yellow: '>=0.20 and <0.50'
+    red: <0.20
+  last_value: 0.9
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+  verified: false
+  formula: 809 / 426 - 1 = 0.899
+- id: PLTR-KPI-04
+  name: U.S. commercial RDV
+  unit: USD B
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=6'
+    yellow: '>=4 and <6'
+    red: <4
+  last_value: 6.238
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
+  verified: false
+- id: PLTR-KPI-05
+  name: U.S. commercial RDV YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.75'
+    yellow: '>=0.30 and <0.75'
+    red: <0.30
+  last_value: 1.24
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
+  verified: false
+- id: PLTR-KPI-06
+  name: Total contract value closed
+  unit: USD B
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=3'
+    yellow: '>=2 and <3'
+    red: <2
+  last_value: 3.373
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
+  verified: false
+- id: PLTR-KPI-07
+  name: GAAP operating margin
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.40'
+    yellow: '>=0.25 and <0.40'
+    red: <0.25
+  last_value: 0.47
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
+  verified: false
+  formula: 0.912004 / 1.935464 = 0.4712
+- id: PLTR-KPI-08
+  name: Adjusted FCF margin
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.50'
+    yellow: '>=0.30 and <0.50'
+    red: <0.30
+  last_value: 0.63
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
+  verified: false
+  formula: 1.220359 / 1.935464 = 0.6305
+- id: PLTR-KPI-09
+  name: H1 U.S. revenue share
+  unit: fraction
+  period: semiannual
+  source: SEC
+  thresholds:
+    green: <0.70
+    yellow: '>=0.70 and <0.85'
+    red: '>=0.85'
+  last_value: 0.8
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+  verified: false
+  note: 'Diversification/risk KPI: lower concentration is better.'
+- id: PLTR-KPI-10
+  name: Stock-based compensation / revenue
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: <0.10
+    yellow: '>=0.10 and <0.20'
+    red: '>=0.20'
+  last_value: 0.137
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+  verified: false
+  formula: 0.265209 / 1.935464 = 0.1370

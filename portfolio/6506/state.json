@@ -1,0 +1,94 @@
+{
+  "updated": "2026-09-17T12:00:00Z",
+  "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
+  "price": {
+    "symbol": "6506.T",
+    "last": 4378,
+    "last_at": "2026-09-17",
+    "zone": null,
+    "note": "zone ведёт скрипт aiinfra-price-watch в trigger.state"
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [
+    {
+      "fact": "Q1 FY2027 orders",
+      "value_in_discussion": "+29% г/г",
+      "where_to_verify": "Yaskawa Q1 FY2027 report",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "Total orders Q1 FY2026 (fiscal year ending Feb 2027) 163.8bn yen, YoY +29%",
+      "source_url": "https://www.yaskawa-global.com/wp-content/uploads/2026/07/haifu_script_e_26-1_3.pdf",
+      "checked_at": "2026-09-17T12:25:56Z"
+    },
+    {
+      "fact": "Q1 FY2027 Robotics revenue",
+      "value_in_discussion": "+2% г/г",
+      "where_to_verify": "Yaskawa Q1 FY2027 report",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "Robotics revenue 56.7bn yen, YoY +2.0% (56,728 vs 55,633 million yen)",
+      "source_url": "https://www.yaskawa-global.com/wp-content/uploads/2026/07/20260710_en.pdf",
+      "checked_at": "2026-09-17T12:25:56Z"
+    },
+    {
+      "fact": "MOTOMAN NEXT в эксплуатации",
+      "value_in_discussion": "> 200 единиц",
+      "where_to_verify": "Yaskawa IR / пресс-релизы",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "not_found",
+      "actual_value": null,
+      "source_url": null,
+      "checked_at": "2026-09-17T12:25:56Z",
+      "why_pending": "Не найдено упоминания MOTOMAN NEXT или числа установленных единиц ни в 決算短信 (kessan tanshin), ни в презентации/скрипте Q1 FY2027 (haifu_script_e_26-1_3.pdf). Проверены только first-party PDF; новостные агрегаторы не использовались как источник."
+    },
+    {
+      "fact": "дата Q2 FY2027 report",
+      "value_in_discussion": "09.10.2026",
+      "where_to_verify": "Yaskawa IR calendar",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "IR-страница указывает '2Q Results (Oct. 2026)' без точной даты; в обсуждении фигурировала дата 09.10.2026, точный день на IR-странице не проставлен (только месяц). Дата не противоречит, но не подтверждена буквально день-в-день.",
+      "source_url": "https://www.yaskawa-global.com/ir/materials/br",
+      "checked_at": "2026-09-17T12:25:56Z"
+    },
+    {
+      "fact": "финансовый год",
+      "value_in_discussion": "до конца февраля (FY2026 до 28.02.2027)",
+      "where_to_verify": "Yaskawa IR",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "verified",
+      "actual_value": "Consolidated Results for the First Quarter of Fiscal Year Ending February 28, 2027 [IFRS] — заголовок отчёта подтверждает финансовый год до 28.02.2027",
+      "source_url": "https://www.yaskawa-global.com/wp-content/uploads/2026/07/20260710_en.pdf",
+      "checked_at": "2026-09-17T12:25:56Z"
+    },
+    {
+      "fact": "6506-E-04: гуманоиды поставки ≥ сотен тысяч в год",
+      "value_in_discussion": "Tesla Optimus ~50 000 в 2026 (не 100k+); Unitree 10 000-й/15 000-й робот (март/июнь 2026, смешанные типы)",
+      "where_to_verify": "Tesla shareholder letter, Unitree/Figure/Agility официальные раскрытия, IFR",
+      "found_at": "2026-09-18T06:05:35Z",
+      "status": "not_met",
+      "why_pending": "Ни одна цифра не достигает «сотен тысяч в год»: Tesla ориентир ~50 000 (вторичные источники, не first-party), Unitree суммарные поставки за месяцы включают неоднородные модели. Условие не закрыто, не уведомлять.",
+      "checked_at": "2026-09-18T06:05:35Z"
+    },
+    {
+      "fact": "insider voting concentration",
+      "value_in_discussion": "неизвестно",
+      "where_to_verify": "Yaskawa annual securities report",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified"
+    }
+  ],
+  "owner_decisions": [],
+  "notes": [
+    "2026-09-17: реестр заведён по финальному блоку обсуждения; предпосылки не проверены — разовое задание aiinfra-facts-verify",
+    "2026-09-17T12:25:56Z: разовая проверка facts-verify по первоисточникам (kessan tanshin 20260710_en.pdf и haifu_script_e_26-1_3.pdf). Robotics orders YoY по презентации = +14% (не входил в исходный список пунктов discussion, но встречен как смежная цифра — записан в notes для справки)."
+  ],
+  "route": {
+    "current": "watch",
+    "done_steps": [],
+    "changed_at": "2026-09-17",
+    "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
+  },
+  "info_log": []
+}

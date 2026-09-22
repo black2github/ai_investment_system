@@ -1,0 +1,208 @@
+# Реестр триггеров: Rocket Lab Corporation (RKLB)
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c).
+# Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
+# Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
+meta:
+  ticker: RKLB
+  company: Rocket Lab Corporation
+  exchange: NASDAQ
+  yahoo_symbol: RKLB
+  registry_updated: '2026-09-21'
+  source_artifact: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+  price_source: https://query1.finance.yahoo.com/v8/finance/chart/RKLB?range=1d&interval=1d (поле meta.regularMarketPrice)
+  price_at_registry: 64.57
+  position: фактическая позиция владельца, см. portfolio/_portfolio.yaml
+automations:
+  _note: дозор событий по этим триггерам ещё не заведён (очередь); вечерняя сводка обходит папку
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний по осям states.yaml — фазы стратегии владельца не заданы
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+triggers:
+- id: RKLB-E-01
+  class: event
+  step: vector
+  axis: Electron_Cadence
+  transition:
+    from: E2
+    to: E3
+  level: E2
+  kpis:
+  - RKLB-KPI-04
+  condition: Electron/HASTE launches trailing 6m >=18
+  period: rolling 6 months
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Electron_Cadence E2→E3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: RKLB-E-02
+  class: event
+  step: vector
+  axis: Electron_Cadence
+  transition:
+    from: E2
+    to: E1
+  level: E2
+  kpis:
+  - RKLB-KPI-04
+  condition: Electron/HASTE launches trailing 6m <12 for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Electron_Cadence E2→E1 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: RKLB-E-03
+  class: event
+  step: vector
+  axis: Electron_Cadence
+  transition:
+    from: E2
+    to: E4
+  level: E3
+  kpis:
+  - RKLB-KPI-04
+  condition: launch success rate <90% OR launches trailing 6m decline >=30% YoY
+  period: one failure cluster or one quarter
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Electron_Cadence E2→E4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: RKLB-E-04
+  class: event
+  step: vector
+  axis: Neutron_Development
+  transition:
+    from: N1
+    to: N2
+  level: E2
+  kpis:
+  - RKLB-KPI-09
+  condition: one successful orbital Neutron mission meeting >=80% declared objectives
+  period: one mission
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Neutron_Development N1→N2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: RKLB-E-05
+  class: event
+  step: vector
+  axis: Neutron_Development
+  transition:
+    from: N2
+    to: N3
+  level: E2
+  kpis:
+  - RKLB-KPI-09
+  condition: same flight-capable Neutron first-stage architecture successfully reused >=2 times
+  period: event driven
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Neutron_Development N2→N3 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: RKLB-E-06
+  class: event
+  step: vector
+  axis: Space_Systems_Scale
+  transition:
+    from: S3
+    to: S4
+  level: E2
+  kpis:
+  - RKLB-KPI-02
+  - RKLB-KPI-03
+  condition: Space Systems share >=75% AND YoY growth >=40% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Space_Systems_Scale S3→S4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: RKLB-E-07
+  class: event
+  step: vector
+  axis: Space_Systems_Scale
+  transition:
+    from: S3
+    to: S2
+  level: E2
+  kpis:
+  - RKLB-KPI-02
+  - RKLB-KPI-03
+  condition: Space Systems share <75% OR YoY growth <40% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Space_Systems_Scale S3→S2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: RKLB-E-08
+  class: event
+  step: vector
+  axis: Backlog_Visibility
+  transition:
+    from: B3
+    to: B4
+  level: E2
+  kpis:
+  - RKLB-KPI-06
+  condition: backlog >= $3.0B
+  period: one quarter
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Backlog_Visibility B3→B4 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: RKLB-E-09
+  class: event
+  step: vector
+  axis: Backlog_Visibility
+  transition:
+    from: B3
+    to: B2
+  level: E2
+  kpis:
+  - RKLB-KPI-06
+  - RKLB-KPI-07
+  condition: backlog < $2.0B OR backlog YoY growth <20% for 2 consecutive quarters
+  period: 2 quarters
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Backlog_Visibility B3→B2 в state.json (state_transitions, scenario_state) и отправить Decision
+    Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: RKLB-E-10
+  class: event
+  step: vector
+  axis: Capital_and_Integration
+  transition:
+    from: C2
+    to: C3
+  level: E2
+  kpis: []
+  condition: liquidity < $1.0B OR acquisition/development cash commitments >50% of disclosed liquidity
+  period: one verified report
+  source: первичный источник по kpis.yaml (SEC 10-Q/10-K/6-K, IR)
+  action: Зафиксировать переход Capital_and_Integration C2→C3 в state.json (state_transitions, scenario_state) и отправить
+    Decision Request владельцу; инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []

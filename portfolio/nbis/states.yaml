@@ -1,0 +1,137 @@
+# Вектор состояний NBIS (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+version: '1.1'
+artifact: NBIS State Vector
+as_of: '2026-09-21'
+ticker: NBIS
+source_artifact: inbox/received/NBIS_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
+semantics:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  numeric_thresholds_provenance: model_assumption
+sources:
+  NBIS_Q2_RELEASE: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm
+  NBIS_Q2_LETTER: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm
+  NBIS_Q2_6K: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm
+axes:
+  Demand_Monetization:
+    name: Demand Monetization
+    name_ru: спрос и монетизация AI-облака
+    states:
+      N0:
+        name: optionality
+        criteria: AI cloud quarterly revenue < $0.10B
+      N1:
+        name: demand_validation
+        criteria: AI cloud quarterly revenue >= $0.10B AND ARR >= $0.50B
+      N2:
+        name: scale_validation
+        criteria: AI cloud quarterly revenue >= $0.30B AND ARR >= $1.50B
+      N3:
+        name: contracted_scale
+        criteria: AI cloud quarterly revenue >= $0.50B AND ARR >= $3.0B AND disclosed customer commitments >= $20B
+      N4:
+        name: durable_scale
+        criteria: AI cloud quarterly revenue >= $1.0B AND ARR >= $5.0B for 2 consecutive quarters
+    current: N3
+    current_evidence: []
+    source_refs:
+    - NBIS_Q2_LETTER
+    - NBIS_Q2_6K
+  Unit_Economics:
+    name: Unit Economics
+    name_ru: юнит-экономика AI-облака
+    states:
+      E0:
+        name: negative
+        criteria: AI cloud adjusted EBITDA margin < 0%
+      E1:
+        name: breakeven
+        criteria: margin >= 0% and < 20%
+      E2:
+        name: scaled_positive
+        criteria: margin >= 20% and < 35%
+      E3:
+        name: high_margin
+        criteria: margin >= 35% for at least 1 quarter
+      E4:
+        name: durable_high_margin
+        criteria: AI cloud margin >= 45% for 2 quarters AND group adjusted EBITDA margin >= 35%
+    current: E3
+    current_evidence: []
+    source_refs:
+    - NBIS_Q2_LETTER
+    - NBIS_Q2_6K
+  Capacity_Secured:
+    name: Capacity Secured
+    name_ru: законтрактованная мощность (ГВт)
+    states:
+      C0:
+        name: subscale
+        criteria: contracted power guidance < 1 GW
+      C1:
+        name: initial_scale
+        criteria: guidance >= 1 GW and < 3 GW
+      C2:
+        name: large_scale
+        criteria: guidance >= 3 GW and < 5 GW
+      C3:
+        name: hyperscale_secured
+        criteria: guidance >= 5 GW
+      C4:
+        name: hyperscale_execution
+        criteria: contracted power >= 6 GW AND >= 1 GW capacity brought online in trailing 12 months
+    current: pending_verification
+    current_evidence: []
+    source_refs:
+    - NBIS_Q2_LETTER
+    prior_snapshot: C3
+    current_note: Guidance 5 GW (YE2026) не считается реализованным состоянием; ждём факт по NBIS-KPI-11 (поправка LLM 21.09)
+  Capital_Intensity:
+    name: Capital Intensity
+    name_ru: капиталоёмкость (capex к выручке)
+    states:
+      K0:
+        name: normalized
+        criteria: quarterly capex/revenue < 1x
+      K1:
+        name: expansion
+        criteria: capex/revenue >= 1x and < 3x
+      K2:
+        name: aggressive_expansion
+        criteria: capex/revenue >= 3x and < 6x
+      K3:
+        name: extreme_but_prefunded
+        criteria: capex/revenue >= 6x AND prepayment coverage >= 40% AND AI cloud adjusted EBITDA > 0
+      K4:
+        name: overbuild_financing_risk
+        criteria: capex/revenue >= 6x AND (prepayment coverage < 30% OR AI cloud adjusted EBITDA margin < 15%) for 2 quarters
+    current: K3
+    current_evidence: []
+    source_refs:
+    - NBIS_Q2_LETTER
+  Funding_Liquidity:
+    name: Funding Liquidity
+    name_ru: финансирование и ликвидность
+    states:
+      F0:
+        name: internally_funded
+        criteria: no material external financing in trailing 12m AND cash >= 2x latest quarterly capex
+      F1:
+        name: ample_liquidity
+        criteria: cash >= 2x latest quarterly capex
+      F2:
+        name: funded_expansion
+        criteria: cash >= 1x latest quarterly capex AND external funding/prepayments actively support buildout
+      F3:
+        name: refinancing_dependence
+        criteria: cash < 1x latest quarterly capex OR interest expense > 50% of group adjusted EBITDA for 2 quarters
+      F4:
+        name: liquidity_stress
+        criteria: cash < 0.5x latest quarterly capex AND no committed funding sufficient for next 2 quarters
+    current: F2
+    current_evidence: []
+    source_refs:
+    - NBIS_Q2_6K
+    - NBIS_Q2_LETTER

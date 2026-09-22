@@ -1,0 +1,91 @@
+# Входы MPC для META: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: META
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/META_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+driver_exposure_semantics:
+  scale:
+    -2: strong_negative
+    -1: negative
+    0: immaterial
+    1: positive
+    2: strong_positive
+  provenance: model_assumption
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 2
+  HYPERSCALER_CAPEX: -2
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: -1
+  HBM_MEMORY: -1
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 1
+  DATA_CENTER_POWER: -2
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 0
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: -1
+  ACQUISITION_INTEGRATION: 0
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 1
+  UTILITY_CAPEX: 1
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 2
+  SPACE_REGULATION: 0
+driver_interpretation:
+  HYPERSCALER_CAPEX:
+    directionality: dual
+    vector_score: -2
+    positive_channel: More AI infrastructure can improve recommendation, advertising and future AI products.
+    negative_channel: META is itself a hyperscaler buyer; rising infrastructure capex is a direct cash-flow/commitment burden.
+    net_rule_v1: For portfolio common-cause exposure, encode the cash-consumer channel as negative; retain AI_COMPUTE_DEMAND
+      +2 as the separate positive demand/monetization channel.
+  TAIWAN_SUPPLY:
+    directionality: negative_input_dependency
+    note: Disruption would impair availability/cost of leading-edge compute hardware; this is an input-side exposure.
+failure_modes:
+- failure_id: META-FM-01
+  name: AI infrastructure spending fails to produce proportional ad/product monetization
+  common_cause_id: AI_OVERBUILD
+  severity: high
+- failure_id: META-FM-02
+  name: Data-center power/lease commitments constrain FCF
+  common_cause_id: DATA_CENTER_POWER_CONSTRAINT
+  severity: high
+- failure_id: META-FM-03
+  name: Leading-edge GPU/HBM supply disruption raises cost or delays capacity
+  common_cause_id: TAIWAN_SUPPLY_DISRUPTION
+  severity: high
+- failure_id: META-FM-04
+  name: Advertising growth decelerates despite high infrastructure spend
+  common_cause_id: DIGITAL_AD_DEMAND_SLOWDOWN
+  severity: high
+- failure_id: META-FM-05
+  name: Reality Labs losses remain structurally large
+  common_cause_id: LONG_DURATION_NEW_BET_BURN
+  severity: medium
+- failure_id: META-FM-06
+  name: Privacy/antitrust/legal actions impair monetization or create material charges
+  common_cause_id: PLATFORM_REGULATORY_PRESSURE
+  severity: high
+- failure_id: META-FM-07
+  name: Debt/lease/contract commitments reduce strategic flexibility during downturn
+  common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN
+  severity: medium
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

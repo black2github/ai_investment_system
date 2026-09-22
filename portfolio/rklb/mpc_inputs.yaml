@@ -1,0 +1,72 @@
+# Входы MPC для RKLB: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: RKLB
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 0
+  HYPERSCALER_CAPEX: 0
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 0
+  DATA_CENTER_POWER: 0
+  LAUNCH_ECONOMICS: 2
+  SATELLITE_CONNECTIVITY: 2
+  GOVERNMENT_DEFENSE: 2
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 2
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 1
+  AEROSPACE_CYCLE: 2
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: -1
+failure_modes:
+- failure_id: RKLB-FM-01
+  name: Neutron development/first-flight delay or failure
+  common_cause_id: LAUNCH_VEHICLE_DEVELOPMENT_FAILURE
+  severity: critical
+- failure_id: RKLB-FM-02
+  name: Electron launch failure/cadence disruption
+  common_cause_id: LAUNCH_OPERATIONS_FAILURE
+  severity: high
+- failure_id: RKLB-FM-03
+  name: Government space procurement slowdown
+  common_cause_id: GOVERNMENT_SPACE_BUDGET
+  severity: high
+- failure_id: RKLB-FM-04
+  name: Space-systems program execution failure
+  common_cause_id: SPACE_SYSTEMS_EXECUTION
+  severity: high
+- failure_id: RKLB-FM-05
+  name: Mynaric/Motiv/Iridium integration complexity
+  common_cause_id: ACQUISITION_INTEGRATION_FAILURE
+  severity: high
+- failure_id: RKLB-FM-06
+  name: Capital-market dependence during development
+  common_cause_id: CAPITAL_MARKETS_TIGHTENING
+  severity: medium
+- failure_id: RKLB-FM-07
+  name: Launch regulatory/range delay
+  common_cause_id: SPACE_REGULATORY_RANGE_DELAY
+  severity: medium
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

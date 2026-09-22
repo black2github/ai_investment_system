@@ -1,0 +1,40 @@
+{
+  "updated": "2026-09-17T12:00:00Z",
+  "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
+  "price": {
+    "symbol": "CRWD",
+    "last": 241.36,
+    "last_at": "2026-09-16",
+    "zone": null,
+    "note": "zone ведёт скрипт aiinfra-price-watch в trigger.state"
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [
+    {
+      "fact": "дата ближайшего квартального отчёта",
+      "value_in_discussion": "неизвестно",
+      "where_to_verify": "CRWD IR",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified"
+    },
+    {
+      "fact": "раскрытие Cloud Security ARR",
+      "value_in_discussion": "неизвестно",
+      "where_to_verify": "CRWD earnings presentation",
+      "found_at": "2026-09-17T12:00:00Z",
+      "status": "unverified"
+    }
+  ],
+  "owner_decisions": [],
+  "notes": [
+    "2026-09-17: реестр заведён по финальному блоку обсуждения; предпосылки не проверены — разовое задание aiinfra-facts-verify"
+  ],
+  "route": {
+    "current": "watch",
+    "done_steps": [],
+    "changed_at": "2026-09-17",
+    "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
+  },
+  "info_log": []
+}

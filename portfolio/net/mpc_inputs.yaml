@@ -1,0 +1,72 @@
+# Входы MPC для NET: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: NET
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/NET_company_state_v1.0.yaml (другая LLM, партия 3, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 2
+  HYPERSCALER_CAPEX: 1
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 2
+  DATA_CENTER_POWER: 1
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 0
+  AI_CLOUD_PRICING: 1
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+failure_modes:
+- failure_id: NET-FM-01
+  name: Enterprise/cloud software spending slowdown
+  common_cause_id: CLOUD_SOFTWARE_DEMAND_SLOWDOWN
+  severity: high
+- failure_id: NET-FM-02
+  name: AI edge inference/agent monetization fails to become material
+  common_cause_id: AI_MONETIZATION_FAILURE
+  severity: high
+- failure_id: NET-FM-03
+  name: Hyperscaler/cloud-platform competition
+  common_cause_id: CLOUD_PLATFORM_COMPETITION
+  severity: high
+- failure_id: NET-FM-04
+  name: Network outage/security incident
+  common_cause_id: INTERNET_INFRASTRUCTURE_OUTAGE
+  severity: critical
+- failure_id: NET-FM-05
+  name: Large-customer expansion/NRR decelerates
+  common_cause_id: ENTERPRISE_EXPANSION_SLOWDOWN
+  severity: high
+- failure_id: NET-FM-06
+  name: AI traffic cost grows faster than monetization
+  common_cause_id: AI_OVERBUILD
+  severity: medium
+- failure_id: NET-FM-07
+  name: Valuation sensitivity under higher rates
+  common_cause_id: CAPITAL_MARKETS_TIGHTENING
+  severity: medium
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

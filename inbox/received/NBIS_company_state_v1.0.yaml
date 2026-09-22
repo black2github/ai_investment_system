@@ -1,0 +1,120 @@
+version: "1.0"
+ticker: NBIS
+as_of: "2026-09-21"
+artifact: company_state_kpi_trigger_mpc
+semantics:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  numeric_thresholds_provenance: model_assumption
+sources:
+  NBIS_Q2_RELEASE: "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm"
+  NBIS_Q2_LETTER: "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm"
+  NBIS_Q2_6K: "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm"
+
+states:
+  Demand_Monetization:
+    states:
+      N0: {name: optionality, criteria: "AI cloud quarterly revenue < $0.10B"}
+      N1: {name: demand_validation, criteria: "AI cloud quarterly revenue >= $0.10B AND ARR >= $0.50B"}
+      N2: {name: scale_validation, criteria: "AI cloud quarterly revenue >= $0.30B AND ARR >= $1.50B"}
+      N3: {name: contracted_scale, criteria: "AI cloud quarterly revenue >= $0.50B AND ARR >= $3.0B AND disclosed customer commitments >= $20B"}
+      N4: {name: durable_scale, criteria: "AI cloud quarterly revenue >= $1.0B AND ARR >= $5.0B for 2 consecutive quarters"}
+    current: N3
+    evidence: ["Q2 AI cloud revenue $574.9M (+514% YoY)", "ARR $3.0B", ">$40B customer commitments"]
+    source_refs: [NBIS_Q2_LETTER, NBIS_Q2_6K]
+  Unit_Economics:
+    states:
+      E0: {name: negative, criteria: "AI cloud adjusted EBITDA margin < 0%"}
+      E1: {name: breakeven, criteria: "margin >= 0% and < 20%"}
+      E2: {name: scaled_positive, criteria: "margin >= 20% and < 35%"}
+      E3: {name: high_margin, criteria: "margin >= 35% for at least 1 quarter"}
+      E4: {name: durable_high_margin, criteria: "AI cloud margin >= 45% for 2 quarters AND group adjusted EBITDA margin >= 35%"}
+    current: E3
+    evidence: ["AI cloud adjusted EBITDA $285.7M; margin 49.7%", "Group adjusted EBITDA $236.2M; margin 41%"]
+    source_refs: [NBIS_Q2_LETTER, NBIS_Q2_6K]
+  Capacity_Secured:
+    states:
+      C0: {name: subscale, criteria: "contracted power guidance < 1 GW"}
+      C1: {name: initial_scale, criteria: "guidance >= 1 GW and < 3 GW"}
+      C2: {name: large_scale, criteria: "guidance >= 3 GW and < 5 GW"}
+      C3: {name: hyperscale_secured, criteria: "guidance >= 5 GW"}
+      C4: {name: hyperscale_execution, criteria: "contracted power >= 6 GW AND >= 1 GW capacity brought online in trailing 12 months"}
+    current: C3
+    evidence: ["2026 contracted-power guidance >5 GW", "plan to deploy >1 GW/year starting 2027"]
+    source_refs: [NBIS_Q2_LETTER]
+  Capital_Intensity:
+    states:
+      K0: {name: normalized, criteria: "quarterly capex/revenue < 1x"}
+      K1: {name: expansion, criteria: "capex/revenue >= 1x and < 3x"}
+      K2: {name: aggressive_expansion, criteria: "capex/revenue >= 3x and < 6x"}
+      K3: {name: extreme_but_prefunded, criteria: "capex/revenue >= 6x AND prepayment coverage >= 40% AND AI cloud adjusted EBITDA > 0"}
+      K4: {name: overbuild_financing_risk, criteria: "capex/revenue >= 6x AND (prepayment coverage < 30% OR AI cloud adjusted EBITDA margin < 15%) for 2 quarters"}
+    current: K3
+    evidence: ["Q2 capex ~$5.7B vs group revenue $582.3M (~9.8x)", "Q2-deal prepayments cover 50-60% of associated capex", "AI cloud adjusted EBITDA positive"]
+    source_refs: [NBIS_Q2_LETTER]
+  Funding_Liquidity:
+    states:
+      F0: {name: internally_funded, criteria: "no material external financing in trailing 12m AND cash >= 2x latest quarterly capex"}
+      F1: {name: ample_liquidity, criteria: "cash >= 2x latest quarterly capex"}
+      F2: {name: funded_expansion, criteria: "cash >= 1x latest quarterly capex AND external funding/prepayments actively support buildout"}
+      F3: {name: refinancing_dependence, criteria: "cash < 1x latest quarterly capex OR interest expense > 50% of group adjusted EBITDA for 2 quarters"}
+      F4: {name: liquidity_stress, criteria: "cash < 0.5x latest quarterly capex AND no committed funding sufficient for next 2 quarters"}
+    current: F2
+    evidence: ["cash $8.042B", "Q2 capex ~$5.7B", "H1 financing inflow $9.160B; H1 OCF $4.504B materially supported by $4.395B increase in deferred revenue/customer advances"]
+    source_refs: [NBIS_Q2_6K, NBIS_Q2_LETTER]
+
+kpis:
+  - {id: NBIS-KPI-01, name: "AI cloud revenue YoY", period: quarterly, current_value: 5.14, unit: "YoY fraction", zones: {green: ">=1.00", yellow: ">=0.40 and <1.00", red: "<0.40"}, source_ref: NBIS_Q2_6K}
+  - {id: NBIS-KPI-02, name: "AI cloud quarterly revenue", period: quarterly, current_value: 0.5749, unit: "USD B", zones: {green: ">=0.50", yellow: ">=0.30 and <0.50", red: "<0.30"}, source_ref: NBIS_Q2_6K}
+  - {id: NBIS-KPI-03, name: "AI cloud ARR", period: quarterly, current_value: 3.0, unit: "USD B", zones: {green: ">=3.0", yellow: ">=1.5 and <3.0", red: "<1.5"}, source_ref: NBIS_Q2_LETTER}
+  - {id: NBIS-KPI-04, name: "AI cloud adjusted EBITDA margin", period: quarterly, current_value: 0.497, unit: fraction, zones: {green: ">=0.35", yellow: ">=0.15 and <0.35", red: "<0.15"}, source_ref: NBIS_Q2_LETTER}
+  - {id: NBIS-KPI-05, name: "Quarterly capex", period: quarterly, current_value: 5.7, unit: "USD B", zones: {green: "<3.0", yellow: ">=3.0 and <5.0", red: ">=5.0"}, source_ref: NBIS_Q2_LETTER, note: "risk KPI; interpret with monetization/funding"}
+  - {id: NBIS-KPI-06, name: "Customer prepayment coverage of associated capex", period: deal_cohort, current_value_range: [0.50, 0.60], unit: fraction, zones: {green: ">=0.50", yellow: ">=0.30 and <0.50", red: "<0.30"}, source_ref: NBIS_Q2_LETTER}
+  - {id: NBIS-KPI-07, name: "Disclosed customer commitments", period: quarterly, current_value: ">40", unit: "USD B", zones: {green: ">=30", yellow: ">=15 and <30", red: "<15"}, source_ref: NBIS_Q2_LETTER}
+  - {id: NBIS-KPI-08, name: "Contracted power guidance", period: quarterly, current_value: ">5", unit: GW, zones: {green: ">=5", yellow: ">=3 and <5", red: "<3"}, source_ref: NBIS_Q2_LETTER, note: "company guidance, not realized live capacity"}
+  - {id: NBIS-KPI-09, name: "Cash and cash equivalents", period: quarterly, current_value: 8.0421, unit: "USD B", zones: {green: ">=8", yellow: ">=4 and <8", red: "<4"}, source_ref: NBIS_Q2_6K}
+  - {id: NBIS-KPI-10, name: "Group adjusted EBITDA margin", period: quarterly, current_value: 0.41, unit: fraction, zones: {green: ">=0.35", yellow: ">=0.15 and <0.35", red: "<0.15"}, source_ref: NBIS_Q2_LETTER}
+
+triggers:
+  - {id: NBIS-E-01, axis: Demand_Monetization, transition: {from: N3, to: N4}, kpis: [NBIS-KPI-02, NBIS-KPI-03], condition: "AI cloud quarterly revenue >= $1.0B AND ARR >= $5.0B for 2 consecutive quarters", period: "2 quarters", level: E2}
+  - {id: NBIS-E-02, axis: Demand_Monetization, transition: {from: N3, to: N2}, kpis: [NBIS-KPI-01, NBIS-KPI-03], condition: "AI cloud revenue YoY <50% for 2 quarters OR ARR declines sequentially for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NBIS-E-03, axis: Unit_Economics, transition: {from: E3, to: E4}, kpis: [NBIS-KPI-04, NBIS-KPI-10], condition: "AI cloud adjusted EBITDA margin >=45% AND group adjusted EBITDA margin >=35% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NBIS-E-04, axis: Unit_Economics, transition: {from: E3, to: E2}, kpis: [NBIS-KPI-04], condition: "AI cloud adjusted EBITDA margin <30% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NBIS-E-05, axis: Capacity_Secured, transition: {from: C3, to: C4}, kpis: [NBIS-KPI-08], condition: "contracted power >=6 GW AND >=1 GW capacity brought online in trailing 12 months", period: "rolling 12m", level: E2}
+  - {id: NBIS-E-06, axis: Capacity_Secured, transition: {from: C3, to: C2}, kpis: [NBIS-KPI-08], condition: "contracted-power guidance <4 GW OR planned next-12m capacity additions reduced/delayed >=25%", period: "one verified update", level: E2}
+  - {id: NBIS-E-07, axis: Capital_Intensity, transition: {from: K3, to: K2}, kpis: [NBIS-KPI-04, NBIS-KPI-05], condition: "quarterly capex/revenue <6x AND AI cloud adjusted EBITDA margin >=35% for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NBIS-E-08, axis: Capital_Intensity, transition: {from: K3, to: K4}, kpis: [NBIS-KPI-04, NBIS-KPI-05, NBIS-KPI-06], condition: "capex/revenue >=8x AND (prepayment coverage <30% OR AI cloud adjusted EBITDA margin <15%) for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NBIS-E-09, axis: Funding_Liquidity, transition: {from: F2, to: F3}, kpis: [NBIS-KPI-05, NBIS-KPI-09, NBIS-KPI-10], condition: "cash <1x latest quarterly capex OR interest expense >50% of group adjusted EBITDA for 2 quarters", period: "2 quarters", level: E2}
+  - {id: NBIS-E-10, axis: Funding_Liquidity, transition: {from: F2, to: F1}, kpis: [NBIS-KPI-05, NBIS-KPI-09], condition: "cash >=2x latest quarterly capex for 2 quarters", period: "2 quarters", level: E2}
+
+mpc_inputs:
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 2
+    HYPERSCALER_CAPEX: 1
+    SEMICONDUCTOR_WFE: 0
+    ADVANCED_PACKAGING: 1
+    HBM_MEMORY: 1
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 2
+    DATA_CENTER_POWER: 2
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 0
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: 2
+    CHINA_REVENUE: 0
+    TAIWAN_SUPPLY: 2
+    ACQUISITION_INTEGRATION: 1
+  driver_vector_provenance: model_assumption
+  failure_modes:
+    - {failure_id: NBIS-FM-01, common_cause_id: AI_OVERBUILD, severity: high, name: "AI capacity overbuild / pricing compression"}
+    - {failure_id: NBIS-FM-02, common_cause_id: DATA_CENTER_POWER_CONSTRAINT, severity: high, name: "Power/site buildout delays"}
+    - {failure_id: NBIS-FM-03, common_cause_id: TAIWAN_SUPPLY_DISRUPTION, severity: high, name: "GPU/component supply disruption"}
+    - {failure_id: NBIS-FM-04, common_cause_id: CAPITAL_MARKETS_TIGHTENING, severity: high, name: "External financing unavailable/expensive"}
+    - {failure_id: NBIS-FM-05, common_cause_id: AI_CLOUD_CUSTOMER_FINANCING_STRESS, severity: high, name: "Customer prepayment/commitment conversion weakens"}
+    - {failure_id: NBIS-FM-06, common_cause_id: ACQUISITION_INTEGRATION_FAILURE, severity: medium, name: "Acquisition integration distracts platform execution"}
+  benchmark:
+    sector_id: AI_COMPUTE
+    recommendation: NO_EXTERNAL_BENCHMARK_V1
+    reason: "IGV, semiconductor indices and broad-AI ETFs mix different economics; keep benchmark coverage false until a dedicated AI_COMPUTE basket/index methodology is approved."

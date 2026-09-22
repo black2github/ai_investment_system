@@ -1,0 +1,122 @@
+version: "1.0"
+artifact: portfolio_optimizer
+as_of: "2026-09-21"
+status: proposed_normative
+
+objective:
+  type: lexicographic_constrained
+  primary: maximize_median_portfolio_CAGR_5Y
+  objective_tolerance_pp: 0.50
+  objective_tolerance_provenance: model_assumption
+  secondary:
+    - maximize_ES5_5Y
+    - minimize_scenario_concentration
+    - minimize_turnover
+
+constraints:
+  status: pending_owner_approval
+  provenance: model_assumption
+
+  concentration:
+    single_name_max: 0.20
+    sector_max: 0.30
+    top3_aggregate_max: 0.50
+    common_cause_effective_max: 0.35
+    unmodeled_target_weight: 0.00
+
+  roles:
+    Core_max_per_name: 0.20
+    Challenger_max_per_name: 0.08
+    Challenger_aggregate_max: 0.25
+    Watch_target_weight: 0.00
+
+  dry_powder:
+    Normal: {min: 0.05, preferred_max: 0.10, hard_max: 0.15}
+    Stress: {min: 0.05, preferred_max: 0.15, hard_max: 0.20}
+    Shock: {min: 0.10, preferred_max: 0.20, hard_max: 0.30}
+
+  illiquidity:
+    aggregate_max: 0.10
+    single_name_max: 0.05
+
+  risk_5y:
+    p_loss_gt_30_max: 0.20
+    p_loss_gt_50_max: 0.10
+    es5_min: -0.55
+    scenario_concentration_warning: 0.50
+    scenario_concentration_max: 0.60
+
+common_cause:
+  severity_factor:
+    critical: 1.00
+    high: 0.75
+    medium: 0.50
+    low: 0.25
+  formula: "sum(target_weight_i * severity_factor_i for material exposure to cause)"
+
+mpc_allowed_range:
+  min_weight: 0.00
+  max_weight: 0.20
+  grid_step: 0.01
+  include_current_weight: true
+  local_refinement_step: 0.005
+  include_constraint_boundaries: true
+  prior_weight_as_anchor: false
+
+portfolio_engine:
+  use_joint_paths: true
+  standalone_medians_as_optimizer_input: false
+  formula: "PortfolioValue_h = sum(w_i * RelativeValue_i,h) + DryPowderValue_h + HedgeValue_h"
+
+execution:
+  stages: [continuous_target, discrete_account_projection]
+  accounts: 2
+  consolidated_optimization_first: true
+  discrete_projection_objective:
+    - minimize_tracking_error
+    - minimize_transaction_cost
+    - minimize_account_constraint_penalty
+  required_instrument_fields:
+    - account_eligibility
+    - currency
+    - lot_size
+    - fractional_shares
+    - option_contract_size
+    - transaction_cost
+  options:
+    standard_contract_shares: 100
+    force_underlying_to_100_share_multiple: false
+    hedgeable_shares_formula: "floor(position_shares / 100) * 100"
+
+inputs:
+  required:
+    - portfolio_state
+    - joint_MC_paths
+    - MPC_outputs
+    - scenario_probabilities
+    - correlation_structure
+    - driver_exposures
+    - failure_modes
+    - implementation_constraints
+  forbidden:
+    - initial_portfolio_hypothesis_as_model_input
+
+outputs:
+  - proposed_weights
+  - feasible_weight_bands
+  - dry_powder_weight
+  - portfolio_return_distribution
+  - portfolio_downside
+  - sector_concentration
+  - driver_concentration
+  - common_cause_concentration
+  - binding_constraints
+  - constraint_gaps_vs_current
+  - execution_projection_by_account
+  - ex_post_initial_hypothesis_comparison
+  - stability_test_ref
+  - decision_none
+
+infeasible_rule:
+  auto_relax_constraints: false
+  output_minimum_relaxations: true

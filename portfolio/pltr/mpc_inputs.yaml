@@ -1,0 +1,72 @@
+# Входы MPC для PLTR: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: PLTR
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/PLTR_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 1
+  HYPERSCALER_CAPEX: 0
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 2
+  DATA_CENTER_POWER: 0
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 2
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 0
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 1
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+failure_modes:
+- failure_id: PLTR-FM-01
+  name: U.S. government procurement/budget slowdown
+  common_cause_id: GOVERNMENT_DEFENSE_BUDGET_SLOWDOWN
+  severity: high
+- failure_id: PLTR-FM-02
+  name: Commercial AI deployment growth slows
+  common_cause_id: CLOUD_SOFTWARE_DEMAND_SLOWDOWN
+  severity: high
+- failure_id: PLTR-FM-03
+  name: AIP commercialization fails to sustain current expansion
+  common_cause_id: AI_MONETIZATION_FAILURE
+  severity: high
+- failure_id: PLTR-FM-04
+  name: TCV/RDV fails to convert because options are not exercised or contracts terminate
+  common_cause_id: CONTRACT_CONVERSION_FAILURE
+  severity: high
+- failure_id: PLTR-FM-05
+  name: Government-contract compliance/security issue impairs eligibility
+  common_cause_id: GOVERNMENT_CONTRACT_COMPLIANCE
+  severity: critical
+- failure_id: PLTR-FM-06
+  name: U.S. revenue concentration magnifies domestic demand shock
+  common_cause_id: GEOGRAPHIC_REVENUE_CONCENTRATION
+  severity: medium
+- failure_id: PLTR-FM-07
+  name: Stock-based compensation/dilution reaccelerates
+  common_cause_id: EQUITY_COMPENSATION_DILUTION
+  severity: medium
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

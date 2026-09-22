@@ -1,0 +1,159 @@
+# KPI LLY с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.0'
+artifact: LLY KPI Dashboard
+as_of: '2026-09-21'
+ticker: LLY
+max_critical_kpis: 10
+source_artifact: inbox/received/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+zone_semantics:
+  green: поддерживает thesis/state
+  yellow: требует наблюдения
+  red: указывает на ухудшение/риск
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - Eli Lilly and Company Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: LLY-KPI-01
+  name: Total revenue YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>= 0.30'
+    yellow: '>= 0.15 and < 0.30'
+    red: < 0.15
+  last_value: 0.48
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm
+  verified: false
+- id: LLY-KPI-02
+  name: Tirzepatide quarterly revenue
+  unit: USD B
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>= 12'
+    yellow: '>= 8 and < 12'
+    red: < 8
+  last_value: 14.871
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  verified: false
+  formula: 9.943 Mounjaro + 4.928 Zepbound = 14.871
+- id: LLY-KPI-03
+  name: Tirzepatide revenue YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>= 0.50'
+    yellow: '>= 0.20 and < 0.50'
+    red: < 0.20
+  last_value: 0.7332
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  verified: false
+  formula: (9.943 + 4.928) / (5.199 + 3.381) - 1 = 0.7332
+- id: LLY-KPI-04
+  name: Tirzepatide share of total revenue
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: < 0.50
+    yellow: '>= 0.50 and <= 0.65'
+    red: '> 0.65'
+  last_value: 0.6473
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  verified: false
+  formula: (9.943 + 4.928) / 22.974 = 0.6473
+  note: 'Risk/concentration KPI: higher is worse despite strong product demand.'
+- id: LLY-KPI-05
+  name: Consolidated realized-price contribution
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>= -0.05'
+    yellow: '>= -0.15 and < -0.05'
+    red: < -0.15
+  last_value: -0.13
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  verified: false
+- id: LLY-KPI-06
+  name: Consolidated volume contribution
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>= 0.40'
+    yellow: '>= 0.20 and < 0.40'
+    red: < 0.20
+  last_value: 0.6
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  verified: false
+- id: LLY-KPI-07
+  name: Gross margin
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>= 0.82'
+    yellow: '>= 0.75 and < 0.82'
+    red: < 0.75
+  last_value: 0.858
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  verified: false
+  formula: 19.706 / 22.974 = 0.8578; company reports 85.8%
+- id: LLY-KPI-08
+  name: Simple FCF margin
+  unit: fraction
+  period: semiannual
+  source: SEC
+  thresholds:
+    green: '>= 0.20'
+    yellow: '>= 0.10 and < 0.20'
+    red: < 0.10
+  last_value: 0.2517
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  verified: false
+  formula: (16.023 OCF - 5.259 PP&E capex) / 42.773 revenue = 0.2517
+- id: LLY-KPI-09
+  name: PP&E capex / revenue
+  unit: fraction
+  period: semiannual
+  source: SEC
+  thresholds:
+    green: < 0.10
+    yellow: '>= 0.10 and < 0.15'
+    red: '>= 0.15'
+  last_value: 0.123
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  verified: false
+  formula: 5.259 / 42.773 = 0.1230
+  note: Risk KPI; elevated capex may be value-creating if demand and FCF remain strong.
+- id: LLY-KPI-10
+  name: Validated next-generation incretin milestones
+  unit: count
+  period: event_driven
+  source: SEC
+  thresholds:
+    green: '>= 2'
+    yellow: = 1
+    red: = 0
+  last_value: 2
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  verified: false
+  formula: 1 = orforglipron obesity FDA approval; 1 = retatrutide Phase 3 obesity primary-endpoint success

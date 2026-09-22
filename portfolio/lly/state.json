@@ -1,0 +1,97 @@
+{
+  "updated": "2026-09-21T06:06:02Z",
+  "price": {
+    "last": 1152.93,
+    "last_at": "2026-09-18",
+    "zone": null
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [],
+  "notes": "Папка создана 2026-09-21 по партии моделей компаний; KPI сверены по 10-Q и пресс-релизу (задание facts-verify, партия 2).",
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-21",
+    "note": "фазы стратегии владельца не заданы; ведётся только вектор состояний"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T06:30:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании LLY v1.0 принята от другой LLM; вектор Incretin_Demand=D4 + Pricing_Access=P3 + Manufacturing_Expansion=M2 + Pipeline_Diversification=R3 + Cash_Economics=F3; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-21T06:06:02Z",
+      "kind": "facts_verify",
+      "summary": "Сверка по 10-Q (lly-20260630.htm) и пресс-релизу Q2 2026 (SEC 8-K exhibit): все 10 KPI подтверждены, расхождений нет. Все 5 осей вектора получили verified: true."
+    }
+  ],
+  "scenario_state": {
+    "Incretin_Demand": {
+      "state": "D4",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 Mounjaro revenue $9.943B + Zepbound revenue $4.928B = $14.871B.",
+        "Q2 combined tirzepatide revenue grew 73.3% YoY: ($14.871B / $8.580B) - 1.",
+        "H1 2026 combined Mounjaro + Zepbound revenue was $27.693B versus $14.734B in H1 2025."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "Pricing_Access": {
+      "state": "P3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 2026 consolidated revenue change: volume +60%, price -13%, FX +1%.",
+        "10-Q attributes U.S. lower realized prices primarily to Zepbound and Mounjaro; outside the U.S. lower prices were driven primarily by Mounjaro's China NRDL inclusion."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "Manufacturing_Expansion": {
+      "state": "M2",
+      "since": "2026-09-21",
+      "evidence": [
+        "H1 2026 purchases of property and equipment were $5.259B on revenue of $42.773B = 12.30%.",
+        "Q2 earnings release states Lilly committed an additional $4.5B to expand Indiana manufacturing sites."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm', 'type': 'SEC 10-Q'}, {'url': 'https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm', 'type': 'SEC 8-K exhibit / earnings release'}",
+      "verified": true
+    },
+    "Pipeline_Diversification": {
+      "state": "R3",
+      "since": "2026-09-21",
+      "evidence": [
+        "10-Q states FDA approved orforglipron (Foundayo) for obesity and Lilly launched it in Q2.",
+        "10-Q states Phase 3 retatrutide obesity trials met primary endpoints."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "Cash_Economics": {
+      "state": "F3",
+      "since": "2026-09-21",
+      "evidence": [
+        "H1 2026 OCF $16.023B less PP&E capex $5.259B = simple FCF $10.764B.",
+        "H1 simple FCF margin = $10.764B / $42.773B = 25.17%."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {"kpi_id": "LLY-KPI-01", "name": "Total revenue YoY", "period_end": "2026-06-30", "value": 0.48, "value_raw": "Total Revenue 22,974 15,558 48%", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm", "verified": true},
+    {"kpi_id": "LLY-KPI-02", "name": "Tirzepatide quarterly revenue", "period_end": "2026-06-30", "value": 14.871, "value_raw": "Mounjaro $9,943 + Zepbound $4,928 (в млн $)", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
+    {"kpi_id": "LLY-KPI-03", "name": "Tirzepatide revenue YoY", "period_end": "2026-06-30", "value": 0.7332, "value_raw": "Mounjaro 91% YoY ($9,943 vs $5,199); Zepbound 46% YoY ($4,928 vs $3,381); формула даёт 0.7332", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
+    {"kpi_id": "LLY-KPI-04", "name": "Tirzepatide share of total revenue", "period_end": "2026-06-30", "value": 0.6473, "value_raw": "(9,943+4,928)/22,974 = 0.6473 (Revenue 22,974 в отчёте)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
+    {"kpi_id": "LLY-KPI-05", "name": "Consolidated realized-price contribution", "period_end": "2026-06-30", "value": -0.13, "value_raw": "driven by a 60% increase in volume, partially offset by ... price -13%", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
+    {"kpi_id": "LLY-KPI-06", "name": "Consolidated volume contribution", "period_end": "2026-06-30", "value": 0.6, "value_raw": "driven by a 60% increase in volume", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
+    {"kpi_id": "LLY-KPI-07", "name": "Gross margin", "period_end": "2026-06-30", "value": 0.858, "value_raw": "Gross margin as a percent of revenue 85.8 %", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
+    {"kpi_id": "LLY-KPI-08", "name": "Simple FCF margin", "period_end": "2026-06-30", "value": 0.2517, "value_raw": "Net Cash Provided by Operating Activities 16,023; Purchases of property and equipment (5,259); Revenue H1 42,773", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
+    {"kpi_id": "LLY-KPI-09", "name": "PP&E capex / revenue", "period_end": "2026-06-30", "value": 0.123, "value_raw": "Purchases of property and equipment (5,259); Revenue H1 42,773", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true},
+    {"kpi_id": "LLY-KPI-10", "name": "Validated next-generation incretin milestones", "period_end": "2026-06-30", "value": 2, "value_raw": "FDA approved orforglipron for treatment of obesity; Phase 3 trials for retatrutide for obesity met their primary endpoints", "unit": "count", "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm", "verified": true}
+  ],
+  "calc_runs": []
+}

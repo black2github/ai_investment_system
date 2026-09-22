@@ -1,0 +1,150 @@
+# KPI HOOD с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.0'
+artifact: HOOD KPI Dashboard
+as_of: '2026-09-21'
+ticker: HOOD
+max_critical_kpis: 10
+source_artifact: inbox/received/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - Robinhood Markets, Inc. Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: HOOD-KPI-01
+  name: Funded Customers
+  unit: million
+  period: monthly
+  source: IR
+  thresholds:
+    green: '>=28'
+    yellow: '>=26 and <28'
+    red: <26
+  last_value: 28.6
+  last_date: null
+  source_url: null
+  verified: false
+- id: HOOD-KPI-02
+  name: Total Platform Assets
+  unit: USD B
+  period: monthly
+  source: IR
+  thresholds:
+    green: '>=350'
+    yellow: '>=300 and <350'
+    red: <300
+  last_value: 383.7
+  last_date: null
+  source_url: null
+  verified: false
+- id: HOOD-KPI-03
+  name: LTM Net Deposit growth rate
+  unit: fraction
+  period: monthly
+  source: IR
+  thresholds:
+    green: '>=0.20'
+    yellow: '>=0.10 and <0.20'
+    red: <0.10
+  last_value: 0.24
+  last_date: null
+  source_url: null
+  verified: false
+- id: HOOD-KPI-04
+  name: ARPU
+  unit: USD annualized
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=180'
+    yellow: '>=140 and <180'
+    red: <140
+  last_value: 187
+  last_date: null
+  source_url: null
+  verified: false
+- id: HOOD-KPI-05
+  name: Robinhood Gold Subscribers
+  unit: million
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=4.5'
+    yellow: '>=3.5 and <4.5'
+    red: <3.5
+  last_value: 4.84
+  last_date: null
+  source_url: null
+  verified: false
+- id: HOOD-KPI-06
+  name: Total net revenue YoY
+  unit: YoY fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.25'
+    yellow: '>=0.10 and <0.25'
+    red: <0.10
+  last_value: 0.32
+  last_date: null
+  source_url: null
+  verified: false
+- id: HOOD-KPI-07
+  name: Adjusted EBITDA margin
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.45'
+    yellow: '>=0.25 and <0.45'
+    red: <0.25
+  last_value: 0.5665
+  last_date: null
+  source_url: null
+  verified: false
+  formula: 741/1308
+- id: HOOD-KPI-08
+  name: Transaction-based revenue share
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: <=0.60
+    yellow: '>0.60 and <=0.70'
+    red: '>0.70'
+  last_value: 0.59
+  last_date: null
+  source_url: null
+  verified: false
+- id: HOOD-KPI-09
+  name: Event-contract revenue share
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: <0.10
+    yellow: '>=0.10 and <0.20'
+    red: '>=0.20'
+  last_value: 0.12
+  last_date: null
+  source_url: null
+  verified: false
+  note: risk/concentration KPI
+- id: HOOD-KPI-10
+  name: Credit-loss provision / revenue
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: <0.03
+    yellow: '>=0.03 and <0.05'
+    red: '>=0.05'
+  last_value: 0.0428
+  last_date: null
+  source_url: null
+  verified: false
+  formula: 56/1308

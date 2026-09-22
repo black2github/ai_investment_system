@@ -1,0 +1,200 @@
+{
+  "updated": "2026-09-22T07:30:00Z",
+  "price": {
+    "last": 223.54,
+    "last_at": "2026-09-18",
+    "zone": null
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [],
+  "notes": "Папка создана 2026-09-21 по партии 1 моделей компаний; сверка фактов по отчёту выполнена 2026-09-20 (задание facts-verify, батч 1).",
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-21",
+    "note": "фазы стратегии владельца не заданы; ведётся только вектор состояний"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T00:30:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании NBIS v1.0 принята от другой LLM (партия 1); вектор Demand_Monetization=N3 + Unit_Economics=E3 + Capacity_Secured=C3 + Capital_Intensity=K3 + Funding_Liquidity=F2; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-20T21:33:57Z",
+      "kind": "facts_verify",
+      "summary": "Сверка по отчёту (Q2 2026, 6-K и Ex-99.2): подтверждено 9 из 10 KPI. Расхождение по NBIS-KPI-08 (Contracted power guidance): в источнике '5 ГВт' (цель на конец 2026), в модели '>5 ГВт' — модель не исправлена. Оси Demand_Monetization, Unit_Economics, Capital_Intensity, Funding_Liquidity подтверждены; Capacity_Secured не подтверждена из-за расхождения по KPI-08."
+    },
+    {
+      "timestamp": "2026-09-21T00:50:00Z",
+      "kind": "verification",
+      "summary": "Досверка NBIS KPI-08 с хоста: расхождение подтверждено (5 GW цель YE2026, не >5); остальные 9 KPI подтверждены заданием"
+    },
+    {
+      "timestamp": "2026-09-21T06:35:00Z",
+      "kind": "correction",
+      "summary": "Поправка партии 1 (LLM): KPI-08 = guidance 5 GW YE2026 (подтверждён как guidance); KPI-11 факт — pending; ось Capacity_Secured → pending_verification (prior C3)"
+    },
+    {
+      "timestamp": "2026-09-22T07:30:00Z",
+      "kind": "owner_decision",
+      "summary": "Пометка «доверяю» активирована владельцем (журнал CONV-2026-09-22-NBIS-01) с исключением по оси Capacity_Secured; L_max 25% NAV; докупки заблокированы лимитом вложенного капитала (22.4% > 20%)"
+    }
+  ],
+  "scenario_state": {
+    "Demand_Monetization": {
+      "state": "N3",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm, https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+      "verified": true
+    },
+    "Unit_Economics": {
+      "state": "E3",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm, https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+      "verified": true
+    },
+    "Capacity_Secured": {
+      "state": "pending_verification",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": false,
+      "verified_note": "Поправка LLM 21.09: 5 GW — цель YE2026; факт по KPI-11 не раскрыт → состояние оси не установлено",
+      "prior_snapshot": "C3"
+    },
+    "Capital_Intensity": {
+      "state": "K3",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true
+    },
+    "Funding_Liquidity": {
+      "state": "F2",
+      "since": "2026-09-21",
+      "evidence": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm, https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {
+      "kpi_id": "NBIS-KPI-01",
+      "name": "AI cloud revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 5.14,
+      "value_raw": "Nebius AI cloud revenue grew 514% year-over-year to $575 million",
+      "unit": "YoY fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NBIS-KPI-02",
+      "name": "AI cloud quarterly revenue",
+      "period_end": "2026-06-30",
+      "value": 0.5749,
+      "value_raw": "Revenues for the Nebius AI cloud business grew by $481.2 million, or 514%, from $93.7 million in the second quarter of 2025 to $574.9 million in the second quarter of 2026",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NBIS-KPI-03",
+      "name": "AI cloud ARR",
+      "period_end": "2026-06-30",
+      "value": 3,
+      "value_raw": "ARR reached $3.0 billion",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NBIS-KPI-04",
+      "name": "AI cloud adjusted EBITDA margin",
+      "period_end": "2026-06-30",
+      "value": 0.497,
+      "value_raw": "our AI cloud business delivered an adjusted EBITDA margin of 50% in the quarter... adjusted EBITDA of $285.7 million and adjusted EBITDA margin of 49.7%",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NBIS-KPI-05",
+      "name": "Quarterly capex",
+      "period_end": "2026-06-30",
+      "value": 5.7,
+      "value_raw": "In Q2'26, capital expenditures were approximately $5.7 billion, primarily driven by purchases of GPUs and GPU-related hardware, and our data center expansion activities",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NBIS-KPI-06",
+      "name": "Customer prepayment coverage of associated capex",
+      "period_end": "2026-06-30",
+      "value": [
+        0.5,
+        0.6
+      ],
+      "value_raw": "Overall deal economics strengthened, with 70% of deals including prepayments, covering 50-60% of the associated capex",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NBIS-KPI-07",
+      "name": "Disclosed customer commitments",
+      "period_end": "2026-06-30",
+      "value": ">40",
+      "value_raw": "and with $40 billion in customer commitments, we will do more of this",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NBIS-KPI-08",
+      "name": "Year-end contracted power target",
+      "period_end": "2026-06-30",
+      "value": 5.0,
+      "value_raw": "«today we are raising our year-end contracted power target again to 5 GW»",
+      "unit": "GW",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true,
+      "verified_by": "host-check + поправка LLM 21.09",
+      "value_type": "company_guidance"
+    },
+    {
+      "kpi_id": "NBIS-KPI-09",
+      "name": "Cash and cash equivalents",
+      "period_end": "2026-06-30",
+      "value": 8.0421,
+      "value_raw": "As of June 30, 2026, $8,042.1 million was recorded in cash and cash equivalents",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "NBIS-KPI-10",
+      "name": "Group adjusted EBITDA margin",
+      "period_end": "2026-06-30",
+      "value": 0.41,
+      "value_raw": "Adjusted EBITDA / (loss) (21.0) 236.2 n/m (74.7) 365.7 n/m; as a percentage of revenues -20% 41% -48% 37%",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verified": true
+    }
+  ],
+  "calc_runs": [],
+  "conviction": {
+    "status": "active",
+    "since": "2026-09-22",
+    "journal_id": "CONV-2026-09-22-NBIS-01",
+    "L_max": 0.25,
+    "exception": "Capacity_Secured pending_verification (нераскрытие факта)"
+  }
+}

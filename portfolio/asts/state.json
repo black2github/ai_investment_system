@@ -1,0 +1,213 @@
+{
+  "updated": "2026-09-21T09:00:00Z",
+  "price": {
+    "last": 58.52,
+    "last_at": "2026-09-18",
+    "zone": null
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [],
+  "notes": "Папка создана 2026-09-21 по партии моделей компаний; значения KPI сверены заданием batch04-facts-verify 2026-09-21.",
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-21",
+    "note": "фазы стратегии владельца не заданы; ведётся только вектор состояний"
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-21T06:30:00Z",
+      "kind": "onboarding",
+      "summary": "Модель компании ASTS v1.0 принята от другой LLM; вектор Constellation_Deployment=D2 + Commercial_Contracting=C3 + Service_Monetization=M1 + Regulatory_Spectrum=R2 + Funding_Dilution=F2; KPI не сверены"
+    },
+    {
+      "timestamp": "2026-09-21T06:51:25Z",
+      "kind": "facts_verify",
+      "summary": "batch04-facts-verify: все 10 critical_kpis подтверждены по SEC-документам (Q2 2026 press release exhibit 99.1 и 10-Q asts-20260630); расхождений не найдено. Примечание: KPI-02 период в реестре указан как «trailing 90 days», в источнике фигурирует «50 days» — число (6 спутников) подтверждено, формулировка периода в документе иная. Все пять осей scenario_state помечены verified: true."
+    },
+    {
+      "timestamp": "2026-09-21T09:00:00Z",
+      "kind": "correction",
+      "summary": "ASTS patch v1.1: KPI-02 окно 50 дней (по источнику), KPI-11 FCC-статус добавлен (не сверен), Regulatory_Spectrum — qualitative_primary_source"
+    },
+    {
+      "timestamp": "2026-09-21T13:53:30Z",
+      "kind": "facts_verify",
+      "summary": "batch05-facts-verify: ASTS-KPI-11 (FCC-статус) подтверждён по 10-Q (asts-20260630); формулировка об авторизации 248-спутниковой группировки найдена буквально. Ось Regulatory_Spectrum помечена verified: true."
+    }
+  ],
+  "scenario_state": {
+    "Constellation_Deployment": {
+      "state": "D2",
+      "since": "2026-09-21",
+      "evidence": [
+        "After BlueBird 8-13 launches, AST reported 13 in-orbit spacecraft.",
+        "Six spacecraft were launched within 50 days.",
+        "BlueBird 17-46 were in various stages of production/assembly."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm', 'type': 'SEC earnings-release exhibit'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "Commercial_Contracting": {
+      "state": "C3",
+      "since": "2026-09-21",
+      "evidence": [
+        "Revenue backlog approximately $1.30B.",
+        "Definitive agreements include AT&T, Verizon, Vodafone/SatCo and STC.",
+        "Partnerships with >60 MNOs covering >3B subscribers globally."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm', 'type': 'SEC earnings-release exhibit'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "Service_Monetization": {
+      "state": "M1",
+      "since": "2026-09-21",
+      "evidence": [
+        "Q2 revenue $31.5M from gateway deliveries and U.S. government milestones.",
+        "10-Q explicitly states SpaceMobile Service has not launched and has generated no revenue to date."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm', 'type': 'SEC earnings-release exhibit'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    },
+    "Regulatory_Spectrum": {
+      "state": "R2",
+      "since": "2026-09-21",
+      "evidence": [
+        "FCC authorization received to deploy the planned 248-satellite network, including low-band IMT frequencies and Q/V feeder links.",
+        "Company received certain regulatory approvals for SpaceMobile Service in April 2026."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true,
+      "evidence_type": "qualitative_primary_source",
+      "verified_note": "batch05-facts-verify: подтверждено через ASTS-KPI-11 (бинарный статус FCC) по 10-Q"
+    },
+    "Funding_Dilution": {
+      "state": "F2",
+      "since": "2026-09-21",
+      "evidence": [
+        "Pro forma cash/cash equivalents/restricted cash after July financing >$3.7B.",
+        "H1 OCF use $145.2M and PP&E purchases $859.2M; annualized combined use ~2.009B.",
+        "July 2026 convertible offering $1.15B gross; company reports effective dilution <2%."
+      ],
+      "source": "{'url': 'https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm', 'type': 'SEC earnings-release exhibit'}, {'url': 'https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm', 'type': 'SEC 10-Q'}",
+      "verified": true
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {
+      "kpi_id": "ASTS-KPI-01",
+      "name": "In-orbit spacecraft",
+      "period_end": "2026-08-10",
+      "value": 13,
+      "value_raw": "BlueBird 8-13 marks six spacecraft launched within 50 days, increasing network to 13 in-orbit spacecraft",
+      "unit": "satellites",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "ASTS-KPI-02",
+      "name": "Spacecraft launched within disclosed 50-day window",
+      "period_end": "2026-08-10",
+      "value": 6,
+      "value_raw": "BlueBird 8-13 marks six spacecraft launched within 50 days",
+      "unit": "satellites",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
+      "verified": true,
+      "note": "источник называет период «50 days», не «90 days»; число спутников совпадает",
+      "observation_window_days": 50
+    },
+    {
+      "kpi_id": "ASTS-KPI-03",
+      "name": "BlueBird satellites in production/assembly pipeline",
+      "period_end": "2026-08-10",
+      "value": 30,
+      "value_raw": "BlueBird 17 through BlueBird 46 in various stages of production and assembly",
+      "unit": "satellites",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "ASTS-KPI-04",
+      "name": "Contracted revenue backlog",
+      "period_end": "2026-08-10",
+      "value": 1.3,
+      "value_raw": "Revenue backlog increased to approximately $1.30 billion in aggregate contracted revenue with commercial partners and contract awards with the United States Government",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "ASTS-KPI-05",
+      "name": "MNO partnership count lower bound",
+      "period_end": "2026-06-30",
+      "value": 60,
+      "value_raw": "We currently have partnerships with over 60 MNOs with over 3 billion subscribers",
+      "unit": "MNOs",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "ASTS-KPI-06",
+      "name": "Quarterly revenue",
+      "period_end": "2026-06-30",
+      "value": 31.5,
+      "value_raw": "Second quarter revenue of $31.5 million driven by gateway deliveries and U.S. Government milestones met",
+      "unit": "USD M",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "ASTS-KPI-07",
+      "name": "SpaceMobile Service quarterly revenue",
+      "period_end": "2026-06-30",
+      "value": 0,
+      "value_raw": "To date, the Company has not recognized any revenues from the SpaceMobile Service",
+      "unit": "USD M",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "ASTS-KPI-08",
+      "name": "Pro forma liquidity",
+      "period_end": "2026-08-10",
+      "value": 3.7,
+      "value_raw": "Over $3.7 billion in pro forma cash, cash equivalents, restricted cash as of June 30, 2026",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "ASTS-KPI-09",
+      "name": "Annualized H1 OCF + PP&E cash use",
+      "period_end": "2026-06-30",
+      "value": 2.008854,
+      "value_raw": "Cash used in operating activities was $145.2 million for the six months ended June 30, 2026 (145,212 thousand); Purchase of property and equipment (859,215 thousand)",
+      "unit": "USD B/year",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "ASTS-KPI-10",
+      "name": "Latest financing effective dilution",
+      "period_end": "2026-08-10",
+      "value": 0.02,
+      "value_raw": "raised $1.150 billion of gross proceeds from a new 1.625% convertible senior notes offering, with an effective conversion price of $149.20 per share and effective dilution of less than 2%",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm",
+      "verified": true
+    },
+    {
+      "kpi_id": "ASTS-KPI-11",
+      "name": "FCC planned-constellation authorization status",
+      "period_end": "2026-06-30",
+      "value": 1,
+      "value_raw": "We have received FCC authorization to deploy our 248 satellite network including operating in the low-band International Mobile Telecommunications terrestrial frequencies domestically and internationally, as well as Q/V band feeder links in the V band.",
+      "unit": "binary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm",
+      "verified": true
+    }
+  ],
+  "calc_runs": []
+}

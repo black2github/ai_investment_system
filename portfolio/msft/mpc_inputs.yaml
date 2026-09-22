@@ -1,0 +1,80 @@
+# Входы MPC для MSFT: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: MSFT
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 2
+  HYPERSCALER_CAPEX: -2
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: -1
+  HBM_MEMORY: -1
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 2
+  DATA_CENTER_POWER: -2
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 1
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 0
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: -1
+  ACQUISITION_INTEGRATION: 1
+  AI_CLOUD_PRICING: 2
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 1
+  UTILITY_CAPEX: 1
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 1
+  SPACE_REGULATION: 0
+driver_interpretation:
+  HYPERSCALER_CAPEX:
+    directionality: dual
+    vector_score: -2
+    positive_channel: AI infrastructure enables Azure/Copilot growth.
+    negative_channel: Microsoft is itself a large infrastructure buyer; higher capex reduces near-term FCF and cloud gross
+      margin.
+    net_rule_v1: Encode cost channel as -2; monetization separately as AI_COMPUTE_DEMAND +2 and CLOUD_SOFTWARE_DEMAND +2.
+failure_modes:
+- failure_id: MSFT-FM-01
+  name: AI capex outruns monetization
+  common_cause_id: AI_OVERBUILD
+  severity: high
+- failure_id: MSFT-FM-02
+  name: Azure capacity/power constraints limit revenue capture
+  common_cause_id: DATA_CENTER_POWER_CONSTRAINT
+  severity: high
+- failure_id: MSFT-FM-03
+  name: GPU/HBM supply disruption delays cloud capacity
+  common_cause_id: TAIWAN_SUPPLY_DISRUPTION
+  severity: high
+- failure_id: MSFT-FM-04
+  name: Enterprise/cloud software demand decelerates
+  common_cause_id: CLOUD_SOFTWARE_DEMAND_SLOWDOWN
+  severity: high
+- failure_id: MSFT-FM-05
+  name: Frontier-model/OpenAI concentration or contract-economics risk
+  common_cause_id: AI_CLOUD_CUSTOMER_FINANCING_STRESS
+  severity: high
+- failure_id: MSFT-FM-06
+  name: AI infrastructure structurally compresses cloud margins
+  common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN
+  severity: medium
+- failure_id: MSFT-FM-07
+  name: Regulatory/antitrust pressure
+  common_cause_id: PLATFORM_REGULATORY_PRESSURE
+  severity: medium
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

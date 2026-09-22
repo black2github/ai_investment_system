@@ -1,0 +1,86 @@
+version: "1.0"
+artifact: portfolio_stability_test
+as_of: "2026-09-21"
+status: proposed_normative
+
+perturbations:
+  provenance: model_assumption
+
+  return:
+    base_shift_pp: [-3, 3]
+    severe_shift_pp: [-5, 5]
+    apply_at_path_level: true
+
+  correlations:
+    base_delta: [-0.10, 0.10]
+    stress_delta: [-0.15, 0.15]
+    psd_repair_allowed: true
+    psd_repair_must_be_logged: true
+
+  scenario_probabilities:
+    relative_multiplier: [0.75, 1.25]
+    renormalize: true
+    adverse_scenario_absolute_shift_pp: 10
+
+  terminal:
+    multiple_pct: [-0.20, 0.20]
+    margin_pp: [-5, 5]
+    milestone_probability_pp: [-10, 10]
+
+  driver_knockout:
+    material_weighted_abs_exposure_min: 0.30
+    behavior: remove_positive_driver_contribution
+    missing_driver_parameter_mapping: not_testable
+
+  leave_one_company_out:
+    central_weight_min: 0.05
+
+run_plan:
+  one_factor_at_a_time: true
+  combined_method: latin_hypercube
+  combined_runs: 500
+  fixed_seed_required: true
+
+inclusion_stability:
+  inclusion_weight_threshold: 0.01
+  stable_min_frequency: 0.80
+  conditional_min_frequency: 0.50
+  unstable_below_frequency: 0.50
+
+weight_stability:
+  stable:
+    max_p90_p10_spread: "max(0.04, 0.50 * central_weight)"
+    max_median_deviation: "max(0.02, 0.25 * central_weight)"
+  classification:
+    stable: "inclusion_frequency >= 0.80 AND both weight criteria pass"
+    conditional: "inclusion_frequency >= 0.50 AND not stable"
+    unstable: "inclusion_frequency < 0.50 OR frequent collapse to zero"
+
+portfolio_stability:
+  hard_constraint_feasibility_min: 0.95
+  median_turnover_max: 0.25
+  p90_turnover_max: 0.50
+  max_fraction_runs_with_5y_cagr_sign_flip: 0.20
+  driver_knockout_must_have_feasible_replacement: true
+
+mpc_output_mapping:
+  allowed: [improves, neutral, worsens, unstable]
+  unstable_rule: "candidate inclusion_frequency < 0.50 OR candidate weight_stability == unstable"
+  score_prohibited: true
+
+outputs:
+  - central_weights
+  - inclusion_frequency_by_asset
+  - weight_p10_p50_p90
+  - weight_spread
+  - driver_sensitivity
+  - scenario_sensitivity
+  - terminal_sensitivity
+  - feasibility_rate
+  - turnover_distribution
+  - binding_constraint_frequency
+  - company_stability_classification
+  - portfolio_stability_classification
+  - mpc_robustness_mapping
+  - assumptions_hash
+  - decision_none

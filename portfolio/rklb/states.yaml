@@ -1,0 +1,145 @@
+# Вектор состояний RKLB (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+version: '1.0'
+artifact: RKLB State Vector
+as_of: '2026-09-21'
+ticker: RKLB
+source_artifact: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
+semantics:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+sources:
+  RKLB_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+    type: SEC 10-Q
+  RKLB_Q2_2026_RELEASE:
+    url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm
+    type: SEC earnings-release exhibit
+axes:
+  Electron_Cadence:
+    name: Electron Cadence
+    name_ru: каденция пусков Electron
+    states:
+      E0:
+        name: subscale
+        criteria: Electron/HASTE launches trailing 6m < 8
+      E1:
+        name: established
+        criteria: launches trailing 6m >=8 and <12
+      E2:
+        name: scaled
+        criteria: launches trailing 6m >=12 and <18
+      E3:
+        name: high_cadence
+        criteria: launches trailing 6m >=18
+      E4:
+        name: cadence_stress
+        criteria: launch success rate <90% or launches trailing 6m decline >=30% YoY
+    current: E2
+    current_evidence:
+    - Rocket Lab completed 12 Electron missions in H1 2026 versus 10 in H1 2025.
+    source_refs:
+    - RKLB_Q2_2026_10Q
+  Neutron_Development:
+    name: Neutron Development
+    name_ru: разработка Neutron (первый пуск, повторное использование)
+    states:
+      N0:
+        name: development
+        criteria: first-flight hardware not in integrated qualification/readiness phase
+      N1:
+        name: integrated_preflight
+        criteria: first-flight hardware integration/readiness ongoing and first-stage qualification in progress
+      N2:
+        name: orbital_validation
+        criteria: one successful orbital Neutron mission meeting >=80% declared objectives
+      N3:
+        name: reuse_validation
+        criteria: same flight-capable Neutron first-stage architecture reused successfully >=2 times
+      N4:
+        name: operational_cadence
+        criteria: '>=4 successful Neutron missions rolling 12m'
+    current: N1
+    current_evidence:
+    - 'Q2 10-Q: first-flight hardware integration/readiness ongoing; Archimedes testing and second-stage/reusable-fairing
+      work progressing.'
+    - Stage 1 tank production aligned with target delivery to pad in Q4 2026; company says year-end launch window is narrowing.
+    source_refs:
+    - RKLB_Q2_2026_10Q
+  Space_Systems_Scale:
+    name: Space Systems Scale
+    name_ru: масштаб космических систем (Space Systems)
+    states:
+      S0:
+        name: secondary
+        criteria: Space Systems share of quarterly revenue <40%
+      S1:
+        name: balanced
+        criteria: share >=40% and <60%
+      S2:
+        name: dominant
+        criteria: share >=60% and <75%
+      S3:
+        name: platform_core
+        criteria: share >=75% AND Space Systems YoY growth >=40%
+      S4:
+        name: durable_platform
+        criteria: share >=75% AND YoY growth >=40% for 2 consecutive quarters
+    current: S3
+    current_evidence:
+    - Q2 Space Systems revenue $189.5M of $234.2M total, ~80.9%.
+    - Q2 Space Systems revenue +94% YoY.
+    source_refs:
+    - RKLB_Q2_2026_10Q
+  Backlog_Visibility:
+    name: Backlog Visibility
+    name_ru: видимость backlog
+    states:
+      B0:
+        name: low_visibility
+        criteria: backlog < $1.0B
+      B1:
+        name: established
+        criteria: backlog >= $1.0B and < $1.5B
+      B2:
+        name: strong
+        criteria: backlog >= $1.5B and < $2.0B
+      B3:
+        name: very_strong
+        criteria: backlog >= $2.0B and < $3.0B
+      B4:
+        name: exceptional
+        criteria: backlog >= $3.0B
+    current: B3
+    current_evidence:
+    - Q2 2026 backlog $2.36B, +137% YoY.
+    - Launch backlog exceeded 90 missions after Q2/post-quarter signings.
+    source_refs:
+    - RKLB_Q2_2026_RELEASE
+  Capital_and_Integration:
+    name: Capital and Integration
+    name_ru: капитал и интеграция поглощений
+    states:
+      C0:
+        name: disciplined
+        criteria: no material acquisition pending and operating cash burn < $50M/quarter
+      C1:
+        name: active_investment
+        criteria: material development spend or acquisitions but liquidity > $1.0B
+      C2:
+        name: integration_heavy
+        criteria: multiple acquisitions closed/pending AND liquidity > $1.0B
+      C3:
+        name: balance_sheet_strain
+        criteria: liquidity < $1.0B OR acquisition/development cash commitments >50% of liquidity
+      C4:
+        name: funding_stress
+        criteria: liquidity < $0.5B and negative operating cash flow for 2 quarters
+    current: C2
+    current_evidence:
+    - Rocket Lab closed Mynaric and Motiv acquisitions and announced agreement to acquire Iridium.
+    - Company previously disclosed access to >$2B total liquidity.
+    source_refs:
+    - RKLB_Q2_2026_RELEASE

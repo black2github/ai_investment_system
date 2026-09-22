@@ -1,0 +1,159 @@
+# KPI CRWV с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.0'
+artifact: CRWV KPI Dashboard
+as_of: '2026-09-21'
+ticker: CRWV
+max_critical_kpis: 10
+source_artifact: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - CoreWeave, Inc. Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: CRWV-KPI-01
+  name: Revenue YoY
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=1.00'
+    yellow: '>=0.50 and <1.00'
+    red: <0.50
+  last_value: 1.1246
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm
+  verified: false
+  formula: 2.575 / 1.212 - 1 = 1.1246
+- id: CRWV-KPI-02
+  name: Revenue backlog
+  unit: USD B
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=100'
+    yellow: '>=50 and <100'
+    red: <50
+  last_value: 104.2
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm
+  verified: false
+  note: Company-defined backlog includes RPO plus other expected revenue under committed contracts, subject to delivery/availability.
+- id: CRWV-KPI-03
+  name: Top-3 customer revenue share
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: <0.50
+    yellow: '>=0.50 and <0.70'
+    red: '>=0.70'
+  last_value: 0.72
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm
+  verified: false
+  formula: 0.36 + 0.26 + 0.10 = 0.72
+  note: 'Risk/concentration KPI: lower is better.'
+- id: CRWV-KPI-04
+  name: Adjusted EBITDA margin
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.55'
+    yellow: '>=0.40 and <0.55'
+    red: <0.40
+  last_value: 0.59
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm
+  verified: false
+- id: CRWV-KPI-05
+  name: Adjusted operating income margin
+  unit: fraction
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=0.05'
+    yellow: '>=0 and <0.05'
+    red: <0
+  last_value: 0.05
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm
+  verified: false
+- id: CRWV-KPI-06
+  name: Active power
+  unit: GW
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=1.5'
+    yellow: '>=1.0 and <1.5'
+    red: <1.0
+  last_value: 1.5
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm
+  verified: false
+  value_type: approximate
+- id: CRWV-KPI-07
+  name: Contracted power
+  unit: GW
+  period: event_driven
+  source: SEC
+  thresholds:
+    green: '>=4.0'
+    yellow: '>=3.0 and <4.0'
+    red: <3.0
+  last_value: 4.2
+  last_date: '2026-08-11'
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm
+  verified: false
+  formula: Later observation supersedes Q2-end ~3.7 GW for current snapshot.
+  value_type: approximate
+- id: CRWV-KPI-08
+  name: Quarterly capex / revenue
+  unit: x
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: <2.0
+    yellow: '>=2.0 and <4.0'
+    red: '>=4.0'
+  last_value: 3.6505
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm
+  verified: false
+  formula: 9.4 / 2.575 = 3.6505
+  note: Risk KPI; high capex can be contract-backed and value-creating.
+- id: CRWV-KPI-09
+  name: Total liquidity / latest-quarter capex
+  unit: x
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: '>=1.5'
+    yellow: '>=1.0 and <1.5'
+    red: <1.0
+  last_value: 1.6546
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm
+  verified: false
+  formula: 15.553 / 9.4 = 1.6546
+  note: Total liquidity includes undrawn secured facilities; it is not cash.
+- id: CRWV-KPI-10
+  name: Total debt / revenue backlog
+  unit: x
+  period: quarterly
+  source: SEC
+  thresholds:
+    green: <0.25
+    yellow: '>=0.25 and <=0.50'
+    red: '>0.50'
+  last_value: 0.3417
+  last_date: null
+  source_url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm
+  verified: false
+  formula: 35.6 / 104.2 = 0.3417

@@ -1,0 +1,154 @@
+# KPI NVDA с порогами Green/Yellow/Red. История — state.json → kpi_observations.
+version: '1.0'
+artifact: NVDA KPI Dashboard
+as_of: '2026-09-21'
+ticker: NVDA
+max_critical_kpis: 10
+source_artifact: inbox/received/NVDA_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - NVIDIA Corporation Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: 'Last value без подтверждённого источника (verified: true) не используется для перехода состояния.'
+critical_kpis:
+- id: NVDA-KPI-01
+  name: Total revenue YoY
+  unit: YoY fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.40'
+    yellow: '>=0.20 and <0.40'
+    red: <0.20
+  last_value: 1.06
+  last_date: null
+  source_url: null
+  verified: false
+- id: NVDA-KPI-02
+  name: Data Center revenue YoY
+  unit: YoY fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.50'
+    yellow: '>=0.20 and <0.50'
+    red: <0.20
+  last_value: 1.17
+  last_date: null
+  source_url: null
+  verified: false
+- id: NVDA-KPI-03
+  name: Gross margin
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.72'
+    yellow: '>=0.65 and <0.72'
+    red: <0.65
+  last_value: 0.75
+  last_date: null
+  source_url: null
+  verified: false
+- id: NVDA-KPI-04
+  name: Operating margin
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.55'
+    yellow: '>=0.40 and <0.55'
+    red: <0.40
+  last_value: 0.6624
+  last_date: null
+  source_url: null
+  verified: false
+  formula: 63.734/96.221
+- id: NVDA-KPI-05
+  name: H1 operating cash flow margin
+  unit: fraction
+  period: semiannual
+  source: IR
+  thresholds:
+    green: '>=0.35'
+    yellow: '>=0.25 and <0.35'
+    red: <0.25
+  last_value: 0.4185
+  last_date: null
+  source_url: null
+  verified: false
+  formula: 74.421/177.837
+- id: NVDA-KPI-06
+  name: Supply commitments / annualized latest-quarter revenue
+  unit: x
+  period: quarterly
+  source: IR
+  thresholds:
+    green: <0.50
+    yellow: '>=0.50 and <=1.00'
+    red: '>1.00'
+  last_value: 0.725
+  last_date: null
+  source_url: null
+  verified: false
+  formula: 279/(96.221*4)
+- id: NVDA-KPI-07
+  name: Inventory/excess-purchase provisions / quarterly revenue
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: <0.01
+    yellow: '>=0.01 and <0.02'
+    red: '>=0.02'
+  last_value: 0.0102
+  last_date: null
+  source_url: null
+  verified: false
+  formula: 0.985/96.221
+- id: NVDA-KPI-08
+  name: ACIE share of Data Center revenue
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.35'
+    yellow: '>=0.20 and <0.35'
+    red: <0.20
+  last_value: 0.4528
+  last_date: null
+  source_url: null
+  verified: false
+  formula: 40.313/89.023
+- id: NVDA-KPI-09
+  name: China Data Center revenue share
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: '>=0.10'
+    yellow: '>=0.01 and <0.10'
+    red: <0.01
+  last_value: <0.01
+  last_date: null
+  source_url: null
+  verified: false
+  note: market-access KPI
+- id: NVDA-KPI-10
+  name: Top-5 direct customer share of accounts receivable
+  unit: fraction
+  period: quarterly
+  source: IR
+  thresholds:
+    green: <0.50
+    yellow: '>=0.50 and <=0.70'
+    red: '>0.70'
+  last_value: 0.7
+  last_date: null
+  source_url: null
+  verified: false
+  formula: (22+14+13+11+10)%

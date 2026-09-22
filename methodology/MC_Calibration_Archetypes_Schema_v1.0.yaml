@@ -1,0 +1,101 @@
+# ВНИМАНИЕ: common_schema.required дополнена MC_Calibration_Archetypes_Schema_patch_v1.1.yaml (joint_simulation, driver_parameter_mapping; правила — MC_Calibration_Archetypes_Rules_v1.1.md, 21.09.2026).
+version: "1.0"
+artifact: mc_calibration_archetypes
+as_of: "2026-09-21"
+
+common_schema:
+  required:
+    - ticker
+    - as_of
+    - archetype
+    - model_version
+    - state_vector_ref
+    - source_facts
+    - scenario_state
+    - revenue_model.segments
+    - dependencies
+    - simulation
+    - valuation
+    - outputs
+    - validation
+  simulation_defaults:
+    horizons_years: [3, 5, 8]
+    timestep: quarterly
+    paths: 500000
+    seed: required_explicit
+    antithetic_variates: true
+  dependency_rule:
+    structure: latent_factor_plus_idiosyncratic_shock
+    perfect_shared_rank_for_multiple_horizons: false
+  provenance_rule: "Every forecast number must be model_assumption unless sourced fact."
+
+archetypes:
+  mature_positive_margin:
+    margin_model:
+      method: mean_reverting_positive_margin
+      required:
+        - current_margin
+        - terminal_margin_Y5
+        - terminal_margin_Y8
+        - half_life_years
+        - shock_sigma
+        - shock_persistence
+        - lower_bound
+        - upper_bound
+      formula: "m_t = m_terminal + (m_0 - m_terminal)*2^(-t/half_life) + epsilon_t"
+    valuation:
+      default_Y3: FCF_multiple
+      default_Y5: FCF_multiple
+      default_Y8: FCF_multiple_with_maturity_compression
+      allowed_metrics: [FCF, NetIncome, EBIT, AdjustedEBITDA, Revenue]
+      non_FCF_requires_rationale: true
+
+  capital_intensive_transition:
+    margin_model:
+      allowed_methods: [direct_fcf_nodes, ocf_capex_decomposition]
+      direct_fcf_nodes_required: [Y1, Y2, Y3, Y4_terminal_fraction, Y5_terminal_margin]
+      ocf_capex_required: [ocf_margin_path, capex_revenue_path]
+      y0_is_smooth_anchor: false
+    valuation:
+      Y3_if_fcf_unstable: revenue_bridge
+      Y5: FCF_multiple
+      Y8: FCF_multiple
+      negative_fcf_fallback_rule_required: true
+      bridge_dependent_flag_required: true
+
+  pre_service_or_milestone_driven:
+    milestone_model:
+      required:
+        - milestones
+        - conditional_probabilities
+        - timing_windows
+        - dependencies
+        - failure_branches
+        - state_transition_mapping
+    margin_model:
+      pre_service: cash_burn_and_capex
+      post_service: state_conditioned_margin_distribution
+    valuation:
+      piecewise: true
+      bases:
+        - milestone_conditioned_EV
+        - revenue_bridge
+        - EBITDA_multiple
+        - FCF_multiple
+      valuation_basis_saved_per_path: true
+
+company_mapping:
+  SPCX: {archetype: capital_intensive_transition, modifier: "direct_fcf_nodes; AI/Starlink/Space"}
+  NBIS: {archetype: capital_intensive_transition, modifier: "prefer OCF-capex decomposition"}
+  CRWV: {archetype: capital_intensive_transition, modifier: "leverage/power/customer concentration"}
+  NVDA: {archetype: mature_positive_margin, modifier: "high-growth semiconductor cycle"}
+  HOOD: {archetype: mature_positive_margin, modifier: "financial-platform; non-FCF valuation metric allowed"}
+  LLY: {archetype: mature_positive_margin, modifier: "pharma pipeline/pricing/manufacturing"}
+  META: {archetype: mature_positive_margin, modifier: "high-capex overlay"}
+  ASML: {archetype: mature_positive_margin, modifier: "cyclical WFE normalization"}
+  MSFT: {archetype: mature_positive_margin, modifier: "high-capex cloud overlay"}
+  NET: {archetype: mature_positive_margin, modifier: "low-current-FCF; Y3 revenue bridge allowed"}
+  PLTR: {archetype: mature_positive_margin, modifier: "government/commercial split"}
+  ETN: {archetype: mature_positive_margin, modifier: "industrial-cycle normalization"}
+  RKLB: {archetype: pre_service_or_milestone_driven, modifier: "existing core + Neutron milestones"}
+  ASTS: {archetype: pre_service_or_milestone_driven, modifier: "pre-SpaceMobile-service"}

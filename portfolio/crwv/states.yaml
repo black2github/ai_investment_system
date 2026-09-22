@@ -1,0 +1,159 @@
+# Вектор состояний CRWV (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
+version: '1.0'
+artifact: CRWV State Vector
+as_of: '2026-09-21'
+ticker: CRWV
+source_artifact: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
+purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
+semantics:
+  primary_only: true
+  thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+sources:
+  CRWV_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm
+    type: SEC 10-Q
+  CRWV_Q2_2026_RELEASE:
+    url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm
+    type: SEC earnings-release exhibit
+  CRWV_2026_CONVERT_PRESENTATION:
+    url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000429/crwv2026convertpresentat.htm
+    type: SEC-filed investor presentation
+    note: Used only for figures explicitly dated in the presentation, including contracted power as of 2026-08-11.
+axes:
+  Demand_Contracting:
+    name: Demand Contracting
+    name_ru: спрос и законтрактованность (backlog)
+    states:
+      D0:
+        name: weak
+        criteria: revenue YoY <25% OR backlog/annualized-revenue <2x
+      D1:
+        name: validated
+        criteria: revenue YoY >=25% AND backlog/annualized-revenue >=2x
+      D2:
+        name: strong
+        criteria: revenue YoY >=50% AND backlog/annualized-revenue >=5x
+      D3:
+        name: hypergrowth_contracted
+        criteria: revenue YoY >=100% AND backlog/annualized-revenue >=8x
+      D4:
+        name: durable_hypergrowth_contracted
+        criteria: D3 criteria for 2 consecutive quarters
+    current: D3
+    current_evidence:
+    - Q2 revenue $2.575B versus $1.212B, +112.5% YoY.
+    - Revenue backlog $104.2B; backlog / annualized Q2 revenue = 104.2 / (2.575*4) = 10.12x.
+    - Backlog excludes >$25B of net new customer commitments added in early Q3.
+    source_refs:
+    - CRWV_Q2_2026_RELEASE
+    - CRWV_2026_CONVERT_PRESENTATION
+  Unit_Economics:
+    name: Unit Economics
+    name_ru: Unit_Economics
+    states:
+      E0:
+        name: negative
+        criteria: adjusted operating margin <0%
+      E1:
+        name: early_positive
+        criteria: adjusted operating margin >=0% and <3% AND adjusted EBITDA margin >=40%
+      E2:
+        name: scaling
+        criteria: adjusted operating margin >=3% and <5% AND adjusted EBITDA margin >=50%
+      E3:
+        name: positive_scale
+        criteria: adjusted operating margin >=5% AND adjusted EBITDA margin >=55%
+      E4:
+        name: durable_operating_leverage
+        criteria: adjusted operating margin >=10% AND adjusted EBITDA margin >=55% for 2 consecutive quarters
+    current: E3
+    current_evidence:
+    - Q2 adjusted EBITDA $1.510B, margin 59%.
+    - Q2 adjusted operating income $128M, margin 5%.
+    - GAAP operating margin remained -2%; this axis tracks adjusted unit economics and must be read with financing/capital
+      axes.
+    source_refs:
+    - CRWV_Q2_2026_RELEASE
+  Capacity_Secured:
+    name: Capacity Secured
+    name_ru: Capacity_Secured
+    states:
+      C0:
+        name: subscale
+        criteria: active power <0.5 GW
+      C1:
+        name: initial_scale
+        criteria: active power >=0.5 GW and <1.5 GW
+      C2:
+        name: scaled
+        criteria: active power >=1.5 GW AND contracted power >=3.5 GW
+      C3:
+        name: hyperscale_secured
+        criteria: active power >=2.5 GW AND contracted power >=5.0 GW
+      C4:
+        name: hyperscale_active
+        criteria: active power >=4.0 GW AND contracted power >=6.0 GW
+    current: C2
+    current_evidence:
+    - 'Q2 release: active power reached 1.5 GW.'
+    - 'SEC-filed September presentation: contracted power approximately 4.2 GW as of the August 11 earnings call.'
+    - Q2-end release had contracted power at approximately 3.7 GW; 4.2 GW is the later observation.
+    source_refs:
+    - CRWV_Q2_2026_RELEASE
+    - CRWV_2026_CONVERT_PRESENTATION
+  Capital_Intensity:
+    name: Capital Intensity
+    name_ru: Capital_Intensity
+    states:
+      K0:
+        name: normalized
+        criteria: quarterly capex/revenue <1x
+      K1:
+        name: elevated
+        criteria: capex/revenue >=1x and <2x
+      K2:
+        name: aggressive_expansion
+        criteria: capex/revenue >=2x and <4x
+      K3:
+        name: extreme_contract_backed
+        criteria: capex/revenue >=4x AND backlog/annualized-revenue >=8x
+      K4:
+        name: overbuild_risk
+        criteria: capex/revenue >=4x AND (backlog/annualized-revenue <5x OR adjusted operating margin <=0%) for 2 quarters
+    current: K2
+    current_evidence:
+    - Q2 capex $9.4B on revenue $2.575B = 3.65x.
+    - Backlog / annualized Q2 revenue = 10.12x.
+    source_refs:
+    - CRWV_2026_CONVERT_PRESENTATION
+    - CRWV_Q2_2026_RELEASE
+  Funding_Liquidity:
+    name: Funding Liquidity
+    name_ru: Funding_Liquidity
+    states:
+      F0:
+        name: low_leverage
+        criteria: debt/backlog <0.10x AND liquidity/latest-quarter-capex >=2x
+      F1:
+        name: strong_funding
+        criteria: debt/backlog <0.25x AND liquidity/latest-quarter-capex >=1.5x
+      F2:
+        name: funded_leveraged_expansion
+        criteria: debt/backlog <=0.50x AND liquidity/latest-quarter-capex >=1x
+      F3:
+        name: leverage_dependence
+        criteria: debt/backlog >0.50x OR liquidity/latest-quarter-capex <1x
+      F4:
+        name: funding_stress
+        criteria: debt/backlog >0.75x AND liquidity/latest-quarter-capex <0.5x
+    current: F2
+    current_evidence:
+    - Total debt $35.6B at June 30, 2026.
+    - Revenue backlog $104.2B; debt/backlog = 0.342x.
+    - 'Total liquidity $15.553B: $5.524B cash + $15M securities + $10.014B availability under existing facilities.'
+    - Liquidity/latest-quarter capex = 15.553/9.4 = 1.65x.
+    source_refs:
+    - CRWV_Q2_2026_10Q
+    - CRWV_2026_CONVERT_PRESENTATION

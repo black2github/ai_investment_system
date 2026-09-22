@@ -1,0 +1,98 @@
+# Входы MPC для ASML: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
+version: '1.0'
+ticker: ASML
+artifact: mpc_inputs
+as_of: '2026-09-21'
+source_artifact: inbox/received/ASML_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+driver_exposure_semantics:
+  scale:
+    -2: strong_negative
+    -1: negative
+    0: immaterial
+    1: positive
+    2: strong_positive
+  provenance: model_assumption
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 2
+  HYPERSCALER_CAPEX: 2
+  SEMICONDUCTOR_WFE: 2
+  ADVANCED_PACKAGING: 1
+  HBM_MEMORY: 2
+  EDA_DESIGN_COMPLEXITY: 1
+  CLOUD_SOFTWARE_DEMAND: 0
+  DATA_CENTER_POWER: 1
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 0
+  CHINA_REVENUE: 1
+  TAIWAN_SUPPLY: 2
+  ACQUISITION_INTEGRATION: 0
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 1
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+driver_interpretation:
+  TAIWAN_SUPPLY:
+    vector_score: 2
+    exposure_type: demand/customer-geography rather than primary own-supply-chain exposure
+    explanation: 'Healthy Taiwan leading-edge production and foundry capex are strongly positive for ASML demand. A Taiwan
+      disruption would primarily hit ASML through customer fabs, shipment/service access and global semiconductor demand/capex.
+      Do not interpret this score as saying ASML itself is fabricated in Taiwan.
+
+      '
+  HYPERSCALER_CAPEX:
+    vector_score: 2
+    exposure_type: indirect positive demand
+    explanation: Hyperscaler AI capex drives leading-edge logic/HBM demand, which drives foundry/memory WFE and lithography
+      intensity.
+failure_modes:
+- failure_id: ASML-FM-01
+  name: Global wafer-fab equipment downturn / customer capex cuts
+  common_cause_id: SEMICONDUCTOR_WFE_DOWNTURN
+  severity: high
+- failure_id: ASML-FM-02
+  name: Taiwan foundry disruption reduces shipments, service access and leading-edge customer capex
+  common_cause_id: TAIWAN_SUPPLY_DISRUPTION
+  severity: critical
+- failure_id: ASML-FM-03
+  name: Export controls further restrict China shipments/service
+  common_cause_id: EXPORT_CONTROLS_CHINA
+  severity: high
+- failure_id: ASML-FM-04
+  name: TSMC/Samsung/Intel or major-memory customer capex concentration shock
+  common_cause_id: CUSTOMER_CAPEX_CONCENTRATION
+  severity: high
+- failure_id: ASML-FM-05
+  name: Critical single-source supplier disruption
+  common_cause_id: SINGLE_SOURCE_SUPPLIER_DISRUPTION
+  severity: critical
+- failure_id: ASML-FM-06
+  name: EUV/High-NA technology or industrialization delay
+  common_cause_id: LITHOGRAPHY_TECHNOLOGY_EXECUTION
+  severity: high
+- failure_id: ASML-FM-07
+  name: AI capex slowdown reduces advanced logic/HBM fab demand
+  common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN
+  severity: high
+- failure_id: ASML-FM-08
+  name: Memory-cycle downturn reduces lithography demand
+  common_cause_id: MEMORY_CYCLE_DOWNTURN
+  severity: medium
+driver_taxonomy_version: '1.1'
+changelog:
+- date: '2026-09-21'
+  change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

@@ -49,7 +49,8 @@ triggers:
     action: "Купить 5% портфеля (транш 1 из 3)"
     window: { from: 2026-09-17 }
     automation: aiinfra-price-watch
-    status: active
+    status: paused
+    note: 'ПАУЗА с 2026-09-22 (решение владельца): покупка по legacy-реестру приостановлена до оценки портфеля по методологии; наблюдение цены/событий продолжается, уведомление о покупке не отправляется; прежний статус: active'
   - id: NET-P-02
     fired: []
     class: price
@@ -58,7 +59,8 @@ triggers:
     action: "Купить 5% портфеля (транш 2 из 3)"
     window: { from: 2026-09-17 }
     automation: aiinfra-price-watch
-    status: active
+    status: paused
+    note: 'ПАУЗА с 2026-09-22 (решение владельца): покупка по legacy-реестру приостановлена до оценки портфеля по методологии; наблюдение цены/событий продолжается, уведомление о покупке не отправляется; прежний статус: active'
   - id: NET-P-03
     fired: []
     class: price
@@ -67,7 +69,8 @@ triggers:
     action: "Купить 5% портфеля (транш 3 из 3)"
     window: { from: 2026-09-17 }
     automation: aiinfra-price-watch
-    status: active
+    status: paused
+    note: 'ПАУЗА с 2026-09-22 (решение владельца): покупка по legacy-реестру приостановлена до оценки портфеля по методологии; наблюдение цены/событий продолжается, уведомление о покупке не отправляется; прежний статус: active'
   - id: NET-P-04
     fired: []
     class: price

@@ -15,12 +15,12 @@ semantics:
 sources:
   PLTR_Q2_2026_10Q:
     source_class: regulatory_filing
-    as_of: '2026-09-21'
+    as_of: '2026-08-03'
     url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
     type: SEC 10-Q
   PLTR_Q2_2026_RELEASE:
     source_class: issuer_ir_release
-    as_of: '2026-09-21'
+    as_of: '2026-08-03'
     url: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm
     type: SEC earnings-release exhibit
   PLTR_Q2_2026_PRESENTATION:

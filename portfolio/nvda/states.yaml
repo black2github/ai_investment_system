@@ -15,11 +15,11 @@ sources:
   NVDA_Q2_10Q:
     source_class: regulatory_filing
     url: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm
-    as_of: '2026-09-21'
+    as_of: '2026-08-26'
   NVDA_Q2_RELEASE:
     source_class: regulatory_filing
     url: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm
-    as_of: '2026-09-21'
+    as_of: '2026-08-26'
 axes:
   AI_Demand:
     name: AI Demand

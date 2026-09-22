@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-22T07:30:00Z",
+  "updated": "2026-09-22T20:16:00Z",
   "price": {
     "last": 223.54,
     "last_at": "2026-09-18",
@@ -42,6 +42,11 @@
       "timestamp": "2026-09-22T07:30:00Z",
       "kind": "owner_decision",
       "summary": "Пометка «доверяю» активирована владельцем (журнал CONV-2026-09-22-NBIS-01) с исключением по оси Capacity_Secured; L_max 25% NAV; докупки заблокированы лимитом вложенного капитала (22.4% > 20%)"
+    },
+    {
+      "timestamp": "2026-09-22T20:16:00Z",
+      "kind": "verification",
+      "summary": "Первый живой прогон Dozor Verification Protocol v1.0 (гейт G8), run_id verify-NBIS-20260922T201443Z: итог PASS_WITH_DECLARED_PENDING. 10 из 11 KPI подтверждены (5 verified_match, 5 verified_match_with_normalization) по первоисточникам SEC (Ex-99.1, Ex-99.2, 6-K от 12.08.2026). NBIS-KPI-11 (фактически законтрактованная мощность на дату отчёта) — not_found, задекларирован как pending — совпадает с условием PASS_WITH_DECLARED_PENDING, PATCH не требуется. Отчёт: portfolio/nbis/_verify/verify-NBIS-20260922T201443Z.json."
     }
   ],
   "scenario_state": {
@@ -211,8 +216,160 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact"
+    },
+    {
+      "kpi_id": "NBIS-KPI-01",
+      "name": "AI cloud revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 5.14,
+      "value_type": "actual",
+      "observation_qualifier": "exact",
+      "unit": "YoY fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-02",
+      "name": "AI cloud quarterly revenue",
+      "period_end": "2026-06-30",
+      "value": 0.5749,
+      "value_type": "actual",
+      "observation_qualifier": "exact",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-03",
+      "name": "AI cloud ARR",
+      "period_end": "2026-06-30",
+      "value": 3.0,
+      "value_type": "actual",
+      "observation_qualifier": "exact",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-04",
+      "name": "AI cloud adjusted EBITDA margin",
+      "period_end": "2026-06-30",
+      "value": 0.497,
+      "value_type": "actual",
+      "observation_qualifier": "exact",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-05",
+      "name": "Quarterly capex",
+      "period_end": "2026-06-30",
+      "value": 5.7,
+      "value_type": "actual",
+      "observation_qualifier": "approximate",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-06",
+      "name": "Customer prepayment coverage of associated capex",
+      "period_end": "2026-06-30",
+      "value": null,
+      "value_type": "actual",
+      "observation_qualifier": "range",
+      "value_range": {
+        "min": 0.5,
+        "max": 0.6
+      },
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-07",
+      "name": "Disclosed customer commitments",
+      "period_end": "2026-06-30",
+      "value": 40,
+      "value_type": "actual",
+      "observation_qualifier": "lower_bound",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-08",
+      "name": "Year-end contracted power target",
+      "period_end": "2026-06-30",
+      "value": 5.0,
+      "value_type": "company_guidance",
+      "observation_qualifier": "exact",
+      "unit": "GW",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-09",
+      "name": "Cash and cash equivalents",
+      "period_end": "2026-06-30",
+      "value": 8.0421,
+      "value_type": "actual",
+      "observation_qualifier": "exact",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-10",
+      "name": "Group adjusted EBITDA margin",
+      "period_end": "2026-06-30",
+      "value": 0.41,
+      "value_type": "actual",
+      "observation_qualifier": "exact",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
+    },
+    {
+      "kpi_id": "NBIS-KPI-11",
+      "name": "Actually secured contracted power as of reporting date",
+      "period_end": "2026-06-30",
+      "value": null,
+      "value_type": null,
+      "observation_qualifier": "pending_verification",
+      "unit": "GW",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": null,
+      "verification_run_id": "verify-NBIS-20260922T201443Z"
     }
   ],
+  "verification": {
+    "run_id": "verify-NBIS-20260922T201443Z",
+    "as_of": "2026-09-22T20:14:43Z",
+    "overall_status": "PASS_WITH_DECLARED_PENDING"
+  },
   "calc_runs": [],
   "conviction": {
     "status": "active",

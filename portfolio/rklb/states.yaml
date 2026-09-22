@@ -15,12 +15,12 @@ semantics:
 sources:
   RKLB_Q2_2026_10Q:
     source_class: regulatory_filing
-    as_of: '2026-09-21'
+    as_of: '2026-08-10'
     url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
     type: SEC 10-Q
   RKLB_Q2_2026_RELEASE:
     source_class: issuer_ir_release
-    as_of: '2026-09-21'
+    as_of: '2026-08-10'
     url: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000061/rklb-08102026ex991.htm
     type: SEC earnings-release exhibit
 axes:

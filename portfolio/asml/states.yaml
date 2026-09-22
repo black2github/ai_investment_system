@@ -30,22 +30,22 @@ sources:
     type: ASML IR press release; US GAAP headline results
   ASML_SEC_Q2_6K:
     source_class: regulatory_filing
-    as_of: '2026-09-21'
+    as_of: '2026-07-15'
     url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/form6-kquarterlyfilings.htm
     type: SEC Form 6-K
   ASML_SEC_Q2_USGAAP:
     source_class: regulatory_filing
-    as_of: '2026-09-21'
+    as_of: '2026-07-15'
     url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm
     type: SEC 6-K Exhibit 99.3; Summary US GAAP financial statements
   ASML_SEC_Q2_INTERIM:
     source_class: regulatory_filing
-    as_of: '2026-09-21'
+    as_of: '2026-07-15'
     url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm
     type: SEC 6-K Exhibit 99.4; Statutory Interim Report under IAS 34 / EU-IFRS
   ASML_SEC_Q2_PRESENTATION:
     source_class: issuer_investor_presentation
-    as_of: '2026-09-21'
+    as_of: '2026-07-15'
     url: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/presentationinvestorrela.htm
     type: SEC 6-K Exhibit 99.2; investor presentation
 axes:

@@ -15,15 +15,15 @@ sources:
   NBIS_Q2_RELEASE:
     source_class: issuer_ir_release
     url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm
-    as_of: '2026-09-21'
+    as_of: '2026-08-12'
   NBIS_Q2_LETTER:
     source_class: issuer_ir_release
     url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm
-    as_of: '2026-09-21'
+    as_of: '2026-08-12'
   NBIS_Q2_6K:
     source_class: issuer_ir_release
     url: https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm
-    as_of: '2026-09-21'
+    as_of: '2026-08-12'
 axes:
   Demand_Monetization:
     name: Demand Monetization

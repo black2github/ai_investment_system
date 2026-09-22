@@ -15,12 +15,12 @@ semantics:
 sources:
   LLY_Q2_2026_10Q:
     source_class: regulatory_filing
-    as_of: '2026-09-21'
+    as_of: '2026-08-05'
     url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
     type: SEC 10-Q
   LLY_Q2_2026_RELEASE_SEC:
     source_class: regulatory_filing
-    as_of: '2026-09-21'
+    as_of: '2026-08-05'
     url: https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/q226lillysalesandearningsp.htm
     type: SEC 8-K exhibit / earnings release
   LLY_Q2_2026_RELEASE_IR:

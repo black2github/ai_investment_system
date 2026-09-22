@@ -15,7 +15,7 @@ sources:
   HOOD_Q2_10Q:
     source_class: regulatory_filing
     url: https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
-    as_of: '2026-09-21'
+    as_of: '2026-07-29'
   HOOD_Q2_RELEASE:
     source_class: issuer_ir_release
     url: https://investors.robinhood.com/news-releases/news-release-details/robinhood-reports-second-quarter-2026-results

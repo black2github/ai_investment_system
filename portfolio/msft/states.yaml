@@ -15,7 +15,7 @@ semantics:
 sources:
   MSFT_FY2026_10K:
     source_class: regulatory_filing
-    as_of: '2026-09-21'
+    as_of: '2026-07-29'
     url: https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm
     type: SEC 10-K
   MSFT_FY2026_Q4_RELEASE:

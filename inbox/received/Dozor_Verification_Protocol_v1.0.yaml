@@ -1,0 +1,398 @@
+version: 1.0.0
+artifact: dozor_verification_protocol
+id: Dozor_Verification_Protocol_v1.0
+as_of: '2026-09-22'
+status: proposed_normative
+gate: G8_SOURCE_VERIFICATION
+source_policy_ref: Source_Policy_v1.0
+principles:
+  evidence_pack_is_hint_not_authority: true
+  dozor_reopens_or_independently_retrieves_source: true
+  trigger_not_decision: true
+  technical_failure_is_not_evidence_failure: true
+  no_estimation_of_undisclosed_values: true
+inputs:
+  required:
+  - canonical_or_candidate_kpis
+  - source_registry
+  - evidence_pack_or_null
+  - verification_scope
+  - run_id
+  - as_of
+  rules:
+  - If canonical IDs already exist, output must use canonical KPI IDs.
+  - EvidencePack evidence_item fields are consumable as retrieval hints.
+  - Dozor must not treat LLM excerpt_summary as verified truth without source retrieval.
+  - If EvidencePack source_class conflicts with Source Policy, Source Policy classification governs and conflict is logged.
+verification_scope:
+  all_kpis: verify every KPI with last_value or declared non-disclosure/pending state
+  selected_kpis: explicit KPI ID list
+item_statuses:
+  verified_match: {}
+  verified_match_with_normalization: {}
+  mismatch_value: {}
+  mismatch_period: {}
+  mismatch_semantics: {}
+  formula_mismatch: {}
+  source_not_allowed: {}
+  source_unavailable_technical: {}
+  source_conflict: {}
+  not_disclosed: {}
+  not_found: {}
+status_semantics:
+  verified_match: Source supports candidate value/type/qualifier/unit/period without material normalization.
+  verified_match_with_normalization: Source supports candidate after allowed deterministic unit/scale/rounding normalization.
+  mismatch_value: Source value differs beyond allowed normalization/tolerance.
+  mismatch_period: Number may match but source period/window semantics differ.
+  mismatch_semantics: Value type/qualifier or meaning differs, e.g. guidance recorded as actual.
+  formula_mismatch: Declared derived formula does not reproduce candidate value from verified components.
+  source_not_allowed: Source class/purpose violates Source Policy.
+  source_unavailable_technical: Source could not be verified because of access/fetch/transport failure after required retries.
+  source_conflict: Two allowed authoritative sources materially disagree and protocol cannot resolve by document precedence/period identity.
+  not_disclosed: Non-disclosure is established; no numeric value is independently invented.
+  not_found: Source is accessible but expected evidence could not be located; this does not imply non-disclosure.
+normalization:
+  unit_rules:
+  - percent ↔ fraction conversion is allowed when KPI unit declares fraction/percent unambiguously
+  - USD/EUR/etc thousand/million/billion/trillion scale conversion is exact
+  - basis points ↔ percentage points conversion is allowed when unit semantics are explicit
+  - count/ordinal/unitless values are not rescaled
+  rounding_rules:
+    reported_value: After unit normalization, match if candidate falls within ±0.5 unit of the source's last displayed decimal place.
+    derived_value: Recompute formula from verified components; default relative tolerance 0.001 (0.1%) unless source/display precision implies a wider half-ULP interval.
+    bounds: lower_bound/upper_bound compare the disclosed bound itself; never replace with midpoint.
+    range: verify both endpoints independently.
+  period_rules:
+  - Period/window labels are semantic, not cosmetic.
+  - within-50-days is not equivalent to trailing-90-days.
+  - LTM/TTM, quarter, H1, FY and point-in-time are distinct.
+  - A derived rolling window is allowed only from dated underlying events with explicit method.
+technical_access:
+  sec:
+  - Use configured compliant User-Agent.
+  - On 403 retry with compliant UA and alternate official SEC document/archive URL.
+  - If still inaccessible -> source_unavailable_technical, never not_found.
+  truncated_fetch:
+  - If retrieved text is truncated before relevant section, perform full-document/host retrieval before not_found/not_disclosed.
+  general:
+  - Paywall/auth/network/tool failure -> source_unavailable_technical unless an allowed equivalent primary source is verified.
+  - Do not replace inaccessible primary KPI evidence with an unapproved aggregator.
+non_disclosure_rule:
+  not_disclosed_when:
+  - primary source explicitly states metric is not separately disclosed
+  - disclosure structure proves only aggregate is reported and separate metric cannot be deterministically derived
+  not_disclosed_is_not: failure to find text in an incomplete or technically inaccessible source
+formula_verification:
+  required_if: KPI provenance == derived_fact OR formula is present
+  procedure:
+  - verify every formula input from allowed source(s)
+  - normalize units
+  - recompute deterministically
+  - compare under derived-value tolerance
+  - return formula_mismatch if failed
+runtime_verified_mapping:
+  verified_match: true
+  verified_match_with_normalization: true
+  mismatch_value: false
+  mismatch_period: false
+  mismatch_semantics: false
+  formula_mismatch: false
+  source_not_allowed: false
+  source_unavailable_technical: null
+  source_conflict: null
+  not_found: null
+  not_disclosed: true only if candidate last_value=null and observation_qualifier=not_separately_disclosed; otherwise false
+patch_and_gate_rules:
+- when:
+  - mismatch_value
+  - mismatch_period
+  - mismatch_semantics
+  - formula_mismatch
+  - source_not_allowed
+  result: PATCH_REQUIRED
+- when:
+  - source_unavailable_technical
+  result: BLOCKED_TECHNICAL
+  artifact_patch: no automatic patch from technical failure
+- when:
+  - source_conflict
+  result: BLOCKED_SOURCE_CONFLICT
+  artifact_patch: no silent reconciliation
+- when:
+  - not_disclosed
+  result_if_candidate_matches: PASS
+  match_condition: last_value=null AND observation_qualifier=not_separately_disclosed
+  otherwise: PATCH_REQUIRED
+- when:
+  - not_found
+  result_if_candidate_declared_pending: PASS_WITH_DECLARED_PENDING
+  pending_condition: last_value=null AND observation_qualifier=pending_verification
+  otherwise: PATCH_REQUIRED
+output_report_schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  $id: https://ai-investment-system.local/schemas/dozor-verification-report/1.0
+  title: Dozor Verification Report v1.0
+  type: object
+  additionalProperties: false
+  required:
+  - protocol_version
+  - run_id
+  - ticker
+  - as_of
+  - inputs
+  - items
+  - summary
+  properties:
+    protocol_version:
+      const: 1.0.0
+    run_id:
+      type: string
+      minLength: 1
+    ticker:
+      type: string
+      minLength: 1
+    as_of:
+      type: string
+      format: date-time
+    inputs:
+      type: object
+      additionalProperties: false
+      required:
+      - kpis_ref
+      - source_registry_ref
+      - evidence_pack_ref
+      properties:
+        kpis_ref:
+          type: string
+        source_registry_ref:
+          type: string
+        evidence_pack_ref:
+          type:
+          - string
+          - 'null'
+        artifact_schema_version:
+          type:
+          - string
+          - 'null'
+    items:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        required:
+        - kpi_id
+        - status
+        - candidate
+        - source_check
+        - found
+        - normalization
+        - runtime_verified
+        - patch_required
+        properties:
+          kpi_id:
+            type: string
+          status:
+            type: string
+            enum:
+            - verified_match
+            - verified_match_with_normalization
+            - mismatch_value
+            - mismatch_period
+            - mismatch_semantics
+            - formula_mismatch
+            - source_not_allowed
+            - source_unavailable_technical
+            - source_conflict
+            - not_disclosed
+            - not_found
+          candidate:
+            type: object
+            additionalProperties: true
+            required:
+            - last_value
+            - value_type
+            - observation_qualifier
+            - unit
+            - period
+          source_check:
+            type: object
+            additionalProperties: false
+            required:
+            - source_ref
+            - source_class
+            - url
+            - allowed_by_policy
+            - technical_status
+            properties:
+              source_ref:
+                type:
+                - string
+                - 'null'
+              source_class:
+                type:
+                - string
+                - 'null'
+              url:
+                type:
+                - string
+                - 'null'
+              allowed_by_policy:
+                type:
+                - boolean
+                - 'null'
+              technical_status:
+                type: string
+                enum:
+                - accessible
+                - unavailable_technical
+                - not_attempted
+              technical_error:
+                type:
+                - string
+                - 'null'
+              evidence_locator:
+                type:
+                - string
+                - 'null'
+              evidence_excerpt:
+                type:
+                - string
+                - 'null'
+                maxLength: 1200
+          found:
+            type: object
+            additionalProperties: false
+            required:
+            - value
+            - value_type
+            - observation_qualifier
+            - unit
+            - period
+            properties:
+              value:
+                type:
+                - number
+                - 'null'
+              value_range:
+                type:
+                - object
+                - 'null'
+                additionalProperties: false
+                properties:
+                  min:
+                    type:
+                    - number
+                    - 'null'
+                  max:
+                    type:
+                    - number
+                    - 'null'
+              value_type:
+                type:
+                - string
+                - 'null'
+                enum:
+                - actual
+                - company_guidance
+                - analyst_estimate
+                - null
+              observation_qualifier:
+                type:
+                - string
+                - 'null'
+                enum:
+                - exact
+                - approximate
+                - lower_bound
+                - upper_bound
+                - range
+                - not_separately_disclosed
+                - pending_verification
+                - null
+              unit:
+                type:
+                - string
+                - 'null'
+              period:
+                type:
+                - string
+                - 'null'
+              formula_recomputed_value:
+                type:
+                - number
+                - 'null'
+          normalization:
+            type: object
+            additionalProperties: false
+            required:
+            - applied
+            - steps
+            properties:
+              applied:
+                type: boolean
+              steps:
+                type: array
+                items:
+                  type: string
+              numeric_difference:
+                type:
+                - number
+                - 'null'
+              relative_difference:
+                type:
+                - number
+                - 'null'
+          mismatch_reason:
+            type:
+            - string
+            - 'null'
+          runtime_verified:
+            type:
+            - boolean
+            - 'null'
+          patch_required:
+            type: boolean
+          notes:
+            type:
+            - string
+            - 'null'
+    summary:
+      type: object
+      additionalProperties: false
+      required:
+      - overall_status
+      - counts
+      - patch_required_kpis
+      - technical_blocked_kpis
+      - pending_kpis
+      properties:
+        overall_status:
+          type: string
+          enum:
+          - PASS
+          - PASS_WITH_DECLARED_PENDING
+          - PATCH_REQUIRED
+          - BLOCKED_TECHNICAL
+          - BLOCKED_SOURCE_CONFLICT
+        counts:
+          type: object
+          additionalProperties:
+            type: integer
+            minimum: 0
+        patch_required_kpis:
+          type: array
+          items:
+            type: string
+        technical_blocked_kpis:
+          type: array
+          items:
+            type: string
+        pending_kpis:
+          type: array
+          items:
+            type: string
+output_mutation_rules:
+- Dozor may write runtime verification observations/status owned by dozor.
+- Dozor does not silently rewrite canonical KPI value, state criteria, trigger condition or canonical ID.
+- A mismatch creates a PatchProposal/patch-required result for integration workflow.
+- A verification result is not a trade decision.

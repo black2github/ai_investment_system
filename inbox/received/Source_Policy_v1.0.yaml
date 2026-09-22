@@ -1,0 +1,236 @@
+version: 1.0.0
+artifact: source_policy
+id: Source_Policy_v1.0
+as_of: '2026-09-22'
+status: proposed_normative
+scope:
+- IMA evidence collection
+- Company Candidate/Artifact sources
+- Dozor G8 verification
+- event/news verification where this policy is referenced
+principles:
+  fact_not_news: true
+  guidance_not_actual: true
+  absence_must_not_be_inferred_from_truncated_fetch: true
+  unreported_value_must_not_be_estimated: true
+  direct_document_url_required: true
+  document_as_of_required: true
+  content_identity_overrides_host_domain: true
+source_classes:
+  regulatory_filing:
+    authority: primary
+    examples:
+    - SEC 10-Q
+    - SEC 10-K
+    - SEC 6-K filing body
+    - 20-F
+    - proxy/beneficial-ownership filing
+    allowed_for:
+    - financial_statement_fact
+    - shares_outstanding
+    - segment_fact
+    - risk_disclosure
+    - contractual_commitment
+    - official filing narrative
+    notes: A SEC-hosted issuer Exhibit 99 release/presentation is classified by document identity, not merely by sec.gov host.
+  issuer_ir_release:
+    authority: primary
+    examples:
+    - issuer earnings release
+    - issuer news release
+    - SEC Exhibit 99 earnings release
+    allowed_for:
+    - company_guidance
+    - operating_KPI
+    - earnings_fact
+    - official issuer announcement
+  issuer_investor_presentation:
+    authority: primary
+    examples:
+    - earnings slides
+    - investor presentation
+    - SEC-filed presentation exhibit
+    allowed_for:
+    - operating_KPI
+    - guidance_detail
+    - segment_metric
+    - management-defined metric
+  issuer_transcript:
+    authority: primary_verbal
+    examples:
+    - issuer-hosted earnings-call transcript
+    - official webcast transcript
+    allowed_for:
+    - management_verbal_guidance
+    - management_intent
+    - capacity/demand commentary
+    restrictions:
+    - Prefer written filing/release for exact accounting numbers when available.
+    - Verbal statement must remain typed as verbal/management statement; do not upgrade to filed fact.
+  other_primary:
+    authority: primary
+    examples:
+    - regulator notice/authorization
+    - government agency notice
+    - exchange notice
+    - official issuer operational update
+    - official counterparty contract announcement
+    allowed_for:
+    - regulatory_authorization
+    - launch/operational_event
+    - exchange_event
+    - government_contract_event
+    - other directly authoritative fact
+  first_tier_media:
+    authority: secondary
+    allowed_for:
+    - independent event corroboration
+    - news-event confirmation when primary unavailable
+    - analyst_estimate if explicitly labeled analyst_estimate
+    restrictions:
+    - Not a sole source for company financial KPI verification when an accessible primary source exists.
+    - If used instead of a primary source for an event, require two independent approved first-tier media sources.
+    - Never reclassify reported estimate/rumor as actual.
+  market_data_provider:
+    authority: market_data_only
+    examples:
+    - Yahoo chart
+    allowed_for:
+    - security_price
+    - FX_rate
+    restrictions:
+    - Not allowed as primary evidence for company fundamentals, guidance, revenue, margins, shares outstanding or contracts.
+    - Market capitalization should normally be a derived_fact from verified shares outstanding × verified market price.
+source_class_resolution:
+- priority: 1
+  when: SEC filing body/form (10-Q, 10-K, 6-K/20-F filing content)
+  class: regulatory_filing
+- priority: 2
+  when: SEC-hosted Exhibit 99 / issuer document that is an earnings/news release
+  class: issuer_ir_release
+- priority: 3
+  when: SEC-hosted or issuer-hosted investor/earnings presentation
+  class: issuer_investor_presentation
+- priority: 4
+  when: issuer-hosted official transcript/webcast transcript
+  class: issuer_transcript
+- priority: 5
+  when: issuer website official release/news item
+  class: issuer_ir_release
+- priority: 6
+  when: official regulator/government/exchange/counterparty primary document
+  class: other_primary
+- priority: 7
+  when: Yahoo market chart/FX endpoint
+  class: market_data_provider
+- priority: 8
+  when: approved Reuters/Bloomberg/FT-or-equivalent first-tier reporting
+  class: first_tier_media
+preferred_source_by_fact_type:
+  financial_statement_line_item:
+  - regulatory_filing
+  - issuer_ir_release
+  shares_outstanding:
+  - regulatory_filing
+  company_guidance:
+  - issuer_ir_release
+  - regulatory_filing
+  - issuer_investor_presentation
+  - issuer_transcript
+  operating_KPI:
+  - regulatory_filing
+  - issuer_ir_release
+  - issuer_investor_presentation
+  - issuer_transcript
+  management_verbal_statement:
+  - issuer_transcript
+  - issuer_ir_release
+  regulatory_authorization:
+  - other_primary
+  - regulatory_filing
+  - issuer_ir_release
+  operational_event:
+  - other_primary
+  - issuer_ir_release
+  - first_tier_media
+  government_contract_event:
+  - other_primary
+  - issuer_ir_release
+  - regulatory_filing
+  security_price:
+  - market_data_provider
+  FX_rate:
+  - market_data_provider
+  analyst_estimate:
+  - first_tier_media
+  market_capitalization:
+  - 'derived_fact: verified shares_outstanding × verified security_price'
+value_semantics:
+  value_type_enum:
+  - actual
+  - company_guidance
+  - analyst_estimate
+  observation_qualifier_enum:
+  - exact
+  - approximate
+  - lower_bound
+  - upper_bound
+  - range
+  - not_separately_disclosed
+  - pending_verification
+  rules:
+  - company_guidance must never be written as actual
+  - analyst_estimate must never be written as actual or company_guidance
+  - approximate/lower_bound/upper_bound/range belong to observation_qualifier, not value_type
+  - not_separately_disclosed requires last_value=null
+  - pending_verification must not be replaced by an estimate
+period_semantics:
+  rules:
+  - Preserve issuer/source period semantics exactly.
+  - quarterly, H1, FY, LTM/TTM, point-in-time and event windows are distinct.
+  - A statement 'within 50 days' must not be relabeled as 'trailing 90 days'.
+  - A new rolling-window metric may be created only as derived_fact from dated underlying events with formula/method.
+  - as_of on source object is document publication/filing date, not retrieval date.
+url_and_identity:
+  rules:
+  - Use direct document URL when possible, not search-results URL.
+  - Mirror URLs may be recorded only with explicit access_note and same-document identity.
+  - The same issuer document mirrored on SEC and IR is one evidence identity, not two independent sources.
+  - Source title/type is descriptive; source_class is normative classification.
+non_disclosure:
+  rules:
+  - Do not estimate a value merely because a related aggregate is disclosed.
+  - Use last_value=null + observation_qualifier=not_separately_disclosed when non-disclosure is established.
+  - Failure to find a value in a truncated/partial document is not evidence of non-disclosure.
+technical_access:
+  sec:
+    user_agent_required: true
+    configuration_rule: SEC access must use a configured non-empty User-Agent identifying application and contact; no hard-coded fake contact.
+    on_403:
+    - retry with compliant configured User-Agent
+    - try alternate official SEC archive/document URL
+    - if still inaccessible mark source_unavailable_technical; never not_found
+  truncated_fetch:
+    rule: If relevant section may be outside retrieved content, use full document/host fetch/browser before deciding not_found or not_disclosed.
+  paywall_or_auth:
+    rule: Technical access failure is not an evidence mismatch. Seek an allowed equivalent primary source; otherwise source_unavailable_technical.
+secondary_media_event_rule:
+  when_primary_unavailable: two independent approved first-tier media sources required for event confirmation
+  does_not_apply_to:
+  - financial KPI verification
+  - guidance-as-actual conversion
+migration_classification_rules_v1:
+- match: sec.gov filing body
+  class: regulatory_filing
+- match: SEC Exhibit 99 earnings/news release
+  class: issuer_ir_release
+- match: investor presentation/slides
+  class: issuer_investor_presentation
+- match: official transcript
+  class: issuer_transcript
+- match: Yahoo chart/FX
+  class: market_data_provider
+- match: issuer official release site
+  class: issuer_ir_release
+- match: official regulator/government/exchange/counterparty document
+  class: other_primary

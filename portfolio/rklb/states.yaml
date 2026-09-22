@@ -1,5 +1,5 @@
 # Вектор состояний RKLB (оси и состояния). Переходы — triggers.yaml, текущий вектор — state.json.
-schema_version: '1.0.1'
+schema_version: '1.0.3'
 version: '1.0'
 artifact: RKLB State Vector
 as_of: '2026-09-21'

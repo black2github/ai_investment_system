@@ -2,7 +2,7 @@
 # Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
-schema_version: '1.0.1'
+schema_version: '1.0.3'
 profile: full_model
 meta:
   ticker: ASTS

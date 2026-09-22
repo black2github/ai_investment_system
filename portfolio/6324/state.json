@@ -110,7 +110,7 @@
     "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
   },
   "info_log": [],
-  "schema_version": "1.0.1",
+  "schema_version": "1.0.3",
   "state_transitions": [],
   "kpi_observations": [],
   "calc_runs": [],

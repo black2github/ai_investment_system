@@ -1,5 +1,5 @@
 # KPI ETN с порогами Green/Yellow/Red. История — state.json → kpi_observations.
-schema_version: '1.0.1'
+schema_version: '1.0.3'
 version: '1.0'
 artifact: ETN KPI Dashboard
 as_of: '2026-09-21'

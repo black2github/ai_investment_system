@@ -222,5 +222,5 @@
     "exception": "Capacity_Secured pending_verification (нераскрытие факта)",
     "provenance": "owner_judgment"
   },
-  "schema_version": "1.0.1"
+  "schema_version": "1.0.3"
 }

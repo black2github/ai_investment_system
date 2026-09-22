@@ -1,5 +1,5 @@
 # Вектор состояний ETN (оси и состояния). Переходы — triggers.yaml (ETN-E-04..ETN-E-10 + привязка legacy ETN-E-*/X-* к осям), текущий вектор — state.json.
-schema_version: '1.0.1'
+schema_version: '1.0.3'
 version: '1.0'
 artifact: ETN State Vector
 as_of: '2026-09-21'

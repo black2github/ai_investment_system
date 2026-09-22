@@ -231,6 +231,47 @@ Decision Request (сигнал к действию для перехода) — 
 плюс legacy-действие из старых триггеров, если оно есть. Карточка компании получает строку
 `Вектор: AI A2 🟢 · Starlink B2 🟢 · Starship C1 🟡 · Капитал D3 🔴 · Valuation V4 🔴` (цвет — по KPI оси).
 
+## Сверка по первоисточникам (Dozor Verification Protocol v1.0, гейт G8)
+
+Норматив: `methodology/Dozor_Verification_Protocol_v1.0.yaml` (статусы, допуски, схема отчёта) и
+`methodology/Source_Policy_v1.0.yaml` (классы источников, guidance ≠ actual, период дословно, технический доступ).
+Принято 22.09.2026. Ниже — как это исполняется в этом workspace.
+
+1. **Роль.** Дозор не второй аналитик: он независимо открывает источник и воспроизводит число. EvidencePack /
+   `source_url` от LLM — подсказка, где искать, а не доказательство. Excerpt LLM без открытого документа
+   не считается подтверждением.
+2. **Статус на KPI** (ровно один): `verified_match`, `verified_match_with_normalization`, `mismatch_value`,
+   `mismatch_period`, `mismatch_semantics` (guidance записан как actual и т.п.), `formula_mismatch`,
+   `source_not_allowed`, `source_unavailable_technical`, `source_conflict`, `not_disclosed`, `not_found`.
+   Три разных вещи: `not_found` (документ открыт, значения нет) ≠ `not_disclosed` (компания не раскрывает —
+   должно быть установлено) ≠ `source_unavailable_technical` (403/усечённый fetch/сеть после повторов).
+3. **Сверка числа.** Разрешены только детерминированные преобразования: % ↔ доля, тыс./млн/млрд, б.п. ↔ п.п.,
+   заявленные единицы. Совпадение — если после нормализации кандидат попадает в интервал округления
+   опубликованного числа (± половина последнего знака). Для `derived_fact` — пересчёт формулы из независимо
+   подтверждённых слагаемых, допуск 0.1%. Границы (`lower_bound`/`upper_bound`) сравниваются как границы, не
+   как середина; `range` — оба конца отдельно. Период — часть факта: «within 50 days» не подтверждает
+   «trailing 90 days» (это `mismatch_period` даже при совпавшем числе).
+4. **Технический отказ — не отсутствие факта.** SEC: только с User-Agent (см. выше), при 403 — повтор и
+   альтернативный официальный URL архива; усечённый fetch — взять полный документ через `exec`/curl. Если всё
+   равно недоступно — `source_unavailable_technical`, KPI не правится, итог `BLOCKED_TECHNICAL`.
+5. **Отчёт прогона** — иммутабельный файл `portfolio/<ticker>/_verify/<run_id>.json` по схеме
+   `output_report_schema` протокола (run_id вида `verify-<ticker>-<YYYYMMDDTHHMMSSZ>`, `as_of` — момент прогона в
+   date-time; это НЕ as_of документа-источника). Перед записью отчёт проверяется валидатором сайдкара:
+   `POST /run {"model": "artifact_validator", "inputs": {"mode": "dozor_report", "report": <json>, "folders": ["<папка>"]}}`.
+6. **Что пишется в state.json** (и только это): в `kpi_observations[]` — новое наблюдение с `value` (число|null),
+   `value_type`, `observation_qualifier`, `unit`, `period_end`, `source_url`, `provenance`, `verified` по правилу
+   протокола (`true` для verified_match*, `false` для mismatch*/source_not_allowed, `null` для технического
+   отказа/конфликта/not_found) и `verification_run_id`; поле `verification` = {run_id, as_of, overall_status};
+   строка в `info_log`. Канонические KPI в kpis.yaml, критерии состояний, условия триггеров и ID дозор НЕ
+   переписывает: расхождение → Decision Request владельцу с текстом «PATCH_REQUIRED: <kpi_id>: <статус>,
+   найдено <значение> (<период>, <url>)».
+7. **Итог прогона:** `PASS` (все KPI подтверждены или корректно `not_disclosed`), `PASS_WITH_DECLARED_PENDING`
+   (нерешённые KPI уже записаны как null + pending_verification), `PATCH_REQUIRED`, `BLOCKED_TECHNICAL`,
+   `BLOCKED_SOURCE_CONFLICT` (два разрешённых источника расходятся — не выбирать удобный, спросить владельца).
+8. **Область v1.0 — только KPI.** Подтверждение текущих состояний осей (`scenario_state[axis].verified`) и
+   событий E-/X-триггеров пока ведётся по прежним правилам (раздел «Вектор состояний»); протокол v1.1 добавит
+   `axis_items[]` и `event_items[]` в тот же отчёт после первого живого прогона по NBIS.
+
 ## Расчётный движок (сайдкар invest-calc)
 
 Расчёты (Монте-Карло, valuation, портфель) выполняет отдельный сервис, не модель. Доступен из

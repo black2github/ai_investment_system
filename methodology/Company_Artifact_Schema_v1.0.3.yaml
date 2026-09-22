@@ -1,4 +1,4 @@
-schema_package_version: 1.0.1
+schema_package_version: 1.0.3
 artifact: Company Artifact Schema
 json_schema_dialect: https://json-schema.org/draft/2020-12/schema
 as_of: '2026-09-22'
@@ -23,7 +23,7 @@ files:
     - axes
     properties:
       schema_version:
-        const: 1.0.1
+        const: 1.0.3
       version:
         type: string
       artifact:
@@ -225,7 +225,7 @@ files:
     - critical_kpis
     properties:
       schema_version:
-        const: 1.0.1
+        const: 1.0.3
       version:
         type: string
       artifact:
@@ -516,7 +516,7 @@ files:
     - triggers
     properties:
       schema_version:
-        const: 1.0.1
+        const: 1.0.3
       meta:
         type: object
         additionalProperties: false
@@ -587,6 +587,18 @@ files:
             type:
             - string
             - 'null'
+          target_weight:
+            type:
+            - string
+            - 'null'
+            description: Owner strategy target-weight expression preserved verbatim, e.g. '5%' or '0% (при подтверждении — до 5% + добавления)'. Not a normalized optimizer
+              target.
+          lot:
+            type:
+            - integer
+            - 'null'
+            minimum: 1
+            description: Owner registry market-lot size, primarily for instruments with board-lot constraints.
       automations:
         type: object
         additionalProperties:
@@ -737,12 +749,15 @@ files:
               - 'null'
             status:
               type: string
-              enum:
+              enum: &id004
               - active
               - planned
               - due
+              - paused
               - done
               - dropped
+              description: active=armed; planned=defined but not yet armed; due=condition/time window due; paused=condition remains monitored/logged but action notification/execution
+                is suppressed by owner decision; done=completed/closed; dropped=permanently retired.
             fired:
               type: array
               items: {}
@@ -760,6 +775,11 @@ files:
               - object
               - 'null'
               description: Legacy registry timing/window semantics. Object form may contain provider-specific structured window data.
+            priority:
+              type:
+              - string
+              - 'null'
+              description: Owner-defined qualitative registry priority preserved verbatim.
           allOf:
           - if:
               required:
@@ -827,7 +847,7 @@ files:
     - driver_taxonomy_version
     properties:
       schema_version:
-        const: 1.0.1
+        const: 1.0.3
       version:
         type: string
       ticker:
@@ -987,7 +1007,7 @@ files:
     - calc_runs
     properties:
       schema_version:
-        const: 1.0.1
+        const: 1.0.3
       updated:
         type: string
         format: date-time
@@ -1232,6 +1252,11 @@ files:
               type:
               - string
               - 'null'
+            verification_run_id:
+              type:
+              - string
+              - 'null'
+              description: Links this runtime KPI observation to immutable Dozor verification report portfolio/<ticker>/_verify/<run_id>.json.
       calc_runs:
         type: array
         items:
@@ -1281,6 +1306,34 @@ files:
         - string
         - object
         - 'null'
+      verification:
+        type:
+        - object
+        - 'null'
+        additionalProperties: false
+        required:
+        - run_id
+        - as_of
+        - overall_status
+        properties:
+          run_id:
+            type: string
+            minLength: 1
+            description: Immutable Dozor verification report run_id.
+          as_of:
+            type: string
+            format: date-time
+            description: Verification run timestamp, not the source-document as_of date.
+          overall_status:
+            type: string
+            enum: &id003
+            - PASS
+            - PASS_WITH_DECLARED_PENDING
+            - PATCH_REQUIRED
+            - BLOCKED_TECHNICAL
+            - BLOCKED_SOURCE_CONFLICT
+            description: Copied from Dozor Verification Protocol v1.0 summary.overall_status.
+        description: Pointer/summary of the latest relevant immutable verification run. Full report lives outside state.json at portfolio/<ticker>/_verify/<run_id>.json.
 integrity_rules:
 - id: ART-REF-001
   severity: error
@@ -1340,12 +1393,14 @@ integrity_rules:
   message: Driver vector must match declared taxonomy.
 - id: ART-REF-015
   severity: error
-  rule: 'if triggers.rules exists: triggers.rules.trigger_not_decision == true; no trigger action encodes executable trade instruction'
-  message: Trigger must create monitoring/Decision Request, not trade.
+  rule: 'if triggers.rules exists: triggers.rules.trigger_not_decision == true; for triggers with status in {active, planned, due}, action text must not encode an executable
+    trade instruction. For status in {paused, dropped, done}, action-text trade-language validation is skipped because the trigger is non-executing/non-notifying; trigger_not_decision
+    remains true globally.'
+  message: Active/planned/due triggers must remain monitoring/Decision-Request semantics. Paused/dropped/done triggers are exempt from action-text validation but cannot execute.
 - id: ART-REF-016
   severity: error
-  rule: all present canonical company files schema_version == 1.0.1
-  message: All canonical files in schema profile must declare schema version 1.0.1.
+  rule: all present canonical company files schema_version == 1.0.3
+  message: All canonical files in schema profile must declare schema version 1.0.3.
 - id: ART-REF-017
   severity: error
   rule: ticker identity agrees across states.yaml, kpis.yaml, triggers.yaml.meta, mpc_inputs.yaml
@@ -1372,13 +1427,22 @@ integrity_rules:
   message: Binary KPI thresholds may use two zones; non-binary KPI requires three zones.
 - id: ART-REF-023
   severity: error
-  rule: if scenario_state.*.evidence_type == qualitative_primary_source then evidence/source must be populated and any binary KPI derivation must be declared in accepted
-    KPI/formula or verification_rule
+  rule: if scenario_state.*.evidence_type == qualitative_primary_source then evidence/source must be populated and any binary KPI derivation must be declared in accepted KPI/formula
+    or verification_rule
   message: Qualitative state evidence must remain explicitly typed and auditable.
 - id: ART-REF-024
   severity: error
   rule: triggers.profile == registry_only does not require states.yaml/kpis.yaml/mpc_inputs.yaml and cross-file trigger axis/KPI integrity checks are skipped
   message: Registry-only trigger files are valid without a company model.
+- id: ART-REF-025
+  severity: error
+  rule: if state.json.verification != null then state.json.verification.run_id identifies an immutable Dozor report at portfolio/<ticker>/_verify/<run_id>.json and overall_status
+    equals that report summary.overall_status
+  message: state.json verification summary must match its immutable Dozor report.
+- id: ART-REF-026
+  severity: error
+  rule: if state.json.kpi_observations[*].verification_run_id != null then the referenced run_id must exist and contain an item for the same kpi_id
+  message: KPI runtime verification link must resolve to a report that verified the same KPI.
 field_catalog:
 - file: kpis.yaml
   path: artifact
@@ -2276,6 +2340,14 @@ field_catalog:
   - analyst_estimate
   - null
 - file: state.json
+  path: kpi_observations[].verification_run_id
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Foreign-key-like link to immutable Dozor verification report run_id.
+  type: string|null
+  enum: null
+- file: state.json
   path: kpi_observations[].verified
   classification: required
   value_source: dozor_runtime
@@ -2545,6 +2617,38 @@ field_catalog:
   value_source: integrator
   mutation_authority: integrator
   note: null
+  type: string
+  enum: null
+- file: state.json
+  path: verification
+  classification: optional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Latest verification pointer/summary only; full report is immutable in portfolio/<ticker>/_verify/<run_id>.json.
+  type: object|null
+  enum: null
+- file: state.json
+  path: verification.as_of
+  classification: conditional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Verification run timestamp. Distinct from source-document as_of, which remains a date.
+  type: date-time-string
+  enum: null
+- file: state.json
+  path: verification.overall_status
+  classification: conditional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Required when verification object exists; copied from Dozor report summary.overall_status.
+  type: string
+  enum: *id003
+- file: state.json
+  path: verification.run_id
+  classification: conditional
+  value_source: dozor_runtime
+  mutation_authority: dozor_runtime
+  note: Required when state.json.verification object exists.
   type: string
   enum: null
 - file: states.yaml
@@ -2996,6 +3100,14 @@ field_catalog:
   type: string|null
   enum: null
 - file: triggers.yaml
+  path: meta.lot
+  classification: optional
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: Board-lot/market-lot size from owner registry; >=1.
+  type: integer|null
+  enum: null
+- file: triggers.yaml
   path: meta.position
   classification: conditional
   value_source: integrator
@@ -3073,6 +3185,14 @@ field_catalog:
   value_source: integrator_or_owner_registry
   mutation_authority: integrator
   note: null
+  type: string|null
+  enum: null
+- file: triggers.yaml
+  path: meta.target_weight
+  classification: optional
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: Allowed in registry_only and full_model. Owner strategy text; not optimizer target weight.
   type: string|null
   enum: null
 - file: triggers.yaml
@@ -3317,6 +3437,14 @@ field_catalog:
   type: string
   enum: null
 - file: triggers.yaml
+  path: triggers[].priority
+  classification: optional
+  value_source: owner_via_integrator
+  mutation_authority: integrator
+  note: Qualitative owner registry priority; not inferred or rewritten by IMA.
+  type: string|null
+  enum: null
+- file: triggers.yaml
   path: triggers[].source
   classification: optional
   value_source: integrator
@@ -3329,14 +3457,9 @@ field_catalog:
   classification: required
   value_source: dozor_runtime
   mutation_authority: dozor_runtime
-  note: null
+  note: 'paused is reversible owner-controlled suppression: monitoring/logging continues; purchase/action notification is not emitted. Distinct from dropped and planned.'
   type: string
-  enum:
-  - active
-  - planned
-  - due
-  - done
-  - dropped
+  enum: *id004
 - file: triggers.yaml
   path: triggers[].step
   classification: required
@@ -3390,9 +3513,9 @@ legacy_reference_coverage:
     models_in_patch_report: 13
     spcx_included: false
     report_ref: ima-party1.validation-report.md
-title: Company Artifact Schema Package v1.0.1
-supersedes: Company Artifact Schema v1.0
-patch_scope: Additive compatibility patch based on accepted 13-model workspace validation; SPCX explicitly excluded.
+title: Company Artifact Schema Package v1.0.3
+supersedes: Company Artifact Schema v1.0.2
+patch_scope: 'Minimal additive patch only: trigger status ''paused''; runtime linkage from state.json to immutable Dozor verification reports. Candidate Schema remains v1.0.1.'
 known_migrations_v1_0_to_v1_0_1:
 - id: MIG-101-SCHEMA-VERSION
   action: set_schema_version
@@ -3441,3 +3564,33 @@ known_migrations_v1_0_to_v1_0_1:
   action: pre_validation_normalization
   scope: all date/date-time fields
   rule: YAML native date/datetime objects are serialized to ISO-8601 strings before JSON Schema validation; semantic date is unchanged
+known_migrations_v1_0_1_to_v1_0_2:
+- id: MIG-112-SCHEMA-VERSION
+  action: set_schema_version
+  from: 1.0.1
+  to: 1.0.2
+  scope: all canonical company files
+- id: MIG-113-OWNER-REGISTRY-FIELDS
+  action: preserve_first_class_fields
+  scope:
+  - triggers.yaml.meta.target_weight
+  - triggers.yaml.meta.lot
+  - triggers.yaml.triggers[].priority
+  rule: Preserve existing owner registry values verbatim; do not normalize, infer or overwrite.
+known_migrations_v1_0_2_to_v1_0_3:
+- id: MIG-114-SCHEMA-VERSION
+  action: set_schema_version
+  from: 1.0.2_or_pre_bump_workspace
+  to: 1.0.3
+  scope: all canonical company files
+- id: MIG-115-PAUSED-STATUS
+  action: preserve_existing_enum_value
+  scope: triggers.yaml.triggers[].status
+  rule: Existing status=paused is retained verbatim; no transition, ID, condition, note or previous-status text is changed. Paused trigger remains monitored/logged but does
+    not emit action notification or execute action.
+- id: MIG-116-VERIFICATION-LINKAGE
+  action: no_backfill_required
+  scope:
+  - state.json.verification
+  - state.json.kpi_observations[].verification_run_id
+  rule: Fields are optional runtime outputs. Do not fabricate historical run_id values. Populate only for verification runs performed under Dozor Verification Protocol v1.0+.

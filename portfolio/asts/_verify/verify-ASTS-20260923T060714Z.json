@@ -1,0 +1,294 @@
+{
+  "protocol_version": "1.1.0",
+  "run_id": "verify-ASTS-20260923T060714Z",
+  "ticker": "ASTS",
+  "as_of": "2026-09-23T06:07:14Z",
+  "inputs": {
+    "kpis_ref": "portfolio/asts/kpis.yaml",
+    "source_registry_ref": "portfolio/asts/states.yaml",
+    "evidence_pack_ref": null,
+    "artifact_schema_version": "1.0.4",
+    "state_ref": "portfolio/asts/state.json",
+    "triggers_ref": "portfolio/asts/triggers.yaml"
+  },
+  "items": [
+    {
+      "kpi_id": "ASTS-KPI-01",
+      "status": "verified_match",
+      "candidate": {"last_value": 13, "value_type": "actual", "observation_qualifier": "exact", "unit": "satellites", "period": "event_driven"},
+      "source_check": {"source_ref": "ASTS_Q2_RELEASE", "source_class": "issuer_ir_release", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Business/financial highlights bullet, second-quarter 2026 release", "evidence_excerpt": "Orbital launch of BlueBird 8-13 marks six spacecraft launched within 50 days, increasing network to 13 in-orbit spacecraft, with combined aperture hardware of approximately 20,000 sq ft"},
+      "found": {"value": 13, "value_type": "actual", "observation_qualifier": "exact", "unit": "satellites", "period": "as of release date 2026-08-10"},
+      "normalization": {"applied": false, "steps": [], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": null
+    },
+    {
+      "kpi_id": "ASTS-KPI-02",
+      "status": "verified_match",
+      "candidate": {"last_value": 6, "value_type": "actual", "observation_qualifier": "exact", "unit": "satellites", "period": "within 50 days"},
+      "source_check": {"source_ref": "ASTS_Q2_RELEASE", "source_class": "issuer_ir_release", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Business/financial highlights bullet, second-quarter 2026 release", "evidence_excerpt": "Orbital launch of BlueBird 8-13 marks six spacecraft launched within 50 days, increasing network to 13 in-orbit spacecraft"},
+      "found": {"value": 6, "value_type": "actual", "observation_qualifier": "exact", "unit": "satellites", "period": "within 50 days"},
+      "normalization": {"applied": false, "steps": [], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "Источник дословно использует «within 50 days»; переобозначение в «trailing 90 days» не подтверждается и не применяется. observation_window_days=50 из реестра сохранён без изменений."
+    },
+    {
+      "kpi_id": "ASTS-KPI-03",
+      "status": "verified_match",
+      "candidate": {"last_value": 30, "value_type": "actual", "observation_qualifier": "exact", "unit": "satellites", "period": "quarterly"},
+      "source_check": {"source_ref": "ASTS_Q2_RELEASE", "source_class": "issuer_ir_release", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Business/financial highlights bullet", "evidence_excerpt": "BlueBirds 14, 15, and 16 will be ready to ship shortly, with BlueBird 17 through BlueBird 46 in various stages of production and assembly"},
+      "found": {"value": 30, "value_type": "actual", "observation_qualifier": "exact", "unit": "satellites", "period": "as of release date 2026-08-10", "formula_recomputed_value": 30},
+      "normalization": {"applied": true, "steps": ["BlueBird 17 through 46 inclusive = 46 - 17 + 1 = 30"], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": null
+    },
+    {
+      "kpi_id": "ASTS-KPI-04",
+      "status": "verified_match_with_normalization",
+      "candidate": {"last_value": 1.3, "value_type": "actual", "observation_qualifier": "exact", "unit": "USD B", "period": "quarterly"},
+      "source_check": {"source_ref": "ASTS_Q2_RELEASE", "source_class": "issuer_ir_release", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Business/financial highlights bullet", "evidence_excerpt": "Revenue backlog increased to approximately $1.30 billion in aggregate contracted revenue with commercial partners and contract awards with the United States Government"},
+      "found": {"value": 1.3, "value_type": "actual", "observation_qualifier": "approximate", "unit": "USD B", "period": "as of release date 2026-08-10"},
+      "normalization": {"applied": true, "steps": ["qualifier: source=approximate, candidate=exact"], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": true,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "Число совпадает; источник помечает значение как «approximately» — qualifier следует гармонизировать до approximate без изменения значения (интегратору)."
+    },
+    {
+      "kpi_id": "ASTS-KPI-05",
+      "status": "verified_match",
+      "candidate": {"last_value": 60, "value_type": "actual", "observation_qualifier": "lower_bound", "unit": "MNOs", "period": "quarterly"},
+      "source_check": {"source_ref": "ASTS_Q2_10Q", "source_class": "regulatory_filing", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Item 2 MD&A, Overview section", "evidence_excerpt": "We currently have partnerships with over 60 MNOs with over 3 billion subscribers globally."},
+      "found": {"value": 60, "value_type": "actual", "observation_qualifier": "lower_bound", "unit": "MNOs", "period": "as of 2026-06-30 (10-Q filing date)"},
+      "normalization": {"applied": false, "steps": [], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "«over 60» подтверждает нижнюю границу буквально; сравнивается как граница, не midpoint."
+    },
+    {
+      "kpi_id": "ASTS-KPI-06",
+      "status": "verified_match",
+      "candidate": {"last_value": 31.5, "value_type": "actual", "observation_qualifier": "exact", "unit": "USD M", "period": "quarterly"},
+      "source_check": {"source_ref": "ASTS_Q2_RELEASE", "source_class": "issuer_ir_release", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Second Quarter 2026 Financial Highlights", "evidence_excerpt": "Second quarter revenue of $31.5 million driven by gateway deliveries and U.S. Government milestones met"},
+      "found": {"value": 31.5, "value_type": "actual", "observation_qualifier": "exact", "unit": "USD M", "period": "Q2 2026"},
+      "normalization": {"applied": false, "steps": [], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": null
+    },
+    {
+      "kpi_id": "ASTS-KPI-07",
+      "status": "verified_match",
+      "candidate": {"last_value": 0, "value_type": "actual", "observation_qualifier": "exact", "unit": "USD M", "period": "quarterly"},
+      "source_check": {"source_ref": "ASTS_Q2_10Q", "source_class": "regulatory_filing", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Notes to financial statements, Revenue recognition", "evidence_excerpt": "Revenue for the SpaceMobile Service will be recognized over the life of the contract, beginning when the Company provides MNOs access to its satellite network. To date, the Company has not recognized any revenues from the SpaceMobile Service."},
+      "found": {"value": 0, "value_type": "actual", "observation_qualifier": "exact", "unit": "USD M", "period": "as of/through Q2 2026"},
+      "normalization": {"applied": false, "steps": [], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "Нуль подтверждён структурой раскрытия (явное заявление об отсутствии признанной выручки по SpaceMobile Service), а не отсутствием текста."
+    },
+    {
+      "kpi_id": "ASTS-KPI-08",
+      "status": "verified_match",
+      "candidate": {"last_value": 3.7, "value_type": "actual", "observation_qualifier": "lower_bound", "unit": "USD B", "period": "event_driven"},
+      "source_check": {"source_ref": "ASTS_Q2_RELEASE", "source_class": "issuer_ir_release", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Business/financial highlights bullet", "evidence_excerpt": "Over $3.7 billion in pro forma cash, cash equivalents, restricted cash as of June 30, 2026"},
+      "found": {"value": 3.7, "value_type": "actual", "observation_qualifier": "lower_bound", "unit": "USD B", "period": "as of 2026-06-30, pro forma for July 2026 financing"},
+      "normalization": {"applied": false, "steps": [], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "«Over $3.7 billion» подтверждает нижнюю границу буквально."
+    },
+    {
+      "kpi_id": "ASTS-KPI-09",
+      "status": "verified_match_with_normalization",
+      "candidate": {"last_value": 2.008854, "value_type": "actual", "observation_qualifier": "exact", "unit": "USD B/year", "period": "semiannual"},
+      "source_check": {"source_ref": "ASTS_Q2_10Q", "source_class": "regulatory_filing", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Condensed consolidated statements of cash flows; MD&A Liquidity and Capital Resources", "evidence_excerpt": "Net cash used in operating activities (145,212); Purchase of property and equipment (859,215). Cash used in operating activities was $145.2 million for the six months ended June 30, 2026."},
+      "found": {"value": 1.004427, "value_type": "actual", "observation_qualifier": "exact", "unit": "USD B", "period": "H1 2026 (six months ended 2026-06-30)", "formula_recomputed_value": 2.008854},
+      "normalization": {"applied": true, "steps": ["145,212 thousand + 859,215 thousand = 1,004,427 thousand = 1.004427 USD B (H1 sum)", "annualize: 2 x 1.004427 = 2.008854 USD B/year"], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "derived_fact: слагаемые подтверждены буквально в отчёте о движении денежных средств; пересчёт по формуле реестра совпал с last_value в допуске 0.1% (расхождение 0%)."
+    },
+    {
+      "kpi_id": "ASTS-KPI-10",
+      "status": "verified_match",
+      "candidate": {"last_value": 0.02, "value_type": "actual", "observation_qualifier": "upper_bound", "unit": "fraction", "period": "event_driven"},
+      "source_check": {"source_ref": "ASTS_Q2_RELEASE", "source_class": "issuer_ir_release", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Business/financial highlights bullet", "evidence_excerpt": "In July 2026, raised $1.150 billion of gross proceeds from a new 1.625% convertible senior notes offering, with an effective conversion price of $149.20 per share and effective dilution of less than 2%"},
+      "found": {"value": 0.02, "value_type": "actual", "observation_qualifier": "upper_bound", "unit": "fraction", "period": "July 2026 financing (2034 1.625% Convertible Notes)"},
+      "normalization": {"applied": true, "steps": ["less than 2% -> upper_bound 0.02 fraction"], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "«less than 2%» подтверждает верхнюю границу буквально; сравнивается как граница."
+    },
+    {
+      "kpi_id": "ASTS-KPI-11",
+      "status": "verified_match",
+      "candidate": {"last_value": 1, "value_type": "actual", "observation_qualifier": "exact", "unit": "binary", "period": "event_driven"},
+      "source_check": {"source_ref": "ASTS_Q2_10Q", "source_class": "regulatory_filing", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm", "allowed_by_policy": true, "technical_status": "accessible", "technical_error": null, "evidence_locator": "Item 2 MD&A, Overview/regulatory section", "evidence_excerpt": "We have received FCC authorization to deploy our 248 satellite network including operating in the low-band International Mobile Telecommunications terrestrial frequencies domestically and internationally, as well as Q/V band feeder links in the V band."},
+      "found": {"value": 1, "value_type": "actual", "observation_qualifier": "exact", "unit": "binary", "period": "as of 10-Q filing (2026-06-30 period, filed 2026-08-10)"},
+      "normalization": {"applied": true, "steps": ["direct authorization statement -> binary value=1 per registry formula (deривация в notes)"], "numeric_difference": 0, "relative_difference": 0},
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "Прямая формулировка регуляторного разрешения найдена буквально; деривация бинарного статуса из качественного первоисточника соответствует формуле реестра."
+    }
+  ],
+  "axis_items": [
+    {
+      "axis_id": "Constellation_Deployment",
+      "current_state": "D2",
+      "prior_snapshot": null,
+      "criteria": "in-orbit spacecraft >=10 and <25 AND >=3 spacecraft launched in trailing 90 days",
+      "criteria_provenance": "model_assumption",
+      "evidence_type": "quantitative",
+      "status": "state_supported",
+      "kpi_item_refs": ["ASTS-KPI-01", "ASTS-KPI-02"],
+      "source_evidence": [],
+      "criterion_checks": [
+        {"expression": "in-orbit spacecraft >=10 and <25", "result": true, "evidence_kpi_refs": ["ASTS-KPI-01"], "calculation": "13 in [10,25)", "notes": null},
+        {"expression": ">=3 spacecraft launched in trailing 90 days", "result": true, "evidence_kpi_refs": ["ASTS-KPI-02"], "calculation": "6 spacecraft launched within a 50-day window (KPI-02, period preserved literally); 6>=3, and a 50-day window is nested inside any 90-day trailing window, so the '>=3 in trailing 90 days' criterion atom is also satisfied by entailment", "notes": "Дозор не переобозначает период KPI-02 в 90 дней; критерий оси проверен через логическое вложение более узкого 50-дневного окна в более широкое 90-дневное."}
+      ],
+      "history_evaluation_ref": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": null
+    },
+    {
+      "axis_id": "Commercial_Contracting",
+      "current_state": "C3",
+      "prior_snapshot": null,
+      "criteria": "backlog >=$1.25B AND >=4 definitive major-market MNO agreements",
+      "criteria_provenance": "model_assumption",
+      "evidence_type": "mixed",
+      "status": "state_supported",
+      "kpi_item_refs": ["ASTS-KPI-04"],
+      "source_evidence": [
+        {"source_ref": "ASTS_Q2_10Q", "source_class": "regulatory_filing", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm", "technical_status": "accessible", "evidence_locator": "Item 2 MD&A, Overview", "evidence_excerpt": "We have entered into a space-based wireless connectivity agreement with AT&T... entered into a reseller agreement with...SatCo... an agreement with Vodafone...signing of a definitive commercial agreement with Verizon...ten-year commercial agreement with Saudi Telecom Company (STC)", "independent_source_identity": null, "notes": null}
+      ],
+      "criterion_checks": [
+        {"expression": "backlog >=$1.25B", "result": true, "evidence_kpi_refs": ["ASTS-KPI-04"], "calculation": "1.3 >= 1.25", "notes": null},
+        {"expression": ">=4 definitive major-market MNO agreements", "result": true, "evidence_kpi_refs": [], "calculation": "именованы 4 определённых коммерческих соглашения: AT&T, Verizon, Vodafone/SatCo, STC", "notes": "Качественный факт из 10-Q, не отдельный KPI; используется как первоисточник narrative evidence."}
+      ],
+      "history_evaluation_ref": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": null
+    },
+    {
+      "axis_id": "Service_Monetization",
+      "current_state": "M1",
+      "prior_snapshot": null,
+      "criteria": "company revenue >0 but SpaceMobile Service revenue = 0",
+      "criteria_provenance": "model_assumption",
+      "evidence_type": "quantitative",
+      "status": "state_supported",
+      "kpi_item_refs": ["ASTS-KPI-06", "ASTS-KPI-07"],
+      "source_evidence": [],
+      "criterion_checks": [
+        {"expression": "company revenue >0", "result": true, "evidence_kpi_refs": ["ASTS-KPI-06"], "calculation": "31.5 > 0", "notes": null},
+        {"expression": "SpaceMobile Service revenue = 0", "result": true, "evidence_kpi_refs": ["ASTS-KPI-07"], "calculation": "0 = 0", "notes": null}
+      ],
+      "history_evaluation_ref": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": null
+    },
+    {
+      "axis_id": "Regulatory_Spectrum",
+      "current_state": "R2",
+      "prior_snapshot": null,
+      "criteria": "FCC authorization for planned satellite network and commercial-service spectrum framework",
+      "criteria_provenance": "model_assumption",
+      "evidence_type": "qualitative_primary_source",
+      "status": "state_supported",
+      "kpi_item_refs": ["ASTS-KPI-11"],
+      "source_evidence": [
+        {"source_ref": "ASTS_Q2_10Q", "source_class": "regulatory_filing", "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm", "technical_status": "accessible", "evidence_locator": "Item 2 MD&A, Overview/regulatory section", "evidence_excerpt": "We have received FCC authorization to deploy our 248 satellite network including operating in the low-band International Mobile Telecommunications terrestrial frequencies domestically and internationally, as well as Q/V band feeder links in the V band.", "independent_source_identity": null, "notes": null}
+      ],
+      "criterion_checks": [
+        {"expression": "FCC authorization for planned satellite network and commercial-service spectrum framework granted, without multi-market broadening beyond U.S.", "result": true, "evidence_kpi_refs": ["ASTS-KPI-11"], "calculation": null, "notes": "Прямая цитата первоисточника подтверждает текущее состояние R2; деривация ASTS-KPI-11=1 согласуется с verification_rule states.yaml."}
+      ],
+      "history_evaluation_ref": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": null
+    },
+    {
+      "axis_id": "Funding_Dilution",
+      "current_state": "F2",
+      "prior_snapshot": null,
+      "criteria": "ratio >=1.0x and <2.0x AND latest financing effective dilution <=5%",
+      "criteria_provenance": "model_assumption",
+      "evidence_type": "quantitative",
+      "status": "state_supported",
+      "kpi_item_refs": ["ASTS-KPI-08", "ASTS-KPI-09", "ASTS-KPI-10"],
+      "source_evidence": [],
+      "criterion_checks": [
+        {"expression": "liquidity / annualized H1 OCF+PP&E cash use ratio >=1.0x and <2.0x", "result": true, "evidence_kpi_refs": ["ASTS-KPI-08", "ASTS-KPI-09"], "calculation": "3.7 / 2.008854 ~= 1.842x, in [1.0, 2.0)", "notes": null},
+        {"expression": "latest financing effective dilution <=5%", "result": true, "evidence_kpi_refs": ["ASTS-KPI-10"], "calculation": "0.02 <= 0.05", "notes": null}
+      ],
+      "history_evaluation_ref": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": null
+    }
+  ],
+  "event_items": [
+    {"trigger_id": "ASTS-E-01", "trigger_family": "E", "event_claim": "Constellation_Deployment переход D2->D3 (in-orbit spacecraft >=25)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "Известное ограничение v1.1: активный триггер-наблюдатель не сработал (13 in-orbit < 25), это не событие-опровержение, поэтому event_unconfirmed, не event_contradicted."},
+    {"trigger_id": "ASTS-E-02", "trigger_family": "E", "event_claim": "Constellation_Deployment переход D2->D1 (in-orbit <10 из-за отказов или >180 дней без запуска)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "Условие не выполнено (13 in-orbit; последний запуск BlueBird 8-13 в пределах 90 дней до отчёта); известное ограничение v1.1 — не event_contradicted."},
+    {"trigger_id": "ASTS-E-03", "trigger_family": "E", "event_claim": "Commercial_Contracting переход C3->C4 (backlog >=2B и покрытие >=2B подписчиков)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "Условие не выполнено (backlog 1.3B < 2B); известное ограничение v1.1 — не event_contradicted."},
+    {"trigger_id": "ASTS-E-04", "trigger_family": "E", "event_claim": "Commercial_Contracting переход C3->C2 (backlog <1.25B два квартала подряд)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "Условие не выполнено (backlog 1.3B >= 1.25B); известное ограничение v1.1 — не event_contradicted."},
+    {"trigger_id": "ASTS-E-05", "trigger_family": "E", "event_claim": "Service_Monetization переход M1->M2 (SpaceMobile Service revenue >0)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "Условие не выполнено (SpaceMobile Service revenue = 0 подтверждено); известное ограничение v1.1 — не event_contradicted."},
+    {"trigger_id": "ASTS-E-06", "trigger_family": "E", "event_claim": "Service_Monetization переход M2->M3 (SpaceMobile Service revenue >=$25M)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "Неприменимо: компания в M1, не в M2; условие не выполнено. Известное ограничение v1.1 — не event_contradicted."},
+    {"trigger_id": "ASTS-E-07", "trigger_family": "E", "event_claim": "Regulatory_Spectrum переход R2->R3 (одобрения в США плюс >=3 доп. крупных рынка)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "Условие не выполнено по текущим свидетельствам; известное ограничение v1.1 — не event_contradicted."},
+    {"trigger_id": "ASTS-E-08", "trigger_family": "E", "event_claim": "Regulatory_Spectrum переход R2->R1 (ASTS-KPI-11 меняется с 1 на 0)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "ASTS-KPI-11=1 подтверждён в этом отчёте, изменения на 0 нет; известное ограничение v1.1 — не event_contradicted."},
+    {"trigger_id": "ASTS-E-09", "trigger_family": "E", "event_claim": "Funding_Dilution переход F2->F3 (ratio >=2.0x AND dilution <=5%)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "Условие не выполнено (ratio ~1.842x < 2.0x); известное ограничение v1.1 — не event_contradicted."},
+    {"trigger_id": "ASTS-E-10", "trigger_family": "E", "event_claim": "Funding_Dilution переход F2->F1 (ratio <1.0x OR dilution >10%)", "event_date": null, "status": "event_unconfirmed", "primary_sources": [], "media_sources": [], "fact_only": true, "runtime_verified": false, "patch_required": false, "runtime_targets": [], "notes": "Условие не выполнено (ratio ~1.842x >= 1.0x; dilution 2% <= 10%); известное ограничение v1.1 — не event_contradicted."}
+  ],
+  "summary": {
+    "overall_status": "PASS_WITH_DECLARED_PENDING",
+    "counts": {
+      "verified_match": 9,
+      "verified_match_with_normalization": 2
+    },
+    "patch_required_kpis": [],
+    "technical_blocked_kpis": [],
+    "pending_kpis": [],
+    "qualifier_patch_suggested_kpis": ["ASTS-KPI-04"],
+    "axis_counts": {
+      "state_supported": 5
+    },
+    "event_counts": {
+      "event_unconfirmed": 10
+    },
+    "patch_required_axes": [],
+    "technical_blocked_axes": [],
+    "pending_axes": [],
+    "patch_required_events": [],
+    "technical_blocked_events": [],
+    "pending_events": ["ASTS-E-01", "ASTS-E-02", "ASTS-E-03", "ASTS-E-04", "ASTS-E-05", "ASTS-E-06", "ASTS-E-07", "ASTS-E-08", "ASTS-E-09", "ASTS-E-10"]
+  }
+}

@@ -1,0 +1,29 @@
+package: MC_v1_1_1_recalibration
+files:
+- file: Company_Conditional_Monte_Carlo_Specification_v1.1.1.md
+  sha256: 3d94ee14d75e50fecf16c48389f75694ec07888bec3b550940cbec89daffa8eb
+  bytes: 3593
+- file: IMMA_Naming_Patch_Planned.md
+  sha256: c07e39ae0dfd8c627c1dc047496161fecfe7350e81a915ea135a169aabe9eaf6
+  bytes: 760
+- file: Joint_Simulation_Layer_Rules_v1.1.md
+  sha256: 7940e82e1e66a1866d5687c14937e8e9acf1c32fe30d271b0579e40cd9776aaa
+  bytes: 3337
+- file: Joint_Simulation_Layer_Rules_v1.1.yaml
+  sha256: 43253cf51eda70b92c93ef0e7b9b0773808d496dbb35c7d76bd456a37fe9c59d
+  bytes: 3410
+- file: NBIS_Anti_Circularity_Note_v1.0.md
+  sha256: aff6795dd631743bbb419bfc830ad2f076a36a55eaff3826800a3896259ec1d5
+  bytes: 3581
+- file: NBIS_mc_calibration_v1.0.1.yaml
+  sha256: d50a20024515d95ddc0361fc894f846d72eb5cf5c1a9affe5c2822b73b9eee97
+  bytes: 25044
+- file: NVDA_mc_calibration_v1.0.1.yaml
+  sha256: 17b55c3aa12a7d420b1056295cc7a8d012e5d85c44dc1ff089b9d23b5bdf4665
+  bytes: 23622
+- file: Recalibration_v1.1.1_Notes.md
+  sha256: 0c89624a48cea9274758010f77b55e20e05bcda1dc9f5b4bd8d7de75bdc275df
+  bytes: 2515
+- file: SPCX_mc_calibration_v1.1.1.yaml
+  sha256: e7dc0847a6ec24f88cbad9da36ea47f4741e63b9f33199f5bdc1df9fee26ca90
+  bytes: 28251

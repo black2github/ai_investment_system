@@ -1,0 +1,665 @@
+schema_version: 1.0.1
+artifact: company_mc_calibration
+ticker: NBIS
+as_of: '2026-09-23'
+archetype: capital_intensive_transition
+calculation_engine_version: company_mc 2.3.0
+state_vector:
+  Demand_Monetization: N3
+  Unit_Economics: E3
+  Capacity_Secured: pending_verification
+  Capital_Intensity: K3
+  Funding_Liquidity: F2
+simulation:
+  paths: 500000
+  paths_meta:
+    provenance: model_assumption
+    rationale: Normative production path count.
+  seed: 20260920
+  seed_meta:
+    provenance: model_assumption
+    rationale: Fixed reproducibility seed carried from the SPCX normative MC lineage.
+  antithetic_variates: true
+  store_summary_quantiles:
+  - 0.01
+  - 0.05
+  - 0.1
+  - 0.25
+  - 0.5
+  - 0.75
+  - 0.9
+  - 0.95
+  - 0.99
+  store_summary_quantiles_meta:
+    provenance: model_assumption
+    rationale: Preserves the established system summary-quantile grid.
+  horizons_years:
+  - 3
+  - 5
+  - 8
+  horizons_years_meta:
+    provenance: model_assumption
+    rationale: System Current Thesis / Primary Optimization / Persistence horizons.
+revenue_model:
+  segments:
+    AI:
+      base_revenue_quarterly: 574900000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-08-12 | https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm
+      initial_growth:
+        distribution: triangular
+        min: 0.4
+        mode: 1.2
+        max: 2.2
+        provenance: model_assumption
+        rationale: 'Independent operating-evidence calibration, not price-implied: Q2 AI-cloud revenue was $574.9M (+514% YoY); ARR was $3.0B at June-end (+56% QoQ from $1.9B); company
+          disclosed >$40B customer commitments; roughly 70% of Q2 deals included prepayments covering 50-60% of associated capex; majority of Q2 deals were signed against late-2026 capacity
+          and contribute primarily to 2027 revenue; company guidance targets 5 GW contracted power by YE2026 and >1 GW/year deployment from 2027. Mode remains 120% from v1.0; v1.0.1
+          widens tails to 40-220% because disclosed operating evidence supports very high growth but does not identify a single forecast CAGR.'
+      long_run_growth_y8:
+        distribution: triangular
+        min: 0.05
+        mode: 0.22
+        max: 0.45
+        provenance: model_assumption
+        rationale: Long-run AI-infrastructure growth after capacity expansion matures.
+      growth_half_life_years: 2.5
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Hypergrowth decays over multiple commissioning cycles rather than one year.
+      latent_loading:
+        growth: 0.75
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: AI segment is strongly exposed to common demand/capacity drivers but retains company-specific execution risk.
+    Other:
+      base_revenue_quarterly: 7400000.0
+      base_revenue_quarterly_meta:
+        provenance: derived_fact
+        formula: Q2 total revenue 582.3M - AI-cloud revenue 574.9M = 7.4M.
+      initial_growth:
+        distribution: triangular
+        min: -0.3
+        mode: 0.15
+        max: 0.6
+        provenance: model_assumption
+        rationale: Residual non-AI businesses are small and volatile; calibration prevents them from dominating enterprise value.
+      long_run_growth_y8:
+        distribution: triangular
+        min: -0.02
+        mode: 0.08
+        max: 0.2
+        provenance: model_assumption
+        rationale: Mature residual-growth assumption for Avride/TripleTen/eliminations net.
+      growth_half_life_years: 2.0
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Small residual segment mean-reverts faster than core AI cloud.
+      latent_loading:
+        growth: 0.45
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Other businesses have lower exposure to the core AI common-growth factor.
+margin_model:
+  method: ocf_capex_decomposition
+  ocf_margin_nodes:
+    Y1:
+      distribution: triangular
+      min: 0.5
+      mode: 1.5
+      max: 2.6
+      provenance: model_assumption
+      rationale: Customer prepayments can keep OCF unusually high during the initial buildout; sharply below H1 2026 4.59x OCF/revenue.
+    Y2:
+      distribution: triangular
+      min: 0.25
+      mode: 0.75
+      max: 1.4
+      provenance: model_assumption
+      rationale: Prepayment tail persists but normalizes as revenue base scales.
+    Y3:
+      distribution: triangular
+      min: 0.2
+      mode: 0.5
+      max: 0.8
+      provenance: model_assumption
+      rationale: OCF becomes more operating-economics driven by Y3.
+    Y4:
+      distribution: triangular
+      min: 0.2
+      mode: 0.46
+      max: 0.7
+      provenance: model_assumption
+      rationale: OCF margin continues normalization with scaled recurring AI-cloud revenue.
+    Y5:
+      distribution: triangular
+      min: 0.18
+      mode: 0.44
+      max: 0.68
+      provenance: model_assumption
+      rationale: Mature-but-growth OCF margin; still benefits from advance customer economics.
+    Y8:
+      distribution: triangular
+      min: 0.15
+      mode: 0.4
+      max: 0.65
+      provenance: model_assumption
+      rationale: Long-run OCF normalization.
+  capex_revenue_nodes:
+    Y1:
+      distribution: triangular
+      min: 1.2
+      mode: 2.3
+      max: 4.0
+      provenance: model_assumption
+      rationale: K3 remains very capital intensive in Y1, but far below Q2 capex/revenue ~9.7x.
+    Y2:
+      distribution: triangular
+      min: 0.3
+      mode: 0.85
+      max: 1.8
+      provenance: model_assumption
+      rationale: Commissioning wave begins normalizing capex/revenue.
+    Y3:
+      distribution: triangular
+      min: 0.15
+      mode: 0.4
+      max: 0.8
+      provenance: model_assumption
+      rationale: Transition to positive FCF is expected only after substantial capex normalization.
+    Y4:
+      distribution: triangular
+      min: 0.1
+      mode: 0.28
+      max: 0.55
+      provenance: model_assumption
+      rationale: Scaled network remains reinvestment-heavy.
+    Y5:
+      distribution: triangular
+      min: 0.08
+      mode: 0.22
+      max: 0.45
+      provenance: model_assumption
+      rationale: Mature expansion still consumes meaningful capex.
+    Y8:
+      distribution: triangular
+      min: 0.05
+      mode: 0.15
+      max: 0.35
+      provenance: model_assumption
+      rationale: Long-run capital intensity remains above software-like models.
+valuation:
+  Y3:
+    basis: revenue_bridge
+    multiple:
+      distribution: triangular
+      min: 6.0
+      mode: 12.0
+      max: 20.0
+      provenance: model_assumption
+      rationale: Y3 remains bridge-dependent because FCF normalization is still an execution assumption.
+  Y5:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 18.0
+      mode: 28.0
+      max: 40.0
+      provenance: model_assumption
+      rationale: Aligned with NBIS Reverse Valuation terminal multiple range.
+  Y8:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 14.0
+      mode: 22.0
+      max: 32.0
+      provenance: model_assumption
+      rationale: Maturity compression by Y8.
+  negative_fcf_fallback:
+    basis: revenue_bridge
+    multiple:
+      distribution: triangular
+      min: 3.0
+      mode: 8.0
+      max: 15.0
+      provenance: model_assumption
+      rationale: Fallback when a path fails to reach positive horizon FCF.
+dependencies:
+  latent_factors:
+  - growth
+  - margin
+  - valuation
+  factor_correlations:
+    growth__margin: 0.45
+    growth__valuation: 0.3
+    margin__valuation: 0.35
+  factor_correlations_meta:
+    provenance: model_assumption
+    rationale: High growth/utilization is positively related to cash normalization; valuation remains only partly correlated.
+  default_loading: 0.7
+  default_loading_meta:
+    provenance: model_assumption
+    rationale: Strong shared AI-infrastructure factors with material idiosyncratic site/funding execution risk.
+market_path_model:
+  quarterly_log_price_noise:
+    annualized_sigma: 0.6
+    annualized_sigma_meta:
+      provenance: model_assumption
+      rationale: Young high-beta AI-infrastructure equity; path volatility used only for drawdown layer.
+  valuation_mean_reversion_half_life_years: 2.0
+  valuation_mean_reversion_half_life_years_meta:
+    provenance: model_assumption
+    rationale: Long-duration valuation dislocations mean-revert slowly.
+reverse_valuation_ref:
+  run_ref: 20260923T133421Z-reverse_valuation-ba01b6
+  implied_revenue_cagr_5y: 0.64303
+  implied_revenue_cagr_5y_meta:
+    provenance: derived_fact
+    formula: Authoritative reverse_valuation 1.2.0 run 20260923T133421Z-reverse_valuation-ba01b6.
+  discount_rate: 0.12
+  discount_rate_meta:
+    provenance: model_assumption
+    rationale: Inherited from NBIS Reverse Valuation calibration base case.
+robustness_tests:
+  Scenario_Robustness:
+    perturbations:
+      growth_modes_pp:
+      - -0.1
+      - 0.1
+      margin_nodes_pp:
+      - -0.05
+      - 0.05
+      terminal_multiple_pct:
+      - -0.2
+      - 0.2
+      correlation_rho:
+      - -0.15
+      - 0.15
+    perturbations_meta:
+      provenance: model_assumption
+      rationale: 'NBIS: canonical perturbation grid accepted for MC robustness v1.1.'
+    delta_tolerance: 0.1
+    delta_tolerance_meta:
+      provenance: model_assumption
+      rationale: 'NBIS: v1.1 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|.'
+joint_simulation:
+  layer_version: '1.0'
+  active_drivers:
+  - AI_COMPUTE_DEMAND
+  - HYPERSCALER_CAPEX
+  - ADVANCED_PACKAGING
+  - HBM_MEMORY
+  - CLOUD_SOFTWARE_DEMAND
+  - DATA_CENTER_POWER
+  - INTEREST_RATES
+  - CAPITAL_MARKETS
+  - TAIWAN_SUPPLY
+  - ACQUISITION_INTEGRATION
+  - AI_CLOUD_PRICING
+  - ELECTRIFICATION_GRID
+  - UTILITY_CAPEX
+  company_idiosyncratic_factors:
+  - id: NBIS_EXECUTION
+    distribution: standard_normal
+    persistence: 0.7
+    persistence_meta:
+      provenance: model_assumption
+      rationale: Site commissioning, contract conversion and capital deployment execution persist across adjacent quarters.
+  path_alignment:
+    use_global_path_id: true
+driver_parameter_mapping:
+- driver_id: AI_COMPUTE_DEMAND
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.016981
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: AI compute demand is the primary revenue-growth driver. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  - path: margin_model.ocf_margin_nodes.Y3
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.017143
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Higher utilization/demand improves cash generation by Y3. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.571429.
+  structural_support:
+  - path: revenue_model.segments.AI.initial_growth.mode
+    contribution: 0.12
+    meta:
+      provenance: model_assumption
+      rationale: N3 central growth embeds sustained AI-compute demand.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Failure links: NBIS-FM-01 AI_OVERBUILD; NBIS-FM-05 AI_CLOUD_CUSTOMER_FINANCING_STRESS. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not
+    a standalone full shock.'
+- driver_id: HYPERSCALER_CAPEX
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.00566
+    lag_quarters: 1
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: External hyperscaler/AI-lab capex is a demand signal but partly competes with self-build. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Dual channel; stochastic-only to avoid double counting AI_COMPUTE_DEMAND. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone
+    full shock.'
+- driver_id: ADVANCED_PACKAGING
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.004528
+    lag_quarters: 1
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Packaging availability gates accelerator deployment. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Failure link: NBIS-FM-03 TAIWAN_SUPPLY_DISRUPTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: HBM_MEMORY
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.004528
+    lag_quarters: 1
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: HBM availability gates GPU cluster commissioning. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Failure link: NBIS-FM-03 TAIWAN_SUPPLY_DISRUPTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: CLOUD_SOFTWARE_DEMAND
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.009057
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Cloud workload expansion supports utilization and AI-cloud revenue. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  structural_support:
+  - path: revenue_model.segments.AI.initial_growth.mode
+    contribution: 0.05
+    meta:
+      provenance: model_assumption
+      rationale: Central AI growth assumes continued cloud software/workload demand.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Demand channel; overlaps AI_OVERBUILD on downside. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: DATA_CENTER_POWER
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.011321
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Power availability gates delivery of contracted capacity. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  - path: margin_model.capex_revenue_nodes.Y1
+    transform: additive_pp
+    effect_per_plus_1sigma: -0.035
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Better power delivery reduces stranded/incomplete capex intensity. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.233333.
+  - path: margin_model.capex_revenue_nodes.Y2
+    transform: additive_pp
+    effect_per_plus_1sigma: -0.03
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Power commissioning improves capex/revenue normalization. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.300000.
+  structural_support:
+  - path: revenue_model.segments.AI.initial_growth.mode
+    contribution: 0.08
+    meta:
+      provenance: model_assumption
+      rationale: Central growth assumes timely site/power commissioning.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Failure link: NBIS-FM-02 DATA_CENTER_POWER_CONSTRAINT. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: INTEREST_RATES
+  material: true
+  stochastic_targets:
+  - path: valuation.Y5.multiple
+    transform: multiplicative_pct
+    effect_per_plus_1sigma: -0.06
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Higher rates compress long-duration valuation. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.750000.
+  - path: valuation.Y8.multiple
+    transform: multiplicative_pct
+    effect_per_plus_1sigma: -0.08
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Higher rates compress long-duration valuation.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: 1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Negative exposure; adverse direction is +1σ rates. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: CAPITAL_MARKETS
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.004528
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Funding availability supports capacity deployment. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  - path: valuation.Y5.multiple
+    transform: multiplicative_pct
+    effect_per_plus_1sigma: 0.06
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Funding/risk appetite influences terminal valuation. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.750000.
+  structural_support:
+  - path: revenue_model.segments.AI.initial_growth.mode
+    contribution: 0.04
+    meta:
+      provenance: model_assumption
+      rationale: Central expansion assumes continued access to financing/prepayment structures.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Failure link: NBIS-FM-04 CAPITAL_MARKETS_TIGHTENING. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: TAIWAN_SUPPLY
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.011321
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Accelerator supply availability gates capacity conversion. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  structural_support:
+  - path: revenue_model.segments.AI.initial_growth.mode
+    contribution: 0.07
+    meta:
+      provenance: model_assumption
+      rationale: Central growth assumes uninterrupted accelerator supply.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Failure link: NBIS-FM-03 TAIWAN_SUPPLY_DISRUPTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: ACQUISITION_INTEGRATION
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.Other.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.03
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Integration execution primarily affects non-core/residual businesses. Re-sized under v1.1.1 per-target variance budget; capped from 0.050000 to 0.030000.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Failure link: NBIS-FM-06 ACQUISITION_INTEGRATION_FAILURE. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: AI_CLOUD_PRICING
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.011321
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Price realization directly affects AI-cloud revenue growth. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  - path: margin_model.ocf_margin_nodes.Y3
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.022857
+    lag_quarters: 1
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Pricing affects operating cash conversion. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.571429.
+  structural_support:
+  - path: revenue_model.segments.AI.initial_growth.mode
+    contribution: 0.08
+    meta:
+      provenance: model_assumption
+      rationale: Central growth includes continued strong AI-cloud pricing.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Failure link: NBIS-FM-01 AI_OVERBUILD / pricing compression. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: ELECTRIFICATION_GRID
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.003396
+    lag_quarters: 2
+    decay_half_life_quarters: 10.0
+    meta:
+      provenance: model_assumption
+      rationale: Grid capacity expands feasible powered data-center capacity with a lag. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Upstream enabling factor. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+- driver_id: UTILITY_CAPEX
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AI.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.003396
+    lag_quarters: 2
+    decay_half_life_quarters: 10.0
+    meta:
+      provenance: model_assumption
+      rationale: Utility capex enables interconnect/generation capacity with a lag. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.113208.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under the accepted driver sign convention.
+  note: 'Upstream enabling factor. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'

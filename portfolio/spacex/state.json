@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-22T06:25:00Z",
+  "updated": "2026-09-23T15:00:00Z",
   "price": {
     "last": 150.88,
     "last_at": "2026-09-16",
@@ -158,6 +158,11 @@
       "timestamp": "2026-09-22T06:25:00Z",
       "kind": "calc",
       "summary": "Сравнительный прогон SPCX на company_mc 2.3.0 (run …-e169f2): совпадает с нормативным в пределах 0.6 п.п.; добавлены gap-метрики (RV_Growth_Gap +49.3 п.п., Price_Expectation_Gap 3.78×) и файл путей для будущего MPC. Перевод на v2 — решение владельца"
+    },
+    {
+      "timestamp": "2026-09-23T15:00:00Z",
+      "kind": "calc",
+      "summary": "Интеграция калибровок (23.09): mc_calibration_v1.1.2.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260923T143532Z-company_mc-0484ce. Прежний норматив SPCX conditional_mc …-861006 и сравнительный …-e169f2 — исторические"
     }
   ],
   "scenario_state": {
@@ -414,6 +419,41 @@
       },
       "paths_file": "portfolio/_runs/20260922T062152Z-company_mc-e169f2-paths.npz",
       "comparison_vs_normative": "CAGR5 −14.92 vs −14.86%; P(loss>30%) 0.963 vs 0.966; ES5 −0.736 vs −0.731; medE5 $897.2 vs $900.6 млрд — расхождения в пределах 0.6 п.п."
+    },
+    {
+      "run_id": "20260923T143532Z-company_mc-0484ce",
+      "model": "company_mc",
+      "version": "2.3.0",
+      "timestamp": "20260923T143532",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1 + v1.1.2 (Joint_Simulation_Layer_Rules_v1.1/v1.1.1)",
+      "calibration": "mc_calibration_v1.1.2.yaml",
+      "purpose": "нормативный прогон принятой калибровки (валидатор: схема v1.0.1, MC-G5-013 pass, дисперсия в ориентирах)",
+      "equity_value_0_b": 2039.5,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": -0.1931,
+        "median_CAGR_5Y": -0.134,
+        "median_CAGR_8Y": -0.0213,
+        "CAGR_5Y_q05_q95": [
+          -0.344,
+          0.099
+        ],
+        "P_2x_5Y": 0.023,
+        "P_loss_gt_30pct_5Y": 0.6816,
+        "P_loss_gt_50pct_5Y": 0.5134,
+        "ES5": -0.9126,
+        "median_equity_value_5Y_b": 993.3,
+        "RV_Growth_Gap": 0.4592,
+        "Price_Expectation_Gap": 3.4597,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          0.875
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260923T143532Z-company_mc-0484ce-paths.npz"
     }
   ]
 }

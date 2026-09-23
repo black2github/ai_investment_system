@@ -15,7 +15,7 @@ stages: [candidate, company_model, valuation, conditional_mc, mpc, optimizer, st
 pool:
   # --- prior Core-10 (portfolio/_portfolio.yaml → initial_portfolio_hypothesis; подтверждён владельцем 20.09) ---
   - {ticker: AVGO, exchange: NASDAQ, yahoo: AVGO,   currency: USD, sector_id: SEMICONDUCTORS,    origin: prior_core10, stage: candidate}
-  - {ticker: NVDA, exchange: NASDAQ, yahoo: NVDA,   currency: USD, sector_id: SEMICONDUCTORS,    origin: prior_core10, stage: company_model, folder: nvda, model_received: "2026-09-21", held: true, weight_nav: 0.2154, mc_archetype: mature_positive_margin, theme: AI}
+  - {ticker: NVDA, exchange: NASDAQ, yahoo: NVDA,   currency: USD, sector_id: SEMICONDUCTORS,    origin: prior_core10, stage: conditional_mc, folder: nvda, model_received: "2026-09-21", held: true, weight_nav: 0.2154, mc_archetype: mature_positive_margin, theme: AI}
   - {ticker: KLAC, exchange: NASDAQ, yahoo: KLAC,   currency: USD, sector_id: SEMICONDUCTORS,    origin: prior_core10, stage: candidate}
   - {ticker: ASML, exchange: NASDAQ, yahoo: ASML,   currency: USD, sector_id: SEMICONDUCTORS,    origin: prior_core10, stage: company_model, folder: asml, model_received: "2026-09-21", held: true, weight_nav: 0.028, mc_archetype: mature_positive_margin, theme: AI}
   - {ticker: SPCX, exchange: NASDAQ, yahoo: SPCX,   currency: USD, sector_id: SPACE,             origin: prior_core10, stage: conditional_mc, held: true, weight_nav: 0.0068, mc_archetype: capital_intensive_transition, theme: AI,
@@ -26,7 +26,7 @@ pool:
   - {ticker: CDNS, exchange: NASDAQ, yahoo: CDNS,   currency: USD, sector_id: SOFTWARE,          origin: prior_core10, stage: candidate,
      note: "парный эксперимент с SNPS"}
   - {ticker: MSFT, exchange: NASDAQ, yahoo: MSFT,   currency: USD, sector_id: SOFTWARE,          origin: prior_core10, stage: company_model, model_received: "2026-09-21", folder: msft, held: true, weight_nav: 0.0192, mc_archetype: mature_positive_margin, theme: AI}
-  - {ticker: NBIS, exchange: NASDAQ, yahoo: NBIS,   currency: USD, sector_id: AI_INFRASTRUCTURE, origin: prior_core10, stage: company_model, folder: nbis, model_received: "2026-09-21", held: true, weight_nav: 0.334, mc_archetype: capital_intensive_transition, theme: AI}
+  - {ticker: NBIS, exchange: NASDAQ, yahoo: NBIS,   currency: USD, sector_id: AI_INFRASTRUCTURE, origin: prior_core10, stage: conditional_mc, folder: nbis, model_received: "2026-09-21", held: true, weight_nav: 0.334, mc_archetype: capital_intensive_transition, theme: AI}
   # --- корзина «ИИ-инфраструктура» (онбординг 17.09, папки с тезисом/триггерами/дозором) ---
   - {ticker: ETN,  exchange: NYSE,   yahoo: ETN,    currency: USD, sector_id: AI_INFRASTRUCTURE, origin: aiinfra_basket, stage: company_model, model_received: "2026-09-21", folder: etn, held: true, weight_nav: 0.0118, mc_archetype: mature_positive_margin, theme: AI}
   - {ticker: SU,   exchange: EPA,    yahoo: SU.PA,  currency: EUR, sector_id: AI_INFRASTRUCTURE, origin: aiinfra_basket, stage: candidate, folder: su}

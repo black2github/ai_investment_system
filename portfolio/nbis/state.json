@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-22T21:04:00Z",
+  "updated": "2026-09-23T15:00:00Z",
   "price": {
     "last": 223.54,
     "last_at": "2026-09-18",
@@ -62,6 +62,11 @@
       "timestamp": "2026-09-22T21:04:00Z",
       "kind": "verification",
       "summary": "Второй живой прогон Dozor Verification Protocol v1.1 (гейт G8), run_id verify-NBIS-20260922T210122Z: приёмка v1.1 (axis_items + event_items). Итог PASS_WITH_DECLARED_PENDING. 11 KPI (4 verified_match, 6 verified_match_with_normalization включая новую норму по качественному различию у NBIS-KPI-05 approximate/exact, 1 not_found — NBIS-KPI-11). 5 осей: 4 state_supported (Demand_Monetization N3, Unit_Economics E3, Capital_Intensity K3, Funding_Liquidity F2), 1 state_pending_verification (Capacity_Secured, каноническое состояние уже pending — без патча). 2 события: NBIS-E-01 event_confirmed_primary (факт раскрытия выручки/ARR, переход не подтверждён числами), NBIS-E-06 event_unconfirmed (guidance повышен до 5 GW, условие снижения не выполнено — наблюдение продолжается). Отчёт: portfolio/nbis/_verify/verify-NBIS-20260922T210122Z.json."
+    },
+    {
+      "timestamp": "2026-09-23T15:00:00Z",
+      "kind": "calc",
+      "summary": "Интеграция калибровок (23.09): calibration_v1.0.yaml, mc_calibration_v1.0.2.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260923T133421Z-reverse_valuation-ba01b6, 20260923T143929Z-company_mc-28c1e0"
     }
   ],
   "scenario_state": {
@@ -390,7 +395,57 @@
     "as_of": "2026-09-22T21:01:22Z",
     "overall_status": "PASS_WITH_DECLARED_PENDING"
   },
-  "calc_runs": [],
+  "calc_runs": [
+    {
+      "run_id": "20260923T133421Z-reverse_valuation-ba01b6",
+      "model": "reverse_valuation 1.2.0",
+      "spec": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+      "calibration": "NBIS_calibration_v1.0",
+      "valuation_date": "2026-09-23",
+      "price": 236.12,
+      "shares_outstanding": 271855218,
+      "equity_value_b": 64.19,
+      "implied_revenue_cagr_5y": 0.643,
+      "terminal_value_share_of_pv": 1.004,
+      "model_stability": "model_fragile",
+      "note": "Первый нормативный RV-прогон; класс устойчивости по Reverse_Valuation_Rules_v1.1 §1 — model_fragile; при model_fragile Decision Request обязан содержать флаг риска модели и сетку чувствительности"
+    },
+    {
+      "run_id": "20260923T143929Z-company_mc-28c1e0",
+      "model": "company_mc",
+      "version": "2.3.0",
+      "timestamp": "20260923T143929",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1 + v1.1.2 (Joint_Simulation_Layer_Rules_v1.1/v1.1.1)",
+      "calibration": "mc_calibration_v1.0.2.yaml",
+      "purpose": "нормативный прогон принятой калибровки (валидатор: схема v1.0.1, MC-G5-013 pass, дисперсия в ориентирах)",
+      "equity_value_0_b": 64.2,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": 0.3609,
+        "median_CAGR_5Y": 0.2066,
+        "median_CAGR_8Y": 0.2663,
+        "CAGR_5Y_q05_q95": [
+          -0.156,
+          0.572
+        ],
+        "P_2x_5Y": 0.6031,
+        "P_loss_gt_30pct_5Y": 0.1045,
+        "P_loss_gt_50pct_5Y": 0.0636,
+        "ES5": -0.7506,
+        "median_equity_value_5Y_b": 164.1,
+        "RV_Growth_Gap": -0.0597,
+        "Price_Expectation_Gap": 0.6892,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          0.875
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260923T143929Z-company_mc-28c1e0-paths.npz"
+    }
+  ],
   "conviction": {
     "status": "active",
     "since": "2026-09-22",

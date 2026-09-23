@@ -1,0 +1,27 @@
+package: MC_v1_1_2_reissue
+checks:
+- 'SPCX_mc_calibration_v1.1.2.yaml: schema PASS'
+- 'NBIS_mc_calibration_v1.0.2.yaml: schema PASS'
+- 'NVDA_mc_calibration_v1.0.2.yaml: schema PASS'
+- 'SPCX: central modes unchanged PASS'
+- 'NBIS: central modes unchanged PASS'
+- 'NVDA: central modes unchanged PASS'
+files:
+- file: Company_Conditional_Monte_Carlo_Specification_v1.1.2.md
+  sha256: 041dee3e9e58d1327f993a3a1a0598a3a47adda936df127aaba54101c54ac18b
+  bytes: 3998
+- file: Joint_Simulation_Layer_Rules_v1.1.1.md
+  sha256: 72719920c70e6d9f1192e9ad2851fe8036080c11c01526a3f4498f5de3aefab7
+  bytes: 2929
+- file: NBIS_mc_calibration_v1.0.2.yaml
+  sha256: ff845208e55054e27e5233e102bc6792cfd08a7cde1ad54e37c85325ab81e932
+  bytes: 25934
+- file: NVDA_mc_calibration_v1.0.2.yaml
+  sha256: b4d5943556d796dd1dfcbbd8acf61caedd447380884b24fe5035250124ca6496
+  bytes: 24595
+- file: Reissue_v1.1.2_v1.0.2_Notes.md
+  sha256: f8537f0603b4b04f6d0e89520ef49e21a7de0a1d98d531c82f1473c17a06ef35
+  bytes: 1761
+- file: SPCX_mc_calibration_v1.1.2.yaml
+  sha256: f2432454acf85eeb18f65cfa29582a4608365e0e124a010514a55e3cca71979b
+  bytes: 29430

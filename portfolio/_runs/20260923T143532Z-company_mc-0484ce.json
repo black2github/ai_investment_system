@@ -1,0 +1,1557 @@
+{
+  "run_id": "20260923T143532Z-company_mc-0484ce",
+  "model": "company_mc",
+  "version": "2.3.0",
+  "seed": 20260920,
+  "inputs": {
+    "calibration": {
+      "schema_version": "1.0.1",
+      "artifact": "company_mc_calibration",
+      "ticker": "SPCX",
+      "as_of": "2026-09-23",
+      "archetype": "capital_intensive_transition",
+      "calculation_engine_version": "company_mc 2.3.0",
+      "state_vector": {
+        "AI": "A2",
+        "Starlink": "B2",
+        "Starship": "C1",
+        "Capital_Intensity": "D3"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed carried from the SPCX normative MC lineage."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Preserves the established system summary-quantile grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "System Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "AI": {
+            "base_revenue_quarterly": 2561000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "SEC Q2 2026 Exhibit 99.1 filed 2026-08-04 | https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.1,
+              "mode": 0.6,
+              "max": 1.5,
+              "provenance": "model_assumption",
+              "rationale": "v1.1.2 intrinsic-uncertainty widening; center 60% unchanged. Tails cover severe demand/capacity shortfall through faster conversion."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.0,
+              "mode": 0.25,
+              "max": 0.6,
+              "provenance": "model_assumption",
+              "rationale": "v1.1.2 intrinsic-uncertainty widening; center 25% unchanged."
+            },
+            "growth_half_life_years": 2.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Carried unchanged from SPCX MC v1.0."
+            },
+            "latent_loading": {
+              "growth": 0.7
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Translation of legacy AI/Connectivity/Space rank dependence into incomplete common-factor exposure."
+            }
+          },
+          "Connectivity": {
+            "base_revenue_quarterly": 4291000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "SEC Q2 2026 Exhibit 99.1 filed 2026-08-04 | https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.1,
+              "mode": 0.25,
+              "max": 0.7,
+              "provenance": "model_assumption",
+              "rationale": "v1.1.2 intrinsic-uncertainty widening; center 25% unchanged."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.0,
+              "mode": 0.12,
+              "max": 0.35,
+              "provenance": "model_assumption",
+              "rationale": "v1.1.2 intrinsic-uncertainty widening; center 12% unchanged."
+            },
+            "growth_half_life_years": 2.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Carried unchanged from SPCX MC v1.0."
+            },
+            "latent_loading": {
+              "growth": 0.43
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Approximate translation of legacy AI-growth/Connectivity-growth rho=0.30 with AI loading 0.70."
+            }
+          },
+          "Space": {
+            "base_revenue_quarterly": 962000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "SEC Q2 2026 Exhibit 99.1 filed 2026-08-04 | https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.2,
+              "mode": 0.18,
+              "max": 0.65,
+              "provenance": "model_assumption",
+              "rationale": "v1.1.2 intrinsic-uncertainty widening; center 18% unchanged; C1 remains current state."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.05,
+              "mode": 0.12,
+              "max": 0.4,
+              "provenance": "model_assumption",
+              "rationale": "v1.1.2 intrinsic-uncertainty widening; center 12% unchanged."
+            },
+            "growth_half_life_years": 3.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Carried unchanged from SPCX MC v1.0."
+            },
+            "latent_loading": {
+              "growth": 0.21
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Approximate translation of legacy AI-growth/Space-growth rho=0.15 with AI loading 0.70."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "direct_fcf_nodes",
+        "nodes": {
+          "Y1": {
+            "distribution": "triangular",
+            "min": -1.6,
+            "mode": -0.75,
+            "max": 0.05,
+            "provenance": "model_assumption",
+            "rationale": "v1.1.2 wider intrinsic D3 execution uncertainty; center unchanged."
+          },
+          "Y2": {
+            "distribution": "triangular",
+            "min": -0.7,
+            "mode": -0.15,
+            "max": 0.35,
+            "provenance": "model_assumption",
+            "rationale": "v1.1.2 wider intrinsic D3 execution uncertainty; center unchanged."
+          },
+          "Y3": {
+            "distribution": "triangular",
+            "min": -0.2,
+            "mode": 0.1,
+            "max": 0.4,
+            "provenance": "model_assumption",
+            "rationale": "v1.1.2 wider intrinsic D3 execution uncertainty; center unchanged."
+          },
+          "Y4_terminal_fraction": {
+            "distribution": "triangular",
+            "min": 0.2,
+            "mode": 0.7,
+            "max": 1.0,
+            "provenance": "model_assumption",
+            "rationale": "v1.1.2 wider normalization uncertainty; center unchanged."
+          },
+          "Y5_terminal_margin": {
+            "distribution": "triangular",
+            "min": 0.05,
+            "mode": 0.27,
+            "max": 0.5,
+            "provenance": "model_assumption",
+            "rationale": "v1.1.2 wider terminal-margin uncertainty; center 27% unchanged."
+          },
+          "Y8_terminal_margin": {
+            "rule": "y5_plus_normal",
+            "sigma": 0.08,
+            "sigma_meta": {
+              "provenance": "model_assumption",
+              "rationale": "v1.1.2 widened Y8 margin uncertainty; Y5/Y8 central margin anchor unchanged."
+            }
+          }
+        },
+        "monotonic": true
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 3.0,
+            "mode": 14.0,
+            "max": 32.0,
+            "provenance": "model_assumption",
+            "rationale": "v1.1.2 wider intrinsic valuation uncertainty at Y3; central multiple unchanged."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 12.0,
+            "mode": 32.0,
+            "max": 55.0,
+            "provenance": "model_assumption",
+            "rationale": "v1.1.2 wider intrinsic valuation uncertainty at Y5; central multiple unchanged."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 8.0,
+            "mode": 27.0,
+            "max": 48.0,
+            "provenance": "model_assumption",
+            "rationale": "v1.1.2 wider intrinsic valuation uncertainty at Y8; central multiple unchanged."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 2.0,
+            "mode": 14.0,
+            "max": 30.0,
+            "provenance": "model_assumption",
+            "rationale": "v1.1.2 wider fallback valuation uncertainty; center unchanged."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.45,
+          "growth__valuation": 0.2,
+          "margin__valuation": 0.35
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "v2 translation: growth-margin anchored to the strongest legacy growth/margin dependence; margin-valuation retains legacy terminal-margin/multiple rho=0.35; growth-valuation remains incomplete."
+        },
+        "default_loading": 0.7,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Common loading below 1 preserves idiosyncratic path dispersion and removes shared-rank 'permanent winner' behavior."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.55,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Carried unchanged from SPCX MC v1.0 market path."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 2.0,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Carried unchanged from SPCX MC v1.0 market path."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "20260920T183913Z-reverse_valuation-ab1fb7",
+        "implied_revenue_cagr_5y": 0.762964,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Authoritative reverse_valuation run 20260920T183913Z-reverse_valuation-ab1fb7 output."
+        },
+        "discount_rate": 0.11,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Accepted SPCX Reverse Valuation calibration base discount rate."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.06156151,
+              0.06156151
+            ],
+            "margin_nodes_pp": [
+              -0.02443216,
+              0.02443216
+            ],
+            "terminal_multiple_pct": [
+              -0.07003684,
+              0.07531142
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "local robustness v1.1.2: sigma_equiv=(Q84-Q16)/2; growth sigma=base-revenue-weighted RMS of segment initial_growth sigma_equiv; margin sigma=Y5 margin sigma_equiv (or sqrt(ocf^2+capex^2) for decomposition); multiple sigma=log-space sigma_equiv of Y5 multiple; local shift=0.25*sigma with ceilings 10pp growth, 5pp margin, 20% multiple; correlation remains ±0.15"
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "SPCX: v1.1 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "AI_COMPUTE_DEMAND",
+          "HYPERSCALER_CAPEX",
+          "ADVANCED_PACKAGING",
+          "HBM_MEMORY",
+          "CLOUD_SOFTWARE_DEMAND",
+          "DATA_CENTER_POWER",
+          "LAUNCH_ECONOMICS",
+          "SATELLITE_CONNECTIVITY",
+          "GOVERNMENT_DEFENSE",
+          "INTEREST_RATES",
+          "CAPITAL_MARKETS",
+          "TAIWAN_SUPPLY",
+          "AI_CLOUD_PRICING",
+          "ELECTRIFICATION_GRID",
+          "UTILITY_CAPEX",
+          "AEROSPACE_CYCLE",
+          "SPACE_REGULATION"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "SPCX_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.6,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Company execution idiosyncrasy across AI buildout, Starlink commercialization and launch operations."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.016364,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI compute demand directly shifts near-term AI-cloud growth. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            },
+            {
+              "path": "margin_model.nodes.Y3",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.00833313,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Demand/utilization improves the transition to positive FCF. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.666667. v1.1.2 re-sized from measured MC-G5-013 sigma 0.064 to design sigma 0.04."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth.mode",
+              "contribution": 0.1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "A2 central growth assumes persistent AI-compute demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure links: AI_OVERBUILD; AI_CLOUD_CUSTOMER_FINANCING_STRESS. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "HYPERSCALER_CAPEX",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.006818,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Hyperscaler/AI-lab capex is a demand signal but partly competes with self-build. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Dual channel; no structural support to avoid double-counting AI_COMPUTE_DEMAND. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "ADVANCED_PACKAGING",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.005455,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Packaging availability gates GPU deployment. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: TAIWAN_SUPPLY_DISRUPTION / component bottlenecks. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "HBM_MEMORY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.005455,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "HBM availability gates accelerator deployment. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: TAIWAN_SUPPLY_DISRUPTION / memory bottlenecks. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "CLOUD_SOFTWARE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.006818,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Cloud/software workload growth raises compute utilization. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Demand-side AI cloud channel. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "DATA_CENTER_POWER",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.010909,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Power/site availability gates commissioned compute. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            },
+            {
+              "path": "margin_model.nodes.Y2",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Better power delivery reduces stranded capex and helps FCF normalization."
+              }
+            },
+            {
+              "path": "margin_model.nodes.Y3",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.00833313,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Better utilization supports Y3 cash conversion. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.666667. v1.1.2 re-sized from measured MC-G5-013 sigma 0.064 to design sigma 0.04."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth.mode",
+              "contribution": 0.06,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central AI growth embeds timely power/site commissioning."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: DATA_CENTER_POWER_CONSTRAINT. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "LAUNCH_ECONOMICS",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Space.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02285714,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Launch economics directly shifts Space segment growth. Re-sized under v1.1.1 per-target variance budget; capped from 0.080000 to 0.040000. v1.1.2 re-sized from measured MC-G5-013 sigma 0.210 to design sigma 0.12."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.Space.initial_growth.mode",
+              "contribution": 0.05,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "C1 central case assumes continued Falcon/launch economics without crediting later Starship states."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure links: LAUNCH_VEHICLE_DEVELOPMENT_FAILURE; LAUNCH_OPERATIONS_FAILURE. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "SATELLITE_CONNECTIVITY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Connectivity.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Connectivity adoption/pricing shifts Starlink growth. Re-sized under v1.1.1 per-target variance budget; capped from 0.080000 to 0.030000."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.Connectivity.initial_growth.mode",
+              "contribution": 0.06,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "B2 central growth includes continued satellite-connectivity demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "GOVERNMENT_DEFENSE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Space.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02285714,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Government/defense programs support launch and Starshield-related growth. Re-sized under v1.1.1 per-target variance budget; capped from 0.050000 to 0.040000. v1.1.2 re-sized from measured MC-G5-013 sigma 0.210 to design sigma 0.12."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: GOVERNMENT_SPACE_BUDGET. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "INTEREST_RATES",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": -0.03845103,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates compress long-duration terminal valuation. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.857143. v1.1.2 re-sized from measured MC-G5-013 sigma 0.214 to design log-multiple sigma 0.12."
+              }
+            },
+            {
+              "path": "valuation.Y8.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": -0.08,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates compress long-duration terminal valuation."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Negative exposure; adverse direction is +1σ rates. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "CAPITAL_MARKETS",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004091,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Funding availability supports pace of capacity buildout. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": 0.02883869,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Risk-capital availability affects long-duration valuation. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.857143. v1.1.2 re-sized from measured MC-G5-013 sigma 0.214 to design log-multiple sigma 0.12."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure links: CAPITAL_MARKETS_TIGHTENING; CAPITAL_INTENSITY_OVERBUILD. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "TAIWAN_SUPPLY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.010909,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Accelerator/advanced-package availability affects compute commissioning. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth.mode",
+              "contribution": 0.05,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central buildout assumes continuing accelerator supply."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: TAIWAN_SUPPLY_DISRUPTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "AI_CLOUD_PRICING",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.009545,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Pricing realization affects AI-cloud revenue growth. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            },
+            {
+              "path": "margin_model.nodes.Y3",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.00833313,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Pricing realization affects cash-conversion path. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.666667. v1.1.2 re-sized from measured MC-G5-013 sigma 0.064 to design sigma 0.04."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: AI_OVERBUILD / pricing compression. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "ELECTRIFICATION_GRID",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004091,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Grid buildout expands feasible data-center power over a lag. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Upstream enabling driver; kept stochastic-only. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "UTILITY_CAPEX",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.AI.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004091,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Utility capex expands interconnect/generation capacity over a lag. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Upstream enabling driver; kept stochastic-only. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "AEROSPACE_CYCLE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Space.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02285714,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Aerospace launch/satellite cycle affects Space demand. Re-sized under v1.1.1 per-target variance budget; capped from 0.060000 to 0.040000. v1.1.2 re-sized from measured MC-G5-013 sigma 0.210 to design sigma 0.12."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure links overlap launch/government-space channels. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        },
+        {
+          "driver_id": "SPACE_REGULATION",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Space.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": -0.02285714,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Positive SPACE_REGULATION shock means more restrictive regulation in taxonomy semantics. Re-sized under v1.1.1 per-target variance budget; capped from -0.060000 to -0.040000. v1.1.2 re-sized from measured MC-G5-013 sigma 0.210 to design sigma 0.12."
+              }
+            },
+            {
+              "path": "valuation.Y3.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": -0.05,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Regulatory delay reduces near-horizon bridge valuation."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Negative exposure; adverse direction is +1σ restrictive regulation. Failure links: SPACE_REGULATORY_RANGE_DELAY; SPACE_REGULATORY_SPECTRUM_DELAY. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock."
+        }
+      ]
+    },
+    "equity_value_0": 2039484993090.4,
+    "joint_layer_spec": {
+      "version": "1.0",
+      "artifact": "joint_simulation_layer",
+      "as_of": "2026-09-21",
+      "status": "proposed_normative",
+      "scenario_interface": {
+        "scenario_engine_required_for_multiscenario": true,
+        "fallback_without_scenario_engine": {
+          "id": "BASE",
+          "probability": 1.0,
+          "driver_overrides": {},
+          "root_correlation_overrides": []
+        }
+      },
+      "root_factors": {
+        "distribution": "stationary_standard_normal_AR1",
+        "timestep": "quarterly",
+        "factors": {
+          "GLOBAL_GROWTH": {
+            "phi": 0.65
+          },
+          "AI_CAPEX_CYCLE": {
+            "phi": 0.75
+          },
+          "SEMI_SUPPLY_HEALTH": {
+            "phi": 0.55
+          },
+          "POWER_BUILDOUT": {
+            "phi": 0.8
+          },
+          "FINANCIAL_CONDITIONS": {
+            "phi": 0.6
+          },
+          "SPACE_GOVERNMENT_DEMAND": {
+            "phi": 0.75
+          },
+          "SPACE_REGULATORY_ACCESS": {
+            "phi": 0.7
+          },
+          "HEALTHCARE_DEMAND_ACCESS": {
+            "phi": 0.7
+          },
+          "CONSUMER_RISK_APPETITE": {
+            "phi": 0.55
+          },
+          "DIGITAL_PLATFORM_DEMAND": {
+            "phi": 0.6
+          },
+          "CHINA_MARKET_ACCESS": {
+            "phi": 0.7
+          }
+        },
+        "provenance": "model_assumption"
+      },
+      "root_correlation": {
+        "diagonal": 1.0,
+        "default_off_diagonal": 0.0,
+        "pair_overrides": {
+          "GLOBAL_GROWTH__AI_CAPEX_CYCLE": 0.35,
+          "GLOBAL_GROWTH__FINANCIAL_CONDITIONS": 0.35,
+          "GLOBAL_GROWTH__CONSUMER_RISK_APPETITE": 0.45,
+          "GLOBAL_GROWTH__DIGITAL_PLATFORM_DEMAND": 0.55,
+          "GLOBAL_GROWTH__HEALTHCARE_DEMAND_ACCESS": 0.1,
+          "GLOBAL_GROWTH__POWER_BUILDOUT": 0.25,
+          "GLOBAL_GROWTH__SEMI_SUPPLY_HEALTH": 0.15,
+          "GLOBAL_GROWTH__CHINA_MARKET_ACCESS": 0.1,
+          "AI_CAPEX_CYCLE__SEMI_SUPPLY_HEALTH": 0.3,
+          "AI_CAPEX_CYCLE__POWER_BUILDOUT": 0.45,
+          "AI_CAPEX_CYCLE__DIGITAL_PLATFORM_DEMAND": 0.3,
+          "AI_CAPEX_CYCLE__FINANCIAL_CONDITIONS": 0.2,
+          "SEMI_SUPPLY_HEALTH__CHINA_MARKET_ACCESS": 0.2,
+          "FINANCIAL_CONDITIONS__CONSUMER_RISK_APPETITE": 0.4,
+          "FINANCIAL_CONDITIONS__DIGITAL_PLATFORM_DEMAND": 0.2,
+          "FINANCIAL_CONDITIONS__CHINA_MARKET_ACCESS": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__GLOBAL_GROWTH": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__FINANCIAL_CONDITIONS": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__SPACE_REGULATORY_ACCESS": 0.1,
+          "SPACE_REGULATORY_ACCESS__GLOBAL_GROWTH": 0.05,
+          "HEALTHCARE_DEMAND_ACCESS__CONSUMER_RISK_APPETITE": 0.05
+        },
+        "provenance": "model_assumption",
+        "psd_checked_v1_0": true
+      },
+      "driver_generation": {
+        "formula": "standardize(sum(root_loading * root_factor) + idio_weight * epsilon_driver)",
+        "unspecified_driver_default": "idiosyncratic",
+        "mappings": {
+          "AI_COMPUTE_DEMAND": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.85,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "HYPERSCALER_CAPEX": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.8,
+              "FINANCIAL_CONDITIONS": 0.15
+            },
+            "idio_weight": 0.35
+          },
+          "SEMICONDUCTOR_WFE": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.5,
+              "GLOBAL_GROWTH": 0.3
+            },
+            "idio_weight": 0.45
+          },
+          "ADVANCED_PACKAGING": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.65,
+              "AI_CAPEX_CYCLE": 0.35
+            },
+            "idio_weight": 0.35
+          },
+          "HBM_MEMORY": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.55,
+              "AI_CAPEX_CYCLE": 0.45
+            },
+            "idio_weight": 0.35
+          },
+          "EDA_DESIGN_COMPLEXITY": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.4,
+              "DIGITAL_PLATFORM_DEMAND": 0.25
+            },
+            "idio_weight": 0.6
+          },
+          "CLOUD_SOFTWARE_DEMAND": {
+            "roots": {
+              "DIGITAL_PLATFORM_DEMAND": 0.75,
+              "GLOBAL_GROWTH": 0.25
+            },
+            "idio_weight": 0.35
+          },
+          "DATA_CENTER_POWER": {
+            "roots": {
+              "POWER_BUILDOUT": 0.75,
+              "AI_CAPEX_CYCLE": 0.3
+            },
+            "idio_weight": 0.35
+          },
+          "LAUNCH_ECONOMICS": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.25,
+              "SPACE_REGULATORY_ACCESS": 0.2
+            },
+            "idio_weight": 0.75
+          },
+          "SATELLITE_CONNECTIVITY": {
+            "roots": {
+              "GLOBAL_GROWTH": 0.25,
+              "SPACE_GOVERNMENT_DEMAND": 0.25
+            },
+            "idio_weight": 0.7
+          },
+          "GOVERNMENT_DEFENSE": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.8,
+              "GLOBAL_GROWTH": 0.1
+            },
+            "idio_weight": 0.35
+          },
+          "INTEREST_RATES": {
+            "roots": {
+              "FINANCIAL_CONDITIONS": -0.9
+            },
+            "idio_weight": 0.25
+          },
+          "CAPITAL_MARKETS": {
+            "roots": {
+              "FINANCIAL_CONDITIONS": 0.9
+            },
+            "idio_weight": 0.25
+          },
+          "CHINA_REVENUE": {
+            "roots": {
+              "CHINA_MARKET_ACCESS": 0.8,
+              "GLOBAL_GROWTH": 0.15
+            },
+            "idio_weight": 0.35
+          },
+          "TAIWAN_SUPPLY": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.9
+            },
+            "idio_weight": 0.25
+          },
+          "AI_CLOUD_PRICING": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.6
+            },
+            "idio_weight": 0.55
+          },
+          "HEALTHCARE_DEMAND": {
+            "roots": {
+              "HEALTHCARE_DEMAND_ACCESS": 0.8,
+              "GLOBAL_GROWTH": 0.1
+            },
+            "idio_weight": 0.4
+          },
+          "REIMBURSEMENT_PRICING": {
+            "roots": {
+              "HEALTHCARE_DEMAND_ACCESS": 0.6
+            },
+            "idio_weight": 0.6
+          },
+          "ELECTRIFICATION_GRID": {
+            "roots": {
+              "POWER_BUILDOUT": 0.75,
+              "GLOBAL_GROWTH": 0.15
+            },
+            "idio_weight": 0.4
+          },
+          "UTILITY_CAPEX": {
+            "roots": {
+              "POWER_BUILDOUT": 0.65,
+              "GLOBAL_GROWTH": 0.2,
+              "FINANCIAL_CONDITIONS": 0.15
+            },
+            "idio_weight": 0.4
+          },
+          "AEROSPACE_CYCLE": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.5,
+              "GLOBAL_GROWTH": 0.25
+            },
+            "idio_weight": 0.55
+          },
+          "CONSUMER_CREDIT": {
+            "roots": {
+              "CONSUMER_RISK_APPETITE": 0.8,
+              "FINANCIAL_CONDITIONS": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "CRYPTO_CYCLE": {
+            "roots": {
+              "CONSUMER_RISK_APPETITE": 0.55,
+              "FINANCIAL_CONDITIONS": 0.35
+            },
+            "idio_weight": 0.5
+          },
+          "DIGITAL_AD_DEMAND": {
+            "roots": {
+              "DIGITAL_PLATFORM_DEMAND": 0.7,
+              "CONSUMER_RISK_APPETITE": 0.2,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "SPACE_REGULATION": {
+            "roots": {
+              "SPACE_REGULATORY_ACCESS": -0.9
+            },
+            "idio_weight": 0.25
+          }
+        }
+      },
+      "company_calibration_required_sections": [
+        "joint_simulation",
+        "driver_parameter_mapping"
+      ],
+      "material_driver_rule": {
+        "any_of": [
+          "abs(driver_exposure_vector) == 2",
+          "terminal_value_sensitivity_share >= 0.10",
+          "one_sigma_driver_shift_changes_median_CAGR_5Y_by_at_least_0.01",
+          "driver participates in critical_or_high_failure_mode"
+        ],
+        "provenance": "model_assumption"
+      },
+      "joint_path_algorithm": [
+        "sample_scenario",
+        "generate_root_paths",
+        "apply_scenario_overrides",
+        "generate_standardized_driver_paths",
+        "map_drivers_to_company_parameters",
+        "add_company_idiosyncratic_shocks",
+        "run_company_models",
+        "store_relative_values_with_same_path_id"
+      ],
+      "validation": [
+        "root_matrix_psd",
+        "all_material_drivers_have_mapping",
+        "scenario_probabilities_sum_to_one",
+        "driver_long_run_variance_approximately_one",
+        "same_factor_path_for_all_companies",
+        "standalone_marginals_match_joint_marginals_within_tolerance",
+        "no_double_counting"
+      ]
+    },
+    "convergence_check": true,
+    "robustness": true,
+    "robustness_paths": 100000,
+    "store_paths": true
+  },
+  "outputs": {
+    "model_version": "2.3.0",
+    "paths_file": "/data/workspace-invest/portfolio/_runs/20260923T143532Z-company_mc-0484ce-paths.npz",
+    "spec_version": "MC_Calibration_Archetypes_v1.0+Rules_v1.1+Joint_Simulation_Layer_v1.0",
+    "ticker": "SPCX",
+    "archetype": "capital_intensive_transition",
+    "margin_method": "direct_fcf_nodes",
+    "adapted_from": null,
+    "state_vector": {
+      "AI": "A2",
+      "Starlink": "B2",
+      "Starship": "C1",
+      "Capital_Intensity": "D3"
+    },
+    "inputs_hash": "2621ac3209e07a14",
+    "seed": 20260920,
+    "paths": 500000,
+    "equity_value_0": 2039484993090.4,
+    "factor_correlation_psd_fixed": false,
+    "dependency_structure": "latent_factor_plus_idiosyncratic_shock (Archetypes §2.1); общий ранг не используется",
+    "joint_simulation": {
+      "layer_version": "1.0.0",
+      "global_seed": 20260920,
+      "active_drivers": [
+        "AI_COMPUTE_DEMAND",
+        "HYPERSCALER_CAPEX",
+        "ADVANCED_PACKAGING",
+        "HBM_MEMORY",
+        "CLOUD_SOFTWARE_DEMAND",
+        "DATA_CENTER_POWER",
+        "LAUNCH_ECONOMICS",
+        "SATELLITE_CONNECTIVITY",
+        "GOVERNMENT_DEFENSE",
+        "INTEREST_RATES",
+        "CAPITAL_MARKETS",
+        "TAIWAN_SUPPLY",
+        "AI_CLOUD_PRICING",
+        "ELECTRIFICATION_GRID",
+        "UTILITY_CAPEX",
+        "AEROSPACE_CYCLE",
+        "SPACE_REGULATION"
+      ],
+      "scenario": "BASE",
+      "adverse_driver_stress": [],
+      "knockout_applied": [],
+      "path_id_rule": "path_id = chunk_index*chunk + i; шоки по SeedSequence([global_seed, chunk_index])"
+    },
+    "base": {
+      "paths": 500000,
+      "return": {
+        "median_CAGR_3Y": -0.1931025148524092,
+        "median_CAGR_5Y": -0.1340055356204249,
+        "median_CAGR_8Y": -0.02129612817085713,
+        "P_2x_3Y": 0.000268,
+        "P_2x_5Y": 0.023046,
+        "P_2x_8Y": 0.207812,
+        "P_5x_5Y": 7.4e-05,
+        "P_5x_8Y": 0.041386,
+        "CAGR_5Y_quantiles": {
+          "0.01": -0.4201338177129513,
+          "0.05": -0.34420573954670225,
+          "0.1": -0.30031117163558413,
+          "0.25": -0.22358960856777488,
+          "0.5": -0.1340055356204249,
+          "0.75": -0.04036024008014638,
+          "0.9": 0.046425774174328534,
+          "0.95": 0.0989784775505787,
+          "0.99": 0.1938057788178508
+        },
+        "bridge_dependent": {
+          "Y3": true,
+          "Y5": false,
+          "Y8": true
+        }
+      },
+      "downside": {
+        "P_loss_gt_30pct_5Y": 0.681574,
+        "P_loss_gt_50pct_5Y": 0.513448,
+        "expected_shortfall_5pct_5Y": -0.9126455429108169,
+        "max_drawdown_5Y_quantiles": {
+          "0.05": -0.942431348114291,
+          "0.25": -0.8683063371413424,
+          "0.5": -0.7817489193217837,
+          "0.75": -0.6670044779007744,
+          "0.95": -0.4871002902883386
+        },
+        "max_drawdown_model_dependent": true
+      },
+      "scenario": {
+        "variance_within_state_CAGR_5Y": 0.0179783510257217,
+        "variance_between_state_scenarios": null,
+        "persistence_ratio": null,
+        "persistence_class": null,
+        "scenario_concentration": null
+      },
+      "valuation_basis_share": {
+        "Y3": {
+          "multiple": 0.0,
+          "revenue_bridge": 1.0,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.0
+        },
+        "Y5": {
+          "multiple": 1.0,
+          "revenue_bridge": 0.0,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.0
+        },
+        "Y8": {
+          "multiple": 0.989534,
+          "revenue_bridge": 0.0,
+          "negative_fcf_fallback": 0.010466,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.0
+        }
+      },
+      "gap_metrics": {
+        "median_revenue_CAGR_5Y": 0.3037662458357312,
+        "median_fcf_margin_Y5": 0.2726512111044964,
+        "RV_Growth_Gap": 0.4591977541642688,
+        "Price_Expectation_Gap": 3.4597069525105213,
+        "note": "диагностика (ответ LLM 21.09): без автоматического перехода оси Valuation"
+      },
+      "median_equity_value_5Y_b": 993.3358134038655,
+      "mapping_warnings": []
+    },
+    "convergence": {
+      "runs": {
+        "100000": {
+          "median_CAGR_5Y": -0.1339146566042927,
+          "ES5": -0.9127395175825103,
+          "P_loss_gt_30pct_5Y": 0.68103
+        },
+        "250000": {
+          "median_CAGR_5Y": -0.1338735949495624,
+          "ES5": -0.9124283913935867,
+          "P_loss_gt_30pct_5Y": 0.681976
+        },
+        "500000": {
+          "median_CAGR_5Y": -0.1340055356204249,
+          "ES5": -0.9126455429108169,
+          "P_loss_gt_30pct_5Y": 0.681574
+        }
+      },
+      "stable": true,
+      "tolerance": {
+        "median_CAGR_5Y": 0.005,
+        "ES5": 0.01,
+        "P_loss_gt_30pct_5Y": 0.01
+      }
+    },
+    "robustness": {
+      "runs": [
+        {
+          "perturbation": "growth_modes_pp",
+          "value": -0.06156151,
+          "median_CAGR_5Y": -0.1704476672835748,
+          "dP_2x_5Y": -0.011876000000000001,
+          "dP_loss_gt_30pct_5Y": 0.08883600000000003
+        },
+        {
+          "perturbation": "growth_modes_pp",
+          "value": 0.06156151,
+          "median_CAGR_5Y": -0.09727207100850632,
+          "dP_2x_5Y": 0.020543999999999996,
+          "dP_loss_gt_30pct_5Y": -0.10054399999999997
+        },
+        {
+          "perturbation": "margin_nodes_pp",
+          "value": -0.02443216,
+          "median_CAGR_5Y": -0.15070475467737943,
+          "dP_2x_5Y": -0.005016,
+          "dP_loss_gt_30pct_5Y": 0.03956599999999999
+        },
+        {
+          "perturbation": "margin_nodes_pp",
+          "value": 0.02443216,
+          "median_CAGR_5Y": -0.11810566718368526,
+          "dP_2x_5Y": 0.006584,
+          "dP_loss_gt_30pct_5Y": -0.03982399999999997
+        },
+        {
+          "perturbation": "terminal_multiple_pct",
+          "value": -0.07003684,
+          "median_CAGR_5Y": -0.14640111704540204,
+          "dP_2x_5Y": -0.005496000000000001,
+          "dP_loss_gt_30pct_5Y": 0.03339599999999998
+        },
+        {
+          "perturbation": "terminal_multiple_pct",
+          "value": 0.07531142,
+          "median_CAGR_5Y": -0.12124554290920064,
+          "dP_2x_5Y": 0.007434,
+          "dP_loss_gt_30pct_5Y": -0.03539400000000004
+        },
+        {
+          "perturbation": "correlation_rho",
+          "value": -0.15,
+          "median_CAGR_5Y": -0.1348249190046884,
+          "dP_2x_5Y": -0.005205999999999999,
+          "dP_loss_gt_30pct_5Y": 0.012116000000000016
+        },
+        {
+          "perturbation": "correlation_rho",
+          "value": 0.15,
+          "median_CAGR_5Y": -0.1329727036487987,
+          "dP_2x_5Y": 0.006113999999999998,
+          "dP_loss_gt_30pct_5Y": -0.011133999999999977
+        }
+      ],
+      "paths_per_run": 100000,
+      "same_sign_share": 1.0,
+      "within_delta_tolerance_share": 0.875,
+      "delta_tolerance": 0.1,
+      "pass": true,
+      "pass_rule": "v1.1: знак медианы CAGR 5Y сохранён в ≥75% прогонов И |ΔP(2x,5Y)|, |ΔP(loss>30%,5Y)| ≤ допуска в ≥75%"
+    }
+  },
+  "elapsed_ms": 197925.9,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "run_id": "20260923T133451Z-reverse_valuation-012879",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "NVDA",
+    "valuation_date": "2026-09-23",
+    "calibration": "NVDA_calibration_v1.0 (AI_Demand=D4, Gross_Margin=M3, Customer_Breadth=B4, Supply_Commitment=S2, China_Access=X2)",
+    "market": {
+      "price": 228.87,
+      "shares_outstanding": 24100000000,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+    },
+    "balance_sheet": {
+      "net_debt": -23220000000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 302970000000.0,
+      "current_fcf_margin": 0.3930284473984604,
+      "revenue_source": "FY2026 revenue 215,938M + H1 FY2027 177,837M - H1 FY2026 90,805M = 302,970M",
+      "source": "Company-defined H1 FY2027 FCF 69,895M / H1 revenue 177,837M"
+    },
+    "discounting": {
+      "discount_rate": 0.1,
+      "stress_rates": [
+        0.08,
+        0.13
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.3,
+        "base": 0.36,
+        "max": 0.42
+      },
+      "multiple_range": {
+        "min": 20.0,
+        "base": 25.0,
+        "max": 30.0
+      }
+    },
+    "margin_transition": {
+      "type": "mature_short_normalization",
+      "path": {
+        "1": {
+          "factor_of_terminal": 1.08
+        },
+        "2": {
+          "factor_of_terminal": 1.05
+        },
+        "3": {
+          "factor_of_terminal": 1.02
+        },
+        "4": "terminal",
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "AI_Demand": "D4",
+      "Gross_Margin": "M3",
+      "Customer_Breadth": "B4",
+      "Supply_Commitment": "S2",
+      "China_Access": "X2"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "8bbafaeb97101c3d",
+    "scenario_state": {
+      "AI_Demand": "D4",
+      "Gross_Margin": "M3",
+      "Customer_Breadth": "B4",
+      "Supply_Commitment": "S2",
+      "China_Access": "X2"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 5515767000000.0,
+      "enterprise_value": 5492547000000.0,
+      "terminal_fcf_margin": 0.36,
+      "terminal_multiple": 25.0,
+      "discount_rate": 0.1,
+      "current_fcf_margin": 0.3930284473984604,
+      "revenue_ttm": 302970000000.0,
+      "implied_revenue_cagr_5y": 0.2371,
+      "terminal_revenue": 877855370687.33,
+      "terminal_fcf": 316027933447.44,
+      "pv_interim_fcf": 610054944395.67,
+      "pv_terminal_value": 4905712063995.83,
+      "terminal_value_share_of_pv": 0.8894,
+      "control_cagr": 0.2371
+    },
+    "validation": {
+      "converged": true,
+      "residual": 8391.5068359375,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.3|multiple=20.0": 0.3405,
+        "margin=0.3|multiple=25.0": 0.2855,
+        "margin=0.3|multiple=30.0": 0.2419,
+        "margin=0.36|multiple=20.0": 0.2898,
+        "margin=0.36|multiple=25.0": 0.2371,
+        "margin=0.36|multiple=30.0": 0.1953,
+        "margin=0.42|multiple=20.0": 0.2482,
+        "margin=0.42|multiple=25.0": 0.1974,
+        "margin=0.42|multiple=30.0": 0.1571
+      },
+      "discount_rate_grid": {
+        "r=0.08": 0.2146,
+        "r=0.13": 0.2708
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "terminal_dependent",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": false
+    }
+  },
+  "elapsed_ms": 4.5,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

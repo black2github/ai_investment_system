@@ -1,0 +1,130 @@
+calibration_v1.0:
+  ticker: NVDA
+  as_of: '2026-09-23'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    AI_Demand: D4
+    Gross_Margin: M3
+    Customer_Breadth: B4
+    Supply_Commitment: S2
+    China_Access: X2
+  market:
+    price: 228.87
+    price_as_of: '2026-09-22'
+    price_source: https://finance.yahoo.com/quote/NVDA/
+    shares_outstanding: 24100000000
+    shares_as_of: '2026-08-21'
+    shares_observation_qualifier: approximate
+    shares_source: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm
+    equity_value: 5515767000000.0
+  balance_sheet:
+    cash_and_marketable_debt_securities: 56586000000.0
+    debt_short_term: 1000000000.0
+    debt_long_term: 32366000000.0
+    net_debt: -23220000000.0
+    as_of: '2026-07-26'
+    source: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm
+  base_period:
+    revenue_ttm: 302970000000.0
+    current_fcf_margin: 0.3930284473984604
+    revenue_formula: FY2026 revenue 215,938M + H1 FY2027 177,837M - H1 FY2026 90,805M = 302,970M
+    fcf_margin_formula: Company-defined H1 FY2027 FCF 69,895M / H1 revenue 177,837M
+  discount_rate:
+    base: 0.1
+    stress:
+      min: 0.08
+      max: 0.13
+  terminal_fcf_margin:
+    min: 0.3
+    base: 0.36
+    max: 0.42
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 20.0
+    base: 25.0
+    max: 30.0
+  margin_transition:
+    type: mature_short_normalization
+    path:
+      1:
+        factor_of_terminal: 1.08
+      2:
+        factor_of_terminal: 1.05
+      3:
+        factor_of_terminal: 1.02
+      4: terminal
+      5: terminal
+    critical_assumption:
+      linked_state: M3
+      description: Current high cash conversion normalizes gradually toward a still-premium mature terminal FCF margin.
+      falsification: Sustained gross-margin compression below M3 or materially weaker OCF/FCF conversion requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.08
+    - 0.1
+    - 0.13
+    terminal_fcf_margin:
+    - 0.3
+    - 0.36
+    - 0.42
+    terminal_fcf_multiple:
+    - 20.0
+    - 25.0
+    - 30.0
+  base_case:
+    discount_rate: 0.1
+    terminal_fcf_margin: 0.36
+    terminal_fcf_multiple: 25.0
+    margin_path:
+      Y0: 0.3930284473984604
+      Y1: 0.3888
+      Y2: 0.378
+      Y3: 0.3672
+      Y4: 0.36
+      Y5: 0.36
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-22 close | https://finance.yahoo.com/quote/NVDA/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-08-26 | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 228.87 * 24.1B shares; shares are rounded in 10-Q, therefore equity value is approximate
+    balance_sheet.cash_and_marketable_debt_securities:
+      provenance: verified_fact
+      source_ref: 2026-08-26 | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm
+    balance_sheet.debt_short_term:
+      provenance: verified_fact
+      source_ref: 2026-08-26 | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm
+    balance_sheet.debt_long_term:
+      provenance: verified_fact
+      source_ref: 2026-08-26 | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 1,000M + 32,366M - 56,586M = -23,220M
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: 215,938M + 177,837M - 90,805M = 302,970M
+      source_ref: 2026-02-25 | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm; 2026-08-26 | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: 69,895M / 177,837M = 0.393028
+      source_ref: 2026-08-26 | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm
+    discount_rate:
+      provenance: model_assumption
+      rationale: Mature, highly profitable mega-cap with material semiconductor cycle/geopolitical concentration risk.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Long-run cash conversion below current H1 level but still premium given software/platform economics and gross-margin structure.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Mature platform multiple with explicit normalization from hypergrowth; not fitted to current price.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Short mature normalization from current ~39.3% H1 FCF margin toward 36% base terminal margin.

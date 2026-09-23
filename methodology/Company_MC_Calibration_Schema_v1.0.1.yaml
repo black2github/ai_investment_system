@@ -1,0 +1,1293 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://ai-investment-system.local/schemas/company-mc-calibration/1.0.1
+title: Company MC Calibration Schema v1.0.1
+description: G5 validation schema for company_mc 2.3.0 calibration artifacts. v1.0.1 aligns PERT/truncated-normal parameter names with live dist_ppf.
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- ticker
+- as_of
+- archetype
+- calculation_engine_version
+- state_vector
+- simulation
+- revenue_model
+- valuation
+- dependencies
+- market_path_model
+- reverse_valuation_ref
+- robustness_tests
+- joint_simulation
+- driver_parameter_mapping
+properties:
+  schema_version:
+    const: 1.0.1
+  artifact:
+    const: company_mc_calibration
+  ticker:
+    type: string
+    minLength: 1
+  as_of:
+    type: string
+    format: date
+  archetype:
+    type: string
+    enum:
+    - mature_positive_margin
+    - capital_intensive_transition
+    - pre_service_or_milestone_driven
+  calculation_engine_version:
+    const: company_mc 2.3.0
+  state_vector:
+    type: object
+    minProperties: 1
+    additionalProperties:
+      type: string
+      minLength: 1
+  simulation:
+    $ref: '#/$defs/simulation'
+  revenue_model:
+    oneOf:
+    - $ref: '#/$defs/revenue_model_ab'
+    - $ref: '#/$defs/revenue_model_c'
+  margin_model:
+    oneOf:
+    - $ref: '#/$defs/margin_model_a'
+    - $ref: '#/$defs/margin_model_b_direct'
+    - $ref: '#/$defs/margin_model_b_ocf_capex'
+  valuation:
+    oneOf:
+    - $ref: '#/$defs/valuation_ab'
+    - $ref: '#/$defs/valuation_c'
+  dependencies:
+    $ref: '#/$defs/dependencies'
+  market_path_model:
+    $ref: '#/$defs/market_path_model'
+  reverse_valuation_ref:
+    $ref: '#/$defs/reverse_valuation_ref'
+  robustness_tests:
+    $ref: '#/$defs/robustness_tests'
+  joint_simulation:
+    $ref: '#/$defs/joint_simulation'
+  driver_parameter_mapping:
+    type: array
+    items:
+      $ref: '#/$defs/driver_mapping'
+  milestone_model:
+    $ref: '#/$defs/milestone_model'
+  cash_model:
+    $ref: '#/$defs/cash_model'
+$defs:
+  provenance_meta:
+    type: object
+    additionalProperties: false
+    required:
+    - provenance
+    properties:
+      provenance:
+        type: string
+        enum: &id001
+        - model_assumption
+        - verified_fact
+        - derived_fact
+        - owner_judgment
+      rationale:
+        type:
+        - string
+        - 'null'
+      source_ref:
+        type:
+        - string
+        - 'null'
+      formula:
+        type:
+        - string
+        - 'null'
+      owner_decision_ref:
+        type:
+        - string
+        - 'null'
+    allOf:
+    - if:
+        properties:
+          provenance:
+            const: model_assumption
+        required:
+        - provenance
+      then:
+        required:
+        - rationale
+        properties:
+          rationale:
+            type: string
+            minLength: 1
+    - if:
+        properties:
+          provenance:
+            const: verified_fact
+        required:
+        - provenance
+      then:
+        required:
+        - source_ref
+        properties:
+          source_ref:
+            type: string
+            minLength: 1
+    - if:
+        properties:
+          provenance:
+            const: derived_fact
+        required:
+        - provenance
+      then:
+        required:
+        - formula
+        properties:
+          formula:
+            type: string
+            minLength: 1
+    - if:
+        properties:
+          provenance:
+            const: owner_judgment
+        required:
+        - provenance
+      then:
+        required:
+        - owner_decision_ref
+        properties:
+          owner_decision_ref:
+            type: string
+            minLength: 1
+  distribution:
+    oneOf:
+    - type: object
+      additionalProperties: false
+      required:
+      - distribution
+      - min
+      - mode
+      - max
+      - provenance
+      properties:
+        distribution:
+          const: triangular
+        provenance: &id002
+          type: string
+          enum: *id001
+        rationale: &id003
+          type:
+          - string
+          - 'null'
+        source_ref: &id004
+          type:
+          - string
+          - 'null'
+        formula: &id005
+          type:
+          - string
+          - 'null'
+        owner_decision_ref: &id006
+          type:
+          - string
+          - 'null'
+        min:
+          type: number
+        mode:
+          type: number
+        max:
+          type: number
+    - type: object
+      additionalProperties: false
+      required:
+      - distribution
+      - min
+      - mode
+      - max
+      - provenance
+      properties:
+        distribution:
+          const: pert
+        provenance: *id002
+        rationale: *id003
+        source_ref: *id004
+        formula: *id005
+        owner_decision_ref: *id006
+        min:
+          type: number
+        mode:
+          type: number
+        max:
+          type: number
+        lambda:
+          type: number
+          exclusiveMinimum: 0
+          default: 4.0
+          description: PERT shape parameter; company_mc dist_ppf default is 4.0.
+    - type: object
+      additionalProperties: false
+      required:
+      - distribution
+      - mean
+      - sd
+      - provenance
+      properties:
+        distribution:
+          const: truncated_normal
+        provenance: *id002
+        rationale: *id003
+        source_ref: *id004
+        formula: *id005
+        owner_decision_ref: *id006
+        mean:
+          type: number
+        min:
+          type: number
+          description: Optional lower truncation bound; omitted means -infinity in engine.
+        max:
+          type: number
+          description: Optional upper truncation bound; omitted means +infinity in engine.
+        sd:
+          type: number
+          exclusiveMinimum: 0
+    - type: object
+      additionalProperties: false
+      required:
+      - distribution
+      - median
+      - sigma
+      - provenance
+      properties:
+        distribution:
+          const: lognormal
+        provenance: *id002
+        rationale: *id003
+        source_ref: *id004
+        formula: *id005
+        owner_decision_ref: *id006
+        median:
+          type: number
+          exclusiveMinimum: 0
+        sigma:
+          type: number
+          exclusiveMinimum: 0
+    - type: object
+      additionalProperties: false
+      required:
+      - distribution
+      - value
+      - provenance
+      properties:
+        distribution:
+          const: deterministic
+        provenance: *id002
+        rationale: *id003
+        source_ref: *id004
+        formula: *id005
+        owner_decision_ref: *id006
+        value:
+          type: number
+    allOf:
+    - if:
+        properties:
+          provenance:
+            const: model_assumption
+        required:
+        - provenance
+      then:
+        required:
+        - rationale
+        properties:
+          rationale:
+            type: string
+            minLength: 1
+    - if:
+        properties:
+          provenance:
+            const: verified_fact
+        required:
+        - provenance
+      then:
+        required:
+        - source_ref
+        properties:
+          source_ref:
+            type: string
+            minLength: 1
+    - if:
+        properties:
+          provenance:
+            const: derived_fact
+        required:
+        - provenance
+      then:
+        required:
+        - formula
+        properties:
+          formula:
+            type: string
+            minLength: 1
+    - if:
+        properties:
+          provenance:
+            const: owner_judgment
+        required:
+        - provenance
+      then:
+        required:
+        - owner_decision_ref
+        properties:
+          owner_decision_ref:
+            type: string
+            minLength: 1
+  y5_plus_normal_rule:
+    type: object
+    additionalProperties: false
+    required:
+    - rule
+    - sigma
+    - sigma_meta
+    properties:
+      rule:
+        const: y5_plus_normal
+      sigma:
+        type: number
+        exclusiveMinimum: 0
+      sigma_meta: &id007
+        $ref: '#/$defs/provenance_meta'
+  simulation:
+    type: object
+    additionalProperties: false
+    required:
+    - paths
+    - paths_meta
+    - seed
+    - seed_meta
+    - antithetic_variates
+    - store_summary_quantiles
+    - store_summary_quantiles_meta
+    - horizons_years
+    - horizons_years_meta
+    properties:
+      paths:
+        type: integer
+        minimum: 2
+      paths_meta: *id007
+      seed:
+        type: integer
+        minimum: 0
+      seed_meta: *id007
+      antithetic_variates:
+        type: boolean
+      store_summary_quantiles:
+        type: array
+        minItems: 1
+        uniqueItems: true
+        items:
+          type: number
+          exclusiveMinimum: 0
+          exclusiveMaximum: 1
+      store_summary_quantiles_meta: *id007
+      horizons_years:
+        type: array
+        const:
+        - 3
+        - 5
+        - 8
+      horizons_years_meta: *id007
+  ab_segment:
+    type: object
+    additionalProperties: false
+    required:
+    - base_revenue_quarterly
+    - base_revenue_quarterly_meta
+    - initial_growth
+    - long_run_growth_y8
+    - growth_half_life_years
+    - growth_half_life_years_meta
+    properties:
+      base_revenue_quarterly:
+        type: number
+        minimum: 0
+      base_revenue_quarterly_meta: *id007
+      initial_growth:
+        $ref: '#/$defs/distribution'
+      long_run_growth_y8:
+        $ref: '#/$defs/distribution'
+      growth_half_life_years:
+        type: number
+        exclusiveMinimum: 0
+      growth_half_life_years_meta: *id007
+      latent_loading:
+        type: object
+        additionalProperties: false
+        properties:
+          growth:
+            type: number
+            minimum: 0
+            maximum: 1
+      latent_loading_meta: *id007
+    allOf:
+    - if:
+        required:
+        - latent_loading
+      then:
+        required:
+        - latent_loading_meta
+  service_segment:
+    type: object
+    additionalProperties: false
+    required:
+    - initial_annual_revenue
+    - post_service_growth
+    - long_run_growth_y8
+    - growth_half_life_years
+    - growth_half_life_years_meta
+    properties:
+      initial_annual_revenue:
+        $ref: '#/$defs/distribution'
+      post_service_growth:
+        $ref: '#/$defs/distribution'
+      long_run_growth_y8:
+        $ref: '#/$defs/distribution'
+      growth_half_life_years:
+        type: number
+        exclusiveMinimum: 0
+      growth_half_life_years_meta: *id007
+  revenue_model_ab:
+    type: object
+    additionalProperties: false
+    required:
+    - segments
+    properties:
+      segments:
+        type: object
+        minProperties: 1
+        additionalProperties:
+          $ref: '#/$defs/ab_segment'
+  revenue_model_c:
+    type: object
+    additionalProperties: false
+    required:
+    - existing_segments
+    - service_segments
+    properties:
+      existing_segments:
+        type: object
+        additionalProperties:
+          $ref: '#/$defs/ab_segment'
+      service_segments:
+        type: object
+        minProperties: 1
+        additionalProperties:
+          $ref: '#/$defs/service_segment'
+  margin_model_a:
+    type: object
+    additionalProperties: false
+    required:
+    - method
+    - current_margin
+    - current_margin_meta
+    - terminal_margin_Y5
+    - terminal_margin_Y8
+    - half_life_years
+    - half_life_years_meta
+    - shock_sigma
+    - shock_sigma_meta
+    - shock_persistence
+    - shock_persistence_meta
+    - lower_bound
+    - lower_bound_meta
+    - upper_bound
+    - upper_bound_meta
+    properties:
+      method:
+        const: mean_reverting_positive_margin
+      current_margin:
+        type: number
+      current_margin_meta: *id007
+      terminal_margin_Y5:
+        $ref: '#/$defs/distribution'
+      terminal_margin_Y8:
+        oneOf:
+        - $ref: '#/$defs/distribution'
+        - $ref: '#/$defs/y5_plus_normal_rule'
+      half_life_years:
+        type: number
+        exclusiveMinimum: 0
+      half_life_years_meta: *id007
+      shock_sigma:
+        type: number
+        minimum: 0
+      shock_sigma_meta: *id007
+      shock_persistence:
+        type: number
+        minimum: -1
+        maximum: 1
+      shock_persistence_meta: *id007
+      lower_bound:
+        type: number
+      lower_bound_meta: *id007
+      upper_bound:
+        type: number
+      upper_bound_meta: *id007
+  margin_model_b_direct:
+    type: object
+    additionalProperties: false
+    required:
+    - method
+    - nodes
+    - monotonic
+    properties:
+      method:
+        const: direct_fcf_nodes
+      nodes:
+        type: object
+        additionalProperties: false
+        required:
+        - Y1
+        - Y2
+        - Y3
+        - Y4_terminal_fraction
+        - Y5_terminal_margin
+        - Y8_terminal_margin
+        properties:
+          Y1:
+            $ref: '#/$defs/distribution'
+          Y2:
+            $ref: '#/$defs/distribution'
+          Y3:
+            $ref: '#/$defs/distribution'
+          Y4_terminal_fraction:
+            $ref: '#/$defs/distribution'
+          Y5_terminal_margin:
+            $ref: '#/$defs/distribution'
+          Y8_terminal_margin:
+            oneOf:
+            - $ref: '#/$defs/distribution'
+            - $ref: '#/$defs/y5_plus_normal_rule'
+      monotonic:
+        const: true
+  margin_nodes_y1_y5_y8:
+    type: object
+    additionalProperties: false
+    required:
+    - Y1
+    - Y2
+    - Y3
+    - Y4
+    - Y5
+    - Y8
+    properties:
+      Y1:
+        $ref: '#/$defs/distribution'
+      Y2:
+        $ref: '#/$defs/distribution'
+      Y3:
+        $ref: '#/$defs/distribution'
+      Y4:
+        $ref: '#/$defs/distribution'
+      Y5:
+        $ref: '#/$defs/distribution'
+      Y8:
+        oneOf:
+        - $ref: '#/$defs/distribution'
+        - $ref: '#/$defs/y5_plus_normal_rule'
+  margin_model_b_ocf_capex:
+    type: object
+    additionalProperties: false
+    required:
+    - method
+    - ocf_margin_nodes
+    - capex_revenue_nodes
+    properties:
+      method:
+        const: ocf_capex_decomposition
+      ocf_margin_nodes:
+        $ref: '#/$defs/margin_nodes_y1_y5_y8'
+      capex_revenue_nodes:
+        $ref: '#/$defs/margin_nodes_y1_y5_y8'
+  horizon_valuation:
+    type: object
+    additionalProperties: false
+    required:
+    - basis
+    - multiple
+    properties:
+      basis:
+        type: string
+        enum:
+        - FCF_multiple
+        - revenue_bridge
+        - EBITDA_multiple
+      multiple:
+        $ref: '#/$defs/distribution'
+  valuation_ab:
+    type: object
+    additionalProperties: false
+    required:
+    - Y3
+    - Y5
+    - Y8
+    - negative_fcf_fallback
+    properties:
+      Y3:
+        $ref: '#/$defs/horizon_valuation'
+      Y5:
+        $ref: '#/$defs/horizon_valuation'
+      Y8:
+        $ref: '#/$defs/horizon_valuation'
+      negative_fcf_fallback:
+        type: object
+        additionalProperties: false
+        required:
+        - basis
+        - multiple
+        properties:
+          basis:
+            const: revenue_bridge
+          multiple:
+            $ref: '#/$defs/distribution'
+      ebitda_margin_over_fcf:
+        type: number
+      ebitda_margin_over_fcf_meta: *id007
+    allOf:
+    - if:
+        anyOf:
+        - properties:
+            Y3:
+              properties:
+                basis:
+                  const: EBITDA_multiple
+        - properties:
+            Y5:
+              properties:
+                basis:
+                  const: EBITDA_multiple
+        - properties:
+            Y8:
+              properties:
+                basis:
+                  const: EBITDA_multiple
+      then:
+        required:
+        - ebitda_margin_over_fcf
+        - ebitda_margin_over_fcf_meta
+  valuation_c:
+    type: object
+    additionalProperties: false
+    required:
+    - fcf_maturity_margin
+    - fcf_maturity_margin_meta
+    - multiple_fcf
+    - multiple_revenue_bridge
+    properties:
+      fcf_maturity_margin:
+        type: number
+      fcf_maturity_margin_meta: *id007
+      multiple_fcf:
+        $ref: '#/$defs/distribution'
+      multiple_revenue_bridge:
+        $ref: '#/$defs/distribution'
+  dependencies:
+    type: object
+    additionalProperties: false
+    required:
+    - latent_factors
+    - factor_correlations
+    - factor_correlations_meta
+    - default_loading
+    - default_loading_meta
+    properties:
+      latent_factors:
+        type: array
+        uniqueItems: true
+        minItems: 3
+        maxItems: 3
+        items:
+          type: string
+          enum:
+          - growth
+          - margin
+          - valuation
+        allOf:
+        - contains:
+            const: growth
+        - contains:
+            const: margin
+        - contains:
+            const: valuation
+      factor_correlations:
+        type: object
+        additionalProperties: false
+        required:
+        - growth__margin
+        - growth__valuation
+        - margin__valuation
+        properties:
+          growth__margin:
+            type: number
+            minimum: -1
+            maximum: 1
+          growth__valuation:
+            type: number
+            minimum: -1
+            maximum: 1
+          margin__valuation:
+            type: number
+            minimum: -1
+            maximum: 1
+      factor_correlations_meta: *id007
+      default_loading:
+        type: number
+        minimum: 0
+        maximum: 1
+      default_loading_meta: *id007
+  market_path_model:
+    type: object
+    additionalProperties: false
+    required:
+    - quarterly_log_price_noise
+    - valuation_mean_reversion_half_life_years
+    - valuation_mean_reversion_half_life_years_meta
+    properties:
+      quarterly_log_price_noise:
+        type: object
+        additionalProperties: false
+        required:
+        - annualized_sigma
+        - annualized_sigma_meta
+        properties:
+          annualized_sigma:
+            type: number
+            minimum: 0
+          annualized_sigma_meta: *id007
+      valuation_mean_reversion_half_life_years:
+        type: number
+        exclusiveMinimum: 0
+      valuation_mean_reversion_half_life_years_meta: *id007
+  reverse_valuation_ref:
+    type: object
+    additionalProperties: false
+    required:
+    - run_ref
+    - implied_revenue_cagr_5y
+    - implied_revenue_cagr_5y_meta
+    - discount_rate
+    - discount_rate_meta
+    properties:
+      run_ref:
+        type: string
+        minLength: 1
+      implied_revenue_cagr_5y:
+        type: number
+      implied_revenue_cagr_5y_meta: *id007
+      discount_rate:
+        type: number
+        minimum: 0
+      discount_rate_meta: *id007
+  robustness_tests:
+    type: object
+    additionalProperties: false
+    required:
+    - Scenario_Robustness
+    properties:
+      Scenario_Robustness:
+        type: object
+        additionalProperties: false
+        required:
+        - perturbations
+        - perturbations_meta
+        - delta_tolerance
+        - delta_tolerance_meta
+        properties:
+          perturbations:
+            type: object
+            additionalProperties: false
+            required:
+            - growth_modes_pp
+            - margin_nodes_pp
+            - terminal_multiple_pct
+            - correlation_rho
+            properties:
+              growth_modes_pp:
+                type: array
+                minItems: 2
+                maxItems: 2
+                items:
+                  type: number
+              margin_nodes_pp:
+                type: array
+                minItems: 2
+                maxItems: 2
+                items:
+                  type: number
+              terminal_multiple_pct:
+                type: array
+                minItems: 2
+                maxItems: 2
+                items:
+                  type: number
+              correlation_rho:
+                type: array
+                minItems: 2
+                maxItems: 2
+                items:
+                  type: number
+          perturbations_meta: *id007
+          delta_tolerance:
+            type: number
+            minimum: 0
+            maximum: 1
+          delta_tolerance_meta: *id007
+  joint_simulation:
+    type: object
+    additionalProperties: false
+    required:
+    - layer_version
+    - active_drivers
+    - company_idiosyncratic_factors
+    - path_alignment
+    properties:
+      layer_version:
+        const: '1.0'
+      active_drivers:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+          minLength: 1
+      company_idiosyncratic_factors:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - id
+          - distribution
+          - persistence
+          - persistence_meta
+          properties:
+            id:
+              type: string
+              minLength: 1
+            distribution:
+              const: standard_normal
+            persistence:
+              type: number
+              minimum: -1
+              maximum: 1
+            persistence_meta: *id007
+      path_alignment:
+        type: object
+        additionalProperties: false
+        required:
+        - use_global_path_id
+        properties:
+          use_global_path_id:
+            const: true
+  mapping_meta:
+    type: object
+    additionalProperties: false
+    required:
+    - provenance
+    properties:
+      provenance:
+        type: string
+        enum: *id001
+      rationale:
+        type:
+        - string
+        - 'null'
+      source_ref:
+        type:
+        - string
+        - 'null'
+      formula:
+        type:
+        - string
+        - 'null'
+      owner_decision_ref:
+        type:
+        - string
+        - 'null'
+    allOf:
+    - if:
+        properties:
+          provenance:
+            const: model_assumption
+      then:
+        required:
+        - rationale
+        properties:
+          rationale:
+            type: string
+            minLength: 1
+  stochastic_target:
+    type: object
+    additionalProperties: false
+    required:
+    - path
+    - transform
+    - effect_per_plus_1sigma
+    - lag_quarters
+    - decay_half_life_quarters
+    - meta
+    properties:
+      path:
+        type: string
+        pattern: ^(revenue_model\.segments\.[^.]+\.initial_growth|margin_model\.terminal_margin_Y5|margin_model\.terminal_margin_Y8|margin_model\.nodes\.(Y1|Y2|Y3|Y4_terminal_fraction|Y5_terminal_margin|Y8_terminal_margin)|margin_model\.ocf_margin_nodes\.(Y1|Y2|Y3|Y4|Y5|Y8)|margin_model\.capex_revenue_nodes\.(Y1|Y2|Y3|Y4|Y5|Y8)|valuation\.(Y3|Y5|Y8)\.multiple|valuation\.negative_fcf_fallback\.multiple|milestone_model\.milestones\.[^.]+\.(probability|timing)|revenue_model\.service_segments\.[^.]+\.post_service_growth|cash_model\.service_margin\.terminal_margin_Y5)$
+      transform:
+        type: string
+        enum:
+        - additive_pp
+        - multiplicative_pct
+        - log_multiplier
+        - probability_logit_shift
+        - timing_quarters_shift
+      effect_per_plus_1sigma:
+        type: number
+      lag_quarters:
+        type: integer
+        minimum: 0
+      decay_half_life_quarters:
+        type: number
+        exclusiveMinimum: 0
+      meta:
+        $ref: '#/$defs/mapping_meta'
+  structural_support:
+    type: object
+    additionalProperties: false
+    required:
+    - path
+    - contribution
+    - meta
+    properties:
+      path:
+        type: string
+        pattern: ^(revenue_model\.segments\.[^.]+\.(initial_growth|long_run_growth_y8)\.(min|mode|max|mean|median|value)|margin_model\.(nodes\.)?(Y1|Y2|Y3|Y4_terminal_fraction|Y5_terminal_margin|Y8_terminal_margin)\.(min|mode|max|mean|median|value)|margin_model\.(ocf_margin_nodes|capex_revenue_nodes)\.(Y1|Y2|Y3|Y4|Y5|Y8)\.(min|mode|max|mean|median|value)|valuation\.(Y3|Y5|Y8)\.multiple\.(min|mode|max|mean|median|value)|valuation\.negative_fcf_fallback\.multiple\.(min|mode|max|mean|median|value)|revenue_model\.service_segments\.[^.]+\.(post_service_growth|long_run_growth_y8)\.(min|mode|max|mean|median|value)|cash_model\.service_margin\.terminal_margin_Y5\.(min|mode|max|mean|median|value)|milestone_model\.milestones\.[^.]+\.probability)$
+      contribution:
+        type: number
+      meta:
+        $ref: '#/$defs/mapping_meta'
+  knockout_shift:
+    type: object
+    additionalProperties: false
+    required:
+    - path
+    - delta
+    - meta
+    properties:
+      path:
+        type: string
+        pattern: ^(revenue_model\.segments\.[^.]+\.(initial_growth|long_run_growth_y8)\.(min|mode|max|mean|median|value)|margin_model\.(nodes\.)?(Y1|Y2|Y3|Y4_terminal_fraction|Y5_terminal_margin|Y8_terminal_margin)\.(min|mode|max|mean|median|value)|margin_model\.(ocf_margin_nodes|capex_revenue_nodes)\.(Y1|Y2|Y3|Y4|Y5|Y8)\.(min|mode|max|mean|median|value)|valuation\.(Y3|Y5|Y8)\.multiple\.(min|mode|max|mean|median|value)|valuation\.negative_fcf_fallback\.multiple\.(min|mode|max|mean|median|value)|revenue_model\.service_segments\.[^.]+\.(post_service_growth|long_run_growth_y8)\.(min|mode|max|mean|median|value)|cash_model\.service_margin\.terminal_margin_Y5\.(min|mode|max|mean|median|value)|milestone_model\.milestones\.[^.]+\.probability)$
+      delta:
+        type: number
+      meta:
+        $ref: '#/$defs/mapping_meta'
+  driver_mapping:
+    type: object
+    additionalProperties: false
+    required:
+    - driver_id
+    - material
+    - stochastic_targets
+    - structural_support
+    - stability
+    properties:
+      driver_id:
+        type: string
+        minLength: 1
+      material:
+        type: boolean
+      stochastic_targets:
+        type: array
+        items:
+          $ref: '#/$defs/stochastic_target'
+      structural_support:
+        type: array
+        items:
+          $ref: '#/$defs/structural_support'
+      stability:
+        type: object
+        additionalProperties: false
+        required:
+        - knockout
+        - adverse_driver_stress
+        properties:
+          knockout:
+            oneOf:
+            - type: object
+              additionalProperties: false
+              required:
+              - mode
+              properties:
+                mode:
+                  const: not_applicable
+            - type: object
+              additionalProperties: false
+              required:
+              - mode
+              properties:
+                mode:
+                  const: remove_structural_support
+                shifts:
+                  type: array
+                  items:
+                    $ref: '#/$defs/knockout_shift'
+          adverse_driver_stress:
+            type: object
+            additionalProperties: false
+            required:
+            - driver_sigma
+            - meta
+            properties:
+              driver_sigma:
+                type: number
+              meta:
+                $ref: '#/$defs/mapping_meta'
+      note:
+        type:
+        - string
+        - 'null'
+  milestone_on_failure:
+    oneOf:
+    - type: object
+      additionalProperties: false
+      required:
+      - branch
+      properties:
+        branch:
+          const: terminal_failure
+    - type: object
+      additionalProperties: false
+      required:
+      - branch
+      - retry_probability
+      - retry_probability_meta
+      - retry_delay_quarters
+      - retry_delay_quarters_meta
+      properties:
+        branch:
+          const: delay_retry
+        retry_probability:
+          type: number
+          minimum: 0
+          maximum: 1
+        retry_probability_meta: *id007
+        retry_delay_quarters:
+          type: integer
+          minimum: 1
+        retry_delay_quarters_meta: *id007
+  milestone:
+    type: object
+    additionalProperties: false
+    required:
+    - id
+    - probability
+    - probability_meta
+    - requires
+    - timing
+    - value_uplift
+    - value_uplift_meta
+    - on_failure
+    properties:
+      id:
+        type: string
+        minLength: 1
+      probability:
+        type: number
+        minimum: 0
+        maximum: 1
+      probability_meta: *id007
+      requires:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+      timing:
+        $ref: '#/$defs/distribution'
+      value_uplift:
+        type: number
+        minimum: 0
+        maximum: 1
+      value_uplift_meta: *id007
+      on_failure:
+        $ref: '#/$defs/milestone_on_failure'
+  milestone_model:
+    type: object
+    additionalProperties: false
+    required:
+    - service_onset_milestone
+    - reference_value
+    - residual_on_failure
+    - residual_on_failure_meta
+    - milestones
+    properties:
+      service_onset_milestone:
+        type: string
+        minLength: 1
+      reference_value:
+        $ref: '#/$defs/distribution'
+      residual_on_failure:
+        type: number
+        minimum: 0
+        maximum: 1
+      residual_on_failure_meta: *id007
+      milestones:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/$defs/milestone'
+  cash_model:
+    type: object
+    additionalProperties: false
+    required:
+    - net_cash_0
+    - net_cash_0_meta
+    - pre_service_burn_quarterly
+    - dilution_penalty
+    - dilution_penalty_meta
+    - core_margin
+    - service_margin
+    properties:
+      net_cash_0:
+        type: number
+      net_cash_0_meta: *id007
+      pre_service_burn_quarterly:
+        $ref: '#/$defs/distribution'
+      dilution_penalty:
+        type: number
+        minimum: 0
+      dilution_penalty_meta: *id007
+      core_margin:
+        $ref: '#/$defs/distribution'
+      service_margin:
+        type: object
+        additionalProperties: false
+        required:
+        - current_margin_at_onset
+        - current_margin_at_onset_meta
+        - terminal_margin_Y5
+        - half_life_years
+        - half_life_years_meta
+        properties:
+          current_margin_at_onset:
+            type: number
+          current_margin_at_onset_meta: *id007
+          terminal_margin_Y5:
+            $ref: '#/$defs/distribution'
+          half_life_years:
+            type: number
+            exclusiveMinimum: 0
+          half_life_years_meta: *id007
+allOf:
+- if:
+    properties:
+      archetype:
+        const: mature_positive_margin
+    required:
+    - archetype
+  then:
+    properties:
+      revenue_model:
+        $ref: '#/$defs/revenue_model_ab'
+      margin_model:
+        $ref: '#/$defs/margin_model_a'
+      valuation:
+        $ref: '#/$defs/valuation_ab'
+    not:
+      anyOf:
+      - required:
+        - milestone_model
+      - required:
+        - cash_model
+    required:
+    - margin_model
+- if:
+    properties:
+      archetype:
+        const: capital_intensive_transition
+    required:
+    - archetype
+  then:
+    properties:
+      revenue_model:
+        $ref: '#/$defs/revenue_model_ab'
+      margin_model:
+        oneOf:
+        - $ref: '#/$defs/margin_model_b_direct'
+        - $ref: '#/$defs/margin_model_b_ocf_capex'
+      valuation:
+        $ref: '#/$defs/valuation_ab'
+    not:
+      anyOf:
+      - required:
+        - milestone_model
+      - required:
+        - cash_model
+    required:
+    - margin_model
+- if:
+    properties:
+      archetype:
+        const: pre_service_or_milestone_driven
+    required:
+    - archetype
+  then:
+    required:
+    - milestone_model
+    - cash_model
+    properties:
+      revenue_model:
+        $ref: '#/$defs/revenue_model_c'
+      valuation:
+        $ref: '#/$defs/valuation_c'
+    not:
+      required:
+      - margin_model
+x-g5-cross-rules:
+- id: MC-G5-001
+  rule: For every material driver in external mpc_inputs under material_driver_rule, one driver_parameter_mapping entry must exist. A native not_mapped waiver is NOT part of company_mc
+    2.3.0 calibration schema.
+- id: MC-G5-002
+  rule: Every driver_parameter_mapping[*].driver_id must appear in joint_simulation.active_drivers.
+- id: MC-G5-003
+  rule: Mapping path must be one of the engine-supported target families encoded by the schema pattern. Unknown targets such as capacity_model.* are rejected before engine run rather
+    than tolerated as mapping_warnings.
+- id: MC-G5-004
+  rule: probability_logit_shift is allowed only for milestone probability targets; timing_quarters_shift only for milestone timing; A/B growth/margin/multiple targets use additive_pp,
+    multiplicative_pct or log_multiplier.
+- id: MC-G5-005
+  rule: For archetype C, milestone IDs are unique; every requires ID exists; dependency graph is acyclic; service_onset_milestone exists.
+- id: MC-G5-006
+  rule: For archetype C, sum(value_uplift) <= 1.0.
+- id: MC-G5-007
+  rule: 'Distribution ordering: triangular/PERT min <= mode <= max; truncated_normal min < max and mean within [min,max].'
+- id: MC-G5-008
+  rule: margin lower_bound <= upper_bound; factor correlation matrix must be PSD or engine repair must be logged.
+- id: MC-G5-009
+  rule: Current market price/equity value must not be used to set growth, margin, milestone probability or valuation multiple calibration parameters; current value is only a runtime
+    input for returns/gap diagnostics.
+- id: MC-G5-010
+  rule: Nearest parameter metadata/provenance must cover every numerical calibration parameter. model_assumption requires non-empty rationale; verified_fact requires source_ref; derived_fact
+    requires formula; owner_judgment requires owner_decision_ref.
+- id: MC-G5-011
+  rule: For ocf_capex_decomposition, FCF margin is OCF margin minus capex/revenue at each simulated point; no second independent FCF-margin distribution is allowed.
+- id: MC-G5-012
+  rule: state_transition_effects is intentionally absent from v2 schema because company_mc 2.3.0 design/docstrings do not expose a native field for conditional transition deltas.
+x-engine-alignment:
+  engine: company_mc 2.3.0
+  joint_layer: 1.0.0
+  milestone_engine: milestone_mc / company_mc slice 3
+  validator_metadata: '*_meta, provenance, rationale/source_ref/formula/owner_decision_ref are G5 metadata; they do not change the numerical calculation.'
+  excluded_not_engine_native:
+  - state_transition_effects
+  - mapping_status:not_mapped
+  - categorical_transition_probability_shift
+  - capacity_model.* mapping targets
+  distribution_parameterization_note: 'Live company_mc 2.3.0 dist_ppf verified 2026-09-23: triangular=min/mode/max; pert=min/mode/max with optional lambda (default 4.0); truncated_normal=mean/sd
+    with optional min/max (default ±infinity); lognormal=median/sigma; deterministic=value.'

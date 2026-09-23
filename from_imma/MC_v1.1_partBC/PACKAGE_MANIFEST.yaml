@@ -1,0 +1,32 @@
+package: MC_v1_1_BC_Calibrations
+files:
+- file: Company_Conditional_Monte_Carlo_Specification_v1.1.md
+  sha256: 5cc7dbae2bc0dccecd26a45ae6dae59355fece8c86b83f3401153d3c5fb5d07a
+  bytes: 19029
+- file: Company_MC_Calibration_Schema_v1.0.1.yaml
+  sha256: b8878a3dd85c967d72b2b28b171715d4fa033bb2b33112ace7ecd12d51d834db
+  bytes: 33917
+- file: Company_MC_Calibration_Schema_v1.0.1_examples.yaml
+  sha256: a5212663b7b55d3a1ec3c3ab1c7cfc1fd3002e6c29f5b0989c19f8cf946728cd
+  bytes: 25117
+- file: MC_v1.1_Calibrations_BC_Notes.md
+  sha256: 1a44fd955f132314d0a0ab1a5c710c8c26f2a8d2e2ea1c7afe5cf25be8d6946d
+  bytes: 10173
+- file: NBIS_calibration_v1.0.yaml
+  sha256: 9eaf1c506456873d3671a185d770ad847a5ec1cbf55b9723399a7c700b951b0c
+  bytes: 4835
+- file: NBIS_mc_calibration_v1.0.yaml
+  sha256: 2d544e4c2f8d57711f696be1933c6e99e3f2a748b5cc83a70597df4477aeb733
+  bytes: 21560
+- file: NVDA_calibration_v1.0.yaml
+  sha256: d22aba2b9f75381a2fe168794d2d4d35a83f017cefcc33af7cd39e34111dc005
+  bytes: 4870
+- file: NVDA_mc_calibration_v1.0.yaml
+  sha256: 1dd36def31a79b222200b5eb8401e7d5e70ae635521f3a0790f08e6c3f4a3914
+  bytes: 20590
+- file: README.md
+  sha256: 8a9d5699ec457ecd32b7bbc15ffc5337582b0aa65aa20334bdefcc89d3a11d7a
+  bytes: 1016
+- file: SPCX_mc_calibration_v1.1.yaml
+  sha256: 855f2813c250e4b56c33661e89d8f3affc8398c37cc51644167c520c3cf2c9ee
+  bytes: 24470

@@ -1,19 +1,20 @@
-version: 1.2.0
+version: 1.2.1
 artifact: dozor_verification_protocol
-id: Dozor_Verification_Protocol_v1.2
+id: Dozor_Verification_Protocol_v1.2.1
 as_of: '2026-09-23'
-status: proposed_normative
-supersedes: Dozor_Verification_Protocol_v1.1
-backward_compatibility: Report schema accepts protocol_version 1.0.0, 1.1.0 and 1.2.0; v1.2-only authoring rules do not retroactively invalidate old semantics.
+status: proposed_consolidated_normative
+supersedes: Dozor_Verification_Protocol_v1.2
+backward_compatibility: 'Consolidated editorial revision. Report contract is unchanged from v1.2: protocol_version 1.0.0, 1.1.0 and 1.2.0 remain valid.'
 gate: G8_SOURCE_VERIFICATION
 source_policy_ref: Source_Policy_v1.0
 artifact_schema_ref: Company_Artifact_Schema_v1.0.5
 storage:
   report_path: portfolio/<ticker>/_verify/<run_id>.json
   immutable: true
-  report_as_of: date-time of verification run
-  source_as_of: date of source publication/filing
-  source_recorded_at: optional date-time when source registry record was written
+  state_json_contains_only_summary_and_runtime_links: true
+  report_as_of_semantics: date-time moment of verification run
+  source_as_of_semantics: date of document publication/filing
+  source_recorded_at_semantics: optional date-time when source record/link was written to workspace
 status_registry:
   kpi:
     verified_match:
@@ -21,108 +22,129 @@ status_registry:
       runtime_verified: true
       gate_effect: pass
       default_patch_required: false
+      semantics: Source supports value/type/qualifier/unit/period without material normalization.
     verified_match_with_normalization:
       label_ru: подтверждено с нормализацией
       runtime_verified: true
       gate_effect: pass
       default_patch_required: false
+      semantics: Source supports the observation after allowed unit/scale/rounding or qualifier normalization.
     mismatch_value:
       label_ru: расхождение значения
       runtime_verified: false
       gate_effect: PATCH_REQUIRED
       default_patch_required: true
+      semantics: Verified source value differs beyond allowed tolerance.
     mismatch_period:
       label_ru: расхождение периода
       runtime_verified: false
       gate_effect: PATCH_REQUIRED
       default_patch_required: true
+      semantics: Value may match, but source period/window semantics differ from candidate.
     mismatch_semantics:
       label_ru: расхождение смысла
       runtime_verified: false
       gate_effect: PATCH_REQUIRED
       default_patch_required: true
+      semantics: Economic/source meaning differs, including company guidance recorded as actual.
     formula_mismatch:
       label_ru: формула не сходится
       runtime_verified: false
       gate_effect: PATCH_REQUIRED
       default_patch_required: true
+      semantics: Derived formula cannot be reproduced from verified inputs within tolerance.
     source_not_allowed:
       label_ru: источник не допускается
       runtime_verified: false
       gate_effect: PATCH_REQUIRED
       default_patch_required: true
+      semantics: Evidence source is not allowed for this fact under Source Policy v1.0.
     source_unavailable_technical:
       label_ru: источник недоступен технически
       runtime_verified: null
       gate_effect: BLOCKED_TECHNICAL
       default_patch_required: false
+      semantics: Required evidence could not be checked due to technical access/fetch/tool failure after required retries.
     source_conflict:
       label_ru: источники противоречат
       runtime_verified: null
       gate_effect: BLOCKED_SOURCE_CONFLICT
       default_patch_required: false
+      semantics: Allowed authoritative sources materially conflict and cannot be resolved by document/period identity.
     not_disclosed:
       label_ru: компания не раскрывает
       runtime_verified: true
       gate_effect: conditional_pass
       default_patch_required: false
+      semantics: Non-disclosure is established. Pass only when candidate is null + not_separately_disclosed.
     not_found:
       label_ru: в источнике не найдено
       runtime_verified: null
       gate_effect: conditional_pending_or_patch
       default_patch_required: false
+      semantics: Complete accessible reviewed source set does not contain the requested fact; this does not prove non-disclosure.
   axis:
     state_supported:
       label_ru: текущее состояние подтверждено
       runtime_verified: true
       gate_effect: pass
       default_patch_required: false
+      semantics: Verified KPI/qualitative evidence supports the currently recorded axis state under its criterion.
     state_not_supported:
       label_ru: текущее состояние не подтверждается
       runtime_verified: false
       gate_effect: PATCH_REQUIRED
       default_patch_required: true
+      semantics: Verified evidence contradicts or fails the criterion for the recorded concrete current state.
     state_pending_verification:
       label_ru: состояние ожидает подтверждения
       runtime_verified: false
       gate_effect: conditional_pending_or_patch
       default_patch_required: false
+      semantics: Evidence is insufficient to assign/confirm a concrete state. No technical source failure is implied.
     evidence_unavailable_technical:
       label_ru: свидетельство недоступно технически
       runtime_verified: null
       gate_effect: BLOCKED_TECHNICAL
       default_patch_required: false
+      semantics: Axis evidence cannot be checked because required source is technically unavailable.
     evidence_conflict:
       label_ru: свидетельства по состоянию противоречат
       runtime_verified: null
       gate_effect: BLOCKED_SOURCE_CONFLICT
       default_patch_required: false
+      semantics: Allowed evidence sources/KPI observations materially conflict, preventing state verification.
   event:
     event_confirmed_primary:
       label_ru: событие подтверждено первоисточником
       runtime_verified: true
       gate_effect: pass
       default_patch_required: false
+      semantics: Event fact is confirmed by an allowed primary source.
     event_confirmed_two_media:
       label_ru: событие подтверждено двумя СМИ первого ряда
       runtime_verified: true
       gate_effect: pass
       default_patch_required: false
+      semantics: No accessible primary source is available; event is independently confirmed by two approved first-tier media sources.
     event_unconfirmed:
       label_ru: событие не подтверждено
       runtime_verified: false
       gate_effect: pending
       default_patch_required: false
+      semantics: Available evidence is insufficient to confirm the claimed event.
     event_contradicted:
       label_ru: событие опровергнуто
       runtime_verified: false
       gate_effect: PATCH_REQUIRED
       default_patch_required: true
+      semantics: Authoritative evidence materially contradicts the claimed event.
     source_unavailable_technical:
       label_ru: источник недоступен технически
       runtime_verified: null
       gate_effect: BLOCKED_TECHNICAL
       default_patch_required: false
+      semantics: Event evidence could not be checked due to technical failure after required retries/fallbacks.
     condition_not_met:
       label_ru: условие не выполнено
       runtime_verified: false
@@ -178,14 +200,35 @@ transition_checks:
     rule: Dozor verifies observations; deterministic evaluator computes N consecutive periods. If current period alone falsifies an AND/consecutive predicate, result may be not_met without
       history.
 event_verification:
+  primary_rule: Allowed primary source -> event_confirmed_primary.
+  two_media_rule: If no accessible primary source exists, two independent approved first-tier media identities are required for event_confirmed_two_media.
+  independence_rule: Syndicated copies, mirrors or articles relying on the same single report do not count as two independent media sources.
+  runtime_write_rules:
+    confirmed_event: May create/link events_reported runtime record with verification_run_id.
+    fired: Dozor G8 never creates or executes fired. A separate trigger-condition evaluator/owner workflow may create fired, which may then carry the same verification_run_id for the
+      underlying fact.
+    event_unconfirmed: If no event had been canonically reported/fired, leave pending; if an existing runtime event is asserted as confirmed, request patch/review.
+    event_contradicted: runtime_verified=false and PATCH_REQUIRED.
+    source_unavailable_technical: runtime_verified=null and BLOCKED_TECHNICAL.
   v1_2_event_scope: 'discrete_event only: launch, contract, regulatory decision, financing, acquisition, incident or other one-off fact.'
   condition_not_met:
     use: Compatibility/status option when an event-style monitored condition is positively false and there is no asserted event to patch.
     preferred_v1_2: For KPI threshold transitions use transition_checks.result=not_met instead.
-  primary_rule: Allowed primary source -> event_confirmed_primary.
-  two_media_rule: If no accessible primary source exists, two independent approved first-tier media identities are required for event_confirmed_two_media.
   fact_only: Event verification does not equal trigger firing, state transition or trade decision.
 axis_verification:
+  inputs:
+  - states.yaml current state and its criteria/criteria_provenance
+  - scenario_state runtime current state
+  - KPI items verified in the same report
+  - primary-source qualitative evidence where evidence_type=qualitative_primary_source
+  - optional deterministic history_evaluation_ref for N-period criteria
+  legacy_rule: scenario_state[axis].verified=true without verification_run_id is legacy_unlinked and is not protocol verification.
+  runtime_write_rules:
+    state_supported: write verified=true and verification_run_id=run_id
+    state_not_supported: write verified=false and verification_run_id=run_id; PATCH_REQUIRED
+    state_pending_verification: write verified=false and verification_run_id=run_id; no patch only when canonical state is already pending_verification, otherwise PATCH_REQUIRED
+    evidence_unavailable_technical: do not overwrite verified; no verification_run_id write; BLOCKED_TECHNICAL
+    evidence_conflict: do not overwrite verified; no verification_run_id write; BLOCKED_SOURCE_CONFLICT
   pending_canonical_state:
     rule: For current_state == pending_verification, v1.2 authoring uses criteria:null and non-empty pending_reason.
     criterion_checks: May be empty or may document why evidence is insufficient; do not invent a pseudo-state criterion.
@@ -210,6 +253,24 @@ runtime_history:
   latest_alias: state.json.kpi_observations[].verification_run_id
   deduplication_rule: If kpi_id, period_end and normalized value/value_range are unchanged, update existing observation and append run_id; do not duplicate the observation.
   latest_rule: verification_run_id == last(verification_run_ids) when history exists.
+  migration_id: MIG-122-KPI-VERIFICATION-RUN-HISTORY
+  observation_identity:
+    fields:
+    - kpi_id
+    - period_end
+    - normalized_value_or_value_range
+    numeric_identity: Compare numerically after the existing unit/value normalization; representation does not matter (for example 3 and 3.0 are identical). For value_range, both normalized
+      endpoints must match numerically.
+  migration_rules:
+    existing_duplicates:
+      rule: If legacy state.json contains duplicate rows for the same observation identity, collapse them into one row. Prefer the row already linked to a verification run; fill only
+        missing fields (for example value_raw or note/source metadata) from the duplicate. Do not overwrite populated fields merely because the duplicate differs.
+      run_history: Union all deterministically recoverable verification run IDs for the collapsed observation, order them by report run time, and set verification_run_id to the latest.
+    backfill_from_immutable_reports:
+      rule: Append report.run_id only when the immutable report contains an item with the same kpi_id, item.runtime_verified == true, and item.candidate.last_value or candidate.value_range
+        numerically equals the normalized runtime observation. Compare candidate, not found, because v1.0/v1.1 found may use source basis.
+      negative_example: An item such as not_found with runtime_verified != true does not bind report.run_id to the runtime observation.
+    no_guessing: Historical run IDs not deterministically recoverable from immutable reports or git history are not invented.
 gate_aggregation:
   precedence:
   - BLOCKED_SOURCE_CONFLICT
@@ -217,6 +278,12 @@ gate_aggregation:
   - PATCH_REQUIRED
   - PASS_WITH_DECLARED_PENDING
   - PASS
+  rules:
+  - Any KPI source_conflict or axis evidence_conflict -> BLOCKED_SOURCE_CONFLICT.
+  - Any required KPI/axis/event source_unavailable_technical -> BLOCKED_TECHNICAL unless the event is validly confirmed by two first-tier media under Source Policy.
+  - Any patch_required=true item -> PATCH_REQUIRED.
+  - Declared pending KPI/axis/event without patch -> PASS_WITH_DECLARED_PENDING.
+  - Otherwise PASS.
   pending_sources:
   - KPI not_found only when candidate was already null+pending_verification
   - axis state_pending_verification without patch
@@ -917,3 +984,39 @@ output_report_schema:
             properties:
               claim_type:
                 const: discrete_event
+report_contract_version: 1.2.0
+principles:
+  single_report_single_run_id_single_G8: true
+  evidence_pack_is_hint_not_authority: true
+  dozor_reopens_or_independently_retrieves_source: true
+  trigger_not_decision: true
+  event_verification_does_not_equal_trigger_firing: true
+  technical_failure_is_not_evidence_failure: true
+  no_estimation_of_undisclosed_values: true
+kpi_rules:
+  not_found_vs_not_disclosed:
+    explicit_example:
+      case: Company discloses 5 GW year-end guidance for contracted power but does not state actual contracted power as of reporting date.
+      status: not_found
+      reason: Guidance is a different value type and does not establish that current actual is intentionally/not separately disclosed.
+    not_disclosed_requires:
+    - explicit statement that metric is not separately disclosed; OR
+    - a disclosure structure that affirmatively establishes the requested separate metric is not disclosed/derivable, not merely absent from reviewed text
+  qualifier_difference:
+    rule: If numeric value/value_type/unit/period match but source qualifier differs from candidate (e.g. approximate vs exact, lower_bound vs exact), use verified_match_with_normalization.
+    normalization_step_format: 'qualifier: source=<source_qualifier>, candidate=<candidate_qualifier>'
+    qualifier_patch_suggested: true
+    patch_required: false
+    integrator_action: May deterministically harmonize observation_qualifier to found.observation_qualifier without changing numeric value or value_type.
+  range_from_single_phrase:
+    rule: A single authoritative excerpt containing both range endpoints (e.g. 50–60%) is sufficient; endpoints must both match after normalization. Two separate citations are not required.
+  consecutive_periods:
+    rule: Dozor verifies each observation and its period_end only. It does not count N consecutive quarters/periods.
+    owner: deterministic transition/state-history evaluator
+    input_history: state.json.kpi_observations ordered by period_end
+    axis_note: If a current-state criterion itself requires N periods, axis state_supported requires a deterministic history_evaluation_ref; otherwise state_pending_verification.
+publication_rule:
+  complete_republication: A superseding normative file contains the complete normative content of the prior version plus the delta. A reader must not need a superseded file to recover
+    rules still in force.
+  patch_notes: The delta from the immediately preceding version is documented separately in patch notes.
+  regression_check: Before publication, perform structural diff and regression of retained historical/live report fixtures against the report schema.

@@ -1,0 +1,20 @@
+package: Dozor_v1_2_1_consolidated
+files:
+- file: Company_Artifact_Schema_v1.0.5.yaml
+  sha256: ef84b178bfc2a1eb4905f7dddb3c3e718a2fdd4a07334a5e3ea34024c5a371e5
+  bytes: 98832
+- file: Company_Artifact_Schema_v1.0.5_Consolidated_Notes.md
+  sha256: beee74dfa8636a23b86fa51dc6e693a76ee58f7f2bdd15ff8313cf4f3956d356
+  bytes: 1093
+- file: Dozor_Verification_Protocol_v1.2.1.md
+  sha256: 225828a0ef2f2821cf699fc8a065ea9cadc32a371f5bdf16e36bdb7ab68151eb
+  bytes: 10773
+- file: Dozor_Verification_Protocol_v1.2.1.yaml
+  sha256: 42f12d33c9c0bcb75a7644152f6e8c8abb0c3c718a117ddee02037a9f4e1672b
+  bytes: 36276
+- file: Dozor_Verification_Protocol_v1.2.1_Patch_Notes.md
+  sha256: 74406007ee6be5ab4e8e544f73315baab5dd2f23749591099f3abda324cb47ed
+  bytes: 1252
+- file: Validation_Report_v1.2.1.md
+  sha256: af33bba98f0bd96cf1a5358666d3548a1a6bc2b20aea3b4b9c8074cafb651421
+  bytes: 895

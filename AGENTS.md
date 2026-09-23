@@ -231,15 +231,16 @@ Decision Request (сигнал к действию для перехода) — 
 плюс legacy-действие из старых триггеров, если оно есть. Карточка компании получает строку
 `Вектор: AI A2 🟢 · Starlink B2 🟢 · Starship C1 🟡 · Капитал D3 🔴 · Valuation V4 🔴` (цвет — по KPI оси).
 
-## Сверка по первоисточникам (Dozor Verification Protocol v1.2, гейт G8)
+## Сверка по первоисточникам (Dozor Verification Protocol v1.2.1, гейт G8)
 
-Норматив: `methodology/Dozor_Verification_Protocol_v1.2.yaml` (реестр статусов с label_ru, секции отчёта, правила
-transition_checks / событий / осей / окон / базы derived_fact, схема отчёта `output_report_schema`; правила KPI из
-v1.1 — `Dozor_Verification_Protocol_v1.1.yaml`, пока не выпущена сводная редакция) и `methodology/Source_Policy_v1.0.yaml`
-(классы источников, guidance ≠ actual, период дословно, технический доступ). v1.2 принят 23.09.2026 после двух живых
-прогонов по v1.1 (NBIS run verify-NBIS-20260922T210122Z, ASTS run verify-ASTS-20260923T060714Z); пример полного
-отчёта v1.2 — `from_imma/Dozor_v1.2_and_Artifact_v1.0.5/verify-ASTS-v1.2-example.json`. Ниже — как это исполняется в
-этом workspace.
+Норматив: `methodology/Dozor_Verification_Protocol_v1.2.1.yaml` — сводная редакция (принципы, реестр статусов с
+label_ru и semantics, правила KPI, секции отчёта, transition_checks, события, оси, вложение окон, база derived_fact,
+история прогонов, итог по старшинству, схема отчёта `output_report_schema` контракта 1.2.0) и
+`methodology/Source_Policy_v1.0.yaml` (классы источников, guidance ≠ actual, период дословно, технический доступ).
+v1.2 принят 23.09.2026 после двух живых прогонов по v1.1 (NBIS run verify-NBIS-20260922T210122Z, ASTS run
+verify-ASTS-20260923T060714Z), сводная v1.2.1 — в тот же день; первый живой прогон по v1.2 — NVDA
+(run verify-NVDA-20260923T190405Z). Пример полного отчёта v1.2 —
+`from_imma/Dozor_v1.2_and_Artifact_v1.0.5/verify-ASTS-v1.2-example.json`. Ниже — как это исполняется в этом workspace.
 
 1. **Роль.** Дозор не второй аналитик: он независимо открывает источник и воспроизводит число. `source_url` и
    EvidencePack от LLM — подсказка, где искать, а не доказательство. Один отчёт, один run_id, один гейт, четыре

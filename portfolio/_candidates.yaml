@@ -22,7 +22,7 @@ pool:
      folder: spacex, note: "единственный полигон: states/kpis v1.3, RV run …-ab1fb7, MC run …-861006; MPC — после MC v1.1"}
   - {ticker: SNPS, exchange: NASDAQ, yahoo: SNPS,   currency: USD, sector_id: SOFTWARE,          origin: prior_core10, stage: candidate,
      note: "парный эксперимент с CDNS после Flight 14; ось интеграции Ansys — слой состояния (LLM 20.09)"}
-  - {ticker: RKLB, exchange: NASDAQ, yahoo: RKLB,   currency: USD, sector_id: SPACE,             origin: prior_core10, stage: company_model, model_received: "2026-09-21", folder: rklb, held: true, weight_nav: 0.0229, mc_archetype: pre_service_or_milestone_driven}
+  - {ticker: RKLB, exchange: NASDAQ, yahoo: RKLB,   currency: USD, sector_id: SPACE,             origin: prior_core10, stage: conditional_mc, model_received: "2026-09-21", folder: rklb, held: true, weight_nav: 0.0229, mc_archetype: pre_service_or_milestone_driven}
   - {ticker: CDNS, exchange: NASDAQ, yahoo: CDNS,   currency: USD, sector_id: SOFTWARE,          origin: prior_core10, stage: candidate,
      note: "парный эксперимент с SNPS"}
   - {ticker: MSFT, exchange: NASDAQ, yahoo: MSFT,   currency: USD, sector_id: SOFTWARE,          origin: prior_core10, stage: company_model, model_received: "2026-09-21", folder: msft, held: true, weight_nav: 0.0192, mc_archetype: mature_positive_margin, theme: AI}
@@ -37,7 +37,7 @@ pool:
   # --- фактические позиции владельца вне prior/корзины (21.09.2026): в пул как held; модель компании требуется ---
   - {ticker: META, exchange: NASDAQ, yahoo: META, currency: USD, sector_id: INTERNET_PLATFORMS, origin: actual_holding, stage: company_model, folder: meta, model_received: "2026-09-21", held: true, weight_nav: 0.0553, mc_archetype: mature_positive_margin, theme: AI}
   - {ticker: LLY,  exchange: NYSE,   yahoo: LLY,  currency: USD, sector_id: HEALTHCARE,         origin: actual_holding, stage: company_model, folder: lly, model_received: "2026-09-21", held: true, weight_nav: 0.0831, mc_archetype: mature_positive_margin}
-  - {ticker: HOOD, exchange: NASDAQ, yahoo: HOOD, currency: USD, sector_id: FINTECH,            origin: actual_holding, stage: company_model, folder: hood, model_received: "2026-09-21", held: true, weight_nav: 0.1439, mc_archetype: mature_positive_margin}
+  - {ticker: HOOD, exchange: NASDAQ, yahoo: HOOD, currency: USD, sector_id: FINTECH,            origin: actual_holding, stage: conditional_mc, folder: hood, model_received: "2026-09-21", held: true, weight_nav: 0.1439, mc_archetype: mature_positive_margin}
   - {ticker: PLTR, exchange: NASDAQ, yahoo: PLTR, currency: USD, sector_id: SOFTWARE,           origin: actual_holding, stage: company_model, model_received: "2026-09-21", folder: pltr, held: true, weight_nav: 0.0177, mc_archetype: mature_positive_margin, theme: AI}
   - {ticker: ASTS, exchange: NASDAQ, yahoo: ASTS, currency: USD, sector_id: SPACE,              origin: actual_holding, stage: company_model, model_received: "2026-09-21", folder: asts, held: true, weight_nav: 0.0104, mc_archetype: pre_service_or_milestone_driven}
   - {ticker: CRWV, exchange: NASDAQ, yahoo: CRWV, currency: USD, sector_id: AI_COMPUTE,         origin: actual_holding, stage: company_model, model_received: "2026-09-21", held: true, weight_nav: 0.005, mc_archetype: capital_intensive_transition, theme: AI}

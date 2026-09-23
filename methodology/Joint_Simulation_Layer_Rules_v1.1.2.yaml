@@ -1,0 +1,123 @@
+version: 1.1.2
+artifact: joint_simulation_layer_rules
+as_of: '2026-09-23'
+status: proposed_normative_consolidated
+supersedes: Joint_Simulation_Layer_Rules_v1.1.1
+depends_on:
+  joint_layer_spec: '1.0'
+  company_mc: 2.3.1
+  conditional_mc_spec: 1.1.3
+principles:
+- Joint Layer adds shared macro/sector co-movement; it is not the primary source of company-specific uncertainty.
+- effect_per_plus_1sigma is a marginal contribution inside an aggregate target budget, not a standalone full shock.
+- Measured aggregate target sigma is authoritative; gross sum of absolute effects is descriptive only.
+- No stored sigma_eff correction factor substitutes for reproducing the actual Joint Layer.
+MC-G5-013:
+  name: aggregate_target_shift_sigma
+  severity: error
+  validation_paths: 20000
+  validation_seed: use calibration.simulation.seed
+  scenario: BASE
+  procedure:
+  - Collect all stochastic_targets mapping to the same target path.
+  - Generate the same Joint Layer root/driver paths as company_mc, including root correlations and driver persistence.
+  - Apply lag and decay/half-life exactly as company_mc.
+  - Apply each mapping transform and sum all mappings to the same target.
+  - Measure cross-path standard deviation in the native target-shift unit.
+  - Reject calibration if measured sigma exceeds the applicable hard cap.
+  measurement:
+    growth:
+      unit: absolute annual growth-rate shift
+      evaluation: q20 for primary 5Y growth targets; native engine quarter for horizon-specific growth target if any
+      sigma_max: 0.15
+    margin:
+      unit: absolute margin shift
+      evaluation: 'native horizon quarter: Y3=q12, Y5=q20, Y8=q32'
+      sigma_max: 0.05
+    valuation_multiple:
+      unit: log multiple shift ln(M_shocked/M_base)
+      evaluation: 'native horizon quarter: Y3=q12, Y5=q20, Y8=q32'
+      sigma_max: 0.15
+    milestone_probability:
+      unit: aggregate logit shift applied to milestone Bernoulli probability
+      evaluation: same effective driver shock that company_mc/milestone layer applies when the milestone probability is evaluated; do not substitute q20
+      sigma_max: 0.35
+    milestone_timing:
+      unit: aggregate timing shift in quarters
+      evaluation: same effective driver shock that company_mc/milestone layer applies to the timing draw; do not substitute q20
+      sigma_max: 1.0
+  design_headroom:
+    mature_positive_margin:
+      growth: 0.1
+      margin: 0.04
+      log_multiple: 0.12
+    capital_intensive_transition:
+      growth: 0.12
+      margin: 0.04
+      log_multiple: 0.12
+    pre_service_or_milestone_driven:
+      growth: 0.12
+      margin: 0.04
+      log_multiple: 0.12
+      milestone_probability_logit: 0.25
+      milestone_timing_quarters: 0.75
+  deterministic_resize:
+    allowed: true
+    formula: effect_new = effect_old * sigma_design / sigma_measured
+    conditions: Only linear effect_per_plus_1sigma mappings to the same target are changed; re-run MC-G5-013 after resize.
+  descriptive_only:
+  - sum(abs(effect_per_plus_1sigma))
+milestone_cap_rationale:
+  probability_logit:
+    hard_cap: 0.35
+    design_headroom: 0.25
+    rationale: Logit space respects probability boundaries. Around p=0.5-0.8 a 0.35 logit 1-sigma shift is roughly a mid-single/high-single-digit percentage-point probability move, while
+      large technical-success uncertainty remains in the milestone's own probability distribution/branch structure.
+  timing_quarters:
+    hard_cap: 1.0
+    design_headroom: 0.75
+    rationale: Joint macro/sector conditions may move a milestone by about one quarter at 1 sigma; multi-year technical delays belong in timing distributions, delay_retry or terminal_failure.
+  first_live_reference:
+    ticker: RKLB
+    measured_probability_sigmas_logit:
+    - 0.118
+    - 0.069
+    measured_timing_sigmas_quarters:
+    - 0.365
+    - 0.147
+    interpretation: Comfortably below the proposed caps; used as empirical conformance evidence, not as a calibration target.
+dispersion_plausibility:
+  status: diagnostic_warning_not_hard_gate
+  intrinsic_run: driver_parameter_mapping disabled; company distributions, latent factors and idiosyncratic shocks retained
+  full_run: normal Joint Layer enabled
+  metric: W = q95(CAGR_5Y_equity) - q5(CAGR_5Y_equity)
+  reference_bands:
+    mature_positive_margin:
+      intrinsic_W:
+      - 0.25
+      - 0.5
+      full_W:
+      - 0.3
+      - 0.6
+      full_to_intrinsic_width_ratio_max: 1.5
+    capital_intensive_transition:
+      intrinsic_W:
+      - 0.4
+      - 0.85
+      full_W:
+      - 0.45
+      - 1.0
+      full_to_intrinsic_width_ratio_max: 1.5
+    pre_service_or_milestone_driven:
+      intrinsic_W:
+      - 0.6
+      - 1.3
+      full_W:
+      - 0.7
+      - 1.5
+      full_to_intrinsic_width_ratio_max: 1.6
+  interpretation:
+  - 'Below intrinsic band: review whether company-specific distributions are too narrow.'
+  - 'Above full band: inspect double counting, impossible tails, milestone/failure branches or excessive terminal-value uncertainty.'
+  - Excessive full/intrinsic ratio indicates Joint Layer is dominating uncertainty.
+  - Bands are diagnostics, not targets for parameter fitting.

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-23T19:47:18Z",
+  "updated": "2026-09-24T00:30:00Z",
   "price": {
     "last": 119.82,
     "last_at": "2026-09-18",
@@ -42,6 +42,11 @@
       "timestamp": "2026-09-23T19:47:18Z",
       "kind": "verification",
       "summary": "Прогон сверки run_id=verify-HOOD-20260923T194500Z (Dozor Verification Protocol v1.2.1, гейт G8): 7/10 KPI подтверждены (verified_match) по пресс-релизу Q2 2026 Ex-99.1 (SEC EDGAR); 3 KPI (HOOD-KPI-01/02/03, августовские операционные данные) заблокированы технически — сайт investors.robinhood.com не отвечает (TLS handshake проходит, тело ответа не получено после ~20 минут повторных попыток HTTP/1.1 и HTTP/2 с разными таймаутами); 8-K с этими данными на EDGAR не найден. Ось Regulatory_Product (G2) не подтверждена: в 10-Q не найдено ни подтверждения, ни опровержения текущего состояния «конкретный продукт принуждён к прекращению в конкретной юрисдикции» — только риск-факторы о потенциальных будущих ограничениях event contracts и новый налог в Illinois (не запрет). Оси Revenue_Diversification/Profitability/Credit_Risk подтверждены повторно. Событийные триггеры HOOD-E-09 и HOOD-E-11 — событие не подтверждено (event_unconfirmed), fired не создан. Итог прогона: BLOCKED_TECHNICAL (старшинство выше PATCH_REQUIRED). Отчёт: portfolio/hood/_verify/verify-HOOD-20260923T194500Z.json."
+    },
+    {
+      "timestamp": "2026-09-24T00:30:00Z",
+      "kind": "calc",
+      "summary": "Интеграция калибровок (23.09): calibration_v1.0.yaml, mc_calibration_v1.0.1.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260923T200831Z-reverse_valuation-933181, 20260923T211400Z-company_mc-6fb7ec (v1.0 — справочный прогон …-9b14c5 на 2.3.0)"
     }
   ],
   "scenario_state": {
@@ -235,6 +240,63 @@
     "as_of": "2026-09-23T19:45:00Z",
     "overall_status": "BLOCKED_TECHNICAL"
   },
-  "calc_runs": [],
+  "calc_runs": [
+    {
+      "run_id": "20260923T200831Z-reverse_valuation-933181",
+      "model": "reverse_valuation 1.2.0",
+      "spec": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+      "calibration": "HOOD_calibration_v1.0",
+      "valuation_date": "2026-09-23",
+      "price": 119.82,
+      "shares_outstanding": 899000000,
+      "equity_value_b": 107.72,
+      "implied_revenue_cagr_5y": 0.3452,
+      "terminal_value_share_of_pv": 0.8952,
+      "model_stability": "terminal_dependent",
+      "note": "Первый нормативный RV-прогон; класс устойчивости по Reverse_Valuation_Rules_v1.1 §1 — terminal_dependent"
+    },
+    {
+      "run_id": "20260923T211400Z-company_mc-6fb7ec",
+      "model": "company_mc",
+      "version": "2.3.1",
+      "timestamp": "20260923T211400",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Rules_v1.1.2; company_mc 2.3.1, parity-gated blend)",
+      "calibration": "mc_calibration_v1.0.1.yaml",
+      "purpose": "нормативный прогон принятой калибровки (валидатор 1.6.0: схема v1.0.2, MC-G5-013 pass вкл. цели вех; дисперсия intrinsic ниже ориентира — warning, объяснено в приёмке)",
+      "equity_value_0_b": 107.7,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": -0.1701,
+        "median_CAGR_5Y": -0.0841,
+        "median_CAGR_8Y": -0.0323,
+        "CAGR_5Y_q05_q95": [
+          -0.21,
+          0.053
+        ],
+        "P_2x_5Y": 0.0024,
+        "P_loss_gt_30pct_5Y": 0.575,
+        "P_loss_gt_50pct_5Y": 0.2831,
+        "ES5": -0.7404,
+        "median_equity_value_5Y_b": 69.4,
+        "RV_Growth_Gap": 0.2307,
+        "Price_Expectation_Gap": 2.6149,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          0.75
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260923T211400Z-company_mc-6fb7ec-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.2722595800471789,
+        "q05": 0.16127976310825534,
+        "q95": 0.4013666998864369,
+        "paths_share": 1.0
+      }
+    }
+  ],
   "schema_version": "1.0.5"
 }

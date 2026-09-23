@@ -1,0 +1,785 @@
+schema_examples_version: 1.0.2
+purpose: shape_only_with_current_engine_pin
+robustness_expectation: Fixtures demonstrate schema/engine shape. Robustness pass is not asserted. Fixture C probability mapping was reduced so it no longer intentionally violates the
+  accepted milestone_probability MC-G5-013 cap.
+fixtures:
+  A:
+    fixture_role: shape_only
+    robustness_pass_required: false
+    calibration:
+      schema_version: 1.0.2
+      artifact: company_mc_calibration
+      as_of: '2026-09-23'
+      calculation_engine_version: company_mc 2.3.1
+      simulation:
+        paths: 500000
+        paths_meta:
+          provenance: model_assumption
+          rationale: Normative production path count.
+        seed: 20260920
+        seed_meta:
+          provenance: model_assumption
+          rationale: Fixed reproducibility seed.
+        antithetic_variates: true
+        store_summary_quantiles:
+        - 0.05
+        - 0.5
+        - 0.95
+        store_summary_quantiles_meta:
+          provenance: model_assumption
+          rationale: Compact summary quantiles.
+        horizons_years:
+        - 3
+        - 5
+        - 8
+        horizons_years_meta:
+          provenance: model_assumption
+          rationale: System horizon convention.
+      dependencies:
+        latent_factors:
+        - growth
+        - margin
+        - valuation
+        factor_correlations:
+          growth__margin: 0.3
+          growth__valuation: 0.2
+          margin__valuation: 0.3
+        factor_correlations_meta:
+          provenance: model_assumption
+          rationale: Illustrative factor correlations.
+        default_loading: 0.7
+        default_loading_meta:
+          provenance: model_assumption
+          rationale: Illustrative common-factor loading.
+      market_path_model:
+        quarterly_log_price_noise:
+          annualized_sigma: 0.4
+          annualized_sigma_meta:
+            provenance: model_assumption
+            rationale: Illustrative market-path noise.
+        valuation_mean_reversion_half_life_years: 2.0
+        valuation_mean_reversion_half_life_years_meta:
+          provenance: model_assumption
+          rationale: Illustrative valuation mean reversion.
+      reverse_valuation_ref:
+        run_ref: rv-example
+        implied_revenue_cagr_5y: 0.25
+        implied_revenue_cagr_5y_meta:
+          provenance: derived_fact
+          formula: reverse_valuation output
+        discount_rate: 0.11
+        discount_rate_meta:
+          provenance: model_assumption
+          rationale: Discount rate inherited from referenced RV calibration.
+      robustness_tests:
+        Scenario_Robustness:
+          perturbations:
+            growth_modes_pp:
+            - -0.1
+            - 0.1
+            margin_nodes_pp:
+            - -0.05
+            - 0.05
+            terminal_multiple_pct:
+            - -0.2
+            - 0.2
+            correlation_rho:
+            - -0.15
+            - 0.15
+          perturbations_meta:
+            provenance: model_assumption
+            rationale: v1.1 standard perturbations.
+          delta_tolerance: 0.1
+          delta_tolerance_meta:
+            provenance: model_assumption
+            rationale: v1.1 probability-delta tolerance.
+      joint_simulation:
+        layer_version: '1.0'
+        active_drivers:
+        - AI_COMPUTE_DEMAND
+        company_idiosyncratic_factors:
+        - id: EXECUTION
+          distribution: standard_normal
+          persistence: 0.5
+          persistence_meta:
+            provenance: model_assumption
+            rationale: Illustrative execution persistence.
+        path_alignment:
+          use_global_path_id: true
+      driver_parameter_mapping:
+      - driver_id: AI_COMPUTE_DEMAND
+        material: true
+        stochastic_targets:
+        - path: revenue_model.segments.Core.initial_growth
+          transform: additive_pp
+          effect_per_plus_1sigma: 0.05
+          lag_quarters: 0
+          decay_half_life_quarters: 4
+          meta:
+            provenance: model_assumption
+            rationale: Illustrative sensitivity.
+        structural_support:
+        - path: revenue_model.segments.Core.initial_growth.mode
+          contribution: 0.03
+          meta:
+            provenance: model_assumption
+            rationale: Illustrative central support.
+        stability:
+          knockout:
+            mode: remove_structural_support
+          adverse_driver_stress:
+            driver_sigma: -1.0
+            meta:
+              provenance: model_assumption
+              rationale: Adverse demand shock.
+      ticker: EXA
+      archetype: mature_positive_margin
+      state_vector:
+        Core: A2
+      revenue_model:
+        segments:
+          Core:
+            base_revenue_quarterly: 1000000000
+            base_revenue_quarterly_meta:
+              provenance: verified_fact
+              source_ref: TEST-Q
+            initial_growth:
+              distribution: triangular
+              min: 0.1
+              mode: 0.2
+              max: 0.3
+              provenance: model_assumption
+              rationale: Illustrative growth.
+            long_run_growth_y8:
+              distribution: triangular
+              min: 0.03
+              mode: 0.07
+              max: 0.12
+              provenance: model_assumption
+              rationale: Illustrative mature growth.
+            growth_half_life_years: 2.0
+            growth_half_life_years_meta:
+              provenance: model_assumption
+              rationale: Illustrative half-life.
+            latent_loading:
+              growth: 0.7
+            latent_loading_meta:
+              provenance: model_assumption
+              rationale: Illustrative segment loading.
+      margin_model:
+        method: mean_reverting_positive_margin
+        current_margin: 0.25
+        current_margin_meta:
+          provenance: verified_fact
+          source_ref: TEST-Q
+        terminal_margin_Y5:
+          distribution: triangular
+          min: 0.22
+          mode: 0.27
+          max: 0.32
+          provenance: model_assumption
+          rationale: Illustrative terminal margin.
+        terminal_margin_Y8:
+          rule: y5_plus_normal
+          sigma: 0.02
+          sigma_meta:
+            provenance: model_assumption
+            rationale: Illustrative Y8 uncertainty.
+        half_life_years: 2.0
+        half_life_years_meta:
+          provenance: model_assumption
+          rationale: Illustrative margin half-life.
+        shock_sigma: 0.03
+        shock_sigma_meta:
+          provenance: model_assumption
+          rationale: Illustrative margin shock.
+        shock_persistence: 0.5
+        shock_persistence_meta:
+          provenance: model_assumption
+          rationale: Illustrative persistence.
+        lower_bound: 0.05
+        lower_bound_meta:
+          provenance: model_assumption
+          rationale: Illustrative bound.
+        upper_bound: 0.5
+        upper_bound_meta:
+          provenance: model_assumption
+          rationale: Illustrative bound.
+      valuation:
+        Y3:
+          basis: FCF_multiple
+          multiple:
+            distribution: triangular
+            min: 20
+            mode: 25
+            max: 30
+            provenance: model_assumption
+            rationale: Illustrative multiple.
+        Y5:
+          basis: FCF_multiple
+          multiple:
+            distribution: triangular
+            min: 18
+            mode: 23
+            max: 28
+            provenance: model_assumption
+            rationale: Illustrative multiple.
+        Y8:
+          basis: FCF_multiple
+          multiple:
+            distribution: triangular
+            min: 15
+            mode: 20
+            max: 25
+            provenance: model_assumption
+            rationale: Illustrative multiple.
+        negative_fcf_fallback:
+          basis: revenue_bridge
+          multiple:
+            distribution: triangular
+            min: 4
+            mode: 6
+            max: 8
+            provenance: model_assumption
+            rationale: Fallback bridge.
+  B:
+    fixture_role: shape_only
+    robustness_pass_required: false
+    calibration:
+      schema_version: 1.0.2
+      artifact: company_mc_calibration
+      as_of: '2026-09-23'
+      calculation_engine_version: company_mc 2.3.1
+      simulation:
+        paths: 500000
+        paths_meta:
+          provenance: model_assumption
+          rationale: Normative production path count.
+        seed: 20260920
+        seed_meta:
+          provenance: model_assumption
+          rationale: Fixed reproducibility seed.
+        antithetic_variates: true
+        store_summary_quantiles:
+        - 0.05
+        - 0.5
+        - 0.95
+        store_summary_quantiles_meta:
+          provenance: model_assumption
+          rationale: Compact summary quantiles.
+        horizons_years:
+        - 3
+        - 5
+        - 8
+        horizons_years_meta:
+          provenance: model_assumption
+          rationale: System horizon convention.
+      dependencies:
+        latent_factors:
+        - growth
+        - margin
+        - valuation
+        factor_correlations:
+          growth__margin: 0.3
+          growth__valuation: 0.2
+          margin__valuation: 0.3
+        factor_correlations_meta:
+          provenance: model_assumption
+          rationale: Illustrative factor correlations.
+        default_loading: 0.7
+        default_loading_meta:
+          provenance: model_assumption
+          rationale: Illustrative common-factor loading.
+      market_path_model:
+        quarterly_log_price_noise:
+          annualized_sigma: 0.4
+          annualized_sigma_meta:
+            provenance: model_assumption
+            rationale: Illustrative market-path noise.
+        valuation_mean_reversion_half_life_years: 2.0
+        valuation_mean_reversion_half_life_years_meta:
+          provenance: model_assumption
+          rationale: Illustrative valuation mean reversion.
+      reverse_valuation_ref:
+        run_ref: rv-example
+        implied_revenue_cagr_5y: 0.25
+        implied_revenue_cagr_5y_meta:
+          provenance: derived_fact
+          formula: reverse_valuation output
+        discount_rate: 0.11
+        discount_rate_meta:
+          provenance: model_assumption
+          rationale: Discount rate inherited from referenced RV calibration.
+      robustness_tests:
+        Scenario_Robustness:
+          perturbations:
+            growth_modes_pp:
+            - -0.1
+            - 0.1
+            margin_nodes_pp:
+            - -0.05
+            - 0.05
+            terminal_multiple_pct:
+            - -0.2
+            - 0.2
+            correlation_rho:
+            - -0.15
+            - 0.15
+          perturbations_meta:
+            provenance: model_assumption
+            rationale: v1.1 standard perturbations.
+          delta_tolerance: 0.1
+          delta_tolerance_meta:
+            provenance: model_assumption
+            rationale: v1.1 probability-delta tolerance.
+      joint_simulation:
+        layer_version: '1.0'
+        active_drivers:
+        - AI_COMPUTE_DEMAND
+        company_idiosyncratic_factors:
+        - id: EXECUTION
+          distribution: standard_normal
+          persistence: 0.5
+          persistence_meta:
+            provenance: model_assumption
+            rationale: Illustrative execution persistence.
+        path_alignment:
+          use_global_path_id: true
+      driver_parameter_mapping:
+      - driver_id: AI_COMPUTE_DEMAND
+        material: true
+        stochastic_targets:
+        - path: revenue_model.segments.Core.initial_growth
+          transform: additive_pp
+          effect_per_plus_1sigma: 0.05
+          lag_quarters: 0
+          decay_half_life_quarters: 4
+          meta:
+            provenance: model_assumption
+            rationale: Illustrative sensitivity.
+        structural_support:
+        - path: revenue_model.segments.Core.initial_growth.mode
+          contribution: 0.03
+          meta:
+            provenance: model_assumption
+            rationale: Illustrative central support.
+        stability:
+          knockout:
+            mode: remove_structural_support
+          adverse_driver_stress:
+            driver_sigma: -1.0
+            meta:
+              provenance: model_assumption
+              rationale: Adverse demand shock.
+      ticker: EXB
+      archetype: capital_intensive_transition
+      state_vector:
+        Capital: K3
+      revenue_model:
+        segments:
+          Core:
+            base_revenue_quarterly: 500000000
+            base_revenue_quarterly_meta:
+              provenance: verified_fact
+              source_ref: TEST-Q
+            initial_growth:
+              distribution: triangular
+              min: 0.2
+              mode: 0.4
+              max: 0.6
+              provenance: model_assumption
+              rationale: Illustrative transition growth.
+            long_run_growth_y8:
+              distribution: triangular
+              min: 0.08
+              mode: 0.15
+              max: 0.25
+              provenance: model_assumption
+              rationale: Illustrative long-run growth.
+            growth_half_life_years: 2.5
+            growth_half_life_years_meta:
+              provenance: model_assumption
+              rationale: Illustrative growth half-life.
+      margin_model:
+        method: direct_fcf_nodes
+        nodes:
+          Y1:
+            distribution: triangular
+            min: -0.8
+            mode: -0.5
+            max: -0.2
+            provenance: model_assumption
+            rationale: Y1 transition margin.
+          Y2:
+            distribution: triangular
+            min: -0.3
+            mode: -0.1
+            max: 0.05
+            provenance: model_assumption
+            rationale: Y2 transition margin.
+          Y3:
+            distribution: triangular
+            min: 0.0
+            mode: 0.08
+            max: 0.15
+            provenance: model_assumption
+            rationale: Y3 transition margin.
+          Y4_terminal_fraction:
+            distribution: triangular
+            min: 0.5
+            mode: 0.7
+            max: 0.9
+            provenance: model_assumption
+            rationale: Y4 fraction.
+          Y5_terminal_margin:
+            distribution: triangular
+            min: 0.15
+            mode: 0.22
+            max: 0.3
+            provenance: model_assumption
+            rationale: Y5 margin.
+          Y8_terminal_margin:
+            rule: y5_plus_normal
+            sigma: 0.03
+            sigma_meta:
+              provenance: model_assumption
+              rationale: Y8 uncertainty.
+        monotonic: true
+      valuation:
+        Y3:
+          basis: revenue_bridge
+          multiple:
+            distribution: triangular
+            min: 5
+            mode: 8
+            max: 12
+            provenance: model_assumption
+            rationale: Y3 bridge.
+        Y5:
+          basis: FCF_multiple
+          multiple:
+            distribution: triangular
+            min: 20
+            mode: 25
+            max: 30
+            provenance: model_assumption
+            rationale: Y5 multiple.
+        Y8:
+          basis: FCF_multiple
+          multiple:
+            distribution: triangular
+            min: 16
+            mode: 21
+            max: 26
+            provenance: model_assumption
+            rationale: Y8 multiple.
+        negative_fcf_fallback:
+          basis: revenue_bridge
+          multiple:
+            distribution: triangular
+            min: 3
+            mode: 5
+            max: 8
+            provenance: model_assumption
+            rationale: Negative-FCF fallback.
+  C:
+    fixture_role: shape_only
+    robustness_pass_required: false
+    calibration:
+      schema_version: 1.0.2
+      artifact: company_mc_calibration
+      as_of: '2026-09-23'
+      calculation_engine_version: company_mc 2.3.1
+      simulation:
+        paths: 500000
+        paths_meta:
+          provenance: model_assumption
+          rationale: Normative production path count.
+        seed: 20260920
+        seed_meta:
+          provenance: model_assumption
+          rationale: Fixed reproducibility seed.
+        antithetic_variates: true
+        store_summary_quantiles:
+        - 0.05
+        - 0.5
+        - 0.95
+        store_summary_quantiles_meta:
+          provenance: model_assumption
+          rationale: Compact summary quantiles.
+        horizons_years:
+        - 3
+        - 5
+        - 8
+        horizons_years_meta:
+          provenance: model_assumption
+          rationale: System horizon convention.
+      dependencies:
+        latent_factors:
+        - growth
+        - margin
+        - valuation
+        factor_correlations:
+          growth__margin: 0.3
+          growth__valuation: 0.2
+          margin__valuation: 0.3
+        factor_correlations_meta:
+          provenance: model_assumption
+          rationale: Illustrative factor correlations.
+        default_loading: 0.7
+        default_loading_meta:
+          provenance: model_assumption
+          rationale: Illustrative common-factor loading.
+      market_path_model:
+        quarterly_log_price_noise:
+          annualized_sigma: 0.4
+          annualized_sigma_meta:
+            provenance: model_assumption
+            rationale: Illustrative market-path noise.
+        valuation_mean_reversion_half_life_years: 2.0
+        valuation_mean_reversion_half_life_years_meta:
+          provenance: model_assumption
+          rationale: Illustrative valuation mean reversion.
+      reverse_valuation_ref:
+        run_ref: rv-example
+        implied_revenue_cagr_5y: 0.25
+        implied_revenue_cagr_5y_meta:
+          provenance: derived_fact
+          formula: reverse_valuation output
+        discount_rate: 0.11
+        discount_rate_meta:
+          provenance: model_assumption
+          rationale: Discount rate inherited from referenced RV calibration.
+      robustness_tests:
+        Scenario_Robustness:
+          perturbations:
+            growth_modes_pp:
+            - -0.1
+            - 0.1
+            margin_nodes_pp:
+            - -0.05
+            - 0.05
+            terminal_multiple_pct:
+            - -0.2
+            - 0.2
+            correlation_rho:
+            - -0.15
+            - 0.15
+          perturbations_meta:
+            provenance: model_assumption
+            rationale: v1.1 standard perturbations.
+          delta_tolerance: 0.1
+          delta_tolerance_meta:
+            provenance: model_assumption
+            rationale: v1.1 probability-delta tolerance.
+      joint_simulation:
+        layer_version: '1.0'
+        active_drivers:
+        - AI_COMPUTE_DEMAND
+        company_idiosyncratic_factors:
+        - id: EXECUTION
+          distribution: standard_normal
+          persistence: 0.5
+          persistence_meta:
+            provenance: model_assumption
+            rationale: Illustrative execution persistence.
+        path_alignment:
+          use_global_path_id: true
+      driver_parameter_mapping:
+      - driver_id: AI_COMPUTE_DEMAND
+        material: true
+        stochastic_targets:
+        - path: milestone_model.milestones.M1.probability
+          transform: probability_logit_shift
+          effect_per_plus_1sigma: 0.1
+          lag_quarters: 0
+          decay_half_life_quarters: 4
+          meta:
+            provenance: model_assumption
+            rationale: 'Illustrative milestone sensitivity. Patched in examples v1.0.2: 0.20 logit standalone fixture was measured at aggregate sigma ~0.40 and exceeded the 0.35 hard
+              cap; 0.10 is a shape-only conservative example, still subject to measured MC-G5-013.'
+        structural_support: []
+        stability:
+          knockout:
+            mode: not_applicable
+          adverse_driver_stress:
+            driver_sigma: -1.0
+            meta:
+              provenance: model_assumption
+              rationale: Adverse demand shock.
+      ticker: EXC
+      archetype: pre_service_or_milestone_driven
+      state_vector:
+        Milestone: M0
+      revenue_model:
+        existing_segments:
+          Core:
+            base_revenue_quarterly: 100000000
+            base_revenue_quarterly_meta:
+              provenance: verified_fact
+              source_ref: TEST-Q
+            initial_growth:
+              distribution: triangular
+              min: 0.0
+              mode: 0.05
+              max: 0.1
+              provenance: model_assumption
+              rationale: Core growth.
+            long_run_growth_y8:
+              distribution: triangular
+              min: 0.0
+              mode: 0.03
+              max: 0.06
+              provenance: model_assumption
+              rationale: Core long-run growth.
+            growth_half_life_years: 2.0
+            growth_half_life_years_meta:
+              provenance: model_assumption
+              rationale: Core half-life.
+        service_segments:
+          Service:
+            initial_annual_revenue:
+              distribution: triangular
+              min: 200000000
+              mode: 400000000
+              max: 700000000
+              provenance: model_assumption
+              rationale: Initial service revenue.
+            post_service_growth:
+              distribution: triangular
+              min: 0.2
+              mode: 0.4
+              max: 0.7
+              provenance: model_assumption
+              rationale: Post-service growth.
+            long_run_growth_y8:
+              distribution: triangular
+              min: 0.05
+              mode: 0.15
+              max: 0.25
+              provenance: model_assumption
+              rationale: Long-run service growth.
+            growth_half_life_years: 2.5
+            growth_half_life_years_meta:
+              provenance: model_assumption
+              rationale: Service growth half-life.
+      valuation:
+        fcf_maturity_margin: 0.1
+        fcf_maturity_margin_meta:
+          provenance: model_assumption
+          rationale: Maturity threshold.
+        multiple_fcf:
+          distribution: triangular
+          min: 15
+          mode: 20
+          max: 25
+          provenance: model_assumption
+          rationale: Mature service multiple.
+        multiple_revenue_bridge:
+          distribution: triangular
+          min: 3
+          mode: 5
+          max: 7
+          provenance: model_assumption
+          rationale: Pre-maturity revenue bridge.
+      milestone_model:
+        service_onset_milestone: M2
+        reference_value:
+          distribution: triangular
+          min: 1000000000
+          mode: 2000000000
+          max: 3000000000
+          provenance: model_assumption
+          rationale: Reference milestone value.
+        residual_on_failure: 0.1
+        residual_on_failure_meta:
+          provenance: model_assumption
+          rationale: Residual fraction.
+        milestones:
+        - id: M1
+          probability: 0.8
+          probability_meta:
+            provenance: model_assumption
+            rationale: Milestone probability.
+          requires: []
+          timing:
+            distribution: triangular
+            min: 1
+            mode: 2
+            max: 3
+            provenance: model_assumption
+            rationale: Timing in quarters.
+          value_uplift: 0.3
+          value_uplift_meta:
+            provenance: model_assumption
+            rationale: Reference-value share.
+          on_failure:
+            branch: delay_retry
+            retry_probability: 0.5
+            retry_probability_meta:
+              provenance: model_assumption
+              rationale: Retry probability.
+            retry_delay_quarters: 2
+            retry_delay_quarters_meta:
+              provenance: model_assumption
+              rationale: Retry delay.
+        - id: M2
+          probability: 0.7
+          probability_meta:
+            provenance: model_assumption
+            rationale: Service-onset probability.
+          requires:
+          - M1
+          timing:
+            distribution: triangular
+            min: 1
+            mode: 2
+            max: 4
+            provenance: model_assumption
+            rationale: Timing in quarters.
+          value_uplift: 0.5
+          value_uplift_meta:
+            provenance: model_assumption
+            rationale: Reference-value share.
+          on_failure:
+            branch: terminal_failure
+      cash_model:
+        net_cash_0: 500000000
+        net_cash_0_meta:
+          provenance: verified_fact
+          source_ref: TEST-BS
+        pre_service_burn_quarterly:
+          distribution: triangular
+          min: 50000000
+          mode: 70000000
+          max: 100000000
+          provenance: model_assumption
+          rationale: Pre-service burn.
+        dilution_penalty: 0.2
+        dilution_penalty_meta:
+          provenance: model_assumption
+          rationale: Reduced-form financing penalty.
+        core_margin:
+          distribution: triangular
+          min: 0.0
+          mode: 0.05
+          max: 0.1
+          provenance: model_assumption
+          rationale: Core FCF margin.
+        service_margin:
+          current_margin_at_onset: -0.1
+          current_margin_at_onset_meta:
+            provenance: model_assumption
+            rationale: Service onset margin.
+          terminal_margin_Y5:
+            distribution: triangular
+            min: 0.1
+            mode: 0.2
+            max: 0.3
+            provenance: model_assumption
+            rationale: Service terminal margin.
+          half_life_years: 2.0
+          half_life_years_meta:
+            provenance: model_assumption
+            rationale: Service margin half-life.
+    milestone_dimension_expectation: candidate_positive_example; host must still measure aggregate sigma

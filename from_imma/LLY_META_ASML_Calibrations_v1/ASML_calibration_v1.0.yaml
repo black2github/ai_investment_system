@@ -1,0 +1,129 @@
+calibration_v1.0:
+  ticker: ASML
+  as_of: '2026-09-24'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  currency: EUR
+  scenario_state:
+    Demand_Visibility: D3
+    EUV_Adoption: E3
+    Margin_Execution: M3
+    China_Export_Exposure: X1
+    Installed_Base_Resilience: I3
+  market:
+    price: 1446.0
+    price_as_of: '2026-09-18'
+    price_source: https://finance.yahoo.com/quote/ASML.AS/history/
+    listing: Euronext Amsterdam
+    currency: EUR
+    shares_outstanding: 384100000.0
+    shares_as_of: '2026-06-28'
+    shares_source: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm
+    equity_value: 555408600000.0
+  balance_sheet:
+    cash_and_short_term_investments: 7581500000.0
+    debt: 3719700000.0
+    net_debt: -3861800000.0
+    as_of: '2026-06-28'
+    currency: EUR
+    source: https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm
+  base_period:
+    revenue_ttm: 35327500000.0
+    current_fcf_margin: 0.30417168691346025
+    revenue_formula: FY2025 sales 32.6673B + H1 2026 18.0934B - H1 2025 15.4332B = 35.3275B EUR.
+    fcf_margin_formula: H1 reported OCF -0.4815B; working-capital/tax timing changes total -6.7791B, so OCF before these timing movements = 6.2976B. Less 0.7018B PP&E and 0.0923B intangible
+      capex = 5.5035B normalized economic FCF; /18.0934B sales = 30.42%.
+  discount_rate:
+    base: 0.095
+    stress:
+      min: 0.08
+      max: 0.12
+  terminal_fcf_margin:
+    min: 0.23
+    base: 0.3
+    max: 0.37
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 17.0
+    base: 24.0
+    max: 31.0
+  margin_transition:
+    type: mature_working_capital_normalization
+    path:
+      1: 0.3
+      2: 0.3
+      3: 0.3
+      4: 0.3
+      5: terminal
+    critical_assumption:
+      linked_state: M3/I3
+      description: ASML remains a high-margin mature franchise; reported H1 OCF was distorted by large receivable and contract-liability timing movements, so the base uses normalized
+        economic FCF rather than the raw half-year cash-flow margin.
+      falsification: Sustained gross margin below 50%, normalized FCF margin below 22%, or material service-access/export disruption requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.08
+    - 0.095
+    - 0.12
+    terminal_fcf_margin:
+    - 0.23
+    - 0.3
+    - 0.37
+    terminal_fcf_multiple:
+    - 17
+    - 24
+    - 31
+  base_case:
+    discount_rate: 0.095
+    terminal_fcf_margin: 0.3
+    terminal_fcf_multiple: 24
+    margin_path:
+      Y0: 0.30417168691346025
+      Y1: 0.3
+      Y2: 0.3
+      Y3: 0.3
+      Y4: 0.3
+      Y5: 0.3
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-18 Euronext Amsterdam close | https://finance.yahoo.com/quote/ASML.AS/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-07-15 | https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: EUR 1,446.00 * 384.1M issued and outstanding shares = EUR 555.4086B
+    balance_sheet.cash_and_short_term_investments:
+      provenance: derived_fact
+      formula: 6.6719B cash + 0.9096B short-term investments = 7.5815B EUR
+    balance_sheet.debt:
+      provenance: derived_fact
+      formula: 1.9844B long-term debt + 1.7353B short-term/current debt = 3.7197B EUR
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 3.7197B debt - 7.5815B cash+short-term investments = -3.8618B net debt
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: 32.6673B + 18.0934B - 15.4332B = 35.3275B EUR
+      source_ref: 2026-02-25 | https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm; 2026-07-15 | https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: '[-0.4815B OCF - (-6.7791B working-capital/tax timing) - 0.7018B PP&E - 0.0923B intangibles] / 18.0934B = 30.42%'
+      source_ref: 2026-07-15 | https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm
+    discount_rate:
+      provenance: model_assumption
+      rationale: Near-monopoly lithography economics and net cash reduce risk, while semiconductor cyclicality, export controls, Taiwan/customer concentration and technology execution
+        remain material.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Normalized FCF is anchored below gross/operating margins and allows continued R&D/capacity investment; no FX premium is inserted because calibration is fully in EUR.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Mature high-moat semiconductor-equipment FCF multiple with strong installed-base resilience but material cyclicality/geopolitical exposure; not fitted to price.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Stable mature normalized FCF; raw H1 OCF working-capital swing is not treated as structural economics.

@@ -452,13 +452,23 @@ initial_portfolio_hypothesis:
 constraints:
   constitution_refs: ["§28", "§30"]
   rule: "Числовые лимиты не придумываются схемой; после утверждения владельцем хранятся версионно."
-  limits:
-    single_name_max_weight: null
-    sector_max_weight: null
-    challenger_max_weight: null
-    illiquid_max_weight: null
-    minimum_dry_powder_weight: null
+  limits:                       # действующие (approved_limits_v1_0, владелец 24.09.2026); null — не утверждено/берётся из другого блока
+    single_name_max_weight: null  # на бумагу — НЕ плоское число: потолок из conviction_overlay_v1_0 (hard_loss_budget_cap / target_cap)
+    sector_max_weight: 0.35
+    challenger_max_weight: 0.08
+    illiquid_max_weight: null     # отложено владельцем 24.09
+    minimum_dry_powder_weight: null   # по режиму — см. approved_limits_v1_0.dry_powder
     maximum_dry_powder_weight: null
+  approved_limits_v1_0:           # решение владельца 24.09.2026 по proposed_limits_v1_0 (переписка); owner_judgment
+    status: approved_2026_09_24
+    single_name: {rule: from_conviction_overlay, note: "лимит на бумагу — потолки Conviction Overlay (бюджет потерь 8 %/15 % NAV ÷ правдоподобная просадка; целевой = 0.75 × жёсткого); отдельного плоского числа нет"}
+    sector_max: 0.35              # владелец выбрал 35 (overlay: мягкий 35 / жёсткий 45), а не 30 из предложения
+    top3_aggregate_max: 0.50
+    roles: {Challenger_max_per_name: 0.08, Challenger_aggregate_max: 0.25}
+    dry_powder: {Normal: {min: 0.05, preferred_max: 0.10, hard_max: 0.15}, Stress: {min: 0.05, preferred_max: 0.15, hard_max: 0.20}, Shock: {min: 0.10, preferred_max: 0.20, hard_max: 0.30}}
+    risk_5y: {p_loss_gt_30_max: 0.20, p_loss_gt_50_max: 0.10, es5_min: -0.55, scenario_concentration_max: 0.60}
+    deferred: [common_cause_effective_max, illiquidity]   # не утверждены 24.09 — оптимизатор их не применяет до решения
+    breach_is_not_an_order: true  # нарушение лимита — разрыв для Decision Request, не приказ продавать (Optimizer §3.1)
   owner_constraints:            # вход владельца 20.09.2026; числовой лимит числа бумаг — решение отложено
     positions_count_limit: null
     positions_count_note: >
@@ -470,7 +480,7 @@ constraints:
       min_lot_shares: 100
       feasible_note: "хедж опционами доступен только по позициям ≥ 100 акций; иначе — только через размер позиции/кэш"
   proposed_limits_v1_0:            # рекомендация другой LLM (Portfolio_Optimizer_Specification_v1.0 §3–4), 21.09.2026; model_assumption
-    status: pending_owner_approval # пока не утверждено — поле limits выше остаётся пустым; движок лимиты не применяет
+    status: superseded_2026_09_24  # решение владельца — approved_limits_v1_0 выше; здесь — исходное предложение IMMA как есть
     source: methodology/Portfolio_Optimizer_Schema_v1.0.yaml
     concentration: {single_name_max: 0.20, sector_max: 0.30, top3_aggregate_max: 0.50, common_cause_effective_max: 0.35, unmodeled_target_weight: 0.00}
     roles: {Core_max_per_name: 0.20, Challenger_max_per_name: 0.08, Challenger_aggregate_max: 0.25, Watch_target_weight: 0.00}

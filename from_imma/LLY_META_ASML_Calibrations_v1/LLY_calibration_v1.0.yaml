@@ -1,0 +1,125 @@
+calibration_v1.0:
+  ticker: LLY
+  as_of: '2026-09-24'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    Incretin_Demand: D4
+    Pricing_Access: P3
+    Manufacturing_Expansion: M2
+    Pipeline_Diversification: R3
+    Cash_Economics: F3
+  market:
+    price: 1152.93
+    price_as_of: '2026-09-18'
+    price_source: https://finance.yahoo.com/quote/LLY/history/
+    shares_outstanding: 941357065
+    shares_as_of: '2026-08-03'
+    shares_source: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+    equity_value: 1085318800950.4501
+  balance_sheet:
+    cash: 8950000000.0
+    debt: 54907999999.99999
+    net_debt: 45957999999.99999
+    as_of: '2026-06-30'
+    source: https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+  base_period:
+    revenue_ttm: 79666000000.0
+    current_fcf_margin: 0.2516540808453931
+    revenue_formula: FY2025 revenue 65.179B + H1 2026 42.773B - H1 2025 28.286B = 79.666B.
+    fcf_margin_formula: H1 2026 simple FCF = 16.023B OCF - 5.259B PP&E capex = 10.764B; /42.773B revenue = 25.17%.
+  discount_rate:
+    base: 0.095
+    stress:
+      min: 0.08
+      max: 0.125
+  terminal_fcf_margin:
+    min: 0.23
+    base: 0.3
+    max: 0.37
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 18.0
+    base: 25.0
+    max: 32.0
+  margin_transition:
+    type: mature_capex_normalization
+    path:
+      1: 0.26
+      2: 0.28
+      3: 0.29
+      4: 0.3
+      5: terminal
+    critical_assumption:
+      linked_state: F3/M2
+      description: Current FCF is positive despite unusually high manufacturing capex; margin expands modestly as capacity projects mature, not to gross-margin economics.
+      falsification: Persistent capex/revenue above ~15% without proportional volume growth, or reimbursement/price pressure causing FCF margin below 20%, requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.08
+    - 0.095
+    - 0.125
+    terminal_fcf_margin:
+    - 0.23
+    - 0.3
+    - 0.37
+    terminal_fcf_multiple:
+    - 18
+    - 25
+    - 32
+  base_case:
+    discount_rate: 0.095
+    terminal_fcf_margin: 0.3
+    terminal_fcf_multiple: 25
+    margin_path:
+      Y0: 0.2516540808453931
+      Y1: 0.26
+      Y2: 0.28
+      Y3: 0.29
+      Y4: 0.3
+      Y5: 0.3
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-18 close | https://finance.yahoo.com/quote/LLY/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-08-05 | https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 1152.93 * 941,357,065
+    balance_sheet.cash:
+      provenance: verified_fact
+      source_ref: 2026-08-05 | https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+    balance_sheet.debt:
+      provenance: derived_fact
+      formula: 7.050B short-term borrowings/current maturities + 47.858B long-term debt = 54.908B
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 54.908B debt - 8.950B cash = 45.958B net debt
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: 65.179B + 42.773B - 28.286B = 79.666B
+      source_ref: 2026-02-12 | https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm; 2026-08-05 | https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: (16.023B - 5.259B)/42.773B = 25.17%
+      source_ref: 2026-08-05 | https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm
+    discount_rate:
+      provenance: model_assumption
+      rationale: Large profitable pharma lowers financing risk, but concentration in tirzepatide, reimbursement/price policy, clinical/regulatory and litigation risks justify a premium
+        to mega-cap platform discount rates.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Manufacturing capex is currently 12.3% of revenue and should normalize, but reimbursement pressure and a concentrated franchise prevent extrapolating gross margin into
+        cash margin.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Mature pharma multiple with exceptional growth but concentration/policy risk. Mounjaro/Zepbound compound-patent protection is disclosed to 2036 in the U.S., 2037 in
+        major Europe and 2040 in Japan; 5Y terminal is before the major compound-patent cliff but 8Y persistence is closer to it.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Short mature expansion from 25% H1 simple FCF margin as manufacturing buildout normalizes.

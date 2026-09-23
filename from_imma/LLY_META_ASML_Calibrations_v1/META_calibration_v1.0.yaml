@@ -1,0 +1,125 @@
+calibration_v1.0:
+  ticker: META
+  as_of: '2026-09-24'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    Ad_Monetization: A3
+    User_Engagement: U2
+    FoA_Profitability: P2
+    AI_Capital_Intensity: C3
+    Reality_Labs_Drag: R3
+  market:
+    price: 665.75
+    price_as_of: '2026-09-18'
+    price_source: https://finance.yahoo.com/quote/META/history/
+    shares_outstanding: 2547506225
+    shares_as_of: '2026-07-24'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm
+    equity_value: 1696002269293.75
+  balance_sheet:
+    cash_and_marketable_securities: 90260000000.0
+    long_term_debt: 83660000000.0
+    net_debt: -6600000000.0
+    as_of: '2026-06-30'
+    source: https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm
+  base_period:
+    revenue_ttm: 228247000000.0
+    current_fcf_margin: 0.012894524761105903
+    revenue_formula: FY2025 revenue 200.966B + H1 2026 117.111B - H1 2025 89.830B = 228.247B.
+    fcf_margin_formula: Q2 2026 company FCF 0.784B / 60.801B revenue = 1.29%; capex including finance-lease principal was 31.08B = 51.1% of revenue.
+  discount_rate:
+    base: 0.095
+    stress:
+      min: 0.08
+      max: 0.125
+  terminal_fcf_margin:
+    min: 0.18
+    base: 0.25
+    max: 0.32
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 17.0
+    base: 24.0
+    max: 31.0
+  margin_transition:
+    type: two_phase_capex_normalization
+    path:
+      1: 0.08
+      2: 0.15
+      3: 0.2
+      4: 0.23
+      5: terminal
+    critical_assumption:
+      linked_state: C3/P2/R3
+      description: Latest-quarter FCF is depressed by an exceptional AI infrastructure buildout; the base case assumes capex intensity normalizes while FoA monetization remains strong
+        and Reality Labs drag persists.
+      falsification: Capex/revenue remaining above ~40% beyond Y2 without corresponding OCF growth, or FoA operating margin sustainably below 30%, requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.08
+    - 0.095
+    - 0.125
+    terminal_fcf_margin:
+    - 0.18
+    - 0.25
+    - 0.32
+    terminal_fcf_multiple:
+    - 17
+    - 24
+    - 31
+  base_case:
+    discount_rate: 0.095
+    terminal_fcf_margin: 0.25
+    terminal_fcf_multiple: 24
+    margin_path:
+      Y0: 0.012894524761105903
+      Y1: 0.08
+      Y2: 0.15
+      Y3: 0.2
+      Y4: 0.23
+      Y5: 0.25
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-18 close | https://finance.yahoo.com/quote/META/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 665.75 * (2,205,128,509 Class A + 342,377,716 Class B)
+    balance_sheet.cash_and_marketable_securities:
+      provenance: verified_fact
+      source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm
+    balance_sheet.long_term_debt:
+      provenance: verified_fact
+      source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 83.66B long-term debt - 90.26B cash+marketable securities = -6.60B net debt
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: 200.966B + 117.111B - 89.830B = 228.247B
+      source_ref: 2026-02 | https://www.sec.gov/Archives/edgar/data/1326801/000162828026025534/meta-12312025x10kars.htm; 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: 0.784B / 60.801B = 1.29% Q2 FCF margin
+      source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm
+    discount_rate:
+      provenance: model_assumption
+      rationale: Mega-cap cash generation lowers financing risk, but unprecedented infrastructure commitments, AI monetization uncertainty and regulatory/platform risks raise duration
+        and execution risk.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Base margin assumes normalization from the current capex peak but remains below a software-like steady state because infrastructure, Reality Labs and regulatory costs
+        persist.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Mature ad/platform FCF multiple with AI optionality but explicit capex-duration and regulatory risk; not fitted to market price.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Two-phase capex normalization from Q2 1.3% FCF margin toward a still-capital-intensive mature cash margin.

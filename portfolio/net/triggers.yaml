@@ -18,7 +18,7 @@ meta:
   price_at_strategy: 324.65
   fiscal_year: календарный
   scenario: portfolio/_scenarios/taiwan.yaml
-  source_artifact: 'inbox/received/NET_company_state_v1.0.yaml (другая LLM, партия 3, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)'
+  source_artifact: 'from_imma/NET_company_state_v1.0.yaml (другая LLM, партия 3, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)'
   price_source: 'Yahoo Finance chart (дозор)'
   price_at_registry: 324.65
   position: null

@@ -5,7 +5,7 @@ artifact: PLTR KPI Dashboard
 as_of: '2026-09-21'
 ticker: PLTR
 max_critical_kpis: 10
-source_artifact: inbox/received/PLTR_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+source_artifact: from_imma/PLTR_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
 zone_semantics:
   thresholds_provenance: model_assumption
 source_policy:

@@ -1,5 +1,5 @@
 # Реестр триггеров: Eli Lilly and Company (LLY)
-# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1).
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: from_imma/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
 schema_version: '1.0.4'
@@ -10,7 +10,7 @@ meta:
   exchange: NYSE
   yahoo_symbol: LLY
   registry_updated: '2026-09-21'
-  source_artifact: inbox/received/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+  source_artifact: from_imma/LLY_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/LLY?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 1152.93
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml

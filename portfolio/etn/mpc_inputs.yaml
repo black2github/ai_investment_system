@@ -5,7 +5,7 @@ version: '1.0'
 ticker: ETN
 artifact: mpc_inputs
 as_of: '2026-09-21'
-source_artifact: inbox/received/ETN_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+source_artifact: from_imma/ETN_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
 driver_exposure_vector:
   AI_COMPUTE_DEMAND: 1
   HYPERSCALER_CAPEX: 2

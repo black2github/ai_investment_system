@@ -4,7 +4,7 @@ version: '1.0'
 artifact: CRWV State Vector
 as_of: '2026-09-21'
 ticker: CRWV
-source_artifact: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
+source_artifact: from_imma/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
 purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
 semantics:
   evidence_required: true

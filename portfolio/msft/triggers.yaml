@@ -1,5 +1,5 @@
 # Реестр триггеров: Microsoft Corporation (MSFT)
-# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c).
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: from_imma/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
 schema_version: '1.0.4'
@@ -10,7 +10,7 @@ meta:
   exchange: NASDAQ
   yahoo_symbol: MSFT
   registry_updated: '2026-09-21'
-  source_artifact: inbox/received/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+  source_artifact: from_imma/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/MSFT?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 493.78
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml

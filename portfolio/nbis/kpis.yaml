@@ -5,7 +5,7 @@ artifact: NBIS KPI Dashboard
 as_of: '2026-09-21'
 ticker: NBIS
 max_critical_kpis: 11
-source_artifact: inbox/received/NBIS_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+source_artifact: from_imma/NBIS_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
 zone_semantics:
   thresholds_provenance: model_assumption
 source_policy:

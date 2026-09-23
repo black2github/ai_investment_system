@@ -195,7 +195,7 @@ data_quality:
   latest_financial_observation: '2026-06-30'
   market_observation: '2026-09-18'
   rule: До публикации Q3 финансовые KPI остаются на Q2; календарные события могут обновляться отдельно.
-source_artifact: inbox/received/SPCX_kpis_v1.0.yaml (другая LLM, 20.09.2026)
+source_artifact: from_imma/SPCX_kpis_v1.0.yaml (другая LLM, 20.09.2026)
 kpi_observation_rule: Каждое новое значение записывается в state.json → kpi_observations (kpi_id, period_end, value,
   source_url, verified). Цвет KPI = сравнение last_value с thresholds.
 supporting_metrics:

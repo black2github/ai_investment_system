@@ -5,7 +5,7 @@ artifact: CRWV KPI Dashboard
 as_of: '2026-09-21'
 ticker: CRWV
 max_critical_kpis: 10
-source_artifact: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
+source_artifact: from_imma/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
 zone_semantics:
   thresholds_provenance: model_assumption
 source_policy:

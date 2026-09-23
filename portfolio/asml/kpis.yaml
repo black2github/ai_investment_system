@@ -5,7 +5,7 @@ artifact: ASML KPI Dashboard
 as_of: '2026-09-21'
 ticker: ASML
 max_critical_kpis: 10
-source_artifact: inbox/received/ASML_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
+source_artifact: from_imma/ASML_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0c77f-f568-83eb-a790-606600afccb1)
 zone_semantics:
   thresholds_provenance: model_assumption
 source_policy:

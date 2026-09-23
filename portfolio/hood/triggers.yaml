@@ -1,5 +1,5 @@
 # Реестр триггеров: Robinhood Markets, Inc. (HOOD)
-# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f).
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: from_imma/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
 schema_version: '1.0.4'
@@ -10,7 +10,7 @@ meta:
   exchange: NASDAQ
   yahoo_symbol: HOOD
   registry_updated: '2026-09-21 (дозор новостей заведён: models-news-watch)'
-  source_artifact: inbox/received/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+  source_artifact: from_imma/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/HOOD?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 119.82
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml

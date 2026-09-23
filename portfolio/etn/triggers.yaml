@@ -20,7 +20,7 @@ meta:
   price_at_strategy: 397.80
   fiscal_year: календарный
   scenario: portfolio/_scenarios/taiwan.yaml
-  source_artifact: 'inbox/received/ETN_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)'
+  source_artifact: 'from_imma/ETN_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)'
   price_source: 'Yahoo Finance chart (дозор)'
   price_at_registry: 413.29
   position: null

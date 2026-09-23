@@ -1,5 +1,5 @@
 # Реестр триггеров: AST SpaceMobile, Inc. (ASTS)
-# Единственный нормативный дом того, ЧТО отслеживаем. Источник: inbox/received/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595).
+# Единственный нормативный дом того, ЧТО отслеживаем. Источник: from_imma/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595).
 # Классы: event | price | calendar | digest. Статусы: active | planned | due | done | dropped. Все пороги — model_assumption.
 # Тезис владельца по этой бумаге не записан: позиция фактическая (унаследована), см. thesis.md.
 schema_version: '1.0.4'
@@ -10,7 +10,7 @@ meta:
   exchange: NASDAQ
   yahoo_symbol: ASTS
   registry_updated: '2026-09-21 (patch v1.1: E-08 по KPI-11)'
-  source_artifact: inbox/received/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+  source_artifact: from_imma/ASTS_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
   price_source: https://query1.finance.yahoo.com/v8/finance/chart/ASTS?range=1d&interval=1d (поле meta.regularMarketPrice)
   price_at_registry: 58.52
   position: фактическая позиция владельца, см. portfolio/_portfolio.yaml

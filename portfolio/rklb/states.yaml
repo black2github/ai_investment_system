@@ -4,7 +4,7 @@ version: '1.0'
 artifact: RKLB State Vector
 as_of: '2026-09-21'
 ticker: RKLB
-source_artifact: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+source_artifact: from_imma/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
 purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
 semantics:
   evidence_required: true

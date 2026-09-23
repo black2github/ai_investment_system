@@ -1,7 +1,7 @@
 # STATUS.md — точка возврата инвестиционного дозора
 
 Обновлено: 2026-09-20 (сессия Claude Code «Агенты отслеживания инвестиционных событий», ветка-форк
-от 17.09; замороженная ветка «портфель» УСТАРЕЛА — всё её содержимое здесь и в inbox/).
+от 17.09; замороженная ветка «портфель» УСТАРЕЛА — всё её содержимое здесь и в to_imma/).
 Это статус-файл трека, аналог CRITICMARKUP_STATUS.md в рабочем проекте. Обновляется на вехах.
 
 ## ТОЧКА ВОЗВРАТА 2026-09-20: перед разбором переписки об уровне портфеля
@@ -13,19 +13,19 @@
   «<ID>: сделано/отложено/отклонено» записываются в state.json (проверено на SPCX-C-01);
 - открыто у владельца: ETN-P-01 (транш 1 Eaton) и SPCX-C-02 (транш DCA) — сделаны ли; брокер/TSE/лоты;
   доля валютного риска; уровень входа CRWD; капитализация (число акций из 10-Q) — не заведена;
-- уровень портфеля: НЕ начат. Разбор WAR-ECONOMY — `inbox/war-economy-2026-01-05.coverage.md`
+- уровень портфеля: НЕ начат. Разбор WAR-ECONOMY — `notes/war-economy-2026-01-05.coverage.md`
   (5 расширений модели: portfolio.yaml, триггеры scope=portfolio, сценарий как пакет действий,
   статус idea + ретро-дозор, история версий; 5 вопросов владельцу).
 
 Следующий шаг (договорённость 20.09): владелец даёт ссылку на длинную переписку с LLM о подходе к
 поддержке портфеля (финальный вид в конце переписки). Я: (1) делаю суммарную вырезку финального
-подхода в `inbox/portfolio-approach.summary.md`; (2) разбор «ложится / требует расширения /
+подхода в `notes/portfolio-approach.summary.md`; (2) разбор «ложится / требует расширения /
 противоречит принятому»; (3) список доработок OpenClaw и агента для объединения уровней компаний и
 портфеля; (4) блок идей для передачи другой LLM (готовый к вставке, как вопросник дозакрытия).
 Решения по портфелю принимаются с опорой на эту точку + вырезку, не на полный текст переписки.
 
 Выполнено 20.09: переписка прочитана выборочно (Constitution v1.0, сценарная сессия SPCX, интеграция с
-OpenClaw, заголовки артефактов и таблиц). Артефакты в `inbox/`: `portfolio-approach.summary.md`
+OpenClaw, заголовки артефактов и таблиц). Артефакты в `to_imma/`: `portfolio-approach.summary.md`
 (вырезка финального подхода), `portfolio-approach.assessment.md` (ложится / расширить / противоречит;
 план из 8 доработок; 4 вопроса владельцу), `portfolio-approach.ideas-for-llm.md` (блок для вставки в
 ChatGPT-проект). Главные развилки: какой список бумаг — портфель учёта (Core-10 vs корзина ИИ-инфра);
@@ -50,15 +50,15 @@ ChatGPT-проект — площадка обсуждения; (3) расчёт
 Следующее для движка: контракт и формулы от другой LLM → модели reverse valuation / условный MC / портфель.
 
 Вектор состояний SPCX внедрён 20.09 (пилот): `portfolio/spacex/{states.yaml, kpis.yaml}` (из
-`inbox/received/SPCX_*_v1.0.yaml`), в triggers.yaml переходы E-10..E-33 (axis / transition / level /
+`from_imma/SPCX_*_v1.0.yaml`), в triggers.yaml переходы E-10..E-33 (axis / transition / level /
 period; негативные переходы и C1→C2 переведены E1→E2 — вопрос автору), у legacy E-триггеров поле axis,
 шаг маршрута `vector`; state.json: scenario_state A2/B2/C1/D3/V4, state_transitions [], kpi_observations
 (10 KPI Q2 2026), pending: число акций и TTM revenue. AGENTS.md: раздел «Вектор состояний компании и
 переходы» (правила оценки, Decision Request, строка «Вектор» в карточке). invest-calc: модель
 `valuation_multiple` (KPI-10; тест 5/5; SPCX ≈ 89.8x → red). Интеграционный тест: one-shot
 `spacex-flight14-check` 23.09.2026 09:00 МСК (E-21 C1→C2 по первоисточникам → Decision Request);
-spacex-news-watch дополнен переходами Starship. Для другой LLM: `inbox/spcx-artifacts.feedback.md` +
-исправленные states.yaml, kpis.yaml, `inbox/spcx-triggers-E10-E33.yaml`. SpaceX report-check (Q3, дата
+spacex-news-watch дополнен переходами Starship. Для другой LLM: `to_imma/spcx-artifacts.feedback.md` +
+исправленные states.yaml, kpis.yaml, `to_imma/spcx-triggers-E10-E33.yaml`. SpaceX report-check (Q3, дата
 неизвестна) — ещё не заведён.
 
 Ответ другой LLM на замечания (20.09, share 6aaff5e9…, реплика 177) ПРИНЯТ: E1 у негативных переходов —
@@ -92,7 +92,7 @@ calc/: 102ffe6. Ждём calibration_v1.0 (запрос владельцу вы�
 calibration_v1.0 (другая LLM, 20.09, принята владельцем): r 11% (стресс 9–14%), терминальная FCF-маржа
 20/27/34%, мультипликатор 25/32/40x, траектория маржи two_phase_capex_normalization (Y1 −75%, Y2 −15%,
 Y3 +10%, Y4 = 0.7×terminal, Y5 = terminal; Y0 факт — только наблюдение) — файл `portfolio/spacex/calibration_v1.0.yaml`,
-исходник `inbox/received/SPCX_calibration_v1.0.md`. Движок `reverse_valuation` 1.1.0: явная траектория margin_path
+исходник `from_imma/SPCX_calibration_v1.0.md`. Движок `reverse_valuation` 1.1.0: явная траектория margin_path
 (тесты 13/13; НЕ закоммичено). ПЕРВЫЙ НОРМАТИВНЫЙ ПРОГОН SPCX (run 20260920T183913Z-reverse_valuation-ab1fb7,
 цена $152.71, equity $2.013 трлн): implied 5Y revenue CAGR 76.3% (сетка 61–97%, по ставке 73–81%), 2031 revenue
 $392 млрд, терминальный FCF $106 млрд, доля терминальной стоимости 99.96%; переходов оси Valuation нет — V4
@@ -125,7 +125,7 @@ ES5 −73%; медианная стоимость 2031 $0.9 трлн проти�
 ключевой сигнал системы, не торговый. Открыто у владельца: состав портфеля и позиции, выбор секторных индексов.
 
 Коммит lab 6686dd1 (portfolio_regime 1.0.0 + conditional_mc 1.0.0, тесты). Обратная связь по MC передана
-(`inbox/spcx-mc-run1.feedback.md`, с разделом согласования о составе портфеля). ВЛАДЕЛЕЦ 20.09: прежний Core-10 —
+(`to_imma/spcx-mc-run1.feedback.md`, с разделом согласования о составе портфеля). ВЛАДЕЛЕЦ 20.09: прежний Core-10 —
 гипотеза, а не вход; даже согласованный состав проверяется системой (пример SNPS: интеграция Ansys, долг).
 ОТВЕТ LLM (share 6ab03704…, реплика 201) ПРИНЯТ и развёрнут: `portfolio/_portfolio.yaml` → v1.1 (блок
 `initial_portfolio_hypothesis`: AVGO 15 / NVDA 15 / KLAC 14 / ASML 11 / SPCX 10 / SNPS 8 / RKLB 8 / CDNS 7 /
@@ -149,7 +149,7 @@ persistent growth и устойчивый valuation regime); (3) 3Y помеча
 конвейер по компаниям); (2) пул кандидатов = prior Core-10 + корзина ИИ-инфраструктуры 17.09 (ETN, SU, NET, 6506,
 6324, CRWD) + ideas/watch из `_ideas.yaml`; число бумаг ограничено (лимит — владелец), остальное интересное — постоянный
 мониторинг. Сделано: `portfolio/_candidates.yaml` v1.0 (пул 16 + ссылка на _ideas, стадии конвейера, sector_id
-provisional), `inbox/positions-input.template.yaml` (шаблон ввода фактических позиций/кэша/решений по триггерам —
+provisional), `notes/positions-input.template.yaml` (шаблон ввода фактических позиций/кэша/решений по триггерам —
 отправлен владельцу). Ждём: заполненный шаблон → positions/cash в `_portfolio.yaml`, owner_decision SPCX-C-02
 в state.json, первый прогон portfolio_regime (SOX покрывает только SEMICONDUCTORS, остальные — coverage flag).
 Для компаний пула кроме SPCX нет states/kpis/калибровок — заказывать у LLM после MC v1.1, партиями (сначала
@@ -163,7 +163,7 @@ constraints.owner_constraints (ментальная нагрузка частн�
 ROBO, XLK; предложение владельцу: SOFTWARE→IGV, SPACE→UFO, AI_INFRASTRUCTURE разбить (электрификация GRID,
 робототехника ROBO) — ждём решения, схему не менять до него. Владелец подтвердил: свой самостоятельно собранный
 портфель прогоняется через тот же анализ, модели компаний заказываются у LLM по каждой бумаге. ЖДЁМ полный
-список фактических позиций и кэша (шаблон inbox/positions-input.template.yaml) — пока известна только SPCX.
+список фактических позиций и кэша (шаблон notes/positions-input.template.yaml) — пока известна только SPCX.
 
 ## ТОЧКА ВОЗВРАТА 2026-09-21 (ночь): фактический портфель владельца загружен, первый прогон режима
 Владелец передал портфель: два счёта (P1, P2 — разные брокеры/страны), 16 бумаг + SPCX (8 акций, счёт не указан),
@@ -179,7 +179,7 @@ RKLB −57%, ASTS −56%, CRWV −43%). Концентрация: NBIS 33.4%, NV
 `_portfolio.yaml` → machine_outputs, nav_history (первый снимок; просадка портфеля 0 по построению).
 SPCX-C-01 закрыт («сделано», покупка 17.09; triggers.yaml status done), C-02 «сделано частично»; route остаётся opening.
 `portfolio/_candidates.yaml` v1.0: пул 25 записей (prior Core-10 + корзина ИИ-инфры + 8 фактических позиций вне них,
-held/weight_nav; ссылка на _ideas). Заказ моделей компаний для LLM — `inbox/company-models-batch1.request.md`
+held/weight_nav; ссылка на _ideas). Заказ моделей компаний для LLM — `to_imma/company-models-batch1.request.md`
 (13 компаний по весу: NBIS, NVDA, HOOD, LLY, META, ASML, RKLB, MSFT, NET, PLTR, ETN, ASTS, CRWV; states/kpis/E-триггеры/
 failure modes + driver_exposure_vector; калибровки RV/MC — после MC v1.1). Отправлен владельцу для передачи.
 Открыто у владельца: кэш P2; счёт SPCX; benchmark'и для AI_COMPUTE/INTERNET/HEALTHCARE/FINTECH; лимит числа бумаг.
@@ -189,7 +189,7 @@ POST /run, запись nav_history); карточка портфеля в Teleg
 ВЛАДЕЛЕЦ 21.09 (ответы): кэш P2 = 0; SPCX в P1; XLC/XLV/ARKF приняты → `_portfolio.yaml` обновлён, пересчёт снимка 18.09
 (run 20260920T212852Z-portfolio_regime-fe89a2): NAV $180 718, режим STRESS (широта 31%), взвешенная секторная −17.0%,
 покрытие benchmark 63.7% (без покрытия: NBIS/CRWV — AI_COMPUTE, решение LLM «внешнего benchmark нет» принято; GLD).
-ПАРТИЯ 1 МОДЕЛЕЙ КОМПАНИЙ (другая LLM, share 6ab04f22…, файлы в inbox/received/*_company_state_v1.0.yaml) ПРИНЯТА
+ПАРТИЯ 1 МОДЕЛЕЙ КОМПАНИЙ (другая LLM, share 6ab04f22…, файлы в from_imma/*_company_state_v1.0.yaml) ПРИНЯТА
 и разнесена по папкам portfolio/nbis, nvda, hood: states.yaml (5 осей каждая), kpis.yaml (10 KPI, verified: false),
 triggers.yaml в формате реестра (step vector, status planned — дозор событий не заведён), mpc_inputs.yaml (вектор
 экспозиций + failure modes), thesis.md (позиция унаследована, тезис владельца не записан), state.json (scenario_state
@@ -205,7 +205,7 @@ LLM: следующие партии по 3 — LLY+META+ASML, RKLB+MSFT+NET, PL
 web_fetch отдал 10-Q обрезанным, sec.gov без User-Agent → 403; правило добавлено в AGENTS.md «Проверка по отчёту»);
 NBIS 9/10 — KPI-08 расхождение (5 GW цель YE2026, не >5; C3 на границе) → вопрос LLM; HOOD 9/10 — KPI-03 (LTM Net
 Deposit growth 24%) не найден в тексте IR-релиза → вопрос LLM. Оси verified в state.json выставлены. Заказ партии 2
-(LLY, META, ASML) с результатом сверки — `inbox/company-models-batch2.request.md`, отдан владельцу.
+(LLY, META, ASML) с результатом сверки — `to_imma/company-models-batch2.request.md`, отдан владельцу.
 
 ПАРТИЯ 2 (другая LLM, share 6ab0c77f…, 21.09 утро) ПРИНЯТА: папки portfolio/lly, meta, asml (5 осей, 10 KPI, 10–11
 триггеров, mpc_inputs). Векторы: LLY D4+P3+M2+R3+F3; META A3+U2+P2+C3+R3 (HYPERSCALER_CAPEX = −2, AI_COMPUTE_DEMAND = +2 —
@@ -220,7 +220,7 @@ bookings Q2 не выдуманы — D3→D4 ждёт наблюдения). LL
 verified. Вечерняя сводка обходит 13 папок. Заведено batch02-facts-verify (0ae2e17f…, curl -A по правилу AGENTS.md).
 СВЕРКА ПАРТИИ 2 (batch02-facts-verify, Sonnet, curl -A по правилу): LLY 10/10, META 10/10, ASML 10/10, все 15 осей
 verified; выборочная проверка с хоста (Mounjaro $9,943M в релизе) сходится. Заказ партии 3 (RKLB, MSFT, NET) с
-результатом сверки — `inbox/company-models-batch3.request.md`, отдан владельцу. Очередь: приём партии 3 (конвертер
+результатом сверки — `to_imma/company-models-batch3.request.md`, отдан владельцу. Очередь: приём партии 3 (конвертер
 _apply_batch.py + AXIS_RU для новых осей; NET — привязать существующие NET-E-* к осям, не заменять) → сверка → партия 4
 (PLTR, ETN, ASTS) → CRWV с правилом AI_COMPUTE; параллельно — MC v1.1 после Flight 14 (23.09).
 
@@ -231,14 +231,14 @@ portfolio/msft (A4+S1+C3+M3+R3; HYPERSCALER_CAPEX −2 при AI_COMPUTE_DEMAND 
 шаг маршрута vector, legacy NET-E-01..05 / X-01..03 привязаны к осям (axis, kpis по binding_guidance LLM), переходы
 NET-E-06..E-11 (ID присвоил дозор — LLM дала без ID); state.json дополнен scenario_state (G3+N3+R3+P1+A1);
 NET-KPI-08/09 (Workers AI) — null/not_separately_disclosed, verified: null. Вечерняя сводка обходит 15 папок.
-Заведено batch03-facts-verify. Черновик заказа партии 4 (PLTR, ETN, ASTS) — inbox/company-models-batch4.request.md.
+Заведено batch03-facts-verify. Черновик заказа партии 4 (PLTR, ETN, ASTS) — to_imma/company-models-batch4.request.md.
 Позиции без модели после партии 4: CRWV (отдельно, с правилом AI_COMPUTE), GLD/UFO (не компании), SPCX (есть).
 
 СВЕРКА ПАРТИИ 3: задание batch03-facts-verify УПАЛО — OpenRouter 402 (кредиты: $16 всего, ~$14.9 использовано, ~$1.1
 осталось; fallback Opus не спас — тот же ключ). Сверено С ХОСТА (curl -A, документы целиком): RKLB 10/10, MSFT 10/10,
 NET 7/7 (+3 не раскрываются), все 15 осей verified; записано в state.json с verified_by host-check. Замечание LLM: RKLB-KPI-08
 «>90» строкой → число + lower_bound. AGENTS.md: у exec параметр timeoutSeconds (агент слал timeout). Заказ партии 4
-(PLTR, ETN, ASTS) с результатом сверки — `inbox/company-models-batch4.request.md`, отдан владельцу. БЛОКЕР: пополнить
+(PLTR, ETN, ASTS) с результатом сверки — `to_imma/company-models-batch4.request.md`, отдан владельцу. БЛОКЕР: пополнить
 OpenRouter — иначе все агентские задания (news-watch 09:00/09:05, сводка 20:00, Flight 14 23.09 09:00) падают по 402.
 
 OpenRouter ПОПОЛНЕН владельцем 21.09 (утро). ПАРТИЯ 4 (share 6ab0d288…, 21.09) ПРИНЯТА: portfolio/pltr (C3+G3+I1+P3+R3;
@@ -249,11 +249,11 @@ Service revenue = 0; failure modes общие со SPACE-кластером RKLB
 (orders/backlog → Electrical_Americas_Demand, guidance → Organic_Growth), добавлены ETN-E-04..E-10; вектор A3+G3+O3+M3+I2;
 taxonomy_gap ETN (ELECTRIFICATION_GRID, UTILITY_CAPEX, INDUSTRIAL_RESHORING, AEROSPACE_CYCLE) — второй сигнал (после LLY),
 что 16-драйверная таксономия MPC узка. RKLB-KPI-08 → 90 + lower_bound (kpis v1.1). Сводка обходит 17 папок. Заведено
-batch04-facts-verify. Черновик заказа партии 5 (CRWV + правило AI_COMPUTE + расширение таксономии) — inbox/company-models-batch5.request.md.
+batch04-facts-verify. Черновик заказа партии 5 (CRWV + правило AI_COMPUTE + расширение таксономии) — to_imma/company-models-batch5.request.md.
 После партии 5 модели есть у ВСЕХ компаний портфеля (16 бумаг: 14 компаний + GLD, UFO).
 СВЕРКА ПАРТИИ 4 (batch04-facts-verify, Sonnet, после пополнения OpenRouter): PLTR 10/10, ETN 10/10, ASTS 10/10; 14 из 15 осей
 verified — ASTS Regulatory_Spectrum без KPI (только качественные свидетельства) → вопрос LLM; ASTS-KPI-02 период 90 vs 50 дней.
-Заказ партии 5 (CRWV + правило AI_COMPUTE §6 + driver_taxonomy v1.1) с результатом — `inbox/company-models-batch5.request.md`,
+Заказ партии 5 (CRWV + правило AI_COMPUTE §6 + driver_taxonomy v1.1) с результатом — `to_imma/company-models-batch5.request.md`,
 отдан владельцу.
 
 ## ТОЧКА ВОЗВРАТА 2026-09-21 (день): партия 5 принята — модели есть у всех 14 компаний портфеля
@@ -279,7 +279,7 @@ v1.0 + план следующего этапа (MC v1.1 после Flight 14 23
 оптимизатор); дозор событий по vector-триггерам 14 компаний (news-watch — стоимость, решение владельца); еженедельный
 снимок режима (автоматизация с корзиной).
 СВЕРКА ПАРТИИ 5: CRWV 10/10, ASTS-KPI-11 ✓ (Regulatory_Spectrum verified). Итого 14 компаний / 141 KPI подтверждены.
-Следующий запрос LLM (SPCX mpc_inputs v1.0 + план этапа калибровок/MPC) — `inbox/next-stage.request.md`, отдан владельцу.
+Следующий запрос LLM (SPCX mpc_inputs v1.0 + план этапа калибровок/MPC) — `to_imma/next-stage.request.md`, отдан владельцу.
 Коммит lab 785b973 (synthetic_basket 1.0.0 + portfolio_regime 1.1.0 + тесты). ВЛАДЕЛЕЦ 21.09: дозор новостей — только NBIS,
 NVDA, HOOD → задание models-news-watch (ежедневно 09:10 МСК, Sonnet, fallback DeepSeek; событийные переходы по новостям,
 Decision Request по AGENTS.md); в triggers.yaml трёх папок: automations models-news-watch (событийные: NBIS-E-06, NVDA-E-11,
@@ -297,7 +297,7 @@ MSFT, PLTR, ETN, HOOD; NET/ASML — модифицированный), capital_i
 pre_service_or_milestone_driven (ASTS, RKLB/Neutron); I1–I5 → общий латентный фактор + неполно коррелированные шоки по
 горизонтам/узлам (не один ранг); MPC-пилот на портфеле — как только готовы NBIS+NVDA+HOOD, не дожидаясь 13.
 Последовательность: 23.09 Flight 14 → MC v1.1 ‖ Optimizer+Stability → калибровки по 2 → MPC по мере готовности → полный
-Optimizer → кандидаты вне портфеля и пара SNPS/CDNS. Ответ владельцу/LLM — inbox/plan-accept.request.md (архетипы и
+Optimizer → кандидаты вне портфеля и пара SNPS/CDNS. Ответ владельцу/LLM — to_imma/plan-accept.request.md (архетипы и
 Optimizer можно заказывать до 23.09).
 
 ## ТОЧКА ВОЗВРАТА 2026-09-21 (вечер): методология этапа MPC/Optimizer получена
@@ -321,7 +321,7 @@ inclusion stable ≥80% / conditional 50–80% / unstable <50%, weight spread �
 21.5% > 20%; top-3 69.3% > 50%; AI_COMPUTE 33.9% > 30%; кэш 0.5% < 5%. В _candidates.yaml: mc_archetype у 14 компаний.
 ДВИЖОК: реализация optimizer/stability невозможна до совместных MC-путей (общий сценарный/латентный слой между
 компаниями — в спецификациях пока нет определения cross-company latent factors и driver→parameter mapping для knockout) →
-вопросы LLM в inbox/methodology-review.request.md. Порядок: 23.09 Flight 14 → MC v1.1 (+ обобщение движка под архетипы)
+вопросы LLM в to_imma/methodology-review.request.md. Порядок: 23.09 Flight 14 → MC v1.1 (+ обобщение движка под архетипы)
 → калибровки по 2 → MPC-пилот. ЖДЁМ ВЛАДЕЛЬЦА: утверждение лимитов (в т.ч. sector 30% при AI_COMPUTE 34%).
 
 JOINT SIMULATION LAYER v1.0 (share 6ab141b7…, 21.09 вечер) ПРИНЯТ — оба пробела закрыты: (1) это НЕ Scenario Engine
@@ -349,7 +349,7 @@ joint_simulation (root AR(1) + драйверы + mapping → параметры
 выжившего. Мой ответ: оба эффекта реальны (скошенность доходности Бессембиндера vs Барбер/Одеан); не запрещать, а
 бюджетировать и измерять проспективно. Владельцу понравились: два лимита (вложенный капитал vs рыночная стоимость),
 потолок из бюджета потери (cap = L_max / просадка хвоста), пакет «слой убеждения» ВМЕСТЕ с проспективной проверкой через
-год. Заказ inbox/conviction-layer.request.md ОТПРАВЛЕН владельцем LLM 21.09 вечер без правок; ждём спецификацию Conviction Overlay v1.0. Поправки владельца:
+год. Заказ to_imma/conviction-layer.request.md ОТПРАВЛЕН владельцем LLM 21.09 вечер без правок; ждём спецификацию Conviction Overlay v1.0. Поправки владельца:
 NBIS просадка от максимума ~17% (моя 22% — по закрытию 18.09); CRWV −43% от его цены покупки (cost basis, не 12M max).
 
 CONVICTION OVERLAY v1.0 (share 6ab18923…, 21.09 поздний вечер) ПОЛУЧЕН и развёрнут (methodology/, 26 файлов): Conviction_Overlay
@@ -432,7 +432,7 @@ MPC; сделано только для SPCX; блокеры: MC v1.1 (посл�
 новые покупки, не оценка. Порядок: оценить портфель → потом решать докупки.
 
 Как продолжить в свежей сессии: «продолжаем инвестиционный дозор, уровень портфеля, точка возврата
-STATUS.md 20.09» → прочитать этот файл, `inbox/*.coverage.md`, `inbox/portfolio-approach.summary.md`
+STATUS.md 20.09» → прочитать этот файл, `to_imma/*.coverage.md`, `notes/portfolio-approach.summary.md`
 (если уже есть), затем `openclaw cron list` для проверки живости.
 
 ## Готово и работает
@@ -451,7 +451,7 @@ STATUS.md 20.09» → прочитать этот файл, `inbox/*.coverage.md
 ## Прервано здесь: уровень портфеля (пример WAR-ECONOMY)
 
 Разобрана вторая переписка «WAR-ECONOMY (05.01.26. Тайвань 2027 + Венесуэла)» (Evernote):
-черновик покрытия — `inbox/war-economy-2026-01-05.coverage.md` (25 триггеров-кандидатов,
+черновик покрытия — `notes/war-economy-2026-01-05.coverage.md` (25 триггеров-кандидатов,
 14 идей, 5 расширений модели, 5 вопросов владельцу). Онбординг НЕ выполнен, автоматизации
 не заведены. Решение владельца: отложить, вернуться позже.
 
@@ -479,9 +479,9 @@ https://chatgpt.com/share/6aabc9a0-43ac-83eb-8e3c-75599a68e5d4; полный т�
 Решение о покупке в переписке НЕ принято, триггеры без чисел, два несогласованных рейтинга.
 
 Сделано 17.09:
-- `inbox/ai-infra-chatgpt.coverage.md` — разбор: что извлекается (11 событийных триггеров без
+- `notes/ai-infra-chatgpt.coverage.md` — разбор: что извлекается (11 событийных триггеров без
   порогов, правила-эвристики, сценарные оценки), 9 пробелов;
-- `inbox/ai-infra-chatgpt.questions.md` — вопросник из 18 вопросов + шаблон финального блока,
+- `to_imma/ai-infra-chatgpt.questions.md` — вопросник из 18 вопросов + шаблон финального блока,
   готов к вставке в тот же чат ChatGPT одним сообщением;
 - `templates/final-block-template.md` — ОБЩИЙ шаблон финального блока «для дозора» (v1) с
   соответствием разделов A–J файлам реестра.
@@ -490,7 +490,7 @@ https://chatgpt.com/share/6aabc9a0-43ac-83eb-8e3c-75599a68e5d4; полный т�
 - папки `portfolio/{etn,su,net,6506,6324,crwd}/` (thesis, triggers, state с pending_verification);
   `portfolio/_ideas.yaml` (watch/idea/rejected с ценами Yahoo 17.09); `portfolio/_scenarios/taiwan.yaml`
   (TAIWAN-S1..S3); `portfolio/_watch/watch-prices.js` (многотикерный сторож, тест 7/7);
-- таблица покрытия: `inbox/ai-infra-chatgpt.onboarding.md` (что перенесено / не перенесено и почему);
+- таблица покрытия: `notes/ai-infra-chatgpt.onboarding.md` (что перенесено / не перенесено и почему);
 - автоматизации: `aiinfra-price-watch` 3afb8580… (30 мин, ETN/SU/NET уровни входа; ETN-P-01 уже
   выполнен на старте — первое срабатывание ожидаемо), `aiinfra-news-watch` 48f257f2… (09:05 МСК, Sonnet:
   NET-E-03, 6506-E-04, 6324-E-04/05, CRWD-E-04, стадии TAIWAN), one-shot `aiinfra-report-check-6506-2026q2`
@@ -518,7 +518,7 @@ Harmonic Drive — РАСХОЖДЕНИЕ: рост orders Q1 FY2027 +37%, а н
 
 1. Новая сессия Claude Code в этом же проекте: сказать «продолжаем инвестиционный дозор,
    точка возврата STATUS.md в workspace-invest». Память подскажет раскладку OpenClaw и трек.
-2. Прочитать этот файл и `inbox/war-economy-2026-01-05.coverage.md`.
+2. Прочитать этот файл и `notes/war-economy-2026-01-05.coverage.md`.
 3. Проверить живость: `docker exec openclaw-builder openclaw cron list` и
    `openclaw cron runs <id>` для четырёх заданий; state.json на предмет пунктов без owner_decision.
 4. Для уровня портфеля: получить ответы на 5 вопросов, затем расширять модель в порядке 1→2→3→4→5.
@@ -591,51 +591,53 @@ _run_id/_runs_dir (сайдкар ПЕРЕСОБРАН, image 0.1.0, up -d); por
 ## IMA Foundation v1.0 (пакет другой LLM, 2026-09-22): разбор, НЕ принят
 Share 6ab22e7c; пакет в Downloads/Investment_Modeling_Agent_v1.0_foundation (24 файла: манифест роли, реестр скиллов
 IMA-01..08, state machine, промежуточные артефакты, provenance, capability/adapter contracts, гейты G0–G8,
-conformance suite, golden cases v0.1). Разбор — inbox/ima-foundation.review.md. Вывод: направление верное, пакет
+conformance suite, golden cases v0.1). Разбор — to_imma/ima-foundation.review.md. Вывод: направление верное, пакет
 описывает только сторону LLM; отсутствуют Company Artifact Schema, Source Policy, протокол дозора (G8), авторитет
 присвоения ID (интегратор!), машиночитаемые golden cases; предпосылка conformance — git в workspace (нет);
 исполнитель conformance — ДРУГАЯ модель (ChatGPT-проект загрязнён принятыми ответами). Порядок: git → схема артефактов
 → G5-валидатор в invest-calc → conformance NBIS. Вопрос LLM переформулирован в три заказа (§4 разбора). Решение
 владельца: отправлять ли в таком виде.
 
-Заказ по IMA (три заказа: схема артефактов + source policy + протокол дозора; Roles and Seams + golden cases v0.2 + исполнитель conformance; контракты IMA-09/10/11 по схеме company_mc 2.3.0) — inbox/ima-foundation.request.md, вложения Downloads/ima-foundation-to-llm. НЕ отправлен.
+Заказ по IMA (три заказа: схема артефактов + source policy + протокол дозора; Roles and Seams + golden cases v0.2 + исполнитель conformance; контракты IMA-09/10/11 по схеме company_mc 2.3.0) — to_imma/ima-foundation.request.md, вложения Downloads/ima-foundation-to-llm. НЕ отправлен.
 
-IMA, ответ LLM на разбор (share 6ab2c2b4): принят почти целиком; интегратор оставлен как минимальная детерминированная роль (ID + слияние), Candidate Schema отделена от Artifact Schema, порядок §11 LLM принят, conformance — чужие модели (Sonnet 5 + DeepSeek). Партия 1 заказа — Candidate Schema + Company Artifact Schema с критериями приёмки по файлам NBIS: inbox/ima-acceptance-gap.request.md. НЕ отправлен. Очередь на нашей стороне: git в workspace-invest (решение владельца), затем artifact_validator G5 в invest-calc после партии 1.
+IMA, ответ LLM на разбор (share 6ab2c2b4): принят почти целиком; интегратор оставлен как минимальная детерминированная роль (ID + слияние), Candidate Schema отделена от Artifact Schema, порядок §11 LLM принят, conformance — чужие модели (Sonnet 5 + DeepSeek). Партия 1 заказа — Candidate Schema + Company Artifact Schema с критериями приёмки по файлам NBIS: to_imma/ima-acceptance-gap.request.md. НЕ отправлен. Очередь на нашей стороне: git в workspace-invest (решение владельца), затем artifact_validator G5 в invest-calc после партии 1.
 
 GIT В WORKSPACE-INVEST ЗАВЕДЁН 22.09: .git существовал с 20.09 без коммитов; добавлен .gitignore (*.npz, *.lnk, *.zip), идентичность black, первый коммит df6029d (снимок S0, 238 файлов) — точка отсчёта для conformance/golden cases. Правило: коммиты в workspace — по запросу владельца; git запускать в контейнере от node (docker exec -u node). Файлы data.lnk и portfolio/nbis.zip — вне репозитория (игнор).
 
-IMA партия 1 (share 6ab2ca2c): Candidate Schema v1.0 + Company Artifact Schema v1.0 получены (inbox/received), проверены независимо (jsonschema): NBIS — ошибки ровно по §7, после миграции 0; по остальным 12 моделям — пробелы схемы (sources как объект, ASTS evidence_type/observation_window_days = golden cases GC-005/006, legacy-реестры NET/ETN, semantics.*). ПРИНЯТО УСЛОВНО; заказ патча v1.0.1 — inbox/ima-party1.feedback.md (10 пунктов), отчёт — inbox/ima-party1.validation-report.md. НЕ отправлен. Далее на нашей стороне: миграция + artifact_validator (G5) в invest-calc после v1.0.1; SPCX — отдельное решение.
+IMA партия 1 (share 6ab2ca2c): Candidate Schema v1.0 + Company Artifact Schema v1.0 получены (from_imma), проверены независимо (jsonschema): NBIS — ошибки ровно по §7, после миграции 0; по остальным 12 моделям — пробелы схемы (sources как объект, ASTS evidence_type/observation_window_days = golden cases GC-005/006, legacy-реестры NET/ETN, semantics.*). ПРИНЯТО УСЛОВНО; заказ патча v1.0.1 — to_imma/ima-party1.feedback.md (10 пунктов), отчёт — to_imma/ima-party1.validation-report.md. НЕ отправлен. Далее на нашей стороне: миграция + artifact_validator (G5) в invest-calc после v1.0.1; SPCX — отдельное решение.
 
-IMA патч v1.0.1 (share 6ab2ce78): ПРИНЯТ. Сухой прогон миграции MIG-101..111 (scratchpad _migrate_v101_dryrun.py) + Draft 2020-12: 13 моделей — 0 ошибок; остаток 5 ошибок только в 4 реестрах без модели (meta.target_weight/lot, triggers[].priority) → заказ v1.0.2 в inbox/ima-party1-v101.feedback.md (НЕ отправлен; можно совместить с партией 2). Пакет v1.0.1 — inbox/received. GIT: origin = https://github.com/black2github/ai_investment_system.git (push — по запросу владельца, с хоста из C:\openclaw-lab\data\workspace-invest; core.fileMode=false, чтобы хост и контейнер сходились). Очередь: боевая миграция S0→S1 + artifact_validator (G5) в invest-calc — план ниже, ждёт подтверждения.
+IMA патч v1.0.1 (share 6ab2ce78): ПРИНЯТ. Сухой прогон миграции MIG-101..111 (scratchpad _migrate_v101_dryrun.py) + Draft 2020-12: 13 моделей — 0 ошибок; остаток 5 ошибок только в 4 реестрах без модели (meta.target_weight/lot, triggers[].priority) → заказ v1.0.2 в to_imma/ima-party1-v101.feedback.md (НЕ отправлен; можно совместить с партией 2). Пакет v1.0.1 — from_imma. GIT: origin = https://github.com/black2github/ai_investment_system.git (push — по запросу владельца, с хоста из C:\openclaw-lab\data\workspace-invest; core.fileMode=false, чтобы хост и контейнер сходились). Очередь: боевая миграция S0→S1 + artifact_validator (G5) в invest-calc — план ниже, ждёт подтверждения.
 
 ## МИГРАЦИЯ S0 → S1 ВЫПОЛНЕНА (22.09 вечер) + валидатор G5
 Схемы v1.0.1 — нормативный дом methodology/Company_{Candidate,Artifact}_Schema_v1.0.1.yaml. Утилита lab calc/tools/migrate_artifacts_v1_0_1.py (построчный патч по номерам строк ruamel; инварианты: результат патча == эталонной миграции в памяти, ID/состояния/условия неизменны, CRLF/комментарии сохранены, идемпотентность; сухой прогон по умолчанию, --apply — запись). Применена к 17 папкам portfolio (13 моделей full_model + 4 реестра registry_only; spacex НЕ мигрирован — старый формат, отдельное решение): 74 файла, +1189/−210 строк. Валидатор — модель artifact_validator 1.0.0 в invest-calc (jsonschema добавлен в requirements, образ пересобран): JSON Schema Draft 2020-12 + правила ART-REF-*/CAND-REF-* кодом; режим candidate для пакетов LLM. Прогон через сайдкар run 20260922T192306Z-artifact_validator-da61bb: 11 pass / 6 fail — все 6 только по полям, ожидающим v1.0.2 (meta.target_weight/lot, triggers[].priority; заказ уже у LLM). 34 предупреждения ART-REF-015: действия legacy-реестров 6324/6506/SU/NET/ETN вида «Купить 2% портфеля» (реестры 17.09, до методологии) — решение владельца: переформулировать или принять как owner_judgment. AGENTS.md дозора дополнен форматом наблюдений (число|null + observation_qualifier, value_type, provenance). Тесты lab: 84/84 (32 новых: test_migrate_artifacts, test_artifact_validator). НЕ закоммичено: lab (validator, tool, tests, registry, requirements) и workspace (S1: 74 файла + AGENTS.md + inbox + methodology + STATUS).
 
-ПАУЗА ПОКУПОК ПО LEGACY-РЕЕСТРАМ (решение владельца 22.09): 22 триггера с действием «купить» (NET/ETN/SU P-01..03, 6324 P-01..03 + E-01..05, 6506 P-01..03 + E-01/E-03) → status: paused, прежний статус и причина в note (обратимо). Наблюдение цены/событий/отчётов продолжается; уведомление о покупке не отправляется (правило в AGENTS.md). Валидатор: ART-REF-015 не предупреждает по paused/dropped/done. Статус paused в enum схемы пока нет → дополнение к заказу v1.0.2: inbox/ima-v102-addendum.request.md (НЕ отправлен); до патча 5 реестров дают ошибки схемы «paused не в enum» — ожидаемо. Остаток предупреждений: 12 у F-триггеров (фиксация прибыли, «продать») 6324/6506/ETN — решение владельца не принято. SPCX: решение владельца — оставить как есть; путь принят: после Flight 14 файлы SPCX → LLM на расширение схемы (v1.0.3), затем миграция той же утилитой + ручная правка E-34..36 (transition null). Теги git workspace: S0=df6029d, S1=0823caf (локальные; push по запросу). Тесты lab читают исходники из тега S0 (git show), не из текущего workspace.
+ПАУЗА ПОКУПОК ПО LEGACY-РЕЕСТРАМ (решение владельца 22.09): 22 триггера с действием «купить» (NET/ETN/SU P-01..03, 6324 P-01..03 + E-01..05, 6506 P-01..03 + E-01/E-03) → status: paused, прежний статус и причина в note (обратимо). Наблюдение цены/событий/отчётов продолжается; уведомление о покупке не отправляется (правило в AGENTS.md). Валидатор: ART-REF-015 не предупреждает по paused/dropped/done. Статус paused в enum схемы пока нет → дополнение к заказу v1.0.2: to_imma/ima-v102-addendum.request.md (НЕ отправлен); до патча 5 реестров дают ошибки схемы «paused не в enum» — ожидаемо. Остаток предупреждений: 12 у F-триггеров (фиксация прибыли, «продать») 6324/6506/ETN — решение владельца не принято. SPCX: решение владельца — оставить как есть; путь принят: после Flight 14 файлы SPCX → LLM на расширение схемы (v1.0.3), затем миграция той же утилитой + ручная правка E-34..36 (transition null). Теги git workspace: S0=df6029d, S1=0823caf (локальные; push по запросу). Тесты lab читают исходники из тега S0 (git show), не из текущего workspace.
 
-ПАРТИЯ 2 + v1.0.2 ПОЛУЧЕНЫ (share 6ab2da66, inbox/received): v1.0.2 (3 поля реестров) — проверен по 17 папкам: чисто, кроме 22 «paused не в enum» (наше изменение после заказа → v1.0.3); Source Policy v1.0 — соответствует заказу, классификация миграции совпадает, 30 KPI без source_url (IR) корректны; расхождение: UA дозора research@example.com = «fake contact» → нужен реальный контакт (решение владельца). Dozor Protocol v1.0 — принят для KPI; к v1.1: область сверки (состояния осей, события), место хранения отчётов и связь с state.json (предложено portfolio/<tk>/_verify/<run_id>.json + kpi_observations.verification_run_id + state.json.verification). Ответ + заказ v1.0.3 (paused) — inbox/ima-party2.feedback.md (НЕ отправлен; addendum переименован под v1.0.3). Очередь после v1.0.3: миграция S2 (bump 1.0.3 + paused), Source Policy/Dozor → methodology, AGENTS.md сверка по протоколу, режим валидатора для отчётов дозора, живой прогон NBIS. Открыто у владельца: контакт для SEC UA; пауза 12 F-триггеров («продать»); Flight 14 23.09 09:00 → заказ калибровок.
+ПАРТИЯ 2 + v1.0.2 ПОЛУЧЕНЫ (share 6ab2da66, from_imma): v1.0.2 (3 поля реестров) — проверен по 17 папкам: чисто, кроме 22 «paused не в enum» (наше изменение после заказа → v1.0.3); Source Policy v1.0 — соответствует заказу, классификация миграции совпадает, 30 KPI без source_url (IR) корректны; расхождение: UA дозора research@example.com = «fake contact» → нужен реальный контакт (решение владельца). Dozor Protocol v1.0 — принят для KPI; к v1.1: область сверки (состояния осей, события), место хранения отчётов и связь с state.json (предложено portfolio/<tk>/_verify/<run_id>.json + kpi_observations.verification_run_id + state.json.verification). Ответ + заказ v1.0.3 (paused) — to_imma/ima-party2.feedback.md (НЕ отправлен; addendum переименован под v1.0.3). Очередь после v1.0.3: миграция S2 (bump 1.0.3 + paused), Source Policy/Dozor → methodology, AGENTS.md сверка по протоколу, режим валидатора для отчётов дозора, живой прогон NBIS. Открыто у владельца: контакт для SEC UA; пауза 12 F-триггеров («продать»); Flight 14 23.09 09:00 → заказ калибровок.
 
 22.09 поздно: контакт SEC User-Agent = azbuka09@yahoo.com (владелец; AGENTS.md); 12 F-триггеров «продать» (6324/6506/ETN/NET/SU) → paused по подтверждению владельца (итого 34 paused); валидатор: предупреждений 0, ошибки только «paused не в enum» до v1.0.3. Заказ v1.0.3 отправлен владельцем (в тексте 22 триггера — enum тот же). Ждём ответ LLM.
 
 ## v1.0.3 ПРИНЯТ, СНИМОК S2 ПОДГОТОВЛЕН (22.09 ночь)
-Патч v1.0.3 (share 6ab2de18): status paused в enum, ART-REF-015 только для active/planned/due, state.json.verification + kpi_observations[].verification_run_id (dozor_runtime, без backfill — MIG-116), as_of документа (date) ≠ as_of прогона (date-time); раскладка отчётов дозора portfolio/<tk>/_verify/<run_id>.json подтверждена; Dozor v1.1 = axis_items[]/event_items[] в ТОМ ЖЕ отчёте после живого прогона NBIS. Проверено: 0 ошибок по 17 папкам. Сделано: methodology/ ← Company_Artifact_Schema_v1.0.3 (v1.0.1 убран из methodology в inbox/received), Source_Policy_v1.0, Dozor_Verification_Protocol_v1.0; миграция MIG-114 (bump 1.0.3 той же утилитой, 74 файла, идемпотентно); artifact_validator 1.1.0 (схема 1.0.3, кандидат 1.0.1, режим dozor_report по output_report_schema + DZR-001..005); прогон сайдкара 20260922T200623Z-artifact_validator-5d5fbc: 17/17 pass, 0 предупреждений; AGENTS.md — раздел «Сверка по первоисточникам» по протоколу (роль, статусы, допуски, технический отказ, отчёт в _verify/, что пишется в state.json, итоги, область v1.0 = KPI). Тесты lab 85/85. Очередь: первый живой прогон дозора по протоколу (NBIS) → вход для Dozor v1.1; партия 3 (Roles & Seams, Integration Protocol, Golden Cases v0.2, Acceptance Record); Flight 14 23.09 09:00 → заказ калибровок NBIS/NVDA.
+Патч v1.0.3 (share 6ab2de18): status paused в enum, ART-REF-015 только для active/planned/due, state.json.verification + kpi_observations[].verification_run_id (dozor_runtime, без backfill — MIG-116), as_of документа (date) ≠ as_of прогона (date-time); раскладка отчётов дозора portfolio/<tk>/_verify/<run_id>.json подтверждена; Dozor v1.1 = axis_items[]/event_items[] в ТОМ ЖЕ отчёте после живого прогона NBIS. Проверено: 0 ошибок по 17 папкам. Сделано: methodology/ ← Company_Artifact_Schema_v1.0.3 (v1.0.1 убран из methodology в from_imma), Source_Policy_v1.0, Dozor_Verification_Protocol_v1.0; миграция MIG-114 (bump 1.0.3 той же утилитой, 74 файла, идемпотентно); artifact_validator 1.1.0 (схема 1.0.3, кандидат 1.0.1, режим dozor_report по output_report_schema + DZR-001..005); прогон сайдкара 20260922T200623Z-artifact_validator-5d5fbc: 17/17 pass, 0 предупреждений; AGENTS.md — раздел «Сверка по первоисточникам» по протоколу (роль, статусы, допуски, технический отказ, отчёт в _verify/, что пишется в state.json, итоги, область v1.0 = KPI). Тесты lab 85/85. Очередь: первый живой прогон дозора по протоколу (NBIS) → вход для Dozor v1.1; партия 3 (Roles & Seams, Integration Protocol, Golden Cases v0.2, Acceptance Record); Flight 14 23.09 09:00 → заказ калибровок NBIS/NVDA.
 
-ПЕРВЫЙ ЖИВОЙ ПРОГОН ДОЗОРА ПО ПРОТОКОЛУ v1.0 (NBIS, 22.09 23:14–23:17 МСК, Sonnet 5, одноразовая задача): run_id verify-NBIS-20260922T201443Z, отчёт portfolio/nbis/_verify/, итог PASS_WITH_DECLARED_PENDING — 10/11 KPI подтверждены (5 match, 5 с нормализацией), KPI-11 not_found (кандидат pending_verification), PATCH_REQUIRED пуст; отчёт прошёл валидатор (mode dozor_report, run …-62bb0f) с первого раза, папка после записи state.json — pass (…-f971f5); 3 curl без 403 (UA с контактом владельца работает), ~12–15 мин. state.json: 11 наблюдений с verification_run_id, поле verification, info_log; канонические файлы не тронуты. Обратная связь агента — inbox/dozor-run1.feedback.md: (1) граница not_found/not_disclosed для «guidance есть, факта нет» — нужен явный пример; (2) approximate в источнике vs exact в кандидате при совпавшем числе — критерий не прописан (KPI-05); (3) as_of у sources = дата фиксации ссылки, а не подачи документа → предложение поля filing_date; (4) verified у осей (4 из 5 true) без run_id — v1.1 должна решить судьбу старого механизма; (5) «2 квартала подряд» — где считать; (6) диапазон из одной фразы — одной цитаты достаточно. Вход для заказа Dozor v1.1. НЕ закоммичено (state.json, _verify/, 2 прогона, feedback).
+ПЕРВЫЙ ЖИВОЙ ПРОГОН ДОЗОРА ПО ПРОТОКОЛУ v1.0 (NBIS, 22.09 23:14–23:17 МСК, Sonnet 5, одноразовая задача): run_id verify-NBIS-20260922T201443Z, отчёт portfolio/nbis/_verify/, итог PASS_WITH_DECLARED_PENDING — 10/11 KPI подтверждены (5 match, 5 с нормализацией), KPI-11 not_found (кандидат pending_verification), PATCH_REQUIRED пуст; отчёт прошёл валидатор (mode dozor_report, run …-62bb0f) с первого раза, папка после записи state.json — pass (…-f971f5); 3 curl без 403 (UA с контактом владельца работает), ~12–15 мин. state.json: 11 наблюдений с verification_run_id, поле verification, info_log; канонические файлы не тронуты. Обратная связь агента — to_imma/dozor-run1.feedback.md: (1) граница not_found/not_disclosed для «guidance есть, факта нет» — нужен явный пример; (2) approximate в источнике vs exact в кандидате при совпавшем числе — критерий не прописан (KPI-05); (3) as_of у sources = дата фиксации ссылки, а не подачи документа → предложение поля filing_date; (4) verified у осей (4 из 5 true) без run_id — v1.1 должна решить судьбу старого механизма; (5) «2 квартала подряд» — где считать; (6) диапазон из одной фразы — одной цитаты достаточно. Вход для заказа Dozor v1.1. НЕ закоммичено (state.json, _verify/, 2 прогона, feedback).
 as_of у источников sec.gov в states.yaml 13 моделей заменён на фактическую дату подачи по SEC index.json (было 2026-09-21 = дата фиксации ссылки; например NBIS 2026-08-12, ASML 2026-07-15, NVDA 2026-08-26); 13 источников не на sec.gov и 2 с недоступным индексом оставлены (см. STATUS). Валидатор после прогона дозора и правки дат: 17/17 pass (…-186ef4).
 
-22.09 поздно: замечание владельца по Telegram — статусы по-русски (оригинал в скобках) → словарь label_ru в AGENTS.md (п. 8 раздела сверки); заказ Dozor v1.1 подготовлен — inbox/dozor-v11.request.md (axis_items/event_items в том же отчёте, правила not_found/not_disclosed и квалификаторов, recorded_at, счётчик «N кварталов» вне G8, label_ru, патч Artifact Schema v1.0.4), вложения Downloads/dozor-v11-to-llm (отчёт, feedback, state.json, раздел AGENTS.md). НЕ отправлен. НЕ закоммичено: AGENTS.md, inbox/dozor-v11.request.md, STATUS.
+22.09 поздно: замечание владельца по Telegram — статусы по-русски (оригинал в скобках) → словарь label_ru в AGENTS.md (п. 8 раздела сверки); заказ Dozor v1.1 подготовлен — to_imma/dozor-v11.request.md (axis_items/event_items в том же отчёте, правила not_found/not_disclosed и квалификаторов, recorded_at, счётчик «N кварталов» вне G8, label_ru, патч Artifact Schema v1.0.4), вложения Downloads/dozor-v11-to-llm (отчёт, feedback, state.json, раздел AGENTS.md). НЕ отправлен. НЕ закоммичено: AGENTS.md, to_imma/dozor-v11.request.md, STATUS.
 
 ## DOZOR v1.1 + ARTIFACT SCHEMA v1.0.4 ПРИНЯТЫ (22.09 ночь), снимок S3 подготовлен
-Share 6ab2e866, пакет Downloads/Dozor_Verification_Protocol_v1.1_and_Artifact_v1.0.4 (inbox/received). Проверено: схема отчёта v1.1 корректна; живой отчёт v1.0 валиден по v1.1 (обратная совместимость); пример v1.1 (11 KPI + 5 осей + 1 событие) валиден и проходит валидатор сайдкара (…-64a1bc, DZR-001..010); v1.0.4 — 0 ошибок по 17 папкам. Внедрено: methodology ← Dozor_Verification_Protocol_v1.1 (.yaml/.md), Company_Artifact_Schema_v1.0.4 (v1.0.3 и протокол v1.0 → inbox/received); миграция MIG-117 (bump 1.0.4, 73 файла, идемпотентно); artifact_validator 1.2.0 (схема 1.0.4, протокол 1.1: runtime_verified/patch_required по status_registry, оси DZR-006/007, события DZR-008/009, итог DZR-010); прогон сайдкара …-849e9c: 17/17 pass; AGENTS.md — раздел сверки переписан под v1.1 (оси, события, квалификатор, «N кварталов» вне G8, legacy_unlinked, старшинство итогов, label_ru из status_registry). Тесты lab 86/86. Очередь: второй живой прогон по v1.1 — NBIS (оси + события) и ASTS (качественная ось, бинарный KPI, окно 50 дней); затем прогоны по остальным 11 моделям; партия 3 (Roles & Seams, Integration Protocol, Golden Cases v0.2, Acceptance Record). Flight 14 23.09 09:00 → заказ калибровок NBIS/NVDA.
+Share 6ab2e866, пакет Downloads/Dozor_Verification_Protocol_v1.1_and_Artifact_v1.0.4 (from_imma). Проверено: схема отчёта v1.1 корректна; живой отчёт v1.0 валиден по v1.1 (обратная совместимость); пример v1.1 (11 KPI + 5 осей + 1 событие) валиден и проходит валидатор сайдкара (…-64a1bc, DZR-001..010); v1.0.4 — 0 ошибок по 17 папкам. Внедрено: methodology ← Dozor_Verification_Protocol_v1.1 (.yaml/.md), Company_Artifact_Schema_v1.0.4 (v1.0.3 и протокол v1.0 → from_imma); миграция MIG-117 (bump 1.0.4, 73 файла, идемпотентно); artifact_validator 1.2.0 (схема 1.0.4, протокол 1.1: runtime_verified/patch_required по status_registry, оси DZR-006/007, события DZR-008/009, итог DZR-010); прогон сайдкара …-849e9c: 17/17 pass; AGENTS.md — раздел сверки переписан под v1.1 (оси, события, квалификатор, «N кварталов» вне G8, legacy_unlinked, старшинство итогов, label_ru из status_registry). Тесты lab 86/86. Очередь: второй живой прогон по v1.1 — NBIS (оси + события) и ASTS (качественная ось, бинарный KPI, окно 50 дней); затем прогоны по остальным 11 моделям; партия 3 (Roles & Seams, Integration Protocol, Golden Cases v0.2, Acceptance Record). Flight 14 23.09 09:00 → заказ калибровок NBIS/NVDA.
 
-ВТОРОЙ ЖИВОЙ ПРОГОН ДОЗОРА — ПРИЁМКА v1.1 (NBIS, 23.09 00:01–00:05 МСК): run verify-NBIS-20260922T210122Z, protocol 1.1.0, итог PASS_WITH_DECLARED_PENDING: 11 KPI (4 match, 6 с нормализацией, KPI-11 not_found), 5 осей (4 state_supported с criterion_checks по KPI отчёта, Capacity_Secured pending), 2 события (E-01 факт раскрытия подтверждён первоисточником, fired не создан; E-06 event_unconfirmed — условие не выполнено, guidance повышен 4→5 GW). Валидатор: первый заход отчёта отклонён (DZR-004: event_contradicted без patch_required) — агент исправил статус, второй pass; папка pass. state.json: scenario_state всех 5 осей с verification_run_id (legacy_unlinked снят), events_reported 1 запись с run_id, наблюдения перепривязаны к run2 (ссылка на run1 потеряна — по моему указанию; для v1.2 лучше список verification_run_ids или отдельные наблюдения). Интегратор: kpis.yaml NBIS-KPI-05 observation_qualifier → approximate (по qualifier_patch_suggested). Обратная связь агента inbox/dozor-run2.feedback.md — вход для v1.2: (1) статус condition_not_met для активных триггеров-наблюдателей без заявленного события (event_contradicted требует патч, а патчить нечего); (2) claim_type: kpi_threshold_check | discrete_event, чтобы не смешивать регулярные проверки условий и разовые события; (3) criteria: null + pending_reason для осей с каноническим pending_verification; (4) вторичные новости (Palantir-партнёрство, повышение цен) без первичного документа в event_items не внесены — правило двух СМИ не выполнено. НЕ закоммичено: state.json, kpis.yaml, _verify/, feedback, 4 прогона, STATUS. Далее: ASTS после проверки Flight 14 (09:00); заказ Dozor v1.2 — после ASTS (накопить два прогона).
+ВТОРОЙ ЖИВОЙ ПРОГОН ДОЗОРА — ПРИЁМКА v1.1 (NBIS, 23.09 00:01–00:05 МСК): run verify-NBIS-20260922T210122Z, protocol 1.1.0, итог PASS_WITH_DECLARED_PENDING: 11 KPI (4 match, 6 с нормализацией, KPI-11 not_found), 5 осей (4 state_supported с criterion_checks по KPI отчёта, Capacity_Secured pending), 2 события (E-01 факт раскрытия подтверждён первоисточником, fired не создан; E-06 event_unconfirmed — условие не выполнено, guidance повышен 4→5 GW). Валидатор: первый заход отчёта отклонён (DZR-004: event_contradicted без patch_required) — агент исправил статус, второй pass; папка pass. state.json: scenario_state всех 5 осей с verification_run_id (legacy_unlinked снят), events_reported 1 запись с run_id, наблюдения перепривязаны к run2 (ссылка на run1 потеряна — по моему указанию; для v1.2 лучше список verification_run_ids или отдельные наблюдения). Интегратор: kpis.yaml NBIS-KPI-05 observation_qualifier → approximate (по qualifier_patch_suggested). Обратная связь агента to_imma/dozor-run2.feedback.md — вход для v1.2: (1) статус condition_not_met для активных триггеров-наблюдателей без заявленного события (event_contradicted требует патч, а патчить нечего); (2) claim_type: kpi_threshold_check | discrete_event, чтобы не смешивать регулярные проверки условий и разовые события; (3) criteria: null + pending_reason для осей с каноническим pending_verification; (4) вторичные новости (Palantir-партнёрство, повышение цен) без первичного документа в event_items не внесены — правило двух СМИ не выполнено. НЕ закоммичено: state.json, kpis.yaml, _verify/, feedback, 4 прогона, STATUS. Далее: ASTS после проверки Flight 14 (09:00); заказ Dozor v1.2 — после ASTS (накопить два прогона).
 
 ## 23.09 УТРО: Flight 14, переключения, ASTS, заказ калибровок
 Flight 14 (задача spacex-flight14-check, 09:00 МСК, 66 с, ~$0.34 по usage из cron runs): полёт перенесён SpaceX на 28.09.2026 (space.com; spacex.com технически не открылся) — запись E1 в info_log SPCX, переход C1→C2 не оценивался, вектор A2/B2/C1/D3 без изменений; доставлено в Telegram. Повторная проверка — по факту полёта 28.09 (задача не пересоздана — решение владельца).
 Затраты (решения владельца 23.09): вечерняя сводка 0e661c05 → Haiku 4.5 (fallback Sonnet 5); три дозора новостей ОТКЛЮЧЕНЫ (spacex/aiinfra/models-news-watch, не удалены — откат возможен), вместо них один portfolio-news-watch 88c05803 (09:00 МСК, Haiku 4.5, три группы в одном запуске, все правила/шаблоны сохранены, правило paused и политика ИИ добавлены). Ценовые дозоры РАБОТАЮТ как задумано (trigger script: 263 оценки за неделю, модель вызывается только при смене зоны; SPCX $154.72 зона 0; ETN/SU/NET выше уровней) — в оба задания добавлено ПРАВИЛО ПАУЗЫ (paused-триггер: уровень → info_log, без fired и уведомления). Факт: cron runs хранит usage по прогонам → можно считать стоимость точно.
 ASTS: прогон сверки по v1.1 запущен (dozor-verify-asts-run1 fc826f2d) — качественная ось, бинарный KPI-11, окно 50 дней, derived KPI-09.
-Заказ калибровок подготовлен: inbox/mc-v11-calibrations.request.md (A: спецификация Conditional MC v1.1 под движок + JSON Schema калибровки; B: SPCX v1.1 в формате v2 с учётом переноса Flight 14; C: RV + MC калибровки NBIS и NVDA), вложения Downloads/mc-v11-to-llm. НЕ отправлен. Очередь: результат ASTS → заказ Dozor v1.2 → отправка обоих заказов (порядок за владельцем).
+Заказ калибровок подготовлен: to_imma/mc-v11-calibrations.request.md (A: спецификация Conditional MC v1.1 под движок + JSON Schema калибровки; B: SPCX v1.1 в формате v2 с учётом переноса Flight 14; C: RV + MC калибровки NBIS и NVDA), вложения Downloads/mc-v11-to-llm. НЕ отправлен. Очередь: результат ASTS → заказ Dozor v1.2 → отправка обоих заказов (порядок за владельцем).
 
-ASTS ПРОГОН v1.1 ЗАВЕРШЁН (run verify-ASTS-20260923T060714Z, 7 мин, 3.17M токенов, 95% кэш, ~$1.33): 11/11 KPI подтверждены (KPI-04 qualifier approximate → гармонизирован интегратором в kpis.yaml; KPI-09 derived пересчитан, 0%), 5/5 осей state_supported (качественная Regulatory_Spectrum по цитате 10-Q + KPI-11; Commercial_Contracting со списком MNO как source_evidence), 10 переходов event_unconfirmed (условия не выполнены — из-за этого итог PASS_WITH_DECLARED_PENDING вместо PASS), events_reported 0, fired 0. Валидатор: отчёт pass, папки asts+nbis pass (…-d7dd70). Feedback — inbox/dozor-run3-asts.feedback.md. ЗАКАЗ Dozor v1.2 + Artifact Schema v1.0.5 подготовлен: inbox/dozor-v12.request.md (condition_not_met; transition_checks vs discrete events; criteria null для pending-осей; entailment окон; база found у derived; qualifier_patch_suggested только в отчёте; verification_run_ids список), вложения Downloads/dozor-v12-to-llm. НЕ отправлен. Стоимость сверки по протоколу: ~$1.3 за компанию (Sonnet 5). НЕ закоммичено: spacex/state.json (E1 Flight 14), asts (_verify, state.json, kpis.yaml), nbis (—), inbox (2 заказа, feedback), прогоны валидатора, STATUS.
+ASTS ПРОГОН v1.1 ЗАВЕРШЁН (run verify-ASTS-20260923T060714Z, 7 мин, 3.17M токенов, 95% кэш, ~$1.33): 11/11 KPI подтверждены (KPI-04 qualifier approximate → гармонизирован интегратором в kpis.yaml; KPI-09 derived пересчитан, 0%), 5/5 осей state_supported (качественная Regulatory_Spectrum по цитате 10-Q + KPI-11; Commercial_Contracting со списком MNO как source_evidence), 10 переходов event_unconfirmed (условия не выполнены — из-за этого итог PASS_WITH_DECLARED_PENDING вместо PASS), events_reported 0, fired 0. Валидатор: отчёт pass, папки asts+nbis pass (…-d7dd70). Feedback — to_imma/dozor-run3-asts.feedback.md. ЗАКАЗ Dozor v1.2 + Artifact Schema v1.0.5 подготовлен: to_imma/dozor-v12.request.md (condition_not_met; transition_checks vs discrete events; criteria null для pending-осей; entailment окон; база found у derived; qualifier_patch_suggested только в отчёте; verification_run_ids список), вложения Downloads/dozor-v12-to-llm. НЕ отправлен. Стоимость сверки по протоколу: ~$1.3 за компанию (Sonnet 5). НЕ закоммичено: spacex/state.json (E1 Flight 14), asts (_verify, state.json, kpis.yaml), nbis (—), inbox (2 заказа, feedback), прогоны валидатора, STATUS.
 
-MC v1.1 ЧАСТЬ A ПОЛУЧЕНА (share 6ab3ca76): Company_Conditional_Monte_Carlo_Specification_v1.1 + Company_MC_Calibration_Schema_v1.0 + fixtures A/B/C (inbox/received/MC_v1.1_partA). Проверено на живом движке: схема валидна, fixtures проходят схему и исполняются (mapping_warnings пусты, детерминизм, *_meta игнорируются загрузчиком); методологический Joint_Simulation_Layer_Schema принимается как joint_layer_spec. Расхождения: truncated_normal — движок sd, схема sigma; pert lambda не в схеме; fixtures A/B не проходят robustness (допуск 25%). Правило robustness движка = спецификации (75%/75%). Решения (мои, для подтверждения владельцем): state_transition_effects в v2 не вводить (калибровка = текущий вектор, после перехода — новая версия), not_mapped не вводить (отказ G5), C1 принят. Приёмка + заказ схемы v1.0.1 и частей B/C — inbox/mc-v11-partA.feedback.md (НЕ отправлен). Очередь у нас: режим calibration в artifact_validator (схема + MC-G5-001..012 + сухой прогон движка).
+MC v1.1 ЧАСТЬ A ПОЛУЧЕНА (share 6ab3ca76): Company_Conditional_Monte_Carlo_Specification_v1.1 + Company_MC_Calibration_Schema_v1.0 + fixtures A/B/C (from_imma/MC_v1.1_partA). Проверено на живом движке: схема валидна, fixtures проходят схему и исполняются (mapping_warnings пусты, детерминизм, *_meta игнорируются загрузчиком); методологический Joint_Simulation_Layer_Schema принимается как joint_layer_spec. Расхождения: truncated_normal — движок sd, схема sigma; pert lambda не в схеме; fixtures A/B не проходят robustness (допуск 25%). Правило robustness движка = спецификации (75%/75%). Решения (мои, для подтверждения владельцем): state_transition_effects в v2 не вводить (калибровка = текущий вектор, после перехода — новая версия), not_mapped не вводить (отказ G5), C1 принят. Приёмка + заказ схемы v1.0.1 и частей B/C — to_imma/mc-v11-partA.feedback.md (НЕ отправлен). Очередь у нас: режим calibration в artifact_validator (схема + MC-G5-001..012 + сухой прогон движка).
+
+ПЕРЕИМЕНОВАНИЕ КАТАЛОГОВ ПЕРЕПИСКИ (решение владельца 23.09): inbox/received → from_imma (всё полученное от IMMA), inbox/<наши тексты> → to_imma (заказы, приёмки, обратная связь дозора, разборы-вложения), внутренние документы → notes; IMMA = Investment Modeling & Methodology Agent — роль внешней LLM (в пакете Foundation роль названа IMA; просьба привести имя к IMMA — в следующий заказ). Перенос через git mv (132 переименования), ссылки в 63 файлах (source_artifact в канонических файлах, STATUS, README, AGENTS, to_imma) переписаны байтово без переформатирования; исторические упоминания «inbox» в старых записях STATUS и в уже отправленных заказах оставлены как есть. Валидатор 17/17 pass (…-6edcb7), тесты lab 86/86 (пути в тестах обновлены). НЕ закоммичено (workspace + lab tests).

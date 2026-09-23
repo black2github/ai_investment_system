@@ -5,7 +5,7 @@ version: '1.0'
 ticker: CRWV
 artifact: mpc_inputs
 as_of: '2026-09-21'
-source_artifact: inbox/received/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
+source_artifact: from_imma/CRWV_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)
 driver_exposure_vector:
   AI_COMPUTE_DEMAND: 2
   HYPERSCALER_CAPEX: 2

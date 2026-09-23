@@ -4,7 +4,7 @@ version: '1.0'
 artifact: NVDA State Vector
 as_of: '2026-09-21'
 ticker: NVDA
-source_artifact: inbox/received/NVDA_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+source_artifact: from_imma/NVDA_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
 purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
 semantics:
   evidence_required: true

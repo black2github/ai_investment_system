@@ -4,7 +4,7 @@ ticker: SPCX
 artifact: mpc_inputs
 as_of: '2026-09-21'
 driver_taxonomy_version: '1.1'
-source_artifact: inbox/received/SPCX_mpc_inputs_v1.0.yaml (другая LLM, 21.09.2026, share 6ab13b5b-bbc8-83eb-9f43-f996394edc9b)
+source_artifact: from_imma/SPCX_mpc_inputs_v1.0.yaml (другая LLM, 21.09.2026, share 6ab13b5b-bbc8-83eb-9f43-f996394edc9b)
 status: complete
 methodology_refs:
   mpc_schema: Marginal_Portfolio_Contribution_Schema_v1.0

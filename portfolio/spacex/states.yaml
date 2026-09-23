@@ -3,7 +3,7 @@ version: '1.1'
 artifact: SPCX State Vector
 as_of: '2026-09-20'
 ticker: SPCX
-source_artifact: inbox/received/SPCX_states_v1.0.yaml (другая LLM, 20.09.2026)
+source_artifact: from_imma/SPCX_states_v1.0.yaml (другая LLM, 20.09.2026)
 purpose: 'Оси и состояния компании. Условия переходов НЕ здесь: нормативный дом — triggers.yaml (SPCX-E-10..E-33,
   поле transition). Текущий вектор ведётся в state.json → scenario_state; здесь — снимок на дату.'
 source_policy:

@@ -4,7 +4,7 @@ version: '1.0'
 artifact: NET State Vector
 as_of: '2026-09-21'
 ticker: NET
-source_artifact: inbox/received/NET_company_state_v1.0.yaml (другая LLM, партия 3, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+source_artifact: from_imma/NET_company_state_v1.0.yaml (другая LLM, партия 3, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
 purpose: 'Оси и состояния компании поверх реестра владельца от 17.09: legacy-триггеры NET-E-01..05 / X-01..03 сохранены и
   привязаны к осям (поле axis), переходы состояний — NET-E-06..E-11.'
 semantics:

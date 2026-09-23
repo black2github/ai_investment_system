@@ -5,7 +5,7 @@ version: '1.0'
 ticker: MSFT
 artifact: mpc_inputs
 as_of: '2026-09-21'
-source_artifact: inbox/received/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+source_artifact: from_imma/MSFT_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
 driver_exposure_vector:
   AI_COMPUTE_DEMAND: 2
   HYPERSCALER_CAPEX: -2

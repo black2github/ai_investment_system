@@ -4,7 +4,7 @@ version: '1.0'
 artifact: ETN State Vector
 as_of: '2026-09-21'
 ticker: ETN
-source_artifact: inbox/received/ETN_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
+source_artifact: from_imma/ETN_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0d288-5728-83eb-a10c-88faa5926595)
 purpose: 'Оси и состояния компании поверх реестра владельца от 17.09: legacy-триггеры сохранены и привязаны к осям (поле axis),
   переходы состояний — ETN-E-04..ETN-E-10.'
 semantics:

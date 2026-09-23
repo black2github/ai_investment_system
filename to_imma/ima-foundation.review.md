@@ -47,10 +47,10 @@
    Прогон «воспроизведи NBIS без принятого результата» на нём не измеряет переносимость. Исполнителем
    первого прогона должна быть другая модель (через OpenRouter в OpenClaw: Sonnet 5 / DeepSeek), а ChatGPT —
    независимый рецензент (IMA-08), что как раз соответствует `review_policy.independent_model_preferred`.
-7. **Транспорт в Model Adapter.** Сейчас адаптер для ChatGPT — это файл заказа в `inbox/`, share-ссылка,
+7. **Транспорт в Model Adapter.** Сейчас адаптер для ChatGPT — это файл заказа в `to_imma/`, share-ссылка,
    папка Downloads и конвертер на хосте. Adapter Contract должен содержать транспорт задачи и результата
    (ручной share / cron-сообщение агенту / API), иначе Invocation/Result envelope существуют только на
-   бумаге. Наш формат заказов (`inbox/*.request.md`) надо выровнять с Skill_Runtime_Envelope.
+   бумаге. Наш формат заказов (`to_imma/*.request.md`) надо выровнять с Skill_Runtime_Envelope.
 8. **Детерминированные гейты G0–G5 без исполнителя.** Естественный дом — модель `artifact_validator` в
    реестре invest-calc (версия попадает в `calculation_engine_version`). Начать с G5 (schema + ID +
    references) — дешевле всего, у нас уже есть конвертеры. Без реализации гейтов пакет остаётся

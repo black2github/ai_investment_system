@@ -4,7 +4,7 @@ version: '1.0'
 artifact: HOOD State Vector
 as_of: '2026-09-21'
 ticker: HOOD
-source_artifact: inbox/received/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
+source_artifact: from_imma/HOOD_company_state_v1.0.yaml (другая LLM, партия 1, 2026-09-21, share https://chatgpt.com/share/6ab04f22-52b4-83eb-ab75-17495e90bb0f)
 purpose: Оси и состояния компании. Условия переходов — в triggers.yaml (поле transition). Текущий вектор — state.json → scenario_state.
 semantics:
   evidence_required: true

@@ -5,7 +5,7 @@ artifact: RKLB KPI Dashboard
 as_of: '2026-09-21'
 ticker: RKLB
 max_critical_kpis: 10
-source_artifact: inbox/received/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
+source_artifact: from_imma/RKLB_company_state_v1.0.yaml (другая LLM, 2026-09-21, share https://chatgpt.com/share/6ab0ce43-9540-83eb-8e39-ec1d3e21002c)
 zone_semantics:
   thresholds_provenance: model_assumption
 source_policy:

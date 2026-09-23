@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-23T15:00:00Z",
+  "updated": "2026-09-23T19:04:05Z",
   "price": {
     "last": 222.27,
     "last_at": "2026-09-18",
@@ -37,6 +37,11 @@
       "timestamp": "2026-09-23T15:00:00Z",
       "kind": "calc",
       "summary": "Интеграция калибровок (23.09): calibration_v1.0.yaml, mc_calibration_v1.0.2.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260923T133451Z-reverse_valuation-012879, 20260923T144500Z-company_mc-4a7d0d"
+    },
+    {
+      "timestamp": "2026-09-23T19:04:05Z",
+      "kind": "verification",
+      "summary": "Сверка по Dozor Verification Protocol v1.2 (гейт G8), run_id verify-NVDA-20260923T190405Z: итог PASS_WITH_DECLARED_PENDING; KPI {'verified_match': 4, 'verified_match_with_normalization': 6}; оси {'state_supported': 5}; переходы {'not_met': 10, 'pending_history': 1} (pending: ['NVDA-E-11']); события {'event_unconfirmed': 1} (pending: ['NVDA-E-11']). Отчёт записан исполнителем-дозором; runtime дописан интегратором по отчёту (прогон прерван ошибкой биллинга OpenRouter после записи отчёта)."
     }
   ],
   "scenario_state": {
@@ -46,14 +51,16 @@
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q"
+      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q",
+      "verification_run_id": "verify-NVDA-20260923T190405Z"
     },
     "Gross_Margin": {
       "state": "M3",
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
-      "verified": true
+      "verified": true,
+      "verification_run_id": "verify-NVDA-20260923T190405Z"
     },
     "Customer_Breadth": {
       "state": "B4",
@@ -61,7 +68,8 @@
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q"
+      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q",
+      "verification_run_id": "verify-NVDA-20260923T190405Z"
     },
     "Supply_Commitment": {
       "state": "S2",
@@ -69,7 +77,8 @@
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q"
+      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q",
+      "verification_run_id": "verify-NVDA-20260923T190405Z"
     },
     "China_Access": {
       "state": "X2",
@@ -77,7 +86,8 @@
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
-      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q"
+      "verified_note": "host-check 21.09.2026: Data Center $89,023 (+117%), H1 $164,269 vs $80,208; ACIE $40,313 / H1 $72,508 vs $33,780; commitments $279B; provisions $784M+$201M; China <1%, «effectively foreclosed» — все в 10-Q",
+      "verification_run_id": "verify-NVDA-20260923T190405Z"
     }
   },
   "state_transitions": [],
@@ -92,7 +102,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "observation_qualifier": "exact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     },
     {
       "kpi_id": "NVDA-KPI-02",
@@ -104,7 +119,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "observation_qualifier": "exact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     },
     {
       "kpi_id": "NVDA-KPI-03",
@@ -116,7 +136,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "observation_qualifier": "exact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     },
     {
       "kpi_id": "NVDA-KPI-04",
@@ -128,7 +153,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "observation_qualifier": "exact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     },
     {
       "kpi_id": "NVDA-KPI-05",
@@ -141,7 +171,12 @@
       "verified": true,
       "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "observation_qualifier": "exact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     },
     {
       "kpi_id": "NVDA-KPI-06",
@@ -154,7 +189,12 @@
       "verified": true,
       "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "observation_qualifier": "exact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     },
     {
       "kpi_id": "NVDA-KPI-07",
@@ -167,7 +207,12 @@
       "verified": true,
       "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "observation_qualifier": "exact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     },
     {
       "kpi_id": "NVDA-KPI-08",
@@ -180,7 +225,12 @@
       "verified": true,
       "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "observation_qualifier": "exact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     },
     {
       "kpi_id": "NVDA-KPI-09",
@@ -194,7 +244,11 @@
       "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
       "observation_qualifier": "upper_bound",
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     },
     {
       "kpi_id": "NVDA-KPI-10",
@@ -207,7 +261,12 @@
       "verified": true,
       "verified_by": "host-check: curl -A по 10-Q целиком (Claude, 21.09.2026)",
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "observation_qualifier": "exact",
+      "verification_run_id": "verify-NVDA-20260923T190405Z",
+      "verification_run_ids": [
+        "verify-NVDA-20260923T190405Z"
+      ]
     }
   ],
   "calc_runs": [
@@ -261,5 +320,10 @@
       "paths_file": "portfolio/_runs/20260923T144500Z-company_mc-4a7d0d-paths.npz"
     }
   ],
-  "schema_version": "1.0.5"
+  "schema_version": "1.0.5",
+  "verification": {
+    "run_id": "verify-NVDA-20260923T190405Z",
+    "as_of": "2026-09-23T19:04:05Z",
+    "overall_status": "PASS_WITH_DECLARED_PENDING"
+  }
 }

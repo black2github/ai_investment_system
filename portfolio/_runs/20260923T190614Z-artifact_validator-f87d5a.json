@@ -1,0 +1,946 @@
+{
+  "run_id": "20260923T190614Z-artifact_validator-f87d5a",
+  "model": "artifact_validator",
+  "version": "1.5.0",
+  "seed": 190374,
+  "inputs": {
+    "mode": "dozor_report",
+    "report": {
+      "protocol_version": "1.2.0",
+      "run_id": "verify-NVDA-20260923T190405Z",
+      "ticker": "NVDA",
+      "as_of": "2026-09-23T19:04:05Z",
+      "inputs": {
+        "kpis_ref": "portfolio/nvda/kpis.yaml",
+        "source_registry_ref": "portfolio/nvda/states.yaml",
+        "evidence_pack_ref": null,
+        "artifact_schema_version": "1.0.5",
+        "state_ref": "portfolio/nvda/state.json",
+        "triggers_ref": "portfolio/nvda/triggers.yaml"
+      },
+      "items": [
+        {
+          "kpi_id": "NVDA-KPI-01",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 1.06,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "YoY fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Second-quarter FY2027 press release, opening financial highlights",
+            "evidence_excerpt": "NVIDIA today reported revenue for the second quarter ended July 26, 2026, of $96.2 billion, up 18% from the previous quarter and up 106% from a year ago."
+          },
+          "found": {
+            "value": 1.06,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "YoY fraction",
+            "period": "Q2 FY2027 (quarter ended 2026-07-26)"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NVDA-KPI-02",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 1.17,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "YoY fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Second-quarter FY2027 press release, Data Center segment bullet",
+            "evidence_excerpt": "Second-quarter revenue was $89.0 billion, up 18% from the previous quarter and up 117% from a year ago."
+          },
+          "found": {
+            "value": 1.17,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "YoY fraction",
+            "period": "Q2 FY2027 (quarter ended 2026-07-26)"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NVDA-KPI-03",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 0.75,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Second-quarter FY2027 press release, financial highlights",
+            "evidence_excerpt": "For the quarter, GAAP and non-GAAP gross margins were both 75.0%."
+          },
+          "found": {
+            "value": 0.75,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "Q2 FY2027 (quarter ended 2026-07-26)"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NVDA-KPI-04",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.6624,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly",
+            "formula": "63.734/96.221"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_10Q",
+            "source_class": "regulatory_filing",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Condensed consolidated statements of income, Three Months Ended Jul 26, 2026",
+            "evidence_excerpt": "Revenue $ 96,221 ... Operating income 63,734"
+          },
+          "found": {
+            "value": 0.6624,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "Q2 FY2027 (quarter ended 2026-07-26)",
+            "formula_recomputed_value": 0.6624
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source components (three months ended 2026-07-26, $ millions): Operating income $63,734; Revenue $96,221",
+              "candidate-basis derived_fact: 63,734/96,221 = 0.662397 -> 0.6624"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NVDA-KPI-05",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.4185,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "semiannual",
+            "formula": "74.421/177.837"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_10Q",
+            "source_class": "regulatory_filing",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Condensed consolidated statements of cash flows; income statement, Six Months Ended Jul 26, 2026",
+            "evidence_excerpt": "Net cash provided by operating activities 74,421 ... Total revenue $ 96,221 ... $ 177,837 (Six Months Ended Jul 26, 2026)"
+          },
+          "found": {
+            "value": 0.4185,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "H1 FY2027 (six months ended 2026-07-26)",
+            "formula_recomputed_value": 0.41854
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source components (six months ended 2026-07-26, $ millions): Net cash from operating activities $74,421; Revenue $177,837",
+              "candidate-basis derived_fact: 74,421/177,837 = 0.418538 -> 0.4185"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NVDA-KPI-06",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.725,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "x",
+            "period": "quarterly",
+            "formula": "279/(96.221*4)"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_10Q",
+            "source_class": "regulatory_filing",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Item 2 MD&A, Liquidity and Capital Resources",
+            "evidence_excerpt": "We have significantly increased our supply and capacity commitments from $119 billion last quarter to $279 billion as of July 26, 2026 to meet future demand."
+          },
+          "found": {
+            "value": 0.725,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "x",
+            "period": "Q2 FY2027 (as of 2026-07-26), annualized quarterly revenue basis",
+            "formula_recomputed_value": 0.72477
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source components: supply commitments $279,000M; quarterly revenue $96,221M",
+              "candidate-basis derived_fact: 279,000 / (96,221*4) = 279,000/384,884 = 0.72488 -> 0.725"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NVDA-KPI-07",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.0102,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly",
+            "formula": "0.985/96.221"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_10Q",
+            "source_class": "regulatory_filing",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Notes to condensed consolidated financial statements, inventory/excess purchase obligations note",
+            "evidence_excerpt": "Provisions for inventory and excess inventory purchase obligations totaled $985 million and $2.1 billion for the second quarter and first half of fiscal year 2027, respectively."
+          },
+          "found": {
+            "value": 0.01024,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "Q2 FY2027 (quarter ended 2026-07-26)",
+            "formula_recomputed_value": 0.01024
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source component (directly disclosed total for the quarter): provisions $985M; quarterly revenue $96,221M",
+              "candidate-basis derived_fact: 985/96,221 = 0.010236 -> 0.0102 (registry formula text '0.985/96.221' interpreted as $985M, same result)"
+            ],
+            "numeric_difference": 4e-05,
+            "relative_difference": 0.0004
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": "10-Q даёт единую цифру $985 млн за квартал напрямую (не сумму двух отдельных компонент); совпадает с зарегистрированной формулой по величине."
+        },
+        {
+          "kpi_id": "NVDA-KPI-08",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.4528,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly",
+            "formula": "40.313/89.023"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_10Q",
+            "source_class": "regulatory_filing",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Revenue disaggregation note, Data Center by end market, Three Months Ended Jul 26, 2026",
+            "evidence_excerpt": "Hyperscale 48,710 ... AI Clouds, Industrial, & Enterprise 40,313 ... Edge Computing 7,198 ... [Data Center total 89,023]"
+          },
+          "found": {
+            "value": 0.45283,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "Q2 FY2027 (quarter ended 2026-07-26)",
+            "formula_recomputed_value": 0.45283
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source components: ACIE revenue $40,313M; Data Center revenue $89,023M",
+              "candidate-basis derived_fact: 40,313/89,023 = 0.45283"
+            ],
+            "numeric_difference": 3e-05,
+            "relative_difference": 7e-05
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NVDA-KPI-09",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 0.01,
+            "value_type": "actual",
+            "observation_qualifier": "upper_bound",
+            "unit": "fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_10Q",
+            "source_class": "regulatory_filing",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Item 2 MD&A, China export controls discussion",
+            "evidence_excerpt": "Shipments of Data Center Hopper products to China during the second quarter of fiscal year 2027 were less than 1% of Data Center revenue."
+          },
+          "found": {
+            "value": 0.01,
+            "value_type": "actual",
+            "observation_qualifier": "upper_bound",
+            "unit": "fraction",
+            "period": "Q2 FY2027 (quarter ended 2026-07-26)"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [
+              "'less than 1%' -> upper_bound 0.01 fraction"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": "«less than 1%» подтверждает верхнюю границу буквально; сравнивается как граница, не точное значение."
+        },
+        {
+          "kpi_id": "NVDA-KPI-10",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.7,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly",
+            "formula": "(22+14+13+11+10)%"
+          },
+          "source_check": {
+            "source_ref": "NVDA_Q2_10Q",
+            "source_class": "regulatory_filing",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Notes to condensed consolidated financial statements, concentration of credit risk note",
+            "evidence_excerpt": "Five direct customers accounted for 22%, 14%, 13%, 11%, and 10% of our accounts receivable balance as of July 26, 2026."
+          },
+          "found": {
+            "value": 0.7,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "as of 2026-07-26 (10-Q filing date)",
+            "formula_recomputed_value": 0.7
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source components: 22%+14%+13%+11%+10% = 70%",
+              "candidate-basis derived_fact: 0.70"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        }
+      ],
+      "axis_items": [
+        {
+          "axis_id": "AI_Demand",
+          "current_state": "D4",
+          "prior_snapshot": null,
+          "criteria": "latest-quarter YoY >=100% AND 2-quarter aggregate YoY >=100%",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "NVDA-KPI-02"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "NVDA_Q2_10Q",
+              "source_class": "regulatory_filing",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Revenue disaggregation note, Data Center, Six Months Ended",
+              "evidence_excerpt": "89,023 ... $ 41,096 ... $ 164,269 ... $ 80,208 (Three/Six Months Ended, Data Center revenue)",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "latest-quarter Data Center YoY >=100%",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NVDA-KPI-02"
+              ],
+              "calculation": "117% >= 100%",
+              "notes": null
+            },
+            {
+              "expression": "2-quarter aggregate Data Center YoY >=100%",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NVDA-KPI-02"
+              ],
+              "calculation": "H1 FY2027 Data Center $164,269M vs H1 FY2026 $80,208M = (164,269-80,208)/80,208 = 104.8% >= 100%; both quarters within the same 10-Q, no cross-filing history needed",
+              "notes": "Двухквартальный агрегат вычислен из одного 10-Q (столбец Six Months Ended), не требует деривационного history_evaluation_ref."
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "axis_id": "Gross_Margin",
+          "current_state": "M3",
+          "prior_snapshot": null,
+          "criteria": "gross margin 72%-<78%",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "NVDA-KPI-03"
+          ],
+          "source_evidence": [],
+          "criterion_checks": [
+            {
+              "expression": "gross margin in [72%, 78%)",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NVDA-KPI-03"
+              ],
+              "calculation": "75.0% in [72,78)",
+              "notes": null
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "axis_id": "Customer_Breadth",
+          "current_state": "B4",
+          "prior_snapshot": null,
+          "criteria": "ACIE share >=40% AND 2-quarter aggregate ACIE YoY growth >=50%",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "NVDA-KPI-08"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "NVDA_Q2_10Q",
+              "source_class": "regulatory_filing",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Revenue disaggregation note, AI Clouds, Industrial & Enterprise, Six Months Ended",
+              "evidence_excerpt": "AI Clouds, Industrial, & Enterprise 40,313 ... 16,928 ... 72,508 ... 33,780",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "ACIE share of Data Center revenue >=40%",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NVDA-KPI-08"
+              ],
+              "calculation": "45.28% >= 40%",
+              "notes": null
+            },
+            {
+              "expression": "2-quarter aggregate ACIE YoY growth >=50%",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NVDA-KPI-08"
+              ],
+              "calculation": "H1 FY2027 ACIE $72,508M vs H1 FY2026 $33,780M = (72,508-33,780)/33,780 = 114.65% >= 50%; both quarters within the same 10-Q",
+              "notes": "Двухквартальный агрегат вычислен из столбца Six Months Ended того же 10-Q."
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "axis_id": "Supply_Commitment",
+          "current_state": "S2",
+          "prior_snapshot": null,
+          "criteria": "supply commitments / annualized latest-quarter revenue 0.50x-<1.00x",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "NVDA-KPI-06"
+          ],
+          "source_evidence": [],
+          "criterion_checks": [
+            {
+              "expression": "commitment ratio in [0.50x, 1.00x)",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NVDA-KPI-06"
+              ],
+              "calculation": "0.725x in [0.50,1.00)",
+              "notes": null
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "axis_id": "China_Access",
+          "current_state": "X2",
+          "prior_snapshot": null,
+          "criteria": "China Data Center shipments <1% and company states effective foreclosure",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "mixed",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "NVDA-KPI-09"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "NVDA_Q2_10Q",
+              "source_class": "regulatory_filing",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Item 2 MD&A, China export controls discussion",
+              "evidence_excerpt": "Although we are already effectively foreclosed from the China market by U.S. export controls... we were effectively foreclosed from competing in China's data center computing/compute market",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "China Data Center shipments <1%",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NVDA-KPI-09"
+              ],
+              "calculation": "less than 1% (upper_bound)",
+              "notes": null
+            },
+            {
+              "expression": "company states effective foreclosure",
+              "result": true,
+              "evidence_kpi_refs": [],
+              "calculation": null,
+              "notes": "Прямая цитата 10-Q: «effectively foreclosed from competing in China's data center computing/compute market»."
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        }
+      ],
+      "event_items": [
+        {
+          "trigger_id": "NVDA-E-11",
+          "trigger_family": "E",
+          "claim_type": "discrete_event",
+          "event_claim": "New export restrictions outside the current China foreclosure produced a disclosed revenue loss/charge >=5% of quarterly revenue during Q2 FY2027.",
+          "event_date": null,
+          "status": "event_unconfirmed",
+          "primary_sources": [
+            {
+              "source_ref": "NVDA_Q2_10Q",
+              "source_class": "regulatory_filing",
+              "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Item 2 MD&A, China export controls discussion",
+              "evidence_excerpt": "During the first half of fiscal year 2027, we incurred a $0.4 billion charge associated with H200 for excess inventory and purchase obligations... any H200s shipped under the new licensing program are subject to a 25% tariff upon importation into the United States. We have been unable to pass along any of the tariff to our customers.",
+              "independent_source_identity": null,
+              "notes": "H200-лицензионная программа и связанный с ней тариф — уже действующий (не новый сверх текущего foreclosure) режим, упомянутый в предыдущих отчётах; $0.4 млрд за H1 = ~0.42% квартальной выручки, ниже порога 5% в любом случае."
+            }
+          ],
+          "media_sources": [],
+          "fact_only": true,
+          "runtime_verified": null,
+          "patch_required": false,
+          "runtime_targets": [
+            "events_reported"
+          ],
+          "notes": "10-Q не содержит ни позитивного заявления об отсутствии новых ограничений сверх текущего foreclosure, ни раскрытия нового ограничения с потерей/списанием >=5% квартальной выручки; по протоколу это event_unconfirmed, а не condition_not_met (нужно позитивное подтверждение отсутствия для condition_not_met)."
+        }
+      ],
+      "transition_checks": [
+        {
+          "trigger_id": "NVDA-E-01",
+          "axis": "AI_Demand",
+          "transition": {
+            "from": "D4",
+            "to": "D3"
+          },
+          "condition": "Data Center revenue YoY <100% but >=50% for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-02"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "Текущая квартальная YoY 117% не <100%; условие ложно уже в текущем периоде."
+        },
+        {
+          "trigger_id": "NVDA-E-02",
+          "axis": "AI_Demand",
+          "transition": {
+            "from": "D4",
+            "to": "D2"
+          },
+          "condition": "Data Center revenue YoY <50% for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-02"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "117% не <50%."
+        },
+        {
+          "trigger_id": "NVDA-E-03",
+          "axis": "Gross_Margin",
+          "transition": {
+            "from": "M3",
+            "to": "M4"
+          },
+          "condition": "gross margin >=78% for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-03"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "75.0% не >=78%."
+        },
+        {
+          "trigger_id": "NVDA-E-04",
+          "axis": "Gross_Margin",
+          "transition": {
+            "from": "M3",
+            "to": "M2"
+          },
+          "condition": "gross margin <72% for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-03"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "75.0% не <72%."
+        },
+        {
+          "trigger_id": "NVDA-E-05",
+          "axis": "Customer_Breadth",
+          "transition": {
+            "from": "B4",
+            "to": "B3"
+          },
+          "condition": "ACIE share <40% for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-08"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "45.28% не <40%."
+        },
+        {
+          "trigger_id": "NVDA-E-06",
+          "axis": "Customer_Breadth",
+          "transition": {
+            "from": "B4",
+            "to": "B2"
+          },
+          "condition": "ACIE share <30% for 2 quarters OR top-5 AR concentration >75% for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-08",
+            "NVDA-KPI-10"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "Оба конъюнкта OR ложны в текущем периоде: ACIE 45.28% не <30%; AR-концентрация 70% не >75%."
+        },
+        {
+          "trigger_id": "NVDA-E-07",
+          "axis": "Supply_Commitment",
+          "transition": {
+            "from": "S2",
+            "to": "S3"
+          },
+          "condition": "commitment ratio >1.0x for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-06"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "0.725x не >1.0x."
+        },
+        {
+          "trigger_id": "NVDA-E-08",
+          "axis": "Supply_Commitment",
+          "transition": {
+            "from": "S2",
+            "to": "S4"
+          },
+          "condition": "inventory/excess-purchase provisions >=2% of quarterly revenue for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-07"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "1.02% не >=2%."
+        },
+        {
+          "trigger_id": "NVDA-E-09",
+          "axis": "Supply_Commitment",
+          "transition": {
+            "from": "S2",
+            "to": "S1"
+          },
+          "condition": "commitment ratio <0.50x AND provision ratio <1% for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-06",
+            "NVDA-KPI-07"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "Первый конъюнкт ложен: 0.725x не <0.50x."
+        },
+        {
+          "trigger_id": "NVDA-E-10",
+          "axis": "China_Access",
+          "transition": {
+            "from": "X2",
+            "to": "X1"
+          },
+          "condition": "lawfully permitted China Data Center shipments >=5% of Data Center revenue for 2 quarters",
+          "kpi_item_refs": [
+            "NVDA-KPI-09"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "<1% не >=5%."
+        },
+        {
+          "trigger_id": "NVDA-E-11",
+          "axis": "China_Access",
+          "transition": {
+            "from": "X2",
+            "to": "X3"
+          },
+          "condition": "new export restrictions outside current China foreclosure produce disclosed revenue loss/charge >=5% of quarterly revenue",
+          "kpi_item_refs": [
+            "NVDA-KPI-09"
+          ],
+          "event_item_refs": [
+            "NVDA-E-11"
+          ],
+          "history_evaluation_ref": null,
+          "result": "pending_history",
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Однопериодный дискретно-событийный триггер без предиката истории; протокол v1.2 не даёт отдельного enum-значения для 'событие не подтверждено' в transition_checks, поэтому используется pending_history как ближайшая непатчевая категория, отражающая исход event_items=event_unconfirmed. Помечено для feedback как неоднозначность схемы v1.2."
+        }
+      ],
+      "summary": {
+        "overall_status": "PASS_WITH_DECLARED_PENDING",
+        "counts": {
+          "verified_match": 4,
+          "verified_match_with_normalization": 6
+        },
+        "patch_required_kpis": [],
+        "technical_blocked_kpis": [],
+        "pending_kpis": [],
+        "qualifier_patch_suggested_kpis": [],
+        "axis_counts": {
+          "state_supported": 5
+        },
+        "event_counts": {
+          "event_unconfirmed": 1
+        },
+        "transition_counts": {
+          "not_met": 10,
+          "pending_history": 1
+        },
+        "patch_required_axes": [],
+        "technical_blocked_axes": [],
+        "pending_axes": [],
+        "patch_required_events": [],
+        "technical_blocked_events": [],
+        "pending_events": [
+          "NVDA-E-11"
+        ],
+        "patch_required_transition_checks": [],
+        "pending_transition_checks": [
+          "NVDA-E-11"
+        ]
+      }
+    },
+    "folders": [
+      "nvda"
+    ]
+  },
+  "outputs": {
+    "model_version": "1.5.0",
+    "protocol_version": "1.2",
+    "mode": "dozor_report",
+    "ticker": "NVDA",
+    "run_id": "verify-NVDA-20260923T190405Z",
+    "schema_errors": [],
+    "integrity": [
+      {
+        "rule": "DZR-012",
+        "severity": "error",
+        "path": "items/6/found",
+        "message": "derived_fact: found 0.01024 'fraction' не в базе кандидата 0.0102 'fraction'; слагаемые источника — в normalization.steps"
+      },
+      {
+        "rule": "DZR-003",
+        "severity": "error",
+        "path": "event_items/0/runtime_verified",
+        "message": "для статуса 'event_unconfirmed' ожидается False, получено None"
+      }
+    ],
+    "pass": false,
+    "decision": "none"
+  },
+  "elapsed_ms": 81.4,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

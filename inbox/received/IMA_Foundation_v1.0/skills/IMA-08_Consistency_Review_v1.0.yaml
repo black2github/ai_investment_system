@@ -1,0 +1,22 @@
+skill: {id: IMA-08, name: Consistency_Review, version: "1.0.0", status: proposed_normative}
+purpose: "Perform semantic/adversarial review against facts, normative context and accepted artifacts."
+inputs: {required: [CandidateArtifactBundle, NormalizedFactSet, NormativeContextPackage, deterministic_quality_gate_report]}
+preconditions: [hard_deterministic_gates_completed]
+outputs: {required: [ValidationReport, PatchProposal_if_needed]}
+postconditions:
+  - fact_state_consistency_checked
+  - axis_redundancy_checked
+  - proxy_semantics_checked
+  - trigger_semantics_checked
+  - driver_direction_checked
+  - legacy_compatibility_checked
+  - silent_normative_change_checked
+  - unresolved_items_explicit
+failure_statuses: [patch_required, owner_decision_required, normative_conflict, failed]
+review_policy:
+  independent_model_or_fresh_context_preferred: true
+  same_generation_context_discouraged: true
+runtime:
+  private_chain_of_thought_required: false
+  design_decision_record_required_for_material_choice: true
+  structured_output_required: true

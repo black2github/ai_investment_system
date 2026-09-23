@@ -1,0 +1,19 @@
+version: "1.0.0"
+artifact: intermediate_artifacts_schema
+NormativeContextPackage:
+  required: [task_id, resolved_dependencies, accepted_artifacts, proposed_artifacts, protected_ids, normative_constraints, context_hash]
+EvidencePack:
+  required: [task_id, subject, source_policy, sources, evidence_items, unresolved_source_questions, evidence_hash]
+  evidence_item_required: [evidence_id, source_ref, source_type, as_of, excerpt_summary, supports, status]
+NormalizedFactSet:
+  required: [subject, facts, derived_facts, unresolved_facts, fact_set_hash]
+  fact_required: [fact_id, name, value, unit, period, provenance, evidence_refs, verification_status]
+ModelDesignRecord:
+  required: [subject, proposed_axes, design_decisions, unresolved_design_questions]
+  design_decision_required: [decision_id, issue, alternatives, selected, evidence_refs, rationale_summary, rejected_alternative_reasons, provenance]
+CandidateArtifactBundle:
+  required: [subject, artifact_files, production_manifest, validation_report]
+ValidationReport:
+  required: [task_id, gates, errors, warnings, unresolved, result]
+PatchProposal:
+  required: [patch_id, target_artifact, base_version, changes, reason, evidence_refs, backward_compatibility]

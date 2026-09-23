@@ -1,0 +1,39 @@
+version: "1.0.0"
+artifact: llm_capability_contract
+role: Investment_Modeling_Agent
+capabilities:
+  structured_output:
+    yaml_schema_compliance: required
+    stable_identifier_preservation: required
+  reasoning:
+    causal_analysis: required
+    financial_statement_analysis: required
+    probabilistic_reasoning: required
+    alternative_model_comparison: required
+  evidence_behavior:
+    distinguish_fact_inference_assumption: required
+    abstain_when_evidence_missing: required
+    conflicting_source_detection: required
+    provenance_preservation: required
+  context:
+    large_context_or_retrieval: required
+    dependency_resolution: required
+  tools:
+    deterministic_tool_use: required
+    web_or_prebuilt_evidence_pack:
+      full_stack_agent: required
+      downstream_modeling_only_agent: optional
+  review:
+    self_consistency_check: required
+    patch_instead_of_silent_rewrite: required
+must_not:
+  - invent_missing_number
+  - silently_change_normative_rule
+  - silently_rename_existing_id
+  - confuse_guidance_with_actual
+  - fit_forecast_to_current_price_without_explicit_reverse_valuation_context
+  - convert_trigger_to_trade_decision
+qualification:
+  conformance_suite_required: true
+  no_single_total_score: true
+  hard_gate_failures_block_production: true

@@ -1,0 +1,43 @@
+version: "1.0.0"
+artifact: runtime_quality_gates
+gates:
+  G0_RUNTIME_ENVELOPE:
+    type: deterministic
+    hard: true
+    checks: [invocation_schema_valid, role_skill_versions_present]
+  G1_NORMATIVE_CONTEXT:
+    type: deterministic
+    hard: true
+    checks: [dependencies_resolved, accepted_vs_proposed_separated, protected_ids_loaded]
+  G2_SOURCE_POLICY:
+    type: deterministic_plus_reviewer
+    hard: true
+    checks: [all_verified_facts_have_allowed_source, no_forbidden_source_as_primary_fact]
+  G3_PROVENANCE:
+    type: deterministic
+    hard: true
+    checks: [all_material_numbers_typed, derived_facts_have_formula, owner_judgment_explicit]
+  G4_NUMERIC_RECONCILIATION:
+    type: deterministic
+    hard: true
+    checks: [formulas_recalculate_within_tolerance, periods_units_consistent]
+  G5_SCHEMA_AND_ID_INTEGRITY:
+    type: deterministic
+    hard: true
+    checks: [yaml_schema_valid, current_value_numeric_or_null, no_silent_id_rewrite, references_resolve]
+  G6_SEMANTIC_CONSISTENCY:
+    type: IMA-08
+    hard: true
+    checks: [axis_semantics_nonredundant, facts_support_current_states, trigger_semantics_match_axes, proxy_usage_explicit, no_hidden_normative_change]
+  G7_INDEPENDENT_REVIEW:
+    type: llm_review
+    hard: false
+    preferred: true
+    checks: [adversarial_review_completed, material_disagreement_logged]
+  G8_SOURCE_VERIFICATION:
+    type: dosor_or_equivalent
+    hard: true
+    checks: [source_values_verified, discrepancies_closed_or_patch_required]
+result_rule:
+  accepted_candidate: "all hard gates PASS"
+  warning_allowed_only_if: "gate explicitly non-hard"

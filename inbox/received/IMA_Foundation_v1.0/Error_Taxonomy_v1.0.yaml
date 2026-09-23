@@ -1,0 +1,27 @@
+version: "1.0.0"
+artifact: investment_modeling_error_taxonomy
+severity:
+  INFO: "No action required."
+  WARNING: "Artifact may proceed only if explicitly allowed by gate."
+  ERROR: "Artifact blocked until corrected."
+  FATAL: "Task cannot continue without new input or normative resolution."
+codes:
+  EVIDENCE_NOT_FOUND: {severity: ERROR}
+  EVIDENCE_CONFLICT: {severity: ERROR}
+  SOURCE_NOT_ALLOWED: {severity: ERROR}
+  FACT_UNVERIFIED: {severity: ERROR}
+  GUIDANCE_ACTUAL_CONFUSION: {severity: ERROR}
+  DERIVED_FACT_FORMULA_MISSING: {severity: ERROR}
+  MODEL_ASSUMPTION_MISSING_LABEL: {severity: ERROR}
+  OWNER_JUDGMENT_MISSING_LABEL: {severity: ERROR}
+  SCHEMA_VIOLATION: {severity: ERROR}
+  NORMATIVE_CONFLICT: {severity: FATAL}
+  EXISTING_ID_COLLISION: {severity: ERROR}
+  SILENT_ID_REWRITE: {severity: FATAL}
+  MODEL_CIRCULARITY: {severity: ERROR}
+  DOUBLE_COUNTING: {severity: ERROR}
+  CALIBRATION_UNDERSPECIFIED: {severity: ERROR}
+  UNSUPPORTED_PROXY: {severity: ERROR}
+  SOURCE_PERIOD_MISMATCH: {severity: ERROR}
+  NUMERIC_VALUE_AS_STRING: {severity: WARNING}
+  OWNER_DECISION_REQUIRED: {severity: INFO}

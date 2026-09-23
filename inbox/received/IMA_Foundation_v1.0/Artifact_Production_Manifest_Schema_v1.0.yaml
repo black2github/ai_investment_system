@@ -1,0 +1,19 @@
+version: "1.0.0"
+artifact: artifact_production_manifest_schema
+required: [artifact_id, artifact_version, artifact_type, produced_at, produced_by, dependencies, inputs, hashes, validation, acceptance]
+produced_by:
+  required: [agent_role, agent_role_version, skill_ids, skill_versions, model_implementation, model_adapter]
+dependencies:
+  required: [methodology_refs, schema_refs]
+  optional: [calculation_engine_refs]
+inputs:
+  required: [normative_context_ref, evidence_pack_ref, normalized_fact_set_ref]
+hashes:
+  required: [normative_context_hash, evidence_pack_hash, normalized_fact_set_hash, artifact_content_hash]
+validation:
+  required: [quality_gate_report_ref, reviewer_report_ref]
+acceptance:
+  required: [status, accepted_at]
+  status_enum: [candidate, source_verified, accepted, patch_required, superseded]
+lineage:
+  optional: [parent_artifact_ref, patch_ref, supersedes_ref]

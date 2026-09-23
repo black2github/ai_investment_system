@@ -1,0 +1,19 @@
+skill: {id: IMA-02, name: Build_Evidence_Pack, version: "1.0.0", status: proposed_normative}
+purpose: "Collect auditable evidence under source policy without performing company-model design."
+inputs: {required: [task_descriptor, NormativeContextPackage, source_policy]}
+preconditions: [context_status_is_resolved]
+outputs: {required: [EvidencePack]}
+postconditions:
+  - every_source_has_type_url_or_repository_ref_and_as_of
+  - primary_sources_preferred_where_required
+  - unsupported_claims_marked_unresolved
+  - evidence_hash_emitted
+failure_statuses: [insufficient_evidence, source_conflict, source_not_allowed, failed]
+rules:
+  interpretation_minimized: true
+  invent_missing_fact: false
+  allowed_modes: [web_research, provided_evidence_only]
+runtime:
+  private_chain_of_thought_required: false
+  design_decision_record_required_for_material_choice: false
+  structured_output_required: true

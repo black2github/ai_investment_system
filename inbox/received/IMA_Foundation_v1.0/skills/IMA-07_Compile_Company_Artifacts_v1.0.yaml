@@ -1,0 +1,20 @@
+skill: {id: IMA-07, name: Compile_Company_Artifacts, version: "1.0.0", status: proposed_normative}
+purpose: "Compile upstream model products into machine-readable company artifacts without adding new substantive assumptions."
+inputs: {required: [NormativeContextPackage, NormalizedFactSet, ModelDesignRecord, proposed_kpis, proposed_transitions, driver_exposure_vector, failure_modes]}
+preconditions: [all_required_upstream_outputs_present]
+outputs: {required: [CandidateArtifactBundle]}
+postconditions:
+  - yaml_parses
+  - schema_refs_resolve
+  - source_urls_and_formulas_preserved
+  - no_new_untyped_assumption_added
+  - production_manifest_attached
+  - lineage_recorded
+failure_statuses: [schema_failure, normative_conflict, failed]
+rules:
+  new_substantive_reasoning_allowed: false
+  formatting_and_schema_translation_only: true
+runtime:
+  private_chain_of_thought_required: false
+  design_decision_record_required_for_material_choice: false
+  structured_output_required: true

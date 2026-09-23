@@ -1,0 +1,20 @@
+skill: {id: IMA-01, name: Load_Normative_Context, version: "1.0.0", status: proposed_normative}
+purpose: "Resolve exact normative, proposed and historical artifacts governing the task."
+inputs: {required: [task_descriptor, repository_manifest_or_artifact_index]}
+preconditions: [task_id_exists]
+outputs: {required: [NormativeContextPackage]}
+postconditions:
+  - latest_accepted_versions_resolved
+  - accepted_and_proposed_artifacts_separated
+  - protected_existing_ids_loaded
+  - normative_conflicts_reported_not_silently_resolved
+  - context_hash_emitted
+failure_statuses: [normative_conflict, schema_failure, failed]
+rules:
+  web_research_allowed: false
+  historical_artifact_may_override_latest: false
+  proposed_rule_may_be_treated_as_accepted: false
+runtime:
+  private_chain_of_thought_required: false
+  design_decision_record_required_for_material_choice: true
+  structured_output_required: true

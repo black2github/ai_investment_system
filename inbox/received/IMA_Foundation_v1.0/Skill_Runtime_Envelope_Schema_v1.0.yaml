@@ -1,0 +1,8 @@
+version: "1.0.0"
+artifact: skill_runtime_envelope
+Invocation:
+  required: [task_id, role, role_version, skill_id, skill_version, adapter_ref, normative_context_ref, inputs]
+  optional: [execution_deadline, reviewer_separation_policy]
+Result:
+  required: [task_id, skill_id, skill_version, status, outputs, provenance_summary, validation_summary, warnings, errors, unresolved]
+  status_enum: [success, insufficient_evidence, source_conflict, normative_conflict, schema_failure, patch_required, owner_decision_required, failed]

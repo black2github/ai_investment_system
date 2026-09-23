@@ -1,0 +1,85 @@
+version: "0.1.0"
+artifact: golden_case_catalog
+status: seed_regression_corpus
+cases:
+  - id: GC-001
+    name: NBIS_Guidance_Not_Actual
+    target_skills: [IMA-02, IMA-03, IMA-04, IMA-05]
+    expected_behavior:
+      - "5 GW YE2026 typed as company_guidance"
+      - "actual secured contracted power remains pending if not separately disclosed"
+      - "Capacity_Secured cannot be confirmed solely from forward guidance"
+
+  - id: GC-002
+    name: HOOD_Evidence_Traceability
+    target_skills: [IMA-02, IMA-03]
+    expected_behavior:
+      - "primary-source evidence found for LTM Net Deposit growth"
+      - "exact period semantics preserved"
+
+  - id: GC-003
+    name: META_Dual_Capex_Exposure
+    target_skills: [IMA-06]
+    expected_behavior:
+      - "HYPERSCALER_CAPEX may be negative cost channel"
+      - "AI_COMPUTE_DEMAND/CLOUD_SOFTWARE_DEMAND carry positive monetization channel separately"
+      - "both channels are not collapsed into one sign"
+
+  - id: GC-004
+    name: ASML_Taiwan_Semantics
+    target_skills: [IMA-04, IMA-06]
+    expected_behavior:
+      - "Taiwan exposure explained as demand/customer-geography for ASML"
+      - "no claim that ASML systems are fabricated in Taiwan"
+
+  - id: GC-005
+    name: ASTS_50_Day_Window
+    target_skills: [IMA-03, IMA-05]
+    expected_behavior:
+      - "preserve source wording within 50 days"
+      - "do not relabel aggregate as trailing 90 days"
+
+  - id: GC-006
+    name: ASTS_Qualitative_Regulatory_Evidence
+    target_skills: [IMA-03, IMA-04, IMA-05]
+    expected_behavior:
+      - "qualitative authorization represented explicitly"
+      - "machine KPI may be binary if derivation is declared"
+      - "axis evidence_type explicit when numeric KPI absent"
+
+  - id: GC-007
+    name: PLTR_AIP_Proxy
+    target_skills: [IMA-04, IMA-05]
+    expected_behavior:
+      - "U.S. commercial metrics may be proxy for AIP monetization"
+      - "do not claim separately disclosed AIP revenue if absent"
+
+  - id: GC-008
+    name: CRWV_Liquidity_Not_Cash
+    target_skills: [IMA-03, IMA-04]
+    expected_behavior:
+      - "liquidity including undrawn facilities not labeled cash"
+      - "funding axis may use liquidity ratio with composition explicit"
+
+  - id: GC-009
+    name: NET_Not_Disclosed_AI_Revenue
+    target_skills: [IMA-03, IMA-05]
+    expected_behavior:
+      - "AI/Workers revenue KPI remains null/not_separately_disclosed"
+      - "do not estimate undisclosed value"
+
+  - id: GC-010
+    name: Legacy_ID_Preservation
+    target_skills: [IMA-05, IMA-07]
+    expected_behavior:
+      - "existing NET/ETN trigger IDs preserved"
+      - "new transitions added without collision"
+      - "legacy triggers may be enriched with axis/KPI refs"
+
+  - id: GC-011
+    name: LLY_YAML_Structure
+    target_skills: [IMA-07, IMA-08]
+    expected_behavior:
+      - "taxonomy_gap remains list-valued"
+      - "explanatory note is a separate key"
+      - "YAML parses before delivery"

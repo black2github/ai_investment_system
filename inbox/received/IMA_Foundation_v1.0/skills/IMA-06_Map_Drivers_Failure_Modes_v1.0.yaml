@@ -1,0 +1,17 @@
+skill: {id: IMA-06, name: Map_Drivers_Failure_Modes, version: "1.0.0", status: proposed_normative}
+purpose: "Map company economics to MPC driver taxonomy and failure-mode common causes."
+inputs: {required: [NormalizedFactSet, ModelDesignRecord, NormativeContextPackage, driver_taxonomy, portfolio_common_cause_registry]}
+preconditions: [company_state_model_proposed, taxonomy_loaded]
+outputs: {required: [driver_exposure_vector, driver_interpretation, failure_modes, cross_portfolio_common_causes, taxonomy_gaps]}
+postconditions:
+  - all_required_driver_ids_explicit
+  - driver_sign_semantics_follow_taxonomy
+  - material_dual_channels_explained
+  - failure_modes_have_common_cause_id
+  - driver_not_conflated_with_failure_mode
+  - taxonomy_gap_explicit
+failure_statuses: [normative_conflict, schema_failure, failed]
+runtime:
+  private_chain_of_thought_required: false
+  design_decision_record_required_for_material_choice: true
+  structured_output_required: true

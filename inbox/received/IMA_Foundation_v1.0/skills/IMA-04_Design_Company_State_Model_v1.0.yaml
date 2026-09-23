@@ -1,0 +1,19 @@
+skill: {id: IMA-04, name: Design_Company_State_Model, version: "1.0.0", status: proposed_normative}
+purpose: "Propose economically distinct company state axes grounded in verified facts."
+inputs: {required: [NormalizedFactSet, NormativeContextPackage, existing_company_artifacts_if_any]}
+preconditions: [facts_pass_verification_gate]
+outputs: {required: [ModelDesignRecord]}
+postconditions:
+  - axes_economically_distinct
+  - current_state_supported_by_verified_or_declared_qualitative_evidence
+  - valuation_not_used_as_business_state_unless_explicitly_allowed
+  - proxy_usage_explicit
+  - material_alternatives_recorded
+failure_statuses: [insufficient_evidence, normative_conflict, owner_decision_required, failed]
+design_defaults:
+  axis_count_preferred: [3, 5]
+  threshold_provenance: model_assumption
+runtime:
+  private_chain_of_thought_required: false
+  design_decision_record_required_for_material_choice: true
+  structured_output_required: true

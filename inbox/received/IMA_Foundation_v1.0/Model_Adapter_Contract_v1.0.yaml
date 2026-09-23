@@ -1,0 +1,25 @@
+version: "1.0.0"
+artifact: model_adapter_contract
+definition: >
+  A Model Adapter converts a normative Skill Contract into model-specific
+  prompting/tool-routing/structured-output behavior without changing skill semantics.
+required:
+  - adapter_id
+  - adapter_version
+  - model_family
+  - supported_skill_versions
+  - prompt_template_hashes
+  - structured_output_strategy
+  - tool_routing
+  - retry_policy
+  - capability_handshake
+forbidden:
+  - change_skill_preconditions
+  - change_skill_postconditions
+  - change_normative_rules
+  - weaken_source_policy
+  - add_unrecorded_business_logic
+versioning:
+  prompt_change_requires_adapter_version_change: true
+  methodology_change_requires_skill_or_methodology_version_change: true
+  model_change_requires_adapter_or_implementation_ref_change: true

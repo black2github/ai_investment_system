@@ -1,0 +1,29 @@
+version: "1.0.0"
+artifact: provenance_schema
+types:
+  verified_fact:
+    definition: "Directly supported by an allowed primary source or accepted verified artifact."
+    source_required: true
+  derived_fact:
+    definition: "Deterministic transformation of verified facts."
+    source_required: true
+    formula_required: true
+  model_assumption:
+    definition: "Chosen modeling value/rule not asserted as observed fact."
+    rationale_required: true
+  owner_judgment:
+    definition: "Explicit owner belief/override not presented as verified evidence."
+    owner_record_required: true
+  normative_rule:
+    definition: "Accepted system rule/version governing production or calculation."
+    dependency_ref_required: true
+  external_methodology:
+    definition: "External method/reference adopted for methodological reasons."
+    citation_required: true
+forbidden:
+  - untyped_material_number
+  - assumption_presented_as_fact
+  - owner_judgment_presented_as_verified_fact
+material_number_rule: >
+  Every material numeric input/output used in a model must have provenance
+  directly or through an enclosing object.

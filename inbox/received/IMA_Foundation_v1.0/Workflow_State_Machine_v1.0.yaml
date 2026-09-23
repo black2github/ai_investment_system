@@ -1,0 +1,35 @@
+version: "1.0.0"
+artifact: investment_modeling_workflow
+states:
+  - TASK_CREATED
+  - CONTEXT_RESOLVED
+  - EVIDENCE_COLLECTED
+  - FACTS_NORMALIZED
+  - FACTS_VERIFIED
+  - MODEL_PROPOSED
+  - MODEL_REVIEWED
+  - ARTIFACT_COMPILED
+  - SCHEMA_VALIDATED
+  - SOURCE_VERIFIED
+  - ACCEPTED
+  - PATCH_REQUIRED
+  - OWNER_DECISION_REQUIRED
+  - INSUFFICIENT_EVIDENCE
+  - SOURCE_CONFLICT
+  - NORMATIVE_CONFLICT
+  - FAILED
+transitions:
+  TASK_CREATED: {IMA-01_success: CONTEXT_RESOLVED, IMA-01_normative_conflict: NORMATIVE_CONFLICT}
+  CONTEXT_RESOLVED: {IMA-02_success: EVIDENCE_COLLECTED, IMA-02_insufficient_evidence: INSUFFICIENT_EVIDENCE, IMA-02_source_conflict: SOURCE_CONFLICT}
+  EVIDENCE_COLLECTED: {IMA-03_success: FACTS_NORMALIZED}
+  FACTS_NORMALIZED: {deterministic_fact_checks_pass: FACTS_VERIFIED, verification_failure: PATCH_REQUIRED}
+  FACTS_VERIFIED: {IMA-04_success: MODEL_PROPOSED}
+  MODEL_PROPOSED: {IMA-05_and_IMA-06_success: MODEL_REVIEWED}
+  MODEL_REVIEWED: {IMA-07_success: ARTIFACT_COMPILED}
+  ARTIFACT_COMPILED: {deterministic_quality_gates_pass: SCHEMA_VALIDATED, deterministic_quality_gates_fail: PATCH_REQUIRED}
+  SCHEMA_VALIDATED: {IMA-08_pass: SOURCE_VERIFIED, IMA-08_patch_required: PATCH_REQUIRED, IMA-08_owner_decision_required: OWNER_DECISION_REQUIRED}
+  SOURCE_VERIFIED: {dosor_accept: ACCEPTED, dosor_patch: PATCH_REQUIRED}
+rules:
+  skip_states_allowed: false
+  private_chain_of_thought_required: false
+  decision_record_required_for_material_design_choice: true

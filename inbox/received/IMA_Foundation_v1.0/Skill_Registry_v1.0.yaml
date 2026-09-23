@@ -1,0 +1,22 @@
+version: "1.0.0"
+artifact: skill_registry
+agent_role: Investment_Modeling_Agent
+skills:
+  - {id: IMA-01, name: Load_Normative_Context, version: "1.0.0", phase: context, requires_web: false}
+  - {id: IMA-02, name: Build_Evidence_Pack, version: "1.0.0", phase: evidence, requires_web: conditional}
+  - {id: IMA-03, name: Extract_Normalize_Facts, version: "1.0.0", phase: facts, requires_web: false}
+  - {id: IMA-04, name: Design_Company_State_Model, version: "1.0.0", phase: model_design, requires_web: false}
+  - {id: IMA-05, name: Design_KPI_Transitions, version: "1.0.0", phase: model_design, requires_web: false}
+  - {id: IMA-06, name: Map_Drivers_Failure_Modes, version: "1.0.0", phase: portfolio_mapping, requires_web: false}
+  - {id: IMA-07, name: Compile_Company_Artifacts, version: "1.0.0", phase: compile, requires_web: false}
+  - {id: IMA-08, name: Consistency_Review, version: "1.0.0", phase: review, requires_web: false}
+future_reserved:
+  - {id: IMA-09, name: Reverse_Valuation_Calibration}
+  - {id: IMA-10, name: Conditional_MC_Calibration}
+  - {id: IMA-11, name: Joint_Driver_Mapping}
+  - {id: IMA-12, name: Portfolio_Methodology_Design}
+  - {id: IMA-13, name: Artifact_Patch_Migration}
+rules:
+  skill_version_independent_from_model_adapter: true
+  private_chain_of_thought_not_required: true
+  intermediate_artifacts_required: true

@@ -1,0 +1,18 @@
+skill: {id: IMA-05, name: Design_KPI_Transitions, version: "1.0.0", status: proposed_normative}
+purpose: "Design observable KPIs and state transitions while preserving legacy registry semantics."
+inputs: {required: [NormalizedFactSet, ModelDesignRecord, NormativeContextPackage, existing_trigger_registry]}
+preconditions: [company_state_model_proposed]
+outputs: {required: [proposed_kpis, proposed_transitions, DesignDecisionRecord_if_needed]}
+postconditions:
+  - each_KPI_has_source_or_explicit_model_assumption
+  - calculated_KPI_has_formula
+  - thresholds_are_model_assumption
+  - transition_from_to_states_exist
+  - existing_ids_preserved
+  - trigger_not_decision
+  - pending_verification_blocks_transition
+failure_statuses: [existing_id_collision, insufficient_evidence, normative_conflict, failed]
+runtime:
+  private_chain_of_thought_required: false
+  design_decision_record_required_for_material_choice: true
+  structured_output_required: true

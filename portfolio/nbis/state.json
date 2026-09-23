@@ -1,12 +1,22 @@
 {
-  "updated": "2026-09-22T20:16:00Z",
+  "updated": "2026-09-22T21:04:00Z",
   "price": {
     "last": 223.54,
     "last_at": "2026-09-18",
     "zone": null
   },
   "fired": [],
-  "events_reported": [],
+  "events_reported": [
+    {
+      "trigger_id": "NBIS-E-01",
+      "kind": "event_fact",
+      "summary": "Подтверждён факт раскрытия квартальной выручки AI cloud ($0.5749B) и ARR ($3.0B) за Q2 2026 по первоисточникам SEC. Условие триггера (revenue>=$1.0B, ARR>=$5.0B за 2 квартала подряд) не выполнено; переход не зафиксирован, действий нет.",
+      "period_end": "2026-06-30",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "timestamp": "2026-09-22T21:04:00Z"
+    }
+  ],
   "pending_verification": [],
   "notes": [
     "Папка создана 2026-09-21 по партии 1 моделей компаний; сверка фактов по отчёту выполнена 2026-09-20 (задание facts-verify, батч 1)."
@@ -47,6 +57,11 @@
       "timestamp": "2026-09-22T20:16:00Z",
       "kind": "verification",
       "summary": "Первый живой прогон Dozor Verification Protocol v1.0 (гейт G8), run_id verify-NBIS-20260922T201443Z: итог PASS_WITH_DECLARED_PENDING. 10 из 11 KPI подтверждены (5 verified_match, 5 verified_match_with_normalization) по первоисточникам SEC (Ex-99.1, Ex-99.2, 6-K от 12.08.2026). NBIS-KPI-11 (фактически законтрактованная мощность на дату отчёта) — not_found, задекларирован как pending — совпадает с условием PASS_WITH_DECLARED_PENDING, PATCH не требуется. Отчёт: portfolio/nbis/_verify/verify-NBIS-20260922T201443Z.json."
+    },
+    {
+      "timestamp": "2026-09-22T21:04:00Z",
+      "kind": "verification",
+      "summary": "Второй живой прогон Dozor Verification Protocol v1.1 (гейт G8), run_id verify-NBIS-20260922T210122Z: приёмка v1.1 (axis_items + event_items). Итог PASS_WITH_DECLARED_PENDING. 11 KPI (4 verified_match, 6 verified_match_with_normalization включая новую норму по качественному различию у NBIS-KPI-05 approximate/exact, 1 not_found — NBIS-KPI-11). 5 осей: 4 state_supported (Demand_Monetization N3, Unit_Economics E3, Capital_Intensity K3, Funding_Liquidity F2), 1 state_pending_verification (Capacity_Secured, каноническое состояние уже pending — без патча). 2 события: NBIS-E-01 event_confirmed_primary (факт раскрытия выручки/ARR, переход не подтверждён числами), NBIS-E-06 event_unconfirmed (guidance повышен до 5 GW, условие снижения не выполнено — наблюдение продолжается). Отчёт: portfolio/nbis/_verify/verify-NBIS-20260922T210122Z.json."
     }
   ],
   "scenario_state": {
@@ -55,14 +70,16 @@
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm, https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
-      "verified": true
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     "Unit_Economics": {
       "state": "E3",
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm, https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
-      "verified": true
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     "Capacity_Secured": {
       "state": "pending_verification",
@@ -70,6 +87,7 @@
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "verified": false,
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
       "verified_note": "Поправка LLM 21.09: 5 GW — цель YE2026; факт по KPI-11 не раскрыт → состояние оси не установлено",
       "prior_snapshot": "C3"
     },
@@ -78,14 +96,16 @@
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     "Funding_Liquidity": {
       "state": "F2",
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm, https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     }
   },
   "state_transitions": [],
@@ -228,7 +248,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-02",
@@ -241,7 +261,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-03",
@@ -254,7 +274,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-04",
@@ -267,7 +287,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-05",
@@ -280,7 +300,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-06",
@@ -297,7 +317,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-07",
@@ -310,7 +330,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-08",
@@ -323,7 +343,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-09",
@@ -336,7 +356,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-10",
@@ -349,7 +369,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     },
     {
       "kpi_id": "NBIS-KPI-11",
@@ -362,12 +382,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": null,
-      "verification_run_id": "verify-NBIS-20260922T201443Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z"
     }
   ],
   "verification": {
-    "run_id": "verify-NBIS-20260922T201443Z",
-    "as_of": "2026-09-22T20:14:43Z",
+    "run_id": "verify-NBIS-20260922T210122Z",
+    "as_of": "2026-09-22T21:01:22Z",
     "overall_status": "PASS_WITH_DECLARED_PENDING"
   },
   "calc_runs": [],

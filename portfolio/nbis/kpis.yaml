@@ -84,6 +84,7 @@ critical_kpis:
   source_class: issuer_ir_release
   provenance: verified_fact
   value_type: actual
+  observation_qualifier: approximate
   name: Quarterly capex
   unit: USD B
   period: quarterly

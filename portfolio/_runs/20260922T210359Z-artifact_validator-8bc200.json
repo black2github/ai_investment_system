@@ -1,0 +1,830 @@
+{
+  "run_id": "20260922T210359Z-artifact_validator-8bc200",
+  "model": "artifact_validator",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "dozor_report",
+    "report": {
+      "protocol_version": "1.1.0",
+      "run_id": "verify-NBIS-20260922T210122Z",
+      "ticker": "NBIS",
+      "as_of": "2026-09-22T21:01:22Z",
+      "inputs": {
+        "kpis_ref": "portfolio/nbis/kpis.yaml",
+        "source_registry_ref": "portfolio/nbis/states.yaml",
+        "evidence_pack_ref": null,
+        "artifact_schema_version": "1.0.4",
+        "state_ref": "portfolio/nbis/state.json",
+        "triggers_ref": "portfolio/nbis/triggers.yaml"
+      },
+      "items": [
+        {
+          "kpi_id": "NBIS-KPI-01",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 5.14,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "YoY fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_LETTER",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Q2 2026 shareholder letter, headline bullets",
+            "evidence_excerpt": "AI cloud revenue grew 514% year-over-year to $575 million, ARR reached $3.0 billion."
+          },
+          "found": {
+            "value": 5.14,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "YoY fraction",
+            "period": "Q2 2026 vs Q2 2025"
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "514% -> 5.14 fraction"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": "Повторно открыт первоисточник независимо (curl, 22.09); совпадает с прошлым прогоном."
+        },
+        {
+          "kpi_id": "NBIS-KPI-02",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.5749,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD B",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_6K",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Exhibit 99.1, Revenues by operating segment",
+            "evidence_excerpt": "Revenues for the Nebius AI cloud business grew by $481.2 million, or 514%, from $93.7 million in the second quarter of 2025 to $574.9 million in the second quarter of 2026."
+          },
+          "found": {
+            "value": 574.9,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD M",
+            "period": "Q2 2026"
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "574.9 USD M -> 0.5749 USD B"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NBIS-KPI-03",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 3.0,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD B",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_LETTER",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Q2 2026 shareholder letter, headline bullets",
+            "evidence_excerpt": "ARR reached $3.0 billion."
+          },
+          "found": {
+            "value": 3.0,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD B",
+            "period": "Q2 2026 exit run-rate"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NBIS-KPI-04",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.497,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_LETTER",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Q2 2026 letter, Adjusted EBITDA table/section",
+            "evidence_excerpt": "adjusted EBITDA of $285.7 million and adjusted EBITDA margin of 49.7% ... an adjusted EBITDA margin of 50% in the quarter."
+          },
+          "found": {
+            "value": 49.7,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "percent",
+            "period": "Q2 2026"
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "49.7% -> 0.497 fraction"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NBIS-KPI-05",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 5.7,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD B",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_LETTER",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Q2 2026 letter, Capital expenditures section",
+            "evidence_excerpt": "In Q2'26, capital expenditures were approximately $5.7 billion, primarily driven by purchases of GPUs and GPU-related hardware, and our data center expansion activities."
+          },
+          "found": {
+            "value": 5.7,
+            "value_type": "actual",
+            "observation_qualifier": "approximate",
+            "unit": "USD B",
+            "period": "Q2 2026"
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "qualifier: source=approximate, candidate=exact"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": true,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": "Правило v1.1 KPI-05: source qualifier 'approximately' vs candidate 'exact' -> verified_match_with_normalization, qualifier_patch_suggested=true, patch_required=false."
+        },
+        {
+          "kpi_id": "NBIS-KPI-06",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": null,
+            "value_type": "actual",
+            "observation_qualifier": "range",
+            "unit": "fraction",
+            "period": "deal_cohort",
+            "value_range": {
+              "min": 0.5,
+              "max": 0.6
+            }
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_LETTER",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Q2 2026 letter, Customers/deal economics section",
+            "evidence_excerpt": "Overall deal economics strengthened, with 70% of deals including prepayments, covering 50-60% of the associated capex."
+          },
+          "found": {
+            "value": null,
+            "value_range": {
+              "min": 50,
+              "max": 60
+            },
+            "value_type": "actual",
+            "observation_qualifier": "range",
+            "unit": "percent",
+            "period": "Q2 2026 deal cohort"
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "50-60% -> 0.5-0.6 fraction; одна цитата с обоими концами достаточна (правило v1.1)"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NBIS-KPI-07",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 40,
+            "value_type": "actual",
+            "observation_qualifier": "lower_bound",
+            "unit": "USD B",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_LETTER",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Q2 2026 letter, funding/customers section",
+            "evidence_excerpt": "and with $40 billion in customer commitments, we will do more of this."
+          },
+          "found": {
+            "value": 40,
+            "value_type": "actual",
+            "observation_qualifier": "lower_bound",
+            "unit": "USD B",
+            "period": "as of Q2 2026 letter"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NBIS-KPI-08",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 5.0,
+            "value_type": "company_guidance",
+            "observation_qualifier": "exact",
+            "unit": "GW",
+            "period": "target YE2026"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_LETTER",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Q2 2026 letter, Capacity build-out section",
+            "evidence_excerpt": "We now anticipate ending 2026 with 5 GW of contracted power, up from the +4 GW we indicated last quarter."
+          },
+          "found": {
+            "value": 5.0,
+            "value_type": "company_guidance",
+            "observation_qualifier": "exact",
+            "unit": "GW",
+            "period": "target, year-end 2026"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": "Явно guidance/target (footnote 5), не факт реализованной мощности. Повышен относительно прошлого квартала (+4 GW -> 5 GW)."
+        },
+        {
+          "kpi_id": "NBIS-KPI-09",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 8.0421,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD B",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_6K",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Exhibit 99.1, Liquidity and Capital Resources",
+            "evidence_excerpt": "As of June 30, 2026, $8,042.1 million was recorded in cash and cash equivalents."
+          },
+          "found": {
+            "value": 8042.1,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD M",
+            "period": "as of 2026-06-30"
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "8,042.1 USD M -> 8.0421 USD B"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NBIS-KPI-10",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.41,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_LETTER",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Q2 2026 letter, Adjusted EBITDA table",
+            "evidence_excerpt": "Adjusted EBITDA / (loss) (21.0) 236.2 n/m (74.7) 365.7 n/m; as a percentage of revenues -20% 41% -48% 37%"
+          },
+          "found": {
+            "value": 41,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "percent",
+            "period": "Q2 2026"
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "41% -> 0.41 fraction"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "NBIS-KPI-11",
+          "status": "not_found",
+          "candidate": {
+            "last_value": null,
+            "value_type": "actual",
+            "observation_qualifier": "pending_verification",
+            "unit": "GW",
+            "period": "as of reporting date"
+          },
+          "source_check": {
+            "source_ref": "NBIS_Q2_LETTER",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Q2 2026 letter, Capacity build-out section; Ex-99.1 6-K reviewed",
+            "evidence_excerpt": "We continue to secure power ahead of our expectations. We now anticipate ending 2026 with 5 GW of contracted power, up from the +4 GW we indicated last quarter. We expanded our contracted capacity footprint in Q2, with additional sites in the UK, Estonia and Finland."
+          },
+          "found": {
+            "value": null,
+            "value_type": null,
+            "observation_qualifier": null,
+            "unit": "GW",
+            "period": null
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": null,
+            "relative_difference": null
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": "Документы обсуждают только цель на конец 2026 (5 GW guidance, footnote 5) и качественное расширение площадок (UK/Эстония/Финляндия); отдельного числа фактически законтрактованной мощности на дату отчёта не раскрыто. Нет формулировки non-disclosure -> not_found, не not_disclosed (правило v1.1, явный пример KPI-11).",
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Совпадает с прошлым прогоном; кандидат уже задекларирован pending_verification -> conditional_pending, не патч."
+        }
+      ],
+      "axis_items": [
+        {
+          "axis_id": "Demand_Monetization",
+          "current_state": "N3",
+          "prior_snapshot": null,
+          "criteria": "AI cloud quarterly revenue >= $0.50B AND ARR >= $3.0B AND disclosed customer commitments >= $20B",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "NBIS-KPI-02",
+            "NBIS-KPI-03",
+            "NBIS-KPI-07"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "NBIS_Q2_LETTER",
+              "source_class": "issuer_ir_release",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "headline bullets",
+              "evidence_excerpt": "ARR reached $3.0 billion; $40 billion in customer commitments.",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "AI cloud quarterly revenue >= $0.50B",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NBIS-KPI-02"
+              ],
+              "calculation": "0.5749 >= 0.50",
+              "notes": null
+            },
+            {
+              "expression": "ARR >= $3.0B",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NBIS-KPI-03"
+              ],
+              "calculation": "3.0 >= 3.0",
+              "notes": "Граница точная (3.0=3.0)"
+            },
+            {
+              "expression": "disclosed customer commitments >= $20B",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NBIS-KPI-07"
+              ],
+              "calculation": "40 (lower_bound) >= 20",
+              "notes": null
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": "Все три условия N3 подтверждены KPI того же отчёта."
+        },
+        {
+          "axis_id": "Unit_Economics",
+          "current_state": "E3",
+          "prior_snapshot": null,
+          "criteria": "AI cloud adjusted EBITDA margin >= 35% for at least 1 quarter",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "NBIS-KPI-04"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "NBIS_Q2_LETTER",
+              "source_class": "issuer_ir_release",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Adjusted EBITDA section",
+              "evidence_excerpt": "adjusted EBITDA margin of 49.7%",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "AI cloud adjusted EBITDA margin >= 35% for at least 1 quarter",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NBIS-KPI-04"
+              ],
+              "calculation": "49.7% >= 35% в Q2 2026 (одного квартала достаточно по критерию E3)",
+              "notes": null
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "axis_id": "Capacity_Secured",
+          "current_state": "pending_verification",
+          "prior_snapshot": "C3",
+          "criteria": "Записанное текущее состояние оси само pending_verification (нераскрытие факта NBIS-KPI-11)",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "qualitative_primary_source",
+          "status": "state_pending_verification",
+          "kpi_item_refs": [
+            "NBIS-KPI-11",
+            "NBIS-KPI-08"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "NBIS_Q2_LETTER",
+              "source_class": "issuer_ir_release",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Capacity build-out section",
+              "evidence_excerpt": "5 GW year-end 2026 target (guidance); фактическая законтрактованная мощность на дату отчёта не раскрыта числом.",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "фактически законтрактованная мощность на дату отчёта раскрыта числом",
+              "result": false,
+              "evidence_kpi_refs": [
+                "NBIS-KPI-11"
+              ],
+              "calculation": null,
+              "notes": "not_found — не доказывает нераскрытие, но факта для присвоения конкретного состояния недостаточно"
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "Каноническое состояние уже pending_verification -> по правилам axis_verification патч не требуется."
+        },
+        {
+          "axis_id": "Capital_Intensity",
+          "current_state": "K3",
+          "prior_snapshot": null,
+          "criteria": "capex/revenue >= 6x AND prepayment coverage >= 40% AND AI cloud adjusted EBITDA > 0",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "mixed",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "NBIS-KPI-04",
+            "NBIS-KPI-05",
+            "NBIS-KPI-06",
+            "NBIS-KPI-02"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "NBIS_Q2_LETTER",
+              "source_class": "issuer_ir_release",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Capex and Customers sections",
+              "evidence_excerpt": "capex ~$5.7B; prepayments cover 50-60% of associated capex; AI cloud adjusted EBITDA $285.7M",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "quarterly capex/revenue >= 6x",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NBIS-KPI-05",
+                "NBIS-KPI-02"
+              ],
+              "calculation": "5.7 / 0.5749 = 9.92x >= 6x",
+              "notes": null
+            },
+            {
+              "expression": "prepayment coverage >= 40%",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NBIS-KPI-06"
+              ],
+              "calculation": "диапазон 50-60%, обе границы >= 40%",
+              "notes": null
+            },
+            {
+              "expression": "AI cloud adjusted EBITDA > 0",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NBIS-KPI-04"
+              ],
+              "calculation": "$285.7M > 0",
+              "notes": null
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "axis_id": "Funding_Liquidity",
+          "current_state": "F2",
+          "prior_snapshot": null,
+          "criteria": "cash >= 1x latest quarterly capex AND external funding/prepayments actively support buildout",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "mixed",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "NBIS-KPI-09",
+            "NBIS-KPI-05"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "NBIS_Q2_LETTER",
+              "source_class": "issuer_ir_release",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Capital requirements section",
+              "evidence_excerpt": "We expect to receive over $9 billion in customer prepayments in 2026; diversified funding sources including convertible notes.",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "cash >= 1x latest quarterly capex",
+              "result": true,
+              "evidence_kpi_refs": [
+                "NBIS-KPI-09",
+                "NBIS-KPI-05"
+              ],
+              "calculation": "8.0421 / 5.7 = 1.41x >= 1x",
+              "notes": null
+            },
+            {
+              "expression": "external funding/prepayments actively support buildout",
+              "result": true,
+              "evidence_kpi_refs": [],
+              "calculation": null,
+              "notes": "Качественное подтверждение: конвертируемые ноты, ATM-программа, ожидаемые $9B клиентских предоплат в 2026"
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        }
+      ],
+      "event_items": [
+        {
+          "trigger_id": "NBIS-E-01",
+          "trigger_family": "E",
+          "event_claim": "AI cloud quarterly revenue >= $1.0B AND ARR >= $5.0B for 2 consecutive quarters (переход Demand_Monetization N3->N4)",
+          "event_date": "2026-08-12",
+          "status": "event_confirmed_primary",
+          "primary_sources": [
+            {
+              "source_ref": "NBIS_Q2_LETTER",
+              "source_class": "issuer_ir_release",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "headline bullets",
+              "evidence_excerpt": "AI cloud revenue grew 514% year-over-year to $575 million, ARR reached $3.0 billion.",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "media_sources": [],
+          "fact_only": true,
+          "runtime_verified": true,
+          "patch_required": false,
+          "runtime_targets": [
+            "events_reported"
+          ],
+          "notes": "Подтверждён факт раскрытия квартальной выручки AI cloud ($0.5749B) и ARR ($3.0B) за Q2 2026. Условие триггера (revenue>=$1.0B, ARR>=$5.0B, 2 квартала подряд) НЕ выполнено этими цифрами — fired не создаётся, действие не исполняется. Это подтверждение факта отчётности, не перехода."
+        },
+        {
+          "trigger_id": "NBIS-E-06",
+          "trigger_family": "E",
+          "event_claim": "contracted-power guidance <4 GW OR planned next-12m capacity additions reduced/delayed >=25% (переход Capacity_Secured C3->C2) — активный триггер-наблюдатель, ранее не заявлялся как случившийся факт",
+          "event_date": "2026-08-12",
+          "status": "event_unconfirmed",
+          "primary_sources": [
+            {
+              "source_ref": "NBIS_Q2_LETTER",
+              "source_class": "issuer_ir_release",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Capacity build-out section",
+              "evidence_excerpt": "We now anticipate ending 2026 with 5 GW of contracted power, up from the +4 GW we indicated last quarter.",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "media_sources": [],
+          "fact_only": true,
+          "runtime_verified": false,
+          "patch_required": false,
+          "runtime_targets": [],
+          "notes": "Проверялось действующее (status: active) наблюдение по NBIS-E-06 — это условие-триггер, не ранее заявленный факт, поэтому используется event_unconfirmed, а не event_contradicted (которое требует наличия заявленного события, опровергаемого источником). Первоисточник показывает: guidance повышен с 4 до 5 GW, сокращений/задержек capacity не раскрыто — условие триггера (guidance <4 GW OR сокращение >=25%) не выполнено. Наблюдение продолжается, действий нет."
+        }
+      ],
+      "summary": {
+        "overall_status": "PASS_WITH_DECLARED_PENDING",
+        "counts": {
+          "verified_match": 4,
+          "verified_match_with_normalization": 6,
+          "not_found": 1
+        },
+        "patch_required_kpis": [],
+        "technical_blocked_kpis": [],
+        "pending_kpis": [
+          "NBIS-KPI-11"
+        ],
+        "qualifier_patch_suggested_kpis": [
+          "NBIS-KPI-05"
+        ],
+        "axis_counts": {
+          "state_supported": 4,
+          "state_pending_verification": 1
+        },
+        "event_counts": {
+          "event_confirmed_primary": 1,
+          "event_unconfirmed": 1
+        },
+        "patch_required_axes": [],
+        "technical_blocked_axes": [],
+        "pending_axes": [
+          "Capacity_Secured"
+        ],
+        "patch_required_events": [],
+        "technical_blocked_events": [],
+        "pending_events": []
+      }
+    },
+    "folders": [
+      "nbis"
+    ]
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "protocol_version": "1.1",
+    "mode": "dozor_report",
+    "ticker": "NBIS",
+    "run_id": "verify-NBIS-20260922T210122Z",
+    "schema_errors": [],
+    "integrity": [],
+    "pass": true,
+    "decision": "none"
+  },
+  "elapsed_ms": 87.3,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

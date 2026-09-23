@@ -1,0 +1,944 @@
+{
+  "run_id": "20260923T194713Z-artifact_validator-b4ef80",
+  "model": "artifact_validator",
+  "version": "1.5.0",
+  "seed": 192833,
+  "inputs": {
+    "mode": "dozor_report",
+    "report": {
+      "protocol_version": "1.2.0",
+      "run_id": "verify-HOOD-20260923T194500Z",
+      "ticker": "HOOD",
+      "as_of": "2026-09-23T19:45:00Z",
+      "inputs": {
+        "kpis_ref": "portfolio/hood/kpis.yaml",
+        "source_registry_ref": "portfolio/hood/states.yaml",
+        "evidence_pack_ref": null,
+        "artifact_schema_version": "1.0.5",
+        "state_ref": "portfolio/hood/state.json",
+        "triggers_ref": "portfolio/hood/triggers.yaml"
+      },
+      "items": [
+        {
+          "kpi_id": "HOOD-KPI-01",
+          "status": "source_unavailable_technical",
+          "candidate": {
+            "last_value": 28.6,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "million",
+            "period": "monthly (August 2026)"
+          },
+          "source_check": {
+            "source_ref": "HOOD_AUG_OPS",
+            "source_class": "issuer_ir_release",
+            "url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
+            "allowed_by_policy": true,
+            "technical_status": "unavailable_technical",
+            "technical_error": "Repeated curl attempts (HTTP/1.1 and HTTP/2, custom User-Agent per Source Policy v1.0 §7, up to 25s timeout, multiple retries over ~20 minutes) to both the IR news-release page and the linked static-file PDF (https://investors.robinhood.com/static-files/5980b367-8c3d-486b-b38d-99fad8d6da70) returned connection resets, HTTP/2 stream errors, or 15-25s timeouts with 0 bytes received. TLS handshake succeeds (valid cert) but the server never returns a response body within the allotted time.",
+            "evidence_locator": null,
+            "evidence_excerpt": null
+          },
+          "found": {
+            "value": null,
+            "value_type": null,
+            "observation_qualifier": null,
+            "unit": null,
+            "period": null
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": null,
+            "relative_difference": null
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Нет SEC-фолбэка: проверка списка 8-K Robinhood Markets, Inc. (CIK 1783879) на EDGAR не обнаружила ни одного 8-K после 2026-07-29 (Q2 2026 отчёт) по состоянию на момент прогона; августовский операционный релиз, по-видимому, не публиковался как приложение к 8-K и доступен только на сайте IR, который технически недоступен. BLOCKED_TECHNICAL."
+        },
+        {
+          "kpi_id": "HOOD-KPI-02",
+          "status": "source_unavailable_technical",
+          "candidate": {
+            "last_value": 383.7,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD B",
+            "period": "monthly (August 2026)"
+          },
+          "source_check": {
+            "source_ref": "HOOD_AUG_OPS",
+            "source_class": "issuer_ir_release",
+            "url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
+            "allowed_by_policy": true,
+            "technical_status": "unavailable_technical",
+            "technical_error": "See HOOD-KPI-01: same source technically unavailable after repeated attempts.",
+            "evidence_locator": null,
+            "evidence_excerpt": null
+          },
+          "found": {
+            "value": null,
+            "value_type": null,
+            "observation_qualifier": null,
+            "unit": null,
+            "period": null
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": null,
+            "relative_difference": null
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Q2 2026 10-Q/release (as of 2026-06-30) discloses Total Platform Assets $369B, not the same period as the August monthly candidate ($383.7B as of 2026-08-31); cannot substitute for the monthly fact. BLOCKED_TECHNICAL."
+        },
+        {
+          "kpi_id": "HOOD-KPI-03",
+          "status": "source_unavailable_technical",
+          "candidate": {
+            "last_value": 0.24,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "monthly (August 2026, LTM basis)"
+          },
+          "source_check": {
+            "source_ref": "HOOD_AUG_OPS",
+            "source_class": "issuer_ir_release",
+            "url": "https://investors.robinhood.com/static-files/5980b367-8c3d-486b-b38d-99fad8d6da70",
+            "allowed_by_policy": true,
+            "technical_status": "unavailable_technical",
+            "technical_error": "See HOOD-KPI-01: same source technically unavailable after repeated attempts.",
+            "evidence_locator": null,
+            "evidence_excerpt": null
+          },
+          "found": {
+            "value": null,
+            "value_type": null,
+            "observation_qualifier": null,
+            "unit": null,
+            "period": null
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": null,
+            "relative_difference": null
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "BLOCKED_TECHNICAL. Prior state.json note records LTM Net Deposits $75.7B in Q2 release (27% growth basis) vs August monthly release claiming $74.1B/24% (per earlier partial LLM verification) — different periods, cannot be cross-substituted."
+        },
+        {
+          "kpi_id": "HOOD-KPI-04",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 187,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD annualized",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "HOOD_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Second Quarter Results bullet list",
+            "evidence_excerpt": "Average Revenue Per User (\"ARPU\") increased 24% year-over-year to $187."
+          },
+          "found": {
+            "value": 187,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "USD annualized",
+            "period": "Q2 2026 (quarter ended 2026-06-30)"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "HOOD-KPI-05",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 4.84,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "million",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "HOOD_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Key metrics table, Robinhood Gold Subscribers (in millions)",
+            "evidence_excerpt": "Gold Subscribers (in millions) 3.48 4.84 39%"
+          },
+          "found": {
+            "value": 4.84,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "million",
+            "period": "Q2 2026 (quarter ended 2026-06-30)"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [
+              "body text rounds to '4.8 million'; key-metrics table gives exact 4.84, matching candidate"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "HOOD-KPI-06",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 0.32,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "YoY fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "HOOD_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Second Quarter Results bullet list",
+            "evidence_excerpt": "Total net revenues increased 32% year-over-year to $1.31 billion."
+          },
+          "found": {
+            "value": 0.32,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "YoY fraction",
+            "period": "Q2 2026 (quarter ended 2026-06-30)"
+          },
+          "normalization": {
+            "applied": false,
+            "steps": [],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "kpi_id": "HOOD-KPI-07",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 0.5665,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly",
+            "formula": "741/1308"
+          },
+          "source_check": {
+            "source_ref": "HOOD_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Reconciliation of GAAP to Non-GAAP Results table, Three Months Ended June 30, 2026 column",
+            "evidence_excerpt": "Total net revenues 989 1,308 32% ... Adjusted EBITDA (non-GAAP) $549 $741 ... Adjusted EBITDA Margin (non-GAAP) 56% 57% 50%"
+          },
+          "found": {
+            "value": 0.5665,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "Q2 2026 (quarter ended 2026-06-30)",
+            "formula_recomputed_value": 0.56651
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source components (three months ended 2026-06-30, $ millions): Adjusted EBITDA $741; Total net revenues $1,308",
+              "candidate-basis derived_fact: 741/1308 = 0.566514 -> 0.5665 (matches candidate/kpis.yaml formula exactly)",
+              "table separately discloses a rounded headline figure '57%' for the same period; this is a display rounding of the same underlying components, not a conflicting source"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": "Кандидатская формула 741/1308 точно воспроизводится из тех же цифр таблицы; заголовочные «57%» — округление того же значения, не отдельный факт."
+        },
+        {
+          "kpi_id": "HOOD-KPI-08",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.59,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "HOOD_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Condensed consolidated statements of operations, Three Months Ended June 30, 2026",
+            "evidence_excerpt": "Transaction-based revenues $ 539 $ 776 44% ... Total net revenues 989 1,308 32%"
+          },
+          "found": {
+            "value": 0.59,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "Q2 2026 (quarter ended 2026-06-30)",
+            "formula_recomputed_value": 0.59328
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source components: Transaction-based revenues $776M; Total net revenues $1,308M",
+              "raw recomputation: 776/1308 = 0.593272",
+              "candidate-basis derived_fact rounded to registry precision (2 decimals, matching candidate.last_value basis): 0.59"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": "kpis.yaml/candidate хранит округлённое до 2 знаков значение 0.59; state.json хранит более точное 0.5931 (наблюдение другого источника уточнения, не этого прогона) — расхождение точности, не значения; для DZR-012 found приведён к базе кандидата (2 знака)."
+        },
+        {
+          "kpi_id": "HOOD-KPI-09",
+          "status": "verified_match_with_normalization",
+          "candidate": {
+            "last_value": 0.12,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly"
+          },
+          "source_check": {
+            "source_ref": "HOOD_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Second Quarter Results bullet detail on transaction-based revenue drivers",
+            "evidence_excerpt": "Transaction-based revenues increased 44% year-over-year to $776 million, primarily driven by event contracts revenue of $156 million, up over 10x ... Total net revenues 1,308 (Q2'26, in millions)"
+          },
+          "found": {
+            "value": 0.12,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "Q2 2026 (quarter ended 2026-06-30)",
+            "formula_recomputed_value": 0.11927
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source components: event contracts revenue $156M; Total net revenues $1,308M",
+              "raw recomputation: 156/1308 = 0.119266",
+              "candidate-basis derived_fact rounded to registry precision (2 decimals, matching candidate.last_value basis): 0.12"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": "state.json хранит более точное 0.1193 (уточнение от другого источника, не этого прогона); для DZR-012 found приведён к базе кандидата (2 знака)."
+        },
+        {
+          "kpi_id": "HOOD-KPI-10",
+          "status": "verified_match",
+          "candidate": {
+            "last_value": 0.0428,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "quarterly",
+            "formula": "56/1308"
+          },
+          "source_check": {
+            "source_ref": "HOOD_Q2_RELEASE",
+            "source_class": "issuer_ir_release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
+            "allowed_by_policy": true,
+            "technical_status": "accessible",
+            "technical_error": null,
+            "evidence_locator": "Condensed consolidated statements of operations, Three Months Ended June 30, 2026",
+            "evidence_excerpt": "Provision for credit losses 28 56 100% ... Total net revenues 989 1,308 32%"
+          },
+          "found": {
+            "value": 0.0428,
+            "value_type": "actual",
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "period": "Q2 2026 (quarter ended 2026-06-30)",
+            "formula_recomputed_value": 0.04281
+          },
+          "normalization": {
+            "applied": true,
+            "steps": [
+              "source components: Provision for credit losses $56M; Total net revenues $1,308M",
+              "candidate-basis derived_fact: 56/1308 = 0.042813 -> 0.0428 (matches candidate/kpis.yaml formula exactly)"
+            ],
+            "numeric_difference": 0,
+            "relative_difference": 0
+          },
+          "qualifier_patch_suggested": false,
+          "mismatch_reason": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        }
+      ],
+      "axis_items": [
+        {
+          "axis_id": "Customer_Asset_Scale",
+          "current_state": "S3",
+          "prior_snapshot": null,
+          "criteria": "Funded Customers >=28M AND TPA >=$350B AND LTM Net Deposit growth >=20%",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "evidence_unavailable_technical",
+          "kpi_item_refs": [
+            "HOOD-KPI-01",
+            "HOOD-KPI-02",
+            "HOOD-KPI-03"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "HOOD_AUG_OPS",
+              "source_class": "issuer_ir_release",
+              "url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
+              "technical_status": "unavailable_technical",
+              "evidence_locator": null,
+              "evidence_excerpt": null,
+              "independent_source_identity": null,
+              "notes": "See HOOD-KPI-01/02/03 technical_error."
+            }
+          ],
+          "criterion_checks": [],
+          "history_evaluation_ref": null,
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Все три опорных KPI (monthly, August 2026) недоступны технически; ось не проверена в этом прогоне. verified в scenario_state не переписывается."
+        },
+        {
+          "axis_id": "Revenue_Diversification",
+          "current_state": "R3",
+          "prior_snapshot": null,
+          "criteria": "transaction share <=60% AND no single transaction category >30% of total net revenue",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "HOOD-KPI-08"
+          ],
+          "source_evidence": [
+            {
+              "source_ref": "HOOD_Q2_RELEASE",
+              "source_class": "issuer_ir_release",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Second Quarter Results bullet detail",
+              "evidence_excerpt": "options revenue of $342 million, up 29%, and equities revenue of $129 million, up 95%, ... cryptocurrencies revenue of $100 million, down 38%; event contracts revenue of $156 million",
+              "independent_source_identity": null,
+              "notes": null
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "transaction share <=60%",
+              "result": true,
+              "evidence_kpi_refs": [
+                "HOOD-KPI-08"
+              ],
+              "calculation": "59.31% <= 60%",
+              "notes": null
+            },
+            {
+              "expression": "no single transaction category >30% of total net revenue",
+              "result": true,
+              "evidence_kpi_refs": [],
+              "calculation": "options 342/1308=26.1%; event contracts 156/1308=11.9%; equities 129/1308=9.9%; crypto 100/1308=7.6% — all <30%",
+              "notes": null
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "axis_id": "Profitability",
+          "current_state": "P3",
+          "prior_snapshot": null,
+          "criteria": "Adjusted EBITDA margin >=45%",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "HOOD-KPI-07"
+          ],
+          "source_evidence": [],
+          "criterion_checks": [
+            {
+              "expression": "Adjusted EBITDA margin >=45%",
+              "result": true,
+              "evidence_kpi_refs": [
+                "HOOD-KPI-07"
+              ],
+              "calculation": "56.65% >= 45%",
+              "notes": null
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "axis_id": "Credit_Risk",
+          "current_state": "C1",
+          "prior_snapshot": null,
+          "criteria": "credit-loss provision 2%-<5% of revenue",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "quantitative",
+          "status": "state_supported",
+          "kpi_item_refs": [
+            "HOOD-KPI-10"
+          ],
+          "source_evidence": [],
+          "criterion_checks": [
+            {
+              "expression": "provision/revenue in [2%,5%)",
+              "result": true,
+              "evidence_kpi_refs": [
+                "HOOD-KPI-10"
+              ],
+              "calculation": "4.28% in [2,5)",
+              "notes": null
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": true,
+          "patch_required": false,
+          "notes": null
+        },
+        {
+          "axis_id": "Regulatory_Product",
+          "current_state": "G2",
+          "prior_snapshot": null,
+          "criteria": "specific product offering required to cease/suspend in at least one jurisdiction",
+          "criteria_provenance": "model_assumption",
+          "evidence_type": "qualitative_primary_source",
+          "status": "state_pending_verification",
+          "kpi_item_refs": [],
+          "source_evidence": [
+            {
+              "source_ref": "HOOD_Q2_10Q",
+              "source_class": "regulatory_filing",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Item 1A Risk Factors, event contracts discussion; Note 15 Commitments & Contingencies references",
+              "evidence_excerpt": "The outcome of these cases or new laws or regulations... could immediately or subsequently prevent us from offering, or continuing to offer, some or all types of event contracts in the future, including in specific states... Illinois recently enacted a tax (effective July 1, 2026) on prediction market operators...",
+              "independent_source_identity": null,
+              "notes": "Текст описывает риск будущего/потенциального принудительного прекращения и новый налог (не запрет) в Illinois; в проверенной части 10-Q не найдено позитивного утверждения о фактически действующем принудительном прекращении конкретного продукта в конкретной юрисдикции на дату отчёта (2026-06-30)."
+            }
+          ],
+          "criterion_checks": [
+            {
+              "expression": "specific product offering required to cease/suspend in at least one jurisdiction (as of the reviewed filing date)",
+              "result": null,
+              "evidence_kpi_refs": [],
+              "calculation": null,
+              "notes": "Не найдено ни подтверждающей, ни опровергающей цитаты первоисточника о текущем принудительном прекращении конкретного продукта; риск-факторы описывают потенциальные будущие сценарии, а не текущее состояние."
+            }
+          ],
+          "history_evaluation_ref": null,
+          "runtime_verified": false,
+          "patch_required": true,
+          "notes": "Канонический current_state=G2 не является pending_verification, поэтому по правилу runtime_write_rules (state_pending_verification) требуется PATCH_REQUIRED, а не тихий pass. Нужен целевой поиск (полный текст Note 15, конкретные штатные cease-and-desist по event contracts) за пределы времени этого прогона."
+        }
+      ],
+      "event_items": [
+        {
+          "trigger_id": "HOOD-E-09",
+          "trigger_family": "E",
+          "claim_type": "discrete_event",
+          "event_claim": "Federal or multi-jurisdiction restriction requiring suspension/termination of a product category representing >=10% of trailing-quarter revenue.",
+          "event_date": null,
+          "status": "event_unconfirmed",
+          "primary_sources": [
+            {
+              "source_ref": "HOOD_Q2_10Q",
+              "source_class": "regulatory_filing",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Item 1A Risk Factors, event contracts discussion",
+              "evidence_excerpt": "The CFTC withdrew this proposed rule amendment on February 4, 2026, and has proposed new rule amendments related to event contracts. Those proposed rule amendments have not yet been finalized.",
+              "independent_source_identity": null,
+              "notes": "Не найдено фактического (не проектного) федерального или мульти-юрисдикционного принуждения к прекращению event contracts, представляющих >=10% выручки за квартал (event contracts = 11.9% выручки, но нет подтверждённого принудительного прекращения)."
+            }
+          ],
+          "media_sources": [],
+          "fact_only": true,
+          "runtime_verified": false,
+          "patch_required": false,
+          "runtime_targets": [
+            "events_reported"
+          ],
+          "notes": null
+        },
+        {
+          "trigger_id": "HOOD-E-11",
+          "trigger_family": "E",
+          "claim_type": "discrete_event",
+          "event_claim": "Regulatory action materially suspends or impairs a core brokerage, clearing or custody authorization.",
+          "event_date": null,
+          "status": "event_unconfirmed",
+          "primary_sources": [
+            {
+              "source_ref": "HOOD_Q2_10Q",
+              "source_class": "regulatory_filing",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm",
+              "technical_status": "accessible",
+              "evidence_locator": "Broker-Dealer, FCM, Investment Adviser regulation section",
+              "evidence_excerpt": "our Singapore subsidiary, Robinhood Singapore Pte. Ltd., was granted a capital markets service license on July 1, 2026",
+              "independent_source_identity": null,
+              "notes": "Раскрытие показывает выдачу новой лицензии, а не приостановку/лишение существующей; не найдено подтверждения материального нарушения авторизации брокерской/клиринговой/кастодиальной деятельности."
+            }
+          ],
+          "media_sources": [],
+          "fact_only": true,
+          "runtime_verified": false,
+          "patch_required": false,
+          "runtime_targets": [
+            "events_reported"
+          ],
+          "notes": null
+        }
+      ],
+      "transition_checks": [
+        {
+          "trigger_id": "HOOD-E-01",
+          "axis": "Customer_Asset_Scale",
+          "transition": {
+            "from": "S3",
+            "to": "S4"
+          },
+          "condition": "Funded Customers >=30M AND TPA >=$450B AND LTM Net Deposit growth >=20% for 2 months",
+          "kpi_item_refs": [
+            "HOOD-KPI-01",
+            "HOOD-KPI-02",
+            "HOOD-KPI-03"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "pending_history",
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Опорные KPI (HOOD_AUG_OPS) технически недоступны в этом прогоне; результат не может быть присвоен met/not_met. pending_history используется как ближайшая непатчевая категория (протокол v1.2.1 не даёт отдельного значения для технической блокировки внутри transition_checks) — отмечено для feedback как неоднозначность схемы."
+        },
+        {
+          "trigger_id": "HOOD-E-02",
+          "axis": "Customer_Asset_Scale",
+          "transition": {
+            "from": "S3",
+            "to": "S2"
+          },
+          "condition": "Funded Customers <27M OR TPA <$300B OR LTM Net Deposit growth <10% for 2 months",
+          "kpi_item_refs": [
+            "HOOD-KPI-01",
+            "HOOD-KPI-02",
+            "HOOD-KPI-03"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "pending_history",
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "См. HOOD-E-01: опорные KPI технически недоступны."
+        },
+        {
+          "trigger_id": "HOOD-E-03",
+          "axis": "Revenue_Diversification",
+          "transition": {
+            "from": "R3",
+            "to": "R4"
+          },
+          "condition": "transaction-based revenue share <50% for 2 quarters",
+          "kpi_item_refs": [
+            "HOOD-KPI-08"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "Текущая доля 59.31% не <50%; условие ложно уже в текущем периоде."
+        },
+        {
+          "trigger_id": "HOOD-E-04",
+          "axis": "Revenue_Diversification",
+          "transition": {
+            "from": "R3",
+            "to": "R2"
+          },
+          "condition": "transaction-based revenue share >60% for 2 quarters",
+          "kpi_item_refs": [
+            "HOOD-KPI-08"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "59.31% не >60%."
+        },
+        {
+          "trigger_id": "HOOD-E-05",
+          "axis": "Profitability",
+          "transition": {
+            "from": "P3",
+            "to": "P4"
+          },
+          "condition": "Adjusted EBITDA margin >=55% for 2 quarters",
+          "kpi_item_refs": [
+            "HOOD-KPI-07"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "pending_history",
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Текущий квартал 56.65% >=55% (условие не опровергается), но нужна история второго квартала подряд."
+        },
+        {
+          "trigger_id": "HOOD-E-06",
+          "axis": "Profitability",
+          "transition": {
+            "from": "P3",
+            "to": "P2"
+          },
+          "condition": "Adjusted EBITDA margin <45% for 2 quarters",
+          "kpi_item_refs": [
+            "HOOD-KPI-07"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "56.65% не <45%; условие ложно уже в текущем периоде."
+        },
+        {
+          "trigger_id": "HOOD-E-07",
+          "axis": "Credit_Risk",
+          "transition": {
+            "from": "C1",
+            "to": "C2"
+          },
+          "condition": "credit-loss provision >=5% of revenue for 2 quarters",
+          "kpi_item_refs": [
+            "HOOD-KPI-10"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "4.28% не >=5%."
+        },
+        {
+          "trigger_id": "HOOD-E-08",
+          "axis": "Credit_Risk",
+          "transition": {
+            "from": "C1",
+            "to": "C0"
+          },
+          "condition": "credit-loss provision <2% of revenue for 2 quarters",
+          "kpi_item_refs": [
+            "HOOD-KPI-10"
+          ],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "not_met",
+          "runtime_verified": false,
+          "patch_required": false,
+          "notes": "4.28% не <2%."
+        },
+        {
+          "trigger_id": "HOOD-E-09",
+          "axis": "Regulatory_Product",
+          "transition": {
+            "from": "G2",
+            "to": "G3"
+          },
+          "condition": "federal or multi-jurisdiction restriction requires suspension/termination of a product category representing >=10% of trailing-quarter revenue",
+          "kpi_item_refs": [
+            "HOOD-KPI-09"
+          ],
+          "event_item_refs": [
+            "HOOD-E-09"
+          ],
+          "history_evaluation_ref": null,
+          "result": "pending_history",
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Однопериодный дискретно-событийный триггер; событие не подтверждено (event_unconfirmed). Протокол v1.2 не даёт отдельного значения enum для этого исхода в transition_checks — используется pending_history как ближайшая непатчевая категория (та же неоднозначность отмечена в verify-NVDA-20260923T190405Z.json)."
+        },
+        {
+          "trigger_id": "HOOD-E-10",
+          "axis": "Regulatory_Product",
+          "transition": {
+            "from": "G2",
+            "to": "G1"
+          },
+          "condition": "previous forced restriction is removed/resolved AND no other forced product suspension remains material for 2 quarters",
+          "kpi_item_refs": [],
+          "event_item_refs": [],
+          "history_evaluation_ref": null,
+          "result": "pending_history",
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Само текущее качественное состояние оси G2 не подтверждено в этом прогоне (см. axis_items.Regulatory_Product, PATCH_REQUIRED); переход, зависящий от этого состояния, не может быть положительно оценён."
+        },
+        {
+          "trigger_id": "HOOD-E-11",
+          "axis": "Regulatory_Product",
+          "transition": {
+            "from": "G2",
+            "to": "G4"
+          },
+          "condition": "regulatory action materially suspends or impairs a core brokerage, clearing or custody authorization",
+          "kpi_item_refs": [],
+          "event_item_refs": [
+            "HOOD-E-11"
+          ],
+          "history_evaluation_ref": null,
+          "result": "pending_history",
+          "runtime_verified": null,
+          "patch_required": false,
+          "notes": "Однопериодный дискретно-событийный триггер; событие не подтверждено (event_unconfirmed). См. схемную неоднозначность выше."
+        }
+      ],
+      "summary": {
+        "overall_status": "BLOCKED_TECHNICAL",
+        "counts": {
+          "verified_match": 7,
+          "verified_match_with_normalization": 0,
+          "source_unavailable_technical": 3
+        },
+        "patch_required_kpis": [],
+        "technical_blocked_kpis": [
+          "HOOD-KPI-01",
+          "HOOD-KPI-02",
+          "HOOD-KPI-03"
+        ],
+        "pending_kpis": [],
+        "qualifier_patch_suggested_kpis": [
+          "HOOD-KPI-08",
+          "HOOD-KPI-09"
+        ],
+        "axis_counts": {
+          "state_supported": 3,
+          "evidence_unavailable_technical": 1,
+          "state_pending_verification": 1
+        },
+        "event_counts": {
+          "event_unconfirmed": 2
+        },
+        "transition_counts": {
+          "not_met": 5,
+          "pending_history": 6
+        },
+        "patch_required_axes": [
+          "Regulatory_Product"
+        ],
+        "technical_blocked_axes": [
+          "Customer_Asset_Scale"
+        ],
+        "pending_axes": [
+          "Regulatory_Product"
+        ],
+        "patch_required_events": [],
+        "technical_blocked_events": [],
+        "pending_events": [
+          "HOOD-E-09",
+          "HOOD-E-11"
+        ],
+        "patch_required_transition_checks": [],
+        "pending_transition_checks": [
+          "HOOD-E-01",
+          "HOOD-E-02",
+          "HOOD-E-05",
+          "HOOD-E-09",
+          "HOOD-E-10",
+          "HOOD-E-11"
+        ]
+      }
+    },
+    "folders": [
+      "hood"
+    ]
+  },
+  "outputs": {
+    "model_version": "1.5.0",
+    "protocol_version": "1.2.1",
+    "mode": "dozor_report",
+    "ticker": "HOOD",
+    "run_id": "verify-HOOD-20260923T194500Z",
+    "schema_errors": [],
+    "integrity": [],
+    "pass": true,
+    "decision": "none"
+  },
+  "elapsed_ms": 72.6,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

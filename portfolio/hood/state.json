@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-21T06:35:00Z",
+  "updated": "2026-09-23T19:47:18Z",
   "price": {
     "last": 119.82,
     "last_at": "2026-09-18",
@@ -37,6 +37,11 @@
       "timestamp": "2026-09-21T06:35:00Z",
       "kind": "correction",
       "summary": "HOOD KPI-03 (LTM Net Deposit growth 24%) подтверждён: место в августовском релизе указано LLM; ось Customer_Asset_Scale verified"
+    },
+    {
+      "timestamp": "2026-09-23T19:47:18Z",
+      "kind": "verification",
+      "summary": "Прогон сверки run_id=verify-HOOD-20260923T194500Z (Dozor Verification Protocol v1.2.1, гейт G8): 7/10 KPI подтверждены (verified_match) по пресс-релизу Q2 2026 Ex-99.1 (SEC EDGAR); 3 KPI (HOOD-KPI-01/02/03, августовские операционные данные) заблокированы технически — сайт investors.robinhood.com не отвечает (TLS handshake проходит, тело ответа не получено после ~20 минут повторных попыток HTTP/1.1 и HTTP/2 с разными таймаутами); 8-K с этими данными на EDGAR не найден. Ось Regulatory_Product (G2) не подтверждена: в 10-Q не найдено ни подтверждения, ни опровержения текущего состояния «конкретный продукт принуждён к прекращению в конкретной юрисдикции» — только риск-факторы о потенциальных будущих ограничениях event contracts и новый налог в Illinois (не запрет). Оси Revenue_Diversification/Profitability/Credit_Risk подтверждены повторно. Событийные триггеры HOOD-E-09 и HOOD-E-11 — событие не подтверждено (event_unconfirmed), fired не создан. Итог прогона: BLOCKED_TECHNICAL (старшинство выше PATCH_REQUIRED). Отчёт: portfolio/hood/_verify/verify-HOOD-20260923T194500Z.json."
     }
   ],
   "scenario_state": {
@@ -46,35 +51,40 @@
       "evidence": [],
       "source": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
       "verified": true,
-      "verified_note": "KPI-01/02 подтверждены заданием, KPI-03 — по указанию LLM на место в релизе (21.09)"
+      "verified_note": "KPI-01/02 подтверждены заданием, KPI-03 — по указанию LLM на место в релизе (21.09). Прогон 23.09 (verify-HOOD-20260923T194500Z) не смог переподтвердить: источник HOOD_AUG_OPS технически недоступен (BLOCKED_TECHNICAL), verified не переписан по правилу evidence_unavailable_technical."
     },
     "Revenue_Diversification": {
       "state": "R3",
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "verification_run_id": "verify-HOOD-20260923T194500Z"
     },
     "Profitability": {
       "state": "P3",
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "verification_run_id": "verify-HOOD-20260923T194500Z"
     },
     "Credit_Risk": {
       "state": "C1",
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
-      "verified": true
+      "verified": true,
+      "verification_run_id": "verify-HOOD-20260923T194500Z"
     },
     "Regulatory_Product": {
       "state": "G2",
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm",
-      "verified": false
+      "verified": false,
+      "verification_run_id": "verify-HOOD-20260923T194500Z",
+      "verified_note": "10-Q не содержит позитивной цитаты, подтверждающей или опровергающей текущее конкретное состояние G2 («product offering required to cease/suspend in at least one jurisdiction») на дату отчёта; state_pending_verification, PATCH_REQUIRED по отчёту."
     }
   },
   "state_transitions": [],
@@ -89,7 +99,8 @@
       "source_url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "note": "Прогон 23.09 (verify-HOOD-20260923T194500Z) не смог переподтвердить: источник технически недоступен (BLOCKED_TECHNICAL). Поле verified не изменено (не переподтверждено, но и не опровергнуто)."
     },
     {
       "kpi_id": "HOOD-KPI-02",
@@ -101,7 +112,8 @@
       "source_url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "note": "Прогон 23.09 (verify-HOOD-20260923T194500Z) не смог переподтвердить: источник технически недоступен (BLOCKED_TECHNICAL)."
     },
     {
       "kpi_id": "HOOD-KPI-03",
@@ -114,7 +126,8 @@
       "verified": true,
       "verified_by": "другая LLM (batch_01_source_corrections, 21.09) с указанием точного места в релизе; дозор подтвердит при следующей сверке по PDF",
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "note": "Прогон 23.09 (verify-HOOD-20260923T194500Z) не смог переподтвердить: источник технически недоступен (BLOCKED_TECHNICAL). Остаётся непроверенным дозором."
     },
     {
       "kpi_id": "HOOD-KPI-04",
@@ -126,7 +139,9 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "verification_run_id": "verify-HOOD-20260923T194500Z",
+      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
     },
     {
       "kpi_id": "HOOD-KPI-05",
@@ -138,7 +153,9 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "verification_run_id": "verify-HOOD-20260923T194500Z",
+      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
     },
     {
       "kpi_id": "HOOD-KPI-06",
@@ -150,7 +167,9 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "verification_run_id": "verify-HOOD-20260923T194500Z",
+      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
     },
     {
       "kpi_id": "HOOD-KPI-07",
@@ -162,7 +181,9 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "verification_run_id": "verify-HOOD-20260923T194500Z",
+      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
     },
     {
       "kpi_id": "HOOD-KPI-08",
@@ -174,7 +195,10 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "verification_run_id": "verify-HOOD-20260923T194500Z",
+      "verification_run_ids": ["verify-HOOD-20260923T194500Z"],
+      "note": "Отчёт verify-HOOD-20260923T194500Z подтверждает 0.5931 = 776/1308 (полная точность); реестр kpis.yaml хранит округлённое 0.59 — расхождение только в точности округления."
     },
     {
       "kpi_id": "HOOD-KPI-09",
@@ -186,7 +210,10 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "verification_run_id": "verify-HOOD-20260923T194500Z",
+      "verification_run_ids": ["verify-HOOD-20260923T194500Z"],
+      "note": "Отчёт verify-HOOD-20260923T194500Z подтверждает 0.1193 = 156/1308 (полная точность); реестр kpis.yaml хранит округлённое 0.12 — расхождение только в точности округления."
     },
     {
       "kpi_id": "HOOD-KPI-10",
@@ -198,9 +225,16 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm",
       "verified": true,
       "value_type": "actual",
-      "provenance": "verified_fact"
+      "provenance": "verified_fact",
+      "verification_run_id": "verify-HOOD-20260923T194500Z",
+      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
     }
   ],
+  "verification": {
+    "run_id": "verify-HOOD-20260923T194500Z",
+    "as_of": "2026-09-23T19:45:00Z",
+    "overall_status": "BLOCKED_TECHNICAL"
+  },
   "calc_runs": [],
   "schema_version": "1.0.5"
 }

@@ -19,7 +19,8 @@ sources:
   HOOD_Q2_RELEASE:
     source_class: issuer_ir_release
     url: https://investors.robinhood.com/news-releases/news-release-details/robinhood-reports-second-quarter-2026-results
-    as_of: '2026-09-21'
+    as_of: '2026-07-29'
+    recorded_at: '2026-09-21T00:00:00Z'
   HOOD_AUG_OPS:
     source_class: issuer_ir_release
     url: https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data

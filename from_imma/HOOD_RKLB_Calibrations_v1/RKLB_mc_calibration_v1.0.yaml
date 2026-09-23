@@ -1,0 +1,632 @@
+schema_version: 1.0.1
+artifact: company_mc_calibration
+ticker: RKLB
+as_of: '2026-09-23'
+archetype: pre_service_or_milestone_driven
+calculation_engine_version: company_mc 2.3.0
+state_vector:
+  Electron_Cadence: E2
+  Neutron_Development: N1
+  Space_Systems_Scale: S3
+  Backlog_Visibility: B3
+  Capital_and_Integration: C2
+simulation:
+  paths: 500000
+  paths_meta:
+    provenance: model_assumption
+    rationale: Normative production path count.
+  seed: 20260920
+  seed_meta:
+    provenance: model_assumption
+    rationale: Fixed reproducibility seed.
+  antithetic_variates: true
+  store_summary_quantiles:
+  - 0.01
+  - 0.05
+  - 0.1
+  - 0.25
+  - 0.5
+  - 0.75
+  - 0.9
+  - 0.95
+  - 0.99
+  store_summary_quantiles_meta:
+    provenance: model_assumption
+    rationale: Standard system summary grid.
+  horizons_years:
+  - 3
+  - 5
+  - 8
+  horizons_years_meta:
+    provenance: model_assumption
+    rationale: Current Thesis / Primary Optimization / Persistence horizons.
+revenue_model:
+  existing_segments:
+    Launch:
+      base_revenue_quarterly: 44600000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-08-10 | https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+      initial_growth:
+        distribution: triangular
+        min: -0.15
+        mode: 0.12
+        max: 0.4
+        provenance: model_assumption
+        rationale: Q2 launch revenue was -4% YoY but H1 launch revenue grew about 32%; center reflects cadence/backlog with quarterly recognition noise.
+      long_run_growth_y8:
+        distribution: triangular
+        min: 0.02
+        mode: 0.1
+        max: 0.22
+        provenance: model_assumption
+        rationale: Electron/HASTE mature growth from cadence, defense and pricing without assuming Neutron.
+      growth_half_life_years: 2.0
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Launch revenue recognition/cadence normalizes across several quarters.
+      latent_loading:
+        growth: 0.6
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Launch economics/government cycle are common, mission timing remains idiosyncratic.
+    SpaceSystems:
+      base_revenue_quarterly: 189500000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-08-10 | https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+      initial_growth:
+        distribution: triangular
+        min: 0.25
+        mode: 0.55
+        max: 0.95
+        provenance: model_assumption
+        rationale: Q2 Space Systems +94% YoY and H1 +76%; center discounts acquisition-driven and extraordinary growth while retaining S3 scale.
+      long_run_growth_y8:
+        distribution: triangular
+        min: 0.08
+        mode: 0.18
+        max: 0.32
+        provenance: model_assumption
+        rationale: Platform-scale space systems can outgrow mature aerospace but acquisition effects normalize.
+      growth_half_life_years: 2.5
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Backlog and manufacturing programs create multi-year persistence.
+      latent_loading:
+        growth: 0.68
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Government/aerospace demand is common but contract execution and acquisition integration remain idiosyncratic.
+  service_segments:
+    Neutron:
+      initial_annual_revenue:
+        distribution: triangular
+        min: 250000000.0
+        mode: 750000000.0
+        max: 1500000000.0
+        provenance: model_assumption
+        rationale: First service year revenue assumption after first successful orbital flight; not company guidance and not price-derived.
+      post_service_growth:
+        distribution: triangular
+        min: 0.25
+        mode: 0.55
+        max: 0.95
+        provenance: model_assumption
+        rationale: Early Neutron ramp after service onset is milestone/production constrained.
+      long_run_growth_y8:
+        distribution: triangular
+        min: 0.08
+        mode: 0.18
+        max: 0.32
+        provenance: model_assumption
+        rationale: Long-run medium-launch growth after cadence normalizes.
+      growth_half_life_years: 2.5
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Service ramp decays over multiple production/cadence cycles.
+milestone_model:
+  service_onset_milestone: NEUTRON_FIRST_ORBITAL
+  reference_value:
+    distribution: triangular
+    min: 8000000000.0
+    mode: 16000000000.0
+    max: 28000000000.0
+    provenance: model_assumption
+    rationale: Reduced-form milestone-conditioned incremental reference value for Neutron service economics; independent of current RKLB market price.
+  residual_on_failure: 0.25
+  residual_on_failure_meta:
+    provenance: model_assumption
+    rationale: Existing Electron/Space Systems business retains material value if Neutron fails.
+  milestones:
+  - id: NEUTRON_FIRST_ORBITAL
+    probability: 0.72
+    probability_meta:
+      provenance: model_assumption
+      rationale: N1 integrated-preflight state, active qualification and hardware readiness support a majority-success prior, but first-flight technical/schedule risk remains high.
+    requires: []
+    timing:
+      distribution: triangular
+      min: 1.0
+      mode: 2.0
+      max: 4.0
+      provenance: model_assumption
+      rationale: Company guidance targets launch-pad delivery in Q4 2026 while stating the end-2026 launch window is narrowing; timing distribution is quarters from 2026-09-23, not an
+        actual date.
+    value_uplift: 0.3
+    value_uplift_meta:
+      provenance: model_assumption
+      rationale: First orbital flight establishes service onset but not repeatability.
+    on_failure:
+      branch: delay_retry
+      retry_probability: 0.65
+      retry_probability_meta:
+        provenance: model_assumption
+        rationale: First-flight failure/delay can be retried after root-cause work.
+      retry_delay_quarters: 2
+      retry_delay_quarters_meta:
+        provenance: model_assumption
+        rationale: Reduced-form two-quarter retry delay.
+  - id: NEUTRON_REPEAT_FLIGHT
+    probability: 0.75
+    probability_meta:
+      provenance: model_assumption
+      rationale: Conditional on first orbital success, repeat flight is more likely but production/reliability risk remains.
+    requires:
+    - NEUTRON_FIRST_ORBITAL
+    timing:
+      distribution: triangular
+      min: 1.0
+      mode: 2.0
+      max: 4.0
+      provenance: model_assumption
+      rationale: Quarters after first orbital flight to a second successful mission.
+    value_uplift: 0.25
+    value_uplift_meta:
+      provenance: model_assumption
+      rationale: Repeat success reduces one-off demonstration risk.
+    on_failure:
+      branch: delay_retry
+      retry_probability: 0.6
+      retry_probability_meta:
+        provenance: model_assumption
+        rationale: Repeat-flight setback remains recoverable.
+      retry_delay_quarters: 2
+      retry_delay_quarters_meta:
+        provenance: model_assumption
+        rationale: Reduced-form recovery period.
+  - id: NEUTRON_REUSE_CADENCE
+    probability: 0.55
+    probability_meta:
+      provenance: model_assumption
+      rationale: N3 requires demonstrated reuse/cadence; this is materially harder than first and repeat flight.
+    requires:
+    - NEUTRON_REPEAT_FLIGHT
+    timing:
+      distribution: triangular
+      min: 2.0
+      mode: 5.0
+      max: 8.0
+      provenance: model_assumption
+      rationale: Quarters after repeat flight to validated reuse / regular cadence economics.
+    value_uplift: 0.2
+    value_uplift_meta:
+      provenance: model_assumption
+      rationale: Reuse/cadence unlocks unit economics but is not required for all launch revenue.
+    on_failure:
+      branch: terminal_failure
+cash_model:
+  net_cash_0: 2372745000.0000005
+  net_cash_0_meta:
+    provenance: derived_fact
+    formula: Cash+marketable securities 2,387.590M - debt 14.845M = 2,372.745M.
+  pre_service_burn_quarterly:
+    distribution: triangular
+    min: 70000000.0
+    mode: 100000000.0
+    max: 160000000.0
+    provenance: model_assumption
+    rationale: H1 2026 FCF burn proxy averaged about 93.8M/quarter; range allows Neutron/acquisition buildout volatility.
+  dilution_penalty: 0.2
+  dilution_penalty_meta:
+    provenance: model_assumption
+    rationale: Accepted reduced-form conservative financing/dilution proxy; sensitivity belongs in robustness for archetype C.
+  core_margin:
+    distribution: triangular
+    min: -0.05
+    mode: 0.05
+    max: 0.15
+    provenance: model_assumption
+    rationale: Existing Launch+Space Systems core FCF margin excluding Neutron development can range around low positive scale economics.
+  service_margin:
+    current_margin_at_onset: -0.2
+    current_margin_at_onset_meta:
+      provenance: model_assumption
+      rationale: Initial Neutron service margin expected negative during low-cadence ramp.
+    terminal_margin_Y5:
+      distribution: triangular
+      min: 0.08
+      mode: 0.18
+      max: 0.28
+      provenance: model_assumption
+      rationale: Scaled Neutron service margin after production/cadence normalization.
+    half_life_years: 2.5
+    half_life_years_meta:
+      provenance: model_assumption
+      rationale: Service margin converges over several production cycles.
+valuation:
+  fcf_maturity_margin: 0.08
+  fcf_maturity_margin_meta:
+    provenance: model_assumption
+    rationale: Below this FCF margin, revenue bridge is more informative than mature FCF multiple.
+  multiple_fcf:
+    distribution: triangular
+    min: 18.0
+    mode: 24.0
+    max: 30.0
+    provenance: model_assumption
+    rationale: Mature end-to-end aerospace/space-platform FCF multiple.
+  multiple_revenue_bridge:
+    distribution: triangular
+    min: 4.0
+    mode: 7.0
+    max: 11.0
+    provenance: model_assumption
+    rationale: Pre-maturity revenue bridge while Neutron/service cash economics remain negative or early-stage.
+dependencies:
+  latent_factors:
+  - growth
+  - margin
+  - valuation
+  factor_correlations:
+    growth__margin: 0.35
+    growth__valuation: 0.25
+    margin__valuation: 0.3
+  factor_correlations_meta:
+    provenance: model_assumption
+    rationale: Aerospace demand and economics co-move, but technical milestone outcomes retain large idiosyncratic risk.
+  default_loading: 0.62
+  default_loading_meta:
+    provenance: model_assumption
+    rationale: Lower common loading than mature market-driven names because vehicle-development execution is highly idiosyncratic.
+market_path_model:
+  quarterly_log_price_noise:
+    annualized_sigma: 0.65
+    annualized_sigma_meta:
+      provenance: model_assumption
+      rationale: Milestone-driven aerospace equity path noise, used only for model-dependent drawdown.
+  valuation_mean_reversion_half_life_years: 2.0
+  valuation_mean_reversion_half_life_years_meta:
+    provenance: model_assumption
+    rationale: Milestone valuation dislocations can persist across development cycles.
+reverse_valuation_ref:
+  run_ref: PENDING_HOST_RUN:RKLB_calibration_v1.0.yaml
+  implied_revenue_cagr_5y: 0.8240676664
+  implied_revenue_cagr_5y_meta:
+    provenance: derived_fact
+    formula: Local deterministic preflight of accepted Reverse Valuation equation; replace run_ref with authoritative sidecar run.
+  discount_rate: 0.125
+  discount_rate_meta:
+    provenance: model_assumption
+    rationale: Inherited from RKLB RV calibration.
+robustness_tests:
+  Scenario_Robustness:
+    perturbations:
+      growth_modes_pp:
+      - -0.0366982
+      - 0.0366982
+      margin_nodes_pp:
+      - -0.01085786
+      - 0.01085786
+      terminal_multiple_pct:
+      - -0.02688411
+      - 0.02762683
+      correlation_rho:
+      - -0.15
+      - 0.15
+    perturbations_meta:
+      provenance: derived_fact
+      formula: 'Provisional archetype-C interpretation for first live case: growth sigma=base-revenue-weighted RMS of existing-segment initial_growth sigma_eq; margin sigma=service terminal
+        Y5 margin sigma_eq; multiple sigma=multiple_fcf log-space sigma_eq; perturbation=0.25*sigma with v1.1.2 ceilings.'
+    delta_tolerance: 0.1
+    delta_tolerance_meta:
+      provenance: model_assumption
+      rationale: Accepted v1.1.2 probability-delta tolerance.
+joint_simulation:
+  layer_version: '1.0'
+  active_drivers:
+  - LAUNCH_ECONOMICS
+  - SATELLITE_CONNECTIVITY
+  - GOVERNMENT_DEFENSE
+  - INTEREST_RATES
+  - CAPITAL_MARKETS
+  - ACQUISITION_INTEGRATION
+  - INDUSTRIAL_RESHORING
+  - AEROSPACE_CYCLE
+  - SPACE_REGULATION
+  company_idiosyncratic_factors:
+  - id: RKLB_EXECUTION
+    distribution: standard_normal
+    persistence: 0.6
+    persistence_meta:
+      provenance: model_assumption
+      rationale: Aerospace demand, government programs, capital access and acquisition execution persist across adjacent quarters.
+  path_alignment:
+    use_global_path_id: true
+driver_parameter_mapping:
+- driver_id: LAUNCH_ECONOMICS
+  material: true
+  stochastic_targets:
+  - path: milestone_model.milestones.NEUTRON_FIRST_ORBITAL.probability
+    transform: probability_logit_shift
+    effect_per_plus_1sigma: 0.035
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Launch-industry economics support first-flight program continuity.
+  - path: milestone_model.milestones.NEUTRON_REPEAT_FLIGHT.timing
+    transform: timing_quarters_shift
+    effect_per_plus_1sigma: -0.1
+    lag_quarters: 1
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Better launch economics/support shortens repeat-flight ramp.
+  - path: revenue_model.service_segments.Neutron.post_service_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.02
+    lag_quarters: 1
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Launch economics supports service ramp.
+  structural_support:
+  - path: milestone_model.milestones.NEUTRON_FIRST_ORBITAL.probability
+    contribution: 0.02
+    meta:
+      provenance: model_assumption
+      rationale: Base case assumes continued launch economics supportive of Neutron development.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure links: RKLB-FM-01 LAUNCH_VEHICLE_DEVELOPMENT_FAILURE and RKLB-FM-02 LAUNCH_OPERATIONS_FAILURE.'
+- driver_id: SATELLITE_CONNECTIVITY
+  material: true
+  stochastic_targets:
+  - path: milestone_model.milestones.NEUTRON_REPEAT_FLIGHT.probability
+    transform: probability_logit_shift
+    effect_per_plus_1sigma: 0.025
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Constellation demand supports repeat-flight commercial pull.
+  - path: revenue_model.service_segments.Neutron.post_service_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.02
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Satellite-connectivity buildout expands launch demand.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: Demand linkage; no own-constellation milestone is introduced because accepted company artifacts do not support it.
+- driver_id: GOVERNMENT_DEFENSE
+  material: true
+  stochastic_targets:
+  - path: milestone_model.milestones.NEUTRON_FIRST_ORBITAL.probability
+    transform: probability_logit_shift
+    effect_per_plus_1sigma: 0.03
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Government demand/funding supports program continuity and launch demand.
+  - path: revenue_model.service_segments.Neutron.post_service_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.02
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Defense missions support launch cadence.
+  structural_support:
+  - path: revenue_model.service_segments.Neutron.post_service_growth.mode
+    contribution: 0.015
+    meta:
+      provenance: model_assumption
+      rationale: Base service ramp assumes continued government mission demand.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure link: RKLB-FM-03 GOVERNMENT_SPACE_BUDGET.'
+- driver_id: INTEREST_RATES
+  material: true
+  stochastic_targets:
+  - path: milestone_model.milestones.NEUTRON_FIRST_ORBITAL.timing
+    transform: timing_quarters_shift
+    effect_per_plus_1sigma: 0.08
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Higher rates marginally worsen capital-intensive program timing.
+  - path: cash_model.service_margin.terminal_margin_Y5
+    transform: additive_pp
+    effect_per_plus_1sigma: -0.004
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Higher financing/risk costs modestly reduce service cash economics.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: 1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: Negative exposure through capital cost; smaller than technical milestones.
+- driver_id: CAPITAL_MARKETS
+  material: true
+  stochastic_targets:
+  - path: milestone_model.milestones.NEUTRON_FIRST_ORBITAL.probability
+    transform: probability_logit_shift
+    effect_per_plus_1sigma: 0.02
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Capital access supports uninterrupted development.
+  - path: milestone_model.milestones.NEUTRON_FIRST_ORBITAL.timing
+    transform: timing_quarters_shift
+    effect_per_plus_1sigma: -0.08
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Better capital availability reduces funding-related schedule pressure.
+  structural_support:
+  - path: milestone_model.milestones.NEUTRON_FIRST_ORBITAL.probability
+    contribution: 0.01
+    meta:
+      provenance: model_assumption
+      rationale: Strong current liquidity supports the base program probability.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure link: RKLB-FM-06 CAPITAL_MARKETS_TIGHTENING.'
+- driver_id: ACQUISITION_INTEGRATION
+  material: true
+  stochastic_targets:
+  - path: milestone_model.milestones.NEUTRON_REPEAT_FLIGHT.timing
+    transform: timing_quarters_shift
+    effect_per_plus_1sigma: -0.08
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Better integration frees management/engineering capacity for repeatability.
+  - path: cash_model.service_margin.terminal_margin_Y5
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.008
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Integrated systems capabilities support mature economics.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure links: RKLB-FM-05 ACQUISITION_INTEGRATION_FAILURE and RKLB-FM-04 SPACE_SYSTEMS_EXECUTION.'
+- driver_id: INDUSTRIAL_RESHORING
+  material: true
+  stochastic_targets:
+  - path: revenue_model.service_segments.Neutron.post_service_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.012
+    lag_quarters: 2
+    decay_half_life_quarters: 10.0
+    meta:
+      provenance: model_assumption
+      rationale: Domestic space/defense industrial buildout supports addressable demand over a lag.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: Secondary structural demand channel.
+- driver_id: AEROSPACE_CYCLE
+  material: true
+  stochastic_targets:
+  - path: milestone_model.milestones.NEUTRON_REPEAT_FLIGHT.probability
+    transform: probability_logit_shift
+    effect_per_plus_1sigma: 0.025
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Broader aerospace demand supports repeat-flight commercial cadence.
+  - path: revenue_model.service_segments.Neutron.post_service_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.02
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Aerospace cycle affects service ramp.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: Failure links overlap launch operations and government/customer budgets.
+- driver_id: SPACE_REGULATION
+  material: true
+  stochastic_targets:
+  - path: milestone_model.milestones.NEUTRON_FIRST_ORBITAL.timing
+    transform: timing_quarters_shift
+    effect_per_plus_1sigma: 0.12
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Positive taxonomy shock is interpreted as more restrictive/range-regulatory conditions, delaying first flight.
+  - path: milestone_model.milestones.NEUTRON_FIRST_ORBITAL.probability
+    transform: probability_logit_shift
+    effect_per_plus_1sigma: -0.02
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Regulatory/range constraints reduce on-time success probability.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: 1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure link: RKLB-FM-07 SPACE_REGULATORY_RANGE_DELAY.'

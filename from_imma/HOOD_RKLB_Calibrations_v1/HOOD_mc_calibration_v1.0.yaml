@@ -1,0 +1,522 @@
+schema_version: 1.0.1
+artifact: company_mc_calibration
+ticker: HOOD
+as_of: '2026-09-23'
+archetype: mature_positive_margin
+calculation_engine_version: company_mc 2.3.0
+state_vector:
+  Customer_Asset_Scale: S3
+  Revenue_Diversification: R3
+  Profitability: P3
+  Credit_Risk: C1
+  Regulatory_Product: G2
+simulation:
+  paths: 500000
+  paths_meta:
+    provenance: model_assumption
+    rationale: Normative production path count.
+  seed: 20260920
+  seed_meta:
+    provenance: model_assumption
+    rationale: Fixed reproducibility seed.
+  antithetic_variates: true
+  store_summary_quantiles:
+  - 0.01
+  - 0.05
+  - 0.1
+  - 0.25
+  - 0.5
+  - 0.75
+  - 0.9
+  - 0.95
+  - 0.99
+  store_summary_quantiles_meta:
+    provenance: model_assumption
+    rationale: Standard system summary grid.
+  horizons_years:
+  - 3
+  - 5
+  - 8
+  horizons_years_meta:
+    provenance: model_assumption
+    rationale: Current Thesis / Primary Optimization / Persistence horizons.
+revenue_model:
+  segments:
+    CyclicalTrading:
+      base_revenue_quarterly: 620000000.0
+      base_revenue_quarterly_meta:
+        provenance: derived_fact
+        formula: Q2 transaction revenue 776M - event-contract revenue 156M = 620M.
+      initial_growth:
+        distribution: triangular
+        min: -0.1
+        mode: 0.18
+        max: 0.45
+        provenance: model_assumption
+        rationale: Options/equities/crypto/other transaction revenue is cyclical; center below company-wide +32% YoY and allows downturn.
+      long_run_growth_y8:
+        distribution: triangular
+        min: 0.0
+        mode: 0.08
+        max: 0.18
+        provenance: model_assumption
+        rationale: Mature trading activity grows with funded customers/assets but is not treated as structurally high-growth.
+      growth_half_life_years: 2.0
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Cyclical activity mean-reverts over roughly one market cycle.
+      latent_loading:
+        growth: 0.72
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Strong common capital-markets/crypto exposure with residual product mix noise.
+    EventContracts:
+      base_revenue_quarterly: 156000000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1783879/000178387926000113/q22026robinhoodexhibit991.htm
+      initial_growth:
+        distribution: triangular
+        min: -0.4
+        mode: 0.2
+        max: 1.0
+        provenance: model_assumption
+        rationale: Q2 event-contract revenue is 12% of total and >10x YoY; calibration treats this as an early, legally exposed cyclical product rather than permanent hypergrowth.
+      long_run_growth_y8:
+        distribution: triangular
+        min: -0.05
+        mode: 0.08
+        max: 0.25
+        provenance: model_assumption
+        rationale: Long-run contribution is bounded by regulatory and product-cycle uncertainty.
+      growth_half_life_years: 1.25
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Early event-contract acceleration should mean-revert quickly absent repeated evidence.
+      latent_loading:
+        growth: 0.55
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Material product-specific regulatory idiosyncrasy lowers common growth loading.
+    NetInterest:
+      base_revenue_quarterly: 389000000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+      initial_growth:
+        distribution: triangular
+        min: -0.12
+        mode: 0.06
+        max: 0.2
+        provenance: model_assumption
+        rationale: Net-interest revenue is rate/balance sensitive; no structural extrapolation from high-rate conditions.
+      long_run_growth_y8:
+        distribution: triangular
+        min: -0.02
+        mode: 0.05
+        max: 0.12
+        provenance: model_assumption
+        rationale: Long-run growth follows customer cash/margin balances with rate normalization.
+      growth_half_life_years: 1.5
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Rate-driven growth normalizes relatively quickly.
+      latent_loading:
+        growth: 0.55
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Shared rate/capital-market exposure with meaningful balance-mix idiosyncrasy.
+    SubscriptionOther:
+      base_revenue_quarterly: 143000000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+      initial_growth:
+        distribution: triangular
+        min: 0.05
+        mode: 0.2
+        max: 0.4
+        provenance: model_assumption
+        rationale: Gold subscribers reached about 4.8M and other revenues grew, but the segment remains smaller and acquisition/product execution dependent.
+      long_run_growth_y8:
+        distribution: triangular
+        min: 0.03
+        mode: 0.1
+        max: 0.2
+        provenance: model_assumption
+        rationale: Recurring/subscription and ancillary revenue can outgrow mature trading without assuming software-like dominance.
+      growth_half_life_years: 2.5
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Product adoption decays more slowly than trading-cycle growth.
+      latent_loading:
+        growth: 0.48
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: More company-specific product execution than market-cycle dependence.
+margin_model:
+  method: mean_reverting_positive_margin
+  current_margin: 0.3696842105263158
+  current_margin_meta:
+    provenance: derived_fact
+    formula: Normalized economic H1 2026 FCF 878M / H1 revenue 2,375M = 36.97%.
+  terminal_margin_Y5:
+    distribution: triangular
+    min: 0.26
+    mode: 0.34
+    max: 0.42
+    provenance: model_assumption
+    rationale: Mature fintech FCF margin after credit/compliance/product costs; center below current normalized level.
+  terminal_margin_Y8:
+    distribution: triangular
+    min: 0.24
+    mode: 0.32
+    max: 0.4
+    provenance: model_assumption
+    rationale: Further maturity normalization while preserving scaled digital operating leverage.
+  half_life_years: 2.0
+  half_life_years_meta:
+    provenance: model_assumption
+    rationale: Current profitability converges over two years.
+  shock_sigma: 0.05
+  shock_sigma_meta:
+    provenance: model_assumption
+    rationale: Quarterly credit, market-volume and product-mix uncertainty.
+  shock_persistence: 0.45
+  shock_persistence_meta:
+    provenance: model_assumption
+    rationale: Market/credit shocks persist across adjacent quarters but mean-revert.
+  lower_bound: 0.12
+  lower_bound_meta:
+    provenance: model_assumption
+    rationale: Severe but still profitable mature-state lower bound.
+  upper_bound: 0.48
+  upper_bound_meta:
+    provenance: model_assumption
+    rationale: Prevents temporary high-margin market activity from becoming a permanent cash margin.
+valuation:
+  Y3:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 18.0
+      mode: 24.0
+      max: 30.0
+      provenance: model_assumption
+      rationale: Premium near-term multiple for scaled growth, tempered by transaction and regulatory cyclicality.
+  Y5:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 16.0
+      mode: 22.0
+      max: 28.0
+      provenance: model_assumption
+      rationale: Aligned with HOOD RV terminal multiple range.
+  Y8:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 14.0
+      mode: 20.0
+      max: 26.0
+      provenance: model_assumption
+      rationale: Maturity compression.
+  negative_fcf_fallback:
+    basis: revenue_bridge
+    multiple:
+      distribution: triangular
+      min: 3.0
+      mode: 6.0
+      max: 9.0
+      provenance: model_assumption
+      rationale: Fallback for extreme negative-FCF paths.
+dependencies:
+  latent_factors:
+  - growth
+  - margin
+  - valuation
+  factor_correlations:
+    growth__margin: 0.4
+    growth__valuation: 0.35
+    margin__valuation: 0.35
+  factor_correlations_meta:
+    provenance: model_assumption
+    rationale: Trading/activity growth and margins co-move, but credit/regulatory and valuation shocks retain independent components.
+  default_loading: 0.68
+  default_loading_meta:
+    provenance: model_assumption
+    rationale: Mature platform has substantial common-market exposure but meaningful product/regulatory idiosyncrasy.
+market_path_model:
+  quarterly_log_price_noise:
+    annualized_sigma: 0.5
+    annualized_sigma_meta:
+      provenance: model_assumption
+      rationale: High-beta fintech path noise, used only for model-dependent drawdown.
+  valuation_mean_reversion_half_life_years: 1.5
+  valuation_mean_reversion_half_life_years_meta:
+    provenance: model_assumption
+    rationale: Liquid fintech valuation dislocations mean-revert faster than capital-intensive transition names.
+reverse_valuation_ref:
+  run_ref: PENDING_HOST_RUN:HOOD_calibration_v1.0.yaml
+  implied_revenue_cagr_5y: 0.3451800472
+  implied_revenue_cagr_5y_meta:
+    provenance: derived_fact
+    formula: Local deterministic preflight of accepted Reverse Valuation equation; replace run_ref with authoritative sidecar run.
+  discount_rate: 0.11
+  discount_rate_meta:
+    provenance: model_assumption
+    rationale: Inherited from HOOD RV calibration.
+robustness_tests:
+  Scenario_Robustness:
+    perturbations:
+      growth_modes_pp:
+      - -0.0353015
+      - 0.0353015
+      margin_nodes_pp:
+      - -0.00868629
+      - 0.00868629
+      terminal_multiple_pct:
+      - -0.02931379
+      - 0.03019904
+      correlation_rho:
+      - -0.15
+      - 0.15
+    perturbations_meta:
+      provenance: derived_fact
+      formula: 'v1.1.2 local robustness: sigma_eq=(Q84-Q16)/2; growth=base-revenue-weighted RMS segment sigma_eq; margin=Y5 terminal margin sigma_eq; multiple=Y5 log-space sigma_eq;
+        perturbation=0.25*sigma with absolute ceilings.'
+    delta_tolerance: 0.1
+    delta_tolerance_meta:
+      provenance: model_assumption
+      rationale: Accepted v1.1.2 probability-delta tolerance.
+joint_simulation:
+  layer_version: '1.0'
+  active_drivers:
+  - CLOUD_SOFTWARE_DEMAND
+  - INTEREST_RATES
+  - CAPITAL_MARKETS
+  - ACQUISITION_INTEGRATION
+  - CONSUMER_CREDIT
+  - CRYPTO_CYCLE
+  - FINTECH_REGULATION
+  company_idiosyncratic_factors:
+  - id: HOOD_EXECUTION
+    distribution: standard_normal
+    persistence: 0.55
+    persistence_meta:
+      provenance: model_assumption
+      rationale: Market activity, credit quality, rate and regulatory/product execution persist across adjacent quarters.
+  path_alignment:
+    use_global_path_id: true
+driver_parameter_mapping:
+- driver_id: CLOUD_SOFTWARE_DEMAND
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.SubscriptionOther.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.015
+    lag_quarters: 1
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Digital product engagement supports Gold/subscription/ancillary growth.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure linkage: HOOD-FM-06 ACQUISITION_INTEGRATION_FAILURE / product-sprawl execution.'
+- driver_id: INTEREST_RATES
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.NetInterest.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.025
+    lag_quarters: 0
+    decay_half_life_quarters: 4.0
+    meta:
+      provenance: model_assumption
+      rationale: Higher rates increase net-interest revenue on customer balances.
+  - path: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: -0.015
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Higher discount rates compress terminal valuation.
+  structural_support:
+  - path: revenue_model.segments.NetInterest.initial_growth.mode
+    contribution: 0.015
+    meta:
+      provenance: model_assumption
+      rationale: Base case assumes a non-zero rate environment.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: 1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure linkage: HOOD-FM-04 INTEREST_RATE_DECLINE; driver has mixed operating/valuation channels.'
+- driver_id: CAPITAL_MARKETS
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.CyclicalTrading.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.025
+    lag_quarters: 0
+    decay_half_life_quarters: 5.0
+    meta:
+      provenance: model_assumption
+      rationale: Risk appetite/market activity drives options/equities trading.
+  - path: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: 0.02
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Capital-market risk appetite affects long-duration fintech valuation.
+  structural_support:
+  - path: revenue_model.segments.CyclicalTrading.initial_growth.mode
+    contribution: 0.02
+    meta:
+      provenance: model_assumption
+      rationale: Central trading growth assumes normalized capital-markets activity.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure linkage: HOOD-FM-01 CAPITAL_MARKETS_RISK_OFF.'
+- driver_id: ACQUISITION_INTEGRATION
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.SubscriptionOther.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.015
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Integration success affects acquired/adjacent product growth.
+  - path: margin_model.terminal_margin_Y5
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.006
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Integration execution influences mature operating leverage.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure linkage: HOOD-FM-06 ACQUISITION_INTEGRATION_FAILURE.'
+- driver_id: CONSUMER_CREDIT
+  material: true
+  stochastic_targets:
+  - path: margin_model.terminal_margin_Y5
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.012
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Better consumer-credit quality reduces loss provisioning.
+  - path: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: 0.01
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Credit quality affects risk premium.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure linkage: HOOD-FM-05 CONSUMER_CREDIT_DETERIORATION.'
+- driver_id: CRYPTO_CYCLE
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.CyclicalTrading.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.025
+    lag_quarters: 0
+    decay_half_life_quarters: 4.0
+    meta:
+      provenance: model_assumption
+      rationale: Crypto activity is included in cyclical trading and mean-reverts with the crypto cycle.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure linkage: HOOD-FM-03 CRYPTO_CYCLE_DOWNTURN. Event contracts are not mapped to CRYPTO_CYCLE.'
+- driver_id: FINTECH_REGULATION
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.EventContracts.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: -0.025
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Positive regulation-shock convention means tighter fintech/event-contract restrictions.
+  - path: margin_model.terminal_margin_Y5
+    transform: additive_pp
+    effect_per_plus_1sigma: -0.008
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Compliance/restriction burden lowers mature cash margin.
+  - path: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: -0.015
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Regulatory tightening raises risk premium.
+  structural_support:
+  - path: revenue_model.segments.EventContracts.initial_growth.mode
+    contribution: 0.01
+    meta:
+      provenance: model_assumption
+      rationale: Base event-contract growth assumes continued legal availability in material jurisdictions.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: 1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under taxonomy sign convention.
+  note: 'Failure linkage: HOOD-FM-02 REGULATORY_PREDICTION_MARKETS and HOOD-FM-07 MARKET_STRUCTURE_COUNTERPARTY_CONCENTRATION.'

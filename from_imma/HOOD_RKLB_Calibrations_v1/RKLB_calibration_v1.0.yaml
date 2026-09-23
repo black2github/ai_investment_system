@@ -1,0 +1,128 @@
+calibration_v1.0:
+  ticker: RKLB
+  as_of: '2026-09-23'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    Electron_Cadence: E2
+    Neutron_Development: N1
+    Space_Systems_Scale: S3
+    Backlog_Visibility: B3
+    Capital_and_Integration: C2
+  market:
+    price: 64.57
+    price_as_of: '2026-09-18'
+    price_source: https://finance.yahoo.com/quote/RKLB/history/
+    shares_outstanding: 639131688
+    shares_as_of: '2026-06-30'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+    equity_value: 41268733094.159996
+    shares_note: Common-equivalent economic shares = 598,180,438 common outstanding + 40,951,250 participating convertible preferred; preferred converts 1:1 and treasury common mirrors
+      the preferred exchange.
+  balance_sheet:
+    cash_and_marketable_securities: 2387590000.0
+    debt: 14845000.0
+    net_cash: 2372745000.0000005
+    as_of: '2026-06-30'
+    source: https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+  base_period:
+    revenue_ttm: 769146000.0
+    current_fcf_margin: -0.43165966106064724
+    revenue_formula: FY2025 revenue 601.799M + H1 2026 434.414M - H1 2025 267.067M = 769.146M
+    fcf_margin_formula: H1 FCF proxy = OCF -134.407M - purchases PPE/software 53.112M = -187.519M; /434.414M revenue = -43.17%
+  discount_rate:
+    base: 0.125
+    stress:
+      min: 0.1
+      max: 0.16
+  terminal_fcf_margin:
+    min: 0.12
+    base: 0.2
+    max: 0.28
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 18.0
+    base: 24.0
+    max: 30.0
+  margin_transition:
+    type: two_phase_capex_normalization
+    path:
+      1: -0.35
+      2: -0.15
+      3: 0.0
+      4:
+        factor_of_terminal: 0.6
+      5: terminal
+    critical_assumption:
+      linked_state: N1/C2
+      description: Neutron development and acquisition integration keep FCF negative before service onset; successful scale of Space Systems and launch cadence allows normalization after
+        the development peak.
+      falsification: Material Neutron delay/failure, persistent acquisition integration losses or FCF burn remaining below -20% of revenue beyond Y3 requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.1
+    - 0.125
+    - 0.16
+    terminal_fcf_margin:
+    - 0.12
+    - 0.2
+    - 0.28
+    terminal_fcf_multiple:
+    - 18
+    - 24
+    - 30
+  base_case:
+    discount_rate: 0.125
+    terminal_fcf_margin: 0.2
+    terminal_fcf_multiple: 24
+    margin_path:
+      Y0: -0.43165966106064724
+      Y1: -0.35
+      Y2: -0.15
+      Y3: 0.0
+      Y4: 0.12
+      Y5: 0.2
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-18 close | https://finance.yahoo.com/quote/RKLB/history/
+    market.shares_outstanding:
+      provenance: derived_fact
+      formula: 598,180,438 common outstanding + 40,951,250 participating convertible preferred = 639,131,688 common-equivalent shares
+      source_ref: 2026-08-10 | https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 64.57 * 639,131,688
+    balance_sheet.cash_and_marketable_securities:
+      provenance: verified_fact
+      source_ref: 2026-08-10 | https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+    balance_sheet.debt:
+      provenance: derived_fact
+      formula: 13.129M convertible notes + 1.716M long-term borrowing = 14.845M
+      source_ref: 2026-08-10 | https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+    balance_sheet.net_cash:
+      provenance: derived_fact
+      formula: 2,387.590M cash+marketable securities - 14.845M debt = 2,372.745M
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: 601.799M + 434.414M - 267.067M = 769.146M
+      source_ref: 2026-02-26 | https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm; 2026-08-10 | https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: (-134.407M OCF - 53.112M PPE/software purchases)/434.414M = -43.17%
+      source_ref: 2026-08-10 | https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm
+    discount_rate:
+      provenance: model_assumption
+      rationale: Milestone-dependent aerospace business with technical, schedule, government-budget, acquisition and capital-market risk despite strong liquidity.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Scaled end-to-end aerospace integrator margin after Neutron development, below software economics and conditional on manufacturing/launch scale.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Mature aerospace/space-platform FCF multiple range; explicitly not fitted to current equity price.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Two-phase development burn then normalization; current N1/C2 state is not treated as mature economics.

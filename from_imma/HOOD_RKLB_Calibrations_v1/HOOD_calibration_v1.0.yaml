@@ -1,0 +1,126 @@
+calibration_v1.0:
+  ticker: HOOD
+  as_of: '2026-09-23'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    Customer_Asset_Scale: S3
+    Revenue_Diversification: R3
+    Profitability: P3
+    Credit_Risk: C1
+    Regulatory_Product: G2
+  market:
+    price: 119.82
+    price_as_of: '2026-09-18'
+    price_source: https://finance.yahoo.com/quote/HOOD/history/
+    shares_outstanding: 899000000
+    shares_as_of: '2026-06-30'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+    equity_value: 107718180000.0
+  balance_sheet:
+    cash: 5362000000.0
+    debt_noncurrent: 2170000000.0
+    net_debt: -3192000000.0
+    as_of: '2026-06-30'
+    source: https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+    note: Segregated customer/regulatory cash is excluded from corporate cash.
+  base_period:
+    revenue_ttm: 4932000000.0
+    current_fcf_margin: 0.3696842105263158
+    revenue_formula: FY2025 total net revenue 4,473M + H1 2026 2,375M - H1 2025 1,916M = 4,932M
+    fcf_margin_formula: Normalized economic H1 FCF = [919 NI +46 D&A +92 credit-loss provision +2 deferred tax -106 deconsolidation gain -23 equity gains +4 other -65 prepaids -186 customer-match
+      assets +73 other assets -2 AP +166 other liabilities] -21 PPE -21 capitalized software = 878M; 878/2,375 = 36.97%. Broker/customer financing balance-sheet flows are excluded; SBC
+      is not added back.
+  discount_rate:
+    base: 0.11
+    stress:
+      min: 0.09
+      max: 0.14
+  terminal_fcf_margin:
+    min: 0.28
+    base: 0.34
+    max: 0.4
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 16.0
+    base: 22.0
+    max: 28.0
+  margin_transition:
+    type: mature_short_normalization
+    path:
+      1: 0.36
+      2: 0.35
+      3: 0.34
+      4: terminal
+      5: terminal
+    critical_assumption:
+      linked_state: P3
+      description: Current normalized economic FCF margin is already high; model assumes modest normalization as credit, compliance and product breadth scale.
+      falsification: Sustained credit-loss provision/revenue deterioration or normalized economic FCF margin below 25% requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.09
+    - 0.11
+    - 0.14
+    terminal_fcf_margin:
+    - 0.28
+    - 0.34
+    - 0.4
+    terminal_fcf_multiple:
+    - 16
+    - 22
+    - 28
+  base_case:
+    discount_rate: 0.11
+    terminal_fcf_margin: 0.34
+    terminal_fcf_multiple: 22
+    margin_path:
+      Y0: 0.3696842105263158
+      Y1: 0.36
+      Y2: 0.35
+      Y3: 0.34
+      Y4: 0.34
+      Y5: 0.34
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-18 close | https://finance.yahoo.com/quote/HOOD/history/
+    market.shares_outstanding:
+      provenance: derived_fact
+      formula: 790M Class A + 109M Class B shares outstanding at 2026-06-30 = 899M
+      source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 119.82 * 899,000,000
+    balance_sheet.cash:
+      provenance: verified_fact
+      source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+    balance_sheet.debt_noncurrent:
+      provenance: verified_fact
+      source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 2,170M debt - 5,362M corporate cash = -3,192M net debt
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: 4,473M + 2,375M - 1,916M = 4,932M
+      source_ref: 2026-02-18 | https://www.sec.gov/Archives/edgar/data/1783879/000178387926000023/hood-20251231.htm; 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: 878M normalized economic FCF / 2,375M H1 revenue = 36.97%
+      source_ref: 2026-07-29 | https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm
+    discount_rate:
+      provenance: model_assumption
+      rationale: Scaled profitable fintech, but with capital-markets cyclicality, consumer-credit loss risk, crypto exposure and product/regulatory tail risk.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Below current normalized cash margin at base and allows substantial compliance, credit and product-sprawl costs; not extrapolated as a permanent winner.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Mature brokerage/fintech FCF multiple with explicit range for cyclicality and regulatory risk; not fitted to current price.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Short mature normalization from high current economic FCF margin.

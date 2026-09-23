@@ -1,0 +1,17 @@
+package: HOOD_RKLB_Calibrations
+files:
+- file: HOOD_RKLB_Calibration_Notes.md
+  sha256: efdf882ef6f3aa0c2dea1498e6c79a6bf7ec6477c8101b3a3b3c0faf8efa0983
+  bytes: 8539
+- file: HOOD_calibration_v1.0.yaml
+  sha256: 37ca2596098320a18bd4f8c71d6ab71e7cc4830876bbc5c14288c4af6dd31685
+  bytes: 5056
+- file: HOOD_mc_calibration_v1.0.yaml
+  sha256: 20ee8ad124a11b72553705352a985e389701289dfc3f756a0e3d3effc75e26bf
+  bytes: 18355
+- file: RKLB_calibration_v1.0.yaml
+  sha256: f8026435bdbcf72f541133ca5df084c6bca228e29f5397cf35629a118d9cb66e
+  bytes: 5244
+- file: RKLB_mc_calibration_v1.0.yaml
+  sha256: 21a167cdd1725f66e83acfc7ce958ea380e94bd6ff76b66754d896fa71f18935
+  bytes: 23014

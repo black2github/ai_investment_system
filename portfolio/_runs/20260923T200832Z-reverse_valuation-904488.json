@@ -1,0 +1,140 @@
+{
+  "run_id": "20260923T200832Z-reverse_valuation-904488",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "RKLB",
+    "valuation_date": "2026-09-23",
+    "calibration": "RKLB_calibration_v1.0 (E2+N1+S3+B3+C2)",
+    "market": {
+      "price": 64.57,
+      "shares_outstanding": 639131688,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm"
+    },
+    "balance_sheet": {
+      "net_debt": -2372745000.0000005,
+      "cash": 2387590000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000062/rklb-20260630.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 769146000.0,
+      "current_fcf_margin": -0.43165966106064724,
+      "revenue_source": "FY2025 revenue 601.799M + H1 2026 434.414M - H1 2025 267.067M = 769.146M",
+      "source": "H1 FCF proxy = OCF -134.407M - purchases PPE/software 53.112M = -187.519M; /434.414M revenue = -43.17%"
+    },
+    "discounting": {
+      "discount_rate": 0.125,
+      "stress_rates": [
+        0.1,
+        0.16
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.12,
+        "base": 0.2,
+        "max": 0.28
+      },
+      "multiple_range": {
+        "min": 18.0,
+        "base": 24.0,
+        "max": 30.0
+      }
+    },
+    "margin_transition": {
+      "type": "two_phase_capex_normalization",
+      "path": {
+        "1": -0.35,
+        "2": -0.15,
+        "3": 0.0,
+        "4": {
+          "factor_of_terminal": 0.6
+        },
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "Electron_Cadence": "E2",
+      "Neutron_Development": "N1",
+      "Space_Systems_Scale": "S3",
+      "Backlog_Visibility": "B3",
+      "Capital_and_Integration": "C2"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "e0a8429bba20cccc",
+    "scenario_state": {
+      "Electron_Cadence": "E2",
+      "Neutron_Development": "N1",
+      "Space_Systems_Scale": "S3",
+      "Backlog_Visibility": "B3",
+      "Capital_and_Integration": "C2"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 41268733094.159996,
+      "enterprise_value": 38895988094.159996,
+      "terminal_fcf_margin": 0.2,
+      "terminal_multiple": 24.0,
+      "discount_rate": 0.125,
+      "current_fcf_margin": -0.43165966106064724,
+      "revenue_ttm": 769146000.0,
+      "implied_revenue_cagr_5y": 0.824068,
+      "terminal_revenue": 15531503951.89,
+      "terminal_fcf": 3106300790.38,
+      "pv_interim_fcf": -101897079.72,
+      "pv_terminal_value": 41370630208.44,
+      "terminal_value_share_of_pv": 1.0025,
+      "control_cagr": 0.824068
+    },
+    "validation": {
+      "converged": true,
+      "residual": 34.560890197753906,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.12|multiple=18.0": 1.141,
+        "margin=0.12|multiple=24.0": 1.022,
+        "margin=0.12|multiple=30.0": 0.9341,
+        "margin=0.2|multiple=18.0": 0.9311,
+        "margin=0.2|multiple=24.0": 0.8241,
+        "margin=0.2|multiple=30.0": 0.7449,
+        "margin=0.28|multiple=18.0": 0.8044,
+        "margin=0.28|multiple=24.0": 0.7044,
+        "margin=0.28|multiple=30.0": 0.6306
+      },
+      "discount_rate_grid": {
+        "r=0.1": 0.7835,
+        "r=0.16": 0.8808
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "model_fragile",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": true
+    }
+  },
+  "elapsed_ms": 5.9,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

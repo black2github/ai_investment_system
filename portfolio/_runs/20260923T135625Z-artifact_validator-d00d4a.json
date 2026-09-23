@@ -1,0 +1,914 @@
+{
+  "run_id": "20260923T135625Z-artifact_validator-d00d4a",
+  "model": "artifact_validator",
+  "version": "1.3.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "calibration",
+    "calibration": {
+      "schema_version": "1.0.1",
+      "artifact": "company_mc_calibration",
+      "ticker": "NVDA",
+      "as_of": "2026-09-23",
+      "archetype": "mature_positive_margin",
+      "calculation_engine_version": "company_mc 2.3.0",
+      "state_vector": {
+        "AI_Demand": "D4",
+        "Gross_Margin": "M3",
+        "Customer_Breadth": "B4",
+        "Supply_Commitment": "S2",
+        "China_Access": "X2"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed carried from the SPCX normative MC lineage."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Preserves the established system summary-quantile grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "System Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "DataCenter": {
+            "base_revenue_quarterly": 89023000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-08-26 | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": 0.45,
+              "mode": 0.65,
+              "max": 0.9,
+              "provenance": "model_assumption",
+              "rationale": "D4: Data Center YoY is 117%, but the model explicitly normalizes extraordinary growth."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.08,
+              "mode": 0.15,
+              "max": 0.24,
+              "provenance": "model_assumption",
+              "rationale": "Long-run AI infrastructure growth after current hypergrowth normalizes."
+            },
+            "growth_half_life_years": 2.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Rapid but not immediate normalization across architecture cycles."
+            },
+            "latent_loading": {
+              "growth": 0.75
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Data Center has high exposure to common AI-capex/demand drivers while retaining architecture/customer idiosyncrasy."
+            }
+          },
+          "Other": {
+            "base_revenue_quarterly": 7198000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "Q2 total revenue 96.221B - Data Center revenue 89.023B = 7.198B."
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": 0.08,
+              "mode": 0.18,
+              "max": 0.3,
+              "provenance": "model_assumption",
+              "rationale": "Gaming/Auto/ProViz and other revenue grows materially slower than Data Center."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.04,
+              "mode": 0.08,
+              "max": 0.14,
+              "provenance": "model_assumption",
+              "rationale": "Mature diversified non-Data-Center growth."
+            },
+            "growth_half_life_years": 2.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Other segment growth mean-reverts toward mature technology growth."
+            },
+            "latent_loading": {
+              "growth": 0.55
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Other businesses have lower loading to common AI growth than Data Center."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "mean_reverting_positive_margin",
+        "current_margin": 0.3930284473984604,
+        "current_margin_meta": {
+          "provenance": "derived_fact",
+          "formula": "H1 FY2027 company-defined FCF 69,895M / revenue 177,837M = 0.393028."
+        },
+        "terminal_margin_Y5": {
+          "distribution": "triangular",
+          "min": 0.3,
+          "mode": 0.36,
+          "max": 0.42,
+          "provenance": "model_assumption",
+          "rationale": "Terminal FCF margin normalizes below current H1 level but remains premium due platform/software economics."
+        },
+        "terminal_margin_Y8": {
+          "distribution": "triangular",
+          "min": 0.28,
+          "mode": 0.34,
+          "max": 0.4,
+          "provenance": "model_assumption",
+          "rationale": "Further maturity compression by Y8 while preserving a structurally high cash margin."
+        },
+        "half_life_years": 2.0,
+        "half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Mature positive margin converges over roughly two years."
+        },
+        "shock_sigma": 0.035,
+        "shock_sigma_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Quarterly execution/cycle uncertainty around an already scaled positive margin."
+        },
+        "shock_persistence": 0.45,
+        "shock_persistence_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Semiconductor/platform margin shocks persist but mean-revert."
+        },
+        "lower_bound": 0.18,
+        "lower_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Severe but still profitable scaled-platform lower bound absent a different state vector."
+        },
+        "upper_bound": 0.5,
+        "upper_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Caps unrealistic FCF extrapolation from temporary working-capital/cycle effects."
+        }
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 24.0,
+            "mode": 30.0,
+            "max": 36.0,
+            "provenance": "model_assumption",
+            "rationale": "Premium near-term multiple while D4 demand remains strong, with explicit normalization range."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 20.0,
+            "mode": 25.0,
+            "max": 30.0,
+            "provenance": "model_assumption",
+            "rationale": "Aligned with NVDA Reverse Valuation terminal multiple range."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 17.0,
+            "mode": 22.0,
+            "max": 27.0,
+            "provenance": "model_assumption",
+            "rationale": "Further mature-platform multiple compression by Y8."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 5.0,
+            "mode": 7.0,
+            "max": 10.0,
+            "provenance": "model_assumption",
+            "rationale": "Fallback only for extreme negative-FCF paths."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.35,
+          "growth__valuation": 0.3,
+          "margin__valuation": 0.35
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "AI demand, cash margin and valuation are related but not perfectly synchronized across architecture/cycle paths."
+        },
+        "default_loading": 0.7,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Strong common AI/semiconductor factors with meaningful company-specific architecture execution."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.45,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "High-beta semiconductor mega-cap path volatility; used only for model-dependent max drawdown."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 1.5,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Liquid mega-cap valuation dislocations mean-revert faster than younger AI-infrastructure names."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:NVDA_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 0.237099606,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of Reverse Valuation v1.0 equation using NVDA_calibration_v1.0 base case; replace run_ref with authoritative sidecar run ID."
+        },
+        "discount_rate": 0.1,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from NVDA Reverse Valuation calibration base case."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.1,
+              0.1
+            ],
+            "margin_nodes_pp": [
+              -0.05,
+              0.05
+            ],
+            "terminal_multiple_pct": [
+              -0.2,
+              0.2
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "model_assumption",
+            "rationale": "NVDA: canonical perturbation grid accepted for MC robustness v1.1."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "NVDA: v1.1 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "AI_COMPUTE_DEMAND",
+          "HYPERSCALER_CAPEX",
+          "SEMICONDUCTOR_WFE",
+          "ADVANCED_PACKAGING",
+          "HBM_MEMORY",
+          "EDA_DESIGN_COMPLEXITY",
+          "CLOUD_SOFTWARE_DEMAND",
+          "DATA_CENTER_POWER",
+          "GOVERNMENT_DEFENSE",
+          "INTEREST_RATES",
+          "CAPITAL_MARKETS",
+          "CHINA_REVENUE",
+          "TAIWAN_SUPPLY"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "NVDA_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.5,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Architecture transition/supply/customer execution persistence across adjacent quarters."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.1,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Primary demand driver for accelerated computing."
+              }
+            },
+            {
+              "path": "margin_model.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher utilization/mix supports cash margin."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth.mode",
+              "contribution": 0.08,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "D4 central growth embeds persistent AI-compute demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure links: NVDA-FM-02 AI_OVERBUILD; NVDA-FM-06 AI_CLOUD_CUSTOMER_FINANCING_STRESS."
+        },
+        {
+          "driver_id": "HYPERSCALER_CAPEX",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.08,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Hyperscaler/AI-lab capex directly drives accelerator demand."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": 0.05,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Capex cycle affects terminal valuation confidence."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth.mode",
+              "contribution": 0.06,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central Data Center growth assumes continued hyperscaler/AI-lab capex."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: NVDA-FM-01 HYPERSCALER_CAPEX_SLOWDOWN."
+        },
+        {
+          "driver_id": "SEMICONDUCTOR_WFE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "WFE capacity supports medium-term foundry/supply expansion."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Supply-chain enabling channel."
+        },
+        {
+          "driver_id": "ADVANCED_PACKAGING",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.06,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Advanced packaging is a direct accelerator-volume bottleneck."
+              }
+            },
+            {
+              "path": "margin_model.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Packaging availability/cost affects product mix and cash margin."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth.mode",
+              "contribution": 0.03,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central growth assumes packaging bottlenecks remain manageable."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: NVDA-FM-04 ADVANCED_PACKAGING_HBM_BOTTLENECK."
+        },
+        {
+          "driver_id": "HBM_MEMORY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.06,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "HBM is a direct accelerator-system bottleneck."
+              }
+            },
+            {
+              "path": "margin_model.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "HBM availability/cost affects mix and cash margin."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth.mode",
+              "contribution": 0.03,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central growth assumes HBM supply remains adequate."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: NVDA-FM-04 ADVANCED_PACKAGING_HBM_BOTTLENECK."
+        },
+        {
+          "driver_id": "EDA_DESIGN_COMPLEXITY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "EDA/design complexity affects cadence and architecture execution over a lag."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: NVDA-FM-07 ARCHITECTURE_TRANSITION_EXECUTION."
+        },
+        {
+          "driver_id": "CLOUD_SOFTWARE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Cloud/software AI workload demand supports accelerator utilization."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Demand channel."
+        },
+        {
+          "driver_id": "DATA_CENTER_POWER",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.05,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Power availability gates customers' ability to deploy purchased compute."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth.mode",
+              "contribution": 0.03,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central growth assumes sufficient powered deployment capacity."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Demand-deployment channel; overlaps AI overbuild/power constraints."
+        },
+        {
+          "driver_id": "GOVERNMENT_DEFENSE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Other.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Sovereign/defense demand is modeled as a smaller diversified growth channel."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Government demand channel."
+        },
+        {
+          "driver_id": "INTEREST_RATES",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": -0.08,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates compress terminal valuation."
+              }
+            },
+            {
+              "path": "valuation.Y8.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": -0.08,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates compress terminal valuation."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Negative exposure; adverse direction is +1σ rates."
+        },
+        {
+          "driver_id": "CAPITAL_MARKETS",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": 0.04,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Risk appetite/customer financing conditions affect long-duration valuation and demand quality."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: NVDA-FM-06 AI_CLOUD_CUSTOMER_FINANCING_STRESS."
+        },
+        {
+          "driver_id": "CHINA_REVENUE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.04,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Restored/expanded China access would improve Data Center growth; current X2 state limits the base channel."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: NVDA-FM-05 EXPORT_CONTROLS_CHINA."
+        },
+        {
+          "driver_id": "TAIWAN_SUPPLY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.1,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Foundry/Taiwan supply availability is critical for shipped accelerator volume."
+              }
+            },
+            {
+              "path": "margin_model.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Supply disruption can impair mix/cost and cash margin."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.DataCenter.initial_growth.mode",
+              "contribution": 0.05,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central growth assumes continued foundry/Taiwan supply access."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Failure link: NVDA-FM-03 TAIWAN_SUPPLY_DISRUPTION."
+        }
+      ]
+    },
+    "folders": [
+      "nvda"
+    ],
+    "dry_run_paths": 2000
+  },
+  "outputs": {
+    "model_version": "1.3.0",
+    "schema_version": "1.0.1",
+    "mode": "calibration",
+    "ticker": "NVDA",
+    "archetype": "mature_positive_margin",
+    "schema_errors": [],
+    "integrity": [
+      {
+        "rule": "MC-G5-013",
+        "severity": "warning",
+        "path": "driver_parameter_mapping → revenue_model.segments.DataCenter.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.812 > 0.15 (growth; драйверов 10, Σ|effect| 0.57)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "warning",
+        "path": "driver_parameter_mapping → margin_model.terminal_margin_Y5",
+        "message": "σ суммарного сдвига q20 = 0.085 > 0.05 (margin; драйверов 4, Σ|effect| 0.06)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "warning",
+        "path": "driver_parameter_mapping → valuation.Y5.multiple",
+        "message": "σ суммарного сдвига q20 = 0.269 > 0.15 (multiple; драйверов 3, Σ|effect| 0.17)"
+      }
+    ],
+    "engine_dry_run": {
+      "engine_version": "2.3.0",
+      "mapping_warnings": [],
+      "deterministic": true,
+      "median_CAGR_5Y": 5.694265782548026,
+      "P_loss_gt_30pct_5Y": 0.0,
+      "paths": 2000
+    },
+    "pass": true,
+    "note": "MC-G5-013 (σ суммарного сдвига) — предложение 23.09, до принятия IMMA выдаётся как warning; MC-G5-009 (антицикличность) и MC-G5-010 (полнота provenance сверх схемы) статически не проверяются",
+    "decision": "none"
+  },
+  "elapsed_ms": 391.1,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

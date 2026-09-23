@@ -1,5 +1,5 @@
 # KPI META с порогами Green/Yellow/Red. История — state.json → kpi_observations.
-schema_version: '1.0.4'
+schema_version: '1.0.5'
 version: '1.0'
 artifact: META KPI Dashboard
 as_of: '2026-09-21'

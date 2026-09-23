@@ -119,7 +119,10 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-02",
@@ -134,7 +137,10 @@
       "observation_window_days": 50,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-03",
@@ -147,7 +153,10 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-04",
@@ -161,7 +170,10 @@
       "value_type": "actual",
       "provenance": "verified_fact",
       "verification_run_id": "verify-ASTS-20260923T060714Z",
-      "observation_qualifier": "approximate"
+      "observation_qualifier": "approximate",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-05",
@@ -174,7 +186,10 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-06",
@@ -187,7 +202,10 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-07",
@@ -200,7 +218,10 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-08",
@@ -213,7 +234,10 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-09",
@@ -226,7 +250,10 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-10",
@@ -239,7 +266,10 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     },
     {
       "kpi_id": "ASTS-KPI-11",
@@ -252,7 +282,10 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "verification_run_id": "verify-ASTS-20260923T060714Z"
+      "verification_run_id": "verify-ASTS-20260923T060714Z",
+      "verification_run_ids": [
+        "verify-ASTS-20260923T060714Z"
+      ]
     }
   ],
   "calc_runs": [],
@@ -261,5 +294,5 @@
     "as_of": "2026-09-23T06:07:14Z",
     "overall_status": "PASS_WITH_DECLARED_PENDING"
   },
-  "schema_version": "1.0.4"
+  "schema_version": "1.0.5"
 }

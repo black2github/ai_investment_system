@@ -1,0 +1,23 @@
+package: Dozor_v1_2_and_Artifact_v1_0_5
+files:
+- file: Company_Artifact_Schema_v1.0.5.yaml
+  sha256: 4e027639fd2d2af8ca6fa8dc5c9064091dce74481cc112e5099a184f342e9513
+  bytes: 97611
+- file: Company_Artifact_Schema_v1.0.5_Patch_Notes.md
+  sha256: 24bcde16a2184420900aa1deeafe5268b799e492cf3e3bf9d3a13d884d6433e2
+  bytes: 2233
+- file: Dozor_Verification_Protocol_v1.2.md
+  sha256: 7b9fd4d5b26724313fee984ccd580e050258d34364118570d203018cb3fed551
+  bytes: 5427
+- file: Dozor_Verification_Protocol_v1.2.yaml
+  sha256: b2fcb202f13d147703f9ad918f861481987db7c03480f30dce5be65527664c4d
+  bytes: 27521
+- file: README.md
+  sha256: 432e9607daf6846705956ef174e6531e7ce6e814f82b9aa70b57f26ba5bd2fb0
+  bytes: 971
+- file: verify-ASTS-v1.2-example.json
+  sha256: 6b01ab519f398ec8261933545554e3214294324c3b6205d249f3c0db4d505eaf
+  bytes: 33672
+- file: verify-ASTS-v1.2-example.md
+  sha256: 55fc11b8016100f392c12020d2caa9dcfb0c7730686c63f01d16c4189d73f353
+  bytes: 931

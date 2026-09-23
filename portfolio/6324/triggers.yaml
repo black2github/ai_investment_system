@@ -1,7 +1,7 @@
 # Реестр триггеров: Harmonic Drive Systems (6324, TSE Prime)
 # Источник: финальный блок «Инвестиции в ИИ-инфраструктуру» (ChatGPT, 17.09.2026). Предпосылки проверены 17.09 по квартальному отчёту компании (tanshin) за Q1 FY2027: sales +23.6% и robot orders ¥6.1 млрд верны, рост orders +37%, а не +55.7%.
 
-schema_version: '1.0.4'
+schema_version: '1.0.5'
 profile: registry_only
 meta:
   ticker: "6324"

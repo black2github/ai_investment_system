@@ -231,16 +231,22 @@ Decision Request (сигнал к действию для перехода) — 
 плюс legacy-действие из старых триггеров, если оно есть. Карточка компании получает строку
 `Вектор: AI A2 🟢 · Starlink B2 🟢 · Starship C1 🟡 · Капитал D3 🔴 · Valuation V4 🔴` (цвет — по KPI оси).
 
-## Сверка по первоисточникам (Dozor Verification Protocol v1.1, гейт G8)
+## Сверка по первоисточникам (Dozor Verification Protocol v1.2, гейт G8)
 
-Норматив: `methodology/Dozor_Verification_Protocol_v1.1.yaml` (реестр статусов с label_ru, правила KPI/осей/событий,
-схема отчёта `output_report_schema`) и `methodology/Source_Policy_v1.0.yaml` (классы источников, guidance ≠ actual,
-период дословно, технический доступ). v1.1 принят 22.09.2026 после первого живого прогона по NBIS
-(run verify-NBIS-20260922T201443Z). Ниже — как это исполняется в этом workspace.
+Норматив: `methodology/Dozor_Verification_Protocol_v1.2.yaml` (реестр статусов с label_ru, секции отчёта, правила
+transition_checks / событий / осей / окон / базы derived_fact, схема отчёта `output_report_schema`; правила KPI из
+v1.1 — `Dozor_Verification_Protocol_v1.1.yaml`, пока не выпущена сводная редакция) и `methodology/Source_Policy_v1.0.yaml`
+(классы источников, guidance ≠ actual, период дословно, технический доступ). v1.2 принят 23.09.2026 после двух живых
+прогонов по v1.1 (NBIS run verify-NBIS-20260922T210122Z, ASTS run verify-ASTS-20260923T060714Z); пример полного
+отчёта v1.2 — `from_imma/Dozor_v1.2_and_Artifact_v1.0.5/verify-ASTS-v1.2-example.json`. Ниже — как это исполняется в
+этом workspace.
 
 1. **Роль.** Дозор не второй аналитик: он независимо открывает источник и воспроизводит число. `source_url` и
-   EvidencePack от LLM — подсказка, где искать, а не доказательство. Один отчёт, один run_id, один гейт: KPI
-   (`items[]`), текущие состояния осей (`axis_items[]`) и факты событий E-/X-триггеров (`event_items[]`).
+   EvidencePack от LLM — подсказка, где искать, а не доказательство. Один отчёт, один run_id, один гейт, четыре
+   секции: KPI (`items[]`), текущие состояния осей (`axis_items[]`), проверки условий переходов
+   (`transition_checks[]`) и факты ДИСКРЕТНЫХ событий (`event_items[]`, только `claim_type: discrete_event`: запуск,
+   контракт, решение регулятора, финансирование, M&A, инцидент). Проверка порога KPI — не событие: она идёт в
+   `transition_checks[]`.
 2. **Статус на KPI** (ровно один): `verified_match`, `verified_match_with_normalization`, `mismatch_value`,
    `mismatch_period`, `mismatch_semantics` (прогноз записан как факт и т.п.), `formula_mismatch`,
    `source_not_allowed`, `source_unavailable_technical`, `source_conflict`, `not_disclosed`, `not_found`.
@@ -253,14 +259,28 @@ Decision Request (сигнал к действию для перехода) — 
    опубликованного числа (± половина последнего знака). Для `derived_fact` — пересчёт формулы из независимо
    подтверждённых слагаемых, допуск 0.1%. Границы (`lower_bound`/`upper_bound`) сравниваются как границы;
    диапазон «50–60%» из одной фразы — достаточная цитата, нужны оба конца. Период — часть факта: «within 50 days»
-   не подтверждает «trailing 90 days» (`mismatch_period` даже при совпавшем числе).
+   не подтверждает «trailing 90 days» (`mismatch_period` даже при совпавшем числе). Исключение — **логическое
+   вложение окон** (v1.2, `criterion_checks[].window_entailment`): узкое окно факта доказывает широкий критерий
+   ТОЛЬКО если одновременно та же метрика/популяция, интервал факта целиком внутри окна критерия, критерий —
+   монотонная нижняя граница (`>= N`, не среднее/темп) и значение факта уже ≥ порога («6 запусков за 50 дней»
+   ⇒ «≥3 за trailing 90 days»; обратное неверно). Период факта при этом НЕ переименовывается.
    **Расходится только квалификатор** (источник «approximately», кандидат `exact`) при совпавших числе, типе,
    единице и периоде → `verified_match_with_normalization`, в `normalization.steps` строка
    `qualifier: source=approximate, candidate=exact`, `qualifier_patch_suggested: true`, `patch_required: false`
-   (форму наблюдения потом правит интегратор, не дозор).
-4. **«N кварталов подряд» дозор не считает.** Он подтверждает наблюдение и его `period_end`; последовательность
-   вычисляет детерминированная проверка перехода по истории `kpi_observations`. Если критерий состояния сам требует
-   N периодов, `state_supported` возможен только со ссылкой `history_evaluation_ref`, иначе
+   (форму наблюдения потом правит интегратор, не дозор). Флаг живёт ТОЛЬКО в отчёте — в state.json его нет.
+   **`derived_fact`** (v1.2): `found.value`, `found.unit`, `found.period` и `formula_recomputed_value` — в базе
+   кандидата (годовое к годовому); слагаемые источника и арифметика (например «H1: 145,212 + 859,215 тыс. = 1.004427
+   млрд; ×2») — в `normalization.steps`, не в `found`.
+4. **Проверки условий переходов (`transition_checks[]`)** — для триггеров с условием по KPI и/или истории
+   (`revenue >= X`, `backlog < X два квартала подряд`, бинарный KPI 1→0): `trigger_id`, `axis`, `transition
+   {from, to}` как в triggers.yaml, `condition`, `kpi_item_refs` (KPI этого же отчёта), `event_item_refs`,
+   `history_evaluation_ref | null`, `result`: `met` (условие подтверждённо выполнено; `runtime_verified: true`),
+   `not_met` (подтверждённо НЕ выполнено; `runtime_verified: false`), `pending_history` (нужна история периодов;
+   `runtime_verified: null`); во всех трёх `patch_required: false`. `met` и `not_met` — pass, не pending; `met` НЕ
+   создаёт `fired`, переход или действие (trigger ≠ decision). **«N кварталов подряд» дозор не считает:** он
+   подтверждает наблюдение и его `period_end`, последовательность вычисляет детерминированная проверка по истории
+   `kpi_observations`; если текущий период сам опровергает условие «подряд» — `not_met` без истории. Если критерий
+   СОСТОЯНИЯ требует N периодов, `state_supported` возможен только со ссылкой `history_evaluation_ref`, иначе
    `state_pending_verification`.
 5. **Технический отказ — не отсутствие факта.** SEC: только с User-Agent (см. выше), при 403 — повтор и
    альтернативный официальный URL архива; усечённый fetch — взять полный документ через `exec`/curl. Если всё равно
@@ -273,27 +293,44 @@ Decision Request (сигнал к действию для перехода) — 
    правки, только если каноническое состояние уже `pending_verification`); `evidence_unavailable_technical` /
    `evidence_conflict` → флаг не трогать, run_id не писать, итог BLOCKED. Старый `verified: true` без
    `verification_run_id` — `legacy_unlinked`: сохраняется, но подтверждением по протоколу не считается.
-7. **События (`event_items[]`).** Факт для -E-/-X-триггера: `event_confirmed_primary` (разрешённый первичный
-   источник) или `event_confirmed_two_media` (нет первичного — два НЕЗАВИСИМЫХ СМИ первого ряда; перепечатки одной
-   новости — один источник), `event_unconfirmed`, `event_contradicted` (PATCH_REQUIRED), `source_unavailable_technical`.
-   Событие подтверждает ФАКТ, не переход и не действие (`fact_only: true`): дозор может создать/связать запись в
-   `events_reported[]` с `verification_run_id`, но НИКОГДА не создаёт `fired` и не исполняет действие.
+   **Ось с каноническим `pending_verification`** (v1.2): в `axis_item` пишется `criteria: null` и непустой
+   `pending_reason` (что именно не раскрыто) — псевдокритерий не выдумывается; статус
+   `state_pending_verification` без правки.
+7. **События (`event_items[]`) — только дискретные факты** (`claim_type: discrete_event`) для -E-/-X-триггеров:
+   `event_confirmed_primary` (разрешённый первичный источник) или `event_confirmed_two_media` (нет первичного — два
+   НЕЗАВИСИМЫХ СМИ первого ряда; перепечатки одной новости — один источник), `event_unconfirmed` (pending),
+   `event_contradicted` (PATCH_REQUIRED), `source_unavailable_technical`, `condition_not_met` (подтверждено, что
+   отслеживаемое условие ложно; pass, не pending, `patch_required: false` — совместимый статус для
+   событийных дозоров; для порогов KPI предпочтителен `transition_checks.result: not_met`). Событие подтверждает
+   ФАКТ, не переход и не действие (`fact_only: true`): дозор может создать/связать запись в `events_reported[]` с
+   `verification_run_id`, но НИКОГДА не создаёт `fired` и не исполняет действие. Подтверждённый факт может быть
+   свидетельством для `transition_checks[].event_item_refs`, но сам переход не запускает.
 8. **Отчёт прогона** — иммутабельный файл `portfolio/<ticker>/_verify/<run_id>.json` по `output_report_schema`
-   (`protocol_version` "1.1.0", run_id `verify-<ticker>-<YYYYMMDDTHHMMSSZ>`, `as_of` — момент прогона в date-time;
+   (`protocol_version` "1.2.0", run_id `verify-<ticker>-<YYYYMMDDTHHMMSSZ>`, `as_of` — момент прогона в date-time;
    это НЕ as_of документа-источника, а `recorded_at` у источника — момент фиксации ссылки в реестре). Перед записью
    отчёт проверяется валидатором сайдкара: `POST /run {"model": "artifact_validator", "inputs": {"mode":
-   "dozor_report", "report": <json>, "folders": ["<папка>"]}}` — правила DZR-001..010 (тикер, kpi_id, оси и состояния,
-   trigger_id, fact_only, runtime_verified/patch_required по реестру статусов, согласованность summary и итога).
-9. **Что пишется в state.json** (и только это): `kpi_observations[]` — новое наблюдение (`value` число|null,
+   "dozor_report", "report": <json>, "folders": ["<папка>"]}}` — правила DZR-001..016 (тикер, kpi_id, оси и
+   состояния, trigger_id, fact_only, runtime_verified/patch_required по реестру статусов для всех четырёх секций,
+   ссылки transition_checks на triggers.yaml/states.yaml/items (DZR-011), база derived_fact (DZR-012), criteria:null у
+   осей pending (DZR-014), not_met/condition_not_met без правки (DZR-015), согласованность summary — включая
+   `transition_counts`, `pending_transition_checks`, `patch_required_transition_checks` — и итог по старшинству).
+9. **Что пишется в state.json** (и только это): `kpi_observations[]` — наблюдение (`value` число|null,
    `value_type`, `observation_qualifier`, `unit`, `period_end`, `source_url`, `provenance`, `verified` по реестру
    статусов: `true` для verified_match*, `false` для mismatch*/source_not_allowed, `null` для технического отказа,
-   конфликта и not_found, `verification_run_id`); `scenario_state[axis].verified` + `verification_run_id` по п. 6;
-   `events_reported[]` с `verification_run_id` по п. 7; поле `verification` = {run_id, as_of, overall_status};
-   строка в `info_log`. Канонические KPI в kpis.yaml, критерии состояний, условия триггеров и ID дозор НЕ
-   переписывает: расхождение → Decision Request владельцу с текстом «PATCH_REQUIRED: <id>: <статус>, найдено
-   <значение> (<период>, <url>)».
+   конфликта и not_found, `verification_run_id` и список `verification_run_ids`). **Наблюдение не дублируется**
+   (Artifact Schema v1.0.5, ART-REF-031): если `kpi_id`, `period_end` и нормализованные `value`/`value_range` не
+   изменились, новая строка НЕ создаётся — обновляются `observation_qualifier`/`note`/источник существующей
+   строки, новый run_id ДОБАВЛЯЕТСЯ в `verification_run_ids`, а `verification_run_id` = последний элемент
+   (ART-REF-030); новая строка — только при новом периоде или ином значении. `scenario_state[axis].verified` +
+   `verification_run_id` по п. 6; `events_reported[]` с `verification_run_id` по п. 7; поле `verification` =
+   {run_id, as_of, overall_status}; строка в `info_log`. Канонические KPI в kpis.yaml, критерии состояний, условия
+   триггеров и ID дозор НЕ переписывает: расхождение → Decision Request владельцу с текстом «PATCH_REQUIRED: <id>:
+   <статус>, найдено <значение> (<период>, <url>)».
 10. **Итог прогона** по старшинству: `BLOCKED_SOURCE_CONFLICT` > `BLOCKED_TECHNICAL` > `PATCH_REQUIRED` >
-    `PASS_WITH_DECLARED_PENDING` (нерешённые KPI/оси/события уже заявлены как pending) > `PASS`.
+    `PASS_WITH_DECLARED_PENDING` > `PASS`. Pending создают только: KPI `not_found` (кандидат уже null +
+    pending_verification), ось `state_pending_verification` без правки, `event_unconfirmed`,
+    `transition_checks.result: pending_history`. `not_met`, `met` и `condition_not_met` — pass: десять положительно
+    проверенных «условие не выполнено» дают `PASS`, а не `PASS_WITH_DECLARED_PENDING`.
 11. **Русские названия статусов в сообщениях владельцу** (замечание владельца 22.09): в Telegram статус пишется
     по-русски, оригинал протокола — в скобках, например `подтверждено (verified_match)`. Нормативный словарь — поле
     `label_ru` в `status_registry` протокола (KPI, оси, события, итоги): «подтверждено», «подтверждено с
@@ -302,8 +339,10 @@ Decision Request (сигнал к действию для перехода) — 
     не раскрывает», «в источнике не найдено»; оси — «текущее состояние подтверждено / не подтверждается / ожидает
     подтверждения», «свидетельство недоступно технически», «свидетельства по состоянию противоречат»; события —
     «событие подтверждено первоисточником / двумя СМИ первого ряда», «событие не подтверждено», «событие
-    опровергнуто»; итоги — «пройдено», «пройдено, есть заявленные ожидания», «нужна правка», «заблокировано
-    технически», «заблокировано: источники противоречат». В файлах отчёта и state.json — только оригинальные коды.
+    опровергнуто», «условие не выполнено» (condition_not_met); проверки переходов — «условие выполнено» (met),
+    «условие не выполнено» (not_met), «ожидается история наблюдений» (pending_history); итоги — «пройдено»,
+    «пройдено, есть заявленные ожидания», «нужна правка», «заблокировано технически», «заблокировано: источники
+    противоречат». В файлах отчёта и state.json — только оригинальные коды.
 
 ## Расчётный движок (сайдкар invest-calc)
 

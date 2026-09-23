@@ -120,153 +120,36 @@
       "name": "AI cloud revenue YoY",
       "period_end": "2026-06-30",
       "value": 5.14,
+      "value_type": "actual",
+      "observation_qualifier": "exact",
+      "unit": "YoY fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
       "value_raw": "Nebius AI cloud revenue grew 514% year-over-year to $575 million",
-      "unit": "YoY fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true,
-      "value_type": "actual",
-      "provenance": "verified_fact"
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-02",
       "name": "AI cloud quarterly revenue",
       "period_end": "2026-06-30",
       "value": 0.5749,
+      "value_type": "actual",
+      "observation_qualifier": "exact",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+      "provenance": "verified_fact",
+      "verified": true,
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
       "value_raw": "Revenues for the Nebius AI cloud business grew by $481.2 million, or 514%, from $93.7 million in the second quarter of 2025 to $574.9 million in the second quarter of 2026",
-      "unit": "USD B",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
-      "verified": true,
-      "value_type": "actual",
-      "provenance": "verified_fact"
-    },
-    {
-      "kpi_id": "NBIS-KPI-03",
-      "name": "AI cloud ARR",
-      "period_end": "2026-06-30",
-      "value": 3,
-      "value_raw": "ARR reached $3.0 billion",
-      "unit": "USD B",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true,
-      "value_type": "actual",
-      "provenance": "verified_fact"
-    },
-    {
-      "kpi_id": "NBIS-KPI-04",
-      "name": "AI cloud adjusted EBITDA margin",
-      "period_end": "2026-06-30",
-      "value": 0.497,
-      "value_raw": "our AI cloud business delivered an adjusted EBITDA margin of 50% in the quarter... adjusted EBITDA of $285.7 million and adjusted EBITDA margin of 49.7%",
-      "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true,
-      "value_type": "actual",
-      "provenance": "verified_fact"
-    },
-    {
-      "kpi_id": "NBIS-KPI-05",
-      "name": "Quarterly capex",
-      "period_end": "2026-06-30",
-      "value": 5.7,
-      "value_raw": "In Q2'26, capital expenditures were approximately $5.7 billion, primarily driven by purchases of GPUs and GPU-related hardware, and our data center expansion activities",
-      "unit": "USD B",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true,
-      "value_type": "actual",
-      "provenance": "verified_fact"
-    },
-    {
-      "kpi_id": "NBIS-KPI-06",
-      "name": "Customer prepayment coverage of associated capex",
-      "period_end": "2026-06-30",
-      "value": null,
-      "value_raw": "Overall deal economics strengthened, with 70% of deals including prepayments, covering 50-60% of the associated capex",
-      "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true,
-      "observation_qualifier": "range",
-      "value_range": {
-        "min": 0.5,
-        "max": 0.6
-      },
-      "value_type": "actual",
-      "provenance": "verified_fact"
-    },
-    {
-      "kpi_id": "NBIS-KPI-07",
-      "name": "Disclosed customer commitments",
-      "period_end": "2026-06-30",
-      "value": 40,
-      "value_raw": "and with $40 billion in customer commitments, we will do more of this",
-      "unit": "USD B",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true,
-      "observation_qualifier": "lower_bound",
-      "value_type": "actual",
-      "provenance": "verified_fact"
-    },
-    {
-      "kpi_id": "NBIS-KPI-08",
-      "name": "Year-end contracted power target",
-      "period_end": "2026-06-30",
-      "value": 5.0,
-      "value_raw": "«today we are raising our year-end contracted power target again to 5 GW»",
-      "unit": "GW",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true,
-      "verified_by": "host-check + поправка LLM 21.09",
-      "value_type": "company_guidance",
-      "provenance": "verified_fact"
-    },
-    {
-      "kpi_id": "NBIS-KPI-09",
-      "name": "Cash and cash equivalents",
-      "period_end": "2026-06-30",
-      "value": 8.0421,
-      "value_raw": "As of June 30, 2026, $8,042.1 million was recorded in cash and cash equivalents",
-      "unit": "USD B",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
-      "verified": true,
-      "value_type": "actual",
-      "provenance": "verified_fact"
-    },
-    {
-      "kpi_id": "NBIS-KPI-10",
-      "name": "Group adjusted EBITDA margin",
-      "period_end": "2026-06-30",
-      "value": 0.41,
-      "value_raw": "Adjusted EBITDA / (loss) (21.0) 236.2 n/m (74.7) 365.7 n/m; as a percentage of revenues -20% 41% -48% 37%",
-      "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "verified": true,
-      "value_type": "actual",
-      "provenance": "verified_fact"
-    },
-    {
-      "kpi_id": "NBIS-KPI-01",
-      "name": "AI cloud revenue YoY",
-      "period_end": "2026-06-30",
-      "value": 5.14,
-      "value_type": "actual",
-      "observation_qualifier": "exact",
-      "unit": "YoY fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
-      "provenance": "verified_fact",
-      "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
-    },
-    {
-      "kpi_id": "NBIS-KPI-02",
-      "name": "AI cloud quarterly revenue",
-      "period_end": "2026-06-30",
-      "value": 0.5749,
-      "value_type": "actual",
-      "observation_qualifier": "exact",
-      "unit": "USD B",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
-      "provenance": "verified_fact",
-      "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-03",
@@ -279,7 +162,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "value_raw": "ARR reached $3.0 billion",
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-04",
@@ -292,7 +180,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "value_raw": "our AI cloud business delivered an adjusted EBITDA margin of 50% in the quarter... adjusted EBITDA of $285.7 million and adjusted EBITDA margin of 49.7%",
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-05",
@@ -305,7 +198,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "value_raw": "In Q2'26, capital expenditures were approximately $5.7 billion, primarily driven by purchases of GPUs and GPU-related hardware, and our data center expansion activities",
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-06",
@@ -322,7 +220,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "value_raw": "Overall deal economics strengthened, with 70% of deals including prepayments, covering 50-60% of the associated capex",
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-07",
@@ -335,7 +238,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "value_raw": "and with $40 billion in customer commitments, we will do more of this",
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-08",
@@ -348,7 +256,13 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "value_raw": "«today we are raising our year-end contracted power target again to 5 GW»",
+      "verified_by": "host-check + поправка LLM 21.09",
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-09",
@@ -361,7 +275,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "value_raw": "As of June 30, 2026, $8,042.1 million was recorded in cash and cash equivalents",
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-10",
@@ -374,7 +293,12 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": true,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "value_raw": "Adjusted EBITDA / (loss) (21.0) 236.2 n/m (74.7) 365.7 n/m; as a percentage of revenues -20% 41% -48% 37%",
+      "verification_run_ids": [
+        "verify-NBIS-20260922T201443Z",
+        "verify-NBIS-20260922T210122Z"
+      ]
     },
     {
       "kpi_id": "NBIS-KPI-11",
@@ -387,7 +311,10 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
       "provenance": "verified_fact",
       "verified": null,
-      "verification_run_id": "verify-NBIS-20260922T210122Z"
+      "verification_run_id": "verify-NBIS-20260922T210122Z",
+      "verification_run_ids": [
+        "verify-NBIS-20260922T210122Z"
+      ]
     }
   ],
   "verification": {
@@ -454,5 +381,5 @@
     "exception": "Capacity_Secured pending_verification (нераскрытие факта)",
     "provenance": "owner_judgment"
   },
-  "schema_version": "1.0.4"
+  "schema_version": "1.0.5"
 }

@@ -89,7 +89,7 @@ methodology/            ПРИНЯТЫЕ нормативы (одна верси
   Company_MC_Calibration_Schema_v1.0.2.yaml (+examples), v1.0.1 (закреплена за SPCX/NBIS/NVDA)  JSON Schema калибровок MC
   SPCX_Conditional_Monte_Carlo_Specification_v1.0.md  условный MC пилота SpaceX (история)
   Investment_System_Reverse_Valuation_Specification_v1.0.md, Reverse_Valuation_Rules_v1.1.md  обратная оценка (implied CAGR) и её устойчивость
-  Portfolio_Optimizer_*_v1.0, Portfolio_Stability_Test_*_v1.0  оптимизатор (порядок приоритетов критериев; движок portfolio_optimizer 1.0.0, стадия A) и тест устойчивости (движок — в работе)
+  Portfolio_Optimizer_*_v1.0, Portfolio_Stability_Test_*_v1.0  оптимизатор (порядок приоритетов критериев; движок portfolio_optimizer 1.0.1, стадия A) и тест устойчивости (движок portfolio_stability 1.0.0: однофакторный набор + LOO + латинский гиперкуб 500; маржа — прокси, driver knockout и вехи — not_testable до пересимуляции)
   Portfolio_Drawdown_and_Regime_Rules_v1.0.md          режимы портфеля (Normal / Stress / Shock) по просадкам
   Conviction_Overlay_*_v1.0, Conviction_Journal_Schema_v1.0.yaml  слой убеждения владельца: два лимита, бюджет потери, журнал
   Team_Execution_Axis_*_v1.0                ось «команда и исполнение» (T0–T4)

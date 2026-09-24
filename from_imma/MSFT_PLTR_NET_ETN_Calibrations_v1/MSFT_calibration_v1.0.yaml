@@ -1,0 +1,130 @@
+calibration_v1.0:
+  ticker: MSFT
+  as_of: '2026-09-24'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    Cloud_AI_Demand: A4
+    Software_Monetization: S1
+    AI_Capital_Intensity: C3
+    Cloud_Margin: M3
+    Contracted_Demand: R3
+  market:
+    price: 493.78
+    price_as_of: '2026-09-18'
+    price_source: https://finance.yahoo.com/quote/MSFT/history/
+    shares_outstanding: 7427000000
+    shares_as_of: '2026-06-30'
+    shares_source: https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm
+    equity_value: 3667304060000.0
+  balance_sheet:
+    cash: 76843000000.0
+    debt_current: 9227000000.0
+    debt_noncurrent: 31067000000.0
+    net_debt: -36549000000.0
+    as_of: '2026-06-30'
+    source: https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm
+    note: Cash includes cash and short-term investments; debt current + noncurrent is recorded for balance control. Equity-FCF terminal method
+      does not subtract net debt twice.
+  base_period:
+    revenue_ttm: 331839000000.0
+    current_fcf_margin: 0.2177608408234915
+    revenue_formula: FY2026 revenue 331.839B; fiscal year ended 2026-06-30.
+    fcf_margin_formula: Q4 FCF = OCF 55.4B - cash PP&E 35.8B = 19.6B; 19.6 / Q4 revenue 90.007 = 21.78%.
+  discount_rate:
+    base: 0.095
+    stress:
+      min: 0.08
+      max: 0.12
+  terminal_fcf_margin:
+    min: 0.14
+    base: 0.26
+    max: 0.38
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 18
+    base: 26
+    max: 34
+  margin_transition:
+    type: capex_normalization_positive_fcf
+    path:
+      '1': 0.225
+      '2': 0.235
+      '3': 0.245
+      '4': 0.255
+      '5': terminal
+    critical_assumption:
+      linked_state: C3
+      description: Current FCF is positive despite cash capex near 40% of revenue. Base case assumes capex intensity gradually normalizes while
+        AI/cloud monetization preserves a mid-20s equity-FCF margin; this is an operating assumption, not an RV target.
+      falsification: Two consecutive quarters with cash capex/revenue >=40% and FCF margin <10%, or sustained Microsoft Cloud gross margin <65%,
+        require recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.08
+    - 0.095
+    - 0.12
+    terminal_fcf_margin:
+    - 0.14
+    - 0.26
+    - 0.38
+    terminal_fcf_multiple:
+    - 18
+    - 26
+    - 34
+  base_case:
+    discount_rate: 0.095
+    terminal_fcf_margin: 0.26
+    terminal_fcf_multiple: 26
+    margin_path:
+      Y0: 0.2177608408234915
+      Y1: 0.225
+      Y2: 0.235
+      Y3: 0.245
+      Y4: 0.255
+      Y5: 0.26
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-18 close | https://finance.yahoo.com/quote/MSFT/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 493.78 * 7,427,000,000
+    balance_sheet.cash:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm
+    balance_sheet.debt_current:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm
+    balance_sheet.debt_noncurrent:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 9227000000.0 + 31067000000.0 - 76843000000.0
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: FY2026 revenue 331.839B; fiscal year ended 2026-06-30.
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: Q4 FCF = OCF 55.4B - cash PP&E 35.8B = 19.6B; 19.6 / Q4 revenue 90.007 = 21.78%.
+    discount_rate:
+      provenance: model_assumption
+      rationale: 'MSFT: state-dependent equity discount rate range; not fitted to current price.'
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Current FCF is positive despite cash capex near 40% of revenue. Base case assumes capex intensity gradually normalizes while
+        AI/cloud monetization preserves a mid-20s equity-FCF margin; this is an operating assumption, not an RV target.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: 'MSFT: equity-FCF terminal multiple range reflects business maturity, cyclicality and duration; not fitted to current price.'
+    margin_transition:
+      provenance: model_assumption
+      rationale: Current FCF is positive despite cash capex near 40% of revenue. Base case assumes capex intensity gradually normalizes while
+        AI/cloud monetization preserves a mid-20s equity-FCF margin; this is an operating assumption, not an RV target.

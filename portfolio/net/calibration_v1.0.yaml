@@ -1,0 +1,131 @@
+calibration_v1.0:
+  ticker: NET
+  as_of: '2026-09-24'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    Revenue_Growth: G3
+    Expansion_Retention: N3
+    Contracted_Demand: R3
+    Profitability_Cash: P1
+    AI_Edge_Monetization: A1
+  market:
+    price: 324.65
+    price_as_of: '2026-09-16'
+    price_source: https://finance.yahoo.com/quote/NET/history/
+    shares_outstanding: 356079715
+    shares_as_of: '2026-07-21'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm
+    equity_value: 115601279474.74998
+  balance_sheet:
+    cash: 4162798000.0
+    debt_current: 1293260000.0
+    debt_noncurrent: 1977006000.0
+    net_debt: -892532000.0
+    as_of: '2026-06-30'
+    source: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm
+    note: Cash plus available-for-sale securities; convertible notes shown as current and noncurrent debt.
+  base_period:
+    revenue_ttm: 2512350000.0
+    current_fcf_margin: 0.08100439472977225
+    revenue_formula: FY2025 revenue 2.167937B + H1 2026 1.335816B - H1 2025 0.991403B = 2.512350B TTM.
+    fcf_margin_formula: Q2 2026 GAAP-definition FCF = OCF less PP&E and capitalized internal-use software = 56.384M; / 696.061M revenue = 8.10%.
+      H1 cross-check is 140.458M / 1.335816B = 10.51%.
+  discount_rate:
+    base: 0.105
+    stress:
+      min: 0.085
+      max: 0.135
+  terminal_fcf_margin:
+    min: 0.05
+    base: 0.2
+    max: 0.34
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 16
+    base: 28
+    max: 46
+  margin_transition:
+    type: early_positive_fcf_scaling
+    path:
+      '1': 0.11
+      '2': 0.135
+      '3': 0.16
+      '4': 0.18
+      '5': terminal
+    critical_assumption:
+      linked_state: P1
+      description: Positive but thin Q2 GAAP-defined FCF keeps NET in archetype A. Terminal margin assumes operating leverage from network/software
+        scale while retaining a wide low-margin tail because GAAP operating margin remains negative and SBC is material.
+      falsification: FCF margin <=0% or sustained DBNRR/cRPO deterioration requires archetype and margin-path recalibration; no AI/Workers revenue
+        is inferred without separate disclosure.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.085
+    - 0.105
+    - 0.135
+    terminal_fcf_margin:
+    - 0.05
+    - 0.2
+    - 0.34
+    terminal_fcf_multiple:
+    - 16
+    - 28
+    - 46
+  base_case:
+    discount_rate: 0.105
+    terminal_fcf_margin: 0.2
+    terminal_fcf_multiple: 28
+    margin_path:
+      Y0: 0.08100439472977225
+      Y1: 0.11
+      Y2: 0.135
+      Y3: 0.16
+      Y4: 0.18
+      Y5: 0.2
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-16 close | https://finance.yahoo.com/quote/NET/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-07-21 | https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 324.65 * 356,079,715
+    balance_sheet.cash:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm
+    balance_sheet.debt_current:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm
+    balance_sheet.debt_noncurrent:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 1293260000.0 + 1977006000.0 - 4162798000.0
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: FY2025 revenue 2.167937B + H1 2026 1.335816B - H1 2025 0.991403B = 2.512350B TTM.
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: Q2 2026 GAAP-definition FCF = OCF less PP&E and capitalized internal-use software = 56.384M; / 696.061M revenue = 8.10%. H1 cross-check
+        is 140.458M / 1.335816B = 10.51%.
+    discount_rate:
+      provenance: model_assumption
+      rationale: 'NET: state-dependent equity discount rate range; not fitted to current price.'
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Positive but thin Q2 GAAP-defined FCF keeps NET in archetype A. Terminal margin assumes operating leverage from network/software
+        scale while retaining a wide low-margin tail because GAAP operating margin remains negative and SBC is material.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: 'NET: equity-FCF terminal multiple range reflects business maturity, cyclicality and duration; not fitted to current price.'
+    margin_transition:
+      provenance: model_assumption
+      rationale: Positive but thin Q2 GAAP-defined FCF keeps NET in archetype A. Terminal margin assumes operating leverage from network/software
+        scale while retaining a wide low-margin tail because GAAP operating margin remains negative and SBC is material.

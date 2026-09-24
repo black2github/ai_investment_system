@@ -1,0 +1,131 @@
+calibration_v1.0:
+  ticker: PLTR
+  as_of: '2026-09-24'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    US_Commercial_AIP_Monetization: C3
+    US_Government_Demand: G3
+    Geographic_Concentration: I1
+    Profitability_Cash: P3
+    Contracted_Demand: R3
+  market:
+    price: 177.64
+    price_as_of: '2026-09-18'
+    price_source: https://finance.yahoo.com/quote/PLTR/history/
+    shares_outstanding: 2403058480
+    shares_as_of: '2026-07-27'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+    equity_value: 426879308387.19995
+  balance_sheet:
+    cash: 9409099000.0
+    debt_current: 0
+    debt_noncurrent: 0
+    net_debt: -9409099000.0
+    as_of: '2026-06-30'
+    source: https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+    note: Cash plus marketable U.S. Treasury securities; no funded debt assumed in base equity bridge.
+  base_period:
+    revenue_ttm: 6155941000.0
+    current_fcf_margin: 0.5867010720430532
+    revenue_formula: FY2025 revenue 4.475446B + H1 2026 3.568047B - H1 2025 1.887552B = 6.155941B TTM.
+    fcf_margin_formula: H1 2026 GAAP-definition FCF = OCF 2.115332B - PP&E purchases 0.021955B = 2.093377B; / 3.568047B revenue = 58.67%. Adjusted
+      FCF is not used as the anchor.
+  discount_rate:
+    base: 0.11
+    stress:
+      min: 0.09
+      max: 0.14
+  terminal_fcf_margin:
+    min: 0.2
+    base: 0.36
+    max: 0.52
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 18
+    base: 30
+    max: 48
+  margin_transition:
+    type: mature_hypergrowth_normalization
+    path:
+      '1': 0.5
+      '2': 0.46
+      '3': 0.42
+      '4': 0.39
+      '5': terminal
+    critical_assumption:
+      linked_state: P3
+      description: Current GAAP cash conversion is exceptional. Base case explicitly normalizes toward 36% as growth slows and SBC/dilution economics,
+        sales intensity and contract conversion become more material; adjusted FCF is not used to lift the anchor.
+      falsification: Failure of U.S. commercial contract conversion, sustained GAAP-FCF margin below 25%, or SBC/revenue failing to normalize
+        with scale requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.09
+    - 0.11
+    - 0.14
+    terminal_fcf_margin:
+    - 0.2
+    - 0.36
+    - 0.52
+    terminal_fcf_multiple:
+    - 18
+    - 30
+    - 48
+  base_case:
+    discount_rate: 0.11
+    terminal_fcf_margin: 0.36
+    terminal_fcf_multiple: 30
+    margin_path:
+      Y0: 0.5867010720430532
+      Y1: 0.5
+      Y2: 0.46
+      Y3: 0.42
+      Y4: 0.39
+      Y5: 0.36
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-18 close | https://finance.yahoo.com/quote/PLTR/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-07-27 | https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 177.64 * 2,403,058,480
+    balance_sheet.cash:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+    balance_sheet.debt_current:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+    balance_sheet.debt_noncurrent:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 0 + 0 - 9409099000.0
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: FY2025 revenue 4.475446B + H1 2026 3.568047B - H1 2025 1.887552B = 6.155941B TTM.
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: H1 2026 GAAP-definition FCF = OCF 2.115332B - PP&E purchases 0.021955B = 2.093377B; / 3.568047B revenue = 58.67%. Adjusted FCF
+        is not used as the anchor.
+    discount_rate:
+      provenance: model_assumption
+      rationale: 'PLTR: state-dependent equity discount rate range; not fitted to current price.'
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Current GAAP cash conversion is exceptional. Base case explicitly normalizes toward 36% as growth slows and SBC/dilution economics,
+        sales intensity and contract conversion become more material; adjusted FCF is not used to lift the anchor.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: 'PLTR: equity-FCF terminal multiple range reflects business maturity, cyclicality and duration; not fitted to current price.'
+    margin_transition:
+      provenance: model_assumption
+      rationale: Current GAAP cash conversion is exceptional. Base case explicitly normalizes toward 36% as growth slows and SBC/dilution economics,
+        sales intensity and contract conversion become more material; adjusted FCF is not used to lift the anchor.

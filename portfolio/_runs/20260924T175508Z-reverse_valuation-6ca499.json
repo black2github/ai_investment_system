@@ -1,0 +1,138 @@
+{
+  "run_id": "20260924T175508Z-reverse_valuation-6ca499",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "NET",
+    "valuation_date": "2026-09-24",
+    "calibration": "NET_calibration_v1.0 (G3+N3+R3+P1+A1)",
+    "market": {
+      "price": 324.65,
+      "shares_outstanding": 356079715,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm"
+    },
+    "balance_sheet": {
+      "net_debt": -892532000.0,
+      "cash": 4162798000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000054/cloud-20260630.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 2512350000.0,
+      "current_fcf_margin": 0.08100439472977225,
+      "revenue_source": "FY2025 revenue 2.167937B + H1 2026 1.335816B - H1 2025 0.991403B = 2.512350B TTM.",
+      "source": "Q2 2026 GAAP-definition FCF = OCF less PP&E and capitalized internal-use software = 56.384M; / 696.061M revenue = 8.10%. H1 cross-check is 140.458M / 1.335816B = 10.51%."
+    },
+    "discounting": {
+      "discount_rate": 0.105,
+      "stress_rates": [
+        0.085,
+        0.135
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.05,
+        "base": 0.2,
+        "max": 0.34
+      },
+      "multiple_range": {
+        "min": 16,
+        "base": 28,
+        "max": 46
+      }
+    },
+    "margin_transition": {
+      "type": "early_positive_fcf_scaling",
+      "path": {
+        "1": 0.11,
+        "2": 0.135,
+        "3": 0.16,
+        "4": 0.18,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "Revenue_Growth": "G3",
+      "Expansion_Retention": "N3",
+      "Contracted_Demand": "R3",
+      "Profitability_Cash": "P1",
+      "AI_Edge_Monetization": "A1"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "d12ac639f82f32b8",
+    "scenario_state": {
+      "Revenue_Growth": "G3",
+      "Expansion_Retention": "N3",
+      "Contracted_Demand": "R3",
+      "Profitability_Cash": "P1",
+      "AI_Edge_Monetization": "A1"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 115601279474.74998,
+      "enterprise_value": 114708747474.74998,
+      "terminal_fcf_margin": 0.2,
+      "terminal_multiple": 28.0,
+      "discount_rate": 0.105,
+      "current_fcf_margin": 0.08100439472977225,
+      "revenue_ttm": 2512350000.0,
+      "implied_revenue_cagr_5y": 0.669222,
+      "terminal_revenue": 32557479134.39,
+      "terminal_fcf": 6511495826.88,
+      "pv_interim_fcf": 4931917165.46,
+      "pv_terminal_value": 110669362386.64,
+      "terminal_value_share_of_pv": 0.9573,
+      "control_cagr": 0.669222
+    },
+    "validation": {
+      "converged": true,
+      "residual": 77.3502197265625,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.05|multiple=16": 1.4091,
+        "margin=0.05|multiple=28": 1.1749,
+        "margin=0.05|multiple=46": 0.9811,
+        "margin=0.2|multiple=16": 0.86,
+        "margin=0.2|multiple=28": 0.6692,
+        "margin=0.2|multiple=46": 0.5149,
+        "margin=0.34|multiple=16": 0.6787,
+        "margin=0.34|multiple=28": 0.5048,
+        "margin=0.34|multiple=46": 0.3648
+      },
+      "discount_rate_grid": {
+        "r=0.085": 0.639,
+        "r=0.135": 0.7145
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "model_fragile",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": true
+    }
+  },
+  "elapsed_ms": 5.9,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

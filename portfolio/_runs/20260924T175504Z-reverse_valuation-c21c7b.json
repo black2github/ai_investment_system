@@ -1,0 +1,138 @@
+{
+  "run_id": "20260924T175504Z-reverse_valuation-c21c7b",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "MSFT",
+    "valuation_date": "2026-09-24",
+    "calibration": "MSFT_calibration_v1.0 (A4+S1+C3+M3+R3)",
+    "market": {
+      "price": 493.78,
+      "shares_outstanding": 7427000000,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+    },
+    "balance_sheet": {
+      "net_debt": -36549000000.0,
+      "cash": 76843000000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 331839000000.0,
+      "current_fcf_margin": 0.2177608408234915,
+      "revenue_source": "FY2026 revenue 331.839B; fiscal year ended 2026-06-30.",
+      "source": "Q4 FCF = OCF 55.4B - cash PP&E 35.8B = 19.6B; 19.6 / Q4 revenue 90.007 = 21.78%."
+    },
+    "discounting": {
+      "discount_rate": 0.095,
+      "stress_rates": [
+        0.08,
+        0.12
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.14,
+        "base": 0.26,
+        "max": 0.38
+      },
+      "multiple_range": {
+        "min": 18,
+        "base": 26,
+        "max": 34
+      }
+    },
+    "margin_transition": {
+      "type": "capex_normalization_positive_fcf",
+      "path": {
+        "1": 0.225,
+        "2": 0.235,
+        "3": 0.245,
+        "4": 0.255,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "Cloud_AI_Demand": "A4",
+      "Software_Monetization": "S1",
+      "AI_Capital_Intensity": "C3",
+      "Cloud_Margin": "M3",
+      "Contracted_Demand": "R3"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "3e8e2dd3e9e15dd2",
+    "scenario_state": {
+      "Cloud_AI_Demand": "A4",
+      "Software_Monetization": "S1",
+      "AI_Capital_Intensity": "C3",
+      "Cloud_Margin": "M3",
+      "Contracted_Demand": "R3"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 3667304060000.0,
+      "enterprise_value": 3630755060000.0,
+      "terminal_fcf_margin": 0.26,
+      "terminal_multiple": 26.0,
+      "discount_rate": 0.095,
+      "current_fcf_margin": 0.2177608408234915,
+      "revenue_ttm": 331839000000.0,
+      "implied_revenue_cagr_5y": 0.181391,
+      "terminal_revenue": 763650855418.46,
+      "terminal_fcf": 198549222408.8,
+      "pv_interim_fcf": 388081131847.18,
+      "pv_terminal_value": 3279222933851.02,
+      "terminal_value_share_of_pv": 0.8942,
+      "control_cagr": 0.181391
+    },
+    "validation": {
+      "converged": true,
+      "residual": 5698.2080078125,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.14|multiple=18": 0.4163,
+        "margin=0.14|multiple=26": 0.3253,
+        "margin=0.14|multiple=34": 0.2614,
+        "margin=0.26|multiple=18": 0.2654,
+        "margin=0.26|multiple=26": 0.1814,
+        "margin=0.26|multiple=34": 0.1229,
+        "margin=0.38|multiple=18": 0.1788,
+        "margin=0.38|multiple=26": 0.0994,
+        "margin=0.38|multiple=34": 0.0444
+      },
+      "discount_rate_grid": {
+        "r=0.08": 0.1652,
+        "r=0.12": 0.2084
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "terminal_dependent",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": false
+    }
+  },
+  "elapsed_ms": 6.7,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

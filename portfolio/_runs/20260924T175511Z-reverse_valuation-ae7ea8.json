@@ -1,0 +1,138 @@
+{
+  "run_id": "20260924T175511Z-reverse_valuation-ae7ea8",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "ETN",
+    "valuation_date": "2026-09-24",
+    "calibration": "ETN_calibration_v1.0 (A3+G3+O3+M3+I2)",
+    "market": {
+      "price": 413.29,
+      "shares_outstanding": 388400000,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm"
+    },
+    "balance_sheet": {
+      "net_debt": 19916000000.0,
+      "cash": 695000000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 30026000000.0,
+      "current_fcf_margin": 0.07433362532849455,
+      "revenue_source": "FY2025 sales 27.448B + H1 2026 15.982B - H1 2025 13.404B = 30.026B TTM.",
+      "source": "H1 2026 GAAP-definition FCF = OCF 1.634B - capex 0.446B = 1.188B; / sales 15.982B = 7.43%."
+    },
+    "discounting": {
+      "discount_rate": 0.1,
+      "stress_rates": [
+        0.085,
+        0.12
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.08,
+        "base": 0.14,
+        "max": 0.2
+      },
+      "multiple_range": {
+        "min": 14,
+        "base": 22,
+        "max": 30
+      }
+    },
+    "margin_transition": {
+      "type": "mature_cycle_and_integration",
+      "path": {
+        "1": 0.09,
+        "2": 0.105,
+        "3": 0.12,
+        "4": 0.13,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "Electrical_Americas_Demand": "A3",
+      "Electrical_Global_Demand": "G3",
+      "Organic_Growth": "O3",
+      "Margin_Execution": "M3",
+      "Portfolio_Integration": "I2"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "32b17b0f2578e8f4",
+    "scenario_state": {
+      "Electrical_Americas_Demand": "A3",
+      "Electrical_Global_Demand": "G3",
+      "Organic_Growth": "O3",
+      "Margin_Execution": "M3",
+      "Portfolio_Integration": "I2"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 160521836000.0,
+      "enterprise_value": 180437836000.0,
+      "terminal_fcf_margin": 0.14,
+      "terminal_multiple": 22.0,
+      "discount_rate": 0.1,
+      "current_fcf_margin": 0.07433362532849455,
+      "revenue_ttm": 30026000000.0,
+      "implied_revenue_cagr_5y": 0.201148,
+      "terminal_revenue": 75072266878.64,
+      "terminal_fcf": 10510117363.01,
+      "pv_interim_fcf": 16950804620.16,
+      "pv_terminal_value": 143571031528.02,
+      "terminal_value_share_of_pv": 0.8944,
+      "control_cagr": 0.201148
+    },
+    "validation": {
+      "converged": true,
+      "residual": 148.18270874023438,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.08|multiple=14": 0.4454,
+        "margin=0.08|multiple=22": 0.3324,
+        "margin=0.08|multiple=30": 0.2584,
+        "margin=0.14|multiple=14": 0.3064,
+        "margin=0.14|multiple=22": 0.2011,
+        "margin=0.14|multiple=30": 0.1328,
+        "margin=0.2|multiple=14": 0.2228,
+        "margin=0.2|multiple=22": 0.1228,
+        "margin=0.2|multiple=30": 0.0582
+      },
+      "discount_rate_grid": {
+        "r=0.085": 0.1848,
+        "r=0.12": 0.223
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "terminal_dependent",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": false
+    }
+  },
+  "elapsed_ms": 5.8,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

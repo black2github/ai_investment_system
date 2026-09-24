@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-21T07:40:00Z",
+  "updated": "2026-09-24T18:20:00Z",
   "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
   "price": {
     "symbol": "NET",
@@ -100,6 +100,11 @@
       "timestamp": "2026-09-21T07:40:00Z",
       "kind": "verification",
       "summary": "Сверка NET с хоста: 7 KPI подтверждены, 3 не раскрываются; все оси verified (задание агента упало: OpenRouter 402)"
+    },
+    {
+      "timestamp": "2026-09-24T18:20:00Z",
+      "kind": "calc",
+      "summary": "Интеграция калибровок партии 4 (24.09): calibration_v1.0.yaml, mc_calibration_v1.0.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260924T175508Z-reverse_valuation-6ca499, 20260924T180403Z-company_mc-a8783a"
     }
   ],
   "scenario_state": {
@@ -285,6 +290,63 @@
       "provenance": "verified_fact"
     }
   ],
-  "calc_runs": [],
+  "calc_runs": [
+    {
+      "run_id": "20260924T175508Z-reverse_valuation-6ca499",
+      "model": "reverse_valuation 1.2.0",
+      "spec": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+      "calibration": "NET_calibration_v1.0",
+      "valuation_date": "2026-09-24",
+      "price": 324.65,
+      "shares_outstanding": 356079715,
+      "equity_value_b": 115.6,
+      "implied_revenue_cagr_5y": 0.6692,
+      "terminal_value_share_of_pv": 0.9573,
+      "model_stability": "model_fragile",
+      "note": "Первый нормативный RV-прогон; класс устойчивости по Reverse_Valuation_Rules_v1.1 §1 — model_fragile; при model_fragile Decision Request обязан содержать флаг риска модели и сетку чувствительности"
+    },
+    {
+      "run_id": "20260924T180403Z-company_mc-a8783a",
+      "model": "company_mc",
+      "version": "2.3.2",
+      "timestamp": "20260924T180403",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Rules_v1.1.2; company_mc 2.3.2, parity-gated blend)",
+      "calibration": "mc_calibration_v1.0.yaml",
+      "purpose": "нормативный прогон принятой калибровки партии 4 (валидатор 1.6.0: схема v1.0.2, MC-G5-013 pass; intrinsic W в ориентире A; MSFT full W 0.294 — warning у границы 0.30, объяснено в приёмке)",
+      "equity_value_0_b": 115.6,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": -0.3345,
+        "median_CAGR_5Y": -0.1644,
+        "median_CAGR_8Y": -0.0554,
+        "CAGR_5Y_q05_q95": [
+          -0.32,
+          -0.004
+        ],
+        "P_2x_5Y": 0.0012,
+        "P_loss_gt_30pct_5Y": 0.838,
+        "P_loss_gt_50pct_5Y": 0.6418,
+        "ES5": -0.8885,
+        "median_equity_value_5Y_b": 47.1,
+        "RV_Growth_Gap": 0.4549,
+        "Price_Expectation_Gap": 4.044,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          1.0
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260924T180403Z-company_mc-a8783a-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.19828425625810425,
+        "q05": 0.09671440011540865,
+        "q95": 0.35189995611819846,
+        "paths_share": 1.0
+      }
+    }
+  ],
   "schema_version": "1.0.5"
 }

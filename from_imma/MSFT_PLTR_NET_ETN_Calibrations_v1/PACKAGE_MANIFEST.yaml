@@ -1,0 +1,43 @@
+package: IMMA_MSFT_PLTR_NET_ETN_v1.0
+package_version: '1.0'
+created_at: '2026-09-24'
+status: proposed_for_host_acceptance
+normative_basis:
+  company_mc_calibration_schema: 1.0.2
+  conditional_mc: 1.1.3
+  joint_simulation_layer_rules: 1.1.2
+  reverse_valuation_rules: '1.1'
+  schema_calculation_engine_const: company_mc 2.3.1
+  host_runtime_expected: company_mc 2.3.2 (ticker-specific RNG seeding only; semantics unchanged per order)
+files:
+- name: ETN_calibration_v1.0.yaml
+  sha256: f167dd6759b64355dfb4ebb2c8c88887f30458d227d39c0484b252dff75b0054
+  bytes: 5086
+- name: ETN_mc_calibration_v1.0.yaml
+  sha256: a204108bd3febcb6d39825ad7de44db75d60b57e71c9cb1afca21f834f0b6285
+  bytes: 18436
+- name: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: 184decd8a484905c99970e5abcb0ee965d5260f933658fc94fe1ad9b98e880c5
+  bytes: 2666
+- name: MSFT_PLTR_NET_ETN_Calibration_Rationale_v1.0.md
+  sha256: 3c102ebcba9409de9fe596e90ee0a80d6f5b9f60fd6a062cd8495ff89a4739ba
+  bytes: 9239
+- name: MSFT_calibration_v1.0.yaml
+  sha256: f46d647c858b487188c0b2ed45c521a2d3c6f629a4e71993e82abc093db86248
+  bytes: 5043
+- name: MSFT_mc_calibration_v1.0.yaml
+  sha256: 837b786cfa8a620555bd55ed5969466d7b68b181e713c68bfbdb9edcc33b423e
+  bytes: 19547
+- name: NET_calibration_v1.0.yaml
+  sha256: c46fbea4f137c42f04d2fabcd929027c7d551a03ac2d1d7e7789e80d21eb246d
+  bytes: 5240
+- name: NET_mc_calibration_v1.0.yaml
+  sha256: 33ca811146ada45f0b21adddd3bd6734fb505a5d199df88701fe390f77169dc2
+  bytes: 12049
+- name: PLTR_calibration_v1.0.yaml
+  sha256: c18efd807fd812db0c51b338912205f1ec1a3fc10a3c661212b7e46ede0f0e23
+  bytes: 5159
+- name: PLTR_mc_calibration_v1.0.yaml
+  sha256: 4991f12c593dc51cbd5c50400b5e57e86cb26a36af7d7f849bbd84d0ab739c88
+  bytes: 14308
+manifest_note: Hash list intentionally excludes PACKAGE_MANIFEST.yaml itself to avoid self-referential hashing.

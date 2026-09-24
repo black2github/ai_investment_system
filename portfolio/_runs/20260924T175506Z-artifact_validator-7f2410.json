@@ -1,0 +1,667 @@
+{
+  "run_id": "20260924T175506Z-artifact_validator-7f2410",
+  "model": "artifact_validator",
+  "version": "1.6.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "calibration",
+    "workspace": "/data/workspace-invest",
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "PLTR",
+      "as_of": "2026-09-24",
+      "archetype": "mature_positive_margin",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "US_Commercial_AIP_Monetization": "C3",
+        "US_Government_Demand": "G3",
+        "Geographic_Concentration": "I1",
+        "Profitability_Cash": "P3",
+        "Contracted_Demand": "R3"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed; host company_mc 2.3.2 derives company-specific RNG stream, while schema field remains company_mc 2.3.1."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "USCommercial": {
+            "base_revenue_quarterly": 764000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-08-03 | https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": 0.35,
+              "mode": 1.05,
+              "max": 1.8,
+              "provenance": "model_assumption",
+              "rationale": "Q2 U.S. commercial +149% validates hypergrowth but annualization is not assumed; tails cover contract conversion and law-of-large-numbers outcomes."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.03,
+              "mode": 0.16,
+              "max": 0.32,
+              "provenance": "model_assumption",
+              "rationale": "By Y8, commercial growth must mean-revert materially from >100% while retaining software/platform upside."
+            },
+            "growth_half_life_years": 1.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Extreme current growth mean-reverts quickly as the revenue base scales."
+            },
+            "latent_loading": {
+              "growth": 0.68
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Commercial AIP demand shares software/AI factors but contract conversion remains highly idiosyncratic."
+            }
+          },
+          "USGovernment": {
+            "base_revenue_quarterly": 809000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-08-03 | https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": 0.2,
+              "mode": 0.65,
+              "max": 1.15,
+              "provenance": "model_assumption",
+              "rationale": "Q2 U.S. government +90% is strong but procurement/compliance timing creates a wide downside tail."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.02,
+              "mode": 0.1,
+              "max": 0.22,
+              "provenance": "model_assumption",
+              "rationale": "Long-run government growth normalizes toward durable program expansion, not Q2 hypergrowth."
+            },
+            "growth_half_life_years": 1.25,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Government growth mean-reverts over contract/procurement cycles."
+            },
+            "latent_loading": {
+              "growth": 0.62
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Government demand has common defense-budget exposure with contract-specific risk."
+            }
+          },
+          "International": {
+            "base_revenue_quarterly": 362464000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "Q2 total revenue 1.935464B - U.S. commercial 0.764B - U.S. government 0.809B = 0.362464B."
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.1,
+              "mode": 0.25,
+              "max": 0.7,
+              "provenance": "model_assumption",
+              "rationale": "International growth is lower and more execution-sensitive than U.S. segments; range allows contraction."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.02,
+              "mode": 0.08,
+              "max": 0.2,
+              "provenance": "model_assumption",
+              "rationale": "International maturity remains slower than U.S. growth and can stagnate in downside cases."
+            },
+            "growth_half_life_years": 1.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "International growth normalizes over a longer enterprise sales cycle."
+            },
+            "latent_loading": {
+              "growth": 0.5
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Lower loading reflects country/product mix and customer-specific execution."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "mean_reverting_positive_margin",
+        "current_margin": 0.5867010720430532,
+        "current_margin_meta": {
+          "provenance": "derived_fact",
+          "formula": "H1 2026 GAAP-definition FCF = 2.115332B operating cash flow - 0.021955B PP&E purchases = 2.093377B; / 3.568047B H1 revenue = 58.67%."
+        },
+        "terminal_margin_Y5": {
+          "distribution": "triangular",
+          "min": 0.18,
+          "mode": 0.36,
+          "max": 0.54,
+          "provenance": "model_assumption",
+          "rationale": "Y5 GAAP-defined cash margin deliberately normalizes far below current H1 58.7%; wide range absorbs SBC/dilution, sales intensity and contract-conversion uncertainty without using adjusted FCF."
+        },
+        "terminal_margin_Y8": {
+          "distribution": "triangular",
+          "min": 0.16,
+          "mode": 0.32,
+          "max": 0.5,
+          "provenance": "model_assumption",
+          "rationale": "Long-run cash margin compresses further at center as hypergrowth matures; broad tail preserves operating-leverage uncertainty."
+        },
+        "half_life_years": 1.75,
+        "half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Mean reversion spans several reporting periods rather than one quarter."
+        },
+        "shock_sigma": 0.06,
+        "shock_sigma_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Quarterly company-specific cash-margin uncertainty; separate from Joint Layer shared drivers."
+        },
+        "shock_persistence": 0.45,
+        "shock_persistence_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Adjacent-quarter operating/cash-conversion shocks are persistent but mean-reverting."
+        },
+        "lower_bound": 0.08,
+        "lower_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Plausible severe cash-margin floor for the modeled archetype; not a failure-event probability."
+        },
+        "upper_bound": 0.62,
+        "upper_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Prevents temporary cash-conversion peaks from becoming permanent terminal economics."
+        }
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 16.0,
+            "mode": 40.0,
+            "max": 75.0,
+            "provenance": "model_assumption",
+            "rationale": "Hypergrowth software can retain a premium near term, but multiple uncertainty is intentionally very wide."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 12.0,
+            "mode": 30.0,
+            "max": 55.0,
+            "provenance": "model_assumption",
+            "rationale": "Premium software FCF multiple with explicit compression tail as growth normalizes and SBC/dilution economics matter."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 10.0,
+            "mode": 24.0,
+            "max": 45.0,
+            "provenance": "model_assumption",
+            "rationale": "Maturity compression while preserving platform/software duration upside."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 3.0,
+            "mode": 11.0,
+            "max": 22.0,
+            "provenance": "model_assumption",
+            "rationale": "Primary parity reference bridge. Mode 11x / 30x Y5 FCF multiple implies ~36.7% parity margin, aligned with the 36% Y5 cash-margin center; wide tails reflect revenue-multiple uncertainty."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.4,
+          "growth__valuation": 0.35,
+          "margin__valuation": 0.35
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Positive co-movement between operating growth, cash economics and duration; idiosyncratic uncertainty remains material."
+        },
+        "default_loading": 0.62,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Company-specific common-factor loading chosen by business maturity and concentration; not fitted to price."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.58,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Model-dependent path noise used for drawdown/path diagnostics, not terminal valuation calibration."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 1.75,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Valuation dislocations mean-revert over a multi-quarter horizon."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:PLTR_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 0.5884744464507026,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of Reverse Valuation v1.2.0 equation from PLTR_calibration_v1.0.yaml; host run_ref remains authoritative."
+        },
+        "discount_rate": 0.11,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from PLTR RV base calibration."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.06256949,
+              0.06256949
+            ],
+            "margin_nodes_pp": [
+              -0.01954416,
+              0.01954416
+            ],
+            "terminal_multiple_pct": [
+              -0.07154558,
+              0.07705879
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 local robustness: sigma_eq=(Q84-Q16)/2; growth=base-revenue-weighted RMS segment initial_growth sigma_eq; margin=Y5 terminal margin sigma_eq; multiple=Y5 log-space sigma_eq; perturbation=0.25*sigma with absolute ceilings growth 10pp, margin 5pp, multiple 20% relative."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "PLTR: accepted v1.1.2 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "CLOUD_SOFTWARE_DEMAND",
+          "GOVERNMENT_DEFENSE",
+          "AI_COMPUTE_DEMAND"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "PLTR_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.55,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Company execution and demand/cash-conversion conditions persist across adjacent quarters."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "CLOUD_SOFTWARE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.USCommercial.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Enterprise software demand affects AIP/commercial conversion."
+              }
+            },
+            {
+              "path": "revenue_model.segments.International.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "International commercial budgets affect expansion."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Software-demand durability affects valuation duration."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.USCommercial.initial_growth.mode",
+              "contribution": 0.03,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central U.S. commercial growth assumes continued enterprise AI/software demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel."
+              }
+            }
+          },
+          "note": "PLTR-FM-01 enterprise demand slowdown."
+        },
+        {
+          "driver_id": "GOVERNMENT_DEFENSE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.USGovernment.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Defense/government demand supports U.S. government growth."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Program durability supports valuation duration."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.USGovernment.initial_growth.mode",
+              "contribution": 0.025,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central government growth assumes continued strong program demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel."
+              }
+            }
+          },
+          "note": "PLTR-FM-02/05 government demand and compliance; compliance event itself is not synthesized as a root driver."
+        },
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.USCommercial.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI adoption supports commercial AIP demand."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Sustained AI monetization supports software duration."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel."
+              }
+            }
+          },
+          "note": "PLTR-FM-03 AI monetization; accepted +1 but high failure-mode linkage makes it material."
+        }
+      ]
+    },
+    "folders": [
+      "pltr"
+    ],
+    "equity_value_0": 426879308387.19995,
+    "dispersion_paths": 20000
+  },
+  "outputs": {
+    "model_version": "1.6.0",
+    "schema_version": "1.0.2",
+    "mode": "calibration",
+    "ticker": "PLTR",
+    "archetype": "mature_positive_margin",
+    "schema_errors": [],
+    "integrity": [
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/INTEREST_RATES",
+        "message": "драйвер 'INTEREST_RATES' (exposure -1) без mapping"
+      },
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/CAPITAL_MARKETS",
+        "message": "драйвер 'CAPITAL_MARKETS' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/INDUSTRIAL_RESHORING",
+        "message": "драйвер 'INDUSTRIAL_RESHORING' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.USCommercial.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.079 ≤ 0.15 (growth; драйверов 2)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.International.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.025 ≤ 0.15 (growth; драйверов 1)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → valuation.Y5.multiple",
+        "message": "σ суммарного сдвига q20 = 0.046 ≤ 0.15 (multiple; драйверов 3)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.USGovernment.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.063 ≤ 0.15 (growth; драйверов 1)"
+      }
+    ],
+    "engine_dry_run": {
+      "engine_version": "2.3.2",
+      "mapping_warnings": [],
+      "deterministic": true,
+      "median_CAGR_5Y": 2.308730883300383,
+      "P_loss_gt_30pct_5Y": 0.0,
+      "paths": 2000
+    },
+    "aggregate_shift": {
+      "revenue_model.segments.USCommercial.initial_growth": {
+        "sigma": 0.0792,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 2,
+        "sum_abs_effect": 0.05,
+        "ok": true
+      },
+      "revenue_model.segments.International.initial_growth": {
+        "sigma": 0.0255,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 1,
+        "sum_abs_effect": 0.015,
+        "ok": true
+      },
+      "valuation.Y5.multiple": {
+        "sigma": 0.0462,
+        "cap": 0.15,
+        "kind": "multiple",
+        "quarter": 20,
+        "drivers": 3,
+        "sum_abs_effect": 0.035,
+        "ok": true
+      },
+      "revenue_model.segments.USGovernment.initial_growth": {
+        "sigma": 0.0633,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 1,
+        "sum_abs_effect": 0.03,
+        "ok": true
+      }
+    },
+    "dispersion": {
+      "paths": 20000,
+      "equity_value_0": 426879308387.19995,
+      "intrinsic": {
+        "W": 0.2863,
+        "q05": -0.1588784772819133,
+        "q95": 0.12740631656942658,
+        "median_CAGR_5Y": -0.01604822185653909,
+        "P_loss_gt_30pct_5Y": 0.28035,
+        "P_2x_5Y": 0.03035
+      },
+      "full": {
+        "W": 0.3015,
+        "q05": -0.16436590819778282,
+        "q95": 0.13712260508738136,
+        "median_CAGR_5Y": -0.015466969621418025,
+        "P_loss_gt_30pct_5Y": 0.28165,
+        "P_2x_5Y": 0.0374
+      },
+      "full_to_intrinsic_ratio": 1.053,
+      "bands": {
+        "intrinsic_W": [
+          0.25,
+          0.5
+        ],
+        "full_W": [
+          0.3,
+          0.6
+        ],
+        "full_to_intrinsic_width_ratio_max": 1.5
+      }
+    },
+    "pass": true,
+    "note": "MC-G5-013 — hard gate по Joint_Simulation_Layer_Rules_v1.1 (strict_aggregate=false → warning); MC-G5-009 (антицикличность) и MC-G5-010 (полнота provenance сверх схемы) статически не проверяются",
+    "decision": "none"
+  },
+  "elapsed_ms": 2002.7,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

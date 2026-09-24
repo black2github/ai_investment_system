@@ -1,0 +1,588 @@
+{
+  "run_id": "20260924T175509Z-artifact_validator-e64fec",
+  "model": "artifact_validator",
+  "version": "1.6.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "calibration",
+    "workspace": "/data/workspace-invest",
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "NET",
+      "as_of": "2026-09-24",
+      "archetype": "mature_positive_margin",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "Revenue_Growth": "G3",
+        "Expansion_Retention": "N3",
+        "Contracted_Demand": "R3",
+        "Profitability_Cash": "P1",
+        "AI_Edge_Monetization": "A1"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed; host company_mc 2.3.2 derives company-specific RNG stream, while schema field remains company_mc 2.3.1."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "CorePlatform": {
+            "base_revenue_quarterly": 696061000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-08-06 | https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": 0.08,
+              "mode": 0.32,
+              "max": 0.6,
+              "provenance": "model_assumption",
+              "rationale": "Q2 revenue +36%, DBNRR 120% and cRPO +35% support strong growth, with wide tail for enterprise slowdown and competition. Workers/AI revenue is not separated because it is not disclosed."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.0,
+              "mode": 0.12,
+              "max": 0.28,
+              "provenance": "model_assumption",
+              "rationale": "Long-run platform growth mean-reverts materially while retaining optionality from edge/security/AI traffic; AI revenue is not separately assumed."
+            },
+            "growth_half_life_years": 2.25,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Platform growth decays gradually as enterprise mix scales."
+            },
+            "latent_loading": {
+              "growth": 0.65
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Common cloud/software demand is material, with product/security execution idiosyncrasy."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "mean_reverting_positive_margin",
+        "current_margin": 0.08100439472977225,
+        "current_margin_meta": {
+          "provenance": "derived_fact",
+          "formula": "Q2 2026 GAAP-definition FCF = 56.384M; 56.384M / 696.061M revenue = 8.10%. H1 cross-check: 140.458M / 1.335816B = 10.51%."
+        },
+        "terminal_margin_Y5": {
+          "distribution": "triangular",
+          "min": 0.02,
+          "mode": 0.2,
+          "max": 0.38,
+          "provenance": "model_assumption",
+          "rationale": "Y5 FCF margin spans stalled operating leverage to scaled software economics; center is an operating-leverage assumption, not a price target."
+        },
+        "terminal_margin_Y8": {
+          "distribution": "triangular",
+          "min": 0.04,
+          "mode": 0.23,
+          "max": 0.4,
+          "provenance": "model_assumption",
+          "rationale": "Long-run margin can improve modestly with scale but remains wide because GAAP operating losses/SBC and infrastructure economics are unresolved."
+        },
+        "half_life_years": 2.5,
+        "half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Mean reversion spans several reporting periods rather than one quarter."
+        },
+        "shock_sigma": 0.055,
+        "shock_sigma_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Quarterly company-specific cash-margin uncertainty; separate from Joint Layer shared drivers."
+        },
+        "shock_persistence": 0.5,
+        "shock_persistence_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Adjacent-quarter operating/cash-conversion shocks are persistent but mean-reverting."
+        },
+        "lower_bound": 0,
+        "lower_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Plausible severe cash-margin floor for the modeled archetype; not a failure-event probability."
+        },
+        "upper_bound": 0.42,
+        "upper_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Prevents temporary cash-conversion peaks from becoming permanent terminal economics."
+        }
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 12.0,
+            "mode": 34.0,
+            "max": 62.0,
+            "provenance": "model_assumption",
+            "rationale": "Early positive-cash high-growth software has wide valuation uncertainty while GAAP operating profitability remains immature."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 10.0,
+            "mode": 28.0,
+            "max": 50.0,
+            "provenance": "model_assumption",
+            "rationale": "Scaled edge/security software FCF multiple with broad competition/rate/execution tails."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 8.0,
+            "mode": 23.0,
+            "max": 42.0,
+            "provenance": "model_assumption",
+            "rationale": "Maturity compression as platform growth normalizes."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 1.0,
+            "mode": 5.5,
+            "max": 11.0,
+            "provenance": "model_assumption",
+            "rationale": "Primary parity reference bridge. Mode 5.5x / 28x Y5 FCF multiple implies ~19.6% parity margin, aligned with the 20% Y5 cash-margin center; bridge use is expected to be material for thin-margin paths."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.45,
+          "growth__valuation": 0.4,
+          "margin__valuation": 0.4
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Positive co-movement between operating growth, cash economics and duration; idiosyncratic uncertainty remains material."
+        },
+        "default_loading": 0.65,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Company-specific common-factor loading chosen by business maturity and concentration; not fitted to price."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.5,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Model-dependent path noise used for drawdown/path diagnostics, not terminal valuation calibration."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 1.75,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Valuation dislocations mean-revert over a multi-quarter horizon."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:NET_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 0.6692220991885327,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of Reverse Valuation v1.2.0 equation from NET_calibration_v1.0.yaml; host run_ref remains authoritative."
+        },
+        "discount_rate": 0.105,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from NET RV base calibration."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.02825769,
+              0.02825769
+            ],
+            "margin_nodes_pp": [
+              -0.01954416,
+              0.01954416
+            ],
+            "terminal_multiple_pct": [
+              -0.07334316,
+              0.07914813
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 local robustness: sigma_eq=(Q84-Q16)/2; growth=base-revenue-weighted RMS segment initial_growth sigma_eq; margin=Y5 terminal margin sigma_eq; multiple=Y5 log-space sigma_eq; perturbation=0.25*sigma with absolute ceilings growth 10pp, margin 5pp, multiple 20% relative."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "NET: accepted v1.1.2 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "AI_COMPUTE_DEMAND",
+          "CLOUD_SOFTWARE_DEMAND",
+          "AI_CLOUD_PRICING"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "NET_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.58,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Company execution and demand/cash-conversion conditions persist across adjacent quarters."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.CorePlatform.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI/agent traffic can increase platform utilization without assuming separately disclosed Workers AI revenue."
+              }
+            },
+            {
+              "path": "margin_model.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.006,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Efficient AI traffic monetization can support cash margin."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.CorePlatform.initial_growth.mode",
+              "contribution": 0.015,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central growth includes some AI/agent traffic benefit as a model assumption, not as separately disclosed revenue."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel."
+              }
+            }
+          },
+          "note": "NET-FM-02 AI monetization failure."
+        },
+        {
+          "driver_id": "CLOUD_SOFTWARE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.CorePlatform.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Enterprise/cloud software demand directly affects expansion and new-logo spend."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Durable cloud demand supports valuation duration."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.CorePlatform.initial_growth.mode",
+              "contribution": 0.025,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central growth assumes healthy enterprise/cloud demand consistent with cRPO/DBNRR evidence."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel."
+              }
+            }
+          },
+          "note": "NET-FM-01 CLOUD_SOFTWARE_DEMAND_SLOWDOWN / FM-05 expansion slowdown."
+        },
+        {
+          "driver_id": "AI_CLOUD_PRICING",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.CorePlatform.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI inference/agent unit pricing affects monetized traffic growth."
+              }
+            },
+            {
+              "path": "margin_model.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.006,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Pricing/cost recovery affects thin cash margins."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Sustainable unit economics supports valuation duration."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel."
+              }
+            }
+          },
+          "note": "NET-FM-02/06 AI monetization/cost mismatch; accepted +1 but high failure-mode linkage makes it material."
+        }
+      ]
+    },
+    "folders": [
+      "net"
+    ],
+    "equity_value_0": 115601279474.74998,
+    "dispersion_paths": 20000
+  },
+  "outputs": {
+    "model_version": "1.6.0",
+    "schema_version": "1.0.2",
+    "mode": "calibration",
+    "ticker": "NET",
+    "archetype": "mature_positive_margin",
+    "schema_errors": [],
+    "integrity": [
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/HYPERSCALER_CAPEX",
+        "message": "драйвер 'HYPERSCALER_CAPEX' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/DATA_CENTER_POWER",
+        "message": "драйвер 'DATA_CENTER_POWER' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/INTEREST_RATES",
+        "message": "драйвер 'INTEREST_RATES' (exposure -1) без mapping"
+      },
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/CAPITAL_MARKETS",
+        "message": "драйвер 'CAPITAL_MARKETS' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.CorePlatform.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.099 ≤ 0.15 (growth; драйверов 3)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → margin_model.terminal_margin_Y5",
+        "message": "σ суммарного сдвига q20 = 0.023 ≤ 0.05 (margin; драйверов 2)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → valuation.Y5.multiple",
+        "message": "σ суммарного сдвига q20 = 0.038 ≤ 0.15 (multiple; драйверов 2)"
+      }
+    ],
+    "engine_dry_run": {
+      "engine_version": "2.3.2",
+      "mapping_warnings": [],
+      "deterministic": true,
+      "median_CAGR_5Y": 1.161964707468801,
+      "P_loss_gt_30pct_5Y": 0.0,
+      "paths": 2000
+    },
+    "aggregate_shift": {
+      "revenue_model.segments.CorePlatform.initial_growth": {
+        "sigma": 0.0992,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 3,
+        "sum_abs_effect": 0.065,
+        "ok": true
+      },
+      "margin_model.terminal_margin_Y5": {
+        "sigma": 0.023,
+        "cap": 0.05,
+        "kind": "margin",
+        "quarter": 20,
+        "drivers": 2,
+        "sum_abs_effect": 0.012,
+        "ok": true
+      },
+      "valuation.Y5.multiple": {
+        "sigma": 0.0383,
+        "cap": 0.15,
+        "kind": "multiple",
+        "quarter": 20,
+        "drivers": 2,
+        "sum_abs_effect": 0.027,
+        "ok": true
+      }
+    },
+    "dispersion": {
+      "paths": 20000,
+      "equity_value_0": 115601279474.74998,
+      "intrinsic": {
+        "W": 0.2728,
+        "q05": -0.29961959551450373,
+        "q95": -0.026778650549395194,
+        "median_CAGR_5Y": -0.16277997344977385,
+        "P_loss_gt_30pct_5Y": 0.8729,
+        "P_2x_5Y": 5e-05
+      },
+      "full": {
+        "W": 0.316,
+        "q05": -0.31875053320097596,
+        "q95": -0.0027497848019062713,
+        "median_CAGR_5Y": -0.16379703970930182,
+        "P_loss_gt_30pct_5Y": 0.83865,
+        "P_2x_5Y": 0.0007
+      },
+      "full_to_intrinsic_ratio": 1.158,
+      "bands": {
+        "intrinsic_W": [
+          0.25,
+          0.5
+        ],
+        "full_W": [
+          0.3,
+          0.6
+        ],
+        "full_to_intrinsic_width_ratio_max": 1.5
+      }
+    },
+    "pass": true,
+    "note": "MC-G5-013 — hard gate по Joint_Simulation_Layer_Rules_v1.1 (strict_aggregate=false → warning); MC-G5-009 (антицикличность) и MC-G5-010 (полнота provenance сверх схемы) статически не проверяются",
+    "decision": "none"
+  },
+  "elapsed_ms": 1127.2,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

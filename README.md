@@ -68,6 +68,7 @@ to_imma/ima-party2.feedback.md):
 
 ```
 README.md               этот файл
+GLOSSARY.md             термины и определения (единственный нормативный дом; см. «Форматы и версии»)
 STATUS.md               точка возврата трека: что сделано, что закоммичено, очередь решений (обновляется на вехах)
 AGENTS.md               инструкция агента invest: программа «Дозор портфеля», шаблоны сообщений, правила сверки, красные линии
 SOUL.md IDENTITY.md     персона агента (OpenClaw)
@@ -77,16 +78,18 @@ templates/              шаблоны текстов (final-block-template.md �
 
 methodology/            ПРИНЯТЫЕ нормативы (одна версия каждого; предыдущие версии — в from_imma/)
   Company_Candidate_Schema_v1.0.1.yaml      формат ответа LLM (кандидат модели компании), JSON Schema
-  Company_Artifact_Schema_v1.0.4.yaml       формат канонических файлов компании (5 файлов), каталог полей с владельцем каждого поля
+  Company_Artifact_Schema_v1.0.5.yaml       формат канонических файлов компании (5 файлов), каталог полей с владельцем каждого поля
   Source_Policy_v1.0.{yaml,md}              классы источников, guidance ≠ actual, период дословно, технический доступ (SEC User-Agent)
-  Dozor_Verification_Protocol_v1.1.{yaml,md} гейт G8: статусы сверки (KPI, оси, события), допуски, схема отчёта, label_ru
+  Dozor_Verification_Protocol_v1.2.1.{yaml,md} гейт G8 (сводная редакция): статусы KPI/осей/событий/переходов, transition_checks, схема отчёта 1.2.0, label_ru
   MPC_Driver_Taxonomy_v1.1.{yaml,md}        таксономия драйверов (32) для вектора экспозиции компании
   Marginal_Portfolio_Contribution_*_v1.0    MPC: вклад позиции в портфель — вектор, не score
-  Joint_Simulation_Layer_*_v1.0             совместные пути драйверов (root-факторы AR(1)) для MC всех компаний
+  Joint_Simulation_Layer_*_v1.0, Joint_Simulation_Layer_Rules_v1.1.2  совместные пути драйверов (root-факторы AR(1)); правила размерности mapping (MC-G5-013, измеренная σ; пороги вех)
   MC_Calibration_Archetypes_*_v1.0/v1.1     три архетипа калибровки MC (mature / capital-intensive / milestone-driven)
-  SPCX_Conditional_Monte_Carlo_Specification_v1.0.md  условный MC (пилот SpaceX; обобщение — заказ MC v1.1)
+  Company_Conditional_Monte_Carlo_Specification_v1.1.3.md  условный MC для трёх архетипов (движок company_mc 2.3.2; parity-gated смена базы, robustness 0.25σ)
+  Company_MC_Calibration_Schema_v1.0.2.yaml (+examples), v1.0.1 (закреплена за SPCX/NBIS/NVDA)  JSON Schema калибровок MC
+  SPCX_Conditional_Monte_Carlo_Specification_v1.0.md  условный MC пилота SpaceX (история)
   Investment_System_Reverse_Valuation_Specification_v1.0.md, Reverse_Valuation_Rules_v1.1.md  обратная оценка (implied CAGR) и её устойчивость
-  Portfolio_Optimizer_*_v1.0, Portfolio_Stability_Test_*_v1.0  оптимизатор (лексикографический) и тест устойчивости
+  Portfolio_Optimizer_*_v1.0, Portfolio_Stability_Test_*_v1.0  оптимизатор (порядок приоритетов критериев; движок portfolio_optimizer 1.0.0, стадия A) и тест устойчивости (движок — в работе)
   Portfolio_Drawdown_and_Regime_Rules_v1.0.md          режимы портфеля (Normal / Stress / Shock) по просадкам
   Conviction_Overlay_*_v1.0, Conviction_Journal_Schema_v1.0.yaml  слой убеждения владельца: два лимита, бюджет потери, журнал
   Team_Execution_Axis_*_v1.0                ось «команда и исполнение» (T0–T4)
@@ -125,6 +128,9 @@ notes/                  внутренние документы, никому н
 
 ## Форматы и версии
 
+- Термины и определения (NAV, ES5, порядок приоритетов критериев, общая причина, бюджет потерь, режимы, статусы дозора
+  и т.д.) — только в [GLOSSARY.md](GLOSSARY.md): один нормативный дом, другие документы ссылаются. Новый термин в
+  приёмке или заказе появляется сначала там.
 - Каждый принятый норматив имеет версию в имени файла и внутри (`version`, `schema_version`); в `methodology/`
   лежит только действующая версия, история — в `from_imma/` и в git. Исключение — закреплённые версии: схема
   калибровки MC v1.0.1 остаётся рядом с v1.0.2, потому что принятые калибровки SPCX/NBIS/NVDA привязаны к ней и к

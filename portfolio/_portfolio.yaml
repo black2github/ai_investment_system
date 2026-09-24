@@ -467,7 +467,8 @@ constraints:
     roles: {Challenger_max_per_name: 0.08, Challenger_aggregate_max: 0.25}
     dry_powder: {Normal: {min: 0.05, preferred_max: 0.10, hard_max: 0.15}, Stress: {min: 0.05, preferred_max: 0.15, hard_max: 0.20}, Shock: {min: 0.10, preferred_max: 0.20, hard_max: 0.30}}
     risk_5y: {p_loss_gt_30_max: 0.20, p_loss_gt_50_max: 0.10, es5_min: -0.55, scenario_concentration_max: 0.60}
-    deferred: [common_cause_effective_max, illiquidity]   # не утверждены 24.09 — оптимизатор их не применяет до решения
+    common_cause_effective_max: 0.35   # владелец 24.09 (второе решение): severity-weighted доля бумаг с материальным failure mode одной причины
+    deferred: [illiquidity]            # не утверждено 24.09 — оптимизатор не применяет до решения; классификатор неликвида отсутствует
     breach_is_not_an_order: true  # нарушение лимита — разрыв для Decision Request, не приказ продавать (Optimizer §3.1)
   owner_constraints:            # вход владельца 20.09.2026; числовой лимит числа бумаг — решение отложено
     positions_count_limit: null

@@ -1,0 +1,138 @@
+{
+  "run_id": "20260923T220311Z-reverse_valuation-f49614",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "LLY",
+    "valuation_date": "2026-09-24",
+    "calibration": "LLY_calibration_v1.0 (D4+P3+M2+R3+F3)",
+    "market": {
+      "price": 1152.93,
+      "shares_outstanding": 941357065,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+    },
+    "balance_sheet": {
+      "net_debt": 45957999999.99999,
+      "cash": 8950000000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 79666000000.0,
+      "current_fcf_margin": 0.2516540808453931,
+      "revenue_source": "FY2025 revenue 65.179B + H1 2026 42.773B - H1 2025 28.286B = 79.666B.",
+      "source": "H1 2026 simple FCF = 16.023B OCF - 5.259B PP&E capex = 10.764B; /42.773B revenue = 25.17%."
+    },
+    "discounting": {
+      "discount_rate": 0.095,
+      "stress_rates": [
+        0.08,
+        0.125
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.23,
+        "base": 0.3,
+        "max": 0.37
+      },
+      "multiple_range": {
+        "min": 18.0,
+        "base": 25.0,
+        "max": 32.0
+      }
+    },
+    "margin_transition": {
+      "type": "mature_capex_normalization",
+      "path": {
+        "1": 0.26,
+        "2": 0.28,
+        "3": 0.29,
+        "4": 0.3,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "Incretin_Demand": "D4",
+      "Pricing_Access": "P3",
+      "Manufacturing_Expansion": "M2",
+      "Pipeline_Diversification": "R3",
+      "Cash_Economics": "F3"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "6606ae3d24c9013f",
+    "scenario_state": {
+      "Incretin_Demand": "D4",
+      "Pricing_Access": "P3",
+      "Manufacturing_Expansion": "M2",
+      "Pipeline_Diversification": "R3",
+      "Cash_Economics": "F3"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 1085318800950.4501,
+      "enterprise_value": 1131276800950.45,
+      "terminal_fcf_margin": 0.3,
+      "terminal_multiple": 25.0,
+      "discount_rate": 0.095,
+      "current_fcf_margin": 0.2516540808453931,
+      "revenue_ttm": 79666000000.0,
+      "implied_revenue_cagr_5y": 0.206266,
+      "terminal_revenue": 203464629223.42,
+      "terminal_fcf": 61039388767.03,
+      "pv_interim_fcf": 115971091688.38,
+      "pv_terminal_value": 969347710417.76,
+      "terminal_value_share_of_pv": 0.8931,
+      "control_cagr": 0.206266
+    },
+    "validation": {
+      "converged": true,
+      "residual": 1155.6895751953125,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.23|multiple=18.0": 0.3468,
+        "margin=0.23|multiple=25.0": 0.2677,
+        "margin=0.23|multiple=32.0": 0.2105,
+        "margin=0.3|multiple=18.0": 0.2826,
+        "margin=0.3|multiple=25.0": 0.2063,
+        "margin=0.3|multiple=32.0": 0.1513,
+        "margin=0.37|multiple=18.0": 0.2334,
+        "margin=0.37|multiple=25.0": 0.1595,
+        "margin=0.37|multiple=32.0": 0.1063
+      },
+      "discount_rate_grid": {
+        "r=0.08": 0.1897,
+        "r=0.125": 0.2393
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "terminal_dependent",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": false
+    }
+  },
+  "elapsed_ms": 8.7,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

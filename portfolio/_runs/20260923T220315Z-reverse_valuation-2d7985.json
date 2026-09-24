@@ -1,0 +1,138 @@
+{
+  "run_id": "20260923T220315Z-reverse_valuation-2d7985",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "ASML",
+    "valuation_date": "2026-09-24",
+    "calibration": "ASML_calibration_v1.0 (D3+E3+M3+X1+I3)",
+    "market": {
+      "price": 1446.0,
+      "shares_outstanding": 384100000.0,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+    },
+    "balance_sheet": {
+      "net_debt": -3861800000.0,
+      "cash": 7581500000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 35327500000.0,
+      "current_fcf_margin": 0.30417168691346025,
+      "revenue_source": "FY2025 sales 32.6673B + H1 2026 18.0934B - H1 2025 15.4332B = 35.3275B EUR.",
+      "source": "H1 reported OCF -0.4815B; working-capital/tax timing changes total -6.7791B, so OCF before these timing movements = 6.2976B. Less 0.7018B PP&E and 0.0923B intangible capex = 5.5035B normalized economic FCF; /18.0934B sales = 30.42%."
+    },
+    "discounting": {
+      "discount_rate": 0.095,
+      "stress_rates": [
+        0.08,
+        0.12
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.23,
+        "base": 0.3,
+        "max": 0.37
+      },
+      "multiple_range": {
+        "min": 17.0,
+        "base": 24.0,
+        "max": 31.0
+      }
+    },
+    "margin_transition": {
+      "type": "mature_working_capital_normalization",
+      "path": {
+        "1": 0.3,
+        "2": 0.3,
+        "3": 0.3,
+        "4": 0.3,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "Demand_Visibility": "D3",
+      "EUV_Adoption": "E3",
+      "Margin_Execution": "M3",
+      "China_Export_Exposure": "X1",
+      "Installed_Base_Resilience": "I3"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "a4a32a9cc1e0378d",
+    "scenario_state": {
+      "Demand_Visibility": "D3",
+      "EUV_Adoption": "E3",
+      "Margin_Execution": "M3",
+      "China_Export_Exposure": "X1",
+      "Installed_Base_Resilience": "I3"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 555408600000.0,
+      "enterprise_value": 551546800000.0,
+      "terminal_fcf_margin": 0.3,
+      "terminal_multiple": 24.0,
+      "discount_rate": 0.095,
+      "current_fcf_margin": 0.30417168691346025,
+      "revenue_ttm": 35327500000.0,
+      "implied_revenue_cagr_5y": 0.251258,
+      "terminal_revenue": 108354666092.81,
+      "terminal_fcf": 32506399827.84,
+      "pv_interim_fcf": 59833452937.31,
+      "pv_terminal_value": 495575147264.63,
+      "terminal_value_share_of_pv": 0.8923,
+      "control_cagr": 0.251258
+    },
+    "validation": {
+      "converged": true,
+      "residual": 201.9342041015625,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.23|multiple=17.0": 0.4012,
+        "margin=0.23|multiple=24.0": 0.315,
+        "margin=0.23|multiple=31.0": 0.2536,
+        "margin=0.3|multiple=17.0": 0.3344,
+        "margin=0.3|multiple=24.0": 0.2513,
+        "margin=0.3|multiple=31.0": 0.1922,
+        "margin=0.37|multiple=17.0": 0.2833,
+        "margin=0.37|multiple=24.0": 0.2027,
+        "margin=0.37|multiple=31.0": 0.1456
+      },
+      "discount_rate_grid": {
+        "r=0.08": 0.2341,
+        "r=0.12": 0.2798
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "terminal_dependent",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": false
+    }
+  },
+  "elapsed_ms": 4.9,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

@@ -1,0 +1,130 @@
+calibration_v1.0:
+  ticker: ETN
+  as_of: '2026-09-24'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    Electrical_Americas_Demand: A3
+    Electrical_Global_Demand: G3
+    Organic_Growth: O3
+    Margin_Execution: M3
+    Portfolio_Integration: I2
+  market:
+    price: 413.29
+    price_as_of: '2026-09-17'
+    price_source: https://finance.yahoo.com/quote/ETN/history/
+    shares_outstanding: 388400000
+    shares_as_of: '2026-06-30'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+    equity_value: 160521836000.0
+  balance_sheet:
+    cash: 695000000.0
+    debt_current: 2102000000.0
+    debt_noncurrent: 18509000000.0
+    net_debt: 19916000000.0
+    as_of: '2026-06-30'
+    source: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+    note: Cash + short-term investments = 0.695B; total debt = 20.611B. Boyd Thermal and Ultra PCS are inside the current perimeter. Mobility
+      remains inside until the RMT closes; close triggers recalibration.
+  base_period:
+    revenue_ttm: 30026000000.0
+    current_fcf_margin: 0.07433362532849455
+    revenue_formula: FY2025 sales 27.448B + H1 2026 15.982B - H1 2025 13.404B = 30.026B TTM.
+    fcf_margin_formula: H1 2026 GAAP-definition FCF = OCF 1.634B - capex 0.446B = 1.188B; / sales 15.982B = 7.43%.
+  discount_rate:
+    base: 0.1
+    stress:
+      min: 0.085
+      max: 0.12
+  terminal_fcf_margin:
+    min: 0.08
+    base: 0.14
+    max: 0.2
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 14
+    base: 22
+    max: 30
+  margin_transition:
+    type: mature_cycle_and_integration
+    path:
+      '1': 0.09
+      '2': 0.105
+      '3': 0.12
+      '4': 0.13
+      '5': terminal
+    critical_assumption:
+      linked_state: I2
+      description: Base case assumes integration and electrification/data-center demand lift cash conversion from an acquisition-heavy H1 level
+        toward a mid-teens mature FCF margin, while debt and industrial cyclicality limit the terminal range.
+      falsification: Mobility RMT close, acquisition integration miss, debt >=25B, or sustained order/backlog deterioration requires perimeter
+        or margin recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.085
+    - 0.1
+    - 0.12
+    terminal_fcf_margin:
+    - 0.08
+    - 0.14
+    - 0.2
+    terminal_fcf_multiple:
+    - 14
+    - 22
+    - 30
+  base_case:
+    discount_rate: 0.1
+    terminal_fcf_margin: 0.14
+    terminal_fcf_multiple: 22
+    margin_path:
+      Y0: 0.07433362532849455
+      Y1: 0.09
+      Y2: 0.105
+      Y3: 0.12
+      Y4: 0.13
+      Y5: 0.14
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-17 close | https://finance.yahoo.com/quote/ETN/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 413.29 * 388,400,000
+    balance_sheet.cash:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+    balance_sheet.debt_current:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+    balance_sheet.debt_noncurrent:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 2102000000.0 + 18509000000.0 - 695000000.0
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: FY2025 sales 27.448B + H1 2026 15.982B - H1 2025 13.404B = 30.026B TTM.
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: H1 2026 GAAP-definition FCF = OCF 1.634B - capex 0.446B = 1.188B; / sales 15.982B = 7.43%.
+    discount_rate:
+      provenance: model_assumption
+      rationale: 'ETN: state-dependent equity discount rate range; not fitted to current price.'
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Base case assumes integration and electrification/data-center demand lift cash conversion from an acquisition-heavy H1 level
+        toward a mid-teens mature FCF margin, while debt and industrial cyclicality limit the terminal range.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: 'ETN: equity-FCF terminal multiple range reflects business maturity, cyclicality and duration; not fitted to current price.'
+    margin_transition:
+      provenance: model_assumption
+      rationale: Base case assumes integration and electrification/data-center demand lift cash conversion from an acquisition-heavy H1 level
+        toward a mid-teens mature FCF margin, while debt and industrial cyclicality limit the terminal range.

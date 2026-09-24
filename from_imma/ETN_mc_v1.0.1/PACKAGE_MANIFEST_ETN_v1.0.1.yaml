@@ -1,0 +1,19 @@
+package: IMMA_ETN_mc_v1.0.1
+status: normative_candidate
+date: '2026-09-24'
+supersedes: ETN_mc_calibration_v1.0.yaml
+files:
+- name: ETN_mc_calibration_v1.0.1.yaml
+  sha256: 849349cb6718edd81b31e4f786aa46dc8465a9092df53ee3a0a1a23afcf520e7
+  bytes: 18443
+- name: ETN_mc_calibration_v1.0.1_patch_notes.md
+  sha256: c058058ff7b67c532a3cd3be22dce105131b2337466cfc69a1d7271c009a9104
+  bytes: 2729
+- name: ETN_v1.0.1_LOCAL_VALIDATION_REPORT.md
+  sha256: 91e082eed2ac98609cc7fd5df8b8e6a3d53ca585bbccbc068109a81ee9393ec7
+  bytes: 1413
+host_recheck_required:
+- artifact_validator 1.6.0 / MC-G5-001..013
+- company_mc 2.3.2 dry-run and determinism
+- normative 500k
+- measured aggregate sigma <= 0.15 for ElectricalAmericas.initial_growth

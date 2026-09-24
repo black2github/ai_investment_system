@@ -1,0 +1,510 @@
+schema_version: 1.0.2
+artifact: company_mc_calibration
+ticker: ETN
+as_of: '2026-09-24'
+archetype: mature_positive_margin
+calculation_engine_version: company_mc 2.3.1
+state_vector:
+  Electrical_Americas_Demand: A3
+  Electrical_Global_Demand: G3
+  Organic_Growth: O3
+  Margin_Execution: M3
+  Portfolio_Integration: I2
+simulation:
+  paths: 500000
+  paths_meta:
+    provenance: model_assumption
+    rationale: Normative production path count.
+  seed: 20260920
+  seed_meta:
+    provenance: model_assumption
+    rationale: Fixed reproducibility seed; host company_mc 2.3.2 derives company-specific RNG stream, while schema field remains company_mc 2.3.1.
+  antithetic_variates: true
+  store_summary_quantiles:
+  - 0.01
+  - 0.05
+  - 0.1
+  - 0.25
+  - 0.5
+  - 0.75
+  - 0.9
+  - 0.95
+  - 0.99
+  store_summary_quantiles_meta:
+    provenance: model_assumption
+    rationale: Standard system summary grid.
+  horizons_years:
+  - 3
+  - 5
+  - 8
+  horizons_years_meta:
+    provenance: model_assumption
+    rationale: Current Thesis / Primary Optimization / Persistence horizons.
+revenue_model:
+  segments:
+    ElectricalAmericas:
+      base_revenue_quarterly: 3951000000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-07-31 | https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+      initial_growth:
+        distribution: triangular
+        min: -0.1
+        mode: 0.14
+        max: 0.38
+        provenance: model_assumption
+        rationale: Q2 organic +18%, TTM orders +41% and backlog +33% support strong initial conditions but industrial/data-center cycles allow
+          contraction.
+      long_run_growth_y8:
+        distribution: triangular
+        min: 0.0
+        mode: 0.07
+        max: 0.16
+        provenance: model_assumption
+        rationale: Long-run Americas growth normalizes toward mid/high single digits with electrification/data-center upside.
+      growth_half_life_years: 2.5
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Backlog/orders normalize across an industrial investment cycle.
+      latent_loading:
+        growth: 0.72
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Strong exposure to shared data-center/grid/electrification cycle.
+    ElectricalGlobal:
+      base_revenue_quarterly: 2517000000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-07-31 | https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+      initial_growth:
+        distribution: triangular
+        min: -0.12
+        mode: 0.13
+        max: 0.36
+        provenance: model_assumption
+        rationale: Q2 organic +18%, TTM orders +33% and strong backlog support growth, with wider geographic/cycle downside.
+      long_run_growth_y8:
+        distribution: triangular
+        min: -0.01
+        mode: 0.06
+        max: 0.15
+        provenance: model_assumption
+        rationale: Global electrical growth normalizes with industrial/grid cycles.
+      growth_half_life_years: 2.5
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Orders/backlog mean-revert over an industrial cycle.
+      latent_loading:
+        growth: 0.68
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Global exposure shares electrification drivers with regional idiosyncrasy.
+    RestAerospaceMobility:
+      base_revenue_quarterly: 2063000000.0
+      base_revenue_quarterly_meta:
+        provenance: derived_fact
+        formula: Q2 Aerospace sales 1.222B + Mobility sales 0.841B = 2.063B; Mobility remains in perimeter until RMT close.
+      initial_growth:
+        distribution: triangular
+        min: -0.16
+        mode: 0.06
+        max: 0.28
+        provenance: model_assumption
+        rationale: Aerospace plus Mobility has mixed cycle exposure; current perimeter retains Mobility until transaction close.
+      long_run_growth_y8:
+        distribution: triangular
+        min: -0.03
+        mode: 0.04
+        max: 0.12
+        provenance: model_assumption
+        rationale: Mature mixed industrial growth with cyclicality and perimeter uncertainty.
+      growth_half_life_years: 2.0
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Aerospace/mobility cycle mean-reverts somewhat faster than electrical backlog cycle.
+      latent_loading:
+        growth: 0.55
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Lower common loading reflects mixed aerospace/mobility and transaction-specific effects.
+margin_model:
+  method: mean_reverting_positive_margin
+  current_margin: 0.07433362532849455
+  current_margin_meta:
+    provenance: derived_fact
+    formula: H1 2026 GAAP-definition FCF = 1.634B operating cash flow - 0.446B capex = 1.188B; / 15.982B sales = 7.43%.
+  terminal_margin_Y5:
+    distribution: triangular
+    min: 0.05
+    mode: 0.14
+    max: 0.24
+    provenance: model_assumption
+    rationale: Y5 cash margin spans debt/integration/cycle pressure through successful high-margin electrical mix; center is independent of price.
+  terminal_margin_Y8:
+    distribution: triangular
+    min: 0.06
+    mode: 0.15
+    max: 0.25
+    provenance: model_assumption
+    rationale: Long-run cash margin can improve modestly with mix/integration, while cyclical and leverage tails remain.
+  half_life_years: 2.5
+  half_life_years_meta:
+    provenance: model_assumption
+    rationale: Mean reversion spans several reporting periods rather than one quarter.
+  shock_sigma: 0.035
+  shock_sigma_meta:
+    provenance: model_assumption
+    rationale: Quarterly company-specific cash-margin uncertainty; separate from Joint Layer shared drivers.
+  shock_persistence: 0.5
+  shock_persistence_meta:
+    provenance: model_assumption
+    rationale: Adjacent-quarter operating/cash-conversion shocks are persistent but mean-reverting.
+  lower_bound: 0.01
+  lower_bound_meta:
+    provenance: model_assumption
+    rationale: Plausible severe cash-margin floor for the modeled archetype; not a failure-event probability.
+  upper_bound: 0.27
+  upper_bound_meta:
+    provenance: model_assumption
+    rationale: Prevents temporary cash-conversion peaks from becoming permanent terminal economics.
+valuation:
+  Y3:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 13.0
+      mode: 24.0
+      max: 39.0
+      provenance: model_assumption
+      rationale: Near-term premium can persist under data-center/electrification supercycle, with debt/integration downside.
+  Y5:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 11.0
+      mode: 22.0
+      max: 35.0
+      provenance: model_assumption
+      rationale: Industrial leader FCF multiple with wide cycle, leverage and integration tails.
+  Y8:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 9.0
+      mode: 19.0
+      max: 31.0
+      provenance: model_assumption
+      rationale: Maturity/cycle normalization reduces terminal multiple.
+  negative_fcf_fallback:
+    basis: revenue_bridge
+    multiple:
+      distribution: triangular
+      min: 0.8
+      mode: 3.1
+      max: 5.8
+      provenance: model_assumption
+      rationale: Primary parity reference bridge. Mode 3.1x / 22x Y5 FCF multiple implies ~14.1% parity margin, aligned with the 14% Y5 margin
+        center; not an emergency-only fallback.
+dependencies:
+  latent_factors:
+  - growth
+  - margin
+  - valuation
+  factor_correlations:
+    growth__margin: 0.5
+    growth__valuation: 0.3
+    margin__valuation: 0.35
+  factor_correlations_meta:
+    provenance: model_assumption
+    rationale: Positive co-movement between operating growth, cash economics and duration; idiosyncratic uncertainty remains material.
+  default_loading: 0.68
+  default_loading_meta:
+    provenance: model_assumption
+    rationale: Company-specific common-factor loading chosen by business maturity and concentration; not fitted to price.
+market_path_model:
+  quarterly_log_price_noise:
+    annualized_sigma: 0.3
+    annualized_sigma_meta:
+      provenance: model_assumption
+      rationale: Model-dependent path noise used for drawdown/path diagnostics, not terminal valuation calibration.
+  valuation_mean_reversion_half_life_years: 1.5
+  valuation_mean_reversion_half_life_years_meta:
+    provenance: model_assumption
+    rationale: Valuation dislocations mean-revert over a multi-quarter horizon.
+reverse_valuation_ref:
+  run_ref: PENDING_HOST_RUN:ETN_calibration_v1.0.yaml
+  implied_revenue_cagr_5y: 0.20114768849457165
+  implied_revenue_cagr_5y_meta:
+    provenance: derived_fact
+    formula: Local deterministic preflight of Reverse Valuation v1.2.0 equation from ETN_calibration_v1.0.yaml; host run_ref remains authoritative.
+  discount_rate: 0.1
+  discount_rate_meta:
+    provenance: model_assumption
+    rationale: Inherited from ETN RV base calibration.
+robustness_tests:
+  Scenario_Robustness:
+    perturbations:
+      growth_modes_pp:
+      - -0.02555288
+      - 0.02555288
+      margin_nodes_pp:
+      - -0.01031963
+      - 0.01031963
+      terminal_multiple_pct:
+      - -0.05678743
+      - 0.0602064
+      correlation_rho:
+      - -0.15
+      - 0.15
+    perturbations_meta:
+      provenance: derived_fact
+      formula: 'v1.1.2 local robustness: sigma_eq=(Q84-Q16)/2; growth=base-revenue-weighted RMS segment initial_growth sigma_eq; margin=Y5 terminal
+        margin sigma_eq; multiple=Y5 log-space sigma_eq; perturbation=0.25*sigma with absolute ceilings growth 10pp, margin 5pp, multiple 20%
+        relative.'
+    delta_tolerance: 0.1
+    delta_tolerance_meta:
+      provenance: model_assumption
+      rationale: 'ETN: accepted v1.1.2 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|.'
+joint_simulation:
+  layer_version: '1.0'
+  active_drivers:
+  - HYPERSCALER_CAPEX
+  - DATA_CENTER_POWER
+  - ACQUISITION_INTEGRATION
+  - ELECTRIFICATION_GRID
+  - UTILITY_CAPEX
+  - INDUSTRIAL_RESHORING
+  - AI_COMPUTE_DEMAND
+  company_idiosyncratic_factors:
+  - id: ETN_EXECUTION
+    distribution: standard_normal
+    persistence: 0.58
+    persistence_meta:
+      provenance: model_assumption
+      rationale: Company execution and demand/cash-conversion conditions persist across adjacent quarters.
+  path_alignment:
+    use_global_path_id: true
+driver_parameter_mapping:
+- driver_id: HYPERSCALER_CAPEX
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.ElectricalAmericas.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.01875
+    lag_quarters: 1
+    decay_half_life_quarters: 8
+    meta:
+      provenance: model_assumption
+      rationale: Hyperscaler capex supports data-center electrical demand.
+  - path: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: 0.012
+    lag_quarters: 1
+    decay_half_life_quarters: 8
+    meta:
+      provenance: model_assumption
+      rationale: Durable data-center demand supports cycle-adjusted valuation.
+  structural_support:
+  - path: revenue_model.segments.ElectricalAmericas.initial_growth.mode
+    contribution: 0.02
+    meta:
+      provenance: model_assumption
+      rationale: Central Americas growth assumes continued material data-center investment.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel.
+  note: ETN-FM-01 data-center demand normalization.
+- driver_id: DATA_CENTER_POWER
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.ElectricalAmericas.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.015
+    lag_quarters: 0
+    decay_half_life_quarters: 8
+    meta:
+      provenance: model_assumption
+      rationale: Higher data-center power buildout supports electrical demand.
+  - path: revenue_model.segments.ElectricalGlobal.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.012
+    lag_quarters: 1
+    decay_half_life_quarters: 8
+    meta:
+      provenance: model_assumption
+      rationale: Global power infrastructure also benefits.
+  structural_support:
+  - path: revenue_model.segments.ElectricalAmericas.initial_growth.mode
+    contribution: 0.015
+    meta:
+      provenance: model_assumption
+      rationale: Central growth assumes continued power-density/buildout demand.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel.
+  note: ETN-FM-01 DATA_CENTER_POWER demand channel.
+- driver_id: ACQUISITION_INTEGRATION
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.ElectricalGlobal.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.018
+    lag_quarters: 1
+    decay_half_life_quarters: 10
+    meta:
+      provenance: model_assumption
+      rationale: Integration success supports cross-selling and acquired-growth conversion.
+  - path: revenue_model.segments.RestAerospaceMobility.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.012
+    lag_quarters: 1
+    decay_half_life_quarters: 10
+    meta:
+      provenance: model_assumption
+      rationale: Portfolio execution affects acquired/remaining industrial businesses.
+  - path: margin_model.terminal_margin_Y5
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.008
+    lag_quarters: 1
+    decay_half_life_quarters: 10
+    meta:
+      provenance: model_assumption
+      rationale: Integration quality affects mature cash margin.
+  structural_support:
+  - path: revenue_model.segments.ElectricalGlobal.initial_growth.mode
+    contribution: 0.015
+    meta:
+      provenance: model_assumption
+      rationale: Central growth assumes Boyd/Ultra integration does not materially disrupt execution.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel.
+  note: ETN-FM-05/06 portfolio integration and leverage execution.
+- driver_id: ELECTRIFICATION_GRID
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.ElectricalAmericas.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.015
+    lag_quarters: 1
+    decay_half_life_quarters: 10
+    meta:
+      provenance: model_assumption
+      rationale: Grid modernization/electrification supports Americas electrical demand.
+  - path: revenue_model.segments.ElectricalGlobal.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.015
+    lag_quarters: 1
+    decay_half_life_quarters: 10
+    meta:
+      provenance: model_assumption
+      rationale: Global grid investment supports Electrical Global.
+  structural_support:
+  - path: revenue_model.segments.ElectricalAmericas.initial_growth.mode
+    contribution: 0.015
+    meta:
+      provenance: model_assumption
+      rationale: Central growth assumes sustained electrification/grid investment.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel.
+  note: ETN-FM-02 electrification/grid cycle.
+- driver_id: UTILITY_CAPEX
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.ElectricalAmericas.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.015
+    lag_quarters: 1
+    decay_half_life_quarters: 8
+    meta:
+      provenance: model_assumption
+      rationale: Utility capex drives electrical equipment demand.
+  - path: revenue_model.segments.ElectricalGlobal.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.012
+    lag_quarters: 1
+    decay_half_life_quarters: 8
+    meta:
+      provenance: model_assumption
+      rationale: Utility investment supports global electrical demand.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel.
+  note: ETN-FM-02 utility/grid capex channel.
+- driver_id: INDUSTRIAL_RESHORING
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.ElectricalAmericas.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.01125
+    lag_quarters: 2
+    decay_half_life_quarters: 10
+    meta:
+      provenance: model_assumption
+      rationale: Domestic industrial buildout supports electrical demand.
+  - path: revenue_model.segments.ElectricalGlobal.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.015
+    lag_quarters: 2
+    decay_half_life_quarters: 10
+    meta:
+      provenance: model_assumption
+      rationale: Broader industrial investment supports global demand.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel.
+  note: ETN-FM-03 industrial investment cycle.
+- driver_id: AI_COMPUTE_DEMAND
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.ElectricalAmericas.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.009
+    lag_quarters: 1
+    decay_half_life_quarters: 8
+    meta:
+      provenance: model_assumption
+      rationale: AI compute growth is an upstream demand driver for data-center electrical infrastructure.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel.
+  note: ETN-FM-01; accepted +1 but high common-cause linkage makes it material.

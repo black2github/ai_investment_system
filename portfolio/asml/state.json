@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.5",
-  "updated": "2026-09-24T06:45:00Z",
+  "updated": "2026-09-24T08:00:00Z",
   "price": {
     "last": 1679.92,
     "last_at": "2026-09-18",
@@ -33,6 +33,11 @@
       "timestamp": "2026-09-24T06:45:00Z",
       "kind": "calc",
       "summary": "Интеграция калибровок (23.09): calibration_v1.0.yaml, mc_calibration_v1.0.1.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260923T220315Z-reverse_valuation-2d7985, 20260924T062843Z-company_mc-7106fc"
+    },
+    {
+      "timestamp": "2026-09-24T08:00:00Z",
+      "kind": "calc",
+      "summary": "Нормативный прогон company_mc 2.3.2 20260924T075104Z-company_mc-aa8132 (исправление: собственные розыгрыши компании от (seed, ticker); прежний 20260924T062843Z-company_mc-7106fc — исторический, сводка в пределах MC-шума)."
     }
   ],
   "scenario_state": {
@@ -153,7 +158,45 @@
         "q05": 0.1468122827745569,
         "q95": 0.38226031093492324,
         "paths_share": 1.0
-      }
+      },
+      "superseded_by": "20260924T075104Z-company_mc-aa8132"
+    },
+    {
+      "run_id": "20260924T075104Z-company_mc-aa8132",
+      "model": "company_mc",
+      "version": "2.3.2",
+      "timestamp": "20260924T075104",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Rules_v1.1.2; company_mc 2.3.1, parity-gated blend)",
+      "calibration": "mc_calibration_v1.0.1.yaml",
+      "purpose": "нормативный прогон после исправления движка 2.3.2 (собственные розыгрыши от (seed, ticker); сводка компании изменилась в пределах MC-шума); совместные пути для портфеля",
+      "supersedes": "20260924T062843Z-company_mc-7106fc",
+      "equity_value_0_b": 555.4,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": -0.0994,
+        "median_CAGR_5Y": -0.0429,
+        "median_CAGR_8Y": -0.0062,
+        "CAGR_5Y_q05_q95": [
+          -0.187,
+          0.112
+        ],
+        "P_2x_5Y": 0.0209,
+        "P_loss_gt_30pct_5Y": 0.3881,
+        "P_loss_gt_50pct_5Y": 0.1672,
+        "ES5": -0.7094,
+        "median_equity_value_5Y_b": 446.1,
+        "RV_Growth_Gap": 0.1399,
+        "Price_Expectation_Gap": 1.9602,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          0.75
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260924T075104Z-company_mc-aa8132-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1"
     }
   ]
 }

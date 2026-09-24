@@ -1,0 +1,179 @@
+{
+  "run_id": "20260924T072829Z-portfolio_paths-2acb55",
+  "model": "portfolio_paths",
+  "version": "1.0.0",
+  "seed": 0,
+  "inputs": {
+    "paths_files": {
+      "SPCX": "/data/workspace-invest/portfolio/_runs/20260923T143532Z-company_mc-0484ce-paths.npz",
+      "NBIS": "/data/workspace-invest/portfolio/_runs/20260923T143929Z-company_mc-28c1e0-paths.npz",
+      "NVDA": "/data/workspace-invest/portfolio/_runs/20260923T144500Z-company_mc-4a7d0d-paths.npz",
+      "HOOD": "/data/workspace-invest/portfolio/_runs/20260923T211400Z-company_mc-6fb7ec-paths.npz",
+      "RKLB": "/data/workspace-invest/portfolio/_runs/20260923T211620Z-company_mc-dbbce2-paths.npz",
+      "LLY": "/data/workspace-invest/portfolio/_runs/20260923T220341Z-company_mc-e5a5c8-paths.npz",
+      "META": "/data/workspace-invest/portfolio/_runs/20260924T062553Z-company_mc-410567-paths.npz",
+      "ASML": "/data/workspace-invest/portfolio/_runs/20260924T062843Z-company_mc-7106fc-paths.npz"
+    },
+    "weights": {
+      "SPCX": 0.0075774711603709575,
+      "NBIS": 0.3735580185478398,
+      "NVDA": 0.24089572494910655,
+      "HOOD": 0.16093643971952049,
+      "RKLB": 0.025559828093191586,
+      "LLY": 0.09296539244514815,
+      "META": 0.06186383171228229,
+      "ASML": 0.031327753901832164
+    },
+    "dry_powder_weight": 0.005315539470707985,
+    "dry_powder_return_annual": 0.04
+  },
+  "outputs": {
+    "model_version": "1.0.0",
+    "paths": 500000,
+    "alignment": {
+      "aligned": true,
+      "joint_layer_all": true,
+      "global_seed": 20260920,
+      "chunk": 50000,
+      "companies": {
+        "SPCX": {
+          "model_version": "2.3.0",
+          "joint": true
+        },
+        "NBIS": {
+          "model_version": "2.3.0",
+          "joint": true
+        },
+        "NVDA": {
+          "model_version": "2.3.0",
+          "joint": true
+        },
+        "HOOD": {
+          "model_version": "2.3.1",
+          "joint": true
+        },
+        "RKLB": {
+          "model_version": "2.3.1",
+          "joint": true
+        },
+        "LLY": {
+          "model_version": "2.3.1",
+          "joint": true
+        },
+        "META": {
+          "model_version": "2.3.1",
+          "joint": true
+        },
+        "ASML": {
+          "model_version": "2.3.1",
+          "joint": true
+        }
+      }
+    },
+    "weights": {
+      "SPCX": 0.0075774711603709575,
+      "NBIS": 0.3735580185478398,
+      "NVDA": 0.24089572494910655,
+      "HOOD": 0.16093643971952049,
+      "RKLB": 0.025559828093191586,
+      "LLY": 0.09296539244514815,
+      "META": 0.06186383171228229,
+      "ASML": 0.031327753901832164
+    },
+    "dry_powder_weight": 0.005315539470707985,
+    "dry_powder_return_annual": 0.04,
+    "horizons": {
+      "Y3": {
+        "median_CAGR": 0.22093418906287776,
+        "P_2x": 0.38016,
+        "P_loss_gt_30pct": 0.00087,
+        "P_loss_gt_50pct": 1.6e-05,
+        "expected_shortfall_5pct": -0.015762958880414617,
+        "CAGR_quantiles": {
+          "0.05": 0.03490295816749507,
+          "0.25": 0.13961680921123476,
+          "0.5": 0.22093418906287776,
+          "0.75": 0.30923209572913424,
+          "0.95": 0.4447998436262163
+        }
+      },
+      "Y5": {
+        "median_CAGR": 0.16495724398570588,
+        "P_2x": 0.55502,
+        "P_loss_gt_30pct": 0.008764,
+        "P_loss_gt_50pct": 0.001106,
+        "expected_shortfall_5pct": -0.18326244992356144,
+        "CAGR_quantiles": {
+          "0.05": -0.005100914042339375,
+          "0.25": 0.08926268751775662,
+          "0.5": 0.16495724398570588,
+          "0.75": 0.2499838050082892,
+          "0.95": 0.38664201620111704
+        },
+        "median_portfolio_value_rel": 2.1456057844794016
+      },
+      "Y8": {
+        "median_CAGR": 0.19897646660125556,
+        "P_2x": 0.856116,
+        "P_loss_gt_30pct": 0.00275,
+        "P_loss_gt_50pct": 0.000534,
+        "expected_shortfall_5pct": 0.09991999337324982,
+        "CAGR_quantiles": {
+          "0.05": 0.041153445184945646,
+          "0.25": 0.12717970178250826,
+          "0.5": 0.19897646660125556,
+          "0.75": 0.28261812053509944,
+          "0.95": 0.41701383909253087
+        }
+      }
+    },
+    "median_contribution_Y5": {
+      "SPCX": 0.003690624376758933,
+      "NBIS": 0.9551959037780762,
+      "NVDA": 0.651238203048706,
+      "HOOD": 0.10370896756649017,
+      "RKLB": 0.031019922345876694,
+      "LLY": 0.13753262162208557,
+      "META": 0.10909546911716461,
+      "ASML": 0.025154458358883858,
+      "dry_powder": 0.00646716652485863
+    },
+    "log_value_correlation_Y5": {
+      "SPCX__NBIS": 0.11971668602893476,
+      "SPCX__NVDA": 0.20784131821794308,
+      "SPCX__HOOD": 0.12360912670301093,
+      "SPCX__RKLB": 0.01708633538886986,
+      "SPCX__LLY": 0.08288825629241783,
+      "SPCX__META": 0.1314122701124782,
+      "SPCX__ASML": 0.14547486290940262,
+      "NBIS__NVDA": 0.2154283732964915,
+      "NBIS__HOOD": 0.10465095494307128,
+      "NBIS__RKLB": 0.004271313115850535,
+      "NBIS__LLY": 0.11341674639796472,
+      "NBIS__META": 0.6831307170000775,
+      "NBIS__ASML": 0.1465881490641565,
+      "NVDA__HOOD": 0.14856880951923446,
+      "NVDA__RKLB": 0.013745117864616678,
+      "NVDA__LLY": 0.11149121304304888,
+      "NVDA__META": 0.2168998097816009,
+      "NVDA__ASML": 0.2975464355581572,
+      "HOOD__RKLB": 0.010131235078482353,
+      "HOOD__LLY": 0.10656036334572822,
+      "HOOD__META": 0.12538194840218708,
+      "HOOD__ASML": 0.8816958586014996,
+      "RKLB__LLY": 0.0023353213263106972,
+      "RKLB__META": 0.013665015532871964,
+      "RKLB__ASML": 0.012149180303143024,
+      "LLY__META": 0.11454177621686032,
+      "LLY__ASML": 0.10199797559925121,
+      "META__ASML": 0.18226157757800954
+    },
+    "decision": "none",
+    "note": "не торговый сигнал; вход для MPC (P0 vs P1(w)) и Optimizer; без joint-слоя корреляции между компаниями — только через общий seed идиосинкратики (диагностика)"
+  },
+  "elapsed_ms": 2437.7,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

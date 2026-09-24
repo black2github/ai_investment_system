@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-23T15:00:00Z",
+  "updated": "2026-09-24T08:00:00Z",
   "price": {
     "last": 223.54,
     "last_at": "2026-09-18",
@@ -67,6 +67,11 @@
       "timestamp": "2026-09-23T15:00:00Z",
       "kind": "calc",
       "summary": "Интеграция калибровок (23.09): calibration_v1.0.yaml, mc_calibration_v1.0.2.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260923T133421Z-reverse_valuation-ba01b6, 20260923T143929Z-company_mc-28c1e0"
+    },
+    {
+      "timestamp": "2026-09-24T08:00:00Z",
+      "kind": "calc",
+      "summary": "Нормативный прогон company_mc 2.3.2 20260924T073647Z-company_mc-0daf30 (исправление: собственные розыгрыши компании от (seed, ticker); прежний 20260923T143929Z-company_mc-28c1e0 — исторический, сводка в пределах MC-шума)."
     }
   ],
   "scenario_state": {
@@ -370,7 +375,45 @@
           0.875
         ]
       },
-      "paths_file": "portfolio/_runs/20260923T143929Z-company_mc-28c1e0-paths.npz"
+      "paths_file": "portfolio/_runs/20260923T143929Z-company_mc-28c1e0-paths.npz",
+      "superseded_by": "20260924T073647Z-company_mc-0daf30"
+    },
+    {
+      "run_id": "20260924T073647Z-company_mc-0daf30",
+      "model": "company_mc",
+      "version": "2.3.2",
+      "timestamp": "20260924T073647",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1 + v1.1.2 (Joint_Simulation_Layer_Rules_v1.1/v1.1.1)",
+      "calibration": "mc_calibration_v1.0.2.yaml",
+      "purpose": "нормативный прогон после исправления движка 2.3.2 (собственные розыгрыши от (seed, ticker); сводка компании изменилась в пределах MC-шума); совместные пути для портфеля",
+      "supersedes": "20260923T143929Z-company_mc-28c1e0",
+      "equity_value_0_b": 64.2,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": 0.3602,
+        "median_CAGR_5Y": 0.2067,
+        "median_CAGR_8Y": 0.2658,
+        "CAGR_5Y_q05_q95": [
+          -0.156,
+          0.572
+        ],
+        "P_2x_5Y": 0.6032,
+        "P_loss_gt_30pct_5Y": 0.104,
+        "P_loss_gt_50pct_5Y": 0.063,
+        "ES5": -0.7486,
+        "median_equity_value_5Y_b": 164.3,
+        "RV_Growth_Gap": -0.0593,
+        "Price_Expectation_Gap": 0.6887,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          0.75
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260924T073647Z-company_mc-0daf30-paths.npz",
+      "valuation_crossover": "hard_switch_v1"
     }
   ],
   "conviction": {

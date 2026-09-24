@@ -1,0 +1,145 @@
+plan_version: '1.0'
+status: non_normative_patch_plan
+intended_target: META_mc_calibration_v1.0.1.yaml
+supersedes_required: META_mc_calibration_v1.0.yaml
+reason: >-
+  Host run of META v1.0 produced intrinsic/full W 0.214/0.250 versus archetype-B
+  orientation 0.40-0.85. The requested correction is tail expansion only; all central
+  parameters, facts, driver mappings and valuation crossover semantics remain unchanged.
+constraints:
+  preserve_all_unmentioned_paths: true
+  preserve_centers: true
+  preserve_distribution_family: true
+  preserve_verified_facts: true
+  preserve_company_guidance: true
+  preserve_state_vector: true
+  preserve_driver_parameter_mapping: true
+  preserve_reverse_valuation_ref: true
+  preserve_parity_gated_crossover: true
+  no_price_target_calibration: true
+  no_fit_to_intrinsic_W_floor: true
+operations:
+  - path: revenue_model.segments.Advertising.initial_growth
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.10
+    upper_tail_delta_pp: 0.08
+    bounds:
+      min_floor: -0.15
+      max_ceiling: 0.50
+    rationale: >-
+      Advertising remains the earnings engine, but v1.0 underrepresented a cyclical ad slowdown,
+      weaker AI monetization and execution dispersion. Downside expansion is intentionally larger.
+  - path: revenue_model.segments.Other_RL.initial_growth
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.12
+    upper_tail_delta_pp: 0.10
+    bounds:
+      min_floor: -0.35
+      max_ceiling: 0.60
+    rationale: >-
+      Reality Labs / other revenue is smaller and more idiosyncratic; retain center while allowing
+      larger execution dispersion.
+  - path: margin_model.capex_revenue_nodes.Y3
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.04
+    upper_tail_delta_pp: 0.10
+    bounds:
+      min_floor: 0.20
+      max_ceiling: 0.55
+    rationale: >-
+      Explicitly admit a path in which AI infrastructure construction remains near current intensity
+      instead of normalizing on schedule.
+  - path: margin_model.capex_revenue_nodes.Y4
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.04
+    upper_tail_delta_pp: 0.10
+    bounds:
+      min_floor: 0.16
+      max_ceiling: 0.50
+    rationale: Same persistent-overbuild / delayed-normalization scenario, one year later.
+  - path: margin_model.capex_revenue_nodes.Y5
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.03
+    upper_tail_delta_pp: 0.08
+    bounds:
+      min_floor: 0.12
+      max_ceiling: 0.45
+    rationale: >-
+      Y5 must retain meaningful probability of structurally elevated capex rather than forcing
+      convergence to a mature hyperscaler level.
+  - path: margin_model.capex_revenue_nodes.Y8
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.02
+    upper_tail_delta_pp: 0.05
+    bounds:
+      min_floor: 0.10
+      max_ceiling: 0.35
+    rationale: Preserve a long-lived high-capex tail without changing the normalization center.
+  - path: margin_model.ocf_margin_nodes.Y3
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.05
+    upper_tail_delta_pp: 0.04
+    bounds:
+      min_floor: 0.20
+      max_ceiling: 0.60
+    rationale: >-
+      Add execution/monetization downside and upside dispersion independently of capex.
+  - path: margin_model.ocf_margin_nodes.Y5
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.05
+    upper_tail_delta_pp: 0.04
+    bounds:
+      min_floor: 0.20
+      max_ceiling: 0.60
+    rationale: Keep long-horizon operating leverage uncertain rather than near-deterministic.
+  - path: margin_model.ocf_margin_nodes.Y8
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.04
+    upper_tail_delta_pp: 0.04
+    bounds:
+      min_floor: 0.20
+      max_ceiling: 0.60
+    rationale: Preserve mature-state uncertainty.
+  - path: valuation.Y3.multiple
+    action: widen_triangular_tails_keep_mode
+    lower_tail_pct_of_mode: -0.20
+    upper_tail_pct_of_mode: 0.15
+    rationale: >-
+      Wider near-term valuation regime uncertainty while keeping Y3 revenue-bridge center unchanged.
+  - path: valuation.Y5.multiple
+    action: widen_triangular_tails_keep_mode
+    lower_tail_pct_of_mode: -0.20
+    upper_tail_pct_of_mode: 0.15
+    rationale: Wider FCF-multiple regime uncertainty without changing the central multiple.
+  - path: valuation.Y8.multiple
+    action: widen_triangular_tails_keep_mode
+    lower_tail_pct_of_mode: -0.18
+    upper_tail_pct_of_mode: 0.12
+    rationale: Maintain mature multiple compression center; broaden terminal valuation regimes.
+  - path: valuation.negative_fcf_fallback.multiple
+    action: widen_triangular_tails_keep_mode
+    lower_tail_pct_of_mode: -0.20
+    upper_tail_pct_of_mode: 0.15
+    rationale: Preserve fallback center while increasing bridge uncertainty in adverse FCF paths.
+recompute_after_patch:
+  robustness_tests_v1_1_2: required
+  method: >-
+    Re-materialize 0.25-sigma perturbations from the patched distributions; do not retain v1.0
+    robustness magnitudes if sigma_eq changes.
+host_acceptance:
+  schema: Company_MC_Calibration_Schema_v1.0.2
+  engine: company_mc 2.3.1
+  validator: artifact_validator 1.6.0
+  paths: 500000
+  seed: 20260920
+  antithetic: true
+  required:
+    - schema_pass
+    - MC-G5-001..013_pass
+    - mapping_warnings_empty
+    - deterministic_rerun
+    - local_stability_v1.1.2_pass
+  dispersion_interpretation: >-
+    Archetype-B orientation 0.40-0.85 remains a diagnostic orientation, not a fitting target.
+    If intrinsic W remains below 0.40 after economically justified tail expansion, retain the
+    result and document why; do not widen further solely to cross 0.40.

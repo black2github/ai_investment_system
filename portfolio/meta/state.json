@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.5",
-  "updated": "2026-09-21T06:06:02Z",
+  "updated": "2026-09-24T06:45:00Z",
   "price": {
     "last": 665.75,
     "last_at": "2026-09-18",
@@ -28,6 +28,11 @@
       "timestamp": "2026-09-21T06:06:02Z",
       "kind": "facts_verify",
       "summary": "Сверка по 10-Q (meta-20260630.htm) и exhibit 99.1 пресс-релиза Q2 2026: все 10 KPI подтверждены, расхождений нет. Все 5 осей вектора получили verified: true."
+    },
+    {
+      "timestamp": "2026-09-24T06:45:00Z",
+      "kind": "calc",
+      "summary": "Интеграция калибровок (23.09): calibration_v1.0.yaml, mc_calibration_v1.0.1.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260923T220313Z-reverse_valuation-94a270, 20260924T062553Z-company_mc-410567"
     }
   ],
   "scenario_state": {
@@ -94,5 +99,62 @@
     {"kpi_id": "META-KPI-09", "name": "Non-cancelable commitments / annualized latest-quarter revenue", "period_end": "2026-06-30", "value": 1.4363, "value_raw": "we had $349.31 billion of non-cancelable contractual commitments; Total revenue $60,801 (в млн $) за квартал", "unit": "x", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
     {"kpi_id": "META-KPI-10", "name": "Reality Labs operating loss", "period_end": "2026-06-30", "value": 4.619, "value_raw": "Loss from operations $(4,619) $(4,530); Reality Labs: Revenue $431", "unit": "USD B", "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"}
   ],
-  "calc_runs": []
+  "calc_runs": [
+    {
+      "run_id": "20260923T220313Z-reverse_valuation-94a270",
+      "model": "reverse_valuation 1.2.0",
+      "spec": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+      "calibration": "META_calibration_v1.0",
+      "valuation_date": "2026-09-24",
+      "price": 665.75,
+      "shares_outstanding": 2547506225,
+      "equity_value_b": 1696.0,
+      "implied_revenue_cagr_5y": 0.1203,
+      "terminal_value_share_of_pv": 0.9051,
+      "model_stability": "terminal_dependent",
+      "note": "Первый нормативный RV-прогон; класс устойчивости по Reverse_Valuation_Rules_v1.1 §1 — terminal_dependent"
+    },
+    {
+      "run_id": "20260924T062553Z-company_mc-410567",
+      "model": "company_mc",
+      "version": "2.3.1",
+      "timestamp": "20260924T062553",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Rules_v1.1.2; company_mc 2.3.1, parity-gated blend)",
+      "calibration": "mc_calibration_v1.0.1.yaml",
+      "purpose": "нормативный прогон принятой калибровки (валидатор 1.6.0: схема v1.0.2, MC-G5-013 pass вкл. цели вех; дисперсия intrinsic ниже ориентира — warning, объяснено в приёмке)",
+      "equity_value_0_b": 1696.0,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": 0.1962,
+        "median_CAGR_5Y": 0.1201,
+        "median_CAGR_8Y": 0.1108,
+        "CAGR_5Y_q05_q95": [
+          -0.041,
+          0.278
+        ],
+        "P_2x_5Y": 0.3855,
+        "P_loss_gt_30pct_5Y": 0.0261,
+        "P_loss_gt_50pct_5Y": 0.0046,
+        "ES5": -0.3309,
+        "median_equity_value_5Y_b": 2990.9,
+        "RV_Growth_Gap": -0.0133,
+        "Price_Expectation_Gap": 0.8927,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          0.875
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260924T062553Z-company_mc-410567-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.249403389504967,
+        "q05": 0.1423420902502929,
+        "q95": 0.38481196369982795,
+        "paths_share": 1.0
+      }
+    }
+  ]
 }

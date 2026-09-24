@@ -1,0 +1,1038 @@
+{
+  "run_id": "20260924T062542Z-artifact_validator-2a623c",
+  "model": "artifact_validator",
+  "version": "1.6.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "calibration",
+    "workspace": "/data/workspace-invest",
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "ASML",
+      "as_of": "2026-09-24",
+      "archetype": "mature_positive_margin",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "Demand_Visibility": "D3",
+        "EUV_Adoption": "E3",
+        "Margin_Execution": "M3",
+        "China_Export_Exposure": "X1",
+        "Installed_Base_Resilience": "I3"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "EUV_Systems": {
+            "base_revenue_quarterly": 3948700000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "H1 2026 EXE 1.1889B + NXE 6.7085B = 7.8974B; divided by 2 for H1-average quarterly base.",
+              "source_ref": "2026-07-15 | https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.17,
+              "mode": 0.22,
+              "max": 0.55,
+              "provenance": "model_assumption",
+              "rationale": "H1 EUV system sales grew ~34.6% YoY; center mean-reverts current AI/leading-edge acceleration while allowing semiconductor-cycle downside."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.09,
+              "mode": 0.12,
+              "max": 0.3,
+              "provenance": "model_assumption",
+              "rationale": "Long-run EUV intensity can outgrow semiconductor units but not current AI-cycle growth indefinitely."
+            },
+            "growth_half_life_years": 2.25,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "EUV capacity/customer-roadmap cycles persist across several years."
+            },
+            "latent_loading": {
+              "growth": 0.72
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "EUV is strongly exposed to AI/WFE/HBM/customer-capex factors with technology-execution idiosyncrasy."
+            }
+          },
+          "DUV_Systems": {
+            "base_revenue_quarterly": 2292350000.0000005,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "H1 2026 ArF immersion 3.3317B + ArF dry 0.3673B + KrF 0.7726B + I-line 0.1131B = 4.5847B; /2.",
+              "source_ref": "2026-07-15 | https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.3,
+              "mode": 0.05,
+              "max": 0.35,
+              "provenance": "model_assumption",
+              "rationale": "H1 DUV system sales declined ~11% YoY; distribution allows memory/China/WFE cyclicality and advanced-packaging/reshoring upside."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.14,
+              "mode": 0.04,
+              "max": 0.18,
+              "provenance": "model_assumption",
+              "rationale": "Mature DUV remains important but structurally slower than EUV."
+            },
+            "growth_half_life_years": 1.75,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "DUV is more cyclical and mean-reverts faster."
+            },
+            "latent_loading": {
+              "growth": 0.65
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "WFE/memory/China factors dominate with meaningful product-mix noise."
+            }
+          },
+          "Metrology_Inspection": {
+            "base_revenue_quarterly": 181050000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "H1 2026 Metrology & Inspection sales 0.3621B /2.",
+              "source_ref": "2026-07-15 | https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.15,
+              "mode": 0.1,
+              "max": 0.32,
+              "provenance": "model_assumption",
+              "rationale": "H1 metrology/inspection sales grew ~12.8% YoY; small segment with advanced-packaging/complexity upside."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.03,
+              "mode": 0.08,
+              "max": 0.2,
+              "provenance": "model_assumption",
+              "rationale": "Complexity supports structural growth but the base remains small."
+            },
+            "growth_half_life_years": 2.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Advanced-node/packaging adoption persists across node transitions."
+            },
+            "latent_loading": {
+              "growth": 0.55
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Lower common loading due small-base/project timing."
+            }
+          },
+          "InstalledBaseManagement": {
+            "base_revenue_quarterly": 2624600000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "H1 2026 Installed Base Management/service and field option sales 5.2492B /2.",
+              "source_ref": "2026-07-15 | https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.05,
+              "mode": 0.15,
+              "max": 0.37,
+              "provenance": "model_assumption",
+              "rationale": "H1 IBM sales grew 28.1% YoY; center mean-reverts but preserves installed-base/upgrade resilience."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.02,
+              "mode": 0.08,
+              "max": 0.18,
+              "provenance": "model_assumption",
+              "rationale": "Installed base and upgrade intensity support resilient recurring growth."
+            },
+            "growth_half_life_years": 2.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Installed-base growth decays slowly with fleet expansion."
+            },
+            "latent_loading": {
+              "growth": 0.48
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Service/upgrade revenue is less cyclical than system shipments."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "mean_reverting_positive_margin",
+        "current_margin": 0.30417168691346025,
+        "current_margin_meta": {
+          "provenance": "derived_fact",
+          "formula": "H1 normalized economic FCF 5.5035B / 18.0934B sales = 30.42%, after removing -6.7791B working-capital/tax timing and subtracting PP&E + intangible capex."
+        },
+        "terminal_margin_Y5": {
+          "distribution": "triangular",
+          "min": 0.165,
+          "mode": 0.3,
+          "max": 0.42,
+          "provenance": "model_assumption",
+          "rationale": "High-moat economics with large R&D/capacity needs; tails include semiconductor-cycle, mix, export-control and supply-chain effects."
+        },
+        "terminal_margin_Y8": {
+          "distribution": "triangular",
+          "min": 0.145,
+          "mode": 0.28,
+          "max": 0.39,
+          "provenance": "model_assumption",
+          "rationale": "Long-run margin allows technology transition and export/customer concentration risk."
+        },
+        "half_life_years": 2.0,
+        "half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normalized cash economics remain mature but mix/capex swings mean-revert over several quarters."
+        },
+        "shock_sigma": 0.045,
+        "shock_sigma_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Quarterly mix, shipment timing, service and working-capital normalization uncertainty."
+        },
+        "shock_persistence": 0.4,
+        "shock_persistence_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Semiconductor cycles persist but service mix stabilizes cash economics."
+        },
+        "lower_bound": 0.1,
+        "lower_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Severe WFE/export/supply downside."
+        },
+        "upper_bound": 0.45,
+        "upper_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Prevents peak product mix from becoming permanent cash economics."
+        }
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 12.96,
+            "mode": 28.0,
+            "max": 42.2,
+            "provenance": "model_assumption",
+            "rationale": "High-moat leading-edge equipment valuation with explicit semiconductor-cycle tails."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 11.68,
+            "mode": 24.0,
+            "max": 35.6,
+            "provenance": "model_assumption",
+            "rationale": "Aligned with ASML RV terminal range; export/Taiwan/customer cyclicality constrains duration."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 10.0,
+            "mode": 20.0,
+            "max": 30.4,
+            "provenance": "model_assumption",
+            "rationale": "Maturity/cycle compression."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 1.92,
+            "mode": 6.0,
+            "max": 9.9,
+            "provenance": "model_assumption",
+            "rationale": "Schema>=1.0.2 revenue-bridge reference for stressed/crossover paths, not only literal negative FCF."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.42,
+          "growth__valuation": 0.32,
+          "margin__valuation": 0.35
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Shipment growth/product mix supports margin; cycle/geopolitics and valuation retain independent components."
+        },
+        "default_loading": 0.65,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Strong common WFE/AI/memory factors with technology/supply/export idiosyncrasy."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.4,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Semiconductor-equipment path noise in local-currency equity; used only for drawdown layer."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 1.75,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "WFE/AI-cycle valuation dislocations can persist across capex cycles."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:ASML_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 0.2512582172,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of accepted Reverse Valuation equation in EUR; replace run_ref with authoritative sidecar run."
+        },
+        "discount_rate": 0.095,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from ASML RV base case."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.03389017,
+              0.03389017
+            ],
+            "margin_nodes_pp": [
+              -0.01385158,
+              0.01385158
+            ],
+            "terminal_multiple_pct": [
+              -0.05408625,
+              0.05717884
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 local robustness: sigma_eq=(Q84-Q16)/2; growth=base-revenue-weighted RMS segment initial_growth sigma_eq; margin=Y5 terminal margin sigma_eq; multiple=Y5 log-space sigma_eq; perturbation=0.25*sigma with accepted absolute ceilings."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "ASML: accepted v1.1.2 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "AI_COMPUTE_DEMAND",
+          "HYPERSCALER_CAPEX",
+          "SEMICONDUCTOR_WFE",
+          "ADVANCED_PACKAGING",
+          "HBM_MEMORY",
+          "EDA_DESIGN_COMPLEXITY",
+          "DATA_CENTER_POWER",
+          "INTEREST_RATES",
+          "CHINA_REVENUE",
+          "TAIWAN_SUPPLY",
+          "INDUSTRIAL_RESHORING"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "ASML_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.58,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "WFE, AI/memory demand, export and supply conditions persist across adjacent quarters."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI compute demand supports leading-edge logic lithography."
+              }
+            },
+            {
+              "path": "revenue_model.segments.InstalledBaseManagement.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.005,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher utilization/fleet growth supports service/upgrades."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth.mode",
+              "contribution": 0.012,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central EUV growth assumes sustained advanced-node AI demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN / CUSTOMER_CAPEX_CONCENTRATION; ASML-FM-07/04."
+        },
+        {
+          "driver_id": "HYPERSCALER_CAPEX",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Hyperscaler AI capex flows through foundry/memory capacity plans into EUV demand."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN; ASML-FM-07."
+        },
+        {
+          "driver_id": "SEMICONDUCTOR_WFE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "WFE cycle drives leading-edge system demand."
+              }
+            },
+            {
+              "path": "revenue_model.segments.DUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "DUV is directly exposed to broader WFE."
+              }
+            },
+            {
+              "path": "revenue_model.segments.InstalledBaseManagement.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Installed fleet activity follows fab utilization/capacity."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Durable WFE conditions support cycle-adjusted valuation."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.DUV_Systems.initial_growth.mode",
+              "contribution": 0.008,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central DUV growth assumes no deep WFE recession."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: SEMICONDUCTOR_WFE_DOWNTURN; ASML-FM-01."
+        },
+        {
+          "driver_id": "ADVANCED_PACKAGING",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.005,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Advanced packaging supports selected DUV/3D-integration demand."
+              }
+            },
+            {
+              "path": "revenue_model.segments.Metrology_Inspection.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Packaging complexity supports metrology/inspection."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: LITHOGRAPHY_TECHNOLOGY_EXECUTION; ASML-FM-06. Secondary ±1 mapping."
+        },
+        {
+          "driver_id": "HBM_MEMORY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Advanced DRAM/HBM node intensity supports EUV."
+              }
+            },
+            {
+              "path": "revenue_model.segments.DUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Memory capacity also supports DUV layers."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth.mode",
+              "contribution": 0.006,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "H1 memory represented ~49.8% of system sales; central growth assumes continued memory investment."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: MEMORY_CYCLE_DOWNTURN; ASML-FM-08."
+        },
+        {
+          "driver_id": "EDA_DESIGN_COMPLEXITY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.005,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher design/process complexity increases lithography intensity with a lag."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: LITHOGRAPHY_TECHNOLOGY_EXECUTION; ASML-FM-06. Secondary ±1 mapping."
+        },
+        {
+          "driver_id": "DATA_CENTER_POWER",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Power availability enables downstream AI capacity and therefore fab demand with a lag."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN; ASML-FM-07. Secondary ±1 mapping."
+        },
+        {
+          "driver_id": "INTEREST_RATES",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": -0.008,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates compress long-duration high-quality equipment valuation."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: macro duration channel."
+        },
+        {
+          "driver_id": "CHINA_REVENUE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.DUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "China represented 15.9% of H1 sales and is primarily relevant to mature-node/export-permitted demand; exact DUV share is not separately used."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.004,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Sustainable permitted China revenue supports utilization but remains export-control exposed."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: EXPORT_CONTROLS_CHINA; ASML-FM-03."
+        },
+        {
+          "driver_id": "TAIWAN_SUPPLY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Taiwan foundry continuity is material to leading-edge shipments/capex."
+              }
+            },
+            {
+              "path": "revenue_model.segments.InstalledBaseManagement.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Service access/utilization is directly exposed to Taiwan continuity."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth.mode",
+              "contribution": 0.008,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central demand assumes Taiwan leading-edge fabs remain accessible and investing."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: TAIWAN_SUPPLY_DISRUPTION; ASML-FM-02."
+        },
+        {
+          "driver_id": "INDUSTRIAL_RESHORING",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.EUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Regional fab buildout supports incremental leading-edge tool demand."
+              }
+            },
+            {
+              "path": "revenue_model.segments.DUV_Systems.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.005,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Reshoring supports broad-node capacity as well."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: CUSTOMER_CAPEX_CONCENTRATION; ASML-FM-04. Secondary ±1 mapping."
+        }
+      ]
+    },
+    "folders": [
+      "asml"
+    ],
+    "equity_value_0": 555408600000.0,
+    "dispersion_paths": 20000
+  },
+  "outputs": {
+    "model_version": "1.6.0",
+    "schema_version": "1.0.2",
+    "mode": "calibration",
+    "ticker": "ASML",
+    "archetype": "mature_positive_margin",
+    "schema_errors": [],
+    "integrity": [
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.EUV_Systems.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.106 ≤ 0.15 (growth; драйверов 8)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.InstalledBaseManagement.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.031 ≤ 0.15 (growth; драйверов 3)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.DUV_Systems.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.047 ≤ 0.15 (growth; драйверов 5)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → valuation.Y5.multiple",
+        "message": "σ суммарного сдвига q20 = 0.025 ≤ 0.15 (multiple; драйверов 3)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.Metrology_Inspection.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.014 ≤ 0.15 (growth; драйверов 1)"
+      },
+      {
+        "rule": "MC-DISP-002",
+        "severity": "warning",
+        "path": "dispersion/full",
+        "message": "full W = 0.299 ниже ориентира 0.3–0.6"
+      }
+    ],
+    "engine_dry_run": {
+      "engine_version": "2.3.1",
+      "mapping_warnings": [],
+      "deterministic": true,
+      "median_CAGR_5Y": 2.3869827878751133,
+      "P_loss_gt_30pct_5Y": 0.0,
+      "paths": 2000
+    },
+    "aggregate_shift": {
+      "revenue_model.segments.EUV_Systems.initial_growth": {
+        "sigma": 0.1058,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 8,
+        "sum_abs_effect": 0.07,
+        "ok": true
+      },
+      "revenue_model.segments.InstalledBaseManagement.initial_growth": {
+        "sigma": 0.031,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 3,
+        "sum_abs_effect": 0.021,
+        "ok": true
+      },
+      "revenue_model.segments.DUV_Systems.initial_growth": {
+        "sigma": 0.0467,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 5,
+        "sum_abs_effect": 0.038,
+        "ok": true
+      },
+      "valuation.Y5.multiple": {
+        "sigma": 0.0254,
+        "cap": 0.15,
+        "kind": "multiple",
+        "quarter": 20,
+        "drivers": 3,
+        "sum_abs_effect": 0.02,
+        "ok": true
+      },
+      "revenue_model.segments.Metrology_Inspection.initial_growth": {
+        "sigma": 0.0137,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 1,
+        "sum_abs_effect": 0.008,
+        "ok": true
+      }
+    },
+    "dispersion": {
+      "paths": 20000,
+      "equity_value_0": 555408600000.0,
+      "intrinsic": {
+        "W": 0.2731,
+        "q05": -0.17627610645285707,
+        "q95": 0.09686325707980058,
+        "median_CAGR_5Y": -0.04177355533709848,
+        "P_loss_gt_30pct_5Y": 0.3749,
+        "P_2x_5Y": 0.01155
+      },
+      "full": {
+        "W": 0.2994,
+        "q05": -0.18671333745302368,
+        "q95": 0.11265473497711648,
+        "median_CAGR_5Y": -0.042373722888784215,
+        "P_loss_gt_30pct_5Y": 0.387,
+        "P_2x_5Y": 0.0214
+      },
+      "full_to_intrinsic_ratio": 1.096,
+      "bands": {
+        "intrinsic_W": [
+          0.25,
+          0.5
+        ],
+        "full_W": [
+          0.3,
+          0.6
+        ],
+        "full_to_intrinsic_width_ratio_max": 1.5
+      }
+    },
+    "pass": true,
+    "note": "MC-G5-013 — hard gate по Joint_Simulation_Layer_Rules_v1.1 (strict_aggregate=false → warning); MC-G5-009 (антицикличность) и MC-G5-010 (полнота provenance сверх схемы) статически не проверяются",
+    "decision": "none"
+  },
+  "elapsed_ms": 1824.3,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

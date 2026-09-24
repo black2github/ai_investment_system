@@ -1,0 +1,963 @@
+{
+  "run_id": "20260924T062539Z-artifact_validator-a8a7e6",
+  "model": "artifact_validator",
+  "version": "1.6.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "calibration",
+    "workspace": "/data/workspace-invest",
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "META",
+      "as_of": "2026-09-24",
+      "archetype": "capital_intensive_transition",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "Ad_Monetization": "A3",
+        "User_Engagement": "U2",
+        "FoA_Profitability": "P2",
+        "AI_Capital_Intensity": "C3",
+        "Reality_Labs_Drag": "R3"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "Advertising": {
+            "base_revenue_quarterly": 59363000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-07-29 | https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.05,
+              "mode": 0.2,
+              "max": 0.46,
+              "provenance": "model_assumption",
+              "rationale": "Q2 ad revenue grew ~27% YoY from +14% impressions and +12% price; center already mean-reverts these two drivers and tails include ad-cycle/regulatory downside."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.02,
+              "mode": 0.09,
+              "max": 0.18,
+              "provenance": "model_assumption",
+              "rationale": "Long-run ad monetization decays toward scaled-platform economics while retaining AI productivity/format upside."
+            },
+            "growth_half_life_years": 2.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Current 27% ad growth decays over several monetization cycles."
+            },
+            "latent_loading": {
+              "growth": 0.72
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Digital-ad demand and AI monetization are common factors, with product/regulatory idiosyncrasy."
+            }
+          },
+          "Other_RL": {
+            "base_revenue_quarterly": 1438000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "Q2 total revenue 60.801B - advertising 59.363B = 1.438B.",
+              "source_ref": "2026-07-29 | https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.35,
+              "mode": 0.08,
+              "max": 0.55,
+              "provenance": "model_assumption",
+              "rationale": "Residual FoA other + Reality Labs revenue is small and volatile; no attempt is made to capitalize RL losses as revenue growth."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.08,
+              "mode": 0.04,
+              "max": 0.18,
+              "provenance": "model_assumption",
+              "rationale": "Optionality remains, but long-run contribution is bounded by persistent RL losses and product uncertainty."
+            },
+            "growth_half_life_years": 2.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Small residual/product revenue mean-reverts quickly."
+            },
+            "latent_loading": {
+              "growth": 0.45
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "More idiosyncratic product-cycle behavior than advertising."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "ocf_capex_decomposition",
+        "ocf_margin_nodes": {
+          "Y1": {
+            "distribution": "triangular",
+            "min": 0.42,
+            "mode": 0.5,
+            "max": 0.6,
+            "provenance": "model_assumption",
+            "rationale": "Q2 implied OCF margin was ~52.4%; high D&A/SBC and strong FoA cash conversion support a high OCF base despite RL drag."
+          },
+          "Y2": {
+            "distribution": "triangular",
+            "min": 0.4,
+            "mode": 0.49,
+            "max": 0.58,
+            "provenance": "model_assumption",
+            "rationale": "OCF remains strong while infrastructure depreciation/operating costs rise."
+          },
+          "Y3": {
+            "distribution": "triangular",
+            "min": 0.33,
+            "mode": 0.48,
+            "max": 0.6,
+            "provenance": "model_assumption",
+            "rationale": "FoA monetization offsets a still-large AI infrastructure operating footprint."
+          },
+          "Y4": {
+            "distribution": "triangular",
+            "min": 0.36,
+            "mode": 0.47,
+            "max": 0.56,
+            "provenance": "model_assumption",
+            "rationale": "Gradual normalization."
+          },
+          "Y5": {
+            "distribution": "triangular",
+            "min": 0.29,
+            "mode": 0.46,
+            "max": 0.59,
+            "provenance": "model_assumption",
+            "rationale": "Scaled ad platform cash generation with persistent infrastructure/RL costs."
+          },
+          "Y8": {
+            "distribution": "triangular",
+            "min": 0.28,
+            "mode": 0.43,
+            "max": 0.56,
+            "provenance": "model_assumption",
+            "rationale": "Long-run OCF normalization."
+          }
+        },
+        "capex_revenue_nodes": {
+          "Y1": {
+            "distribution": "triangular",
+            "min": 0.38,
+            "mode": 0.5,
+            "max": 0.62,
+            "provenance": "model_assumption",
+            "rationale": "Q2 capex/revenue was 51.1%. Company guidance is approximately $130-145B 2026 capex; guidance is treated as company_guidance, not actual."
+          },
+          "Y2": {
+            "distribution": "triangular",
+            "min": 0.25,
+            "mode": 0.38,
+            "max": 0.52,
+            "provenance": "model_assumption",
+            "rationale": "AI/data-center buildout remains intense but begins normalizing."
+          },
+          "Y3": {
+            "distribution": "triangular",
+            "min": 0.14,
+            "mode": 0.3,
+            "max": 0.53,
+            "provenance": "model_assumption",
+            "rationale": "Transition year: positive FCF becomes less dependent on peak construction."
+          },
+          "Y4": {
+            "distribution": "triangular",
+            "min": 0.1,
+            "mode": 0.25,
+            "max": 0.46,
+            "provenance": "model_assumption",
+            "rationale": "Scaled fleet remains capital intensive."
+          },
+          "Y5": {
+            "distribution": "triangular",
+            "min": 0.08,
+            "mode": 0.22,
+            "max": 0.42,
+            "provenance": "model_assumption",
+            "rationale": "Mature AI-supported platform still reinvests far above legacy social-media levels."
+          },
+          "Y8": {
+            "distribution": "triangular",
+            "min": 0.06,
+            "mode": 0.18,
+            "max": 0.33,
+            "provenance": "model_assumption",
+            "rationale": "Long-run infrastructure intensity remains structurally elevated."
+          }
+        }
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 2.4,
+            "mode": 8.0,
+            "max": 14.2,
+            "provenance": "model_assumption",
+            "rationale": "Y3 remains capex-transition dependent; revenue bridge avoids treating a still-normalizing FCF margin as fully mature."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 12.0,
+            "mode": 25.0,
+            "max": 37.75,
+            "provenance": "model_assumption",
+            "rationale": "Mature platform FCF multiple after partial AI-capex normalization."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 10.22,
+            "mode": 21.0,
+            "max": 31.52,
+            "provenance": "model_assumption",
+            "rationale": "Duration compression and infrastructure maturity."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 1.8,
+            "mode": 6.0,
+            "max": 10.9,
+            "provenance": "model_assumption",
+            "rationale": "Schema>=1.0.2 reference revenue bridge for negative-FCF/crossover paths; 6x at the center is economically close to 25x FCF at ~24% margin, reducing artificial basis cliffs."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.45,
+          "growth__valuation": 0.35,
+          "margin__valuation": 0.4
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Ad growth supports cash generation and valuation, while capex/power/supply shocks add partly independent margin risk."
+        },
+        "default_loading": 0.68,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Large common AI/ad-market factors plus material execution/regulatory idiosyncrasy."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.38,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Mega-cap technology path noise, used only for drawdown layer."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 1.75,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "AI-capex valuation dislocations can persist across multi-quarter investment cycles."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:META_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 0.1202866948,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of accepted Reverse Valuation equation; replace run_ref with authoritative sidecar run."
+        },
+        "discount_rate": 0.095,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from META RV base case."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.02837363,
+              0.02837363
+            ],
+            "margin_nodes_pp": [
+              -0.02471873,
+              0.02471873
+            ],
+            "terminal_multiple_pct": [
+              -0.05549313,
+              0.05875355
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 local robustness: growth sigma=base-revenue-weighted RMS segment initial_growth sigma_eq; margin sigma=sqrt(sigma_ocf_Y5^2 + sigma_capex_Y5^2); multiple sigma=Y5 log-space sigma_eq; perturbation=0.25*sigma with accepted ceilings."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "META: accepted v1.1.2 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "AI_COMPUTE_DEMAND",
+          "HYPERSCALER_CAPEX",
+          "ADVANCED_PACKAGING",
+          "HBM_MEMORY",
+          "CLOUD_SOFTWARE_DEMAND",
+          "DATA_CENTER_POWER",
+          "INTEREST_RATES",
+          "TAIWAN_SUPPLY",
+          "ELECTRIFICATION_GRID",
+          "UTILITY_CAPEX",
+          "DIGITAL_AD_DEMAND"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "META_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.6,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "AI infrastructure, digital-ad demand and power/supply constraints persist across adjacent quarters."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Advertising.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "More useful AI compute supports ranking/creative/engagement monetization."
+              }
+            },
+            {
+              "path": "margin_model.ocf_margin_nodes.Y3",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Successful AI monetization supports cash conversion."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.Advertising.initial_growth.mode",
+              "contribution": 0.01,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central ad growth assumes AI investments continue improving monetization."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: AI_OVERBUILD; META-FM-01."
+        },
+        {
+          "driver_id": "HYPERSCALER_CAPEX",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.capex_revenue_nodes.Y1",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Industry-wide AI capex pressure correlates with META's own infrastructure intensity."
+              }
+            },
+            {
+              "path": "margin_model.capex_revenue_nodes.Y2",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Capex cycle persistence extends into Y2."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN / AI_OVERBUILD; META-FM-01/07."
+        },
+        {
+          "driver_id": "ADVANCED_PACKAGING",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.capex_revenue_nodes.Y1",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.003,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Packaging scarcity/cost can raise effective infrastructure capex."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: TAIWAN_SUPPLY_DISRUPTION; META-FM-03."
+        },
+        {
+          "driver_id": "HBM_MEMORY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.capex_revenue_nodes.Y1",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "HBM tightness raises accelerator-system cost and deployment friction."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: TAIWAN_SUPPLY_DISRUPTION; META-FM-03."
+        },
+        {
+          "driver_id": "CLOUD_SOFTWARE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Advertising.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.005,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Enterprise digital activity is a secondary support for advertiser demand."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: DIGITAL_AD_DEMAND_SLOWDOWN; META-FM-04. Secondary ±1 mapping retained for completeness."
+        },
+        {
+          "driver_id": "DATA_CENTER_POWER",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.capex_revenue_nodes.Y1",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Power scarcity increases effective buildout intensity/delay cost."
+              }
+            },
+            {
+              "path": "margin_model.capex_revenue_nodes.Y2",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.006,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Power constraints persist into commissioning."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: DATA_CENTER_POWER_CONSTRAINT; META-FM-02."
+        },
+        {
+          "driver_id": "INTEREST_RATES",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": -0.008,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates compress long-duration platform valuation."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: macro duration channel."
+        },
+        {
+          "driver_id": "TAIWAN_SUPPLY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Advertising.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": -0.005,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Leading-edge accelerator disruption delays AI monetization."
+              }
+            },
+            {
+              "path": "margin_model.capex_revenue_nodes.Y2",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Supply substitution can raise effective capex."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: TAIWAN_SUPPLY_DISRUPTION; META-FM-03."
+        },
+        {
+          "driver_id": "ELECTRIFICATION_GRID",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Advertising.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Grid availability enables AI capacity that supports monetization with a lag."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: DATA_CENTER_POWER_CONSTRAINT; META-FM-02. Secondary ±1 mapping."
+        },
+        {
+          "driver_id": "UTILITY_CAPEX",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Advertising.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.004,
+              "lag_quarters": 2,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Utility investment expands feasible data-center capacity with a lag."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: DATA_CENTER_POWER_CONSTRAINT; META-FM-02. Secondary ±1 mapping."
+        },
+        {
+          "driver_id": "DIGITAL_AD_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Advertising.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 5.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Ad-market demand directly drives the dominant revenue stream."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Durable ad demand supports terminal confidence."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.Advertising.initial_growth.mode",
+              "contribution": 0.015,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central growth assumes no structural collapse in digital ad demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the sign of the accepted MPC driver exposure."
+              }
+            }
+          },
+          "note": "common_cause_id: DIGITAL_AD_DEMAND_SLOWDOWN; META-FM-04."
+        }
+      ]
+    },
+    "folders": [
+      "meta"
+    ],
+    "equity_value_0": 1696002269293.75,
+    "dispersion_paths": 20000
+  },
+  "outputs": {
+    "model_version": "1.6.0",
+    "schema_version": "1.0.2",
+    "mode": "calibration",
+    "ticker": "META",
+    "archetype": "capital_intensive_transition",
+    "schema_errors": [],
+    "integrity": [
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.Advertising.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.064 ≤ 0.15 (growth; драйверов 6)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → margin_model.ocf_margin_nodes.Y3",
+        "message": "σ суммарного сдвига q12 = 0.007 ≤ 0.05 (margin; драйверов 1)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → margin_model.capex_revenue_nodes.Y1",
+        "message": "σ суммарного сдвига q20 = 0.045 ≤ 0.05 (margin; драйверов 4)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → margin_model.capex_revenue_nodes.Y2",
+        "message": "σ суммарного сдвига q20 = 0.030 ≤ 0.05 (margin; драйверов 3)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → valuation.Y5.multiple",
+        "message": "σ суммарного сдвига q20 = 0.025 ≤ 0.15 (multiple; драйверов 2)"
+      },
+      {
+        "rule": "MC-DISP-001",
+        "severity": "warning",
+        "path": "dispersion/intrinsic",
+        "message": "intrinsic W = 0.295 ниже ориентира 0.4–0.85: собственная неопределённость слишком узкая"
+      },
+      {
+        "rule": "MC-DISP-002",
+        "severity": "warning",
+        "path": "dispersion/full",
+        "message": "full W = 0.321 ниже ориентира 0.45–1.0"
+      }
+    ],
+    "engine_dry_run": {
+      "engine_version": "2.3.1",
+      "mapping_warnings": [],
+      "deterministic": true,
+      "median_CAGR_5Y": 3.9568395134349146,
+      "P_loss_gt_30pct_5Y": 0.0,
+      "paths": 2000
+    },
+    "aggregate_shift": {
+      "revenue_model.segments.Advertising.initial_growth": {
+        "sigma": 0.0642,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 6,
+        "sum_abs_effect": 0.05,
+        "ok": true
+      },
+      "margin_model.ocf_margin_nodes.Y3": {
+        "sigma": 0.0074,
+        "cap": 0.05,
+        "kind": "margin",
+        "quarter": 12,
+        "drivers": 1,
+        "sum_abs_effect": 0.004,
+        "ok": true
+      },
+      "margin_model.capex_revenue_nodes.Y1": {
+        "sigma": 0.0453,
+        "cap": 0.05,
+        "kind": "margin",
+        "quarter": 20,
+        "drivers": 4,
+        "sum_abs_effect": 0.025,
+        "ok": true
+      },
+      "margin_model.capex_revenue_nodes.Y2": {
+        "sigma": 0.0299,
+        "cap": 0.05,
+        "kind": "margin",
+        "quarter": 20,
+        "drivers": 3,
+        "sum_abs_effect": 0.018,
+        "ok": true
+      },
+      "valuation.Y5.multiple": {
+        "sigma": 0.0254,
+        "cap": 0.15,
+        "kind": "multiple",
+        "quarter": 20,
+        "drivers": 2,
+        "sum_abs_effect": 0.018,
+        "ok": true
+      }
+    },
+    "dispersion": {
+      "paths": 20000,
+      "equity_value_0": 1696002269293.75,
+      "intrinsic": {
+        "W": 0.2947,
+        "q05": -0.03039227716126485,
+        "q95": 0.2642831060085055,
+        "median_CAGR_5Y": 0.12302373834132385,
+        "P_loss_gt_30pct_5Y": 0.0193,
+        "P_2x_5Y": 0.3847
+      },
+      "full": {
+        "W": 0.321,
+        "q05": -0.04221354344008611,
+        "q95": 0.27883375542532113,
+        "median_CAGR_5Y": 0.12108107216388764,
+        "P_loss_gt_30pct_5Y": 0.02575,
+        "P_2x_5Y": 0.39005
+      },
+      "full_to_intrinsic_ratio": 1.089,
+      "bands": {
+        "intrinsic_W": [
+          0.4,
+          0.85
+        ],
+        "full_W": [
+          0.45,
+          1.0
+        ],
+        "full_to_intrinsic_width_ratio_max": 1.5
+      }
+    },
+    "pass": true,
+    "note": "MC-G5-013 — hard gate по Joint_Simulation_Layer_Rules_v1.1 (strict_aggregate=false → warning); MC-G5-009 (антицикличность) и MC-G5-010 (полнота provenance сверх схемы) статически не проверяются",
+    "decision": "none"
+  },
+  "elapsed_ms": 1949.3,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.5",
-  "updated": "2026-09-21T06:06:02Z",
+  "updated": "2026-09-24T06:45:00Z",
   "price": {
     "last": 1679.92,
     "last_at": "2026-09-18",
@@ -28,6 +28,11 @@
       "timestamp": "2026-09-21T06:06:02Z",
       "kind": "facts_verify",
       "summary": "Сверка по SEC 6-K Exhibit 99.3 (Summary US GAAP) и Exhibit 99.4 (Statutory Interim Report IAS 34) и Exhibit 99.1 (press release, guidance): все 10 KPI подтверждены, расхождений нет. Все 5 осей вектора получили verified: true."
+    },
+    {
+      "timestamp": "2026-09-24T06:45:00Z",
+      "kind": "calc",
+      "summary": "Интеграция калибровок (23.09): calibration_v1.0.yaml, mc_calibration_v1.0.1.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260923T220315Z-reverse_valuation-2d7985, 20260924T062843Z-company_mc-7106fc"
     }
   ],
   "scenario_state": {
@@ -93,5 +98,62 @@
     {"kpi_id": "ASML-KPI-09", "name": "Memory share of H1 net system sales", "period_end": "2026-06-28", "value": 0.4984, "value_raw": "Memory 84 4,178.9 94 6,401.5; Total 241 11,336.5 274 12,844.2 (в млн €, H1 2026)", "unit": "fraction", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/statutoryinterimreport20.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"},
     {"kpi_id": "ASML-KPI-10", "name": "Cash + short-term investments", "period_end": "2026-06-28", "value": 7.5815, "value_raw": "Cash and cash equivalents 6,671.9; Short-term investments 909.6 (в млн €, на 28.06.2026)", "unit": "EUR B", "source_url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026048235/financialstatementsusgaa.htm", "verified": true, "value_type": "actual", "provenance": "verified_fact"}
   ],
-  "calc_runs": []
+  "calc_runs": [
+    {
+      "run_id": "20260923T220315Z-reverse_valuation-2d7985",
+      "model": "reverse_valuation 1.2.0",
+      "spec": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+      "calibration": "ASML_calibration_v1.0",
+      "valuation_date": "2026-09-24",
+      "price": 1446.0,
+      "shares_outstanding": 384100000.0,
+      "equity_value_b": 555.41,
+      "implied_revenue_cagr_5y": 0.2513,
+      "terminal_value_share_of_pv": 0.8923,
+      "model_stability": "terminal_dependent",
+      "note": "Первый нормативный RV-прогон; класс устойчивости по Reverse_Valuation_Rules_v1.1 §1 — terminal_dependent"
+    },
+    {
+      "run_id": "20260924T062843Z-company_mc-7106fc",
+      "model": "company_mc",
+      "version": "2.3.1",
+      "timestamp": "20260924T062843",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Rules_v1.1.2; company_mc 2.3.1, parity-gated blend)",
+      "calibration": "mc_calibration_v1.0.1.yaml",
+      "purpose": "нормативный прогон принятой калибровки (валидатор 1.6.0: схема v1.0.2, MC-G5-013 pass вкл. цели вех; дисперсия intrinsic ниже ориентира — warning, объяснено в приёмке)",
+      "equity_value_0_b": 555.4,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": -0.0993,
+        "median_CAGR_5Y": -0.0429,
+        "median_CAGR_8Y": -0.0061,
+        "CAGR_5Y_q05_q95": [
+          -0.187,
+          0.111
+        ],
+        "P_2x_5Y": 0.0204,
+        "P_loss_gt_30pct_5Y": 0.3884,
+        "P_loss_gt_50pct_5Y": 0.1671,
+        "ES5": -0.7091,
+        "median_equity_value_5Y_b": 446.0,
+        "RV_Growth_Gap": 0.1399,
+        "Price_Expectation_Gap": 1.9606,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          0.75
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260924T062843Z-company_mc-7106fc-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.25023667109495173,
+        "q05": 0.1468122827745569,
+        "q95": 0.38226031093492324,
+        "paths_share": 1.0
+      }
+    }
+  ]
 }

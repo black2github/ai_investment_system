@@ -1,0 +1,123 @@
+plan_version: '1.0'
+status: non_normative_patch_plan
+intended_target: ASML_mc_calibration_v1.0.1.yaml
+supersedes_required: ASML_mc_calibration_v1.0.yaml
+reason: >-
+  Host run of ASML v1.0 produced intrinsic/full W 0.214/0.246 versus archetype-A
+  orientation 0.25-0.50. The requested correction is tail expansion only; all centers,
+  EUR-denominated facts, driver mappings and valuation semantics remain unchanged.
+constraints:
+  preserve_all_unmentioned_paths: true
+  preserve_centers: true
+  preserve_distribution_family: true
+  preserve_verified_facts: true
+  preserve_company_guidance: true
+  preserve_currency_EUR: true
+  preserve_state_vector: true
+  preserve_driver_parameter_mapping: true
+  preserve_reverse_valuation_ref: true
+  no_price_target_calibration: true
+  no_fit_to_intrinsic_W_floor: true
+operations:
+  - path: revenue_model.segments.EUV.initial_growth
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.12
+    upper_tail_delta_pp: 0.10
+    bounds:
+      min_floor: -0.25
+      max_ceiling: 0.55
+    rationale: >-
+      EUV remains structurally advantaged but system shipments are highly cyclical and exposed to
+      customer fab timing, memory/logic cycles and export constraints.
+  - path: revenue_model.segments.EUV.long_run_growth_y8
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.06
+    upper_tail_delta_pp: 0.05
+    bounds:
+      min_floor: -0.05
+      max_ceiling: 0.25
+    rationale: Broaden long-run adoption/cycle outcomes without moving the structural center.
+  - path: revenue_model.segments.DUV.initial_growth
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.12
+    upper_tail_delta_pp: 0.08
+    bounds:
+      min_floor: -0.30
+      max_ceiling: 0.35
+    rationale: >-
+      DUV is more exposed to mature-node cyclicality and China/export-mix variation than v1.0 dispersion implied.
+  - path: revenue_model.segments.DUV.long_run_growth_y8
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.06
+    upper_tail_delta_pp: 0.04
+    bounds:
+      min_floor: -0.08
+      max_ceiling: 0.18
+    rationale: Allow mature-node stagnation/decline and a modest upside tail while retaining center.
+  - path: revenue_model.segments.InstalledBase.initial_growth
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.05
+    upper_tail_delta_pp: 0.05
+    bounds:
+      min_floor: -0.05
+      max_ceiling: 0.30
+    rationale: Service is more stable than systems but not deterministic; broaden less than EUV/DUV.
+  - path: margin_model.terminal_margin_Y5
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.035
+    upper_tail_delta_pp: 0.030
+    bounds:
+      min_floor: 0.20
+      max_ceiling: 0.40
+    rationale: >-
+      Admit customer-mix, product-mix, export-control and manufacturing-utilization margin regimes.
+  - path: margin_model.terminal_margin_Y8
+    action: widen_triangular_tails_keep_mode
+    lower_tail_delta_pp: -0.035
+    upper_tail_delta_pp: 0.030
+    bounds:
+      min_floor: 0.20
+      max_ceiling: 0.40
+    rationale: Preserve mature margin center with wider structural execution/cycle tails.
+  - path: valuation.Y3.multiple
+    action: widen_triangular_tails_keep_mode
+    lower_tail_pct_of_mode: -0.18
+    upper_tail_pct_of_mode: 0.15
+    rationale: Broaden near-term semiconductor-cycle valuation regimes without changing center.
+  - path: valuation.Y5.multiple
+    action: widen_triangular_tails_keep_mode
+    lower_tail_pct_of_mode: -0.18
+    upper_tail_pct_of_mode: 0.15
+    rationale: Broaden mid-horizon FCF valuation regimes.
+  - path: valuation.Y8.multiple
+    action: widen_triangular_tails_keep_mode
+    lower_tail_pct_of_mode: -0.15
+    upper_tail_pct_of_mode: 0.12
+    rationale: Preserve mature multiple center while allowing persistent compression/expansion.
+  - path: valuation.negative_fcf_fallback.multiple
+    action: widen_triangular_tails_keep_mode
+    lower_tail_pct_of_mode: -0.18
+    upper_tail_pct_of_mode: 0.15
+    rationale: Broaden fallback uncertainty only; no change to central bridge assumption.
+recompute_after_patch:
+  robustness_tests_v1_1_2: required
+  method: >-
+    Re-materialize 0.25-sigma perturbations from the patched distributions; do not retain v1.0
+    robustness magnitudes if sigma_eq changes.
+host_acceptance:
+  schema: Company_MC_Calibration_Schema_v1.0.2
+  engine: company_mc 2.3.1
+  validator: artifact_validator 1.6.0
+  paths: 500000
+  seed: 20260920
+  antithetic: true
+  required:
+    - schema_pass
+    - MC-G5-001..013_pass
+    - mapping_warnings_empty
+    - deterministic_rerun
+    - local_stability_v1.1.2_pass
+  dispersion_interpretation: >-
+    Archetype-A orientation 0.25-0.50 remains a diagnostic orientation, not a fitting target.
+    The purpose of this patch is to represent economically plausible cyclicality. Do not widen
+    further solely to force intrinsic W above 0.25.

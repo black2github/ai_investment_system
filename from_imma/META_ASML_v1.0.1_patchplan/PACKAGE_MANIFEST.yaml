@@ -1,0 +1,13 @@
+package: IMMA_META_ASML_v1.0.1_tail_expansion_patchplan
+package_version: '1.0'
+status: non_normative_patch_plan
+files:
+- file: ASML_mc_calibration_v1.0.1_PATCH_PLAN.yaml
+  sha256: 4778d94c89c36e00bf434afbe263f8d59278a7955cb4f88d7345c5a008d92e0f
+  bytes: 4910
+- file: META_ASML_v1.0.1_patch_notes.md
+  sha256: af54841d5b859f3654078db954ec4adb57fda91e780297b52d18f37c8c2ac9da
+  bytes: 3532
+- file: META_mc_calibration_v1.0.1_PATCH_PLAN.yaml
+  sha256: 80eea55561c7e0c995e5030d704ddf9a043cc6129415508b96168ee53fa82c49
+  bytes: 5701

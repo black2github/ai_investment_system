@@ -1,0 +1,48 @@
+package: IMMA_META_ASML_mc_v1.0.1
+package_version: 1.0.1
+created_at: '2026-09-24'
+status: normative_reissue_pending_host_acceptance
+schema_contract: Company_MC_Calibration_Schema_v1.0.2
+engine_contract: company_mc 2.3.1
+validator_contract: artifact_validator 1.6.0 (host)
+supersedes:
+  META: META_mc_calibration_v1.0.yaml
+  ASML: ASML_mc_calibration_v1.0.yaml
+authoritative_rv_host_run_suffixes:
+  META: 94a270
+  ASML: 2d7985
+rv_binding_note: Full host run IDs were abbreviated in the order; MC YAML preserves source PENDING_HOST_RUN strings for integrator binding 
+  to exact authoritative run_ref.
+source_inputs:
+  - file: META_mc_calibration_v1.0.yaml
+    sha256: 7cd8c518ab210af1489162f784770af51c3600eb4472969025efceca520cc68e
+  - file: ASML_mc_calibration_v1.0.yaml
+    sha256: ecc5eab38b9faee390da4bd7f1cb0ee883c19021ee59112b76b50f619d2474a8
+  - file: META_calibration_v1.0.yaml
+    sha256: bf0601e2c49c22a5bc037c7d35be4bb4e48feb787dc73f569c1f067dcd2ff357
+  - file: ASML_calibration_v1.0.yaml
+    sha256: 78836312d081a42e4b4f512dbe484ef500ac064d5dbf50618fa9b93e8cbbfc43
+  - file: LLY_mc_calibration_v1.0.yaml
+    sha256: 4352c4bbcb58c9121f4cf245c0d41199cd11200c2ef71b7914d4bb08915eb0a7
+payload_files:
+  - file: META_mc_calibration_v1.0.1.yaml
+    sha256: f6f2f387b8b306e08f334b206a11bd897b6040668c0fe379d04d430d75e7dfba
+    bytes: 20891
+  - file: ASML_mc_calibration_v1.0.1.yaml
+    sha256: fae571a73e7ac083f2a2fd7c499faafe06108f01a0ee08623f18562ccc8cb2f7
+    bytes: 24444
+  - file: META_ASML_mc_calibration_v1.0.1_patch_notes.md
+    sha256: 5ecbf2d836536bf0fc2d045bb3e05d52af631748fc5efb93c7125d0391391f17
+    bytes: 5573
+  - file: VALIDATION_REPORT.md
+    sha256: 9a2c856ee70a87f9f63f0d82bd2eb49b8813cdc13fb9688f1df6705bcc0501d4
+    bytes: 1049
+local_preflight:
+  schema_draft_2020_12: pass
+  supersedes_removed_paths:
+    META: 0
+    ASML: 0
+  triangular_mode_changes:
+    META: 0
+    ASML: 0
+  company_mc_live_run: not_executed_engine_not_in_restore_package

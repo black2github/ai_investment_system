@@ -1,0 +1,422 @@
+{
+  "protocol_version": "1.2.0",
+  "run_id": "verify-HOOD-20260924T070242Z",
+  "ticker": "HOOD",
+  "as_of": "2026-09-24T07:02:42Z",
+  "inputs": {
+    "kpis_ref": "portfolio/hood/kpis.yaml",
+    "source_registry_ref": "portfolio/hood/states.yaml",
+    "evidence_pack_ref": null,
+    "artifact_schema_version": "1.0.5",
+    "state_ref": "portfolio/hood/state.json",
+    "triggers_ref": "portfolio/hood/triggers.yaml"
+  },
+  "items": [
+    {
+      "kpi_id": "HOOD-KPI-01",
+      "status": "verified_match",
+      "candidate": {
+        "last_value": 28.6,
+        "value_type": "actual",
+        "observation_qualifier": "exact",
+        "unit": "million",
+        "period": "monthly (August 2026)"
+      },
+      "source_check": {
+        "source_ref": "HOOD_AUG_OPS",
+        "source_class": "issuer_ir_release",
+        "url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
+        "allowed_by_policy": true,
+        "technical_status": "accessible",
+        "technical_error": null,
+        "evidence_locator": "local copy portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf (obtained by owner via browser 2026-09-23; site returns no response to non-browser clients); PDF p.1 bullet list and p.2 monthly metrics table",
+        "evidence_excerpt": "Funded Customers at the end of August were 28.6 million (up approximately 120 thousand from the end of July 2026, up approximately 1.90 million year-over-year). / Table: Funded Customers1  28.6  28.5  -  26.7  +7%"
+      },
+      "found": {
+        "value": 28.6,
+        "value_type": "actual",
+        "observation_qualifier": "exact",
+        "unit": "million",
+        "period": "monthly (August 2026)"
+      },
+      "normalization": {
+        "applied": false,
+        "steps": [],
+        "numeric_difference": 0,
+        "relative_difference": 0
+      },
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "Bullet text и таблица дают одно и то же значение 28.6, совпадает с candidate.last_value."
+    },
+    {
+      "kpi_id": "HOOD-KPI-02",
+      "status": "verified_match",
+      "candidate": {
+        "last_value": 383.7,
+        "value_type": "actual",
+        "observation_qualifier": "exact",
+        "unit": "USD B",
+        "period": "monthly (August 2026)"
+      },
+      "source_check": {
+        "source_ref": "HOOD_AUG_OPS",
+        "source_class": "issuer_ir_release",
+        "url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
+        "allowed_by_policy": true,
+        "technical_status": "accessible",
+        "technical_error": null,
+        "evidence_locator": "local copy portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf (obtained by owner via browser 2026-09-23; site returns no response to non-browser clients); PDF p.1 bullet list and p.2 monthly metrics table",
+        "evidence_excerpt": "Total Platform Assets at the end of August were $384 billion (up 8% from the end of July 2026, up 26% year-over-year). / Table: Total Platform Assets1  $383.7  $355.0  +8%  $303.9  +26%"
+      },
+      "found": {
+        "value": 383.7,
+        "value_type": "actual",
+        "observation_qualifier": "exact",
+        "unit": "USD B",
+        "period": "monthly (August 2026)"
+      },
+      "normalization": {
+        "applied": true,
+        "steps": [
+          "bullet text rounds to '$384 billion'; monthly metrics table gives exact 383.7, matching candidate.last_value exactly",
+          "table used as more precise source per задание"
+        ],
+        "numeric_difference": 0,
+        "relative_difference": 0
+      },
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "Таблица (383.7) точнее округлённого текста (384); candidate/kpis.yaml хранит точное 383.7 — совпадает."
+    },
+    {
+      "kpi_id": "HOOD-KPI-03",
+      "status": "verified_match",
+      "candidate": {
+        "last_value": 0.24,
+        "value_type": "actual",
+        "observation_qualifier": "exact",
+        "unit": "fraction",
+        "period": "monthly (August 2026, LTM basis)"
+      },
+      "source_check": {
+        "source_ref": "HOOD_AUG_OPS",
+        "source_class": "issuer_ir_release",
+        "url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
+        "allowed_by_policy": true,
+        "technical_status": "accessible",
+        "technical_error": null,
+        "evidence_locator": "local copy portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf (obtained by owner via browser 2026-09-23; site returns no response to non-browser clients); PDF p.1 bullet list",
+        "evidence_excerpt": "Over the last twelve months, Net Deposits were $74.1 billion, or an annual growth rate of 24% relative to August 2025 Total Platform Assets."
+      },
+      "found": {
+        "value": 0.24,
+        "value_type": "actual",
+        "observation_qualifier": "exact",
+        "unit": "fraction",
+        "period": "LTM to August 2026 (annual growth relative to August 2025 Total Platform Assets)"
+      },
+      "normalization": {
+        "applied": false,
+        "steps": [],
+        "numeric_difference": 0,
+        "relative_difference": 0
+      },
+      "qualifier_patch_suggested": false,
+      "mismatch_reason": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "Дословная цитата релиза; период LTM к августу 2026 сохранён дословно, не подменён на квартальный."
+    }
+  ],
+  "axis_items": [
+    {
+      "axis_id": "Customer_Asset_Scale",
+      "current_state": "S3",
+      "prior_snapshot": "evidence_unavailable_technical (verify-HOOD-20260923T194500Z)",
+      "criteria": "Funded Customers >=28M AND TPA >=$350B AND LTM Net Deposit growth >=20%",
+      "criteria_provenance": "model_assumption",
+      "evidence_type": "quantitative",
+      "status": "state_supported",
+      "kpi_item_refs": [
+        "HOOD-KPI-01",
+        "HOOD-KPI-02",
+        "HOOD-KPI-03"
+      ],
+      "source_evidence": [
+        {
+          "source_ref": "HOOD_AUG_OPS",
+          "source_class": "issuer_ir_release",
+          "url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
+          "technical_status": "accessible",
+          "evidence_locator": "local copy portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf (obtained by owner via browser 2026-09-23)",
+          "evidence_excerpt": "Funded Customers 28.6 million; Total Platform Assets $383.7 billion (table); LTM Net Deposit growth 24%",
+          "independent_source_identity": null,
+          "notes": null
+        }
+      ],
+      "criterion_checks": [
+        {
+          "expression": "Funded Customers >=28M",
+          "result": true,
+          "evidence_kpi_refs": [
+            "HOOD-KPI-01"
+          ],
+          "calculation": "28.6 >= 28",
+          "notes": null
+        },
+        {
+          "expression": "TPA >=$350B",
+          "result": true,
+          "evidence_kpi_refs": [
+            "HOOD-KPI-02"
+          ],
+          "calculation": "383.7 >= 350",
+          "notes": null
+        },
+        {
+          "expression": "LTM Net Deposit growth >=20%",
+          "result": true,
+          "evidence_kpi_refs": [
+            "HOOD-KPI-03"
+          ],
+          "calculation": "0.24 >= 0.20",
+          "notes": null
+        }
+      ],
+      "history_evaluation_ref": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "Критерий S3 однопериодный (не требует истории месяцев, в отличие от S4 «for 2 months»); подтверждён напрямую по августовским данным."
+    },
+    {
+      "axis_id": "Regulatory_Product",
+      "current_state": "G2",
+      "prior_snapshot": "state_pending_verification, PATCH_REQUIRED (verify-HOOD-20260923T194500Z)",
+      "criteria": "specific product offering required to cease/suspend in at least one jurisdiction",
+      "criteria_provenance": "model_assumption",
+      "evidence_type": "qualitative_primary_source",
+      "status": "state_supported",
+      "kpi_item_refs": [],
+      "source_evidence": [
+        {
+          "source_ref": "HOOD_Q2_10Q",
+          "source_class": "regulatory_filing",
+          "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm",
+          "technical_status": "accessible",
+          "evidence_locator": "Note 15 Commitments & Contingencies, Event Contracts Litigation subsection",
+          "evidence_excerpt": "In Nevada, the court denied RHD's motion for a preliminary injunction. Robinhood has agreed to cease offering new sports-related event contracts in Nevada as of December 1, 2025, and to take action to explore unwinding longer-duration open sports-related event contracts in Nevada, in exchange for the State's agreement to refrain from enforcing its state gaming laws during the pendency of RHD's appeal. RHD appealed the decision to the U.S. Court of Appeals for the Ninth Circuit and moved for an injunction pending appeal, both of which remain pending.",
+          "independent_source_identity": null,
+          "notes": "Найдено целевым поиском (не в прежнем прогоне): суд Невады отказал RHD в предварительной судебной защите (preliminary injunction), после чего Robinhood согласилась прекратить предложение новых спортивных event contracts в Неваде с 01.12.2025 в обмен на приостановку правоприменения штатом на время апелляции. Это конкретный продукт (новые спортивные event contracts), прекращённый в конкретной юрисдикции (Невада) — соответствует критерию G2 буквально. Апелляция в 9-м округе не разрешена на дату отчёта (30.06.2026), ограничение действует."
+        }
+      ],
+      "criterion_checks": [
+        {
+          "expression": "specific product offering required to cease/suspend in at least one jurisdiction (as of the reviewed filing date)",
+          "result": true,
+          "evidence_kpi_refs": [],
+          "calculation": null,
+          "notes": "Nevada: RHD согласилась прекратить новые спортивные event contracts с 01.12.2025 после отказа суда в предварительной защите; ограничение действует на дату отчёта (30.06.2026), апелляция не разрешена."
+        }
+      ],
+      "history_evaluation_ref": null,
+      "runtime_verified": true,
+      "patch_required": false,
+      "notes": "Прежний PATCH_REQUIRED (не найдено ни подтверждения, ни опровержения) снят: целевой поиск по Note 15 нашёл прямую цитату о цессии в Неваде. G2 подтверждён как текущее состояние."
+    }
+  ],
+  "event_items": [
+    {
+      "trigger_id": "HOOD-E-09",
+      "trigger_family": "E",
+      "claim_type": "discrete_event",
+      "event_claim": "Federal or multi-jurisdiction restriction requiring suspension/termination of a product category representing >=10% of trailing-quarter revenue.",
+      "event_date": null,
+      "status": "event_unconfirmed",
+      "primary_sources": [
+        {
+          "source_ref": "HOOD_Q2_10Q",
+          "source_class": "regulatory_filing",
+          "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm",
+          "technical_status": "accessible",
+          "evidence_locator": "Note 15, Event Contracts Litigation subsection",
+          "evidence_excerpt": "In Nevada, ... Robinhood has agreed to cease offering new sports-related event contracts in Nevada ...; in Massachusetts, court proceedings pending; CFTC preemption suits against several states pending.",
+          "independent_source_identity": null,
+          "notes": "Найденное ограничение (Nevada) — одна юрисдикция, не федеральное и не мульти-юрисдикционное, и касается только подмножества (новые спортивные event contracts), не всей категории event contracts (11.9% выручки). Порог E-09 (federal or multi-jurisdiction, >=10% выручки) не достигнут этим фактом; событие в заявленном объёме не подтверждено."
+        }
+      ],
+      "media_sources": [],
+      "fact_only": true,
+      "runtime_verified": false,
+      "patch_required": false,
+      "runtime_targets": [
+        "events_reported"
+      ],
+      "notes": "Nevada-факт релевантен оси Regulatory_Product (G2), но не удовлетворяет более высокому порогу E-09 (G3)."
+    },
+    {
+      "trigger_id": "HOOD-E-11",
+      "trigger_family": "E",
+      "claim_type": "discrete_event",
+      "event_claim": "Regulatory action materially suspends or impairs a core brokerage, clearing or custody authorization.",
+      "event_date": null,
+      "status": "event_unconfirmed",
+      "primary_sources": [
+        {
+          "source_ref": "HOOD_Q2_10Q",
+          "source_class": "regulatory_filing",
+          "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm",
+          "technical_status": "accessible",
+          "evidence_locator": "Note 15 Commitments & Contingencies (full section reviewed); Broker-Dealer/FCM regulation section",
+          "evidence_excerpt": "Nevada event-contracts restriction relates to a specific product line, not brokerage/clearing/custody authorization; Singapore capital markets service license granted 2026-07-01 (new authorization, not suspension).",
+          "independent_source_identity": null,
+          "notes": "Не найдено подтверждения материального нарушения брокерской/клиринговой/кастодиальной авторизации; найденные регуляторные факты касаются продуктовой линии event contracts, не core authorization."
+        }
+      ],
+      "media_sources": [],
+      "fact_only": true,
+      "runtime_verified": false,
+      "patch_required": false,
+      "runtime_targets": [
+        "events_reported"
+      ],
+      "notes": null
+    }
+  ],
+  "transition_checks": [
+    {
+      "trigger_id": "HOOD-E-01",
+      "axis": "Customer_Asset_Scale",
+      "transition": {
+        "from": "S3",
+        "to": "S4"
+      },
+      "condition": "Funded Customers >=30M AND TPA >=$450B AND LTM Net Deposit growth >=20% for 2 months",
+      "kpi_item_refs": [
+        "HOOD-KPI-01",
+        "HOOD-KPI-02",
+        "HOOD-KPI-03"
+      ],
+      "event_item_refs": [],
+      "history_evaluation_ref": null,
+      "result": "not_met",
+      "runtime_verified": false,
+      "patch_required": false,
+      "notes": "Текущий месяц (август 2026) уже опровергает условие: Funded Customers 28.6M < 30M. Многомесячная история не требуется для отрицательного результата."
+    },
+    {
+      "trigger_id": "HOOD-E-02",
+      "axis": "Customer_Asset_Scale",
+      "transition": {
+        "from": "S3",
+        "to": "S2"
+      },
+      "condition": "Funded Customers <27M OR TPA <$300B OR LTM Net Deposit growth <10% for 2 months",
+      "kpi_item_refs": [
+        "HOOD-KPI-01",
+        "HOOD-KPI-02",
+        "HOOD-KPI-03"
+      ],
+      "event_item_refs": [],
+      "history_evaluation_ref": null,
+      "result": "not_met",
+      "runtime_verified": false,
+      "patch_required": false,
+      "notes": "Текущий месяц (август 2026) опровергает все три альтернативы: FC 28.6 (не <27), TPA 383.7 (не <300), growth 0.24 (не <0.10)."
+    },
+    {
+      "trigger_id": "HOOD-E-09",
+      "axis": "Regulatory_Product",
+      "transition": {
+        "from": "G2",
+        "to": "G3"
+      },
+      "condition": "federal or multi-jurisdiction restriction requires suspension/termination of a product category representing >=10% of trailing-quarter revenue",
+      "kpi_item_refs": [],
+      "event_item_refs": [
+        "HOOD-E-09"
+      ],
+      "history_evaluation_ref": null,
+      "result": "pending_history",
+      "runtime_verified": null,
+      "patch_required": false,
+      "notes": "Однопериодный дискретно-событийный триггер; событие в заявленном объёме (federal/multi-jurisdiction, >=10% revenue category) не подтверждено — найденный факт (Nevada) уже, чем требуется. Протокол v1.2 не даёт отдельного значения enum для этого исхода в transition_checks — используется pending_history как ближайшая непатчевая категория (та же схемная неоднозначность отмечена в предыдущем прогоне verify-HOOD-20260923T194500Z и в verify-NVDA-20260923T190405Z.json)."
+    },
+    {
+      "trigger_id": "HOOD-E-10",
+      "axis": "Regulatory_Product",
+      "transition": {
+        "from": "G2",
+        "to": "G1"
+      },
+      "condition": "previous forced restriction is removed/resolved AND no other forced product suspension remains material for 2 quarters",
+      "kpi_item_refs": [],
+      "event_item_refs": [],
+      "history_evaluation_ref": null,
+      "result": "not_met",
+      "runtime_verified": false,
+      "patch_required": false,
+      "notes": "Улучшение относительно прежнего прогона (там — pending_history из-за неподтверждённой оси): теперь ось G2 подтверждена (state_supported), ограничение в Неваде действует и не разрешено (апелляция в 9-м округе не завершена на дату отчёта) — условие снятия ограничения буквально не выполнено. not_met."
+    },
+    {
+      "trigger_id": "HOOD-E-11",
+      "axis": "Regulatory_Product",
+      "transition": {
+        "from": "G2",
+        "to": "G4"
+      },
+      "condition": "regulatory action materially suspends or impairs a core brokerage, clearing or custody authorization",
+      "kpi_item_refs": [],
+      "event_item_refs": [
+        "HOOD-E-11"
+      ],
+      "history_evaluation_ref": null,
+      "result": "pending_history",
+      "runtime_verified": null,
+      "patch_required": false,
+      "notes": "Однопериодный дискретно-событийный триггер; событие не подтверждено (event_unconfirmed). См. схемную неоднозначность выше (HOOD-E-09)."
+    }
+  ],
+  "summary": {
+    "overall_status": "PASS_WITH_DECLARED_PENDING",
+    "counts": {
+      "verified_match": 3,
+      "verified_match_with_normalization": 0,
+      "source_unavailable_technical": 0
+    },
+    "patch_required_kpis": [],
+    "technical_blocked_kpis": [],
+    "pending_kpis": [],
+    "qualifier_patch_suggested_kpis": [],
+    "axis_counts": {
+      "state_supported": 2,
+      "evidence_unavailable_technical": 0,
+      "state_pending_verification": 0
+    },
+    "event_counts": {
+      "event_unconfirmed": 2
+    },
+    "transition_counts": {
+      "not_met": 3,
+      "pending_history": 2
+    },
+    "patch_required_axes": [],
+    "technical_blocked_axes": [],
+    "pending_axes": [],
+    "patch_required_events": [],
+    "technical_blocked_events": [],
+    "pending_events": [
+      "HOOD-E-09",
+      "HOOD-E-11"
+    ],
+    "patch_required_transition_checks": [],
+    "pending_transition_checks": [
+      "HOOD-E-09",
+      "HOOD-E-11"
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T00:30:00Z",
+  "updated": "2026-09-24T07:05:08Z",
   "price": {
     "last": 119.82,
     "last_at": "2026-09-18",
@@ -47,6 +47,11 @@
       "timestamp": "2026-09-24T00:30:00Z",
       "kind": "calc",
       "summary": "Интеграция калибровок (23.09): calibration_v1.0.yaml, mc_calibration_v1.0.1.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260923T200831Z-reverse_valuation-933181, 20260923T211400Z-company_mc-6fb7ec (v1.0 — справочный прогон …-9b14c5 на 2.3.0)"
+    },
+    {
+      "timestamp": "2026-09-24T07:05:08Z",
+      "kind": "verification",
+      "summary": "Целевое дозакрытие прогона verify-HOOD-20260923T194500Z (run_id=verify-HOOD-20260924T070242Z, Dozor Verification Protocol v1.2.1, гейт G8): KPI-01/02/03 (August 2026 operating data) подтверждены (verified_match) по копии релиза, полученной владельцем вручную в браузере 23.09 (portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf; IR-сайт остаётся технически недоступен агенту напрямую — HTTP/2 stream error без ответа). Ось Customer_Asset_Scale (S3) подтверждена (criterion_checks met). Ось Regulatory_Product (G2) подтверждена целевым поиском в Note 15 10-Q Q2 2026: RHD согласилась прекратить новые спортивные event contracts в Неваде с 01.12.2025 (апелляция в 9-м округе не разрешена на дату отчёта) — конкретный продукт прекращён в конкретной юрисдикции, критерий выполнен буквально; прежний PATCH_REQUIRED снят. Переходы HOOD-E-01/E-02 (S3→S4/S2) — not_met (текущий месяц уже опровергает условия). HOOD-E-10 (G2→G1) — not_met (ограничение в Неваде действует). HOOD-E-09/E-11 (G2→G3/G4) — событие не подтверждено в требуемом объёме (найденный факт Nevada уже, чем федеральный/мульти-юрисдикционный порог E-09); pending_history (схемная неоднозначность протокола). Итог прогона: PASS_WITH_DECLARED_PENDING (pending — только HOOD-E-09/E-11). Отчёт: portfolio/hood/_verify/verify-HOOD-20260924T070242Z.json."
     }
   ],
   "scenario_state": {
@@ -56,7 +61,8 @@
       "evidence": [],
       "source": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
       "verified": true,
-      "verified_note": "KPI-01/02 подтверждены заданием, KPI-03 — по указанию LLM на место в релизе (21.09). Прогон 23.09 (verify-HOOD-20260923T194500Z) не смог переподтвердить: источник HOOD_AUG_OPS технически недоступен (BLOCKED_TECHNICAL), verified не переписан по правилу evidence_unavailable_technical."
+      "verified_note": "Дозакрытие verify-HOOD-20260923T194500Z: KPI-01/02/03 подтверждены по локальной копии релиза (получена владельцем вручную 23.09), критерий S3 выполнен (28.6>=28M, 383.7>=350B, 0.24>=0.20). run_id=verify-HOOD-20260924T070242Z.",
+      "verification_run_id": "verify-HOOD-20260924T070242Z"
     },
     "Revenue_Diversification": {
       "state": "R3",
@@ -87,9 +93,9 @@
       "since": "2026-09-21",
       "evidence": [],
       "source": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000114/hood-20260630.htm",
-      "verified": false,
-      "verification_run_id": "verify-HOOD-20260923T194500Z",
-      "verified_note": "10-Q не содержит позитивной цитаты, подтверждающей или опровергающей текущее конкретное состояние G2 («product offering required to cease/suspend in at least one jurisdiction») на дату отчёта; state_pending_verification, PATCH_REQUIRED по отчёту."
+      "verified": true,
+      "verification_run_id": "verify-HOOD-20260924T070242Z",
+      "verified_note": "Дозакрытие verify-HOOD-20260923T194500Z: целевой поиск в Note 15 10-Q Q2 2026 нашёл цитату о цессии Robinhood в Неваде (RHD согласилась прекратить новые спортивные event contracts с 01.12.2025, апелляция в 9-м округе не разрешена на дату отчёта) — критерий G2 подтверждён буквально. run_id=verify-HOOD-20260924T070242Z."
     }
   },
   "state_transitions": [],
@@ -105,7 +111,12 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "note": "Прогон 23.09 (verify-HOOD-20260923T194500Z) не смог переподтвердить: источник технически недоступен (BLOCKED_TECHNICAL). Поле verified не изменено (не переподтверждено, но и не опровергнуто)."
+      "note": "Дозакрытие verify-HOOD-20260923T194500Z: подтверждено run_id=verify-HOOD-20260924T070242Z по локальной копии релиза (portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf), полученной владельцем вручную 23.09; IR-сайт остаётся технически недоступен агенту напрямую.",
+      "observation_qualifier": "exact",
+      "verification_run_ids": [
+        "verify-HOOD-20260924T070242Z"
+      ],
+      "verification_run_id": "verify-HOOD-20260924T070242Z"
     },
     {
       "kpi_id": "HOOD-KPI-02",
@@ -118,7 +129,12 @@
       "verified": true,
       "value_type": "actual",
       "provenance": "verified_fact",
-      "note": "Прогон 23.09 (verify-HOOD-20260923T194500Z) не смог переподтвердить: источник технически недоступен (BLOCKED_TECHNICAL)."
+      "note": "Дозакрытие verify-HOOD-20260923T194500Z: подтверждено run_id=verify-HOOD-20260924T070242Z по локальной копии релиза (portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf), полученной владельцем вручную 23.09; таблица даёт точное 383.7 (текст округляет до 384).",
+      "observation_qualifier": "exact",
+      "verification_run_ids": [
+        "verify-HOOD-20260924T070242Z"
+      ],
+      "verification_run_id": "verify-HOOD-20260924T070242Z"
     },
     {
       "kpi_id": "HOOD-KPI-03",
@@ -127,12 +143,16 @@
       "value": 0.24,
       "value_raw": "August 2026 operating release: LTM Net Deposits $74.1B, annual growth rate 24% relative to August 2025 Total Platform Assets; dashboard «24% LTM Growth»",
       "unit": "fraction",
-      "source_url": "https://investors.robinhood.com/static-files/5980b367-8c3d-486b-b38d-99fad8d6da70",
+      "source_url": "https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data",
       "verified": true,
-      "verified_by": "другая LLM (batch_01_source_corrections, 21.09) с указанием точного места в релизе; дозор подтвердит при следующей сверке по PDF",
       "value_type": "actual",
       "provenance": "verified_fact",
-      "note": "Прогон 23.09 (verify-HOOD-20260923T194500Z) не смог переподтвердить: источник технически недоступен (BLOCKED_TECHNICAL). Остаётся непроверенным дозором."
+      "note": "Дозакрытие verify-HOOD-20260923T194500Z: подтверждено дозором напрямую (не по указанию другой LLM) run_id=verify-HOOD-20260924T070242Z по локальной копии релиза (portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf), полученной владельцем вручную 23.09; дословная цитата: LTM Net Deposits $74.1B, annual growth rate 24% relative to August 2025 Total Platform Assets.",
+      "observation_qualifier": "exact",
+      "verification_run_ids": [
+        "verify-HOOD-20260924T070242Z"
+      ],
+      "verification_run_id": "verify-HOOD-20260924T070242Z"
     },
     {
       "kpi_id": "HOOD-KPI-04",
@@ -146,7 +166,9 @@
       "value_type": "actual",
       "provenance": "verified_fact",
       "verification_run_id": "verify-HOOD-20260923T194500Z",
-      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
+      "verification_run_ids": [
+        "verify-HOOD-20260923T194500Z"
+      ]
     },
     {
       "kpi_id": "HOOD-KPI-05",
@@ -160,7 +182,9 @@
       "value_type": "actual",
       "provenance": "verified_fact",
       "verification_run_id": "verify-HOOD-20260923T194500Z",
-      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
+      "verification_run_ids": [
+        "verify-HOOD-20260923T194500Z"
+      ]
     },
     {
       "kpi_id": "HOOD-KPI-06",
@@ -174,7 +198,9 @@
       "value_type": "actual",
       "provenance": "verified_fact",
       "verification_run_id": "verify-HOOD-20260923T194500Z",
-      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
+      "verification_run_ids": [
+        "verify-HOOD-20260923T194500Z"
+      ]
     },
     {
       "kpi_id": "HOOD-KPI-07",
@@ -188,7 +214,9 @@
       "value_type": "actual",
       "provenance": "verified_fact",
       "verification_run_id": "verify-HOOD-20260923T194500Z",
-      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
+      "verification_run_ids": [
+        "verify-HOOD-20260923T194500Z"
+      ]
     },
     {
       "kpi_id": "HOOD-KPI-08",
@@ -202,7 +230,9 @@
       "value_type": "actual",
       "provenance": "verified_fact",
       "verification_run_id": "verify-HOOD-20260923T194500Z",
-      "verification_run_ids": ["verify-HOOD-20260923T194500Z"],
+      "verification_run_ids": [
+        "verify-HOOD-20260923T194500Z"
+      ],
       "note": "Отчёт verify-HOOD-20260923T194500Z подтверждает 0.5931 = 776/1308 (полная точность); реестр kpis.yaml хранит округлённое 0.59 — расхождение только в точности округления."
     },
     {
@@ -217,7 +247,9 @@
       "value_type": "actual",
       "provenance": "verified_fact",
       "verification_run_id": "verify-HOOD-20260923T194500Z",
-      "verification_run_ids": ["verify-HOOD-20260923T194500Z"],
+      "verification_run_ids": [
+        "verify-HOOD-20260923T194500Z"
+      ],
       "note": "Отчёт verify-HOOD-20260923T194500Z подтверждает 0.1193 = 156/1308 (полная точность); реестр kpis.yaml хранит округлённое 0.12 — расхождение только в точности округления."
     },
     {
@@ -232,13 +264,15 @@
       "value_type": "actual",
       "provenance": "verified_fact",
       "verification_run_id": "verify-HOOD-20260923T194500Z",
-      "verification_run_ids": ["verify-HOOD-20260923T194500Z"]
+      "verification_run_ids": [
+        "verify-HOOD-20260923T194500Z"
+      ]
     }
   ],
   "verification": {
-    "run_id": "verify-HOOD-20260923T194500Z",
-    "as_of": "2026-09-23T19:45:00Z",
-    "overall_status": "BLOCKED_TECHNICAL"
+    "run_id": "verify-HOOD-20260924T070242Z",
+    "as_of": "2026-09-24T07:02:42Z",
+    "overall_status": "PASS_WITH_DECLARED_PENDING"
   },
   "calc_runs": [
     {

@@ -1,0 +1,79 @@
+version: '1.0'
+artifact: scenario_mapping_coverage_audit
+as_of: '2026-09-25'
+scenario_drivers:
+  TAIWAN_SEIZURE:
+  - TAIWAN_SUPPLY
+  - CHINA_REVENUE
+  - AI_COMPUTE_DEMAND
+  - HBM_MEMORY
+  - ADVANCED_PACKAGING
+  - SEMICONDUCTOR_WFE
+  - CAPITAL_MARKETS
+  - GOVERNMENT_DEFENSE
+  CHIP_COLD_WAR:
+  - SEMICONDUCTOR_WFE
+  - INDUSTRIAL_RESHORING
+  - GOVERNMENT_DEFENSE
+  - HYPERSCALER_CAPEX
+  - DATA_CENTER_POWER
+  - INTEREST_RATES
+  - CHINA_REVENUE
+  - TAIWAN_SUPPLY
+  - AI_CLOUD_PRICING
+  - ACCELERATOR_PRICE_COMPETITION
+decisions:
+  PLTR:
+    decision: no_patch
+    rationale: Material scenario channels already enter via GOVERNMENT_DEFENSE and AI_COMPUTE_DEMAND/CLOUD_SOFTWARE_DEMAND. Adding semiconductor
+      supply drivers would imply direct hardware sensitivity not supported by the company model.
+  NET:
+    decision: no_patch
+    rationale: AI_COMPUTE_DEMAND and AI_CLOUD_PRICING already transmit demand/compute-economics channels. Direct Taiwan/WFE mapping
+      would duplicate upstream effects without disclosed hardware economics.
+  HOOD:
+    decision: no_patch
+    rationale: Taiwan acute shock transmits primarily through CAPITAL_MARKETS; cold-war semiconductor competition is immaterial to operating
+      model. INTEREST_RATES handles financial-condition channel.
+  LLY:
+    decision: no_patch
+    rationale: CHINA_REVENUE and INTEREST_RATES cover the material cross-border/financial channels; semiconductor-chain drivers are
+      not material to pharma operating economics.
+  ETN:
+    decision: no_patch
+    rationale: HYPERSCALER_CAPEX, DATA_CENTER_POWER, INDUSTRIAL_RESHORING and AI_COMPUTE_DEMAND already capture fab/data-center electrical
+      buildout. Mapping SEMICONDUCTOR_WFE directly would risk double counting the same construction cycle.
+  NVDA:
+    decision: patch_ACC_PRICE_COMPETITION
+    rationale: Current cold-war mapping lacks direct accelerator price/performance competition despite material producer exposure.
+  NBIS:
+    decision: patch_ACC_PRICE_COMPETITION
+    rationale: As accelerator buyer/infrastructure provider, lower hardware unit economics is a material opposite-sign channel.
+  MSFT:
+    decision: patch_ACC_PRICE_COMPETITION
+    rationale: Large accelerator buyer; unit-cost channel is distinct from AI_CLOUD_PRICING, which is downstream service pricing.
+  META:
+    decision: patch_ACC_PRICE_COMPETITION
+    rationale: Large accelerator buyer; capex intensity responds to accelerator economics.
+  ASML:
+    decision: patch_ACC_PRICE_COMPETITION
+    rationale: Technology bifurcation can affect leading-edge lithography demand/valuation separately from simple Taiwan supply availability.
+  SPCX:
+    decision: no_new_patch
+    rationale: Existing broad AI/space/power/Taiwan mappings already cover both scenarios; accelerator-price competition is secondary
+      versus its other segments.
+  RKLB:
+    decision: no_patch
+    rationale: GOVERNMENT_DEFENSE/INDUSTRIAL_RESHORING/INTEREST_RATES cover material cold-war channels; Taiwan semiconductor supply
+      is not a primary company driver.
+  META_TAIWAN_SEMANTICS:
+    decision: semantic_mismatch_requires_patch
+    rationale: TAIWAN_SUPPLY canonically means supply health. Existing MSFT/META negative exposure/effects invert that meaning and caused
+      poorer Taiwan supply to look beneficial in the exploratory run. Do not redefine the driver; correct those company mappings through
+      host-accepted reissues.
+  MSFT_META_TAIWAN_RULE:
+    decision: block_old_signs_in_normative_scenario
+    rationale: Until corrected reissues pass schema/MC-G5-013, scenario reporting must mark the old TAIWAN_SUPPLY channels excluded_semantic_mismatch
+      rather than apply them silently.
+coverage_rule: Scenario run must emit applicable/unmapped/explicitly_immaterial lists by company. A taxonomy exposure without accepted
+  driver_parameter_mapping is not silently applied.

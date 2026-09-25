@@ -1,0 +1,264 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Scenario_Engine_Schema_v1.0
+title: Scenario Calibration v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- scenario_id
+- description
+- status
+- mutual_exclusion_set
+- probability
+- probability_status
+- phases
+- fact_catalog
+- links
+properties:
+  schema_version:
+    const: '1.0'
+  scenario_id:
+    type: string
+    pattern: ^[A-Z][A-Z0-9_]{2,63}$
+  description:
+    type: string
+    minLength: 1
+  status:
+    enum:
+    - proposed_normative
+    - accepted
+    - deprecated
+  mutual_exclusion_set:
+    type: string
+    minLength: 1
+  probability:
+    type:
+    - number
+    - 'null'
+    minimum: 0
+    maximum: 1
+  probability_status:
+    enum:
+    - owner_judgment
+    - pending_owner_judgment
+  probability_meta:
+    $ref: '#/$defs/meta'
+  phases:
+    type: array
+    minItems: 1
+    items:
+      $ref: '#/$defs/phase'
+  fact_catalog:
+    type: array
+    items:
+      $ref: '#/$defs/fact_item'
+  links:
+    type: object
+    additionalProperties: false
+    required:
+    - common_causes
+    - legacy_action_scenario_refs
+    properties:
+      common_causes:
+        type: array
+        items:
+          type: string
+      legacy_action_scenario_refs:
+        type: array
+        items:
+          type: string
+  notes:
+    type: array
+    items:
+      type: string
+$defs:
+  meta:
+    type: object
+    additionalProperties: false
+    required:
+    - provenance
+    - rationale
+    properties:
+      provenance:
+        enum:
+        - verified_fact
+        - derived_fact
+        - model_assumption
+        - owner_judgment
+        - company_guidance
+      rationale:
+        type: string
+      source_ref:
+        type:
+        - string
+        - 'null'
+  timing:
+    type: object
+    additionalProperties: false
+    required:
+    - kind
+    - anchor
+    properties:
+      kind:
+        enum:
+        - fixed_quarter
+        - triangular_quarter
+      anchor:
+        type: string
+        pattern: ^(t0|phase:[A-Z0-9_]+)$
+      quarter:
+        type: integer
+        minimum: 0
+      min:
+        type: integer
+        minimum: 0
+      mode:
+        type: integer
+        minimum: 0
+      max:
+        type: integer
+        minimum: 0
+      meta:
+        $ref: '#/$defs/meta'
+    allOf:
+    - if:
+        properties:
+          kind:
+            const: fixed_quarter
+      then:
+        required:
+        - quarter
+    - if:
+        properties:
+          kind:
+            const: triangular_quarter
+      then:
+        required:
+        - min
+        - mode
+        - max
+  driver_override:
+    type: object
+    additionalProperties: false
+    required:
+    - mean_shift_sigma
+    - volatility_multiplier
+    - persistence_override
+    - meta
+    properties:
+      mean_shift_sigma:
+        type: number
+        minimum: -5
+        maximum: 5
+      volatility_multiplier:
+        type: number
+        exclusiveMinimum: 0
+        maximum: 5
+      persistence_override:
+        type:
+        - number
+        - 'null'
+        minimum: 0
+        maximum: 0.99
+      meta:
+        $ref: '#/$defs/meta'
+  corr_override:
+    type: object
+    additionalProperties: false
+    required:
+    - root_a
+    - root_b
+    - correlation
+    - meta
+    properties:
+      root_a:
+        type: string
+      root_b:
+        type: string
+      correlation:
+        type: number
+        minimum: -1
+        maximum: 1
+      meta:
+        $ref: '#/$defs/meta'
+  phase:
+    type: object
+    additionalProperties: false
+    required:
+    - phase_id
+    - name
+    - effective_from
+    - ramp_quarters
+    - duration_quarters
+    - decay_quarters
+    - driver_overrides
+    - root_correlation_overrides
+    - meta
+    properties:
+      phase_id:
+        type: string
+        pattern: ^[A-Z][A-Z0-9_]{1,63}$
+      name:
+        type: string
+      effective_from:
+        $ref: '#/$defs/timing'
+      ramp_quarters:
+        type: integer
+        minimum: 0
+        maximum: 32
+      duration_quarters:
+        oneOf:
+        - type: integer
+          minimum: 1
+        - enum:
+          - until_next_phase
+          - until_end
+      decay_quarters:
+        type: integer
+        minimum: 0
+        maximum: 32
+      driver_overrides:
+        type: object
+        additionalProperties:
+          $ref: '#/$defs/driver_override'
+      root_correlation_overrides:
+        type: array
+        items:
+          $ref: '#/$defs/corr_override'
+      meta:
+        $ref: '#/$defs/meta'
+  fact_item:
+    type: object
+    additionalProperties: false
+    required:
+    - fact_id
+    - signal
+    - phase_relevance
+    - verification_status
+    - preferred_sources
+    - fallback_sources
+    properties:
+      fact_id:
+        type: string
+      signal:
+        type: string
+      phase_relevance:
+        type: array
+        items:
+          type: string
+      verification_status:
+        enum:
+        - pending_dozor
+        - verified
+        - not_disclosed
+        - source_unavailable_technical
+      preferred_sources:
+        type: array
+        items:
+          type: string
+      fallback_sources:
+        type: array
+        items:
+          type: string
+      note:
+        type: string

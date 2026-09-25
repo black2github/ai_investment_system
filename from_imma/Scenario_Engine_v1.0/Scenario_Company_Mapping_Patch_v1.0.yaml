@@ -1,0 +1,141 @@
+version: '1.0'
+artifact: scenario_company_mapping_patch
+status: proposed_requires_host_validation
+driver: ACCELERATOR_PRICE_COMPETITION
+taxonomy_ref: MPC_Driver_Taxonomy_v1.2
+anti_circularity: Effects are sized as small structural channels; they are not calibrated to reproduce exploratory scenario P/L. Host
+  must run MC-G5-013 after merge.
+company_patches:
+  NVDA:
+    exposure: -2
+    active_driver_add: true
+    stochastic_targets:
+    - path: revenue_model.segments.DataCenter.initial_growth
+      transform: additive_pp
+      effect_per_plus_1sigma: -0.012
+      meta:
+        provenance: model_assumption
+        rationale: Stronger accelerator price/performance competition compresses Data Center growth/ASP economics; kept small to avoid
+          duplicating CHINA_REVENUE/TAIWAN_SUPPLY.
+    - path: margin_model.terminal_margin_Y5
+      transform: additive_pp
+      effect_per_plus_1sigma: -0.006
+      meta:
+        provenance: model_assumption
+        rationale: Sustained price competition compresses mature gross/cash economics.
+    - path: valuation.Y5.multiple
+      transform: multiplicative_pct
+      effect_per_plus_1sigma: -0.02
+      meta:
+        provenance: model_assumption
+        rationale: More durable competition lowers scarcity/premium valuation.
+  NBIS:
+    exposure: 1
+    active_driver_add: true
+    stochastic_targets:
+    - path: margin_model.capex_revenue_nodes.Y2
+      transform: additive_pp
+      effect_per_plus_1sigma: -0.008
+      meta:
+        provenance: model_assumption
+        rationale: Cheaper accelerators reduce compute capex intensity for an AI infrastructure buyer.
+    - path: margin_model.ocf_margin_nodes.Y3
+      transform: additive_pp
+      effect_per_plus_1sigma: 0.006
+      meta:
+        provenance: model_assumption
+        rationale: Lower hardware economics can improve mature operating cash economics if passed through incompletely.
+  MSFT:
+    exposure: 1
+    active_driver_add: true
+    stochastic_targets:
+    - path: margin_model.terminal_margin_Y5
+      transform: additive_pp
+      effect_per_plus_1sigma: 0.005
+      meta:
+        provenance: model_assumption
+        rationale: Accelerator competition lowers infrastructure unit cost for a large buyer.
+    - path: revenue_model.segments.IntelligentCloud.initial_growth
+      transform: additive_pp
+      effect_per_plus_1sigma: 0.005
+      meta:
+        provenance: model_assumption
+        rationale: Lower compute cost can expand economically addressable AI-cloud usage; small to avoid double-count with AI_CLOUD_PRICING.
+  META:
+    exposure: 1
+    active_driver_add: true
+    stochastic_targets:
+    - path: margin_model.capex_revenue_nodes.Y2
+      transform: additive_pp
+      effect_per_plus_1sigma: -0.006
+      meta:
+        provenance: model_assumption
+        rationale: Cheaper accelerators lower medium-term AI infrastructure capex intensity.
+    - path: margin_model.ocf_margin_nodes.Y3
+      transform: additive_pp
+      effect_per_plus_1sigma: 0.004
+      meta:
+        provenance: model_assumption
+        rationale: Lower compute unit cost modestly improves cash economics.
+  ASML:
+    exposure: -1
+    active_driver_add: true
+    stochastic_targets:
+    - path: revenue_model.segments.EUV_Systems.initial_growth
+      transform: additive_pp
+      effect_per_plus_1sigma: -0.006
+      meta:
+        provenance: model_assumption
+        rationale: If cheaper competing accelerator ecosystems rely less on Western leading-edge stack, EUV growth premium is modestly
+          pressured; WFE/China/Taiwan channels remain separate.
+    - path: valuation.Y5.multiple
+      transform: log_multiplier
+      effect_per_plus_1sigma: -0.006
+      meta:
+        provenance: model_assumption
+        rationale: Greater two-system competition modestly raises structural uncertainty around Western leading-edge scarcity rents.
+host_acceptance_required:
+- schema validation after full company reissue
+- MC-G5-013 measured aggregate sigma
+- dry run mapping_warnings=[]
+- determinism
+- intrinsic/full W diagnostic
+- robustness v1.1.2
+note: Do not apply this patch implicitly. Until each company reissue is host-accepted, Scenario Engine reports ACCELERATOR_PRICE_COMPETITION
+  as unmapped for that company.
+semantic_corrections:
+  TAIWAN_SUPPLY:
+    canonical_semantics: Higher TAIWAN_SUPPLY means healthier/more available Taiwan-linked semiconductor supply, consistent with Joint
+      Layer root SEMI_SUPPLY_HEALTH.
+    MSFT:
+      exposure_change:
+        from: -1
+        to: 1
+      target_effect_replacements:
+      - path: revenue_model.segments.IntelligentCloud.initial_growth
+        from: -0.012
+        to: 0.012
+        transform: additive_pp
+      - path: valuation.Y5.multiple
+        from: -0.008
+        to: 0.008
+        transform: log_multiplier
+      rationale: A healthier semiconductor supply chain should not mechanically reduce cloud growth or valuation. The accepted negative
+        signs encoded strategic-dependence semantics into a driver whose canonical meaning is supply health.
+    META:
+      exposure_change:
+        from: -1
+        to: 1
+      target_effect_replacements:
+      - path: revenue_model.segments.Advertising.initial_growth
+        from: -0.005
+        to: 0.005
+        transform: additive_pp
+      - path: margin_model.capex_revenue_nodes.Y2
+        from: 0.004
+        to: -0.004
+        transform: additive_pp
+      rationale: Healthier accelerator/semiconductor supply should support platform growth and reduce, not raise, capex intensity. Strategic
+        dependence belongs in failure/scenario risk, not inverted driver semantics.
+    acceptance_rule: Normative multi-scenario runs must use host-accepted reissues with these semantic corrections, or mark MSFT/META
+      TAIWAN_SUPPLY as excluded_semantic_mismatch. Silent use of the old signs is prohibited.

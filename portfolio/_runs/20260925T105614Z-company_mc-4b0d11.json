@@ -1,0 +1,1597 @@
+{
+  "run_id": "20260925T105614Z-company_mc-4b0d11",
+  "model": "company_mc",
+  "version": "2.4.1",
+  "seed": 20260920,
+  "inputs": {
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "PLTR",
+      "as_of": "2026-09-24",
+      "archetype": "mature_positive_margin",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "US_Commercial_AIP_Monetization": "C3",
+        "US_Government_Demand": "G3",
+        "Geographic_Concentration": "I1",
+        "Profitability_Cash": "P3",
+        "Contracted_Demand": "R3"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed; host company_mc 2.3.2 derives company-specific RNG stream, while schema field remains company_mc 2.3.1."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "USCommercial": {
+            "base_revenue_quarterly": 764000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-08-03 | https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": 0.35,
+              "mode": 1.05,
+              "max": 1.8,
+              "provenance": "model_assumption",
+              "rationale": "Q2 U.S. commercial +149% validates hypergrowth but annualization is not assumed; tails cover contract conversion and law-of-large-numbers outcomes."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.03,
+              "mode": 0.16,
+              "max": 0.32,
+              "provenance": "model_assumption",
+              "rationale": "By Y8, commercial growth must mean-revert materially from >100% while retaining software/platform upside."
+            },
+            "growth_half_life_years": 1.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Extreme current growth mean-reverts quickly as the revenue base scales."
+            },
+            "latent_loading": {
+              "growth": 0.68
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Commercial AIP demand shares software/AI factors but contract conversion remains highly idiosyncratic."
+            }
+          },
+          "USGovernment": {
+            "base_revenue_quarterly": 809000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-08-03 | https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": 0.2,
+              "mode": 0.65,
+              "max": 1.15,
+              "provenance": "model_assumption",
+              "rationale": "Q2 U.S. government +90% is strong but procurement/compliance timing creates a wide downside tail."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.02,
+              "mode": 0.1,
+              "max": 0.22,
+              "provenance": "model_assumption",
+              "rationale": "Long-run government growth normalizes toward durable program expansion, not Q2 hypergrowth."
+            },
+            "growth_half_life_years": 1.25,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Government growth mean-reverts over contract/procurement cycles."
+            },
+            "latent_loading": {
+              "growth": 0.62
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Government demand has common defense-budget exposure with contract-specific risk."
+            }
+          },
+          "International": {
+            "base_revenue_quarterly": 362464000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "Q2 total revenue 1.935464B - U.S. commercial 0.764B - U.S. government 0.809B = 0.362464B."
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.1,
+              "mode": 0.25,
+              "max": 0.7,
+              "provenance": "model_assumption",
+              "rationale": "International growth is lower and more execution-sensitive than U.S. segments; range allows contraction."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.02,
+              "mode": 0.08,
+              "max": 0.2,
+              "provenance": "model_assumption",
+              "rationale": "International maturity remains slower than U.S. growth and can stagnate in downside cases."
+            },
+            "growth_half_life_years": 1.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "International growth normalizes over a longer enterprise sales cycle."
+            },
+            "latent_loading": {
+              "growth": 0.5
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Lower loading reflects country/product mix and customer-specific execution."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "mean_reverting_positive_margin",
+        "current_margin": 0.5867010720430532,
+        "current_margin_meta": {
+          "provenance": "derived_fact",
+          "formula": "H1 2026 GAAP-definition FCF = 2.115332B operating cash flow - 0.021955B PP&E purchases = 2.093377B; / 3.568047B H1 revenue = 58.67%."
+        },
+        "terminal_margin_Y5": {
+          "distribution": "triangular",
+          "min": 0.18,
+          "mode": 0.36,
+          "max": 0.54,
+          "provenance": "model_assumption",
+          "rationale": "Y5 GAAP-defined cash margin deliberately normalizes far below current H1 58.7%; wide range absorbs SBC/dilution, sales intensity and contract-conversion uncertainty without using adjusted FCF."
+        },
+        "terminal_margin_Y8": {
+          "distribution": "triangular",
+          "min": 0.16,
+          "mode": 0.32,
+          "max": 0.5,
+          "provenance": "model_assumption",
+          "rationale": "Long-run cash margin compresses further at center as hypergrowth matures; broad tail preserves operating-leverage uncertainty."
+        },
+        "half_life_years": 1.75,
+        "half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Mean reversion spans several reporting periods rather than one quarter."
+        },
+        "shock_sigma": 0.06,
+        "shock_sigma_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Quarterly company-specific cash-margin uncertainty; separate from Joint Layer shared drivers."
+        },
+        "shock_persistence": 0.45,
+        "shock_persistence_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Adjacent-quarter operating/cash-conversion shocks are persistent but mean-reverting."
+        },
+        "lower_bound": 0.08,
+        "lower_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Plausible severe cash-margin floor for the modeled archetype; not a failure-event probability."
+        },
+        "upper_bound": 0.62,
+        "upper_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Prevents temporary cash-conversion peaks from becoming permanent terminal economics."
+        }
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 16.0,
+            "mode": 40.0,
+            "max": 75.0,
+            "provenance": "model_assumption",
+            "rationale": "Hypergrowth software can retain a premium near term, but multiple uncertainty is intentionally very wide."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 12.0,
+            "mode": 30.0,
+            "max": 55.0,
+            "provenance": "model_assumption",
+            "rationale": "Premium software FCF multiple with explicit compression tail as growth normalizes and SBC/dilution economics matter."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 10.0,
+            "mode": 24.0,
+            "max": 45.0,
+            "provenance": "model_assumption",
+            "rationale": "Maturity compression while preserving platform/software duration upside."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 3.0,
+            "mode": 11.0,
+            "max": 22.0,
+            "provenance": "model_assumption",
+            "rationale": "Primary parity reference bridge. Mode 11x / 30x Y5 FCF multiple implies ~36.7% parity margin, aligned with the 36% Y5 cash-margin center; wide tails reflect revenue-multiple uncertainty."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.4,
+          "growth__valuation": 0.35,
+          "margin__valuation": 0.35
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Positive co-movement between operating growth, cash economics and duration; idiosyncratic uncertainty remains material."
+        },
+        "default_loading": 0.62,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Company-specific common-factor loading chosen by business maturity and concentration; not fitted to price."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.58,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Model-dependent path noise used for drawdown/path diagnostics, not terminal valuation calibration."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 1.75,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Valuation dislocations mean-revert over a multi-quarter horizon."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:PLTR_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 0.5884744464507026,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of Reverse Valuation v1.2.0 equation from PLTR_calibration_v1.0.yaml; host run_ref remains authoritative."
+        },
+        "discount_rate": 0.11,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from PLTR RV base calibration."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.06256949,
+              0.06256949
+            ],
+            "margin_nodes_pp": [
+              -0.01954416,
+              0.01954416
+            ],
+            "terminal_multiple_pct": [
+              -0.07154558,
+              0.07705879
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 local robustness: sigma_eq=(Q84-Q16)/2; growth=base-revenue-weighted RMS segment initial_growth sigma_eq; margin=Y5 terminal margin sigma_eq; multiple=Y5 log-space sigma_eq; perturbation=0.25*sigma with absolute ceilings growth 10pp, margin 5pp, multiple 20% relative."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "PLTR: accepted v1.1.2 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "CLOUD_SOFTWARE_DEMAND",
+          "GOVERNMENT_DEFENSE",
+          "AI_COMPUTE_DEMAND"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "PLTR_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.55,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Company execution and demand/cash-conversion conditions persist across adjacent quarters."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "CLOUD_SOFTWARE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.USCommercial.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Enterprise software demand affects AIP/commercial conversion."
+              }
+            },
+            {
+              "path": "revenue_model.segments.International.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "International commercial budgets affect expansion."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Software-demand durability affects valuation duration."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.USCommercial.initial_growth.mode",
+              "contribution": 0.03,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central U.S. commercial growth assumes continued enterprise AI/software demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel."
+              }
+            }
+          },
+          "note": "PLTR-FM-01 enterprise demand slowdown."
+        },
+        {
+          "driver_id": "GOVERNMENT_DEFENSE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.USGovernment.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Defense/government demand supports U.S. government growth."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Program durability supports valuation duration."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.USGovernment.initial_growth.mode",
+              "contribution": 0.025,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central government growth assumes continued strong program demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel."
+              }
+            }
+          },
+          "note": "PLTR-FM-02/05 government demand and compliance; compliance event itself is not synthesized as a root driver."
+        },
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.USCommercial.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.02,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI adoption supports commercial AIP demand."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Sustained AI monetization supports software duration."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel."
+              }
+            }
+          },
+          "note": "PLTR-FM-03 AI monetization; accepted +1 but high failure-mode linkage makes it material."
+        }
+      ]
+    },
+    "equity_value_0": 426879308387.19995,
+    "joint_layer_spec": {
+      "version": "1.0",
+      "artifact": "joint_simulation_layer",
+      "as_of": "2026-09-21",
+      "status": "proposed_normative",
+      "scenario_interface": {
+        "scenario_engine_required_for_multiscenario": true,
+        "fallback_without_scenario_engine": {
+          "id": "BASE",
+          "probability": 1.0,
+          "driver_overrides": {},
+          "root_correlation_overrides": []
+        }
+      },
+      "root_factors": {
+        "distribution": "stationary_standard_normal_AR1",
+        "timestep": "quarterly",
+        "factors": {
+          "GLOBAL_GROWTH": {
+            "phi": 0.65
+          },
+          "AI_CAPEX_CYCLE": {
+            "phi": 0.75
+          },
+          "SEMI_SUPPLY_HEALTH": {
+            "phi": 0.55
+          },
+          "POWER_BUILDOUT": {
+            "phi": 0.8
+          },
+          "FINANCIAL_CONDITIONS": {
+            "phi": 0.6
+          },
+          "SPACE_GOVERNMENT_DEMAND": {
+            "phi": 0.75
+          },
+          "SPACE_REGULATORY_ACCESS": {
+            "phi": 0.7
+          },
+          "HEALTHCARE_DEMAND_ACCESS": {
+            "phi": 0.7
+          },
+          "CONSUMER_RISK_APPETITE": {
+            "phi": 0.55
+          },
+          "DIGITAL_PLATFORM_DEMAND": {
+            "phi": 0.6
+          },
+          "CHINA_MARKET_ACCESS": {
+            "phi": 0.7
+          }
+        },
+        "provenance": "model_assumption"
+      },
+      "root_correlation": {
+        "diagonal": 1.0,
+        "default_off_diagonal": 0.0,
+        "pair_overrides": {
+          "GLOBAL_GROWTH__AI_CAPEX_CYCLE": 0.35,
+          "GLOBAL_GROWTH__FINANCIAL_CONDITIONS": 0.35,
+          "GLOBAL_GROWTH__CONSUMER_RISK_APPETITE": 0.45,
+          "GLOBAL_GROWTH__DIGITAL_PLATFORM_DEMAND": 0.55,
+          "GLOBAL_GROWTH__HEALTHCARE_DEMAND_ACCESS": 0.1,
+          "GLOBAL_GROWTH__POWER_BUILDOUT": 0.25,
+          "GLOBAL_GROWTH__SEMI_SUPPLY_HEALTH": 0.15,
+          "GLOBAL_GROWTH__CHINA_MARKET_ACCESS": 0.1,
+          "AI_CAPEX_CYCLE__SEMI_SUPPLY_HEALTH": 0.3,
+          "AI_CAPEX_CYCLE__POWER_BUILDOUT": 0.45,
+          "AI_CAPEX_CYCLE__DIGITAL_PLATFORM_DEMAND": 0.3,
+          "AI_CAPEX_CYCLE__FINANCIAL_CONDITIONS": 0.2,
+          "SEMI_SUPPLY_HEALTH__CHINA_MARKET_ACCESS": 0.2,
+          "FINANCIAL_CONDITIONS__CONSUMER_RISK_APPETITE": 0.4,
+          "FINANCIAL_CONDITIONS__DIGITAL_PLATFORM_DEMAND": 0.2,
+          "FINANCIAL_CONDITIONS__CHINA_MARKET_ACCESS": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__GLOBAL_GROWTH": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__FINANCIAL_CONDITIONS": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__SPACE_REGULATORY_ACCESS": 0.1,
+          "SPACE_REGULATORY_ACCESS__GLOBAL_GROWTH": 0.05,
+          "HEALTHCARE_DEMAND_ACCESS__CONSUMER_RISK_APPETITE": 0.05
+        },
+        "provenance": "model_assumption",
+        "psd_checked_v1_0": true
+      },
+      "driver_generation": {
+        "formula": "standardize(sum(root_loading * root_factor) + idio_weight * epsilon_driver)",
+        "unspecified_driver_default": "idiosyncratic",
+        "mappings": {
+          "AI_COMPUTE_DEMAND": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.85,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "HYPERSCALER_CAPEX": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.8,
+              "FINANCIAL_CONDITIONS": 0.15
+            },
+            "idio_weight": 0.35
+          },
+          "SEMICONDUCTOR_WFE": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.5,
+              "GLOBAL_GROWTH": 0.3
+            },
+            "idio_weight": 0.45
+          },
+          "ADVANCED_PACKAGING": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.65,
+              "AI_CAPEX_CYCLE": 0.35
+            },
+            "idio_weight": 0.35
+          },
+          "HBM_MEMORY": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.55,
+              "AI_CAPEX_CYCLE": 0.45
+            },
+            "idio_weight": 0.35
+          },
+          "EDA_DESIGN_COMPLEXITY": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.4,
+              "DIGITAL_PLATFORM_DEMAND": 0.25
+            },
+            "idio_weight": 0.6
+          },
+          "CLOUD_SOFTWARE_DEMAND": {
+            "roots": {
+              "DIGITAL_PLATFORM_DEMAND": 0.75,
+              "GLOBAL_GROWTH": 0.25
+            },
+            "idio_weight": 0.35
+          },
+          "DATA_CENTER_POWER": {
+            "roots": {
+              "POWER_BUILDOUT": 0.75,
+              "AI_CAPEX_CYCLE": 0.3
+            },
+            "idio_weight": 0.35
+          },
+          "LAUNCH_ECONOMICS": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.25,
+              "SPACE_REGULATORY_ACCESS": 0.2
+            },
+            "idio_weight": 0.75
+          },
+          "SATELLITE_CONNECTIVITY": {
+            "roots": {
+              "GLOBAL_GROWTH": 0.25,
+              "SPACE_GOVERNMENT_DEMAND": 0.25
+            },
+            "idio_weight": 0.7
+          },
+          "GOVERNMENT_DEFENSE": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.8,
+              "GLOBAL_GROWTH": 0.1
+            },
+            "idio_weight": 0.35
+          },
+          "INTEREST_RATES": {
+            "roots": {
+              "FINANCIAL_CONDITIONS": -0.9
+            },
+            "idio_weight": 0.25
+          },
+          "CAPITAL_MARKETS": {
+            "roots": {
+              "FINANCIAL_CONDITIONS": 0.9
+            },
+            "idio_weight": 0.25
+          },
+          "CHINA_REVENUE": {
+            "roots": {
+              "CHINA_MARKET_ACCESS": 0.8,
+              "GLOBAL_GROWTH": 0.15
+            },
+            "idio_weight": 0.35
+          },
+          "TAIWAN_SUPPLY": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.9
+            },
+            "idio_weight": 0.25
+          },
+          "AI_CLOUD_PRICING": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.6
+            },
+            "idio_weight": 0.55
+          },
+          "HEALTHCARE_DEMAND": {
+            "roots": {
+              "HEALTHCARE_DEMAND_ACCESS": 0.8,
+              "GLOBAL_GROWTH": 0.1
+            },
+            "idio_weight": 0.4
+          },
+          "REIMBURSEMENT_PRICING": {
+            "roots": {
+              "HEALTHCARE_DEMAND_ACCESS": 0.6
+            },
+            "idio_weight": 0.6
+          },
+          "ELECTRIFICATION_GRID": {
+            "roots": {
+              "POWER_BUILDOUT": 0.75,
+              "GLOBAL_GROWTH": 0.15
+            },
+            "idio_weight": 0.4
+          },
+          "UTILITY_CAPEX": {
+            "roots": {
+              "POWER_BUILDOUT": 0.65,
+              "GLOBAL_GROWTH": 0.2,
+              "FINANCIAL_CONDITIONS": 0.15
+            },
+            "idio_weight": 0.4
+          },
+          "AEROSPACE_CYCLE": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.5,
+              "GLOBAL_GROWTH": 0.25
+            },
+            "idio_weight": 0.55
+          },
+          "CONSUMER_CREDIT": {
+            "roots": {
+              "CONSUMER_RISK_APPETITE": 0.8,
+              "FINANCIAL_CONDITIONS": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "CRYPTO_CYCLE": {
+            "roots": {
+              "CONSUMER_RISK_APPETITE": 0.55,
+              "FINANCIAL_CONDITIONS": 0.35
+            },
+            "idio_weight": 0.5
+          },
+          "DIGITAL_AD_DEMAND": {
+            "roots": {
+              "DIGITAL_PLATFORM_DEMAND": 0.7,
+              "CONSUMER_RISK_APPETITE": 0.2,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "SPACE_REGULATION": {
+            "roots": {
+              "SPACE_REGULATORY_ACCESS": -0.9
+            },
+            "idio_weight": 0.25
+          }
+        }
+      },
+      "company_calibration_required_sections": [
+        "joint_simulation",
+        "driver_parameter_mapping"
+      ],
+      "material_driver_rule": {
+        "any_of": [
+          "abs(driver_exposure_vector) == 2",
+          "terminal_value_sensitivity_share >= 0.10",
+          "one_sigma_driver_shift_changes_median_CAGR_5Y_by_at_least_0.01",
+          "driver participates in critical_or_high_failure_mode"
+        ],
+        "provenance": "model_assumption"
+      },
+      "joint_path_algorithm": [
+        "sample_scenario",
+        "generate_root_paths",
+        "apply_scenario_overrides",
+        "generate_standardized_driver_paths",
+        "map_drivers_to_company_parameters",
+        "add_company_idiosyncratic_shocks",
+        "run_company_models",
+        "store_relative_values_with_same_path_id"
+      ],
+      "validation": [
+        "root_matrix_psd",
+        "all_material_drivers_have_mapping",
+        "scenario_probabilities_sum_to_one",
+        "driver_long_run_variance_approximately_one",
+        "same_factor_path_for_all_companies",
+        "standalone_marginals_match_joint_marginals_within_tolerance",
+        "no_double_counting"
+      ]
+    },
+    "paths": 500000,
+    "chunk": 50000,
+    "convergence_check": false,
+    "robustness": false,
+    "store_paths": true,
+    "scenario": {
+      "schema_version": "1.0",
+      "scenario_id": "TAIWAN_SEIZURE",
+      "description": "Escalating restrictions/blockade/conflict around Taiwan followed by partial supply-chain recovery; valuation-only action plan TAIWAN-S1..S3 is referenced but not used as model input.",
+      "status": "proposed_normative",
+      "mutual_exclusion_set": "GEOTECH_REGIME_8Y_V1",
+      "probability": null,
+      "probability_status": "pending_owner_judgment",
+      "probability_meta": {
+        "provenance": "owner_judgment",
+        "rationale": "Probability intentionally left to owner; calibration defines conditional outcomes only."
+      },
+      "phases": [
+        {
+          "phase_id": "RESTRICTIONS",
+          "name": "Partial shipping/airspace restrictions",
+          "effective_from": {
+            "kind": "fixed_quarter",
+            "anchor": "t0",
+            "quarter": 0,
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Scenario is conditioned on onset of material restrictions at t0."
+            }
+          },
+          "ramp_quarters": 1,
+          "duration_quarters": "until_next_phase",
+          "decay_quarters": 0,
+          "driver_overrides": {
+            "TAIWAN_SUPPLY": {
+              "mean_shift_sigma": -0.75,
+              "volatility_multiplier": 1.25,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Material access friction without assuming full physical outage."
+              }
+            },
+            "CHINA_REVENUE": {
+              "mean_shift_sigma": -0.5,
+              "volatility_multiplier": 1.2,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Cross-strait/export friction weakens China-linked revenue."
+              }
+            },
+            "AI_COMPUTE_DEMAND": {
+              "mean_shift_sigma": -0.25,
+              "volatility_multiplier": 1.15,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Near-term deployment caution offsets some substitution demand."
+              }
+            },
+            "HBM_MEMORY": {
+              "mean_shift_sigma": -0.25,
+              "volatility_multiplier": 1.25,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Packaging/memory logistics tighten."
+              }
+            },
+            "ADVANCED_PACKAGING": {
+              "mean_shift_sigma": -0.25,
+              "volatility_multiplier": 1.25,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Advanced packaging access becomes less reliable."
+              }
+            },
+            "SEMICONDUCTOR_WFE": {
+              "mean_shift_sigma": -0.25,
+              "volatility_multiplier": 1.2,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Near-term fab/equipment activity pauses before reconstruction response."
+              }
+            },
+            "CAPITAL_MARKETS": {
+              "mean_shift_sigma": -0.5,
+              "volatility_multiplier": 1.3,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Risk-off financing shock."
+              }
+            },
+            "GOVERNMENT_DEFENSE": {
+              "mean_shift_sigma": 0.25,
+              "volatility_multiplier": 1.15,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Defense demand rises modestly."
+              }
+            }
+          },
+          "root_correlation_overrides": [
+            {
+              "root_a": "SEMI_SUPPLY_HEALTH",
+              "root_b": "CHINA_MARKET_ACCESS",
+              "correlation": 0.35,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Cross-strait supply and China access become more coupled."
+              }
+            },
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "SEMI_SUPPLY_HEALTH",
+              "correlation": 0.4,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI capex becomes more dependent on semiconductor supply health."
+              }
+            }
+          ],
+          "meta": {
+            "provenance": "model_assumption",
+            "rationale": "Initial restrictions corresponding economically to legacy TAIWAN-S1; legacy actions are not model inputs."
+          }
+        },
+        {
+          "phase_id": "BLOCKADE",
+          "name": "Effective maritime/air blockade",
+          "effective_from": {
+            "kind": "triangular_quarter",
+            "anchor": "t0",
+            "min": 1,
+            "mode": 2,
+            "max": 3,
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Conditional seizure path assumes escalation from restrictions to blockade within roughly one to three quarters; timing is model uncertainty."
+            }
+          },
+          "ramp_quarters": 1,
+          "duration_quarters": "until_next_phase",
+          "decay_quarters": 0,
+          "driver_overrides": {
+            "TAIWAN_SUPPLY": {
+              "mean_shift_sigma": -2.0,
+              "volatility_multiplier": 1.6,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Large sustained supply-health shock."
+              }
+            },
+            "CHINA_REVENUE": {
+              "mean_shift_sigma": -1.25,
+              "volatility_multiplier": 1.5,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Market-access/export shock."
+              }
+            },
+            "AI_COMPUTE_DEMAND": {
+              "mean_shift_sigma": -0.75,
+              "volatility_multiplier": 1.35,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Capacity deployment is constrained by unavailable compute inputs."
+              }
+            },
+            "HBM_MEMORY": {
+              "mean_shift_sigma": -1.0,
+              "volatility_multiplier": 1.55,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "HBM supply becomes strongly constrained."
+              }
+            },
+            "ADVANCED_PACKAGING": {
+              "mean_shift_sigma": -1.0,
+              "volatility_multiplier": 1.55,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Advanced packaging becomes strongly constrained."
+              }
+            },
+            "SEMICONDUCTOR_WFE": {
+              "mean_shift_sigma": -0.75,
+              "volatility_multiplier": 1.45,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Equipment demand/shipments are disrupted before geographic substitution."
+              }
+            },
+            "CAPITAL_MARKETS": {
+              "mean_shift_sigma": -1.0,
+              "volatility_multiplier": 1.6,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Global risk-off shock."
+              }
+            },
+            "GOVERNMENT_DEFENSE": {
+              "mean_shift_sigma": 0.75,
+              "volatility_multiplier": 1.3,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Defense procurement rises materially."
+              }
+            }
+          },
+          "root_correlation_overrides": [
+            {
+              "root_a": "SEMI_SUPPLY_HEALTH",
+              "root_b": "CHINA_MARKET_ACCESS",
+              "correlation": 0.5,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Blockade couples semiconductor supply and China market access."
+              }
+            },
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "SEMI_SUPPLY_HEALTH",
+              "correlation": 0.5,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI infrastructure becomes supply constrained."
+              }
+            },
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "FINANCIAL_CONDITIONS",
+              "correlation": 0.35,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Funding and AI buildout co-move more strongly during blockade."
+              }
+            }
+          ],
+          "meta": {
+            "provenance": "model_assumption",
+            "rationale": "Economic analogue of legacy TAIWAN-S2; conditional on actual blockade."
+          }
+        },
+        {
+          "phase_id": "CONFLICT",
+          "name": "Armed conflict / seizure attempt",
+          "effective_from": {
+            "kind": "triangular_quarter",
+            "anchor": "phase:BLOCKADE",
+            "min": 1,
+            "mode": 2,
+            "max": 4,
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Conflict timing is conditional on blockade and uncertain; no unconditional escalation probability is encoded here."
+            }
+          },
+          "ramp_quarters": 1,
+          "duration_quarters": "until_next_phase",
+          "decay_quarters": 0,
+          "driver_overrides": {
+            "TAIWAN_SUPPLY": {
+              "mean_shift_sigma": -3.0,
+              "volatility_multiplier": 2.0,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Extreme disruption to Taiwan-linked semiconductor supply."
+              }
+            },
+            "CHINA_REVENUE": {
+              "mean_shift_sigma": -2.0,
+              "volatility_multiplier": 1.8,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Severe sanctions/market-access fragmentation."
+              }
+            },
+            "AI_COMPUTE_DEMAND": {
+              "mean_shift_sigma": -1.25,
+              "volatility_multiplier": 1.6,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Physical compute availability dominates demand willingness."
+              }
+            },
+            "HBM_MEMORY": {
+              "mean_shift_sigma": -1.5,
+              "volatility_multiplier": 1.9,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Severe HBM supply shock."
+              }
+            },
+            "ADVANCED_PACKAGING": {
+              "mean_shift_sigma": -1.5,
+              "volatility_multiplier": 1.9,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Severe packaging shock."
+              }
+            },
+            "SEMICONDUCTOR_WFE": {
+              "mean_shift_sigma": -1.0,
+              "volatility_multiplier": 1.7,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Equipment supply/demand shock during conflict."
+              }
+            },
+            "CAPITAL_MARKETS": {
+              "mean_shift_sigma": -1.5,
+              "volatility_multiplier": 2.0,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Severe risk-off and financing stress."
+              }
+            },
+            "GOVERNMENT_DEFENSE": {
+              "mean_shift_sigma": 1.5,
+              "volatility_multiplier": 1.6,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "War-economy procurement impulse."
+              }
+            }
+          },
+          "root_correlation_overrides": [
+            {
+              "root_a": "SEMI_SUPPLY_HEALTH",
+              "root_b": "CHINA_MARKET_ACCESS",
+              "correlation": 0.55,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Conflict links supply and sanctions/market access."
+              }
+            },
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "SEMI_SUPPLY_HEALTH",
+              "correlation": 0.55,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Compute investment becomes tightly supply constrained."
+              }
+            },
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "FINANCIAL_CONDITIONS",
+              "correlation": 0.4,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Financial and capex cycles become unusually coupled."
+              }
+            }
+          ],
+          "meta": {
+            "provenance": "model_assumption",
+            "rationale": "Economic analogue of legacy TAIWAN-S3; conditional on armed conflict."
+          }
+        },
+        {
+          "phase_id": "RECOVERY",
+          "name": "Partial geographic substitution and reconstruction",
+          "effective_from": {
+            "kind": "triangular_quarter",
+            "anchor": "phase:CONFLICT",
+            "min": 6,
+            "mode": 10,
+            "max": 16,
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Recovery onset is highly uncertain; six to sixteen quarters is a model-assumption range, not a forecast."
+            }
+          },
+          "ramp_quarters": 4,
+          "duration_quarters": "until_end",
+          "decay_quarters": 0,
+          "driver_overrides": {
+            "TAIWAN_SUPPLY": {
+              "mean_shift_sigma": -1.25,
+              "volatility_multiplier": 1.35,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Supply remains structurally impaired even after acute conflict shock fades."
+              }
+            },
+            "CHINA_REVENUE": {
+              "mean_shift_sigma": -1.0,
+              "volatility_multiplier": 1.3,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Sanctions/market fragmentation persist."
+              }
+            },
+            "AI_COMPUTE_DEMAND": {
+              "mean_shift_sigma": 0.25,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.7,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Replacement and sovereign compute buildout supports demand."
+              }
+            },
+            "HBM_MEMORY": {
+              "mean_shift_sigma": -0.5,
+              "volatility_multiplier": 1.3,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Memory supply partially normalizes."
+              }
+            },
+            "ADVANCED_PACKAGING": {
+              "mean_shift_sigma": -0.5,
+              "volatility_multiplier": 1.3,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Packaging partially normalizes."
+              }
+            },
+            "SEMICONDUCTOR_WFE": {
+              "mean_shift_sigma": 0.75,
+              "volatility_multiplier": 1.35,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Reconstruction/localization drives equipment demand."
+              }
+            },
+            "CAPITAL_MARKETS": {
+              "mean_shift_sigma": -0.25,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.65,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Risk premium remains above BASE but acute stress fades."
+              }
+            },
+            "GOVERNMENT_DEFENSE": {
+              "mean_shift_sigma": 0.5,
+              "volatility_multiplier": 1.25,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Defense procurement remains elevated."
+              }
+            }
+          },
+          "root_correlation_overrides": [
+            {
+              "root_a": "SEMI_SUPPLY_HEALTH",
+              "root_b": "CHINA_MARKET_ACCESS",
+              "correlation": 0.35,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Persistent bifurcation remains after acute conflict."
+              }
+            },
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "SEMI_SUPPLY_HEALTH",
+              "correlation": 0.45,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI capex remains more sensitive to supply health than BASE."
+              }
+            }
+          ],
+          "meta": {
+            "provenance": "model_assumption",
+            "rationale": "Recovery means partial normalization, not return to pre-shock geopolitics."
+          }
+        }
+      ],
+      "fact_catalog": [
+        {
+          "fact_id": "TW-F01",
+          "signal": "Official restrictions on shipping/airspace around Taiwan affecting commercial traffic.",
+          "phase_relevance": [
+            "RESTRICTIONS"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "Taiwan MND",
+            "Taiwan Ministry of Transportation/port authorities",
+            "official PRC notices"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "Legacy TAIWAN-S1 signal; action plan remains separate."
+        },
+        {
+          "fact_id": "TW-F02",
+          "signal": "Effective blockade or sustained closure of principal commercial maritime/air routes.",
+          "phase_relevance": [
+            "BLOCKADE"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "Taiwan MND",
+            "Taiwan port/aviation authorities"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "Requires observed restriction, not exercises alone."
+        },
+        {
+          "fact_id": "TW-F03",
+          "signal": "Confirmed use of force / armed hostilities around Taiwan.",
+          "phase_relevance": [
+            "CONFLICT"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "Taiwan MND",
+            "official PRC statements"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "Binary event for phase monitoring; does not encode owner action."
+        },
+        {
+          "fact_id": "TW-F04",
+          "signal": "TSMC / key supplier production and shipment restoration or geographic substitution milestones.",
+          "phase_relevance": [
+            "RECOVERY"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "TSMC filings/IR",
+            "supplier filings",
+            "Taiwan MOEA"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "Used to judge whether recovery calibration requires revision."
+        }
+      ],
+      "links": {
+        "common_causes": [
+          "TAIWAN_SUPPLY_DISRUPTION",
+          "EXPORT_CONTROLS_CHINA"
+        ],
+        "legacy_action_scenario_refs": [
+          "portfolio/_scenarios/taiwan.yaml#TAIWAN-S1",
+          "portfolio/_scenarios/taiwan.yaml#TAIWAN-S2",
+          "portfolio/_scenarios/taiwan.yaml#TAIWAN-S3"
+        ]
+      },
+      "notes": [
+        "All magnitudes/timings are model_assumption unless explicitly fact-catalogued.",
+        "Scenario does not prescribe buying/selling."
+      ]
+    }
+  },
+  "outputs": {
+    "model_version": "2.4.1",
+    "paths_file": "/data/workspace-invest/portfolio/_runs/20260925T105614Z-company_mc-4b0d11-paths.npz",
+    "spec_version": "MC_Calibration_Archetypes_v1.0+Rules_v1.1+Joint_Simulation_Layer_v1.0+Conditional_MC_v1.1.3",
+    "ticker": "PLTR",
+    "archetype": "mature_positive_margin",
+    "margin_method": "mean_reverting_positive_margin",
+    "adapted_from": null,
+    "state_vector": {
+      "US_Commercial_AIP_Monetization": "C3",
+      "US_Government_Demand": "G3",
+      "Geographic_Concentration": "I1",
+      "Profitability_Cash": "P3",
+      "Contracted_Demand": "R3"
+    },
+    "inputs_hash": "24b9339421ab4a6c",
+    "seed": 20260920,
+    "paths": 500000,
+    "equity_value_0": 426879308387.19995,
+    "factor_correlation_psd_fixed": false,
+    "dependency_structure": "latent_factor_plus_idiosyncratic_shock (Archetypes §2.1); общий ранг не используется",
+    "joint_simulation": {
+      "layer_version": "1.2.1",
+      "global_seed": 20260920,
+      "active_drivers": [
+        "CLOUD_SOFTWARE_DEMAND",
+        "GOVERNMENT_DEFENSE",
+        "AI_COMPUTE_DEMAND"
+      ],
+      "scenario": "TAIWAN_SEIZURE",
+      "adverse_driver_stress": [],
+      "scenario_phases": {
+        "phased": true,
+        "scenario_id": "TAIWAN_SEIZURE",
+        "phase_start_quantiles": {
+          "RESTRICTIONS": {
+            "0.1": 0.0,
+            "0.5": 0.0,
+            "0.9": 0.0
+          },
+          "BLOCKADE": {
+            "0.1": 1.0,
+            "0.5": 2.0,
+            "0.9": 3.0
+          },
+          "CONFLICT": {
+            "0.1": 3.0,
+            "0.5": 4.0,
+            "0.9": 5.0
+          },
+          "RECOVERY": {
+            "0.1": 12.0,
+            "0.5": 15.0,
+            "0.9": 18.0
+          }
+        },
+        "phase_active_share": {
+          "RESTRICTIONS": 0.062485625,
+          "BLOCKADE": 0.072944375,
+          "CONFLICT": 0.333906875,
+          "RECOVERY": 0.530663125
+        },
+        "n_corr_states": 8,
+        "scenario_drivers_applicable": [
+          "AI_COMPUTE_DEMAND",
+          "GOVERNMENT_DEFENSE"
+        ],
+        "scenario_drivers_unmapped": [
+          "ADVANCED_PACKAGING",
+          "CAPITAL_MARKETS",
+          "CHINA_REVENUE",
+          "HBM_MEMORY",
+          "SEMICONDUCTOR_WFE",
+          "TAIWAN_SUPPLY"
+        ]
+      },
+      "scenario_mode": "phased",
+      "knockout_applied": [],
+      "path_id_rule": "path_id = chunk_index*chunk + i; шоки по SeedSequence([global_seed, chunk_index])"
+    },
+    "base": {
+      "paths": 500000,
+      "return": {
+        "median_CAGR_3Y": -0.056747858898540726,
+        "median_CAGR_5Y": -0.0026456981343740416,
+        "median_CAGR_8Y": 0.05344867425977018,
+        "P_2x_3Y": 0.012218,
+        "P_2x_5Y": 0.071474,
+        "P_2x_8Y": 0.331938,
+        "P_5x_5Y": 0.000156,
+        "P_5x_8Y": 0.022668,
+        "CAGR_5Y_quantiles": {
+          "0.01": -0.22621261707327725,
+          "0.05": -0.16323057740535477,
+          "0.1": -0.12866412058900026,
+          "0.25": -0.06973390337623497,
+          "0.5": -0.0026456981343740416,
+          "0.75": 0.06600264561918978,
+          "0.9": 0.12923606558863934,
+          "0.95": 0.16776205834089913,
+          "0.99": 0.24160108782680628
+        },
+        "bridge_dependent": {
+          "Y3": true,
+          "Y5": true,
+          "Y8": true
+        }
+      },
+      "downside": {
+        "P_loss_gt_30pct_5Y": 0.252898,
+        "P_loss_gt_50pct_5Y": 0.09856,
+        "expected_shortfall_5pct_5Y": -0.6701565643793126,
+        "max_drawdown_5Y_quantiles": {
+          "0.05": -0.8810265943154859,
+          "0.25": -0.7823576368431515,
+          "0.5": -0.6870864001717327,
+          "0.75": -0.5804682358542572,
+          "0.95": -0.4313604017682825
+        },
+        "max_drawdown_model_dependent": true
+      },
+      "scenario": {
+        "variance_within_state_CAGR_5Y": 0.010108759924542595,
+        "variance_between_state_scenarios": null,
+        "persistence_ratio": null,
+        "persistence_class": null,
+        "scenario_concentration": null
+      },
+      "valuation_basis_share": {
+        "Y3": {
+          "multiple": 0.79099,
+          "revenue_bridge": 0.0,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.0,
+          "crossover_bridge": 0.14055,
+          "basis_blend": 0.06846
+        },
+        "Y5": {
+          "multiple": 0.45579,
+          "revenue_bridge": 0.0,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.0,
+          "crossover_bridge": 0.443678,
+          "basis_blend": 0.100532
+        },
+        "Y8": {
+          "multiple": 0.171278,
+          "revenue_bridge": 0.0,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.0,
+          "crossover_bridge": 0.758782,
+          "basis_blend": 0.06994
+        }
+      },
+      "basis_parity_margin": {
+        "Y3": {
+          "median": 0.27395528824687776,
+          "q05": 0.14343576981887737,
+          "q95": 0.4816295391219236,
+          "paths_share": 1.0
+        },
+        "Y5": {
+          "median": 0.3635398564942055,
+          "q05": 0.18860595344683972,
+          "q95": 0.6455994709387022,
+          "paths_share": 1.0
+        },
+        "Y8": {
+          "median": 0.45463264712763235,
+          "q05": 0.23878585096424274,
+          "q95": 0.7941055961175242,
+          "paths_share": 1.0
+        }
+      },
+      "valuation_crossover": {
+        "mode": "parity_gated_linear_blend_v1",
+        "blend_width": 0.04,
+        "bridge_dependent_rule": "доля кодов 1/2/5/6 ≥ 5 % (зафиксировано IMMA 24.09.2026; spec v1.1.3 §10)"
+      },
+      "gap_metrics": {
+        "median_revenue_CAGR_5Y": 0.3121666568157253,
+        "median_fcf_margin_Y5": 0.391061135634931,
+        "RV_Growth_Gap": 0.27630778963497726,
+        "Price_Expectation_Gap": 1.7075269531698338,
+        "note": "диагностика (ответ LLM 21.09): без автоматического перехода оси Valuation"
+      },
+      "median_equity_value_5Y_b": 421.2621408440836,
+      "mapping_warnings": []
+    }
+  },
+  "elapsed_ms": 49031.4,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

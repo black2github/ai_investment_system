@@ -1,0 +1,430 @@
+schema_version: '1.0'
+scenario_id: TAIWAN_SEIZURE
+description: Escalating restrictions/blockade/conflict around Taiwan followed by partial supply-chain recovery; valuation-only
+  action plan TAIWAN-S1..S3 is referenced but not used as model input.
+status: proposed_normative
+mutual_exclusion_set: GEOTECH_REGIME_8Y_V1
+probability: null
+probability_status: pending_owner_judgment
+probability_meta:
+  provenance: owner_judgment
+  rationale: Probability intentionally left to owner; calibration defines conditional outcomes only.
+phases:
+- phase_id: RESTRICTIONS
+  name: Partial shipping/airspace restrictions
+  effective_from:
+    kind: fixed_quarter
+    anchor: t0
+    quarter: 0
+    meta:
+      provenance: model_assumption
+      rationale: Scenario is conditioned on onset of material restrictions at t0.
+  ramp_quarters: 1
+  duration_quarters: until_next_phase
+  decay_quarters: 0
+  driver_overrides:
+    TAIWAN_SUPPLY:
+      mean_shift_sigma: -0.75
+      volatility_multiplier: 1.25
+      persistence_override: null
+      meta:
+        provenance: model_assumption
+        rationale: Material access friction without assuming full physical outage.
+    CHINA_REVENUE:
+      mean_shift_sigma: -0.5
+      volatility_multiplier: 1.2
+      persistence_override: null
+      meta:
+        provenance: model_assumption
+        rationale: Cross-strait/export friction weakens China-linked revenue.
+    AI_COMPUTE_DEMAND:
+      mean_shift_sigma: -0.25
+      volatility_multiplier: 1.15
+      persistence_override: null
+      meta:
+        provenance: model_assumption
+        rationale: Near-term deployment caution offsets some substitution demand.
+    HBM_MEMORY:
+      mean_shift_sigma: -0.25
+      volatility_multiplier: 1.25
+      persistence_override: null
+      meta:
+        provenance: model_assumption
+        rationale: Packaging/memory logistics tighten.
+    ADVANCED_PACKAGING:
+      mean_shift_sigma: -0.25
+      volatility_multiplier: 1.25
+      persistence_override: null
+      meta:
+        provenance: model_assumption
+        rationale: Advanced packaging access becomes less reliable.
+    SEMICONDUCTOR_WFE:
+      mean_shift_sigma: -0.25
+      volatility_multiplier: 1.2
+      persistence_override: null
+      meta:
+        provenance: model_assumption
+        rationale: Near-term fab/equipment activity pauses before reconstruction response.
+    CAPITAL_MARKETS:
+      mean_shift_sigma: -0.5
+      volatility_multiplier: 1.3
+      persistence_override: null
+      meta:
+        provenance: model_assumption
+        rationale: Risk-off financing shock.
+    GOVERNMENT_DEFENSE:
+      mean_shift_sigma: 0.25
+      volatility_multiplier: 1.15
+      persistence_override: null
+      meta:
+        provenance: model_assumption
+        rationale: Defense demand rises modestly.
+  root_correlation_overrides:
+  - root_a: SEMI_SUPPLY_HEALTH
+    root_b: CHINA_MARKET_ACCESS
+    correlation: 0.35
+    meta:
+      provenance: model_assumption
+      rationale: Cross-strait supply and China access become more coupled.
+  - root_a: AI_CAPEX_CYCLE
+    root_b: SEMI_SUPPLY_HEALTH
+    correlation: 0.4
+    meta:
+      provenance: model_assumption
+      rationale: AI capex becomes more dependent on semiconductor supply health.
+  meta:
+    provenance: model_assumption
+    rationale: Initial restrictions corresponding economically to legacy TAIWAN-S1; legacy actions are not model inputs.
+- phase_id: BLOCKADE
+  name: Effective maritime/air blockade
+  effective_from:
+    kind: triangular_quarter
+    anchor: t0
+    min: 1
+    mode: 2
+    max: 3
+    meta:
+      provenance: model_assumption
+      rationale: Conditional seizure path assumes escalation from restrictions to blockade within roughly one to three quarters;
+        timing is model uncertainty.
+  ramp_quarters: 1
+  duration_quarters: until_next_phase
+  decay_quarters: 0
+  driver_overrides:
+    TAIWAN_SUPPLY:
+      mean_shift_sigma: -2.0
+      volatility_multiplier: 1.6
+      persistence_override: 0.8
+      meta:
+        provenance: model_assumption
+        rationale: Large sustained supply-health shock.
+    CHINA_REVENUE:
+      mean_shift_sigma: -1.25
+      volatility_multiplier: 1.5
+      persistence_override: 0.8
+      meta:
+        provenance: model_assumption
+        rationale: Market-access/export shock.
+    AI_COMPUTE_DEMAND:
+      mean_shift_sigma: -0.75
+      volatility_multiplier: 1.35
+      persistence_override: 0.75
+      meta:
+        provenance: model_assumption
+        rationale: Capacity deployment is constrained by unavailable compute inputs.
+    HBM_MEMORY:
+      mean_shift_sigma: -1.0
+      volatility_multiplier: 1.55
+      persistence_override: 0.8
+      meta:
+        provenance: model_assumption
+        rationale: HBM supply becomes strongly constrained.
+    ADVANCED_PACKAGING:
+      mean_shift_sigma: -1.0
+      volatility_multiplier: 1.55
+      persistence_override: 0.8
+      meta:
+        provenance: model_assumption
+        rationale: Advanced packaging becomes strongly constrained.
+    SEMICONDUCTOR_WFE:
+      mean_shift_sigma: -0.75
+      volatility_multiplier: 1.45
+      persistence_override: 0.75
+      meta:
+        provenance: model_assumption
+        rationale: Equipment demand/shipments are disrupted before geographic substitution.
+    CAPITAL_MARKETS:
+      mean_shift_sigma: -1.0
+      volatility_multiplier: 1.6
+      persistence_override: 0.75
+      meta:
+        provenance: model_assumption
+        rationale: Global risk-off shock.
+    GOVERNMENT_DEFENSE:
+      mean_shift_sigma: 0.75
+      volatility_multiplier: 1.3
+      persistence_override: 0.8
+      meta:
+        provenance: model_assumption
+        rationale: Defense procurement rises materially.
+  root_correlation_overrides:
+  - root_a: SEMI_SUPPLY_HEALTH
+    root_b: CHINA_MARKET_ACCESS
+    correlation: 0.5
+    meta:
+      provenance: model_assumption
+      rationale: Blockade couples semiconductor supply and China market access.
+  - root_a: AI_CAPEX_CYCLE
+    root_b: SEMI_SUPPLY_HEALTH
+    correlation: 0.5
+    meta:
+      provenance: model_assumption
+      rationale: AI infrastructure becomes supply constrained.
+  - root_a: AI_CAPEX_CYCLE
+    root_b: FINANCIAL_CONDITIONS
+    correlation: 0.35
+    meta:
+      provenance: model_assumption
+      rationale: Funding and AI buildout co-move more strongly during blockade.
+  meta:
+    provenance: model_assumption
+    rationale: Economic analogue of legacy TAIWAN-S2; conditional on actual blockade.
+- phase_id: CONFLICT
+  name: Armed conflict / seizure attempt
+  effective_from:
+    kind: triangular_quarter
+    anchor: phase:BLOCKADE
+    min: 1
+    mode: 2
+    max: 4
+    meta:
+      provenance: model_assumption
+      rationale: Conflict timing is conditional on blockade and uncertain; no unconditional escalation probability is encoded
+        here.
+  ramp_quarters: 1
+  duration_quarters: until_next_phase
+  decay_quarters: 0
+  driver_overrides:
+    TAIWAN_SUPPLY:
+      mean_shift_sigma: -3.0
+      volatility_multiplier: 2.0
+      persistence_override: 0.9
+      meta:
+        provenance: model_assumption
+        rationale: Extreme disruption to Taiwan-linked semiconductor supply.
+    CHINA_REVENUE:
+      mean_shift_sigma: -2.0
+      volatility_multiplier: 1.8
+      persistence_override: 0.9
+      meta:
+        provenance: model_assumption
+        rationale: Severe sanctions/market-access fragmentation.
+    AI_COMPUTE_DEMAND:
+      mean_shift_sigma: -1.25
+      volatility_multiplier: 1.6
+      persistence_override: 0.85
+      meta:
+        provenance: model_assumption
+        rationale: Physical compute availability dominates demand willingness.
+    HBM_MEMORY:
+      mean_shift_sigma: -1.5
+      volatility_multiplier: 1.9
+      persistence_override: 0.9
+      meta:
+        provenance: model_assumption
+        rationale: Severe HBM supply shock.
+    ADVANCED_PACKAGING:
+      mean_shift_sigma: -1.5
+      volatility_multiplier: 1.9
+      persistence_override: 0.9
+      meta:
+        provenance: model_assumption
+        rationale: Severe packaging shock.
+    SEMICONDUCTOR_WFE:
+      mean_shift_sigma: -1.0
+      volatility_multiplier: 1.7
+      persistence_override: 0.85
+      meta:
+        provenance: model_assumption
+        rationale: Equipment supply/demand shock during conflict.
+    CAPITAL_MARKETS:
+      mean_shift_sigma: -1.5
+      volatility_multiplier: 2.0
+      persistence_override: 0.85
+      meta:
+        provenance: model_assumption
+        rationale: Severe risk-off and financing stress.
+    GOVERNMENT_DEFENSE:
+      mean_shift_sigma: 1.5
+      volatility_multiplier: 1.6
+      persistence_override: 0.9
+      meta:
+        provenance: model_assumption
+        rationale: War-economy procurement impulse.
+  root_correlation_overrides:
+  - root_a: SEMI_SUPPLY_HEALTH
+    root_b: CHINA_MARKET_ACCESS
+    correlation: 0.55
+    meta:
+      provenance: model_assumption
+      rationale: Conflict links supply and sanctions/market access.
+  - root_a: AI_CAPEX_CYCLE
+    root_b: SEMI_SUPPLY_HEALTH
+    correlation: 0.55
+    meta:
+      provenance: model_assumption
+      rationale: Compute investment becomes tightly supply constrained.
+  - root_a: AI_CAPEX_CYCLE
+    root_b: FINANCIAL_CONDITIONS
+    correlation: 0.4
+    meta:
+      provenance: model_assumption
+      rationale: Financial and capex cycles become unusually coupled.
+  meta:
+    provenance: model_assumption
+    rationale: Economic analogue of legacy TAIWAN-S3; conditional on armed conflict.
+- phase_id: RECOVERY
+  name: Partial geographic substitution and reconstruction
+  effective_from:
+    kind: triangular_quarter
+    anchor: phase:CONFLICT
+    min: 6
+    mode: 10
+    max: 16
+    meta:
+      provenance: model_assumption
+      rationale: Recovery onset is highly uncertain; six to sixteen quarters is a model-assumption range, not a forecast.
+  ramp_quarters: 4
+  duration_quarters: until_end
+  decay_quarters: 0
+  driver_overrides:
+    TAIWAN_SUPPLY:
+      mean_shift_sigma: -1.25
+      volatility_multiplier: 1.35
+      persistence_override: 0.75
+      meta:
+        provenance: model_assumption
+        rationale: Supply remains structurally impaired even after acute conflict shock fades.
+    CHINA_REVENUE:
+      mean_shift_sigma: -1.0
+      volatility_multiplier: 1.3
+      persistence_override: 0.8
+      meta:
+        provenance: model_assumption
+        rationale: Sanctions/market fragmentation persist.
+    AI_COMPUTE_DEMAND:
+      mean_shift_sigma: 0.25
+      volatility_multiplier: 1.2
+      persistence_override: 0.7
+      meta:
+        provenance: model_assumption
+        rationale: Replacement and sovereign compute buildout supports demand.
+    HBM_MEMORY:
+      mean_shift_sigma: -0.5
+      volatility_multiplier: 1.3
+      persistence_override: 0.75
+      meta:
+        provenance: model_assumption
+        rationale: Memory supply partially normalizes.
+    ADVANCED_PACKAGING:
+      mean_shift_sigma: -0.5
+      volatility_multiplier: 1.3
+      persistence_override: 0.75
+      meta:
+        provenance: model_assumption
+        rationale: Packaging partially normalizes.
+    SEMICONDUCTOR_WFE:
+      mean_shift_sigma: 0.75
+      volatility_multiplier: 1.35
+      persistence_override: 0.75
+      meta:
+        provenance: model_assumption
+        rationale: Reconstruction/localization drives equipment demand.
+    CAPITAL_MARKETS:
+      mean_shift_sigma: -0.25
+      volatility_multiplier: 1.2
+      persistence_override: 0.65
+      meta:
+        provenance: model_assumption
+        rationale: Risk premium remains above BASE but acute stress fades.
+    GOVERNMENT_DEFENSE:
+      mean_shift_sigma: 0.5
+      volatility_multiplier: 1.25
+      persistence_override: 0.8
+      meta:
+        provenance: model_assumption
+        rationale: Defense procurement remains elevated.
+  root_correlation_overrides:
+  - root_a: SEMI_SUPPLY_HEALTH
+    root_b: CHINA_MARKET_ACCESS
+    correlation: 0.35
+    meta:
+      provenance: model_assumption
+      rationale: Persistent bifurcation remains after acute conflict.
+  - root_a: AI_CAPEX_CYCLE
+    root_b: SEMI_SUPPLY_HEALTH
+    correlation: 0.45
+    meta:
+      provenance: model_assumption
+      rationale: AI capex remains more sensitive to supply health than BASE.
+  meta:
+    provenance: model_assumption
+    rationale: Recovery means partial normalization, not return to pre-shock geopolitics.
+fact_catalog:
+- fact_id: TW-F01
+  signal: Official restrictions on shipping/airspace around Taiwan affecting commercial traffic.
+  phase_relevance:
+  - RESTRICTIONS
+  verification_status: pending_dozor
+  preferred_sources:
+  - Taiwan MND
+  - Taiwan Ministry of Transportation/port authorities
+  - official PRC notices
+  fallback_sources:
+  - Reuters
+  note: Legacy TAIWAN-S1 signal; action plan remains separate.
+- fact_id: TW-F02
+  signal: Effective blockade or sustained closure of principal commercial maritime/air routes.
+  phase_relevance:
+  - BLOCKADE
+  verification_status: pending_dozor
+  preferred_sources:
+  - Taiwan MND
+  - Taiwan port/aviation authorities
+  fallback_sources:
+  - Reuters
+  note: Requires observed restriction, not exercises alone.
+- fact_id: TW-F03
+  signal: Confirmed use of force / armed hostilities around Taiwan.
+  phase_relevance:
+  - CONFLICT
+  verification_status: pending_dozor
+  preferred_sources:
+  - Taiwan MND
+  - official PRC statements
+  fallback_sources:
+  - Reuters
+  note: Binary event for phase monitoring; does not encode owner action.
+- fact_id: TW-F04
+  signal: TSMC / key supplier production and shipment restoration or geographic substitution milestones.
+  phase_relevance:
+  - RECOVERY
+  verification_status: pending_dozor
+  preferred_sources:
+  - TSMC filings/IR
+  - supplier filings
+  - Taiwan MOEA
+  fallback_sources:
+  - Reuters
+  note: Used to judge whether recovery calibration requires revision.
+links:
+  common_causes:
+  - TAIWAN_SUPPLY_DISRUPTION
+  - EXPORT_CONTROLS_CHINA
+  legacy_action_scenario_refs:
+  - portfolio/_scenarios/taiwan.yaml#TAIWAN-S1
+  - portfolio/_scenarios/taiwan.yaml#TAIWAN-S2
+  - portfolio/_scenarios/taiwan.yaml#TAIWAN-S3
+notes:
+- All magnitudes/timings are model_assumption unless explicitly fact-catalogued.
+- Scenario does not prescribe buying/selling.

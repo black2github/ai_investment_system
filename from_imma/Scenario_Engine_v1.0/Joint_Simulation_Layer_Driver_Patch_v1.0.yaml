@@ -1,0 +1,16 @@
+version: '1.0'
+artifact: joint_driver_generation_patch
+target: Joint_Simulation_Layer_Schema_v1.0.driver_generation.mappings
+requires_taxonomy: MPC_Driver_Taxonomy_v1.2
+add:
+  ACCELERATOR_PRICE_COMPETITION:
+    roots:
+      AI_CAPEX_CYCLE: 0.2
+      SEMI_SUPPLY_HEALTH: 0.25
+      CHINA_MARKET_ACCESS: 0.35
+    idio_weight: 0.7
+    provenance: model_assumption
+    rationale: Base competition intensity is partly related to AI demand, manufacturing
+      capability and China market access, but remains largely idiosyncratic. Scenario
+      mean shifts carry the structural cold-war signal.
+note: This patch does not alter existing driver root mappings.

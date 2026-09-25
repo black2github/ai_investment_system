@@ -1,0 +1,44 @@
+package: IMMA_Scenario_Engine_v1.0
+version: '1.0'
+date: '2026-09-25'
+status: proposed_normative
+files:
+- file: CHIP_COLD_WAR_v1.0.yaml
+  sha256: 9f63feffe6095d0535ae9b0aa439af909b6e46a4613c763fa1f50edf207edd5a
+  bytes: 14584
+- file: Joint_Simulation_Layer_Driver_Patch_v1.0.yaml
+  sha256: ca61687c77de6603a37460e92f14dffa23e30446822ebf94e8cd356104207994
+  bytes: 654
+- file: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: 33becb85804b0b83b82ec597182e17228cd966678a9a2a4d63d985d6157f14f5
+  bytes: 1808
+- file: MPC_Driver_Taxonomy_v1.2.yaml
+  sha256: 29d5d75947979d22817f2b820590ecae0ddaa80b7bb8888b58a3be40cd32eb6b
+  bytes: 5608
+- file: Scenario_Company_Mapping_Patch_v1.0.yaml
+  sha256: e4f798e983a212741c91f38df9b316c12a5dc40801cefe37b88223f9c520285f
+  bytes: 5840
+- file: Scenario_Engine_Examples_v1.0.yaml
+  sha256: 1039a2dbb450537c4973568a40aee5847829f0dca998ecba8dd79b56e000cf03
+  bytes: 1060
+- file: Scenario_Engine_Schema_v1.0.yaml
+  sha256: b6d026f8fbf31dbed69974d95540e60cd7837f7f2c4ce1b7b100812b942e81e5
+  bytes: 5145
+- file: Scenario_Engine_Specification_v1.0.md
+  sha256: 4afd2554010c163495d76422aa14ca08335e92c6dd1f273bd4b937b89e829c8e
+  bytes: 11893
+- file: Scenario_Engine_v1.0_Rationale_and_Patch_Notes.md
+  sha256: 861fe0148e405fc834b40326c30b51a9e0d640bf18ae6c4df76fc01df4cf3b60
+  bytes: 4643
+- file: Scenario_Mapping_Coverage_Audit_v1.0.yaml
+  sha256: ea218d2cfc5dfc8f44839c99f9d59c6443c6717dea78e6a24e55ea4e2f2bc50e
+  bytes: 3869
+- file: TAIWAN_SEIZURE_v1.0.yaml
+  sha256: bbf5341cb4685cae96e9afebd79605016442ed8544726fa6105b27fae76494c2
+  bytes: 14157
+notes:
+- Scenario probabilities intentionally pending owner judgment.
+- Company mapping patch is proposed_requires_host_validation and must not be silently
+  merged.
+- MSFT/META legacy TAIWAN_SUPPLY signs are blocked for normative scenario use until
+  semantic-correction reissues are accepted.

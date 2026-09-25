@@ -1,0 +1,40 @@
+schema_version: '1.0'
+artifact: scenario_engine_examples
+examples:
+- name: BASE implicit residual
+  scenario:
+    scenario_id: BASE
+    probability_rule: 1 - sum(non_BASE probabilities)
+    phases: []
+- name: generic shock with recovery
+  scenario:
+    scenario_id: GENERIC_SHOCK_EXAMPLE
+    probability: null
+    probability_status: pending_owner_judgment
+    phases:
+    - phase_id: SHOCK
+      effective_from:
+        kind: fixed_quarter
+        anchor: t0
+        quarter: 0
+      ramp_quarters: 0
+      duration_quarters: 4
+      decay_quarters: 0
+      driver_overrides:
+        CAPITAL_MARKETS:
+          mean_shift_sigma: -1.0
+          volatility_multiplier: 1.5
+          persistence_override: null
+    - phase_id: RECOVERY
+      effective_from:
+        kind: fixed_quarter
+        anchor: t0
+        quarter: 4
+      ramp_quarters: 4
+      duration_quarters: until_end
+      decay_quarters: 0
+      driver_overrides:
+        CAPITAL_MARKETS:
+          mean_shift_sigma: -0.2
+          volatility_multiplier: 1.1
+          persistence_override: null

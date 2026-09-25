@@ -1,0 +1,214 @@
+{
+  "run_id": "20260925T004607Z-portfolio_paths-a0c2d1",
+  "model": "portfolio_paths",
+  "version": "1.0.0",
+  "seed": 0,
+  "inputs": {
+    "paths_files": {
+      "SPCX": "/data/workspace-invest/portfolio/_runs/20260925T004410Z-company_mc-cb035d-paths.npz",
+      "NBIS": "/data/workspace-invest/portfolio/_runs/20260925T004422Z-company_mc-afba02-paths.npz",
+      "NVDA": "/data/workspace-invest/portfolio/_runs/20260925T004433Z-company_mc-5a9912-paths.npz",
+      "HOOD": "/data/workspace-invest/portfolio/_runs/20260925T004443Z-company_mc-679a1a-paths.npz",
+      "RKLB": "/data/workspace-invest/portfolio/_runs/20260925T004453Z-company_mc-703851-paths.npz",
+      "LLY": "/data/workspace-invest/portfolio/_runs/20260925T004504Z-company_mc-35ea95-paths.npz",
+      "META": "/data/workspace-invest/portfolio/_runs/20260925T004512Z-company_mc-70462a-paths.npz",
+      "ASML": "/data/workspace-invest/portfolio/_runs/20260925T004522Z-company_mc-e86321-paths.npz",
+      "MSFT": "/data/workspace-invest/portfolio/_runs/20260925T004533Z-company_mc-f8795d-paths.npz",
+      "PLTR": "/data/workspace-invest/portfolio/_runs/20260925T004543Z-company_mc-7a0ef7-paths.npz",
+      "NET": "/data/workspace-invest/portfolio/_runs/20260925T004550Z-company_mc-f17957-paths.npz",
+      "ETN": "/data/workspace-invest/portfolio/_runs/20260925T004557Z-company_mc-9fbb54-paths.npz"
+    },
+    "weights": {
+      "ETN": 0.07894736842105263,
+      "LLY": 0.1473684210526316,
+      "META": 0.10526315789473685,
+      "MSFT": 0.04210526315789474,
+      "NBIS": 0.1368421052631579,
+      "NET": 0.02105263157894737,
+      "NVDA": 0.14210526315789476,
+      "PLTR": 0.02105263157894737,
+      "RKLB": 0.08421052631578949,
+      "SPCX": 0.010526315789473686
+    },
+    "dry_powder_weight": 0.2105263157894737,
+    "dry_powder_return_annual": 0.04
+  },
+  "outputs": {
+    "model_version": "1.0.0",
+    "paths": 100000,
+    "alignment": {
+      "aligned": true,
+      "joint_layer_all": true,
+      "global_seed": 20260920,
+      "chunk": 50000,
+      "companies": {
+        "ETN": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "LLY": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "META": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "MSFT": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "NBIS": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "NET": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "NVDA": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "PLTR": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "RKLB": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "SPCX": {
+          "model_version": "2.3.2",
+          "joint": true
+        }
+      }
+    },
+    "weights": {
+      "ETN": 0.07894736842105263,
+      "LLY": 0.1473684210526316,
+      "META": 0.10526315789473685,
+      "MSFT": 0.04210526315789474,
+      "NBIS": 0.1368421052631579,
+      "NET": 0.02105263157894737,
+      "NVDA": 0.14210526315789476,
+      "PLTR": 0.02105263157894737,
+      "RKLB": 0.08421052631578949,
+      "SPCX": 0.010526315789473686
+    },
+    "dry_powder_weight": 0.2105263157894737,
+    "dry_powder_return_annual": 0.04,
+    "horizons": {
+      "Y3": {
+        "median_CAGR": 0.13084822113942862,
+        "P_2x": 0.02444,
+        "P_loss_gt_30pct": 0.0,
+        "P_loss_gt_50pct": 0.0,
+        "expected_shortfall_5pct": 0.059673230562691755,
+        "CAGR_quantiles": {
+          "0.05": 0.03963233688075298,
+          "0.25": 0.091801376500047,
+          "0.5": 0.13084822113942862,
+          "0.75": 0.1731010141003434,
+          "0.95": 0.2382434257579095
+        }
+      },
+      "Y5": {
+        "median_CAGR": 0.1177794820032636,
+        "P_2x": 0.31073,
+        "P_loss_gt_30pct": 0.0,
+        "P_loss_gt_50pct": 0.0,
+        "expected_shortfall_5pct": 0.0742526941035351,
+        "CAGR_quantiles": {
+          "0.05": 0.03204269764944872,
+          "0.25": 0.07965117348713424,
+          "0.5": 0.1177794820032636,
+          "0.75": 0.16063842226976288,
+          "0.95": 0.23297146717935965
+        },
+        "median_portfolio_value_rel": 1.7449406785003978
+      },
+      "Y8": {
+        "median_CAGR": 0.13787870111049605,
+        "P_2x": 0.82404,
+        "P_loss_gt_30pct": 0.0,
+        "P_loss_gt_50pct": 0.0,
+        "expected_shortfall_5pct": 0.40464443959714325,
+        "CAGR_quantiles": {
+          "0.05": 0.058781327233304204,
+          "0.25": 0.10259652997165364,
+          "0.5": 0.13787870111049605,
+          "0.75": 0.1801475647972371,
+          "0.95": 0.2576193363134129
+        }
+      }
+    },
+    "median_contribution_Y5": {
+      "ETN": 0.11941275000572205,
+      "LLY": 0.19825683534145355,
+      "META": 0.19364841282367706,
+      "MSFT": 0.049802567809820175,
+      "NBIS": 0.3036613464355469,
+      "NET": 0.00710828322917223,
+      "NVDA": 0.3486845791339874,
+      "PLTR": 0.023821847513318062,
+      "RKLB": 0.11868909001350403,
+      "SPCX": 0.004698104225099087,
+      "dry_powder": 0.25613745313684216
+    },
+    "log_value_correlation_Y5": {
+      "ETN__LLY": 0.013857106143490465,
+      "ETN__META": 0.13137142058413462,
+      "ETN__MSFT": 0.018505906261608616,
+      "ETN__NBIS": 0.11545319654176057,
+      "ETN__NET": 0.17259637654234627,
+      "ETN__NVDA": 0.24174420334929114,
+      "ETN__PLTR": 0.06493282745170766,
+      "ETN__RKLB": 0.010040795611172042,
+      "ETN__SPCX": 0.09430938109896853,
+      "LLY__META": 0.008945014591074869,
+      "LLY__MSFT": 0.0002129561344435464,
+      "LLY__NBIS": 0.007102580267689431,
+      "LLY__NET": 0.015669398192843402,
+      "LLY__NVDA": 0.016770915712223482,
+      "LLY__PLTR": 0.010935668531840591,
+      "LLY__RKLB": 0.0073971891284560064,
+      "LLY__SPCX": 0.005920659886792528,
+      "META__MSFT": 0.07164329740007844,
+      "META__NBIS": 0.07957870203766051,
+      "META__NET": 0.16652150248536549,
+      "META__NVDA": 0.15299087233434727,
+      "META__PLTR": 0.08229129464288057,
+      "META__RKLB": 0.01113091533191329,
+      "META__SPCX": 0.07102463420483032,
+      "MSFT__NBIS": 0.019270776247370426,
+      "MSFT__NET": 0.07610858294731318,
+      "MSFT__NVDA": 0.022138143745892964,
+      "MSFT__PLTR": 0.03072374544106302,
+      "MSFT__RKLB": 0.008935676562155838,
+      "MSFT__SPCX": 0.010560694292399763,
+      "NBIS__NET": 0.10562665548511162,
+      "NBIS__NVDA": 0.18034068455977081,
+      "NBIS__PLTR": 0.05344255483633556,
+      "NBIS__RKLB": 0.005808061223595226,
+      "NBIS__SPCX": 0.07243543840257834,
+      "NET__NVDA": 0.25809124059352523,
+      "NET__PLTR": 0.11230670972739731,
+      "NET__RKLB": 0.009063992753691257,
+      "NET__SPCX": 0.08958281278621535,
+      "NVDA__PLTR": 0.11591112450124692,
+      "NVDA__RKLB": 0.010105440879526282,
+      "NVDA__SPCX": 0.1579167237736169,
+      "PLTR__RKLB": 0.02557691124105667,
+      "PLTR__SPCX": 0.06260741976617333,
+      "RKLB__SPCX": 0.014553826067458274
+    },
+    "decision": "none",
+    "note": "не торговый сигнал; вход для MPC (P0 vs P1(w)) и Optimizer; без joint-слоя корреляции между компаниями — только через общий seed идиосинкратики (диагностика)"
+  },
+  "elapsed_ms": 352.5,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

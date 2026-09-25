@@ -1,0 +1,22 @@
+package: IMMA_CRWV_mc_v1.0.1
+package_version: 1.0.1
+as_of: '2026-09-25'
+status: proposed_for_host_acceptance
+supersedes: CRWV_mc_calibration_v1.0.yaml
+normative_contracts:
+  company_mc_schema: 1.0.2
+  conditional_mc: 1.1.3
+  joint_rules: 1.1.2
+  reverse_valuation_rules: '1.1'
+host_engine_note: MC YAML retains calculation_engine_version company_mc 2.3.1 per schema const; host executes company_mc 2.3.2
+  seed-isolation-compatible engine.
+files:
+- path: CRWV_mc_calibration_v1.0.1.yaml
+  sha256: e9684771721812a7a2f9bbd575184ecff81ff8a5f5471f3c7030a581ae3c2963
+  bytes: 17459
+- path: CRWV_mc_calibration_v1.0.1_patch_notes.md
+  sha256: 2c9ba36e283122a17383c4158c0c252139c93da702dfbbac12bbdae766e8e0ee
+  bytes: 1738
+- path: CRWV_v1.0.1_LOCAL_VALIDATION_REPORT.md
+  sha256: 2481266ce1acbb4ecdad3a448a3eab8801552699886e9ccdd33b13941ed85904
+  bytes: 1012

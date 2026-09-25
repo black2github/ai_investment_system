@@ -753,3 +753,8 @@ machine_outputs:                 # последний прогон portfolio_reg
     - "без секторного benchmark: только GLD (не акция)"
     - "AI_COMPUTE_BASKET_V1 — provisional_low_breadth (2 компонента, совпадают с позициями)"
     - "просадка портфеля = 0 по построению; SPOT добавлен 22.09 по списку средних цен"
+
+owner_decisions:                 # решения владельца по Decision Request (дата, вопрос, выбор, условие пересмотра); дом — здесь, копия в state.json компании
+  - {id: "DR-2026-09-24-01/В1", date: "2026-09-24", ticker: NVDA, question: "hard breach бюджета потерь (21.3 % NAV против жёсткого потолка 18.4 %) — MANDATORY_RISK_REDUCTION_REVIEW", decision: "держать осознанно до отбора бумаг портфеля", review: "2026-10-20 или завершение отбора (что раньше)", source: "decisions/DR-2026-09-24-constraint-gaps-and-capacity.md"}
+  - {id: "DR-2026-09-24-01/В2", date: "2026-09-24", ticker: HOOD, question: "hard breach бюджета потерь по MC-просадке (14.2 % NAV против жёсткого потолка 12.7 %)", decision: "держать осознанно до отбора бумаг портфеля", review: "2026-10-20 или завершение отбора (что раньше)", source: "decisions/DR-2026-09-24-constraint-gaps-and-capacity.md"}
+  - {id: "DR-2026-09-24-01/В4", date: "2026-09-24", ticker: null, question: "кэш (dry powder) 0.5 % NAV ниже минимума 5 % для режима Stress", decision: "принять нарушение осознанно до отбора бумаг портфеля", review: "2026-10-20 или завершение отбора (что раньше)", source: "decisions/DR-2026-09-24-constraint-gaps-and-capacity.md"}

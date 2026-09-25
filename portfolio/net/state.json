@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T18:20:00Z",
+  "updated": "2026-09-24T19:50:00Z",
   "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
   "price": {
     "symbol": "NET",
@@ -105,6 +105,11 @@
       "timestamp": "2026-09-24T18:20:00Z",
       "kind": "calc",
       "summary": "Интеграция калибровок партии 4 (24.09): calibration_v1.0.yaml, mc_calibration_v1.0.yaml приняты (валидатор режим calibration pass); нормативные прогоны: 20260924T175508Z-reverse_valuation-6ca499, 20260924T180403Z-company_mc-a8783a"
+    },
+    {
+      "timestamp": "2026-09-24T19:50:00Z",
+      "kind": "model_risk",
+      "summary": "IMMA (share 6ab57a50) подтвердила: отрицательный коридор CAGR 5Y (−32…−0.4 %, медиана −16.4 %, run …-a8783a) — осознанный вывод калибровки v1.0, не пропущенный параметр; RV model_fragile (implied 66.9 %). Калибровку не менять; перекалибровка только при конкретном механизме (FCF-маржа, монетизация Workers/AI, долгосрочный рост). Decision Request DR-2026-09-24-02 владельцу с флагом model_fragile / valuation_disconnect."
     }
   ],
   "scenario_state": {

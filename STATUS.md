@@ -631,127 +631,976 @@ Share 6ab2e866, пакет Downloads/Dozor_Verification_Protocol_v1.1_and_Artifa
 ВТОРОЙ ЖИВОЙ ПРОГОН ДОЗОРА — ПРИЁМКА v1.1 (NBIS, 23.09 00:01–00:05 МСК): run verify-NBIS-20260922T210122Z, protocol 1.1.0, итог PASS_WITH_DECLARED_PENDING: 11 KPI (4 match, 6 с нормализацией, KPI-11 not_found), 5 осей (4 state_supported с criterion_checks по KPI отчёта, Capacity_Secured pending), 2 события (E-01 факт раскрытия подтверждён первоисточником, fired не создан; E-06 event_unconfirmed — условие не выполнено, guidance повышен 4→5 GW). Валидатор: первый заход отчёта отклонён (DZR-004: event_contradicted без patch_required) — агент исправил статус, второй pass; папка pass. state.json: scenario_state всех 5 осей с verification_run_id (legacy_unlinked снят), events_reported 1 запись с run_id, наблюдения перепривязаны к run2 (ссылка на run1 потеряна — по моему указанию; для v1.2 лучше список verification_run_ids или отдельные наблюдения). Интегратор: kpis.yaml NBIS-KPI-05 observation_qualifier → approximate (по qualifier_patch_suggested). Обратная связь агента to_imma/dozor-run2.feedback.md — вход для v1.2: (1) статус condition_not_met для активных триггеров-наблюдателей без заявленного события (event_contradicted требует патч, а патчить нечего); (2) claim_type: kpi_threshold_check | discrete_event, чтобы не смешивать регулярные проверки условий и разовые события; (3) criteria: null + pending_reason для осей с каноническим pending_verification; (4) вторичные новости (Palantir-партнёрство, повышение цен) без первичного документа в event_items не внесены — правило двух СМИ не выполнено. НЕ закоммичено: state.json, kpis.yaml, _verify/, feedback, 4 прогона, STATUS. Далее: ASTS после проверки Flight 14 (09:00); заказ Dozor v1.2 — после ASTS (накопить два прогона).
 
 ## 23.09 УТРО: Flight 14, переключения, ASTS, заказ калибровок
-Flight 14 (задача spacex-flight14-check, 09:00 МСК, 66 с, ~$0.34 по usage из cron runs): полёт перенесён SpaceX на 28.09.2026 (space.com; spacex.com технически не открылся) — запись E1 в info_log SPCX, переход C1→C2 не оценивался, вектор A2/B2/C1/D3 без изменений; доставлено в Telegram. Повторная проверка — по факту полёта 28.09 (задача не пересоздана — решение владельца).
-Затраты (решения владельца 23.09): вечерняя сводка 0e661c05 → Haiku 4.5 (fallback Sonnet 5); три дозора новостей ОТКЛЮЧЕНЫ (spacex/aiinfra/models-news-watch, не удалены — откат возможен), вместо них один portfolio-news-watch 88c05803 (09:00 МСК, Haiku 4.5, три группы в одном запуске, все правила/шаблоны сохранены, правило paused и политика ИИ добавлены). Ценовые дозоры РАБОТАЮТ как задумано (trigger script: 263 оценки за неделю, модель вызывается только при смене зоны; SPCX $154.72 зона 0; ETN/SU/NET выше уровней) — в оба задания добавлено ПРАВИЛО ПАУЗЫ (paused-триггер: уровень → info_log, без fired и уведомления). Факт: cron runs хранит usage по прогонам → можно считать стоимость точно.
+## 23.09: Flight 14 (задача spacex-flight14-check, 09:00 МСК, 66 с, ~$0.34 по usage из cron runs)
+
+Flight 14 (задача spacex-flight14-check, 09:00 МСК, 66 с, ~$0.34 по usage из cron runs): полёт перенесён SpaceX на
+28.09.2026 (space.com; spacex.com технически не открылся) — запись E1 в info_log SPCX, переход C1→C2 не оценивался,
+вектор A2/B2/C1/D3 без изменений; доставлено в Telegram. Повторная проверка — по факту полёта 28.09 (задача не
+пересоздана — решение владельца).
+## 23.09: Затраты (решения владельца 23.09)
+
+Затраты (решения владельца 23.09): вечерняя сводка 0e661c05 → Haiku 4.5 (fallback Sonnet 5); три дозора новостей
+ОТКЛЮЧЕНЫ (spacex/aiinfra/models-news-watch, не удалены — откат возможен), вместо них один portfolio-news-watch
+88c05803 (09:00 МСК, Haiku 4.5, три группы в одном запуске, все правила/шаблоны сохранены, правило paused и политика
+ИИ добавлены). Ценовые дозоры РАБОТАЮТ как задумано (trigger script: 263 оценки за неделю, модель вызывается только
+при смене зоны; SPCX $154.72 зона 0; ETN/SU/NET выше уровней) — в оба задания добавлено ПРАВИЛО ПАУЗЫ (paused-триггер:
+уровень → info_log, без fired и уведомления). Факт: cron runs хранит usage по прогонам → можно считать стоимость
+точно.
 ASTS: прогон сверки по v1.1 запущен (dozor-verify-asts-run1 fc826f2d) — качественная ось, бинарный KPI-11, окно 50 дней, derived KPI-09.
-Заказ калибровок подготовлен: to_imma/mc-v11-calibrations.request.md (A: спецификация Conditional MC v1.1 под движок + JSON Schema калибровки; B: SPCX v1.1 в формате v2 с учётом переноса Flight 14; C: RV + MC калибровки NBIS и NVDA), вложения Downloads/mc-v11-to-llm. НЕ отправлен. Очередь: результат ASTS → заказ Dozor v1.2 → отправка обоих заказов (порядок за владельцем).
+## 23.09: Заказ калибровок подготовлен
 
-ASTS ПРОГОН v1.1 ЗАВЕРШЁН (run verify-ASTS-20260923T060714Z, 7 мин, 3.17M токенов, 95% кэш, ~$1.33): 11/11 KPI подтверждены (KPI-04 qualifier approximate → гармонизирован интегратором в kpis.yaml; KPI-09 derived пересчитан, 0%), 5/5 осей state_supported (качественная Regulatory_Spectrum по цитате 10-Q + KPI-11; Commercial_Contracting со списком MNO как source_evidence), 10 переходов event_unconfirmed (условия не выполнены — из-за этого итог PASS_WITH_DECLARED_PENDING вместо PASS), events_reported 0, fired 0. Валидатор: отчёт pass, папки asts+nbis pass (…-d7dd70). Feedback — to_imma/dozor-run3-asts.feedback.md. ЗАКАЗ Dozor v1.2 + Artifact Schema v1.0.5 подготовлен: to_imma/dozor-v12.request.md (condition_not_met; transition_checks vs discrete events; criteria null для pending-осей; entailment окон; база found у derived; qualifier_patch_suggested только в отчёте; verification_run_ids список), вложения Downloads/dozor-v12-to-llm. НЕ отправлен. Стоимость сверки по протоколу: ~$1.3 за компанию (Sonnet 5). НЕ закоммичено: spacex/state.json (E1 Flight 14), asts (_verify, state.json, kpis.yaml), nbis (—), inbox (2 заказа, feedback), прогоны валидатора, STATUS.
+Заказ калибровок подготовлен: to_imma/mc-v11-calibrations.request.md (A: спецификация Conditional MC v1.1 под движок +
+JSON Schema калибровки; B: SPCX v1.1 в формате v2 с учётом переноса Flight 14; C: RV + MC калибровки NBIS и NVDA),
+вложения Downloads/mc-v11-to-llm. НЕ отправлен. Очередь: результат ASTS → заказ Dozor v1.2 → отправка обоих заказов
+(порядок за владельцем).
 
-MC v1.1 ЧАСТЬ A ПОЛУЧЕНА (share 6ab3ca76): Company_Conditional_Monte_Carlo_Specification_v1.1 + Company_MC_Calibration_Schema_v1.0 + fixtures A/B/C (from_imma/MC_v1.1_partA). Проверено на живом движке: схема валидна, fixtures проходят схему и исполняются (mapping_warnings пусты, детерминизм, *_meta игнорируются загрузчиком); методологический Joint_Simulation_Layer_Schema принимается как joint_layer_spec. Расхождения: truncated_normal — движок sd, схема sigma; pert lambda не в схеме; fixtures A/B не проходят robustness (допуск 25%). Правило robustness движка = спецификации (75%/75%). Решения (мои, для подтверждения владельцем): state_transition_effects в v2 не вводить (калибровка = текущий вектор, после перехода — новая версия), not_mapped не вводить (отказ G5), C1 принят. Приёмка + заказ схемы v1.0.1 и частей B/C — to_imma/mc-v11-partA.feedback.md (НЕ отправлен). Очередь у нас: режим calibration в artifact_validator (схема + MC-G5-001..012 + сухой прогон движка).
+## 23.09: ASTS ПРОГОН v1.1 ЗАВЕРШЁН
 
-ПЕРЕИМЕНОВАНИЕ КАТАЛОГОВ ПЕРЕПИСКИ (решение владельца 23.09): inbox/received → from_imma (всё полученное от IMMA), inbox/<наши тексты> → to_imma (заказы, приёмки, обратная связь дозора, разборы-вложения), внутренние документы → notes; IMMA = Investment Modeling & Methodology Agent — роль внешней LLM (в пакете Foundation роль названа IMA; просьба привести имя к IMMA — в следующий заказ). Перенос через git mv (132 переименования), ссылки в 63 файлах (source_artifact в канонических файлах, STATUS, README, AGENTS, to_imma) переписаны байтово без переформатирования; исторические упоминания «inbox» в старых записях STATUS и в уже отправленных заказах оставлены как есть. Валидатор 17/17 pass (…-6edcb7), тесты lab 86/86 (пути в тестах обновлены). НЕ закоммичено (workspace + lab tests).
+ASTS ПРОГОН v1.1 ЗАВЕРШЁН (run verify-ASTS-20260923T060714Z, 7 мин, 3.17M токенов, 95% кэш, ~$1.33): 11/11 KPI
+подтверждены (KPI-04 qualifier approximate → гармонизирован интегратором в kpis.yaml; KPI-09 derived пересчитан, 0%),
+5/5 осей state_supported (качественная Regulatory_Spectrum по цитате 10-Q + KPI-11; Commercial_Contracting со списком
+MNO как source_evidence), 10 переходов event_unconfirmed (условия не выполнены — из-за этого итог
+PASS_WITH_DECLARED_PENDING вместо PASS), events_reported 0, fired 0. Валидатор: отчёт pass, папки asts+nbis pass
+(…-d7dd70). Feedback — to_imma/dozor-run3-asts.feedback.md. ЗАКАЗ Dozor v1.2 + Artifact Schema v1.0.5 подготовлен:
+to_imma/dozor-v12.request.md (condition_not_met; transition_checks vs discrete events; criteria null для pending-осей;
+entailment окон; база found у derived; qualifier_patch_suggested только в отчёте; verification_run_ids список),
+вложения Downloads/dozor-v12-to-llm. НЕ отправлен. Стоимость сверки по протоколу: ~$1.3 за компанию (Sonnet 5). НЕ
+закоммичено: spacex/state.json (E1 Flight 14), asts (_verify, state.json, kpis.yaml), nbis (—), inbox (2 заказа,
+feedback), прогоны валидатора, STATUS.
 
-MC v1.1 ЧАСТИ B/C ПОЛУЧЕНЫ (share 6ab3d4a5, from_imma/MC_v1.1_partBC): схема v1.0.1 (sd, lambda, fixtures shape_only) ПРИНЯТА → methodology (+ спецификация v1.1). Хост-проверки: все три MC-калибровки — схема pass, mapping полный (17/13/13), mapping_warnings [], детерминизм, robustness pass, сходимость; нормативные прогоны 500k: SPCX v1.1 …-571c5f, NBIS …-309315, NVDA …-5f30d9; RV на сайдкаре: NBIS …-ba01b6 (CAGR 0.64303 = preflight LLM, TV share 1.004 model_fragile), NVDA …-012879 (0.2371, 0.889 terminal_dependent). ДЕФЕКТ (блокирует норматив B/C): 10–11 коррелированных драйверов на один initial_growth с additive_pp 0.06–0.15/σ → σ суммарного сдвига 0.8–1.06 в единицах годового роста (1% путей −190…−250 п.п.) → ES5 −0.96 (NVDA) / −0.996 (NBIS), P(loss>30%) 0.30; без mapping хвосты слишком тонкие (NVDA q5–q95 CAGR 13–33%, P(2x) 0.91). SPCX: без mapping паритет с v1.0 (−15.1 vs −14.9%, P(loss>30) 0.969 vs 0.963). Приёмка + заказ правила суммарной силы (MC-G5-013) и переиздания калибровок — to_imma/mc-v11-partBC.feedback.md (НЕ отправлен). Калибровки B/C в portfolio/ не переносятся до переиздания. Очередь у нас: режим calibration в валидаторе (схема + MC-G5-001..013 + сухой прогон).
+## 23.09: MC v1.1 ЧАСТЬ A ПОЛУЧЕНА
 
-ВАЛИДАТОР 1.3.0 — режим calibration (23.09): JSON Schema v1.0.1 + MC-G5-001 (material-драйверы из mpc_inputs: |2| без mapping — error, прочие — warning), 002 (mapping ↔ active_drivers), 003 (через mapping_warnings движка), 005 (вехи: уникальность, предпосылки, ацикличность, onset), 006 (Σ uplift ≤ 1), 007 (порядок параметров распределений), 008 (границы маржи, PSD корреляций факторов), 013 (σ суммарного сдвига цели на путях Joint Layer, пороги growth 0.15 / margin 0.05 / multiple 0.15 — до принятия IMMA warning, strict_aggregate → error) + сухой прогон company_mc (mapping_warnings, детерминизм). Прогон через сайдкар по NVDA (…-d00d4a) и SPCX v1.1 (…-503bca): pass с предупреждениями MC-G5-013 (growth σ 0.81 / 0.89). Тесты lab: новый test_calibration_validator.py.
+MC v1.1 ЧАСТЬ A ПОЛУЧЕНА (share 6ab3ca76): Company_Conditional_Monte_Carlo_Specification_v1.1 +
+Company_MC_Calibration_Schema_v1.0 + fixtures A/B/C (from_imma/MC_v1.1_partA). Проверено на живом движке: схема
+валидна, fixtures проходят схему и исполняются (mapping_warnings пусты, детерминизм, *_meta игнорируются загрузчиком);
+методологический Joint_Simulation_Layer_Schema принимается как joint_layer_spec. Расхождения: truncated_normal —
+движок sd, схема sigma; pert lambda не в схеме; fixtures A/B не проходят robustness (допуск 25%). Правило robustness
+движка = спецификации (75%/75%). Решения (мои, для подтверждения владельцем): state_transition_effects в v2 не вводить
+(калибровка = текущий вектор, после перехода — новая версия), not_mapped не вводить (отказ G5), C1 принят. Приёмка +
+заказ схемы v1.0.1 и частей B/C — to_imma/mc-v11-partA.feedback.md (НЕ отправлен). Очередь у нас: режим calibration в
+artifact_validator (схема + MC-G5-001..012 + сухой прогон движка).
 
-MC v1.1.1 ПЕРЕИЗДАНИЕ ПОЛУЧЕНО (share 6ab3dc47, from_imma/MC_v1.1.1_reissue): Joint_Simulation_Layer_Rules_v1.1 (MC-G5-013 hard gate: caps growth 0.15 / margin 0.05 / log-multiple 0.15, design headroom, intrinsic/full W bands) + спецификация v1.1.1 + anti-circularity note NBIS + naming patch IMMA — ПРИНЯТЫ → methodology. Валидатор 1.3.1: MC-G5-013 hard gate по умолчанию, нативный квартал узлов. Переизданные калибровки: рост в норме (σ 0.12/0.12/0.10), но маржа (0.06–0.08 > 0.05) и Y5.multiple (0.19–0.21 > 0.15) выше caps — LLM сайзила по Σ|effect|, а σ_eff одиночного драйвера на путях ≈ 1.6–2.0 (EMA по персистентному AR(1)); SPCX intrinsic W 0.24 < band 0.40; robustness v1.1 на 100k: SPCX 0.50 и NVDA 0.625 fail (возмущения ±10pp роста / ±20% мультипликаторов при широких хвостах дают ΔP > 0.10), NBIS 0.75 на границе. Полные прогоны: SPCX …-9cde9f, NBIS …-2343ac, NVDA …-840b31 (справочные). Приёмка + заказ v1.1.2/v1.0.2 и решения по robustness — to_imma/mc-v111-reissue.feedback.md (НЕ отправлен). Очередь у нас: диагностика intrinsic/full W и отчёт σ по целям в выводе валидатора.
+## 23.09: ПЕРЕИМЕНОВАНИЕ КАТАЛОГОВ ПЕРЕПИСКИ
 
-ВАЛИДАТОР 1.4.0 (23.09): в режиме calibration — структурный отчёт aggregate_shift (σ, cap, kind, квартал, драйверов, ok по каждой цели) и диагностика дисперсии intrinsic/full (W = q95−q5 CAGR 5Y, ориентиры из Joint_Simulation_Layer_Rules_v1.1 → dispersion_plausibility; MC-DISP-001..003 warning; требует equity_value_0, иначе MC-DISP-000). Сайдкар воспроизводит ручные числа: NVDA intrinsic 0.326 / full 0.470 (в bands), SPCX 0.240 / 0.291 (ниже bands). Тесты lab 91/91. Следующие калибровки (v1.1.2 / v1.0.2) принимаются одним вызовом валидатора с equity_value_0.
+ПЕРЕИМЕНОВАНИЕ КАТАЛОГОВ ПЕРЕПИСКИ (решение владельца 23.09): inbox/received → from_imma (всё полученное от IMMA),
+inbox/<наши тексты> → to_imma (заказы, приёмки, обратная связь дозора, разборы-вложения), внутренние документы →
+notes; IMMA = Investment Modeling & Methodology Agent — роль внешней LLM (в пакете Foundation роль названа IMA;
+просьба привести имя к IMMA — в следующий заказ). Перенос через git mv (132 переименования), ссылки в 63 файлах
+(source_artifact в канонических файлах, STATUS, README, AGENTS, to_imma) переписаны байтово без переформатирования;
+исторические упоминания «inbox» в старых записях STATUS и в уже отправленных заказах оставлены как есть. Валидатор
+17/17 pass (…-6edcb7), тесты lab 86/86 (пути в тестах обновлены). НЕ закоммичено (workspace + lab tests).
 
-MC v1.1.2 / Rules v1.1.1 ПРИНЯТЫ И ИНТЕГРИРОВАНЫ (23.09, share 6ab3e367, from_imma/MC_v1.1.2_reissue): спецификация v1.1.2 (локальная устойчивость 0.25σ с потолками; старая сетка — диагностика) и Joint_Simulation_Layer_Rules_v1.1.1 (критерий размерности — только измеренная σ) → methodology (v1.1.1 спецификации удалена). Калибровки SPCX v1.1.2, NBIS v1.0.2, NVDA v1.0.2 — валидатор 1.4.0 pass (MC-G5-013: σ growth 0.122/0.122/0.100, margin ≤0.046, multiple ≤0.146; дисперсия intrinsic/full: SPCX 0.425/0.444 (full на 0.006 ниже ориентира — warning), NBIS 0.697/0.727, NVDA 0.326/0.424). Нормативные прогоны company_mc 2.3.0 (500k, seed 20260920): SPCX …-0484ce (CAGR5 −13.4 %, P(loss>30) 0.68, ES5 −0.91, gap RV +45.9 п.п., price 3.46, robustness pass 1.0/0.875), NBIS …-28c1e0 (+20.7 %, 0.105, P(2x) 0.60, gap −6.0 п.п., price 0.69, pass 1.0/0.875), NVDA …-4a7d0d (+22.0 %, 0.010, P(2x) 0.71, gap −10.6 п.п., price 0.60, pass 1.0/1.0). Интеграция (скрипт, идемпотентен, CRLF сохранён): portfolio/spacex/mc_calibration_v1.1.2.yaml, portfolio/{nbis,nvda}/{calibration_v1.0.yaml, mc_calibration_v1.0.2.yaml}; state.json → calc_runs (RV-прогоны NBIS …-ba01b6 model_fragile / NVDA …-012879 terminal_dependent + три нормативных MC) и info_log; _candidates.yaml: NBIS/NVDA stage → conditional_mc. Валидатор workspace по nbis/nvda — pass (…-ae618c; spacex — старый формат, схемой не проверяется). Приёмка — to_imma/mc-v112.feedback.md (НЕ отправлен). Очередь: заказ Dozor v1.2 (to_imma/dozor-v12.request.md, не отправлен) → следующая пара калибровок HOOD + RKLB; открытые решения владельца — Decision Request SPCX с флагом риска модели (gap 3.46, P(loss>30) 0.68), NVDA, лимиты оптимизатора; Flight 14 перенесён на 28.09 (задание проверки не заведено).
+## 23.09: MC v1.1 ЧАСТИ B/C ПОЛУЧЕНЫ
 
-DOZOR v1.2 + ARTIFACT SCHEMA v1.0.5 ПРИНЯТЫ И ИНТЕГРИРОВАНЫ (23.09, share 6ab3eca3, from_imma/Dozor_v1.2_and_Artifact_v1.0.5): независимая проверка — обе схемы валидны, реестр статусов полон (11/5/6/3/5), отчёты v1.0 (NBIS run1, настоящий), v1.1 (NBIS run2, ASTS) и пример ASTS v1.2 проходят; пример семантически согласован (DZR-012..016, counts, итог PASS по старшинству); v1.0.5 по 13 моделям — 0 ошибок. Интеграция: methodology (протокол v1.2 yaml+md, схема v1.0.5; v1.0.4 снята; v1.1 протокола ОСТАВЛЕНА — см. дефект), миграция 17 папок к v1.0.5 (MIG-121/122: история прогонов; на NBIS схлопнуты 10 legacy-дубликатов, run1 восстановлен из иммутабельного отчёта по candidate.last_value → KPI-01..10 [run1, run2]; правила (а)-(в) — в приёмке), валидатор 1.5.0 (ART-REF-030/031; протокол v1.2: реестр transition_result, DZR-011/012/014/015, DZR-010 по старшинству; 17/17 pass, run …-e84a7b; сайдкар перезапущен), AGENTS.md — раздел сверки на v1.2 (четыре секции, transition_checks, condition_not_met, criteria:null, вложение окон, база derived_fact, неповторение наблюдений). Тесты lab 44/44 (+5). ДЕФЕКТ ПАКЕТА: v1.2.yaml — только дельта, из v1.1 выпали principles/kpi_rules/runtime_write_rules/independence_rule/gate_aggregation.rules/semantics статусов; v1.0.5 — выпал known_migrations_v1_0_3_to_v1_0_4 → заказ сводной v1.2.1 в to_imma/dozor-v12.feedback.md (НЕ отправлен); до неё правила KPI v1.1 — по Dozor_Verification_Protocol_v1.1.yaml (два дома, временно). Очередь: отправка приёмки; первый живой прогон по v1.2 (NVDA/HOOD — решение владельца); заказ калибровок HOOD + RKLB; Decision Request SPCX; Flight 14 28.09.
+MC v1.1 ЧАСТИ B/C ПОЛУЧЕНЫ (share 6ab3d4a5, from_imma/MC_v1.1_partBC): схема v1.0.1 (sd, lambda, fixtures shape_only)
+ПРИНЯТА → methodology (+ спецификация v1.1). Хост-проверки: все три MC-калибровки — схема pass, mapping полный
+(17/13/13), mapping_warnings [], детерминизм, robustness pass, сходимость; нормативные прогоны 500k: SPCX v1.1
+…-571c5f, NBIS …-309315, NVDA …-5f30d9; RV на сайдкаре: NBIS …-ba01b6 (CAGR 0.64303 = preflight LLM, TV share 1.004
+model_fragile), NVDA …-012879 (0.2371, 0.889 terminal_dependent). ДЕФЕКТ (блокирует норматив B/C): 10–11
+коррелированных драйверов на один initial_growth с additive_pp 0.06–0.15/σ → σ суммарного сдвига 0.8–1.06 в единицах
+годового роста (1% путей −190…−250 п.п.) → ES5 −0.96 (NVDA) / −0.996 (NBIS), P(loss>30%) 0.30; без mapping хвосты
+слишком тонкие (NVDA q5–q95 CAGR 13–33%, P(2x) 0.91). SPCX: без mapping паритет с v1.0 (−15.1 vs −14.9%, P(loss>30)
+0.969 vs 0.963). Приёмка + заказ правила суммарной силы (MC-G5-013) и переиздания калибровок —
+to_imma/mc-v11-partBC.feedback.md (НЕ отправлен). Калибровки B/C в portfolio/ не переносятся до переиздания. Очередь у
+нас: режим calibration в валидаторе (схема + MC-G5-001..013 + сухой прогон).
 
-23.09 ВЕЧЕР — ПРИЁМКА НОРМАТИВОВ: ПРАВИЛА + ИНСТРУМЕНТ; ПЕРВЫЙ ПРОГОН ДОЗОРА ПО v1.2 (NVDA). (1) README.md: раздел «Приёмка нормативов от IMMA» (переиздание = полный текст + дельта; полнота замены проверяется механически; гейт «один дом»; порядок приёмки) и правило именования тегов по содержанию (snapshot-artifact-v1.0.5; S0…S3 не переименовываем). (2) lab: calc/tools/check_supersedes.py — сравнение деревьев YAML/JSON старой и новой версии с раскрытием $ref (вынос в $defs — не пропажа), отказ при пропаже без --allow; тесты test_check_supersedes.py 4/4; живой прогон: v1.1→v1.2 протокола — 33 пропажи (principles, kpi_rules, runtime_write_rules, semantics 20 статусов…), v1.0.4→v1.0.5 схемы — 1 (known_migrations_v1_0_3_to_v1_0_4); регресс: v1.0.1→v1.0.2→v1.0.3 — полные, v1.0→v1.1 протокола — тоже дельта (inputs, normalization, technical_access, non_disclosure_rule перестроены/выпали) → в заказ v1.2.1 добавить восстановление и v1.0-содержимого. (3) NVDA run1 по v1.2 (задание dozor-verify-nvda-run1, Sonnet 5): отчёт verify-NVDA-20260923T190405Z записан и проходит валидатор 1.5.0 с первого раза (10 KPI подтверждены, 6 derived_fact в базе кандидата; 5 осей state_supported; E-01..E-10 not_met; E-11 pending_history + событие event_unconfirmed; итог PASS_WITH_DECLARED_PENDING), но исполнитель ПРЕРВАН ошибкой биллинга OpenRouter (402: баланс ниже max_tokens 128k) до state.json/feedback/уведомления; runtime дописан интегратором по отчёту (скрипт: обновление 10 наблюдений по candidate.last_value + verification_run_ids, оси verified+run_id, verification, info_log), валидатор папки pass; обратная связь для v1.2.1 — to_imma/dozor-run4-nvda.feedback.md (pending_event для событийных переходов, граница condition_not_met, форма found.period, порядок шагов исполнителя). БАЛАНС OPENROUTER НАДО ПОПОЛНИТЬ (владелец): до пополнения задания на Sonnet 5 с большим max_tokens будут падать. Очередь: коммит; ответ IMMA по v1.2.1 (принять через check_supersedes + диффы); заказ HOOD + RKLB; Decision Request SPCX; Flight 14 28.09.
+## 23.09: ВАЛИДАТОР 1.3.0
 
-DOZOR v1.2.1 (СВОДНАЯ) + ПЕРЕИЗДАННАЯ ARTIFACT v1.0.5 ПРИНЯТЫ (23.09 поздно, share 6ab4235f, from_imma/Dozor_v1.2.1_consolidated): check_supersedes — v1.1→v1.2.1 0 пропаж, v1.2→v1.2.1 0 (три переименования storage.* разрешены), v1.0.4→v1.0.5 0; output_report_schema идентична v1.2, файловые схемы/field_catalog/integrity_rules идентичны принятой v1.0.5, блок MIG-117..120 возвращён; реестр 25 статусов с semantics; отчёты v1.0/v1.1/v1.2 (вкл. живой NVDA) проходят. Интеграция: methodology — v1.2.1 (yaml+md) ЕДИНСТВЕННЫЙ дом протокола (v1.1 и v1.2 убраны), переизданная схема v1.0.5 (версия не поднята — повторная миграция не нужна); валидатор 1.5.0 → DOZOR_PROTOCOL_VERSION 1.2.1 (сайдкар перезапущен: NVDA pass …-4a92c4, 17/17 …-3d7d1c); AGENTS.md — раздел сверки на v1.2.1; тесты lab 48/48. Приёмка + вход для следующей редакции (pending_event, граница condition_not_met, форма found.period, возврат содержимого v1.0: допуски/технический доступ/output_mutation_rules) — to_imma/dozor-v121.feedback.md (НЕ отправлен). OpenRouter пополнен владельцем. Очередь: коммит; отправка приёмки; следующие прогоны дозора HOOD/ASML/META/CRWV по v1.2.1; заказ калибровок HOOD + RKLB; Decision Request SPCX; Flight 14 28.09.
+ВАЛИДАТОР 1.3.0 — режим calibration (23.09): JSON Schema v1.0.1 + MC-G5-001 (material-драйверы из mpc_inputs: |2| без
+mapping — error, прочие — warning), 002 (mapping ↔ active_drivers), 003 (через mapping_warnings движка), 005 (вехи:
+уникальность, предпосылки, ацикличность, onset), 006 (Σ uplift ≤ 1), 007 (порядок параметров распределений), 008
+(границы маржи, PSD корреляций факторов), 013 (σ суммарного сдвига цели на путях Joint Layer, пороги growth 0.15 /
+margin 0.05 / multiple 0.15 — до принятия IMMA warning, strict_aggregate → error) + сухой прогон company_mc
+(mapping_warnings, детерминизм). Прогон через сайдкар по NVDA (…-d00d4a) и SPCX v1.1 (…-503bca): pass с
+предупреждениями MC-G5-013 (growth σ 0.81 / 0.89). Тесты lab: новый test_calibration_validator.py.
 
-23.09 ночь: (1) IMMA подтвердила приёмку v1.2.1 (share 6ab426b2): норматив — v1.2.1 + переизданная v1.0.5, новые отчёты по-прежнему protocol_version 1.2.0; на следующую редакцию Dozor зафиксированы 4 изменения (pending_event с обязательным event_item_refs; граница condition_not_met для disclosure-сторожей; period как тип окна vs конкретный интервал; возврат допусков нормализации / technical access / output_mutation_rules в единый дом) — до следующего заказа норматив не трогаем. (2) ЗАКАЗ КАЛИБРОВОК HOOD + RKLB подготовлен — to_imma/mc-hood-rklb-calibrations.request.md (НЕ отправлен), вложения собраны в Downloads/mc-hood-rklb-to-llm (hood/, rklb/, reference/: NBIS пара, NVDA mc v1.0.2, SPCX mc v1.1.2, прогон NVDA …-4a7d0d): HOOD — архетип A (крипто/event-contracts как циклический сегмент), RKLB — первый живой архетип C (milestone_model от первого полёта Neutron, cash_model, просьба предложить пороги MC-G5-013 для probability/timing — временный cap 0.75 в валидаторе). Дозор HOOD/RKLB по v1.2.1 — параллельно с калибровкой. Коммиты: workspace 75b8e4c (тег dozor-v1.2.1), lab 0b1e09d — запушены.
+## 23.09: MC v1.1.1 ПЕРЕИЗДАНИЕ ПОЛУЧЕНО
 
-HOOD run1 по v1.2.1 (23.09 22:45, задание dozor-verify-hood-run1, Sonnet 5, 10.3 млн токенов / 96 % кэш ≈ $3.5 — дорого из-за ~8 попыток к IR-сайту за 20 мин): отчёт verify-HOOD-20260923T194500Z, валидатор pass после двух самоисправлений исполнителя (DZR-012 база кандидата для KPI-08/09; DZR-010 старшинство BLOCKED_TECHNICAL над PATCH_REQUIRED). Итог BLOCKED_TECHNICAL: investors.robinhood.com не отвечает (таймауты и с хоста тоже), августовский операционный релиз не подавался как 8-K → KPI-01..03 (monthly) source_unavailable_technical, ось Customer_Asset_Scale evidence_unavailable_technical (legacy verified не тронут), переходы E-01/E-02 pending_history; 7/10 KPI подтверждены по 10-Q/Ex-99.1 (KPI-08/09 — qualifier_patch_suggested: kpis.yaml хранит округлённые 0.59/0.12, state.json точные 0.5931/0.1193); оси R3/P3/C1 подтверждены; Regulatory_Product G2 — state_pending_verification + PATCH_REQUIRED (критерий «продукт остановлен хотя бы в одной юрисдикции» не подтверждён по 10-Q за время прогона, нужен целевой поиск Note 15 / cease-and-desist по event contracts); E-03/04/06/07/08 not_met, E-05 pending_history (56.65 % ≥ 55 %, нужен второй квартал), E-09/E-11 события event_unconfirmed → pending_history (нет pending_event), E-10 pending. state.json: 7 наблюдений с историей, оси R/P/C verified + run_id, G2 verified=false + run_id, verification, info_log; исполнитель сам записал feedback to_imma/dozor-run5-hood.feedback.md (даты IR: Q2-релиз опубликован 2026-07-29 по 8-K 0001783879-26-000113). Интегратор: states.yaml HOOD_Q2_RELEASE.as_of → 2026-07-29 + recorded_at 2026-09-21 (валидатор папки pass …-c672f8). Решения владельца: (1) повторный прогон KPI-01..03 + целевая проверка G2 одним заданием, когда IR-сайт ответит (предложение: завтра утром); (2) Decision Request по G2, если и целевой поиск не подтвердит; (3) гармонизация KPI-08/09 (округление реестра vs точное наблюдение) — вопрос в следующую редакцию Dozor (правило «база кандидата = kpis.yaml» уже так в валидаторе).
+MC v1.1.1 ПЕРЕИЗДАНИЕ ПОЛУЧЕНО (share 6ab3dc47, from_imma/MC_v1.1.1_reissue): Joint_Simulation_Layer_Rules_v1.1
+(MC-G5-013 hard gate: caps growth 0.15 / margin 0.05 / log-multiple 0.15, design headroom, intrinsic/full W bands) +
+спецификация v1.1.1 + anti-circularity note NBIS + naming patch IMMA — ПРИНЯТЫ → methodology. Валидатор 1.3.1:
+MC-G5-013 hard gate по умолчанию, нативный квартал узлов. Переизданные калибровки: рост в норме (σ 0.12/0.12/0.10), но
+маржа (0.06–0.08 > 0.05) и Y5.multiple (0.19–0.21 > 0.15) выше caps — LLM сайзила по Σ|effect|, а σ_eff одиночного
+драйвера на путях ≈ 1.6–2.0 (EMA по персистентному AR(1)); SPCX intrinsic W 0.24 < band 0.40; robustness v1.1 на 100k:
+SPCX 0.50 и NVDA 0.625 fail (возмущения ±10pp роста / ±20% мультипликаторов при широких хвостах дают ΔP > 0.10), NBIS
+0.75 на границе. Полные прогоны: SPCX …-9cde9f, NBIS …-2343ac, NVDA …-840b31 (справочные). Приёмка + заказ
+v1.1.2/v1.0.2 и решения по robustness — to_imma/mc-v111-reissue.feedback.md (НЕ отправлен). Очередь у нас: диагностика
+intrinsic/full W и отчёт σ по целям в выводе валидатора.
 
-Коммит HOOD run1 — 4618576. Задание dozor-verify-hood-run2 (b32fe15b) поставлено на 24.09 07:00 UTC (10:00 МСК): целевое дозакрытие — KPI-01..03 через IR-сайт с ЛИМИТОМ 3 попытки на домен (+1 полнотекстовый поиск EDGAR), фиксация признаков антибот-защиты в technical_error; ось Regulatory_Product G2 по 10-Q (Legal Proceedings / примечание о регуляторных делах) и Ex-99.1; переходы E-01/02/09/10/11; отчёт частичный с новым run_id, история run_id у наблюдений дополняется; feedback — to_imma/dozor-run6-hood.feedback.md. Владелец проверяет доступность https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data вручную (человек vs агент); без обратной связи — действуем по плану.
+## 23.09: ВАЛИДАТОР 1.4.0
 
-HOOD: ручная проверка владельца 23.09 — IR-страница августовского релиза открывается в браузере, PDF скачивается; для агента (curl из контейнера и с хоста) сайт молчит (таймаут без ответа) → блокировка не-браузерных клиентов, не падение сайта. Копия релиза от владельца — portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf (sha256 f83fcec3…5394, 318 773 байт; релиз от 10.09.2026: Funded Customers 28.6 млн, Total Platform Assets $383.7 млрд, LTM Net Deposits $74.1 млрд = 24 % — все три числа модели подтверждаются документом). Задание dozor-verify-hood-run2 (b32fe15b, 24.09 10:00 МСК) ПЕРЕПИСАНО: сверка KPI-01..03 по локальной копии с явной пометкой «получено владельцем через браузер», ровно одна попытка к оригиналу для фиксации поведения сайта + одна к newsroom.aboutrobinhood.com (канал Reg FD); G2 и переходы — как раньше. Вопрос в протокол: как оформлять источник, полученный владельцем вручную (пока — evidence_locator с пометкой).
+ВАЛИДАТОР 1.4.0 (23.09): в режиме calibration — структурный отчёт aggregate_shift (σ, cap, kind, квартал, драйверов,
+ok по каждой цели) и диагностика дисперсии intrinsic/full (W = q95−q5 CAGR 5Y, ориентиры из
+Joint_Simulation_Layer_Rules_v1.1 → dispersion_plausibility; MC-DISP-001..003 warning; требует equity_value_0, иначе
+MC-DISP-000). Сайдкар воспроизводит ручные числа: NVDA intrinsic 0.326 / full 0.470 (в bands), SPCX 0.240 / 0.291
+(ниже bands). Тесты lab 91/91. Следующие калибровки (v1.1.2 / v1.0.2) принимаются одним вызовом валидатора с
+equity_value_0.
 
-КАЛИБРОВКИ HOOD/RKLB v1.0 (share 6ab430a5, from_imma/HOOD_RKLB_Calibrations_v1) — ХОСТ-ПРИЁМКА 23.09 ночь: все жёсткие гейты пройдены (RV …-933181 HOOD terminal_dependent CAGR 34.5 %; …-904488 RKLB model_fragile 82.4 %; валидатор 1.5.1 pass, σ вех RKLB 0.118/0.069 логит и 0.365/0.147 кв. при кандидатных порогах 0.35/1.0 — приняты в AGG_SHIFT_LIMITS как milestone_probability/milestone_timing; нормативные 500k …-9b14c5 HOOD: CAGR5 −9.5 %, P(loss>30) 0.65, gap 2.78, robustness pass 1.0/0.75; …-e3c5c4 RKLB: +1.6 %, 0.26, gap 1.66, P(onset) 0.90, robustness pass 0.75/1.0), НО ИНТЕГРАЦИЯ ОТЛОЖЕНА: (1) дисперсия intrinsic W ниже ориентиров у обеих (HOOD 0.198 < 0.25; RKLB 0.508 < 0.6) — как SPCX v1.1.1, просим v1.0.1 с широкими хвостами; (2) ГЛАВНОЕ — обрыв стоимости у порога fcf_maturity_margin 0.08 в кусочной оценке архетипа C: маржа +5 п.п. → P(loss>30) 0.27→0.35 (переключение revenue_bridge 7× → FCF_multiple 24×FCF), проверено тремя прогонами 30k; это дефект спецификации v1.1 (нет непрерывности базы), заказ патча — to_imma/mc-hood-rklb.feedback.md (НЕ отправлен; там же: фикстура C схемы нарушает порог 0.35, HOOD стресс-допуск 0/6). Движок: robustness.pass numpy.bool → bool (500 при save=false), результаты не менялись. Стресс-диагностика записана …-044b86 (HOOD), …-279ccc (RKLB). Очередь: коммит (workspace: пакет, прогоны, PDF-копия HOOD, STATUS, feedback; lab: валидатор 1.5.1, company_mc bool, тесты); ответ IMMA по патчу спецификации и v1.0.1; Decision Request HOOD (модель против цены) — владельцу; завтра 10:00 дозор HOOD run2.
+## 23.09: MC v1.1.2 / Rules v1.1.1 ПРИНЯТЫ И ИНТЕГРИРОВАНЫ
 
-Передача данных от владельца агенту (23.09 поздно): живой тест — файл, отправленный агенту в Telegram, сохраняется в media/inbound/openclaw-staged-…/ (подтверждено ответом агента); AGENTS.md дополнен: лимит 3 обращения к домену, обязательный блок «Нужна помощь владельца» в уведомлении при BLOCKED_TECHNICAL (URL, что взять, как передать: файл в Telegram с подписью «<тикер> <ID источника>» → агент переносит в portfolio/<тикер>/_sources/ и считает sha256; либо владелец кладёт файл сам), правило провенанса для копии, полученной владельцем (evidence_locator с пометкой, source_url — оригинал). Тестовый файл владельца (чек, не относится к портфелю) остался в media/inbound — удалить по решению владельца.
+MC v1.1.2 / Rules v1.1.1 ПРИНЯТЫ И ИНТЕГРИРОВАНЫ (23.09, share 6ab3e367, from_imma/MC_v1.1.2_reissue): спецификация
+v1.1.2 (локальная устойчивость 0.25σ с потолками; старая сетка — диагностика) и Joint_Simulation_Layer_Rules_v1.1.1
+(критерий размерности — только измеренная σ) → methodology (v1.1.1 спецификации удалена). Калибровки SPCX v1.1.2, NBIS
+v1.0.2, NVDA v1.0.2 — валидатор 1.4.0 pass (MC-G5-013: σ growth 0.122/0.122/0.100, margin ≤0.046, multiple ≤0.146;
+дисперсия intrinsic/full: SPCX 0.425/0.444 (full на 0.006 ниже ориентира — warning), NBIS 0.697/0.727, NVDA
+0.326/0.424). Нормативные прогоны company_mc 2.3.0 (500k, seed 20260920): SPCX …-0484ce (CAGR5 −13.4 %, P(loss>30)
+0.68, ES5 −0.91, gap RV +45.9 п.п., price 3.46, robustness pass 1.0/0.875), NBIS …-28c1e0 (+20.7 %, 0.105, P(2x) 0.60,
+gap −6.0 п.п., price 0.69, pass 1.0/0.875), NVDA …-4a7d0d (+22.0 %, 0.010, P(2x) 0.71, gap −10.6 п.п., price 0.60,
+pass 1.0/1.0). Интеграция (скрипт, идемпотентен, CRLF сохранён): portfolio/spacex/mc_calibration_v1.1.2.yaml,
+portfolio/{nbis,nvda}/{calibration_v1.0.yaml, mc_calibration_v1.0.2.yaml}; state.json → calc_runs (RV-прогоны NBIS
+…-ba01b6 model_fragile / NVDA …-012879 terminal_dependent + три нормативных MC) и info_log; _candidates.yaml:
+NBIS/NVDA stage → conditional_mc. Валидатор workspace по nbis/nvda — pass (…-ae618c; spacex — старый формат, схемой не
+проверяется). Приёмка — to_imma/mc-v112.feedback.md (НЕ отправлен). Очередь: заказ Dozor v1.2
+(to_imma/dozor-v12.request.md, не отправлен) → следующая пара калибровок HOOD + RKLB; открытые решения владельца —
+Decision Request SPCX с флагом риска модели (gap 3.46, P(loss>30) 0.68), NVDA, лимиты оптимизатора; Flight 14
+перенесён на 28.09 (задание проверки не заведено).
 
-Замечание владельца 23.09 (поздно): в запросе помощи агент сам формирует готовую подпись для файла (шаблон «<тикер> <ID источника> <run_id>»), за владельцем — только достать артефакт и переслать в Telegram; AGENTS.md §5 переписан: блок «Нужна помощь владельца» = что открыть / что там должно быть / готовая подпись; главная сессия по файлу с такой подписью переносит его в _sources/, считает sha256 и сама ставит задание дозакрытия прогона из подписи. Приёмка калибровок HOOD/RKLB отправлена IMMA (ожидание патча спецификации по непрерывности базы, v1.0.1 HOOD).
+## 23.09: DOZOR v1.2 + ARTIFACT SCHEMA v1.0.5 ПРИНЯТЫ И ИНТЕГРИРОВАНЫ
 
-24.09 НОЧЬ — MC v1.1.3 / RULES v1.1.2 / SCHEMA v1.0.2 ПРИНЯТЫ, ДВИЖОК 2.3.1, HOOD v1.0.1 + RKLB v1.0.1 ИНТЕГРИРОВАНЫ (share 6ab43b94, from_imma/HOOD_RKLB_v1.0.1_and_MC_v1.1.3). Движок company_mc 2.3.1: parity-gated linear blend (crossover_value, Δ = 4 п.п.; A/B m_elig 0, C m_elig = fcf_maturity_margin; коды 5/6; basis_parity_margin, valuation_crossover.mode); ДВЕ СЕМАНТИКИ по schema_version калибровки — ≤1.0.1 прежний жёсткий переключатель (SPCX/NBIS/NVDA воспроизводимы), ≥1.0.2 смесь (решение владельца 24.09, вариант 1); conformance-тесты непрерывности/монотонности (функция и путь-за-путём для A и C). Валидатор 1.6.0: схема по schema_version файла (1.0.1 закреплена, 1.0.2 текущая), σ вех в квартале моды сроков (q3 у Neutron), Rules v1.1.2. methodology: spec v1.1.3 (v1.1/v1.1.2 сняты), Rules v1.1.2 yaml+md (v1.1/v1.1.1 сняты; проверка полноты: 20 переименований разрешены, 2 пропажи — purpose, interpretation — в приёмку), схема v1.0.2 + examples (v1.0.1 ОСТАВЛЕНА закреплённой — README). Приёмка: валидатор pass обеих (HOOD intrinsic W 0.245 ≈ граница 0.25; RKLB 0.518 < 0.6 — структурно, см. приёмку); нормативные 500k на 2.3.1: HOOD …-6fb7ec (CAGR5 −8.4 %, P(loss>30) 0.575, gap 2.61, Y5 базы multiple 62 % / crossover_bridge 24 % / blend 13 %, паритет 0.27, robustness pass 1.0/0.75), RKLB …-dbbce2 (+3.9 %, 0.159, gap 1.48, паритет 0.30, robustness 1.0/1.0; парадокс маржи устранён: стресс margin ±5 п.п. → ±0.008); стресс-диагностика …(HOOD допуск 2/6, RKLB 3/6). Интеграция: portfolio/{hood,rklb} calibration_v1.0 + mc_calibration_v1.0.1, calc_runs (RV + MC), _candidates → conditional_mc; валидатор папок pass …-e8a012; state.json hood пишется в формате дозора (verification_run_ids в одну строку). Тесты lab 105/105. Приёмка для IMMA — to_imma/mc-v113-hood-rklb-v101.feedback.md (НЕ отправлен). Очередь: коммит (workspace + lab); Decision Request HOOD и RKLB — владельцу; дозор HOOD run2 сегодня 10:00; следующие калибровки CRWV/ASML/META.
+DOZOR v1.2 + ARTIFACT SCHEMA v1.0.5 ПРИНЯТЫ И ИНТЕГРИРОВАНЫ (23.09, share 6ab3eca3,
+from_imma/Dozor_v1.2_and_Artifact_v1.0.5): независимая проверка — обе схемы валидны, реестр статусов полон
+(11/5/6/3/5), отчёты v1.0 (NBIS run1, настоящий), v1.1 (NBIS run2, ASTS) и пример ASTS v1.2 проходят; пример
+семантически согласован (DZR-012..016, counts, итог PASS по старшинству); v1.0.5 по 13 моделям — 0 ошибок. Интеграция:
+methodology (протокол v1.2 yaml+md, схема v1.0.5; v1.0.4 снята; v1.1 протокола ОСТАВЛЕНА — см. дефект), миграция 17
+папок к v1.0.5 (MIG-121/122: история прогонов; на NBIS схлопнуты 10 legacy-дубликатов, run1 восстановлен из
+иммутабельного отчёта по candidate.last_value → KPI-01..10 [run1, run2]; правила (а)-(в) — в приёмке), валидатор 1.5.0
+(ART-REF-030/031; протокол v1.2: реестр transition_result, DZR-011/012/014/015, DZR-010 по старшинству; 17/17 pass,
+run …-e84a7b; сайдкар перезапущен), AGENTS.md — раздел сверки на v1.2 (четыре секции, transition_checks,
+condition_not_met, criteria:null, вложение окон, база derived_fact, неповторение наблюдений). Тесты lab 44/44 (+5).
+ДЕФЕКТ ПАКЕТА: v1.2.yaml — только дельта, из v1.1 выпали
+principles/kpi_rules/runtime_write_rules/independence_rule/gate_aggregation.rules/semantics статусов; v1.0.5 — выпал
+known_migrations_v1_0_3_to_v1_0_4 → заказ сводной v1.2.1 в to_imma/dozor-v12.feedback.md (НЕ отправлен); до неё
+правила KPI v1.1 — по Dozor_Verification_Protocol_v1.1.yaml (два дома, временно). Очередь: отправка приёмки; первый
+живой прогон по v1.2 (NVDA/HOOD — решение владельца); заказ калибровок HOOD + RKLB; Decision Request SPCX; Flight 14
+28.09.
 
-Коммиты 24.09: workspace fa2bc99 (тег mc-spec-v1.1.3), lab 57e2a8b. Приёмка v1.1.3/v1.0.1 отправлена IMMA (ответ ожидается). ЗАКАЗ КАЛИБРОВОК LLY + META + ASML подготовлен — to_imma/mc-lly-meta-asml-calibrations.request.md (НЕ отправлен), вложения Downloads/mc-lly-meta-asml-to-llm (lly/, meta/, asml/, reference/: HOOD пара v1.0.1, NBIS mc v1.0.2, прогон HOOD …-6fb7ec): LLY — архетип A с концентрацией (тирзепатид 65 % выручки, цена −13 %), META — архетип B по факту (capex 51 % выручки, FCF 1.3 %; ocf_capex_decomposition), ASML — архетип A в EUR (Euronext, не Nasdaq; KPI-02 guidance записан как actual — дозору поправить); урок хвостов (intrinsic W ≥ ориентира сразу). Стратегия (ответ владельцу 24.09): покрытие калибровками 71.5 % NAV → после этой партии 88 %; первая валидация портфеля возможна после неё + лимитов владельца (остаток 12 % NAV — прокси).
+## 23.09: ВЕЧЕР — ПРИЁМКА НОРМАТИВОВ
 
-IMMA подтвердила приёмку v1.1.3 / v1.0.1 (share 6ab44608): RKLB не расширять (в следующих Rules — диагностика early_resolved_bridge_dependent, новый нижний band по одному C-кейсу не вводить); HOOD не расширять (0.245 у границы — дальнейшее расширение было бы подгонкой), gap 2.61 / P(loss>30) 0.575 → Decision Request; negative_fcf_fallback при схеме ≥1.0.2 переопределить как revenue_bridge_reference_multiple в следующей спецификации (имя сохранить); Rules v1.1.2 — вернуть purpose и interpretation в сводном переиздании; bridge_dependent: порог ≥5 % путей на кодах 1/2/5/6 на любом из горизонтов (движок приведён к ≥); C без сервисной выручки — margin не определена → путь остаётся на revenue_bridge (код 1) — совпадает с реализацией (m=−1 как sentinel); симметричный mult_mul к обеим базам — подтверждено. Заказ LLY+META+ASML отправлен IMMA. Владелец запросил повтор вопроса по лимитам оптимизатора (proposed_limits_v1_0 в _portfolio.yaml, pending с 21.09).
+23.09 ВЕЧЕР — ПРИЁМКА НОРМАТИВОВ: ПРАВИЛА + ИНСТРУМЕНТ; ПЕРВЫЙ ПРОГОН ДОЗОРА ПО v1.2 (NVDA). (1) README.md: раздел
+«Приёмка нормативов от IMMA» (переиздание = полный текст + дельта; полнота замены проверяется механически; гейт «один
+дом»; порядок приёмки) и правило именования тегов по содержанию (snapshot-artifact-v1.0.5; S0…S3 не переименовываем).
+(2) lab: calc/tools/check_supersedes.py — сравнение деревьев YAML/JSON старой и новой версии с раскрытием $ref (вынос
+в $defs — не пропажа), отказ при пропаже без --allow; тесты test_check_supersedes.py 4/4; живой прогон: v1.1→v1.2
+протокола — 33 пропажи (principles, kpi_rules, runtime_write_rules, semantics 20 статусов…), v1.0.4→v1.0.5 схемы — 1
+(known_migrations_v1_0_3_to_v1_0_4); регресс: v1.0.1→v1.0.2→v1.0.3 — полные, v1.0→v1.1 протокола — тоже дельта
+(inputs, normalization, technical_access, non_disclosure_rule перестроены/выпали) → в заказ v1.2.1 добавить
+восстановление и v1.0-содержимого. (3) NVDA run1 по v1.2 (задание dozor-verify-nvda-run1, Sonnet 5): отчёт
+verify-NVDA-20260923T190405Z записан и проходит валидатор 1.5.0 с первого раза (10 KPI подтверждены, 6 derived_fact в
+базе кандидата; 5 осей state_supported; E-01..E-10 not_met; E-11 pending_history + событие event_unconfirmed; итог
+PASS_WITH_DECLARED_PENDING), но исполнитель ПРЕРВАН ошибкой биллинга OpenRouter (402: баланс ниже max_tokens 128k) до
+state.json/feedback/уведомления; runtime дописан интегратором по отчёту (скрипт: обновление 10 наблюдений по
+candidate.last_value + verification_run_ids, оси verified+run_id, verification, info_log), валидатор папки pass;
+обратная связь для v1.2.1 — to_imma/dozor-run4-nvda.feedback.md (pending_event для событийных переходов, граница
+condition_not_met, форма found.period, порядок шагов исполнителя). БАЛАНС OPENROUTER НАДО ПОПОЛНИТЬ (владелец): до
+пополнения задания на Sonnet 5 с большим max_tokens будут падать. Очередь: коммит; ответ IMMA по v1.2.1 (принять через
+check_supersedes + диффы); заказ HOOD + RKLB; Decision Request SPCX; Flight 14 28.09.
 
-ЛИМИТЫ ОПТИМИЗАТОРА УТВЕРЖДЕНЫ ВЛАДЕЛЬЦЕМ 24.09 (переписка) → portfolio/_portfolio.yaml constraints.approved_limits_v1_0 (proposed_limits_v1_0 → superseded): на бумагу — из Conviction Overlay (бюджет потерь 8/15 % NAV ÷ правдоподобная просадка, целевой 0.75×жёсткого), сектор 35 % (не 30), топ-3 ≤50 %, Challenger 8 %/25 %, кэш по режимам Normal 5–10 (до 15) / Stress 5–15 (до 20) / Shock 10–20 (до 30), риск 5Y: P(loss>30) ≤20 %, P(loss>50) ≤10 %, ES5 ≥ −55 %, концентрация сценария ≤60 %; ОТЛОЖЕНЫ: common_cause_effective_max, неликвид 10/5 %. Нарушение — не приказ. Следующий шаг к валидации портфеля: после калибровок LLY/META/ASML — совместный прогон portfolio_paths (общий seed) → Stability Test → MPC → Optimizer с этими лимитами; движок optimizer/stability ещё НЕ реализован в сайдкаре (portfolio_paths и portfolio_regime есть).
+## 23.09: DOZOR v1.2.1 (СВОДНАЯ) + ПЕРЕИЗДАННАЯ ARTIFACT v1.0.5 ПРИНЯТЫ (23.09 поздно, share…
 
-ПАРТИЯ 3 (LLY/META/ASML v1.0, from_imma/LLY_META_ASML_Calibrations_v1) — ХОСТ-ПРИЁМКА 24.09 ночь: RV …-f49614 / …-94a270 / …-2d7985 (все terminal_dependent, совпали с предрасчётом); валидатор 1.6.0 pass у всех; дисперсия: LLY 0.286 в ориентире, META 0.214 (ориентир B 0.40–0.85), ASML 0.214 (0.25); нормативные 500k …-e5a5c8 LLY (CAGR5 +8.1 %, P(loss>30) 0.04, gap 1.06), …-65c7d5 META (+12.5 %, 0.004, q5 +0.3 % — неправдоподобно узко), …-7d8481 ASML (−3.8 %, 0.34, gap 1.91); стресс …-6c371f/…-a6e571/…-9891e6. РЕШЕНИЕ: LLY ПРИНЯТ и ИНТЕГРИРОВАН (portfolio/lly, calc_runs, stage conditional_mc; валидатор папки pass); META и ASML — заказ v1.0.1 с расширенными хвостами (центры не трогать) — to_imma/mc-lly-meta-asml.feedback.md (НЕ отправлен; отправлять в НОВЫЙ чат IMMA после восстановления контекста по to_imma/imma-context-restore.request.md + Downloads/imma-context-restore). Лимиты: общая причина 35 % утверждена (второе решение 24.09), неликвид отложен; в портфеле неликвида нет (SPCX — публичная, NASDAQ; моя ошибка в примере). Покрытие калибровками 79.7 % NAV.
+DOZOR v1.2.1 (СВОДНАЯ) + ПЕРЕИЗДАННАЯ ARTIFACT v1.0.5 ПРИНЯТЫ (23.09 поздно, share 6ab4235f,
+from_imma/Dozor_v1.2.1_consolidated): check_supersedes — v1.1→v1.2.1 0 пропаж, v1.2→v1.2.1 0 (три переименования
+storage.* разрешены), v1.0.4→v1.0.5 0; output_report_schema идентична v1.2, файловые
+схемы/field_catalog/integrity_rules идентичны принятой v1.0.5, блок MIG-117..120 возвращён; реестр 25 статусов с
+semantics; отчёты v1.0/v1.1/v1.2 (вкл. живой NVDA) проходят. Интеграция: methodology — v1.2.1 (yaml+md) ЕДИНСТВЕННЫЙ
+дом протокола (v1.1 и v1.2 убраны), переизданная схема v1.0.5 (версия не поднята — повторная миграция не нужна);
+валидатор 1.5.0 → DOZOR_PROTOCOL_VERSION 1.2.1 (сайдкар перезапущен: NVDA pass …-4a92c4, 17/17 …-3d7d1c); AGENTS.md —
+раздел сверки на v1.2.1; тесты lab 48/48. Приёмка + вход для следующей редакции (pending_event, граница
+condition_not_met, форма found.period, возврат содержимого v1.0: допуски/технический доступ/output_mutation_rules) —
+to_imma/dozor-v121.feedback.md (НЕ отправлен). OpenRouter пополнен владельцем. Очередь: коммит; отправка приёмки;
+следующие прогоны дозора HOOD/ASML/META/CRWV по v1.2.1; заказ калибровок HOOD + RKLB; Decision Request SPCX; Flight 14
+28.09.
 
-24.09 утро: новый чат IMMA (share 6ab4bbc1) ВОССТАНОВЛЕН — все 5 контрольных ответов верны, работа продолжена в нём. Приёмка партии 3 отправлена; ответ (share 6ab4be13, from_imma/META_ASML_v1.0.1_patchplan): LLY принят, антицикличность подтверждена (центр тирзепатида от операционных фактов); META/ASML — у нового чата НЕТ исходных v1.0 YAML (в пакет восстановления не вложены — наш пропуск), поэтому выдан НЕНОРМАТИВНЫЙ patch-plan (расширение хвостов, центры неизменны). Предпросмотр плана на движке (в памяти, 20k): META W 0.214→≈0.30 (B-ориентир 0.40 не достигается — документировать, не расширять дальше), ASML 0.214→≈0.26; дефекты плана: имена сегментов ASML не совпадают с файлом (EUV/DUV/InstalledBase vs EUV_Systems/DUV_Systems/InstalledBaseManagement; Metrology_Inspection не упомянут), floor/ceiling у terminal_margin_Y8 и InstalledBase сужают хвост, семантика pct_of_mode двояка. Подготовлено сообщение с исходниками — to_imma/mc-meta-asml-v101-sources.request.md (НЕ отправлен), вложения Downloads/mc-meta-asml-v10-sources (META/ASML mc v1.0 + RV, LLY mc v1.0). Ждём нормативные полные v1.0.1 → check_supersedes → конвейер → интеграция → первая валидация портфеля.
+## 23.09: ночь: (1) IMMA подтвердила приёмку v1.2.1 (share 6ab426b2): норматив
 
-META/ASML v1.0.1 (нормативное переиздание IMMA, share 6ab4c222, from_imma/META_ASML_mc_v1.0.1) ПРИНЯТЫ И ИНТЕГРИРОВАНЫ 24.09 09:35 МСК: check_supersedes — изменены только концы хвостов и пересчитанная устойчивость (разрешено), центры 0/0, сужений нет, mapping идентичен; валидатор 1.6.0 pass; дисперсия ASML 0.273/0.299 (в ориентире), META 0.295/0.321 (warning, ориентир B 0.40 — не расширяем далее по правилу IMMA); нормативные 500k на 2.3.1: META …-410567 (CAGR5 +12.0 %, P(loss>30) 0.026, q5 −4.1 %, gap 0.89; Y5 базы: crossover_bridge 67 % — паритет 0.249 ≈ FCF-маржа Y5 → fallback де-факто референсный bridge-мультипликатор, замечание в приёмку), ASML …-7106fc (−4.3 %, 0.388, gap 1.96; crossover 32 %); устойчивость pass обе; стресс …-ec5362/…-e036cc (допуск 2/6 обе). Интеграция: portfolio/{meta,asml} calibration_v1.0 + mc_calibration_v1.0.1, calc_runs, стадия conditional_mc; валидатор папок pass …-d9453e. ПОКРЫТИЕ КАЛИБРОВКАМИ 88 % NAV (SPCX, NBIS, NVDA, HOOD, RKLB, LLY, META, ASML). Приёмка — to_imma/mc-meta-asml-v101.feedback.md (НЕ отправлен). README: правило 5 (смена чата IMMA — пакет восстановления включает файлы текущей приёмки). Очередь: коммит + тег calibrations-88pct-nav; ПЕРВАЯ ВАЛИДАЦИЯ ПОРТФЕЛЯ — совместный прогон portfolio_paths (общий seed) → Stability Test → MPC → Optimizer (движки Stability/Optimizer — реализовать по спецификациям v1.0; лимиты утверждены); дозор HOOD run2 в 10:00 МСК; затем заказ MSFT/PLTR/NET/ETN, CRWV/ASTS.
+23.09 ночь: (1) IMMA подтвердила приёмку v1.2.1 (share 6ab426b2): норматив — v1.2.1 + переизданная v1.0.5, новые
+отчёты по-прежнему protocol_version 1.2.0; на следующую редакцию Dozor зафиксированы 4 изменения (pending_event с
+обязательным event_item_refs; граница condition_not_met для disclosure-сторожей; period как тип окна vs конкретный
+интервал; возврат допусков нормализации / technical access / output_mutation_rules в единый дом) — до следующего
+заказа норматив не трогаем. (2) ЗАКАЗ КАЛИБРОВОК HOOD + RKLB подготовлен —
+to_imma/mc-hood-rklb-calibrations.request.md (НЕ отправлен), вложения собраны в Downloads/mc-hood-rklb-to-llm (hood/,
+rklb/, reference/: NBIS пара, NVDA mc v1.0.2, SPCX mc v1.1.2, прогон NVDA …-4a7d0d): HOOD — архетип A
+(крипто/event-contracts как циклический сегмент), RKLB — первый живой архетип C (milestone_model от первого полёта
+Neutron, cash_model, просьба предложить пороги MC-G5-013 для probability/timing — временный cap 0.75 в валидаторе).
+Дозор HOOD/RKLB по v1.2.1 — параллельно с калибровкой. Коммиты: workspace 75b8e4c (тег dozor-v1.2.1), lab 0b1e09d —
+запушены.
 
-HOOD run2 (дозакрытие, 24.09 10:02 МСК, задание dozor-verify-hood-run2, Sonnet 5, 5.1 млн токенов / 95 % кэш ≈ $1.6): отчёт verify-HOOD-20260924T070242Z — PASS_WITH_DECLARED_PENDING; KPI-01..03 (monthly, август) verified_match по копии релиза от владельца (evidence_locator с пометкой «obtained by owner via browser», sha256); ось Customer_Asset_Scale S3 state_supported (критерий однопериодный); Regulatory_Product G2 state_supported — целевой поиск нашёл в Note 15 10-Q цитату о прекращении новых спортивных event contracts в Неваде (добровольное соглашение на время апелляции — исполнитель отметил развилку критерия «voluntary cessation vs ordered cessation» → в следующую редакцию Dozor); переходы E-01/E-02/E-10 not_met, E-09/E-11 pending_history (события event_unconfirmed — pending_event ещё нет); state.json: 3 наблюдения с verification_run_ids=[run2] (run1 не привязан — там source_unavailable_technical, верно), оси S3/G2 verified + run_id; валидатор отчёта и папки pass. Поведение IR-сайта: HTTP/2 stream INTERNAL_ERROR без тела — стабильная антибот-блокировка не-браузерных клиентов; newsroom не публикует monthly-релизы → для HOOD monthly-KPI единственный путь — файл от владельца (правило §5 AGENTS.md). PDF-текст исполнитель извлёк через npm pdf-parse (pdftotext/pypdf в контейнере нет — учесть в образе). Feedback — to_imma/dozor-run6-hood.feedback.md. Рабочий артефакт _sources/extracted.txt удалён. HOOD полностью закрыт по дозору (10/10 KPI, 5/5 осей).
+## 23.09: HOOD run1 по v1.2.1
 
-ПЕРВАЯ ВАЛИДАЦИЯ ПОРТФЕЛЯ — ЗАХОД 1 (24.09 10:30 МСК): реализован portfolio_optimizer 1.0.0 (стадия A: лексикографическая цель медиана CAGR 5Y → ES5 → [сценарная концентрация n/a] → оборот; покоординатный подъём переносами веса на сетке 1 п.п. + уточнение 0.5 п.п., три старта; жёсткие ограничения без ослабления: потолки на бумагу (target_cap Conviction Overlay по MC: plausible_dd = max(|ES5|, |Q25 maxdd|)), сектор 35 %, топ-3 50 %, общая причина 35 % (severity-взвешенно), кэш по режиму, риск 5Y; некалиброванные 11.6 % NAV фиксированы с плоской доходностью; поиск на 100k совместных путях, итог на 500k; тесты 3/3; зарегистрирован в сайдкаре). Прогоны …-2acb55 (portfolio_paths, текущие веса) и …-3b2cf9 (optimizer) ВЫПОЛНЕНЫ, НО НЕДЕЙСТВИТЕЛЬНЫ: обнаружен ДЕФЕКТ ДВИЖКА — при одном seed калибровки (20260920 у всех) собственные (идиосинкратические) розыгрыши компаний совпадали путь-в-путь → корреляция HOOD__ASML 0.88, NBIS__META 0.68; эксперимент: две одинаковые калибровки с разными тикерами — корреляция 1.0 в 2.3.1, 0.005 без Joint Layer в 2.3.2. Исправлено: company_mc 2.3.2 — собственный seed = SeedSequence(seed, crc32(ticker)); общие пути драйверов по-прежнему (global_seed, chunk); детерминизм на калибровку сохранён. Перепрогон 8 нормативных прогонов на 2.3.2 запущен (скрипт _rerun_normative_232.py; сводки компаний изменятся в пределах MC-шума), затем — повтор портфельного прогона. Предварительная картина (по недействительному заходу, только как ориентир): оптимум при лимитах — NBIS 33→12.5 %, NVDA 21→13.5 %, HOOD 14→7 %, ASML/SPCX→0, LLY 8→14 %, META 5.5→13.5 %, RKLB 2.3→8 %, кэш 0.5→20 %; связывающие — общая причина TAIWAN_SUPPLY_DISRUPTION и потолки LLY/META/NVDA/RKLB; текущий портфель нарушает 8 лимитов.
+HOOD run1 по v1.2.1 (23.09 22:45, задание dozor-verify-hood-run1, Sonnet 5, 10.3 млн токенов / 96 % кэш ≈ $3.5 —
+дорого из-за ~8 попыток к IR-сайту за 20 мин): отчёт verify-HOOD-20260923T194500Z, валидатор pass после двух
+самоисправлений исполнителя (DZR-012 база кандидата для KPI-08/09; DZR-010 старшинство BLOCKED_TECHNICAL над
+PATCH_REQUIRED). Итог BLOCKED_TECHNICAL: investors.robinhood.com не отвечает (таймауты и с хоста тоже), августовский
+операционный релиз не подавался как 8-K → KPI-01..03 (monthly) source_unavailable_technical, ось Customer_Asset_Scale
+evidence_unavailable_technical (legacy verified не тронут), переходы E-01/E-02 pending_history; 7/10 KPI подтверждены
+по 10-Q/Ex-99.1 (KPI-08/09 — qualifier_patch_suggested: kpis.yaml хранит округлённые 0.59/0.12, state.json точные
+0.5931/0.1193); оси R3/P3/C1 подтверждены; Regulatory_Product G2 — state_pending_verification + PATCH_REQUIRED
+(критерий «продукт остановлен хотя бы в одной юрисдикции» не подтверждён по 10-Q за время прогона, нужен целевой поиск
+Note 15 / cease-and-desist по event contracts); E-03/04/06/07/08 not_met, E-05 pending_history (56.65 % ≥ 55 %, нужен
+второй квартал), E-09/E-11 события event_unconfirmed → pending_history (нет pending_event), E-10 pending. state.json:
+7 наблюдений с историей, оси R/P/C verified + run_id, G2 verified=false + run_id, verification, info_log; исполнитель
+сам записал feedback to_imma/dozor-run5-hood.feedback.md (даты IR: Q2-релиз опубликован 2026-07-29 по 8-K
+0001783879-26-000113). Интегратор: states.yaml HOOD_Q2_RELEASE.as_of → 2026-07-29 + recorded_at 2026-09-21 (валидатор
+папки pass …-c672f8). Решения владельца: (1) повторный прогон KPI-01..03 + целевая проверка G2 одним заданием, когда
+IR-сайт ответит (предложение: завтра утром); (2) Decision Request по G2, если и целевой поиск не подтвердит; (3)
+гармонизация KPI-08/09 (округление реестра vs точное наблюдение) — вопрос в следующую редакцию Dozor (правило «база
+кандидата = kpis.yaml» уже так в валидаторе).
 
-ПЕРВАЯ ВАЛИДАЦИЯ ПОРТФЕЛЯ — ЗАХОД 2 ВЫПОЛНЕН (24.09 10:57 МСК, движок 2.3.2, все 8 нормативных прогонов перепрогнаны: сводки компаний изменились ≤0.05 п.п.; записи calc_runs добавлены с supersedes у 8 компаний, формат файлов сохранён; валидатор 17/17 …-a91b28). Совместные пути теперь корректны: корреляции log-стоимости Y5 ≤0.24 (NVDA__ASML 0.24, NBIS__NVDA 0.16; было 0.88/0.68). Текущий портфель (88 % NAV калиброванных, перенормировано; portfolio_paths …-fabcc8): медиана CAGR 3/5/8Y 22.2/16.7/20.0 %, P(loss>30) 0.4 %, ES5 −10.7 %, P(2x) 56 %, q5…q95 5Y +0.8…+37.9 %; вклад в медиану: NBIS 0.96, NVDA 0.65 (две бумаги — 3/4 результата). Оптимизатор стадии A (…-2d192f, feasible, старт current, 1014 оценок): NBIS 33→12.5 %, NVDA 21→13.5 %, HOOD 14→7 %, ASML 2.8→0, SPCX 0.7→0, LLY 8→14 %, META 5.5→13.5 %, RKLB 2.3→8 %, кэш 0.5→19.9 % (выше предпочтительных 15 % — лексикографика: в пределах 0.5 п.п. медианы решает ES5); итог: медиана CAGR 5Y 11.7 % (текущий 15.2 %), ES5 +9.2 % (−9.5 %), P(loss>30) 0 (0.2 %), P(2x) 30 % (51 %), оборот 39 % NAV; связывающие: общая причина TAIWAN_SUPPLY_DISRUPTION (0.348/0.35) и потолки LLY/META/NVDA/RKLB; полосы: NBIS 10.5–24 %, NVDA 8–13.5 %, META 0–13.5 %, LLY 12–14 %, HOOD 6.5–9 %, RKLB 6–8 %, ASML 0–2 %, SPCX 0–5 %; текущий портфель нарушает 8 лимитов (потолки HOOD/NBIS/NVDA, топ-3 68.6 %, общие причины Тайвань 55 %/AI_OVERBUILD 48 %/AI_CLOUD_FINANCING 43 %, кэш 0.5 % < 5 %). ОГРАНИЧЕНИЯ ЗАХОДА: 11.6 % NAV без калибровок фиксированы с плоской доходностью; только сценарий BASE; стадия B не выполнялась; Stability Test не реализован. Прогоны захода 1 (…-2acb55, …-3b2cf9) — недействительны (дефект seeding), захода 2а (…-78c702) — до исправления округления dp; действительные: …-fabcc8 и …-2d192f. Очередь: коммит lab (2.3.2, optimizer 1.0.0, registry, тесты 108/108) и workspace; Decision Request по разрывам — владельцу; Stability Test (следующий блок); затем калибровки MSFT/PLTR/NET/ETN, CRWV/ASTS.
+## 23.09: Коммит HOOD run1
 
-ЗАДАЧА (владелец 24.09): ГЛОССАРИЙ — вынести термины и определения в отдельный файл workspace (предложение: GLOSSARY.md в корне рядом с README, ссылка из README и AGENTS.md), один нормативный дом для каждого термина, без дублирования описаний в других документах; ориентир — частный инвестор, не профессионал: определение по-русски + формула/пример на наших числах + где используется. Обязательный состав: общепринятые (NAV, CAGR, медиана, квантили, просадка, корреляция, ES/expected shortfall, лексикографический порядок критериев, common cause) и наши (ES5 — средняя доходность худших 5 % путей за 5 лет; P(loss>30 %/50 %); P(2x); plausible drawdown = max(|ES5|, |Q25 max drawdown|) и бюджет потерь L_max → жёсткий/целевой потолок; dry powder и режимы Normal/Stress/Shock; Joint Layer, драйверы ±2/±1, MC-G5-013 и измеренная σ; intrinsic/full W; архетипы A/B/C; паритетная маржа и bridge_dependent; статусы дозора и итоги PASS/PASS_WITH_DECLARED_PENDING/PATCH_REQUIRED/BLOCKED_*; Decision Request; trigger ≠ decision; стадии кандидата; Conviction Overlay; Challenger/Core/Watch). Правило: при появлении нового термина в приёмке/заказе — сначала запись в глоссарий. Оценка: ~1 час; сделать до следующего Decision Request владельцу.
+Коммит HOOD run1 — 4618576. Задание dozor-verify-hood-run2 (b32fe15b) поставлено на 24.09 07:00 UTC (10:00 МСК):
+целевое дозакрытие — KPI-01..03 через IR-сайт с ЛИМИТОМ 3 попытки на домен (+1 полнотекстовый поиск EDGAR), фиксация
+признаков антибот-защиты в technical_error; ось Regulatory_Product G2 по 10-Q (Legal Proceedings / примечание о
+регуляторных делах) и Ex-99.1; переходы E-01/02/09/10/11; отчёт частичный с новым run_id, история run_id у наблюдений
+дополняется; feedback — to_imma/dozor-run6-hood.feedback.md. Владелец проверяет доступность
+https://investors.robinhood.com/news-releases/news-release-details/robinhood-markets-inc-reports-august-2026-operating-data
+вручную (человек vs агент); без обратной связи — действуем по плану.
 
-ГЛОССАРИЙ СДЕЛАН (24.09): GLOSSARY.md — 4 раздела (общие понятия; наши метрики; модель компании; портфель и решения), ~35 терминов с определением по-русски, формулой/правилом, примером на наших числах и местом использования; ссылки из README («Форматы и версии» + «Что где лежит») и AGENTS.md (п. 4 «Запуск сессии»: термины в сообщениях владельцу — только по глоссарию); правило «новый термин — сначала в глоссарий». README: список methodology актуализирован до текущих версий (Artifact v1.0.5, Dozor v1.2.1, MC spec v1.1.3, Rules v1.1.2, Schema v1.0.2/v1.0.1, движки 2.3.2 и optimizer 1.0.0). Очередь: коммит; заказ MSFT/PLTR/NET/ETN; Stability Test; Decision Request по разрывам.
+## 23.09: HOOD: ручная проверка владельца 23.09
 
-Коммит 24.09: workspace 90a7a26 (глоссарий + README + AGENTS + STATUS). ЗАКАЗ КАЛИБРОВОК MSFT + PLTR + NET + ETN подготовлен — to_imma/mc-msft-pltr-net-etn-calibrations.request.md (НЕ отправлен), вложения Downloads/mc-msft-pltr-net-etn-to-llm (+ .zip 68 КБ; msft/, pltr/, net/, etn/, reference/: HOOD пара v1.0.1, LLY mc v1.0, ASML mc v1.0.1, прогон HOOD на 2.3.2 …-038894). Все четыре — архетип A; веса 1.9/1.8/1.8/1.2 % NAV → покрытие ≈94.5 %. Развилки, вынесенные IMMA явно: архетип MSFT (A рекомендован; capex 40 % выручки, FCF 21.8 %), SBC/размытие у PLTR (13.7 % выручки; FCF по GAAP-определению, не adjusted 63 %), FCF-маржа NET (в реестре нет — derived_fact из 10-Q; GAAP опер. маржа −29.6 % против non-GAAP +13.8 % объяснить; при FCF ≤0 — архетип B), периметр ETN (Boyd/Ultra куплены, Mobility выделяется Q1 2027 — pro-forma; долг 20.6 млрд). Оговорка по движку: схема v1.0.2 требует const `company_mc 2.3.1` — IMMA пишет 2.3.1, в следующем переиздании схемы просим 2.3.2; нормативные прогоны на 2.3.2. Урок 2 (fallback multiple — основной параметр смеси) внесён в заказ. Примечание для владельца: три общие причины MSFT (AI_OVERBUILD, TAIWAN_SUPPLY_DISRUPTION, AI_CLOUD_CUSTOMER_FINANCING_STRESS) уже нарушены/связывающие в портфеле — после калибровки MSFT разрывы вырастут. Очередь: отправка заказа владельцем; Stability Test; Decision Request по разрывам; дозор по MSFT/PLTR/NET/ETN (ещё не проходил); CRWV (B) + ASTS (C).
+HOOD: ручная проверка владельца 23.09 — IR-страница августовского релиза открывается в браузере, PDF скачивается; для
+агента (curl из контейнера и с хоста) сайт молчит (таймаут без ответа) → блокировка не-браузерных клиентов, не падение
+сайта. Копия релиза от владельца — portfolio/hood/_sources/HOOD_AUG_OPS_2026-09-10.pdf (sha256 f83fcec3…5394, 318 773
+байт; релиз от 10.09.2026: Funded Customers 28.6 млн, Total Platform Assets $383.7 млрд, LTM Net Deposits $74.1 млрд =
+24 % — все три числа модели подтверждаются документом). Задание dozor-verify-hood-run2 (b32fe15b, 24.09 10:00 МСК)
+ПЕРЕПИСАНО: сверка KPI-01..03 по локальной копии с явной пометкой «получено владельцем через браузер», ровно одна
+попытка к оригиналу для фиксации поведения сайта + одна к newsroom.aboutrobinhood.com (канал Reg FD); G2 и переходы —
+как раньше. Вопрос в протокол: как оформлять источник, полученный владельцем вручную (пока — evidence_locator с
+пометкой).
 
-STABILITY TEST — ДВИЖОК И ПЕРВЫЙ ПРОГОН (24.09 день; владелец вне ноутбука, заказ MSFT/PLTR/NET/ETN ждёт отправки). Движок portfolio_stability 1.0.2 (lab, спецификация и схема v1.0): центральный прогон = optimizer на тех же входах; слои — сдвиг доходности ±3/±5 п.п. (масштаб (1+δ)^h на пути), терминальный мультипликатор ±20 % (лог-множитель), терминальная маржа ±5 п.п. (ПРОКСИ (m+δ)/m на Y5/Y8 по терминальной марже калибровки), корреляции ±0.10/±0.15 (Иман–Коновер по рангам стоимости Y5, PSD-ремонт логируется, контроль нулевого δ), сценарии — not_applicable (один BASE), вехи и driver knockout — not_testable до пересимуляции (материальные драйверы перечислены: 10 по правилу ≥0.30), LOO для позиций ≥5 % на трёх стартах + линейная проверка ёмкости (scipy.linprog: max Σw при потолках/общих причинах/секторах против budget − dp_hard_max), combined — латинский гиперкуб 500 × 25 измерений, seed 20260924; частичный перепрогон по семействам (families → partial). Optimizer 1.0.1: пути из памяти, max_paths, старт «given». Тесты lab 112/112. Прогоны: …-c7444b (1.0.0, полный, 78 мин, 569 прогонов на 100k путей) + …-ce0f70 (1.0.1, только LOO) → НОРМАТИВНЫЙ ПРОГОН …-f42e9b (1.0.2, 84 мин, supersedes оба; статистики совпали с 1.0.0 полностью; ёмкость центра 76.2 % при минимуме 68.4 %, запас 7.8 п.п.; LOO без HOOD/LLY/RKLB — structurally_infeasible по линейной проверке, запас −1.7/−6.5/−0.6 п.п.). РЕЗУЛЬТАТ: все 569 возмущений допустимы; веса почти не двигаются (p10–p90: NBIS 10.5–13.5 %, META 12.5–13.5 %, остальные ±0.5 п.п.), включение HOOD/LLY/META/NBIS/NVDA/RKLB 100 % — все шесть stable; ASML включается в 14.6 % прогонов (до 1.5 %), SPCX 0.2 %; оборот от центра медиана 0, p90 2.5 п.п., max 10 п.п.; знак медианы не меняется; портфель structurally_stable по четырём оценённым критериям (driver knockout не оценён). Причина устойчивости — решение ПРИКОЛОЧЕНО ограничениями: связывающие потолки LLY 100 %, NVDA 99.7 %, RKLB 98 %, META 85 %, общая причина TAIWAN_SUPPLY_DISRUPTION 95 % прогонов. Медиана CAGR 5Y под combined-возмущениями 9.8–13.7 % (p10–p90), ES5 всегда ≥ +0.7 %. Корреляции ±0.15 меняют медиану на ±0.2 п.п., веса — нет. LOO: без META/NBIS/NVDA допустимо (медиана −0.7/−3.8/−2.0 п.п.), без HOOD/LLY/RKLB — НЕДОПУСТИМО СТРУКТУРНО (линейная ёмкость: бумаги без тайваньской экспозиции HOOD/LLY/RKLB/SPCX вмещают 40.6 % NAV, остальные упираются в общую причину 35 %, кэш Stress ≤20 %; ёмкость всего набора 76.2 % при минимуме 68.4 % — запас 7.8 п.п.). Вывод для Decision Request: узкое место — ёмкость вне тайваньской общей причины; калибровки PLTR/NET/ETN (без тайваньской экспозиции) расширят её, MSFT — нет. Ограничения: маржа прокси, knockout/вехи не тестированы (срез 2 — пересимуляция company_mc), 11.6 % NAV фиксированы. Файлы: lab engine/portfolio_stability.py, tests/test_portfolio_stability.py, optimizer 1.0.1, registry; workspace README (движок), GLOSSARY (Stability Test, LOO). НЕ закоммичено. Очередь: коммит lab + workspace; Decision Request по разрывам + ёмкости; срез 2 (пересимуляция: маржа, вехи, driver knockout).
+## 23.09: КАЛИБРОВКИ HOOD/RKLB v1.0
 
-DECISION REQUEST DR-2026-09-24-01 ПОДГОТОВЛЕН (владелец запросил 24.09 после push 2a53927/6033188; заказ MSFT/PLTR/NET/ETN ОТПРАВЛЕН IMMA) — decisions/DR-2026-09-24-constraint-gaps-and-capacity.md: 8 разрывов текущего портфеля (потолки NBIS 33.0/25.1, NVDA 21.3/13.8, HOOD 14.2/9.5; топ-3 68.6/50; общие причины Тайвань 55.2, AI_OVERBUILD 48.0, AI_CLOUD_FINANCING 42.7 против 35; кэш 0.5/5); статусы Overlay по MC-просадке: NVDA и HOOD — hard breach (HOOD в превью 22.09 был soft при запасной просадке 0.55, по MC 0.79), NBIS soft при conviction (до жёсткого 0.4 п.п.); четыре варианта на совместных путях (V0 держать 15.2 %/ES5 −9.5 %; V1 только жёсткие пробои → 14.7 %/−8.9 %, продажи 8.1k USD, нарушений 8; V2 целевые потолки + кэш 20 % → 12.5 %/−1.8 %, 36.9k, нарушений 2; V3 оптимум → 11.7 %/+9.2 %, 71.3k, 0); ёмкость (LOO: без HOOD/LLY/RKLB недопустимо, запас 7.8 п.п.; расширяют PLTR/NET/ETN, не MSFT); 7 вопросов (В1 NVDA hard breach: до жёсткого/целевого/держать/conviction-тег (45 %/33.8 %); В2 HOOD; В3 NBIS; В4 кэш; В5 общие причины; В6 ёмкость; В7 стадия B). Не учтено: счета P1/P2, лоты, налоги (прибыль NBIS +188 %, NVDA +151 %, HOOD +128 %), сценарии кроме BASE. Запись решения — _portfolio.yaml owner_decisions + state.json + STATUS. README: строка decisions/. НЕ закоммичено. Очередь: ответ владельца по В1–В7; срез 2 Stability Test; ответ IMMA по партии 4.
+КАЛИБРОВКИ HOOD/RKLB v1.0 (share 6ab430a5, from_imma/HOOD_RKLB_Calibrations_v1) — ХОСТ-ПРИЁМКА 23.09 ночь: все жёсткие
+гейты пройдены (RV …-933181 HOOD terminal_dependent CAGR 34.5 %; …-904488 RKLB model_fragile 82.4 %; валидатор 1.5.1
+pass, σ вех RKLB 0.118/0.069 логит и 0.365/0.147 кв. при кандидатных порогах 0.35/1.0 — приняты в AGG_SHIFT_LIMITS как
+milestone_probability/milestone_timing; нормативные 500k …-9b14c5 HOOD: CAGR5 −9.5 %, P(loss>30) 0.65, gap 2.78,
+robustness pass 1.0/0.75; …-e3c5c4 RKLB: +1.6 %, 0.26, gap 1.66, P(onset) 0.90, robustness pass 0.75/1.0), НО
+ИНТЕГРАЦИЯ ОТЛОЖЕНА: (1) дисперсия intrinsic W ниже ориентиров у обеих (HOOD 0.198 < 0.25; RKLB 0.508 < 0.6) — как
+SPCX v1.1.1, просим v1.0.1 с широкими хвостами; (2) ГЛАВНОЕ — обрыв стоимости у порога fcf_maturity_margin 0.08 в
+кусочной оценке архетипа C: маржа +5 п.п. → P(loss>30) 0.27→0.35 (переключение revenue_bridge 7× → FCF_multiple
+24×FCF), проверено тремя прогонами 30k; это дефект спецификации v1.1 (нет непрерывности базы), заказ патча —
+to_imma/mc-hood-rklb.feedback.md (НЕ отправлен; там же: фикстура C схемы нарушает порог 0.35, HOOD стресс-допуск 0/6).
+Движок: robustness.pass numpy.bool → bool (500 при save=false), результаты не менялись. Стресс-диагностика записана
+…-044b86 (HOOD), …-279ccc (RKLB). Очередь: коммит (workspace: пакет, прогоны, PDF-копия HOOD, STATUS, feedback; lab:
+валидатор 1.5.1, company_mc bool, тесты); ответ IMMA по патчу спецификации и v1.0.1; Decision Request HOOD (модель
+против цены) — владельцу; завтра 10:00 дозор HOOD run2.
 
-ПАРТИЯ 4 (MSFT/PLTR/NET/ETN v1.0, share 6ab56325, from_imma/MSFT_PLTR_NET_ETN_Calibrations_v1, sha256 по манифесту сошлись) — ХОСТ-ПРИЁМКА 24.09 вечер: RV …-c21c7b MSFT 18.1 % terminal_dependent, …-268b86 PLTR 58.8 % terminal_dependent, …-6ca499 NET 66.9 % model_fragile, …-ae7ea8 ETN 20.1 % terminal_dependent (совпали с предрасчётом IMMA); валидатор 1.6.0: MSFT/PLTR/NET pass (…-937964/…-7f2410/…-e64fec; intrinsic W 0.283/0.286/0.273 в ориентире A; MSFT full W 0.294 — warning у 0.30, не расширяем по правилу HOOD), ETN FAIL …-3ea357 — MC-G5-013: σ роста ElectricalAmericas 0.189 > 0.15 при шести коррелированных драйверах (Σ|e| 0.112); предпросмотр ×0.75 по шести вкладам → σ 0.141 pass. Стресс-диагностика (старая сетка) …-227c0e/…-81b51c/…-d69229. Нормативные 500k на 2.3.2: MSFT …-a26670 (CAGR5 +6.8 %, P(loss>30) 0.07, gap 1.13, robustness 1.0/1.0), PLTR …-460fe8 (−1.6 %, 0.285, gap 1.83, robustness 0.875/0.75), NET …-a8783a (−16.4 %, 0.838, q5..q95 −32…−0.4 %, gap 4.04, robustness 1.0/1.0 — весь коридор отрицательный; у IMMA запрошено подтверждение, кандидат на Decision Request с флагом риска модели). РЕШЕНИЕ: MSFT/PLTR/NET ПРИНЯТЫ и ИНТЕГРИРОВАНЫ (portfolio/{msft,pltr,net} calibration_v1.0 + mc_calibration_v1.0, calc_runs RV+MC, стадия conditional_mc; валидатор папок pass 3/3 …-ec00fc; дамп state.json адаптивный — многострочные наблюдения сохранены); ETN — заказ v1.0.1 (только шесть вкладов на ElectricalAmericas). ПОКРЫТИЕ КАЛИБРОВКАМИ 93.4 % NAV. Приёмка — to_imma/mc-msft-pltr-net-etn.feedback.md (НЕ отправлен). ЗАХОД 3 ВАЛИДАЦИИ (11 бумаг): portfolio_paths …-b41a4b (текущие веса: медиана 16.0 %, ES5 −10.7 %), optimizer …-ac7fd4 (NBIS 13.5, NVDA 13.5, LLY 12, META 9, PLTR 9, NET 8, RKLB 5, MSFT 3, SPCX 1, HOOD 0, ASML 0, кэш 19.8 %; медиана 10.9 %, ES5 +3.6 %, оборот 44 %; связывающие потолки NET/NVDA); разрывы текущего те же 8; ЁМКОСТЬ РЕШЕНА (LP: 95.0 % при минимуме 73.8 %, запас 21.1 п.п.; LOO по LP везде ok); НАХОДКА: NET/PLTR в оптимуме как наполнители из-за жёсткого максимума кэша 20 % (без NET медиана была бы 12.6 %, но недопустимо) → DR раздел 7, вопрос В8 (лимит кэша Stress). Stability Test на 11 бумагах запущен в фоне (supersedes …-f42e9b). НЕ закоммичено: DR + README + STATUS (с прошлого шага), партия 4 (from_imma, portfolio/{msft,pltr,net}, _candidates, _runs 15 файлов, to_imma feedback). Очередь: ответ владельца по В1–В8; отправка приёмки IMMA + ETN v1.0.1; результат Stability заход 3; срез 2 Stability; CRWV (B) + ASTS (C).
+## 23.09: Передача данных от владельца агенту
 
-ETN v1.0.1 (share 6ab56b5c, from_imma/ETN_mc_v1.0.1) ПРИНЯТ И ИНТЕГРИРОВАН 24.09 вечер: check_supersedes OK (6 значений — шесть вкладов на ElectricalAmericas ×0.75, пропаж 0); валидатор …-98a03b pass, σ 0.141; RV …-c3f24d 20.1 % terminal_dependent; стресс (старая сетка) знак 0.67/допуск 0.5; норматив …-c0c4ef (CAGR5 +2.5 %, P(loss>30) 0.172, gap 1.42, robustness 1.0/1.0); portfolio/etn calibration_v1.0 + mc_calibration_v1.0.1, стадия conditional_mc, валидатор папки pass …-b675b1. ПАРТИЯ 4 ЗАКРЫТА: ПОКРЫТИЕ 12 БУМАГ, 94.5 % NAV (без калибровок GLD/SPOT/ASTS/CRWV/UFO 5.0 %). Приёмка — to_imma/mc-etn-v101.feedback.md (НЕ отправлен). ЗАХОД 4 ВАЛИДАЦИИ: portfolio_paths …-7c25a1, optimizer …-d58516 (NBIS 13, NVDA 13.5, LLY 14, META 10, ETN 7.5, RKLB 8, MSFT 4, NET 2, PLTR 2, SPCX 1, HOOD 0, ASML 0, кэш 20 %; медиана 11.9 %, ES5 +9.7 %, оборот 45 %; наполнитель — ETN вместо NET; кэш на жёстком максимуме → В8 в силе) → DR раздел 7.1. Stability на 11 бумагах ОСТАНОВЛЕН (перезапуск сайдкара) — перезапущен на 12 бумагах (supersedes …-f42e9b), результат → DR 7.2. НЕ закоммичено: from_imma/ETN_mc_v1.0.1, portfolio/etn, _candidates, _runs (RV/валидаторы/стресс/норматив ETN, заход 4), to_imma feedback, decisions/DR (7.1), STATUS.
+Передача данных от владельца агенту (23.09 поздно): живой тест — файл, отправленный агенту в Telegram, сохраняется в
+media/inbound/openclaw-staged-…/ (подтверждено ответом агента); AGENTS.md дополнен: лимит 3 обращения к домену,
+обязательный блок «Нужна помощь владельца» в уведомлении при BLOCKED_TECHNICAL (URL, что взять, как передать: файл в
+Telegram с подписью «<тикер> <ID источника>» → агент переносит в portfolio/<тикер>/_sources/ и считает sha256; либо
+владелец кладёт файл сам), правило провенанса для копии, полученной владельцем (evidence_locator с пометкой,
+source_url — оригинал). Тестовый файл владельца (чек, не относится к портфелю) остался в media/inbound — удалить по
+решению владельца.
 
-РЕШЕНИЯ ВЛАДЕЛЬЦА 24.09 по DR-2026-09-24-01: В1 (NVDA hard breach) и В2 (HOOD hard breach) — держать осознанно до отбора бумаг портфеля, пересмотр 20.10.2026 или по завершении отбора (что раньше) → portfolio/_portfolio.yaml owner_decisions (новый блок, дом записи), info_log NVDA/HOOD, отметки в DR. Замечания владельца: отбор бумаг ещё не проводился → В3/В5/В7/В8 и варианты V2/V3 отложены до отбора (DR раздел 0); формат «V0: описание»; В4 (кэш) — то же решение (принять до отбора, пересмотр 20.10.2026 / завершение отбора). Термин «провенанс» заменён на «происхождение» (GLOSSARY, AGENTS; поле provenance сохранено). Предложено: план отбора бумаг (кандидаты без моделей — заказ IMMA). НЕ закоммичено: GLOSSARY, AGENTS, DR, _portfolio.yaml, nvda/hood state.json, STATUS; Stability на 12 бумагах считается.
+## 23.09: Замечание владельца 23.09
 
-ОТВЕТ IMMA (share 6ab57a50, без файлов): ETN v1.0.1 зафиксирован принятым; по NET — однозначное подтверждение: отрицательный коридор — осознанный вывод модели (28× FCF на Y5 — зрелое состояние после возврата роста; повышать мультипликатор ради цены — нарушение анти-цикличности), калибровку не менять, перекалибровка только при конкретном механизме. Подготовлен DR-2026-09-24-02 (decisions/DR-2026-09-24-02-net-model-risk.md): флаг model_fragile / valuation_disconnect, факты позиции (1.8 % NAV, +45 % к базе), таблица модели, сетка чувствительности RV (маржа 5/20/34 % × мультипликатор 16/28/46× → implied CAGR 36–141 %), условия перекалибровки, конфликт тезиса (докупки 275/250/225) с моделью, 4 варианта (заморозить докупки / держать как есть / сократить-выйти / отложить до отбора). info_log NET. НЕ закоммичено (+ к списку выше): DR-02, net/state.json.
+Замечание владельца 23.09 (поздно): в запросе помощи агент сам формирует готовую подпись для файла (шаблон «<тикер>
+<ID источника> <run_id>»), за владельцем — только достать артефакт и переслать в Telegram; AGENTS.md §5 переписан:
+блок «Нужна помощь владельца» = что открыть / что там должно быть / готовая подпись; главная сессия по файлу с такой
+подписью переносит его в _sources/, считает sha256 и сама ставит задание дозакрытия прогона из подписи. Приёмка
+калибровок HOOD/RKLB отправлена IMMA (ожидание патча спецификации по непрерывности базы, v1.0.1 HOOD).
 
-ЗАДАЧА ЛАБОРАТОРИИ (24.09, наблюдение владельца «CPU 10 %»): «Диспетчер задач» Windows не показывает нагрузку WSL2 — фактически loadavg 14.9 при 14 ядрах, контейнер сайдкара 1600 % CPU, оптимизатор на хосте замедлился с 5 до 71 с. OpenBLAS в сайдкаре занимает все ядра мелкими операциями (оверсабскрипшн). Сделать: ограничить потоки BLAS в контейнере calc (OPENBLAS_NUM_THREADS/OMP_NUM_THREADS ≈ 4 в docker-compose), замерить время прогонов до/после; тогда 2–3 задачи можно гонять параллельно. Не трогать во время идущих прогонов. РАСШИРЕНИЕ (вопрос владельца о переезде на сервер, 24.09): решение — сначала распараллелить в лаборатории (BLAS 1–2 потока + пул процессов для независимых прогонов: 570 возмущений Stability, компании под сценарием), ожидание 8–10× на 14 ядрах (Stability 15–20 мин вместо 3 ч); переезд сайдкара на арендованный сервер — только если после этого нормативный цикл (компании × сценарии × 500k + Stability по сценариям) не влезает в рабочий день или ноутбук нужен владельцу; схема переезда — разработка и агент на ноутбуке, сайдкар по URL на сервере, _runs через git; данные портфеля на сервере — соображение приватности.
+## 24.09: НОЧЬ — MC v1.1.3 / RULES v1.1.2 / SCHEMA v1.0.2 ПРИНЯТЫ, ДВИЖОК 2.3.1, HOOD v1.0.1 + RKLB…
 
-РАСПАРАЛЛЕЛИВАНИЕ СДЕЛАНО (25.09 ночь): portfolio_stability 1.1.0 — независимые возмущения (OFAT, корреляции, combined, LOO) как задачи пула процессов (spawn; в потомках OPENBLAS/OMP/MKL_NUM_THREADS=1 — проверено в контейнере, переменная соблюдается; каждый потомок грузит пути из файлов один раз; stability.workers по умолчанию cpu−2, ≤12; workers=1 — последовательно); порядок задач и seed'ы фиксированы → результат не зависит от числа процессов (тест: пул 2 = последовательный). Диагностика: стоимость Stability — не BLAS, а Python-накладные на оценку портфеля (~2–5 мс × ~3000 оценок на прогон при 12 бумагах); многопоточность numpy не помогает, процессы — помогают. Прогон 1.0.2 на 12 бумагах (18:43Z) остановлен через 5 ч без результата (клиент отвалился по таймауту 4 ч; таймаут поднят до 12 ч), сайдкар перезапущен на 1.1.0, пробный прогон 20k: 110 задач за 214 с; полный прогон на 12 бумагах перезапущен …T232xxxZ (лог _stability_full_run4b.log). Разведка сценариев (BASE / CHIP_COLD_WAR / TAIWAN_SEIZURE, 100k) в очереди за ним автоматически. НЕ закоммичено (lab): portfolio_stability 1.1.0 + тест.
+24.09 НОЧЬ — MC v1.1.3 / RULES v1.1.2 / SCHEMA v1.0.2 ПРИНЯТЫ, ДВИЖОК 2.3.1, HOOD v1.0.1 + RKLB v1.0.1 ИНТЕГРИРОВАНЫ
+(share 6ab43b94, from_imma/HOOD_RKLB_v1.0.1_and_MC_v1.1.3). Движок company_mc 2.3.1: parity-gated linear blend
+(crossover_value, Δ = 4 п.п.; A/B m_elig 0, C m_elig = fcf_maturity_margin; коды 5/6; basis_parity_margin,
+valuation_crossover.mode); ДВЕ СЕМАНТИКИ по schema_version калибровки — ≤1.0.1 прежний жёсткий переключатель
+(SPCX/NBIS/NVDA воспроизводимы), ≥1.0.2 смесь (решение владельца 24.09, вариант 1); conformance-тесты
+непрерывности/монотонности (функция и путь-за-путём для A и C). Валидатор 1.6.0: схема по schema_version файла (1.0.1
+закреплена, 1.0.2 текущая), σ вех в квартале моды сроков (q3 у Neutron), Rules v1.1.2. methodology: spec v1.1.3
+(v1.1/v1.1.2 сняты), Rules v1.1.2 yaml+md (v1.1/v1.1.1 сняты; проверка полноты: 20 переименований разрешены, 2 пропажи
+— purpose, interpretation — в приёмку), схема v1.0.2 + examples (v1.0.1 ОСТАВЛЕНА закреплённой — README). Приёмка:
+валидатор pass обеих (HOOD intrinsic W 0.245 ≈ граница 0.25; RKLB 0.518 < 0.6 — структурно, см. приёмку); нормативные
+500k на 2.3.1: HOOD …-6fb7ec (CAGR5 −8.4 %, P(loss>30) 0.575, gap 2.61, Y5 базы multiple 62 % / crossover_bridge 24 %
+/ blend 13 %, паритет 0.27, robustness pass 1.0/0.75), RKLB …-dbbce2 (+3.9 %, 0.159, gap 1.48, паритет 0.30,
+robustness 1.0/1.0; парадокс маржи устранён: стресс margin ±5 п.п. → ±0.008); стресс-диагностика …(HOOD допуск 2/6,
+RKLB 3/6). Интеграция: portfolio/{hood,rklb} calibration_v1.0 + mc_calibration_v1.0.1, calc_runs (RV + MC),
+_candidates → conditional_mc; валидатор папок pass …-e8a012; state.json hood пишется в формате дозора
+(verification_run_ids в одну строку). Тесты lab 105/105. Приёмка для IMMA — to_imma/mc-v113-hood-rklb-v101.feedback.md
+(НЕ отправлен). Очередь: коммит (workspace + lab); Decision Request HOOD и RKLB — владельцу; дозор HOOD run2 сегодня
+10:00; следующие калибровки CRWV/ASML/META.
 
-ОПТИМИЗАТОР 1.0.2 (25.09 ночь, по профилю: ~60 % времени оценки — две partition на медиану и ES5, ~20 % — словарные циклы концентраций): одна partition с порядковыми статистиками k−1, n//2−1, n//2; секторы/общие причины/Challenger — матрицами, предвычисленными в _Problem. A/B на реальных входах (20k путей, 12 бумаг): веса, полосы, медиана, ES5, число оценок идентичны, концентрации до 1e-16; время −27 % под нагрузкой. Тесты optimizer+stability 7/7. Остаток стоимости — Python-накладные на оценку (ключ кэша, сборка словарей) и число оценок покоординатного подъёма (~3000 на 12 бумаг). НЕ закоммичено (lab): optimizer 1.0.2.
+## 24.09: Коммиты 24.09
 
-STABILITY НА 12 БУМАГАХ ВЫПОЛНЕН (25.09 ночь, …-86cfbf, движок 1.1.0, 70 мин на 12 процессах против >5 ч последовательно; 601 прогон, все допустимы; supersedes …-f42e9b): портфель structurally_stable (оборот медиана 10 %, p90 16 %), но stable только LLY/NVDA/RKLB; NBIS (5–17 %), META (3.5–13.5), MSFT (2–13.5), ETN (0–11.5), PLTR (1–9.5), SPCX, NET — conditional (взаимозаменяемые имена ИИ-кластера); HOOD/ASML вне центра; связывающие — потолки LLY/RKLB/NVDA, Тайвань 86 %; LOO везде допустимо. → DR раздел 7.2: точные веса conditional-бумаг не исполнять, полосы вместо точек. Разведка сценариев (BASE/CHIP_COLD_WAR/TAIWAN_SEIZURE) стартовала автоматически. НЕ закоммичено: + прогон …-86cfbf, DR 7.2, STATUS.
+Коммиты 24.09: workspace fa2bc99 (тег mc-spec-v1.1.3), lab 57e2a8b. Приёмка v1.1.3/v1.0.1 отправлена IMMA (ответ
+ожидается). ЗАКАЗ КАЛИБРОВОК LLY + META + ASML подготовлен — to_imma/mc-lly-meta-asml-calibrations.request.md (НЕ
+отправлен), вложения Downloads/mc-lly-meta-asml-to-llm (lly/, meta/, asml/, reference/: HOOD пара v1.0.1, NBIS mc
+v1.0.2, прогон HOOD …-6fb7ec): LLY — архетип A с концентрацией (тирзепатид 65 % выручки, цена −13 %), META — архетип B
+по факту (capex 51 % выручки, FCF 1.3 %; ocf_capex_decomposition), ASML — архетип A в EUR (Euronext, не Nasdaq; KPI-02
+guidance записан как actual — дозору поправить); урок хвостов (intrinsic W ≥ ориентира сразу). Стратегия (ответ
+владельцу 24.09): покрытие калибровками 71.5 % NAV → после этой партии 88 %; первая валидация портфеля возможна после
+неё + лимитов владельца (остаток 12 % NAV — прокси).
 
-РАЗВЕДКА СЦЕНАРИЕВ ВЫПОЛНЕНА (25.09 ночь, 42 прогона за 9 мин; НЕ норматив): BASE / CHIP_COLD_WAR (уточнение владельца: превосходство Китая + гонка США с госденьгами, не «паритет») / TAIWAN_SEIZURE; 12 компаний × 100k, портфель на текущих весах и на оптимуме захода 4. Итог: cold war в установившемся уровне — медиана портфеля 15.9 → 13.9 % (оптимум 12.5 → 11.8), ES5 −10.8 → −17.7 %; перекладка: ETN +6.1, PLTR +4.1, RKLB +3.2, ASML +2.5 / NBIS −3.5, MSFT −3.4, NET −3.1, NVDA −2.4, LLY −2.0 п.п.; силовой Тайвань — 15.9 → 4.9 %, ES5 −42 %, NVDA −21.6 п.п., ASML P(loss>30) 78 %. Оптимум устойчивее текущего к обоим. Пробелы: нет драйвера ценовой конкуренции в ускорителях (NVDA вне AI_CLOUD_PRICING), узкий mapping PLTR/NET/HOOD/LLY, семантика TAIWAN_SUPPLY при «обесценивании Тайваня», движок не умеет фазы/effective_from — переходная фаза у границы паритета (главный интерес владельца) не воспроизводится. Файлы: notes/scenario-explore-2026-09-25.md (+ .summary.json), прогоны …T00…Z-company_mc-* (scenario в meta) и 6 portfolio_paths. ЧЕРНОВИК ЗАКАЗА IMMA — to_imma/scenario-engine.request.md (НЕ отправлен): A спецификация Scenario Engine v1.0 (фазы с effective_from/ramp, взаимоисключающий набор с вероятностями owner_judgment, смешивание и Scenario Concentration, отчёт неохваченных драйверов), B две калибровки (TAIWAN_SEIZURE с фазами по стадиям taiwan.yaml; CHIP_COLD_WAR: гонка → граница паритета → две системы), C таксономия и аудит mapping; вложения Downloads/scenario-engine-to-llm (+.zip). НЕ закоммичено: notes, to_imma, прогоны разведки, STATUS.
+## 24.09: IMMA подтвердила приёмку v1.1.3 / v1.0.1
 
-Коммиты 25.09: lab 26c9279 (stability 1.1.0, optimizer 1.0.2), workspace 452e060 (решения владельца, DR-01/02, глоссарий) и f657874 (Stability 12 бумаг, разведка сценариев, заказ Scenario Engine) — запушены владельцем. ЗАКАЗ СЦЕНАРНОГО СЛОЯ ОТПРАВЛЕН IMMA. Ответ владельцу «что тормозит»: отбор бумаг не определён (кандидаты без моделей → MPC не считается), сценарный слой, цикл владелец→IMMA→хост один заход в день → укрупнять заказы, две нити параллельно. ЗАКАЗ КАЛИБРОВОК CRWV (B) + ASTS (C) + МОДЕЛЬ SPOT подготовлен — to_imma/mc-crwv-asts-calibrations.request.md (НЕ отправлен; отправлять после сценарного), вложения Downloads/mc-crwv-asts-to-llm (+.zip: crwv/, asts/, reference: NBIS mc v1.0.2, META пара v1.0.1, RKLB пара v1.0.1, прогон RKLB …-224958). Развилки в заказе: CRWV — долг/рефинансирование и концентрация клиентов 72 %; ASTS — вехи с распределениями сроков, размытие, модель разделения выручки с операторами. Очередь: ответ IMMA по сценарному слою → реализация фаз и смешивания в движке; приёмка CRWV/ASTS; список кандидатов для отбора — за владельцем; срез 2 Stability; дозор по MSFT/PLTR/NET/ETN/LLY/META/ASML/RKLB/CRWV.
+IMMA подтвердила приёмку v1.1.3 / v1.0.1 (share 6ab44608): RKLB не расширять (в следующих Rules — диагностика
+early_resolved_bridge_dependent, новый нижний band по одному C-кейсу не вводить); HOOD не расширять (0.245 у границы —
+дальнейшее расширение было бы подгонкой), gap 2.61 / P(loss>30) 0.575 → Decision Request; negative_fcf_fallback при
+схеме ≥1.0.2 переопределить как revenue_bridge_reference_multiple в следующей спецификации (имя сохранить); Rules
+v1.1.2 — вернуть purpose и interpretation в сводном переиздании; bridge_dependent: порог ≥5 % путей на кодах 1/2/5/6
+на любом из горизонтов (движок приведён к ≥); C без сервисной выручки — margin не определена → путь остаётся на
+revenue_bridge (код 1) — совпадает с реализацией (m=−1 как sentinel); симметричный mult_mul к обеим базам —
+подтверждено. Заказ LLY+META+ASML отправлен IMMA. Владелец запросил повтор вопроса по лимитам оптимизатора
+(proposed_limits_v1_0 в _portfolio.yaml, pending с 21.09).
 
-ОТВЕТ НА ЗАКАЗ СЦЕНАРНОГО СЛОЯ (share 6ab61d75, 25.09) — ВНИМАНИЕ: заказ отправлен в чат «Инвестиции в ИИ-инфраструктуру» (обсуждение корзины ИИ-инфраструктуры, не рабочий чат IMMA «Восстановление контекста IMMA» 6ab57a50). Ответ по существу сильный и совпадает с заказом: план A → B+C; принципиальные уточнения — (1) probability сценария (выбор world-state, owner_judgment) не смешивать с распределением времени наступления фазы (effective_from внутри сценария), иначе двойное взвешивание; (2) «вклад сценария в медиану» не аддитивен — отдельные определения scenario_delta и mixture contribution, разложение по драйверам — attribution/diagnostic; (3) AI_CLOUD_PRICING не переопределять — новый драйвер ACCELERATOR_PRICE_COMPETITION (положительный шок = усиление ценовой конкуренции / снижение ASP ускорителей) с коррелированной передачей в AI_CLOUD_PRICING; (4) TAIWAN_SUPPLY остаётся доступностью/надёжностью цепочки, для «утраты технологического преимущества Тайваня» — отдельный канал; (5) в аудите mapping разделять reviewed_immaterial и mapping_gap; (6) вероятности — pending_owner_judgment; (7) taiwan.yaml S1–S3 — слой действий, не состояния калибровки; 3–5 лет паритета — распределение, не дата. Файлов нет: следующий артефакт — полный текст Scenario Engine Specification v1.0 + Schema v1.0 + fixtures (ещё не выпущен). Решение владельцу: продолжать сценарный слой в этом чате (тогда его пакет восстановления контекста нужно дополнить сценарным треком и правилами обмена: манифест sha256, переиздание = полный текст + дельта) или перенести заказ в чат IMMA.
+## 24.09: ЛИМИТЫ ОПТИМИЗАТОРА УТВЕРЖДЕНЫ ВЛАДЕЛЬЦЕМ 24.09
 
-Решение владельца 25.09: заказ сценарного слоя переотправляется в рабочий чат IMMA (ответ из чата ИИ-инфраструктуры — черновой разбор, не норматив). Следом — заказ CRWV/ASTS/SPOT. Пока ждём: подготовка движка к фазам сценария (effective_from, ramp, duration) и смешиванию сценариев в portfolio_paths — черновая реализация под будущую спецификацию, окончательная семантика — по тексту IMMA.
+ЛИМИТЫ ОПТИМИЗАТОРА УТВЕРЖДЕНЫ ВЛАДЕЛЬЦЕМ 24.09 (переписка) → portfolio/_portfolio.yaml
+constraints.approved_limits_v1_0 (proposed_limits_v1_0 → superseded): на бумагу — из Conviction Overlay (бюджет потерь
+8/15 % NAV ÷ правдоподобная просадка, целевой 0.75×жёсткого), сектор 35 % (не 30), топ-3 ≤50 %, Challenger 8 %/25 %,
+кэш по режимам Normal 5–10 (до 15) / Stress 5–15 (до 20) / Shock 10–20 (до 30), риск 5Y: P(loss>30) ≤20 %, P(loss>50)
+≤10 %, ES5 ≥ −55 %, концентрация сценария ≤60 %; ОТЛОЖЕНЫ: common_cause_effective_max, неликвид 10/5 %. Нарушение — не
+приказ. Следующий шаг к валидации портфеля: после калибровок LLY/META/ASML — совместный прогон portfolio_paths (общий
+seed) → Stability Test → MPC → Optimizer с этими лимитами; движок optimizer/stability ещё НЕ реализован в сайдкаре
+(portfolio_paths и portfolio_regime есть).
 
-ЧЕРНОВАЯ ПОДДЕРЖКА СЦЕНАРНОГО СЛОЯ В ДВИЖКЕ (25.09, до спецификации IMMA; семантика будет подогнана): joint_layer 1.1.0 — scenario.phases [{phase_id, effective_from: число|распределение (uniform/triangular, розыгрыш на путь), after_phase+offset, ramp_quarters, duration_quarters|null, decay_quarters, driver_overrides}], профиль m_i(t)∈[0,1] на путь, сдвиг x += shift·m, волатильность x *= 1+(vm−1)·m, фазы суммируются; legacy top-level driver_overrides = одна фаза m≡1 (результаты прежних прогонов не меняются — тест эквивалентности); root_correlation_overrides по фазам НЕ реализованы. portfolio_paths 1.1.0 — режим смеси: inputs.scenarios [{id, probability, paths_files}], выбор сценария на path_id детерминированно по вероятностям (общие случайные числа), метрики смеси + по сценариям + scenario_delta_vs_first; scenario_concentration = None до определения IMMA. Тесты: фазы (профиль, after_phase, legacy-эквивалентность, детерминизм), смесь (доли, границы, p=1 ≡ обычный прогон, детерминизм, ошибка при Σp≠1). Полный набор lab — см. строку ниже. НЕ закоммичено (lab): joint_layer, portfolio_paths, тесты. Заказ сценарного слоя переотправлен в чат IMMA (владелец, 25.09).
+## 24.09: ПАРТИЯ 3 (LLY/META/ASML v1.0, from_imma/LLY_META_ASML_Calibrations_v1)
 
-25.09: заказ CRWV/ASTS/SPOT отправлен IMMA (владелец). Ожидаем два ответа: Scenario Engine v1.0 (A) и калибровки CRWV/ASTS + модель SPOT. Предложено владельцу на время ожидания: срез 2 Stability (пересимуляция маржи/вех, выбивание драйверов) — делаю; дозор v1.2.1 по MSFT/PLTR/NET/ETN/LLY/META/ASML/RKLB/CRWV — только по слову владельца (токены агента).
+ПАРТИЯ 3 (LLY/META/ASML v1.0, from_imma/LLY_META_ASML_Calibrations_v1) — ХОСТ-ПРИЁМКА 24.09 ночь: RV …-f49614 /
+…-94a270 / …-2d7985 (все terminal_dependent, совпали с предрасчётом); валидатор 1.6.0 pass у всех; дисперсия: LLY
+0.286 в ориентире, META 0.214 (ориентир B 0.40–0.85), ASML 0.214 (0.25); нормативные 500k …-e5a5c8 LLY (CAGR5 +8.1 %,
+P(loss>30) 0.04, gap 1.06), …-65c7d5 META (+12.5 %, 0.004, q5 +0.3 % — неправдоподобно узко), …-7d8481 ASML (−3.8 %,
+0.34, gap 1.91); стресс …-6c371f/…-a6e571/…-9891e6. РЕШЕНИЕ: LLY ПРИНЯТ и ИНТЕГРИРОВАН (portfolio/lly, calc_runs,
+stage conditional_mc; валидатор папки pass); META и ASML — заказ v1.0.1 с расширенными хвостами (центры не трогать) —
+to_imma/mc-lly-meta-asml.feedback.md (НЕ отправлен; отправлять в НОВЫЙ чат IMMA после восстановления контекста по
+to_imma/imma-context-restore.request.md + Downloads/imma-context-restore). Лимиты: общая причина 35 % утверждена
+(второе решение 24.09), неликвид отложен; в портфеле неликвида нет (SPCX — публичная, NASDAQ; моя ошибка в примере).
+Покрытие калибровками 79.7 % NAV.
 
-УРОК ОБМЕНА (25.09): IMMA не работает параллельно — второй заказ (CRWV/ASTS/SPOT) вытеснил первый (сценарный слой) из очереди: «Принял новый заказ и переключаюсь на партию 5/6». Правило: один заказ за раз; следующий отправлять после получения пакета; после пакета CRWV/ASTS/SPOT явно вернуть IMMA к сценарному слою фразой «Продолжай заказ сценарного слоя: часть A — спецификация Scenario Engine v1.0, схема и фикстуры».
+## 24.09: утро: новый чат IMMA
 
-СРЕЗ 2 STABILITY РЕАЛИЗОВАН (25.09): company_mc 2.4.0 — simulate_paths (пути в памяти на общих шоках; inputs.perturbation {growth_shift, margin_shift, mult_factor, rho_shift, milestone_prob_shift}; knockout через существующий механизм снятия structural_support), общая подготовка _prepare; milestone_mc — milestone_prob_shift; portfolio_stability 1.2.0 — stability.resimulate {calibrations, equity_value_0, joint_layer_spec, global_seed, chunk}: маржа ±5 п.п. точно (вместо прокси), вехи ±10 п.п. (семейство milestone), driver_knockout у компаний с положительной экспозицией (отрицательная — без бонуса), критерий §7 driver_knockout_feasible_replacement оценивается; сторожа: размеры чанков должны совпадать с нормативным прогоном (антитетические пары внутри чанка — иначе path_id не выровнены), пересимуляция BASE первой компании обязана побитно совпасть с нормативными путями (resimulate_check). Тесты lab 117/117. Живой частичный прогон среза 2 на 12 бумагах запущен (лог _stability_slice2.log). НЕ закоммичено (lab): company_mc 2.4.0, milestone_mc, portfolio_stability 1.2.0, тесты.
+24.09 утро: новый чат IMMA (share 6ab4bbc1) ВОССТАНОВЛЕН — все 5 контрольных ответов верны, работа продолжена в нём.
+Приёмка партии 3 отправлена; ответ (share 6ab4be13, from_imma/META_ASML_v1.0.1_patchplan): LLY принят, антицикличность
+подтверждена (центр тирзепатида от операционных фактов); META/ASML — у нового чата НЕТ исходных v1.0 YAML (в пакет
+восстановления не вложены — наш пропуск), поэтому выдан НЕНОРМАТИВНЫЙ patch-plan (расширение хвостов, центры
+неизменны). Предпросмотр плана на движке (в памяти, 20k): META W 0.214→≈0.30 (B-ориентир 0.40 не достигается —
+документировать, не расширять дальше), ASML 0.214→≈0.26; дефекты плана: имена сегментов ASML не совпадают с файлом
+(EUV/DUV/InstalledBase vs EUV_Systems/DUV_Systems/InstalledBaseManagement; Metrology_Inspection не упомянут),
+floor/ceiling у terminal_margin_Y8 и InstalledBase сужают хвост, семантика pct_of_mode двояка. Подготовлено сообщение
+с исходниками — to_imma/mc-meta-asml-v101-sources.request.md (НЕ отправлен), вложения
+Downloads/mc-meta-asml-v10-sources (META/ASML mc v1.0 + RV, LLY mc v1.0). Ждём нормативные полные v1.0.1 →
+check_supersedes → конвейер → интеграция → первая валидация портфеля.
 
-СРЕЗ 2 STABILITY ВЫПОЛНЕН (25.09 утро, …-f3468c, 14 мин, 61 прогон, все допустимы, resimulate_check ASML воспроизведён побитно): точная маржа ±5 п.п. (NBIS компания 15.6/26.5 % при базе 20.8; вес 4.5–10.5 %), вехи RKLB ±10 п.п. (3.2/4.6 %, вес 8 % без изменений), knockout 11 материальных драйверов — все допустимы, критерий §7 driver_knockout_feasible_replacement PASS (теперь все 5 критериев оценены); эффект knockout на медианы компаний ≤1.5 п.п. (структурные вклады в калибровках малы), портфель 10.7–11.6 % против 12.0 %. → DR раздел 7.3. Далее: полный нормативный прогон с пересимуляцией (все семейства, supersedes …-86cfbf) — запускаю в фоне.
+## 24.09: META/ASML v1.0.1
 
-ПАРТИЯ 5 (CRWV B / ASTS C + модель SPOT; IMMA share 6ab62c72, from_imma/CRWV_ASTS_SPOT_Calibrations_v1, sha256 сошлись) — ХОСТ-ПРИЁМКА 25.09 утро: CRWV: RV …-55e6d2 implied 29.2 %, TV share 1.16, model_fragile (совпало с предрасчётом); валидатор …-ede78a FAIL — MC-G5-013 margin_model.capex_revenue_nodes.Y2 σ 0.056 > 0.05 (DATA_CENTER_POWER −0.018, TAIWAN_SUPPLY −0.014, CAPITAL_MARKETS −0.014; Σ|e| 0.046); intrinsic W 0.605 в ориентире B; предпросмотр ×0.85 трёх вкладов → σ 0.048 pass → заказ CRWV v1.0.1. ASTS: RV …-47b472 implied 130 %, TV share 1.016, model_fragile (ожидаемо для pre-service; в RV-калибровке balance_sheet в полях net_debt_approx/cash_and_restricted_cash — сборщик входов поправлен вручную); валидатор …-cf95eb pass (σ вех 0.017–0.044 логит, сроки 0.08–0.13 кв.; intrinsic W 1.296 у верхней границы C 1.30); стресс + норматив 500k — в фоне. SPOT: модель (6-K/IAS 34, 5 осей, сектор INTERNET_PLATFORMS provisional) разнесена в portfolio/spot, валидатор папки pass …-d4735b, _candidates: SPOT → company_model (партия 6 моделей); калибровка — следующей партией; дозор по SPOT не проходил. Stability 1.2.1: обёртка engine/stability_worker.py (не перезагружается реестром) — полный прогон 1.2.0 падал PicklingError при параллельных запросах приёмки (reload модулей сайдкаром); тесты 5/5; полный нормативный прогон с пересимуляцией перезапущен в очереди после ASTS. НЕ закоммичено: from_imma пакет, portfolio/spot, _candidates, прогоны, lab 1.2.1.
+META/ASML v1.0.1 (нормативное переиздание IMMA, share 6ab4c222, from_imma/META_ASML_mc_v1.0.1) ПРИНЯТЫ И ИНТЕГРИРОВАНЫ
+24.09 09:35 МСК: check_supersedes — изменены только концы хвостов и пересчитанная устойчивость (разрешено), центры
+0/0, сужений нет, mapping идентичен; валидатор 1.6.0 pass; дисперсия ASML 0.273/0.299 (в ориентире), META 0.295/0.321
+(warning, ориентир B 0.40 — не расширяем далее по правилу IMMA); нормативные 500k на 2.3.1: META …-410567 (CAGR5 +12.0
+%, P(loss>30) 0.026, q5 −4.1 %, gap 0.89; Y5 базы: crossover_bridge 67 % — паритет 0.249 ≈ FCF-маржа Y5 → fallback
+де-факто референсный bridge-мультипликатор, замечание в приёмку), ASML …-7106fc (−4.3 %, 0.388, gap 1.96; crossover 32
+%); устойчивость pass обе; стресс …-ec5362/…-e036cc (допуск 2/6 обе). Интеграция: portfolio/{meta,asml}
+calibration_v1.0 + mc_calibration_v1.0.1, calc_runs, стадия conditional_mc; валидатор папок pass …-d9453e. ПОКРЫТИЕ
+КАЛИБРОВКАМИ 88 % NAV (SPCX, NBIS, NVDA, HOOD, RKLB, LLY, META, ASML). Приёмка — to_imma/mc-meta-asml-v101.feedback.md
+(НЕ отправлен). README: правило 5 (смена чата IMMA — пакет восстановления включает файлы текущей приёмки). Очередь:
+коммит + тег calibrations-88pct-nav; ПЕРВАЯ ВАЛИДАЦИЯ ПОРТФЕЛЯ — совместный прогон portfolio_paths (общий seed) →
+Stability Test → MPC → Optimizer (движки Stability/Optimizer — реализовать по спецификациям v1.0; лимиты утверждены);
+дозор HOOD run2 в 10:00 МСК; затем заказ MSFT/PLTR/NET/ETN, CRWV/ASTS.
 
-ASTS v1.0 ПРИНЯТ И ИНТЕГРИРОВАН (25.09 утро): норматив …-17e2e2 (CAGR 3/5/8 −24.2/+0.9/+14.2 %, q5 −99.2 %, P(loss>30) 0.356, P(loss>50) 0.276, ES5 −1.00, P(2x) 0.222, gap 1.84; P(onset к Y3) 0.797, terminal_failure 19.8 % путей; robustness 0.75/1.0); стресс (старая сетка) …; portfolio/asts calibration_v1.0 + mc_calibration_v1.0, calc_runs, стадия conditional_mc, валидатор папки pass …-c9ef56. ПОКРЫТИЕ 13 БУМАГ, 95.5 % NAV (без калибровок GLD/UFO и SPOT — модель есть, калибровка следующей партией; CRWV — v1.0.1). Кандидат на Decision Request с флагом риска модели (1 % NAV). Приёмка партии 5 — to_imma/mc-crwv-asts-spot.feedback.md (НЕ отправлен; в нём же заказ CRWV v1.0.1 и напоминание вернуть IMMA к сценарному слою). Замечание формата: RV-калибровка ASTS с полями balance_sheet net_debt_approx/cash_and_restricted_cash — сборщик входов RV поправлен вручную, IMMA попросили держать имена RKLB/HOOD. Полный нормативный Stability с пересимуляцией — считается. НЕ закоммичено: партия 5 (from_imma, portfolio/asts, portfolio/spot, _candidates, прогоны, feedback), lab 1.2.1 + черновик сценарного слоя + срез 2, STATUS.
+## 24.09: HOOD run2 (дозакрытие, 24.09 10:02 МСК, задание dozor-verify-hood-run2, Sonnet 5, 5.1 млн…
 
-ОБСУЖДЕНИЕ 25.09 — АВТОМАТИЗАЦИЯ ОБМЕНА С IMMA: узкое место — ручная передача владельцем (копирование текста, архив, скачивание, путь). Варианты: автоматизация UI chatgpt.com — отклонена (хрупко; отправка сообщений от имени владельца требует разрешения на каждое действие); IMMA через OpenAI API — настоящая автоматизация; IMMA как агент OpenClaw (расширение API-варианта: свой workspace, чтение methodology/ и моделей, запись ТОЛЬКО в from_imma/, манифест, право прогнать валидатор до сдачи, Telegram для вопросов владельцу, кроны как триггер от интегратора; модель другого семейства для независимости; инструкции — пакет восстановления). Риски: качество длинных спецификаций в агентном цикле (проверить пилотом), дрейф независимости, стоимость 5–20 $ за партию (лимит бюджета). Решение: сразу — папка-обменник outbox/inbox со сторожем (убирает шаг «сообщить путь»); после приёмки спецификации Scenario Engine — пилот агента IMMA: 5 контрольных вопросов + сводное переиздание Rules v1.1.2 (purpose/interpretation), сравнение с чатом, затем перенос заказов; чат-IMMA — запасной канал и второе мнение. От владельца: ключ API в .env лаборатории (кладёт сам), бюджет пилота.
+HOOD run2 (дозакрытие, 24.09 10:02 МСК, задание dozor-verify-hood-run2, Sonnet 5, 5.1 млн токенов / 95 % кэш ≈ $1.6):
+отчёт verify-HOOD-20260924T070242Z — PASS_WITH_DECLARED_PENDING; KPI-01..03 (monthly, август) verified_match по копии
+релиза от владельца (evidence_locator с пометкой «obtained by owner via browser», sha256); ось Customer_Asset_Scale S3
+state_supported (критерий однопериодный); Regulatory_Product G2 state_supported — целевой поиск нашёл в Note 15 10-Q
+цитату о прекращении новых спортивных event contracts в Неваде (добровольное соглашение на время апелляции —
+исполнитель отметил развилку критерия «voluntary cessation vs ordered cessation» → в следующую редакцию Dozor);
+переходы E-01/E-02/E-10 not_met, E-09/E-11 pending_history (события event_unconfirmed — pending_event ещё нет);
+state.json: 3 наблюдения с verification_run_ids=[run2] (run1 не привязан — там source_unavailable_technical, верно),
+оси S3/G2 verified + run_id; валидатор отчёта и папки pass. Поведение IR-сайта: HTTP/2 stream INTERNAL_ERROR без тела
+— стабильная антибот-блокировка не-браузерных клиентов; newsroom не публикует monthly-релизы → для HOOD monthly-KPI
+единственный путь — файл от владельца (правило §5 AGENTS.md). PDF-текст исполнитель извлёк через npm pdf-parse
+(pdftotext/pypdf в контейнере нет — учесть в образе). Feedback — to_imma/dozor-run6-hood.feedback.md. Рабочий артефакт
+_sources/extracted.txt удалён. HOOD полностью закрыт по дозору (10/10 KPI, 5/5 осей).
 
-НОРМАТИВНЫЙ STABILITY С ПЕРЕСИМУЛЯЦИЕЙ ВЫПОЛНЕН (25.09, …-4fec7a, 1.2.1, 68 мин на 12 процессах, 614 прогонов, все допустимы; supersedes …-86cfbf и …-f3468c): все 5 критериев §7 pass (оборот медиана 9.0 %, p90 14.5 %; knockout 11/11 допустимы); классы: stable LLY/NVDA/RKLB, conditional NBIS/META/MSFT/ETN/PLTR/NET/SPCX, вне центра HOOD/ASML. → DR раздел 7.4. НЕ закоммичено: прогон …-4fec7a, DR 7.4, STATUS (+ spacex/state.json от агента).
+## 24.09: ПЕРВАЯ ВАЛИДАЦИЯ ПОРТФЕЛЯ
 
-SCENARIO ENGINE v1.0 ПОЛУЧЕН (IMMA, тот же чат 6ab62c72 — владелец вернул IMMA к отложенному заказу; from_imma/Scenario_Engine_v1.0, 11 файлов, sha256 сошлись): спецификация (фазы как целевые состояния относительно BASE; effective_from fixed/triangular с якорем t0 или phase:<id>; ramp/duration until_next_phase|until_end|N + decay; интерполяция сдвига линейно, волатильности геометрически; persistence_override [0,0.99]; root_correlation_overrides по фазам с обязательной PSD без авторемонта, convex-интерполяция на ramp; RNG-адресация по path_id; смесь — взвешенная эмпирическая, не ресэмплинг; MedianImpact/ES5Impact/B_s и ScenarioConcentration = max B_s/ΣB_s; §3.3 при вероятностях; coverage-отчёт applicable/unmapped/immaterial; анти-двойной-учёт; совместимость: 2.3.2 только constant snapshot = non_normative), схема + примеры, TAIWAN_SEIZURE (4 фазы restrictions→blockade→conflict→recovery, сдвиги до −3σ×2.0 в conflict), CHIP_COLD_WAR (3 фазы race→parity_boundary q12/16/20→two_systems, новый драйвер ACCELERATOR_PRICE_COMPETITION до +1.5σ), таксономия v1.2 (check_supersedes OK: +ACCELERATOR_PRICE_COMPETITION), Joint driver patch (корни для нового драйвера), mapping patch (NVDA −2 / NBIS +1 / MSFT +1 / META +1 / ASML −1 + исправление знаков TAIWAN_SUPPLY у MSFT/META: семантика «здоровье поставок» — принятые −1 ошибочны; применять только через полные переиздания и MC-G5-013), coverage audit (PLTR/NET/HOOD/LLY/ETN/RKLB/SPCX — обоснованные no_patch). Вероятности — pending_owner_judgment (BASE = остаток). ХОСТ-ПРОВЕРКИ: обе калибровки проходят JSON-схему; 7 фазовых матриц PSD (min eig 0.042…0.210 — совпало с IMMA); драйверы фаз есть в таксономии; ПРОБЕЛ: INDUSTRIAL_RESHORING (и часть драйверов v1.1) без root-mapping в Joint-схеме — идиосинкратический; в Joint-схеме нет корней для ACCELERATOR_PRICE_COMPETITION до применения driver patch. ОТКРЫТО К IMMA: семантика persistence_override в нашей структуре (AR у корней + затухание в mapping, у драйвера своей персистентности нет); переиздания MSFT/META/NVDA/NBIS/ASML под patch (NBIS/NVDA закреплены на схеме 1.0.1 — переход на 1.0.2 меняет семантику базы). СЛЕДУЮЩИЙ БЛОК (план владельцу): реализация фазового оркестратора по спецификации (черновик joint_layer 1.1.0 переделать: целевые состояния, until_next_phase, гео-интерполяция волатильности, корреляции по фазам с per-path таймингом, взвешенная смесь, валидатор сценариев + coverage), прогоны 13 компаний × 2 сценария × 500k, отчёт; смесь/концентрация/§3.3 — после вероятностей владельца. CRWV v1.0.1 ещё не выпущен — приёмка партии 5 (с заказом v1.0.1) не отправлена.
+ПЕРВАЯ ВАЛИДАЦИЯ ПОРТФЕЛЯ — ЗАХОД 1 (24.09 10:30 МСК): реализован portfolio_optimizer 1.0.0 (стадия A:
+лексикографическая цель медиана CAGR 5Y → ES5 → [сценарная концентрация n/a] → оборот; покоординатный подъём
+переносами веса на сетке 1 п.п. + уточнение 0.5 п.п., три старта; жёсткие ограничения без ослабления: потолки на
+бумагу (target_cap Conviction Overlay по MC: plausible_dd = max(|ES5|, |Q25 maxdd|)), сектор 35 %, топ-3 50 %, общая
+причина 35 % (severity-взвешенно), кэш по режиму, риск 5Y; некалиброванные 11.6 % NAV фиксированы с плоской
+доходностью; поиск на 100k совместных путях, итог на 500k; тесты 3/3; зарегистрирован в сайдкаре). Прогоны …-2acb55
+(portfolio_paths, текущие веса) и …-3b2cf9 (optimizer) ВЫПОЛНЕНЫ, НО НЕДЕЙСТВИТЕЛЬНЫ: обнаружен ДЕФЕКТ ДВИЖКА — при
+одном seed калибровки (20260920 у всех) собственные (идиосинкратические) розыгрыши компаний совпадали путь-в-путь →
+корреляция HOOD__ASML 0.88, NBIS__META 0.68; эксперимент: две одинаковые калибровки с разными тикерами — корреляция
+1.0 в 2.3.1, 0.005 без Joint Layer в 2.3.2. Исправлено: company_mc 2.3.2 — собственный seed = SeedSequence(seed,
+crc32(ticker)); общие пути драйверов по-прежнему (global_seed, chunk); детерминизм на калибровку сохранён. Перепрогон
+8 нормативных прогонов на 2.3.2 запущен (скрипт _rerun_normative_232.py; сводки компаний изменятся в пределах
+MC-шума), затем — повтор портфельного прогона. Предварительная картина (по недействительному заходу, только как
+ориентир): оптимум при лимитах — NBIS 33→12.5 %, NVDA 21→13.5 %, HOOD 14→7 %, ASML/SPCX→0, LLY 8→14 %, META 5.5→13.5
+%, RKLB 2.3→8 %, кэш 0.5→20 %; связывающие — общая причина TAIWAN_SUPPLY_DISRUPTION и потолки LLY/META/NVDA/RKLB;
+текущий портфель нарушает 8 лимитов.
 
-SCENARIO ENGINE v1.0 РЕАЛИЗОВАН НА ХОСТЕ (25.09): joint_layer 1.2.1 — фазы как целевые состояния относительно BASE (effective_from fixed/triangular с якорем t0|phase:<id>, целочисленные старты по (seed, scenario_id, phase_id), ramp от состояния квартала s−1: сдвиг линейно, волатильность геометрически; duration int|until_next_phase|until_end, decay к BASE; монотонность стартов — ValueError), корреляции корней по фазам (PSD без ремонта, выпуклая интерполяция квантованная по кварталам, общие iid-инновации, разложение Холецкого на каждое состояние), persistence_override — ПРЕДВАРИТЕЛЬНАЯ интерпретация «б» (AR(1)-перепостоянство инноваций драйвера с теоретическим φ из корней; дисперсия ≈1 с остатком до 0.16 — ждём ответ IMMA 2.1; в v1.0 сценариях ρ 0.65–0.9 задан почти всюду, поэтому реализовать пришлось сразу); company_mc 2.4.1 — scenario_id, scenario_mode (phased | constant_legacy_non_normative | BASE), диагностика фаз в отчёте; portfolio_paths 1.2.0 — взвешенная эмпирическая смесь (§6), BASE = остаток, pending-вероятности → только по-сценарные метрики, MedianImpact/ES5Impact/B_s и ScenarioConcentration (§7); artifact_validator 1.7.0 — режим scenario (§12: схема, id, anchor-порядок, драйверы в таксономии v1.2 (added_v1_2 на верхнем уровне — учтено), PSD, replay/детерминизм, драйверы без root-mapping — warning, контракт вероятностей набора, coverage §9 applicable/unmapped/immaterial/excluded_semantic_mismatch). methodology/: Scenario_Engine_Specification_v1.0.md, Schema, Examples, MPC_Driver_Taxonomy_v1.2; portfolio/_scenarios/: TAIWAN_SEIZURE_v1.0.yaml, CHIP_COLD_WAR_v1.0.yaml. Тесты lab 120/120. НЕ закоммичено.
+## 24.09: ПЕРВАЯ ВАЛИДАЦИЯ ПОРТФЕЛЯ
 
-СЦЕНАРНЫЙ СЛОЙ — ЖИВАЯ ПРОВЕРКА (25.09): registry — перезагрузка joint_layer/milestone_mc (иначе в сайдкаре старый модуль: AttributeError is_phased); валидатор режим scenario …-939a8d pass (обе калибровки; старты фаз медианы TS 0/2/4/15, CW 0/16/20; coverage 13 компаний; MSFT/META TAIWAN_SUPPLY excluded_semantic_mismatch; ACCELERATOR_PRICE_COMPETITION без root-mapping — warning); пробный NVDA 20k: BASE +22.1 %, CHIP_COLD_WAR +24.8 % (артефакт покрытия — канал ускорителей не охвачен до переиздания), TAIWAN_SEIZURE −1.3 %, P(loss>30) 0.38, ES5 −0.86. Нормативные сценарные прогоны 13 × 2 × 500k + по-сценарные портфельные метрики (вероятности pending) запущены в фоне (_scenario_normative.log). Приёмка для IMMA дополнена (persistence — предварительная интерпретация, таксономия, coverage). НЕ закоммичено: lab (joint_layer 1.2.1, company_mc 2.4.1, portfolio_paths 1.2.0, validator 1.7.0, registry, тесты 120/120), workspace (methodology сценарный слой, _scenarios, from_imma пакет, feedback, STATUS).
+ПЕРВАЯ ВАЛИДАЦИЯ ПОРТФЕЛЯ — ЗАХОД 2 ВЫПОЛНЕН (24.09 10:57 МСК, движок 2.3.2, все 8 нормативных прогонов перепрогнаны:
+сводки компаний изменились ≤0.05 п.п.; записи calc_runs добавлены с supersedes у 8 компаний, формат файлов сохранён;
+валидатор 17/17 …-a91b28). Совместные пути теперь корректны: корреляции log-стоимости Y5 ≤0.24 (NVDA__ASML 0.24,
+NBIS__NVDA 0.16; было 0.88/0.68). Текущий портфель (88 % NAV калиброванных, перенормировано; portfolio_paths
+…-fabcc8): медиана CAGR 3/5/8Y 22.2/16.7/20.0 %, P(loss>30) 0.4 %, ES5 −10.7 %, P(2x) 56 %, q5…q95 5Y +0.8…+37.9 %;
+вклад в медиану: NBIS 0.96, NVDA 0.65 (две бумаги — 3/4 результата). Оптимизатор стадии A (…-2d192f, feasible, старт
+current, 1014 оценок): NBIS 33→12.5 %, NVDA 21→13.5 %, HOOD 14→7 %, ASML 2.8→0, SPCX 0.7→0, LLY 8→14 %, META 5.5→13.5
+%, RKLB 2.3→8 %, кэш 0.5→19.9 % (выше предпочтительных 15 % — лексикографика: в пределах 0.5 п.п. медианы решает ES5);
+итог: медиана CAGR 5Y 11.7 % (текущий 15.2 %), ES5 +9.2 % (−9.5 %), P(loss>30) 0 (0.2 %), P(2x) 30 % (51 %), оборот 39
+% NAV; связывающие: общая причина TAIWAN_SUPPLY_DISRUPTION (0.348/0.35) и потолки LLY/META/NVDA/RKLB; полосы: NBIS
+10.5–24 %, NVDA 8–13.5 %, META 0–13.5 %, LLY 12–14 %, HOOD 6.5–9 %, RKLB 6–8 %, ASML 0–2 %, SPCX 0–5 %; текущий
+портфель нарушает 8 лимитов (потолки HOOD/NBIS/NVDA, топ-3 68.6 %, общие причины Тайвань 55 %/AI_OVERBUILD 48
+%/AI_CLOUD_FINANCING 43 %, кэш 0.5 % < 5 %). ОГРАНИЧЕНИЯ ЗАХОДА: 11.6 % NAV без калибровок фиксированы с плоской
+доходностью; только сценарий BASE; стадия B не выполнялась; Stability Test не реализован. Прогоны захода 1 (…-2acb55,
+…-3b2cf9) — недействительны (дефект seeding), захода 2а (…-78c702) — до исправления округления dp; действительные:
+…-fabcc8 и …-2d192f. Очередь: коммит lab (2.3.2, optimizer 1.0.0, registry, тесты 108/108) и workspace; Decision
+Request по разрывам — владельцу; Stability Test (следующий блок); затем калибровки MSFT/PLTR/NET/ETN, CRWV/ASTS.
 
-25.09: приёмка пакета Scenario Engine v1.0 (с вопросами 2.1–2.4) ОТПРАВЛЕНА IMMA владельцем; приёмка партии 5 (заказ CRWV v1.0.1) — уточнить, отправлена ли (порядок: по одному заказу). Нормативные сценарные прогоны — в фоне.
+## 24.09: ЗАДАЧА (владелец 24.09)
 
-ОТВЕТ IMMA ПО ПРИЁМКЕ SCENARIO ENGINE (share 6ab657da, 25.09): 2.1 — предварительная prewhitening-интерпретация ОТВЕРГНУТА, дана нормативная innovation-level семантика persistence_override (η = standardize(Σλ·u_root + w·ε), y_t = ρ·y_{t−1} + sqrt(1−ρ²)·η, null = bypass, старт от последнего шока, numeric→numeric линейно; валидатору — проверка Var(y)≈1 и lag-1≈ρ) → РЕАЛИЗОВАНО: joint_layer 1.3.0, SCN-011 в валидаторе 1.7.0; на калибровках IMMA: TS 24 проверки / CW 19, вне допуска 0 (прогон …-f9405d); тесты 120/120. 2.2 — INDUSTRIAL_RESHORING получает корни (AI_CAPEX 0.30 / POWER 0.35 / GLOBAL_GROWTH 0.20, idio 0.60), ACCELERATOR_PRICE_COMPETITION — (AI_CAPEX 0.35 / SEMI 0.30, idio 0.65) — РАСХОДИТСЯ с Joint_Simulation_Layer_Driver_Patch_v1.0 из пакета (0.20/0.25/CHINA 0.35, idio 0.70) — вопрос в заказе; остальные без mapping — идиосинкратические по правилу. 2.3 — NBIS/NVDA переиздавать как v1.0.3 на схеме 1.0.2 (+MSFT v1.0.1, META v1.0.2, ASML v1.0.2), полная приёмка, старые прогоны сохранить, migration delta ожидаема. 2.4 — Taxonomy v1.2.1 (перенос added_v1_2 под drivers, объяснённая пропажа пути). Прогоны 13×2×500k, сделанные до замены семантики — PRE-NORMATIVE DIAGNOSTICS (notes/scenario-runs-prenormative-2026-09-25.md; портфель текущий: BASE +15.8 %, TS +4.6 % / P(l30) 13 % / ES5 −51 %, CW +17.0 % (артефакт покрытия); оптимум: +12.4 / +6.7 / +13.5). ЗАКАЗ — to_imma/scenario-engine-reissues.request.md (НЕ отправлен): Joint schema v1.1, Taxonomy v1.2.1, 5 переизданий, CRWV v1.0.1. НЕ закоммичено: lab (joint_layer 1.3.0, company_mc 2.4.1, portfolio_paths 1.2.0, validator 1.7.0, registry, тесты), workspace (methodology сценарный слой, _scenarios, from_imma пакет, notes, to_imma ×2, прогоны 26+2+2 валидатора, STATUS).
+ЗАДАЧА (владелец 24.09): ГЛОССАРИЙ — вынести термины и определения в отдельный файл workspace (предложение:
+GLOSSARY.md в корне рядом с README, ссылка из README и AGENTS.md), один нормативный дом для каждого термина, без
+дублирования описаний в других документах; ориентир — частный инвестор, не профессионал: определение по-русски +
+формула/пример на наших числах + где используется. Обязательный состав: общепринятые (NAV, CAGR, медиана, квантили,
+просадка, корреляция, ES/expected shortfall, лексикографический порядок критериев, common cause) и наши (ES5 — средняя
+доходность худших 5 % путей за 5 лет; P(loss>30 %/50 %); P(2x); plausible drawdown = max(|ES5|, |Q25 max drawdown|) и
+бюджет потерь L_max → жёсткий/целевой потолок; dry powder и режимы Normal/Stress/Shock; Joint Layer, драйверы ±2/±1,
+MC-G5-013 и измеренная σ; intrinsic/full W; архетипы A/B/C; паритетная маржа и bridge_dependent; статусы дозора и
+итоги PASS/PASS_WITH_DECLARED_PENDING/PATCH_REQUIRED/BLOCKED_*; Decision Request; trigger ≠ decision; стадии
+кандидата; Conviction Overlay; Challenger/Core/Watch). Правило: при появлении нового термина в приёмке/заказе —
+сначала запись в глоссарий. Оценка: ~1 час; сделать до следующего Decision Request владельцу.
 
-CRWV mc v1.0.1 ПРИНЯТ И ИНТЕГРИРОВАН (25.09 день; пакет IMMA_CRWV_mc_v1.0.1 из чата партии 5, share 6ab62c72; from_imma/CRWV_mc_v1.0.1, sha256 трёх файлов сошлись): check_supersedes v1.0→v1.0.1 — пропаж 0, изменено ровно 3 (три effect_per_plus_1sigma на capex_revenue_nodes.Y2 ×0.85); валидатор 1.7.0 …-d97b71 pass — измеренная σ 0.048 ≤ 0.05 (было 0.056), W 0.605/0.647 без изменений, сухой прогон чистый, 5 предупреждений MC-G5-001 как у v1.0; RV v1.0 не менялась (…-55e6d2 в силе); норматив 500k …-a1b31f: CAGR 3/5/8 +40.6/+31.5/+26.2 %, q5..q95 −0.4..+63.5 %, P(loss>30) 0.021, P(loss>50) 0.008, ES5 −0.29, P(2x) 0.797, medE5 176.5 млрд, gap RV −0.044 / price 0.48, сходимость stable, robustness 1.0/0.875 (один выход: growth −9.3 п.п. → ΔP(2x) −0.138). Интеграция: portfolio/crwv/calibration_v1.0.yaml + mc_calibration_v1.0.1.yaml, calc_runs RV+MC, стадия conditional_mc, валидатор папки …-c64040 pass. ПАРТИЯ 5 ЗАКРЫТА: покрытие 14 бумаг, 96.0 % NAV (без калибровок GLD, UFO, SPOT). Наблюдение: MC-картина CRWV оптимистичнее RV-класса model_fragile (узкий нижний хвост при плече и концентрации 72 %) — калибровку не трогаем, при отборе это вопрос лимита владельцу. Сценарные прогоны CRWV — в нормативном раунде после Joint v1.1. Для IMMA: to_imma/mc-crwv-v101.feedback.md (приёмка, без вложений) → затем scenario-engine-reissues.request.md (п. 2.4 обновлён: CRWV принят) → затем mc-spot-calibration.request.md (заказ SPOT, архетип A; развилка валюты: рекомендация — целиком в EUR, equity_value через курс ЕЦБ; вложения Downloads/mc-spot-to-llm + .zip: spot/ ×5, MSFT пара, ASML RV как образец EUR, норматив MSFT a26670). Скрипты: scratchpad _accept_crwv101.py, _integrate_crwv101.py.
+## 24.09: ГЛОССАРИЙ СДЕЛАН
+
+ГЛОССАРИЙ СДЕЛАН (24.09): GLOSSARY.md — 4 раздела (общие понятия; наши метрики; модель компании; портфель и решения),
+~35 терминов с определением по-русски, формулой/правилом, примером на наших числах и местом использования; ссылки из
+README («Форматы и версии» + «Что где лежит») и AGENTS.md (п. 4 «Запуск сессии»: термины в сообщениях владельцу —
+только по глоссарию); правило «новый термин — сначала в глоссарий». README: список methodology актуализирован до
+текущих версий (Artifact v1.0.5, Dozor v1.2.1, MC spec v1.1.3, Rules v1.1.2, Schema v1.0.2/v1.0.1, движки 2.3.2 и
+optimizer 1.0.0). Очередь: коммит; заказ MSFT/PLTR/NET/ETN; Stability Test; Decision Request по разрывам.
+
+## 24.09: Коммит 24.09: workspace 90a7a26
+
+Коммит 24.09: workspace 90a7a26 (глоссарий + README + AGENTS + STATUS). ЗАКАЗ КАЛИБРОВОК MSFT + PLTR + NET + ETN
+подготовлен — to_imma/mc-msft-pltr-net-etn-calibrations.request.md (НЕ отправлен), вложения
+Downloads/mc-msft-pltr-net-etn-to-llm (+ .zip 68 КБ; msft/, pltr/, net/, etn/, reference/: HOOD пара v1.0.1, LLY mc
+v1.0, ASML mc v1.0.1, прогон HOOD на 2.3.2 …-038894). Все четыре — архетип A; веса 1.9/1.8/1.8/1.2 % NAV → покрытие
+≈94.5 %. Развилки, вынесенные IMMA явно: архетип MSFT (A рекомендован; capex 40 % выручки, FCF 21.8 %), SBC/размытие у
+PLTR (13.7 % выручки; FCF по GAAP-определению, не adjusted 63 %), FCF-маржа NET (в реестре нет — derived_fact из 10-Q;
+GAAP опер. маржа −29.6 % против non-GAAP +13.8 % объяснить; при FCF ≤0 — архетип B), периметр ETN (Boyd/Ultra куплены,
+Mobility выделяется Q1 2027 — pro-forma; долг 20.6 млрд). Оговорка по движку: схема v1.0.2 требует const `company_mc
+2.3.1` — IMMA пишет 2.3.1, в следующем переиздании схемы просим 2.3.2; нормативные прогоны на 2.3.2. Урок 2 (fallback
+multiple — основной параметр смеси) внесён в заказ. Примечание для владельца: три общие причины MSFT (AI_OVERBUILD,
+TAIWAN_SUPPLY_DISRUPTION, AI_CLOUD_CUSTOMER_FINANCING_STRESS) уже нарушены/связывающие в портфеле — после калибровки
+MSFT разрывы вырастут. Очередь: отправка заказа владельцем; Stability Test; Decision Request по разрывам; дозор по
+MSFT/PLTR/NET/ETN (ещё не проходил); CRWV (B) + ASTS (C).
+
+## 24.09: STABILITY TEST
+
+STABILITY TEST — ДВИЖОК И ПЕРВЫЙ ПРОГОН (24.09 день; владелец вне ноутбука, заказ MSFT/PLTR/NET/ETN ждёт отправки).
+Движок portfolio_stability 1.0.2 (lab, спецификация и схема v1.0): центральный прогон = optimizer на тех же входах;
+слои — сдвиг доходности ±3/±5 п.п. (масштаб (1+δ)^h на пути), терминальный мультипликатор ±20 % (лог-множитель),
+терминальная маржа ±5 п.п. (ПРОКСИ (m+δ)/m на Y5/Y8 по терминальной марже калибровки), корреляции ±0.10/±0.15
+(Иман–Коновер по рангам стоимости Y5, PSD-ремонт логируется, контроль нулевого δ), сценарии — not_applicable (один
+BASE), вехи и driver knockout — not_testable до пересимуляции (материальные драйверы перечислены: 10 по правилу
+≥0.30), LOO для позиций ≥5 % на трёх стартах + линейная проверка ёмкости (scipy.linprog: max Σw при потолках/общих
+причинах/секторах против budget − dp_hard_max), combined — латинский гиперкуб 500 × 25 измерений, seed 20260924;
+частичный перепрогон по семействам (families → partial). Optimizer 1.0.1: пути из памяти, max_paths, старт «given».
+Тесты lab 112/112. Прогоны: …-c7444b (1.0.0, полный, 78 мин, 569 прогонов на 100k путей) + …-ce0f70 (1.0.1, только
+LOO) → НОРМАТИВНЫЙ ПРОГОН …-f42e9b (1.0.2, 84 мин, supersedes оба; статистики совпали с 1.0.0 полностью; ёмкость
+центра 76.2 % при минимуме 68.4 %, запас 7.8 п.п.; LOO без HOOD/LLY/RKLB — structurally_infeasible по линейной
+проверке, запас −1.7/−6.5/−0.6 п.п.). РЕЗУЛЬТАТ: все 569 возмущений допустимы; веса почти не двигаются (p10–p90: NBIS
+10.5–13.5 %, META 12.5–13.5 %, остальные ±0.5 п.п.), включение HOOD/LLY/META/NBIS/NVDA/RKLB 100 % — все шесть stable;
+ASML включается в 14.6 % прогонов (до 1.5 %), SPCX 0.2 %; оборот от центра медиана 0, p90 2.5 п.п., max 10 п.п.; знак
+медианы не меняется; портфель structurally_stable по четырём оценённым критериям (driver knockout не оценён). Причина
+устойчивости — решение ПРИКОЛОЧЕНО ограничениями: связывающие потолки LLY 100 %, NVDA 99.7 %, RKLB 98 %, META 85 %,
+общая причина TAIWAN_SUPPLY_DISRUPTION 95 % прогонов. Медиана CAGR 5Y под combined-возмущениями 9.8–13.7 % (p10–p90),
+ES5 всегда ≥ +0.7 %. Корреляции ±0.15 меняют медиану на ±0.2 п.п., веса — нет. LOO: без META/NBIS/NVDA допустимо
+(медиана −0.7/−3.8/−2.0 п.п.), без HOOD/LLY/RKLB — НЕДОПУСТИМО СТРУКТУРНО (линейная ёмкость: бумаги без тайваньской
+экспозиции HOOD/LLY/RKLB/SPCX вмещают 40.6 % NAV, остальные упираются в общую причину 35 %, кэш Stress ≤20 %; ёмкость
+всего набора 76.2 % при минимуме 68.4 % — запас 7.8 п.п.). Вывод для Decision Request: узкое место — ёмкость вне
+тайваньской общей причины; калибровки PLTR/NET/ETN (без тайваньской экспозиции) расширят её, MSFT — нет. Ограничения:
+маржа прокси, knockout/вехи не тестированы (срез 2 — пересимуляция company_mc), 11.6 % NAV фиксированы. Файлы: lab
+engine/portfolio_stability.py, tests/test_portfolio_stability.py, optimizer 1.0.1, registry; workspace README
+(движок), GLOSSARY (Stability Test, LOO). НЕ закоммичено. Очередь: коммит lab + workspace; Decision Request по
+разрывам + ёмкости; срез 2 (пересимуляция: маржа, вехи, driver knockout).
+
+## 24.09: DECISION REQUEST DR-2026-09-24-01 ПОДГОТОВЛЕН
+
+DECISION REQUEST DR-2026-09-24-01 ПОДГОТОВЛЕН (владелец запросил 24.09 после push 2a53927/6033188; заказ
+MSFT/PLTR/NET/ETN ОТПРАВЛЕН IMMA) — decisions/DR-2026-09-24-constraint-gaps-and-capacity.md: 8 разрывов текущего
+портфеля (потолки NBIS 33.0/25.1, NVDA 21.3/13.8, HOOD 14.2/9.5; топ-3 68.6/50; общие причины Тайвань 55.2,
+AI_OVERBUILD 48.0, AI_CLOUD_FINANCING 42.7 против 35; кэш 0.5/5); статусы Overlay по MC-просадке: NVDA и HOOD — hard
+breach (HOOD в превью 22.09 был soft при запасной просадке 0.55, по MC 0.79), NBIS soft при conviction (до жёсткого
+0.4 п.п.); четыре варианта на совместных путях (V0 держать 15.2 %/ES5 −9.5 %; V1 только жёсткие пробои → 14.7 %/−8.9
+%, продажи 8.1k USD, нарушений 8; V2 целевые потолки + кэш 20 % → 12.5 %/−1.8 %, 36.9k, нарушений 2; V3 оптимум → 11.7
+%/+9.2 %, 71.3k, 0); ёмкость (LOO: без HOOD/LLY/RKLB недопустимо, запас 7.8 п.п.; расширяют PLTR/NET/ETN, не MSFT); 7
+вопросов (В1 NVDA hard breach: до жёсткого/целевого/держать/conviction-тег (45 %/33.8 %); В2 HOOD; В3 NBIS; В4 кэш; В5
+общие причины; В6 ёмкость; В7 стадия B). Не учтено: счета P1/P2, лоты, налоги (прибыль NBIS +188 %, NVDA +151 %, HOOD
++128 %), сценарии кроме BASE. Запись решения — _portfolio.yaml owner_decisions + state.json + STATUS. README: строка
+decisions/. НЕ закоммичено. Очередь: ответ владельца по В1–В7; срез 2 Stability Test; ответ IMMA по партии 4.
+
+## 24.09: ПАРТИЯ 4 (MSFT/PLTR/NET/ETN v1.0, share 6ab56325,…
+
+ПАРТИЯ 4 (MSFT/PLTR/NET/ETN v1.0, share 6ab56325, from_imma/MSFT_PLTR_NET_ETN_Calibrations_v1, sha256 по манифесту
+сошлись) — ХОСТ-ПРИЁМКА 24.09 вечер: RV …-c21c7b MSFT 18.1 % terminal_dependent, …-268b86 PLTR 58.8 %
+terminal_dependent, …-6ca499 NET 66.9 % model_fragile, …-ae7ea8 ETN 20.1 % terminal_dependent (совпали с предрасчётом
+IMMA); валидатор 1.6.0: MSFT/PLTR/NET pass (…-937964/…-7f2410/…-e64fec; intrinsic W 0.283/0.286/0.273 в ориентире A;
+MSFT full W 0.294 — warning у 0.30, не расширяем по правилу HOOD), ETN FAIL …-3ea357 — MC-G5-013: σ роста
+ElectricalAmericas 0.189 > 0.15 при шести коррелированных драйверах (Σ|e| 0.112); предпросмотр ×0.75 по шести вкладам
+→ σ 0.141 pass. Стресс-диагностика (старая сетка) …-227c0e/…-81b51c/…-d69229. Нормативные 500k на 2.3.2: MSFT …-a26670
+(CAGR5 +6.8 %, P(loss>30) 0.07, gap 1.13, robustness 1.0/1.0), PLTR …-460fe8 (−1.6 %, 0.285, gap 1.83, robustness
+0.875/0.75), NET …-a8783a (−16.4 %, 0.838, q5..q95 −32…−0.4 %, gap 4.04, robustness 1.0/1.0 — весь коридор
+отрицательный; у IMMA запрошено подтверждение, кандидат на Decision Request с флагом риска модели). РЕШЕНИЕ:
+MSFT/PLTR/NET ПРИНЯТЫ и ИНТЕГРИРОВАНЫ (portfolio/{msft,pltr,net} calibration_v1.0 + mc_calibration_v1.0, calc_runs
+RV+MC, стадия conditional_mc; валидатор папок pass 3/3 …-ec00fc; дамп state.json адаптивный — многострочные наблюдения
+сохранены); ETN — заказ v1.0.1 (только шесть вкладов на ElectricalAmericas). ПОКРЫТИЕ КАЛИБРОВКАМИ 93.4 % NAV. Приёмка
+— to_imma/mc-msft-pltr-net-etn.feedback.md (НЕ отправлен). ЗАХОД 3 ВАЛИДАЦИИ (11 бумаг): portfolio_paths …-b41a4b
+(текущие веса: медиана 16.0 %, ES5 −10.7 %), optimizer …-ac7fd4 (NBIS 13.5, NVDA 13.5, LLY 12, META 9, PLTR 9, NET 8,
+RKLB 5, MSFT 3, SPCX 1, HOOD 0, ASML 0, кэш 19.8 %; медиана 10.9 %, ES5 +3.6 %, оборот 44 %; связывающие потолки
+NET/NVDA); разрывы текущего те же 8; ЁМКОСТЬ РЕШЕНА (LP: 95.0 % при минимуме 73.8 %, запас 21.1 п.п.; LOO по LP везде
+ok); НАХОДКА: NET/PLTR в оптимуме как наполнители из-за жёсткого максимума кэша 20 % (без NET медиана была бы 12.6 %,
+но недопустимо) → DR раздел 7, вопрос В8 (лимит кэша Stress). Stability Test на 11 бумагах запущен в фоне (supersedes
+…-f42e9b). НЕ закоммичено: DR + README + STATUS (с прошлого шага), партия 4 (from_imma, portfolio/{msft,pltr,net},
+_candidates, _runs 15 файлов, to_imma feedback). Очередь: ответ владельца по В1–В8; отправка приёмки IMMA + ETN
+v1.0.1; результат Stability заход 3; срез 2 Stability; CRWV (B) + ASTS (C).
+
+## 24.09: ETN v1.0.1 (share 6ab56b5c, from_imma/ETN_mc_v1.0.1) ПРИНЯТ И ИНТЕГРИРОВАН 24.09 вечер
+
+ETN v1.0.1 (share 6ab56b5c, from_imma/ETN_mc_v1.0.1) ПРИНЯТ И ИНТЕГРИРОВАН 24.09 вечер: check_supersedes OK (6
+значений — шесть вкладов на ElectricalAmericas ×0.75, пропаж 0); валидатор …-98a03b pass, σ 0.141; RV …-c3f24d 20.1 %
+terminal_dependent; стресс (старая сетка) знак 0.67/допуск 0.5; норматив …-c0c4ef (CAGR5 +2.5 %, P(loss>30) 0.172, gap
+1.42, robustness 1.0/1.0); portfolio/etn calibration_v1.0 + mc_calibration_v1.0.1, стадия conditional_mc, валидатор
+папки pass …-b675b1. ПАРТИЯ 4 ЗАКРЫТА: ПОКРЫТИЕ 12 БУМАГ, 94.5 % NAV (без калибровок GLD/SPOT/ASTS/CRWV/UFO 5.0 %).
+Приёмка — to_imma/mc-etn-v101.feedback.md (НЕ отправлен). ЗАХОД 4 ВАЛИДАЦИИ: portfolio_paths …-7c25a1, optimizer
+…-d58516 (NBIS 13, NVDA 13.5, LLY 14, META 10, ETN 7.5, RKLB 8, MSFT 4, NET 2, PLTR 2, SPCX 1, HOOD 0, ASML 0, кэш 20
+%; медиана 11.9 %, ES5 +9.7 %, оборот 45 %; наполнитель — ETN вместо NET; кэш на жёстком максимуме → В8 в силе) → DR
+раздел 7.1. Stability на 11 бумагах ОСТАНОВЛЕН (перезапуск сайдкара) — перезапущен на 12 бумагах (supersedes
+…-f42e9b), результат → DR 7.2. НЕ закоммичено: from_imma/ETN_mc_v1.0.1, portfolio/etn, _candidates, _runs
+(RV/валидаторы/стресс/норматив ETN, заход 4), to_imma feedback, decisions/DR (7.1), STATUS.
+
+## 24.09: РЕШЕНИЯ ВЛАДЕЛЬЦА 24.09 по DR-2026-09-24-01
+
+РЕШЕНИЯ ВЛАДЕЛЬЦА 24.09 по DR-2026-09-24-01: В1 (NVDA hard breach) и В2 (HOOD hard breach) — держать осознанно до
+отбора бумаг портфеля, пересмотр 20.10.2026 или по завершении отбора (что раньше) → portfolio/_portfolio.yaml
+owner_decisions (новый блок, дом записи), info_log NVDA/HOOD, отметки в DR. Замечания владельца: отбор бумаг ещё не
+проводился → В3/В5/В7/В8 и варианты V2/V3 отложены до отбора (DR раздел 0); формат «V0: описание»; В4 (кэш) — то же
+решение (принять до отбора, пересмотр 20.10.2026 / завершение отбора). Термин «провенанс» заменён на «происхождение»
+(GLOSSARY, AGENTS; поле provenance сохранено). Предложено: план отбора бумаг (кандидаты без моделей — заказ IMMA). НЕ
+закоммичено: GLOSSARY, AGENTS, DR, _portfolio.yaml, nvda/hood state.json, STATUS; Stability на 12 бумагах считается.
+
+## 24.09: ОТВЕТ IMMA (share 6ab57a50, без файлов)
+
+ОТВЕТ IMMA (share 6ab57a50, без файлов): ETN v1.0.1 зафиксирован принятым; по NET — однозначное подтверждение:
+отрицательный коридор — осознанный вывод модели (28× FCF на Y5 — зрелое состояние после возврата роста; повышать
+мультипликатор ради цены — нарушение анти-цикличности), калибровку не менять, перекалибровка только при конкретном
+механизме. Подготовлен DR-2026-09-24-02 (decisions/DR-2026-09-24-02-net-model-risk.md): флаг model_fragile /
+valuation_disconnect, факты позиции (1.8 % NAV, +45 % к базе), таблица модели, сетка чувствительности RV (маржа
+5/20/34 % × мультипликатор 16/28/46× → implied CAGR 36–141 %), условия перекалибровки, конфликт тезиса (докупки
+275/250/225) с моделью, 4 варианта (заморозить докупки / держать как есть / сократить-выйти / отложить до отбора).
+info_log NET. НЕ закоммичено (+ к списку выше): DR-02, net/state.json.
+
+## 24.09: ЗАДАЧА ЛАБОРАТОРИИ
+
+ЗАДАЧА ЛАБОРАТОРИИ (24.09, наблюдение владельца «CPU 10 %»): «Диспетчер задач» Windows не показывает нагрузку WSL2 —
+фактически loadavg 14.9 при 14 ядрах, контейнер сайдкара 1600 % CPU, оптимизатор на хосте замедлился с 5 до 71 с.
+OpenBLAS в сайдкаре занимает все ядра мелкими операциями (оверсабскрипшн). Сделать: ограничить потоки BLAS в
+контейнере calc (OPENBLAS_NUM_THREADS/OMP_NUM_THREADS ≈ 4 в docker-compose), замерить время прогонов до/после; тогда
+2–3 задачи можно гонять параллельно. Не трогать во время идущих прогонов. РАСШИРЕНИЕ (вопрос владельца о переезде на
+сервер, 24.09): решение — сначала распараллелить в лаборатории (BLAS 1–2 потока + пул процессов для независимых
+прогонов: 570 возмущений Stability, компании под сценарием), ожидание 8–10× на 14 ядрах (Stability 15–20 мин вместо 3
+ч); переезд сайдкара на арендованный сервер — только если после этого нормативный цикл (компании × сценарии × 500k +
+Stability по сценариям) не влезает в рабочий день или ноутбук нужен владельцу; схема переезда — разработка и агент на
+ноутбуке, сайдкар по URL на сервере, _runs через git; данные портфеля на сервере — соображение приватности.
+
+## 24.09: РАСПАРАЛЛЕЛИВАНИЕ СДЕЛАНО
+
+РАСПАРАЛЛЕЛИВАНИЕ СДЕЛАНО (25.09 ночь): portfolio_stability 1.1.0 — независимые возмущения (OFAT, корреляции,
+combined, LOO) как задачи пула процессов (spawn; в потомках OPENBLAS/OMP/MKL_NUM_THREADS=1 — проверено в контейнере,
+переменная соблюдается; каждый потомок грузит пути из файлов один раз; stability.workers по умолчанию cpu−2, ≤12;
+workers=1 — последовательно); порядок задач и seed'ы фиксированы → результат не зависит от числа процессов (тест: пул
+2 = последовательный). Диагностика: стоимость Stability — не BLAS, а Python-накладные на оценку портфеля (~2–5 мс ×
+~3000 оценок на прогон при 12 бумагах); многопоточность numpy не помогает, процессы — помогают. Прогон 1.0.2 на 12
+бумагах (18:43Z) остановлен через 5 ч без результата (клиент отвалился по таймауту 4 ч; таймаут поднят до 12 ч),
+сайдкар перезапущен на 1.1.0, пробный прогон 20k: 110 задач за 214 с; полный прогон на 12 бумагах перезапущен
+…T232xxxZ (лог _stability_full_run4b.log). Разведка сценариев (BASE / CHIP_COLD_WAR / TAIWAN_SEIZURE, 100k) в очереди
+за ним автоматически. НЕ закоммичено (lab): portfolio_stability 1.1.0 + тест.
+
+## 24.09: ОПТИМИЗАТОР 1.0.2
+
+ОПТИМИЗАТОР 1.0.2 (25.09 ночь, по профилю: ~60 % времени оценки — две partition на медиану и ES5, ~20 % — словарные
+циклы концентраций): одна partition с порядковыми статистиками k−1, n//2−1, n//2; секторы/общие причины/Challenger —
+матрицами, предвычисленными в _Problem. A/B на реальных входах (20k путей, 12 бумаг): веса, полосы, медиана, ES5,
+число оценок идентичны, концентрации до 1e-16; время −27 % под нагрузкой. Тесты optimizer+stability 7/7. Остаток
+стоимости — Python-накладные на оценку (ключ кэша, сборка словарей) и число оценок покоординатного подъёма (~3000 на
+12 бумаг). НЕ закоммичено (lab): optimizer 1.0.2.
+
+## 24.09: STABILITY НА 12 БУМАГАХ ВЫПОЛНЕН
+
+STABILITY НА 12 БУМАГАХ ВЫПОЛНЕН (25.09 ночь, …-86cfbf, движок 1.1.0, 70 мин на 12 процессах против >5 ч
+последовательно; 601 прогон, все допустимы; supersedes …-f42e9b): портфель structurally_stable (оборот медиана 10 %,
+p90 16 %), но stable только LLY/NVDA/RKLB; NBIS (5–17 %), META (3.5–13.5), MSFT (2–13.5), ETN (0–11.5), PLTR (1–9.5),
+SPCX, NET — conditional (взаимозаменяемые имена ИИ-кластера); HOOD/ASML вне центра; связывающие — потолки
+LLY/RKLB/NVDA, Тайвань 86 %; LOO везде допустимо. → DR раздел 7.2: точные веса conditional-бумаг не исполнять, полосы
+вместо точек. Разведка сценариев (BASE/CHIP_COLD_WAR/TAIWAN_SEIZURE) стартовала автоматически. НЕ закоммичено: +
+прогон …-86cfbf, DR 7.2, STATUS.
+
+## 24.09: РАЗВЕДКА СЦЕНАРИЕВ ВЫПОЛНЕНА
+
+РАЗВЕДКА СЦЕНАРИЕВ ВЫПОЛНЕНА (25.09 ночь, 42 прогона за 9 мин; НЕ норматив): BASE / CHIP_COLD_WAR (уточнение
+владельца: превосходство Китая + гонка США с госденьгами, не «паритет») / TAIWAN_SEIZURE; 12 компаний × 100k, портфель
+на текущих весах и на оптимуме захода 4. Итог: cold war в установившемся уровне — медиана портфеля 15.9 → 13.9 %
+(оптимум 12.5 → 11.8), ES5 −10.8 → −17.7 %; перекладка: ETN +6.1, PLTR +4.1, RKLB +3.2, ASML +2.5 / NBIS −3.5, MSFT
+−3.4, NET −3.1, NVDA −2.4, LLY −2.0 п.п.; силовой Тайвань — 15.9 → 4.9 %, ES5 −42 %, NVDA −21.6 п.п., ASML P(loss>30)
+78 %. Оптимум устойчивее текущего к обоим. Пробелы: нет драйвера ценовой конкуренции в ускорителях (NVDA вне
+AI_CLOUD_PRICING), узкий mapping PLTR/NET/HOOD/LLY, семантика TAIWAN_SUPPLY при «обесценивании Тайваня», движок не
+умеет фазы/effective_from — переходная фаза у границы паритета (главный интерес владельца) не воспроизводится. Файлы:
+notes/scenario-explore-2026-09-25.md (+ .summary.json), прогоны …T00…Z-company_mc-* (scenario в meta) и 6
+portfolio_paths. ЧЕРНОВИК ЗАКАЗА IMMA — to_imma/scenario-engine.request.md (НЕ отправлен): A спецификация Scenario
+Engine v1.0 (фазы с effective_from/ramp, взаимоисключающий набор с вероятностями owner_judgment, смешивание и Scenario
+Concentration, отчёт неохваченных драйверов), B две калибровки (TAIWAN_SEIZURE с фазами по стадиям taiwan.yaml;
+CHIP_COLD_WAR: гонка → граница паритета → две системы), C таксономия и аудит mapping; вложения
+Downloads/scenario-engine-to-llm (+.zip). НЕ закоммичено: notes, to_imma, прогоны разведки, STATUS.
+
+## 24.09: Коммиты 25.09
+
+Коммиты 25.09: lab 26c9279 (stability 1.1.0, optimizer 1.0.2), workspace 452e060 (решения владельца, DR-01/02,
+глоссарий) и f657874 (Stability 12 бумаг, разведка сценариев, заказ Scenario Engine) — запушены владельцем. ЗАКАЗ
+СЦЕНАРНОГО СЛОЯ ОТПРАВЛЕН IMMA. Ответ владельцу «что тормозит»: отбор бумаг не определён (кандидаты без моделей → MPC
+не считается), сценарный слой, цикл владелец→IMMA→хост один заход в день → укрупнять заказы, две нити параллельно.
+ЗАКАЗ КАЛИБРОВОК CRWV (B) + ASTS (C) + МОДЕЛЬ SPOT подготовлен — to_imma/mc-crwv-asts-calibrations.request.md (НЕ
+отправлен; отправлять после сценарного), вложения Downloads/mc-crwv-asts-to-llm (+.zip: crwv/, asts/, reference: NBIS
+mc v1.0.2, META пара v1.0.1, RKLB пара v1.0.1, прогон RKLB …-224958). Развилки в заказе: CRWV — долг/рефинансирование
+и концентрация клиентов 72 %; ASTS — вехи с распределениями сроков, размытие, модель разделения выручки с операторами.
+Очередь: ответ IMMA по сценарному слою → реализация фаз и смешивания в движке; приёмка CRWV/ASTS; список кандидатов
+для отбора — за владельцем; срез 2 Stability; дозор по MSFT/PLTR/NET/ETN/LLY/META/ASML/RKLB/CRWV.
+
+## 24.09: ОТВЕТ НА ЗАКАЗ СЦЕНАРНОГО СЛОЯ
+
+ОТВЕТ НА ЗАКАЗ СЦЕНАРНОГО СЛОЯ (share 6ab61d75, 25.09) — ВНИМАНИЕ: заказ отправлен в чат «Инвестиции в
+ИИ-инфраструктуру» (обсуждение корзины ИИ-инфраструктуры, не рабочий чат IMMA «Восстановление контекста IMMA»
+6ab57a50). Ответ по существу сильный и совпадает с заказом: план A → B+C; принципиальные уточнения — (1) probability
+сценария (выбор world-state, owner_judgment) не смешивать с распределением времени наступления фазы (effective_from
+внутри сценария), иначе двойное взвешивание; (2) «вклад сценария в медиану» не аддитивен — отдельные определения
+scenario_delta и mixture contribution, разложение по драйверам — attribution/diagnostic; (3) AI_CLOUD_PRICING не
+переопределять — новый драйвер ACCELERATOR_PRICE_COMPETITION (положительный шок = усиление ценовой конкуренции /
+снижение ASP ускорителей) с коррелированной передачей в AI_CLOUD_PRICING; (4) TAIWAN_SUPPLY остаётся
+доступностью/надёжностью цепочки, для «утраты технологического преимущества Тайваня» — отдельный канал; (5) в аудите
+mapping разделять reviewed_immaterial и mapping_gap; (6) вероятности — pending_owner_judgment; (7) taiwan.yaml S1–S3 —
+слой действий, не состояния калибровки; 3–5 лет паритета — распределение, не дата. Файлов нет: следующий артефакт —
+полный текст Scenario Engine Specification v1.0 + Schema v1.0 + fixtures (ещё не выпущен). Решение владельцу:
+продолжать сценарный слой в этом чате (тогда его пакет восстановления контекста нужно дополнить сценарным треком и
+правилами обмена: манифест sha256, переиздание = полный текст + дельта) или перенести заказ в чат IMMA.
+
+## 24.09: Решение владельца 25.09
+
+Решение владельца 25.09: заказ сценарного слоя переотправляется в рабочий чат IMMA (ответ из чата ИИ-инфраструктуры —
+черновой разбор, не норматив). Следом — заказ CRWV/ASTS/SPOT. Пока ждём: подготовка движка к фазам сценария
+(effective_from, ramp, duration) и смешиванию сценариев в portfolio_paths — черновая реализация под будущую
+спецификацию, окончательная семантика — по тексту IMMA.
+
+## 24.09: ЧЕРНОВАЯ ПОДДЕРЖКА СЦЕНАРНОГО СЛОЯ В ДВИЖКЕ
+
+ЧЕРНОВАЯ ПОДДЕРЖКА СЦЕНАРНОГО СЛОЯ В ДВИЖКЕ (25.09, до спецификации IMMA; семантика будет подогнана): joint_layer
+1.1.0 — scenario.phases [{phase_id, effective_from: число|распределение (uniform/triangular, розыгрыш на путь),
+after_phase+offset, ramp_quarters, duration_quarters|null, decay_quarters, driver_overrides}], профиль m_i(t)∈[0,1] на
+путь, сдвиг x += shift·m, волатильность x *= 1+(vm−1)·m, фазы суммируются; legacy top-level driver_overrides = одна
+фаза m≡1 (результаты прежних прогонов не меняются — тест эквивалентности); root_correlation_overrides по фазам НЕ
+реализованы. portfolio_paths 1.1.0 — режим смеси: inputs.scenarios [{id, probability, paths_files}], выбор сценария на
+path_id детерминированно по вероятностям (общие случайные числа), метрики смеси + по сценариям +
+scenario_delta_vs_first; scenario_concentration = None до определения IMMA. Тесты: фазы (профиль, after_phase,
+legacy-эквивалентность, детерминизм), смесь (доли, границы, p=1 ≡ обычный прогон, детерминизм, ошибка при Σp≠1).
+Полный набор lab — см. строку ниже. НЕ закоммичено (lab): joint_layer, portfolio_paths, тесты. Заказ сценарного слоя
+переотправлен в чат IMMA (владелец, 25.09).
+
+## 25.09: заказ CRWV/ASTS/SPOT отправлен IMMA
+
+25.09: заказ CRWV/ASTS/SPOT отправлен IMMA (владелец). Ожидаем два ответа: Scenario Engine v1.0 (A) и калибровки
+CRWV/ASTS + модель SPOT. Предложено владельцу на время ожидания: срез 2 Stability (пересимуляция маржи/вех, выбивание
+драйверов) — делаю; дозор v1.2.1 по MSFT/PLTR/NET/ETN/LLY/META/ASML/RKLB/CRWV — только по слову владельца (токены
+агента).
+
+## 25.09: УРОК ОБМЕНА (25.09)
+
+УРОК ОБМЕНА (25.09): IMMA не работает параллельно — второй заказ (CRWV/ASTS/SPOT) вытеснил первый (сценарный слой) из
+очереди: «Принял новый заказ и переключаюсь на партию 5/6». Правило: один заказ за раз; следующий отправлять после
+получения пакета; после пакета CRWV/ASTS/SPOT явно вернуть IMMA к сценарному слою фразой «Продолжай заказ сценарного
+слоя: часть A — спецификация Scenario Engine v1.0, схема и фикстуры».
+
+## 25.09: СРЕЗ 2 STABILITY РЕАЛИЗОВАН
+
+СРЕЗ 2 STABILITY РЕАЛИЗОВАН (25.09): company_mc 2.4.0 — simulate_paths (пути в памяти на общих шоках;
+inputs.perturbation {growth_shift, margin_shift, mult_factor, rho_shift, milestone_prob_shift}; knockout через
+существующий механизм снятия structural_support), общая подготовка _prepare; milestone_mc — milestone_prob_shift;
+portfolio_stability 1.2.0 — stability.resimulate {calibrations, equity_value_0, joint_layer_spec, global_seed, chunk}:
+маржа ±5 п.п. точно (вместо прокси), вехи ±10 п.п. (семейство milestone), driver_knockout у компаний с положительной
+экспозицией (отрицательная — без бонуса), критерий §7 driver_knockout_feasible_replacement оценивается; сторожа:
+размеры чанков должны совпадать с нормативным прогоном (антитетические пары внутри чанка — иначе path_id не
+выровнены), пересимуляция BASE первой компании обязана побитно совпасть с нормативными путями (resimulate_check).
+Тесты lab 117/117. Живой частичный прогон среза 2 на 12 бумагах запущен (лог _stability_slice2.log). НЕ закоммичено
+(lab): company_mc 2.4.0, milestone_mc, portfolio_stability 1.2.0, тесты.
+
+## 25.09: СРЕЗ 2 STABILITY ВЫПОЛНЕН
+
+СРЕЗ 2 STABILITY ВЫПОЛНЕН (25.09 утро, …-f3468c, 14 мин, 61 прогон, все допустимы, resimulate_check ASML воспроизведён
+побитно): точная маржа ±5 п.п. (NBIS компания 15.6/26.5 % при базе 20.8; вес 4.5–10.5 %), вехи RKLB ±10 п.п. (3.2/4.6
+%, вес 8 % без изменений), knockout 11 материальных драйверов — все допустимы, критерий §7
+driver_knockout_feasible_replacement PASS (теперь все 5 критериев оценены); эффект knockout на медианы компаний ≤1.5
+п.п. (структурные вклады в калибровках малы), портфель 10.7–11.6 % против 12.0 %. → DR раздел 7.3. Далее: полный
+нормативный прогон с пересимуляцией (все семейства, supersedes …-86cfbf) — запускаю в фоне.
+
+## 25.09: ПАРТИЯ 5 (CRWV B / ASTS C + модель SPOT; IMMA share 6ab62c72,…
+
+ПАРТИЯ 5 (CRWV B / ASTS C + модель SPOT; IMMA share 6ab62c72, from_imma/CRWV_ASTS_SPOT_Calibrations_v1, sha256
+сошлись) — ХОСТ-ПРИЁМКА 25.09 утро: CRWV: RV …-55e6d2 implied 29.2 %, TV share 1.16, model_fragile (совпало с
+предрасчётом); валидатор …-ede78a FAIL — MC-G5-013 margin_model.capex_revenue_nodes.Y2 σ 0.056 > 0.05
+(DATA_CENTER_POWER −0.018, TAIWAN_SUPPLY −0.014, CAPITAL_MARKETS −0.014; Σ|e| 0.046); intrinsic W 0.605 в ориентире B;
+предпросмотр ×0.85 трёх вкладов → σ 0.048 pass → заказ CRWV v1.0.1. ASTS: RV …-47b472 implied 130 %, TV share 1.016,
+model_fragile (ожидаемо для pre-service; в RV-калибровке balance_sheet в полях
+net_debt_approx/cash_and_restricted_cash — сборщик входов поправлен вручную); валидатор …-cf95eb pass (σ вех
+0.017–0.044 логит, сроки 0.08–0.13 кв.; intrinsic W 1.296 у верхней границы C 1.30); стресс + норматив 500k — в фоне.
+SPOT: модель (6-K/IAS 34, 5 осей, сектор INTERNET_PLATFORMS provisional) разнесена в portfolio/spot, валидатор папки
+pass …-d4735b, _candidates: SPOT → company_model (партия 6 моделей); калибровка — следующей партией; дозор по SPOT не
+проходил. Stability 1.2.1: обёртка engine/stability_worker.py (не перезагружается реестром) — полный прогон 1.2.0
+падал PicklingError при параллельных запросах приёмки (reload модулей сайдкаром); тесты 5/5; полный нормативный прогон
+с пересимуляцией перезапущен в очереди после ASTS. НЕ закоммичено: from_imma пакет, portfolio/spot, _candidates,
+прогоны, lab 1.2.1.
+
+## 25.09: ASTS v1.0 ПРИНЯТ И ИНТЕГРИРОВАН
+
+ASTS v1.0 ПРИНЯТ И ИНТЕГРИРОВАН (25.09 утро): норматив …-17e2e2 (CAGR 3/5/8 −24.2/+0.9/+14.2 %, q5 −99.2 %, P(loss>30)
+0.356, P(loss>50) 0.276, ES5 −1.00, P(2x) 0.222, gap 1.84; P(onset к Y3) 0.797, terminal_failure 19.8 % путей;
+robustness 0.75/1.0); стресс (старая сетка) …; portfolio/asts calibration_v1.0 + mc_calibration_v1.0, calc_runs,
+стадия conditional_mc, валидатор папки pass …-c9ef56. ПОКРЫТИЕ 13 БУМАГ, 95.5 % NAV (без калибровок GLD/UFO и SPOT —
+модель есть, калибровка следующей партией; CRWV — v1.0.1). Кандидат на Decision Request с флагом риска модели (1 %
+NAV). Приёмка партии 5 — to_imma/mc-crwv-asts-spot.feedback.md (НЕ отправлен; в нём же заказ CRWV v1.0.1 и напоминание
+вернуть IMMA к сценарному слою). Замечание формата: RV-калибровка ASTS с полями balance_sheet
+net_debt_approx/cash_and_restricted_cash — сборщик входов RV поправлен вручную, IMMA попросили держать имена
+RKLB/HOOD. Полный нормативный Stability с пересимуляцией — считается. НЕ закоммичено: партия 5 (from_imma,
+portfolio/asts, portfolio/spot, _candidates, прогоны, feedback), lab 1.2.1 + черновик сценарного слоя + срез 2,
+STATUS.
+
+## 25.09: ОБСУЖДЕНИЕ 25.09
+
+ОБСУЖДЕНИЕ 25.09 — АВТОМАТИЗАЦИЯ ОБМЕНА С IMMA: узкое место — ручная передача владельцем (копирование текста, архив,
+скачивание, путь). Варианты: автоматизация UI chatgpt.com — отклонена (хрупко; отправка сообщений от имени владельца
+требует разрешения на каждое действие); IMMA через OpenAI API — настоящая автоматизация; IMMA как агент OpenClaw
+(расширение API-варианта: свой workspace, чтение methodology/ и моделей, запись ТОЛЬКО в from_imma/, манифест, право
+прогнать валидатор до сдачи, Telegram для вопросов владельцу, кроны как триггер от интегратора; модель другого
+семейства для независимости; инструкции — пакет восстановления). Риски: качество длинных спецификаций в агентном цикле
+(проверить пилотом), дрейф независимости, стоимость 5–20 $ за партию (лимит бюджета). Решение: сразу — папка-обменник
+outbox/inbox со сторожем (убирает шаг «сообщить путь»); после приёмки спецификации Scenario Engine — пилот агента
+IMMA: 5 контрольных вопросов + сводное переиздание Rules v1.1.2 (purpose/interpretation), сравнение с чатом, затем
+перенос заказов; чат-IMMA — запасной канал и второе мнение. От владельца: ключ API в .env лаборатории (кладёт сам),
+бюджет пилота.
+
+## 25.09: НОРМАТИВНЫЙ STABILITY С ПЕРЕСИМУЛЯЦИЕЙ ВЫПОЛНЕН
+
+НОРМАТИВНЫЙ STABILITY С ПЕРЕСИМУЛЯЦИЕЙ ВЫПОЛНЕН (25.09, …-4fec7a, 1.2.1, 68 мин на 12 процессах, 614 прогонов, все
+допустимы; supersedes …-86cfbf и …-f3468c): все 5 критериев §7 pass (оборот медиана 9.0 %, p90 14.5 %; knockout 11/11
+допустимы); классы: stable LLY/NVDA/RKLB, conditional NBIS/META/MSFT/ETN/PLTR/NET/SPCX, вне центра HOOD/ASML. → DR
+раздел 7.4. НЕ закоммичено: прогон …-4fec7a, DR 7.4, STATUS (+ spacex/state.json от агента).
+
+## 25.09: SCENARIO ENGINE v1.0 ПОЛУЧЕН
+
+SCENARIO ENGINE v1.0 ПОЛУЧЕН (IMMA, тот же чат 6ab62c72 — владелец вернул IMMA к отложенному заказу;
+from_imma/Scenario_Engine_v1.0, 11 файлов, sha256 сошлись): спецификация (фазы как целевые состояния относительно
+BASE; effective_from fixed/triangular с якорем t0 или phase:<id>; ramp/duration until_next_phase|until_end|N + decay;
+интерполяция сдвига линейно, волатильности геометрически; persistence_override [0,0.99]; root_correlation_overrides по
+фазам с обязательной PSD без авторемонта, convex-интерполяция на ramp; RNG-адресация по path_id; смесь — взвешенная
+эмпирическая, не ресэмплинг; MedianImpact/ES5Impact/B_s и ScenarioConcentration = max B_s/ΣB_s; §3.3 при вероятностях;
+coverage-отчёт applicable/unmapped/immaterial; анти-двойной-учёт; совместимость: 2.3.2 только constant snapshot =
+non_normative), схема + примеры, TAIWAN_SEIZURE (4 фазы restrictions→blockade→conflict→recovery, сдвиги до −3σ×2.0 в
+conflict), CHIP_COLD_WAR (3 фазы race→parity_boundary q12/16/20→two_systems, новый драйвер
+ACCELERATOR_PRICE_COMPETITION до +1.5σ), таксономия v1.2 (check_supersedes OK: +ACCELERATOR_PRICE_COMPETITION), Joint
+driver patch (корни для нового драйвера), mapping patch (NVDA −2 / NBIS +1 / MSFT +1 / META +1 / ASML −1 + исправление
+знаков TAIWAN_SUPPLY у MSFT/META: семантика «здоровье поставок» — принятые −1 ошибочны; применять только через полные
+переиздания и MC-G5-013), coverage audit (PLTR/NET/HOOD/LLY/ETN/RKLB/SPCX — обоснованные no_patch). Вероятности —
+pending_owner_judgment (BASE = остаток). ХОСТ-ПРОВЕРКИ: обе калибровки проходят JSON-схему; 7 фазовых матриц PSD (min
+eig 0.042…0.210 — совпало с IMMA); драйверы фаз есть в таксономии; ПРОБЕЛ: INDUSTRIAL_RESHORING (и часть драйверов
+v1.1) без root-mapping в Joint-схеме — идиосинкратический; в Joint-схеме нет корней для ACCELERATOR_PRICE_COMPETITION
+до применения driver patch. ОТКРЫТО К IMMA: семантика persistence_override в нашей структуре (AR у корней + затухание
+в mapping, у драйвера своей персистентности нет); переиздания MSFT/META/NVDA/NBIS/ASML под patch (NBIS/NVDA закреплены
+на схеме 1.0.1 — переход на 1.0.2 меняет семантику базы). СЛЕДУЮЩИЙ БЛОК (план владельцу): реализация фазового
+оркестратора по спецификации (черновик joint_layer 1.1.0 переделать: целевые состояния, until_next_phase,
+гео-интерполяция волатильности, корреляции по фазам с per-path таймингом, взвешенная смесь, валидатор сценариев +
+coverage), прогоны 13 компаний × 2 сценария × 500k, отчёт; смесь/концентрация/§3.3 — после вероятностей владельца.
+CRWV v1.0.1 ещё не выпущен — приёмка партии 5 (с заказом v1.0.1) не отправлена.
+
+## 25.09: SCENARIO ENGINE v1.0 РЕАЛИЗОВАН НА ХОСТЕ
+
+SCENARIO ENGINE v1.0 РЕАЛИЗОВАН НА ХОСТЕ (25.09): joint_layer 1.2.1 — фазы как целевые состояния относительно BASE
+(effective_from fixed/triangular с якорем t0|phase:<id>, целочисленные старты по (seed, scenario_id, phase_id), ramp
+от состояния квартала s−1: сдвиг линейно, волатильность геометрически; duration int|until_next_phase|until_end, decay
+к BASE; монотонность стартов — ValueError), корреляции корней по фазам (PSD без ремонта, выпуклая интерполяция
+квантованная по кварталам, общие iid-инновации, разложение Холецкого на каждое состояние), persistence_override —
+ПРЕДВАРИТЕЛЬНАЯ интерпретация «б» (AR(1)-перепостоянство инноваций драйвера с теоретическим φ из корней; дисперсия ≈1
+с остатком до 0.16 — ждём ответ IMMA 2.1; в v1.0 сценариях ρ 0.65–0.9 задан почти всюду, поэтому реализовать пришлось
+сразу); company_mc 2.4.1 — scenario_id, scenario_mode (phased | constant_legacy_non_normative | BASE), диагностика фаз
+в отчёте; portfolio_paths 1.2.0 — взвешенная эмпирическая смесь (§6), BASE = остаток, pending-вероятности → только
+по-сценарные метрики, MedianImpact/ES5Impact/B_s и ScenarioConcentration (§7); artifact_validator 1.7.0 — режим
+scenario (§12: схема, id, anchor-порядок, драйверы в таксономии v1.2 (added_v1_2 на верхнем уровне — учтено), PSD,
+replay/детерминизм, драйверы без root-mapping — warning, контракт вероятностей набора, coverage §9
+applicable/unmapped/immaterial/excluded_semantic_mismatch). methodology/: Scenario_Engine_Specification_v1.0.md,
+Schema, Examples, MPC_Driver_Taxonomy_v1.2; portfolio/_scenarios/: TAIWAN_SEIZURE_v1.0.yaml, CHIP_COLD_WAR_v1.0.yaml.
+Тесты lab 120/120. НЕ закоммичено.
+
+## 25.09: СЦЕНАРНЫЙ СЛОЙ
+
+СЦЕНАРНЫЙ СЛОЙ — ЖИВАЯ ПРОВЕРКА (25.09): registry — перезагрузка joint_layer/milestone_mc (иначе в сайдкаре старый
+модуль: AttributeError is_phased); валидатор режим scenario …-939a8d pass (обе калибровки; старты фаз медианы TS
+0/2/4/15, CW 0/16/20; coverage 13 компаний; MSFT/META TAIWAN_SUPPLY excluded_semantic_mismatch;
+ACCELERATOR_PRICE_COMPETITION без root-mapping — warning); пробный NVDA 20k: BASE +22.1 %, CHIP_COLD_WAR +24.8 %
+(артефакт покрытия — канал ускорителей не охвачен до переиздания), TAIWAN_SEIZURE −1.3 %, P(loss>30) 0.38, ES5 −0.86.
+Нормативные сценарные прогоны 13 × 2 × 500k + по-сценарные портфельные метрики (вероятности pending) запущены в фоне
+(_scenario_normative.log). Приёмка для IMMA дополнена (persistence — предварительная интерпретация, таксономия,
+coverage). НЕ закоммичено: lab (joint_layer 1.2.1, company_mc 2.4.1, portfolio_paths 1.2.0, validator 1.7.0, registry,
+тесты 120/120), workspace (methodology сценарный слой, _scenarios, from_imma пакет, feedback, STATUS).
+
+## 25.09: приёмка пакета Scenario Engine v1.0
+
+25.09: приёмка пакета Scenario Engine v1.0 (с вопросами 2.1–2.4) ОТПРАВЛЕНА IMMA владельцем; приёмка партии 5 (заказ
+CRWV v1.0.1) — уточнить, отправлена ли (порядок: по одному заказу). Нормативные сценарные прогоны — в фоне.
+
+## 25.09: ОТВЕТ IMMA ПО ПРИЁМКЕ SCENARIO ENGINE
+
+ОТВЕТ IMMA ПО ПРИЁМКЕ SCENARIO ENGINE (share 6ab657da, 25.09): 2.1 — предварительная prewhitening-интерпретация
+ОТВЕРГНУТА, дана нормативная innovation-level семантика persistence_override (η = standardize(Σλ·u_root + w·ε), y_t =
+ρ·y_{t−1} + sqrt(1−ρ²)·η, null = bypass, старт от последнего шока, numeric→numeric линейно; валидатору — проверка
+Var(y)≈1 и lag-1≈ρ) → РЕАЛИЗОВАНО: joint_layer 1.3.0, SCN-011 в валидаторе 1.7.0; на калибровках IMMA: TS 24 проверки
+/ CW 19, вне допуска 0 (прогон …-f9405d); тесты 120/120. 2.2 — INDUSTRIAL_RESHORING получает корни (AI_CAPEX 0.30 /
+POWER 0.35 / GLOBAL_GROWTH 0.20, idio 0.60), ACCELERATOR_PRICE_COMPETITION — (AI_CAPEX 0.35 / SEMI 0.30, idio 0.65) —
+РАСХОДИТСЯ с Joint_Simulation_Layer_Driver_Patch_v1.0 из пакета (0.20/0.25/CHINA 0.35, idio 0.70) — вопрос в заказе;
+остальные без mapping — идиосинкратические по правилу. 2.3 — NBIS/NVDA переиздавать как v1.0.3 на схеме 1.0.2 (+MSFT
+v1.0.1, META v1.0.2, ASML v1.0.2), полная приёмка, старые прогоны сохранить, migration delta ожидаема. 2.4 — Taxonomy
+v1.2.1 (перенос added_v1_2 под drivers, объяснённая пропажа пути). Прогоны 13×2×500k, сделанные до замены семантики —
+PRE-NORMATIVE DIAGNOSTICS (notes/scenario-runs-prenormative-2026-09-25.md; портфель текущий: BASE +15.8 %, TS +4.6 % /
+P(l30) 13 % / ES5 −51 %, CW +17.0 % (артефакт покрытия); оптимум: +12.4 / +6.7 / +13.5). ЗАКАЗ —
+to_imma/scenario-engine-reissues.request.md (НЕ отправлен): Joint schema v1.1, Taxonomy v1.2.1, 5 переизданий, CRWV
+v1.0.1. НЕ закоммичено: lab (joint_layer 1.3.0, company_mc 2.4.1, portfolio_paths 1.2.0, validator 1.7.0, registry,
+тесты), workspace (methodology сценарный слой, _scenarios, from_imma пакет, notes, to_imma ×2, прогоны 26+2+2
+валидатора, STATUS).
+
+## 25.09: CRWV mc v1.0.1 ПРИНЯТ И ИНТЕГРИРОВАН
+
+CRWV mc v1.0.1 ПРИНЯТ И ИНТЕГРИРОВАН (25.09 день; пакет IMMA_CRWV_mc_v1.0.1 из чата партии 5, share 6ab62c72;
+from_imma/CRWV_mc_v1.0.1, sha256 трёх файлов сошлись): check_supersedes v1.0→v1.0.1 — пропаж 0, изменено ровно 3 (три
+effect_per_plus_1sigma на capex_revenue_nodes.Y2 ×0.85); валидатор 1.7.0 …-d97b71 pass — измеренная σ 0.048 ≤ 0.05
+(было 0.056), W 0.605/0.647 без изменений, сухой прогон чистый, 5 предупреждений MC-G5-001 как у v1.0; RV v1.0 не
+менялась (…-55e6d2 в силе); норматив 500k …-a1b31f: CAGR 3/5/8 +40.6/+31.5/+26.2 %, q5..q95 −0.4..+63.5 %, P(loss>30)
+0.021, P(loss>50) 0.008, ES5 −0.29, P(2x) 0.797, medE5 176.5 млрд, gap RV −0.044 / price 0.48, сходимость stable,
+robustness 1.0/0.875 (один выход: growth −9.3 п.п. → ΔP(2x) −0.138). Интеграция: portfolio/crwv/calibration_v1.0.yaml
++ mc_calibration_v1.0.1.yaml, calc_runs RV+MC, стадия conditional_mc, валидатор папки …-c64040 pass. ПАРТИЯ 5 ЗАКРЫТА:
+покрытие 14 бумаг, 96.0 % NAV (без калибровок GLD, UFO, SPOT). Наблюдение: MC-картина CRWV оптимистичнее RV-класса
+model_fragile (узкий нижний хвост при плече и концентрации 72 %) — калибровку не трогаем, при отборе это вопрос лимита
+владельцу. Сценарные прогоны CRWV — в нормативном раунде после Joint v1.1. Для IMMA: to_imma/mc-crwv-v101.feedback.md
+(приёмка, без вложений) → затем scenario-engine-reissues.request.md (п. 2.4 обновлён: CRWV принят) → затем
+mc-spot-calibration.request.md (заказ SPOT, архетип A; развилка валюты: рекомендация — целиком в EUR, equity_value
+через курс ЕЦБ; вложения Downloads/mc-spot-to-llm + .zip: spot/ ×5, MSFT пара, ASML RV как образец EUR, норматив MSFT
+a26670). Скрипты: scratchpad _accept_crwv101.py, _integrate_crwv101.py.
+
+## 25.09: приёмка CRWV v1.0.1 ОТПРАВЛЕНА IMMA владельцем. Очередь к IMMA
+
+25.09: приёмка CRWV v1.0.1 ОТПРАВЛЕНА IMMA владельцем. Очередь к IMMA: scenario-engine-reissues.request.md (следующее
+сообщение), затем mc-spot-calibration.request.md. Ожидаем: подтверждение приёмки CRWV; далее пакет Joint v1.1 /
+Taxonomy v1.2.1 / пять переизданий.
+
+## 25.09: IMMA подтвердила приёмку CRWV v1.0.1
+
+25.09: IMMA подтвердила приёмку CRWV v1.0.1 (share 6ab66794): партия 5 закрыта, наблюдение о расхождении RV/MC принято
+без методологической реакции (калибровку не трогать, лимит CRWV — вопрос владельца/оптимизатора). IMMA ожидает
+следующий заказ отдельным пакетом: Joint v1.1 + Taxonomy v1.2.1 + пять переизданий; после него — SPOT. К отправке:
+to_imma/scenario-engine-reissues.request.md.
+
+## 25.09: заказ Joint v1.1 / Taxonomy v1.2.1 / пять переизданий ОТПРАВЛЕН IMMA владельцем. Ожидаем…
+
+25.09: заказ Joint v1.1 / Taxonomy v1.2.1 / пять переизданий ОТПРАВЛЕН IMMA владельцем. Ожидаем пакет; приёмка:
+check_supersedes (Joint v1.0→v1.1, Taxonomy v1.2→v1.2.1 с разрешённой пропажей added_v1_2; пять калибровок к
+предыдущим версиям), валидатор 1.7.0 по каждой (MC-G5-013 по измеренной σ), 500k BASE на 2.3.2 (NBIS/NVDA — migration
+delta ожидаема), robustness, затем нормативные сценарные прогоны 14 × 2 × 500k. Следом — заказ SPOT.
+
+## 25.09: вопрос владельца о перекалибровках → решение
+
+25.09: вопрос владельца о перекалибровках → решение: заказать IMMA Calibration_Lifecycle_Rules v1.0 (черновик
+to_imma/calibration-lifecycle.request.md, очередь — после SPOT) и в каждом месте обнаружения (дозор, триггеры, RV
+Rules §3, Joint/Conditional MC, AGENTS.md) ставить ссылку на норматив без дублирования критериев. Рецидив термина
+«провенанс»: корневая причина — правило только в глоссарии, без проверки и без памяти агента, старый термин в моих
+прошлых шаблонах to_imma и в ответах IMMA; починка — calc/tools/check_terms.py (lab), запись в памяти агента, заказ
+SPOT вычищен, IMMA уведомляется в заказе Lifecycle.
+
+## 25.09: ПАКЕТ IMMA Joint v1.1 / Taxonomy v1.2.1 / 5 переизданий
+
+ПАКЕТ IMMA Joint v1.1 / Taxonomy v1.2.1 / 5 переизданий (share 6ab66ec1, zip sha256 8bf86be4…, 13 файлов по манифесту
+сошлись; from_imma/Joint_v1.1_Taxonomy_v1.2.1_Reissues) — ХОСТ-ПРИЁМКА 25.09 день: check_supersedes ×7 OK (Joint
+1.0→1.1 пропаж 0; Taxonomy 1.2→1.2.1 с --allow $.added_v1_2; NBIS/NVDA 1.0.2→1.0.3 — 4 скаляра:
+schema/engine/as_of/rationale + добавлен ACCELERATOR; MSFT/META — 8 изменений: TAIWAN_SUPPLY знаки; ASML — только
+as_of). Joint v1.1 и Taxonomy v1.2.1 скопированы в methodology; Scenario_Company_Exposure_Patch_v1.1 применён к
+mpc_inputs пяти компаний (_apply_exposure_patch.py: +ACCELERATOR, MSFT/META TAIWAN_SUPPLY −1→+1,
+driver_taxonomy_version 1.2.1); валидатор папок …-5fde18 5/5; валидатор calibration под Joint v1.1: NBIS dc309a, NVDA
+cab5d4, MSFT 87cf9f, META a5afb8, ASML e551d8 — все pass (NBIS capex Y2 σ 0.047/0.05, ocf Y3 0.046 — впритык;
+DISP-предупреждения MSFT/META/ASML те же, что прежде). РЕВАЛИДАЦИЯ 9 неизменённых под v1.1: 8 pass, ETN v1.0.1 FAIL —
+ElectricalAmericas σ 0.160 > 0.15 (было 0.141): INDUSTRIAL_RESHORING получил корни (класс CLR-4); диагностика ×0.90 →
+0.143 pass, ×0.85 → 0.136; заказ ETN v1.0.2 добавлен разделом E в mc-spot-calibration.request.md (вложения обновлены:
+MSFT v1.0.1, ETN v1.0.1). INDUSTRIAL_RESHORING несут ASML/ETN/RKLB; HOOD под v1.0/v1.1 побитно равен → BASE семи
+компаний без новых корней в силе; RKLB BASE перепрогнан под v1.1 (…-8c5da8, supersedes 224958, отличие в шуме;
+calc_runs записан). NBIS v1.0.3 норматив …-d5e46a: median5 +35.1 % (было +20.7 %), P(l30) 0.007 (0.104), ES5 −0.035
+(−0.749) — ВСЯ дельта от смены семантики оценки hard_switch→parity-gated (принудительная схема 1.0.1 на том же файле
+воспроизводит старое: +20.8 %; без ACCELERATOR — то же +35.1 %); Y5 basis: crossover_bridge 81 %, multiple 9 %.
+Магнитуда ≫ «Δ 4 п.п.» из контекст-пакета IMMA — вынести в приёмку как вопрос «by design?». Ожидаем MSFT/META/ASML
+500k; затем интеграция (_integrate_reissues.py), сценарный раунд 2 (_scenario_normative2.py, 14 компаний под v1.1).
+
+## 25.09: ПЯТЬ ПЕРЕИЗДАНИЙ
+
+ПЯТЬ ПЕРЕИЗДАНИЙ — НОРМАТИВЫ 500k ПОД Joint v1.1 ВЫПОЛНЕНЫ И ИНТЕГРИРОВАНЫ (25.09 день): NBIS v1.0.3 …-d5e46a (median5
++35.1 %, P(l30) 0.007, ES5 −0.035, rob 1.0/0.875; Y5 basis bridge 81 %), NVDA v1.0.3 …-edb3bb (+23.0 % vs +22.0 %,
+P(l30) 0.002, ES5 +0.046, rob 1.0/1.0; Y5 bridge 25 %), MSFT v1.0.1 …-0893a1, META v1.0.2 …-24fee7, ASML v1.0.2
+…-d0c0a0 — BASE трёх последних совпадает с прежними (a26670/965cab/aa8132) с точностью до 3-го знака (дельты только
+под сценарии); все conv stable, robustness pass. Интеграция (_integrate_reissues.py --apply): новые файлы в
+portfolio/<tk>, прежние mc-файлы удалены из папок (в from_imma и git), calc_runs + info_log; валидатор папок …-7dfd8a
+6/6 (вкл. rklb). Сценарный валидатор под Joint v1.1 / таксономия 1.2.1 …-e6570a pass (обе калибровки). ЗАПУЩЕН
+сценарный раунд 2: _scenario_normative2.py (14 × 2 × 500k на общих путях, BASE = принятые нормативы под v1.1; ETN
+v1.0.1 с флагом MC-G5-013), результаты → _scenario_normative2.json. Наблюдение для приёмки IMMA: доля crossover_bridge
+на Y5 велика и у зрелых (MSFT 52 %, META 67 %, ASML 32 %, NVDA 25 %) — уже было в принятых прогонах, магнитуду
+показала миграция NBIS.
+
+## 25.09: ПАРТИЯ 6 (SPOT RV+MC v1.0, ETN mc v1.0.2; share 6ab6770b; zip sha256 653ff50e…, 7 файлов по…
+
+ПАРТИЯ 6 (SPOT RV+MC v1.0, ETN mc v1.0.2; share 6ab6770b; zip sha256 653ff50e…, 7 файлов по манифесту сошлись;
+from_imma/SPOT_ETN_Party6_v1.0) — ХОСТ-ПРИЁМКА 25.09: ETN check_supersedes 1.0.1→1.0.2 — пропаж 0, изменено ровно 6
+(×0.90 на ElectricalAmericas); валидатор под Joint v1.1: ETN …-867bdc pass (σ 0.143/0.15), SPOT …-1848a3 pass
+(AdSupported 0.043, Y5 multiple 0.053, margin 0.007; intrinsic W 0.232 < 0.25 — warning, IMMA задокументировала «не
+подгонялось»; 3× MC-G5-001 reviewed-immaterial). SPOT RV …-66a42b: калибровка целиком в EUR (цена NYSE 18.09 / курс
+ЕЦБ 1.1460 → 444.55 EUR, equity 91.39 млрд EUR), implied CAGR 5Y 10.08 %, TV share 0.859, terminal_dependent;
+предрасчёт IMMA 9.25 % / 0.828 — расхождение (движок equity_fcf_multiple решает на полной equity value, net_debt не
+вычитается; предрасчёт, вероятно, вычел чистый кэш 9.4 млрд) — вынести IMMA, хост авторитетен. Запущены 500k SPOT/ETN
+с robustness (_accept_party6.py --mc); скрипт интеграции _integrate_party6.py готов (SPOT: RV+MC файлы, стадия →
+conditional_mc; ETN: замена файла v1.0.1→v1.0.2). Раунд 2 идёт параллельно (медленнее из-за конкуренции за CPU).
+
+## 25.09: ПАРТИЯ 6 ПРИНЯТА И ИНТЕГРИРОВАНА
+
+ПАРТИЯ 6 ПРИНЯТА И ИНТЕГРИРОВАНА (25.09 день): ETN v1.0.2 норматив …-f7afc9 (median5 +2.5 %, P(l30) 0.177, ES5 −0.63,
+rob 1.0/1.0 — как v1.0.1), SPOT v1.0 норматив …-ca4799 (median5 +11.5 %, q5 −0.0 %, P(l30) 0.003, ES5 −0.13, P(2x)
+0.315, medE5 157 млрд EUR, rob 1.0/1.0; Y5 bridge 50 %; intrinsic W 0.232 < 0.25 warning). Интеграция
+_integrate_party6.py --apply: spot (RV+MC файлы, calc_runs RV …-66a42b + MC, стадия conditional_mc), etn (v1.0.2 на
+месте v1.0.1, calc_runs); валидатор папок …-c1b537 2/2. ПОКРЫТИЕ: 15 бумаг, 97.2 % NAV (без калибровок GLD, UFO). Все
+15 калибровок проходят MC-G5-013 под Joint v1.1. РАУНД 2 ПЕРЕЗАПУЩЕН на 15 компаний (ETN v1.0.2, SPOT; готовые 7
+результатов TAIWAN_SEIZURE сохранены и пропускаются; NORM: _norm_runs_joint11.json). Приёмка для IMMA объединена:
+to_imma/joint-v11-reissues.feedback.md (Joint v1.1 + партия 6; вопросы 3.1/3.2 по семантике оценки, расхождение
+предрасчёта RV SPOT — вычет чистого кэша); раздел 4 заполняется после раунда 2. Глоссарий: статья «Единицы работы»
+(партия/раунд/заход/срез, сквозная нумерация партий — решение владельца 25.09).
+
+## 25.09 вечер: РАУНД 2 ЗАВЕРШЁН — DR по вероятностям сценариев, приёмка Joint v1.1 + партия 6 готова
+
+Раунд 2 завершён (_scenario_normative2.py, 15 компаний × 2 сценария × 500k под Joint v1.1; 30 прогонов company_mc +
+portfolio_paths 51764c текущие / 60045a оптимум 4; валидатор сценариев …-d252b1 pass, покрытие 15). Компании (median5
+BASE → TS / CW): NVDA +23.0 → +5.3 / +24.0; NBIS +35.1 → +23.9 / +36.5; ASML −4.3 → −13.5 / −1.2; META +12.0 → +7.1 /
++11.9; MSFT +6.8 → +2.9 / +4.7; ETN +2.5 → +1.7 / +6.6; CRWV +31.5 → +26.9 / +34.1; остальные в пределах ±3.5 п.п.
+Портфель Y5 (текущие веса): BASE +22.5 % / P(l30) 0.0 / ES5 +24 %; TAIWAN_SEIZURE +12.6 % / 2.5 % / −32 %;
+CHIP_COLD_WAR +23.6 % / 0.0 / +26 %; оптимум 4: +15.7 / +9.4 / +16.6 %. Сдвиг BASE против раунда 1 (+15.8 %) —
+миграция NBIS (34 % NAV) и NVDA на parity-gated семантику (вопрос 3.1/3.2 к IMMA). Сетка смесей по 4 парам
+вероятностей — в DR. ScenarioConcentration = 1.0 при любых вероятностях (CHIP_COLD_WAR без adverse-нагрузки → артефакт
+определения; вопрос 3.4 к IMMA; лимит 60 % не применяем). Сделано: notes/scenario-round2-2026-09-25.md;
+decisions/DR-2026-09-25-01-scenario-probabilities.md (V0…V3, рекомендация V1 — точечные вероятности как
+owner_judgment, правило пересмотра); приёмка to_imma/joint-v11-reissues.feedback.md заполнена (разделы 3.4, 4, 5) —
+готова к отправке. STATUS переформатирован по замечанию владельца (заголовки + переносы; _reformat_status.py).
+Очередь: решение владельца по DR-2026-09-25-01 → смесь, §3.3 Stability, оптимизатор с 15 бумагами; ответ IMMA по
+3.1–3.4; заказ Lifecycle.

@@ -1,9 +1,9 @@
-schema_version: 1.0.1
+schema_version: 1.0.2
 artifact: company_mc_calibration
 ticker: NVDA
-as_of: '2026-09-23'
+as_of: '2026-09-25'
 archetype: mature_positive_margin
-calculation_engine_version: company_mc 2.3.0
+calculation_engine_version: company_mc 2.3.1
 state_vector:
   AI_Demand: D4
   Gross_Margin: M3
@@ -174,7 +174,8 @@ valuation:
       mode: 7.0
       max: 12.0
       provenance: model_assumption
-      rationale: Fallback only for extreme negative-FCF paths.
+      rationale: Schema>=1.0.2 revenue-bridge reference multiple for negative-FCF and parity-crossover paths; retained at the accepted 7x center.
+        It is a primary valuation parameter under parity-gated blending, not an emergency-only fallback.
 dependencies:
   latent_factors:
   - growth
@@ -228,9 +229,9 @@ robustness_tests:
       - 0.15
     perturbations_meta:
       provenance: derived_fact
-      formula: 'local robustness v1.1.2: sigma_equiv=(Q84-Q16)/2; growth sigma=base-revenue-weighted RMS of segment initial_growth sigma_equiv; margin sigma=Y5 margin sigma_equiv (or
-        sqrt(ocf^2+capex^2) for decomposition); multiple sigma=log-space sigma_equiv of Y5 multiple; local shift=0.25*sigma with ceilings 10pp growth, 5pp margin, 20% multiple; correlation
-        remains ±0.15'
+      formula: 'local robustness v1.1.2: sigma_equiv=(Q84-Q16)/2; growth sigma=base-revenue-weighted RMS of segment initial_growth sigma_equiv;
+        margin sigma=Y5 margin sigma_equiv (or sqrt(ocf^2+capex^2) for decomposition); multiple sigma=log-space sigma_equiv of Y5 multiple; local
+        shift=0.25*sigma with ceilings 10pp growth, 5pp margin, 20% multiple; correlation remains ±0.15'
     delta_tolerance: 0.1
     delta_tolerance_meta:
       provenance: model_assumption
@@ -251,6 +252,7 @@ joint_simulation:
   - CAPITAL_MARKETS
   - CHINA_REVENUE
   - TAIWAN_SUPPLY
+  - ACCELERATOR_PRICE_COMPETITION
   company_idiosyncratic_factors:
   - id: NVDA_EXECUTION
     distribution: standard_normal
@@ -279,8 +281,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Higher utilization/mix supports cash margin. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.727273. v1.0.2 re-sized from measured MC-G5-013
-        sigma 0.062 to design sigma 0.04.
+      rationale: Higher utilization/mix supports cash margin. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.727273.
+        v1.0.2 re-sized from measured MC-G5-013 sigma 0.062 to design sigma 0.04.
   structural_support:
   - path: revenue_model.segments.DataCenter.initial_growth.mode
     contribution: 0.08
@@ -295,8 +297,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure links: NVDA-FM-02 AI_OVERBUILD; NVDA-FM-06 AI_CLOUD_CUSTOMER_FINANCING_STRESS. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not
-    a standalone full shock.'
+  note: 'Failure links: NVDA-FM-02 AI_OVERBUILD; NVDA-FM-06 AI_CLOUD_CUSTOMER_FINANCING_STRESS. v1.1.1 sizing: effect is marginal within aggregate
+    per-target Joint variance budget, not a standalone full shock.'
 - driver_id: HYPERSCALER_CAPEX
   material: true
   stochastic_targets:
@@ -307,7 +309,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Hyperscaler/AI-lab capex directly drives accelerator demand. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.123457.
+      rationale: Hyperscaler/AI-lab capex directly drives accelerator demand. Re-sized under MC-G5-013 aggregate target budget; common factor
+        scaling=0.123457.
   - path: valuation.Y5.multiple
     transform: multiplicative_pct
     effect_per_plus_1sigma: 0.02229095
@@ -315,8 +318,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Capex cycle affects terminal valuation confidence. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.705882. v1.0.2 re-sized from measured MC-G5-013
-        sigma 0.190 to design log-multiple sigma 0.12.
+      rationale: Capex cycle affects terminal valuation confidence. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.705882.
+        v1.0.2 re-sized from measured MC-G5-013 sigma 0.190 to design log-multiple sigma 0.12.
   structural_support:
   - path: revenue_model.segments.DataCenter.initial_growth.mode
     contribution: 0.06
@@ -331,7 +334,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: NVDA-FM-01 HYPERSCALER_CAPEX_SLOWDOWN. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: NVDA-FM-01 HYPERSCALER_CAPEX_SLOWDOWN. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget,
+    not a standalone full shock.'
 - driver_id: SEMICONDUCTOR_WFE
   material: true
   stochastic_targets:
@@ -352,7 +356,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Supply-chain enabling channel. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Supply-chain enabling channel. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone
+    full shock.'
 - driver_id: ADVANCED_PACKAGING
   material: true
   stochastic_targets:
@@ -363,7 +368,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Advanced packaging is a direct accelerator-volume bottleneck. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.123457.
+      rationale: Advanced packaging is a direct accelerator-volume bottleneck. Re-sized under MC-G5-013 aggregate target budget; common factor
+        scaling=0.123457.
   - path: margin_model.terminal_margin_Y5
     transform: additive_pp
     effect_per_plus_1sigma: 0.00469226
@@ -371,8 +377,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Packaging availability/cost affects product mix and cash margin. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.727273. v1.0.2 re-sized from
-        measured MC-G5-013 sigma 0.062 to design sigma 0.04.
+      rationale: Packaging availability/cost affects product mix and cash margin. Re-sized under MC-G5-013 aggregate target budget; common factor
+        scaling=0.727273. v1.0.2 re-sized from measured MC-G5-013 sigma 0.062 to design sigma 0.04.
   structural_support:
   - path: revenue_model.segments.DataCenter.initial_growth.mode
     contribution: 0.03
@@ -387,7 +393,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: NVDA-FM-04 ADVANCED_PACKAGING_HBM_BOTTLENECK. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: NVDA-FM-04 ADVANCED_PACKAGING_HBM_BOTTLENECK. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance
+    budget, not a standalone full shock.'
 - driver_id: HBM_MEMORY
   material: true
   stochastic_targets:
@@ -406,8 +413,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: HBM availability/cost affects mix and cash margin. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.727273. v1.0.2 re-sized from measured MC-G5-013
-        sigma 0.062 to design sigma 0.04.
+      rationale: HBM availability/cost affects mix and cash margin. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.727273.
+        v1.0.2 re-sized from measured MC-G5-013 sigma 0.062 to design sigma 0.04.
   structural_support:
   - path: revenue_model.segments.DataCenter.initial_growth.mode
     contribution: 0.03
@@ -422,7 +429,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: NVDA-FM-04 ADVANCED_PACKAGING_HBM_BOTTLENECK. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: NVDA-FM-04 ADVANCED_PACKAGING_HBM_BOTTLENECK. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance
+    budget, not a standalone full shock.'
 - driver_id: EDA_DESIGN_COMPLEXITY
   material: true
   stochastic_targets:
@@ -433,7 +441,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: EDA/design complexity affects cadence and architecture execution over a lag. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.123457.
+      rationale: EDA/design complexity affects cadence and architecture execution over a lag. Re-sized under MC-G5-013 aggregate target budget;
+        common factor scaling=0.123457.
   structural_support: []
   stability:
     knockout:
@@ -443,7 +452,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: NVDA-FM-07 ARCHITECTURE_TRANSITION_EXECUTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: NVDA-FM-07 ARCHITECTURE_TRANSITION_EXECUTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance
+    budget, not a standalone full shock.'
 - driver_id: CLOUD_SOFTWARE_DEMAND
   material: true
   stochastic_targets:
@@ -454,7 +464,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Cloud/software AI workload demand supports accelerator utilization. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.123457.
+      rationale: Cloud/software AI workload demand supports accelerator utilization. Re-sized under MC-G5-013 aggregate target budget; common
+        factor scaling=0.123457.
   structural_support: []
   stability:
     knockout:
@@ -475,7 +486,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Power availability gates customers' ability to deploy purchased compute. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.123457.
+      rationale: Power availability gates customers' ability to deploy purchased compute. Re-sized under MC-G5-013 aggregate target budget; common
+        factor scaling=0.123457.
   structural_support:
   - path: revenue_model.segments.DataCenter.initial_growth.mode
     contribution: 0.03
@@ -490,8 +502,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Demand-deployment channel; overlaps AI overbuild/power constraints. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full
-    shock.'
+  note: 'Demand-deployment channel; overlaps AI overbuild/power constraints. v1.1.1 sizing: effect is marginal within aggregate per-target Joint
+    variance budget, not a standalone full shock.'
 - driver_id: GOVERNMENT_DEFENSE
   material: true
   stochastic_targets:
@@ -502,7 +514,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Sovereign/defense demand is modeled as a smaller diversified growth channel. Re-sized under v1.1.1 per-target variance budget; capped from 0.030000 to 0.020000.
+      rationale: Sovereign/defense demand is modeled as a smaller diversified growth channel. Re-sized under v1.1.1 per-target variance budget;
+        capped from 0.030000 to 0.020000.
   structural_support: []
   stability:
     knockout:
@@ -512,7 +525,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Government demand channel. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Government demand channel. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full
+    shock.'
 - driver_id: INTEREST_RATES
   material: true
   stochastic_targets:
@@ -523,8 +537,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Higher rates compress terminal valuation. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.705882. v1.0.2 re-sized from measured MC-G5-013 sigma
-        0.190 to design log-multiple sigma 0.12.
+      rationale: Higher rates compress terminal valuation. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.705882. v1.0.2
+        re-sized from measured MC-G5-013 sigma 0.190 to design log-multiple sigma 0.12.
   - path: valuation.Y8.multiple
     transform: multiplicative_pct
     effect_per_plus_1sigma: -0.08
@@ -542,7 +556,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Negative exposure; adverse direction is +1σ rates. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Negative exposure; adverse direction is +1σ rates. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget,
+    not a standalone full shock.'
 - driver_id: CAPITAL_MARKETS
   material: true
   stochastic_targets:
@@ -553,8 +568,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Risk appetite/customer financing conditions affect long-duration valuation and demand quality. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.705882.
-        v1.0.2 re-sized from measured MC-G5-013 sigma 0.190 to design log-multiple sigma 0.12.
+      rationale: Risk appetite/customer financing conditions affect long-duration valuation and demand quality. Re-sized under MC-G5-013 aggregate
+        target budget; common factor scaling=0.705882. v1.0.2 re-sized from measured MC-G5-013 sigma 0.190 to design log-multiple sigma 0.12.
   structural_support: []
   stability:
     knockout:
@@ -564,7 +579,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: NVDA-FM-06 AI_CLOUD_CUSTOMER_FINANCING_STRESS. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: NVDA-FM-06 AI_CLOUD_CUSTOMER_FINANCING_STRESS. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance
+    budget, not a standalone full shock.'
 - driver_id: CHINA_REVENUE
   material: true
   stochastic_targets:
@@ -575,8 +591,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Restored/expanded China access would improve Data Center growth; current X2 state limits the base channel. Re-sized under MC-G5-013 aggregate target budget; common factor
-        scaling=0.123457.
+      rationale: Restored/expanded China access would improve Data Center growth; current X2 state limits the base channel. Re-sized under MC-G5-013
+        aggregate target budget; common factor scaling=0.123457.
   structural_support: []
   stability:
     knockout:
@@ -586,7 +602,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: NVDA-FM-05 EXPORT_CONTROLS_CHINA. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: NVDA-FM-05 EXPORT_CONTROLS_CHINA. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget,
+    not a standalone full shock.'
 - driver_id: TAIWAN_SUPPLY
   material: true
   stochastic_targets:
@@ -597,7 +614,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Foundry/Taiwan supply availability is critical for shipped accelerator volume. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.123457.
+      rationale: Foundry/Taiwan supply availability is critical for shipped accelerator volume. Re-sized under MC-G5-013 aggregate target budget;
+        common factor scaling=0.123457.
   - path: margin_model.terminal_margin_Y5
     transform: additive_pp
     effect_per_plus_1sigma: 0.00938387
@@ -605,8 +623,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Supply disruption can impair mix/cost and cash margin. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.727273. v1.0.2 re-sized from measured
-        MC-G5-013 sigma 0.062 to design sigma 0.04.
+      rationale: Supply disruption can impair mix/cost and cash margin. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.727273.
+        v1.0.2 re-sized from measured MC-G5-013 sigma 0.062 to design sigma 0.04.
   structural_support:
   - path: revenue_model.segments.DataCenter.initial_growth.mode
     contribution: 0.05
@@ -621,4 +639,44 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: NVDA-FM-03 TAIWAN_SUPPLY_DISRUPTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: NVDA-FM-03 TAIWAN_SUPPLY_DISRUPTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget,
+    not a standalone full shock.'
+- driver_id: ACCELERATOR_PRICE_COMPETITION
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.DataCenter.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: -0.012
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Stronger accelerator price/performance competition compresses Data Center growth/ASP economics; kept small to avoid duplicating
+        CHINA_REVENUE and TAIWAN_SUPPLY.
+  - path: margin_model.terminal_margin_Y5
+    transform: additive_pp
+    effect_per_plus_1sigma: -0.006
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Sustained accelerator price competition modestly compresses mature cash economics.
+  - path: valuation.Y5.multiple
+    transform: multiplicative_pct
+    effect_per_plus_1sigma: -0.02
+    lag_quarters: 0
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: More durable competition lowers scarcity/premium valuation without redefining China-access or Taiwan-supply channels.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: 1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under canonical MPC driver semantics.
+  note: Scenario Engine CHIP_COLD_WAR channel; negative exposure for an accelerator producer. Effects are structural and not fitted to exploratory
+    scenario P/L.

@@ -1,7 +1,7 @@
 schema_version: 1.0.2
 artifact: company_mc_calibration
 ticker: MSFT
-as_of: '2026-09-24'
+as_of: '2026-09-25'
 archetype: mature_positive_margin
 calculation_engine_version: company_mc 2.3.1
 state_vector:
@@ -277,6 +277,7 @@ joint_simulation:
   - ADVANCED_PACKAGING
   - HBM_MEMORY
   - TAIWAN_SUPPLY
+  - ACCELERATOR_PRICE_COMPETITION
   company_idiosyncratic_factors:
   - id: MSFT_EXECUTION
     distribution: standard_normal
@@ -511,27 +512,56 @@ driver_parameter_mapping:
   stochastic_targets:
   - path: revenue_model.segments.IntelligentCloud.initial_growth
     transform: additive_pp
-    effect_per_plus_1sigma: -0.012
+    effect_per_plus_1sigma: 0.012
     lag_quarters: 1
     decay_half_life_quarters: 8
     meta:
       provenance: model_assumption
-      rationale: Taiwan supply disruption delays GPU/server capacity.
+      rationale: Healthier Taiwan-linked semiconductor supply supports GPU/server availability and Intelligent Cloud growth.
   - path: valuation.Y5.multiple
     transform: log_multiplier
-    effect_per_plus_1sigma: -0.008
+    effect_per_plus_1sigma: 0.008
     lag_quarters: 0
     decay_half_life_quarters: 8
     meta:
       provenance: model_assumption
-      rationale: Geopolitical supply disruption raises risk premium.
+      rationale: Healthier semiconductor supply reduces supply-risk premium and supports terminal valuation confidence.
   structural_support: []
   stability:
     knockout:
       mode: not_applicable
     adverse_driver_stress:
-      driver_sigma: 1
+      driver_sigma: -1.0
       meta:
         provenance: model_assumption
-        rationale: Adverse direction follows the accepted MPC exposure/sign convention for this mapped channel.
-  note: MSFT-FM-03 TAIWAN_SUPPLY_DISRUPTION; accepted ±1 but high failure-mode linkage makes it material.
+        rationale: Adverse direction is -1 sigma because canonical TAIWAN_SUPPLY means healthier/more available Taiwan-linked semiconductor supply.
+  note: MSFT-FM-03 TAIWAN_SUPPLY_DISRUPTION; v1.0.1 corrects prior inverted strategic-dependence signs to canonical supply-health semantics.
+- driver_id: ACCELERATOR_PRICE_COMPETITION
+  material: true
+  stochastic_targets:
+  - path: margin_model.terminal_margin_Y5
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.005
+    lag_quarters: 1
+    decay_half_life_quarters: 8.0
+    meta:
+      provenance: model_assumption
+      rationale: Stronger accelerator competition lowers infrastructure unit cost for a large compute buyer, modestly supporting mature FCF margin.
+  - path: revenue_model.segments.IntelligentCloud.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.005
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Lower compute cost can expand economically addressable AI-cloud usage; effect is kept small to avoid double counting AI_CLOUD_PRICING.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: One-sigma adverse direction under canonical MPC driver semantics.
+  note: Scenario Engine CHIP_COLD_WAR channel; positive buyer-side exposure.

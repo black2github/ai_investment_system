@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T08:00:00Z",
+  "updated": "2026-09-25T14:00:00Z",
   "price": {
     "last": 223.54,
     "last_at": "2026-09-18",
@@ -72,6 +72,11 @@
       "timestamp": "2026-09-24T08:00:00Z",
       "kind": "calc",
       "summary": "Нормативный прогон company_mc 2.3.2 20260924T073647Z-company_mc-0daf30 (исправление: собственные розыгрыши компании от (seed, ticker); прежний 20260923T143929Z-company_mc-28c1e0 — исторический, сводка в пределах MC-шума)."
+    },
+    {
+      "timestamp": "2026-09-25T14:00:00Z",
+      "kind": "calc",
+      "summary": "Переиздание NBIS mc_calibration_v1.0.3.yaml под Joint v1.1 (пакет IMMA 25.09; миграция схемы 1.0.1→1.0.2 (parity-gated смесь; migration delta ожидаема) + ACCELERATOR_PRICE_COMPETITION (+1)): принято (check_supersedes OK, валидатор 1.7.0 …-dc309a pass); прежний файл mc_calibration_v1.0.2.yaml удалён из папки (from_imma/git); mpc_inputs: Scenario_Company_Exposure_Patch_v1.1 применён, driver_taxonomy_version 1.2.1; прежние прогоны остаются записями воспроизводимости; новый нормативный прогон: 20260925T125909Z-company_mc-d5e46a"
     }
   ],
   "scenario_state": {
@@ -414,6 +419,48 @@
       },
       "paths_file": "portfolio/_runs/20260924T073647Z-company_mc-0daf30-paths.npz",
       "valuation_crossover": "hard_switch_v1"
+    },
+    {
+      "run_id": "20260925T125909Z-company_mc-d5e46a",
+      "model": "company_mc",
+      "version": "2.4.1",
+      "timestamp": "20260925T125909",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Rules_v1.1.2; company_mc 2.3.2, parity-gated blend)",
+      "calibration": "mc_calibration_v1.0.3.yaml",
+      "purpose": "нормативный прогон переиздания NBIS mc_calibration_v1.0.3.yaml под Joint_Simulation_Layer_Schema v1.1 (пакет IMMA 25.09: миграция схемы 1.0.1→1.0.2 (parity-gated смесь; migration delta ожидаема) + ACCELERATOR_PRICE_COMPETITION (+1); check_supersedes к предыдущей версии — пропаж 0; валидатор 1.7.0 …-dc309a pass, MC-G5-013 по измеренной σ под Joint v1.1; экспозиции mpc_inputs по Scenario_Company_Exposure_Patch_v1.1, таксономия 1.2.1)",
+      "equity_value_0_b": 64.2,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": 0.3602,
+        "median_CAGR_5Y": 0.3508,
+        "median_CAGR_8Y": 0.3724,
+        "CAGR_5Y_q05_q95": [
+          0.049,
+          0.683
+        ],
+        "P_2x_5Y": 0.8551,
+        "P_loss_gt_30pct_5Y": 0.0069,
+        "P_loss_gt_50pct_5Y": 0.0015,
+        "ES5": -0.035,
+        "median_equity_value_5Y_b": 288.7,
+        "RV_Growth_Gap": -0.0593,
+        "Price_Expectation_Gap": 0.3918,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          0.875
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260925T125909Z-company_mc-d5e46a-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.2992141949650198,
+        "q05": 0.17680454344563462,
+        "q95": 0.4597909741341386,
+        "paths_share": 1.0
+      }
     }
   ],
   "conviction": {

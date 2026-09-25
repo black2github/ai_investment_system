@@ -38,6 +38,7 @@ driver_exposure_vector:
   FINTECH_REGULATION: 0
   DIGITAL_AD_DEMAND: 0
   SPACE_REGULATION: 0
+  ACCELERATOR_PRICE_COMPETITION: 1
 driver_vector_provenance: model_assumption
 failure_modes:
 - failure_id: NBIS-FM-01
@@ -69,7 +70,7 @@ benchmark:
   recommendation: NO_EXTERNAL_BENCHMARK_V1
   reason: IGV, semiconductor indices and broad-AI ETFs mix different economics; keep benchmark coverage false until a dedicated
     AI_COMPUTE basket/index methodology is approved.
-driver_taxonomy_version: '1.1'
+driver_taxonomy_version: '1.2.1'
 changelog:
 - date: '2026-09-21'
   change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

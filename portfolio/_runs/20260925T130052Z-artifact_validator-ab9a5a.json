@@ -1,0 +1,833 @@
+{
+  "run_id": "20260925T130052Z-artifact_validator-ab9a5a",
+  "model": "artifact_validator",
+  "version": "1.7.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "calibration",
+    "workspace": "/data/workspace-invest",
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "CRWV",
+      "as_of": "2026-09-25",
+      "archetype": "capital_intensive_transition",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "Demand_Contracting": "D3",
+        "Unit_Economics": "E3",
+        "Capacity_Secured": "C2",
+        "Capital_Intensity": "K2",
+        "Funding_Liquidity": "F2"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "CoreCloud": {
+            "base_revenue_quarterly": 2575000000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-08-11 | https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.25,
+              "mode": 0.75,
+              "max": 1.45,
+              "provenance": "model_assumption",
+              "rationale": "Q2 revenue grew 112.5% YoY, but the mode mean-reverts hypergrowth and the downside tail explicitly admits contract conversion/customer-concentration failure without splitting undisclosed revenue into invented segments."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.05,
+              "mode": 0.15,
+              "max": 0.35,
+              "provenance": "model_assumption",
+              "rationale": "Long-run AI-cloud growth remains above mature infrastructure in the center but allows overbuild/price compression and slower capacity conversion."
+            },
+            "growth_half_life_years": 1.75,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Current >100% growth should decay quickly as the revenue base scales and contracted capacity moves through commissioning."
+            },
+            "latent_loading": {
+              "growth": 0.58
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Large common AI/power/capital-market exposures coexist with unusually high idiosyncratic customer concentration and execution risk."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "ocf_capex_decomposition",
+        "ocf_margin_nodes": {
+          "Y1": {
+            "distribution": "triangular",
+            "min": 0.15,
+            "mode": 0.42,
+            "max": 0.62,
+            "provenance": "model_assumption",
+            "rationale": "Central OCF anchor starts near adjusted EBITDA 59% less H1 cash interest burden 806M/4.653B=17.3%; reported H1 OCF 78.7% is treated as temporarily boosted by working-capital/prepayment effects."
+          },
+          "Y2": {
+            "distribution": "triangular",
+            "min": 0.18,
+            "mode": 0.43,
+            "max": 0.62,
+            "provenance": "model_assumption",
+            "rationale": "Customer prepayments and high EBITDA can support OCF while interest burden persists; wide tails reflect debt-service and contract timing."
+          },
+          "Y3": {
+            "distribution": "triangular",
+            "min": 0.16,
+            "mode": 0.42,
+            "max": 0.62,
+            "provenance": "model_assumption",
+            "rationale": "OCF becomes progressively operating-economics driven as the construction wave matures."
+          },
+          "Y4": {
+            "distribution": "triangular",
+            "min": 0.15,
+            "mode": 0.4,
+            "max": 0.6,
+            "provenance": "model_assumption",
+            "rationale": "Normalization retains high cash operating conversion but allows pricing/refinancing downside."
+          },
+          "Y5": {
+            "distribution": "triangular",
+            "min": 0.12,
+            "mode": 0.38,
+            "max": 0.58,
+            "provenance": "model_assumption",
+            "rationale": "Mature core cloud OCF before capex; broad tails reflect concentration, debt service and AI-cloud pricing risk."
+          },
+          "Y8": {
+            "distribution": "triangular",
+            "min": 0.1,
+            "mode": 0.34,
+            "max": 0.54,
+            "provenance": "model_assumption",
+            "rationale": "Long-run OCF compression from competition and infrastructure cost while retaining scaled utilization upside."
+          }
+        },
+        "capex_revenue_nodes": {
+          "Y1": {
+            "distribution": "triangular",
+            "min": 1.2,
+            "mode": 2.0,
+            "max": 3.6,
+            "provenance": "model_assumption",
+            "rationale": "Q2 capex/revenue was 3.65x; Y1 remains a construction year with broad commissioning timing."
+          },
+          "Y2": {
+            "distribution": "triangular",
+            "min": 0.55,
+            "mode": 1.15,
+            "max": 2.2,
+            "provenance": "model_assumption",
+            "rationale": "Contracted power/backlog supports continued buildout but the revenue denominator should scale into commissioned assets."
+          },
+          "Y3": {
+            "distribution": "triangular",
+            "min": 0.25,
+            "mode": 0.65,
+            "max": 1.3,
+            "provenance": "model_assumption",
+            "rationale": "Transition toward operating capacity; high tail captures delayed commissioning/overbuild."
+          },
+          "Y4": {
+            "distribution": "triangular",
+            "min": 0.12,
+            "mode": 0.38,
+            "max": 0.75,
+            "provenance": "model_assumption",
+            "rationale": "Scaled platform remains infrastructure intensive."
+          },
+          "Y5": {
+            "distribution": "triangular",
+            "min": 0.08,
+            "mode": 0.2,
+            "max": 0.48,
+            "provenance": "model_assumption",
+            "rationale": "Mature growth still requires substantial replacement/expansion capex; center yields ~18% FCF from 38% OCF."
+          },
+          "Y8": {
+            "distribution": "triangular",
+            "min": 0.06,
+            "mode": 0.17,
+            "max": 0.4,
+            "provenance": "model_assumption",
+            "rationale": "Long-run capital intensity remains above software models and includes refresh cycles."
+          }
+        }
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 1.0,
+            "mode": 4.5,
+            "max": 9.0,
+            "provenance": "model_assumption",
+            "rationale": "Y3 remains bridge-dependent because debt/capex normalization is not yet mature; range reflects contract visibility versus concentration/refinancing risk."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 8.0,
+            "mode": 20.0,
+            "max": 34.0,
+            "provenance": "model_assumption",
+            "rationale": "Mature positive-FCF AI infrastructure multiple, broad enough for price/competition/capital-market regimes without fitting today’s quote."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 7.0,
+            "mode": 17.0,
+            "max": 29.0,
+            "provenance": "model_assumption",
+            "rationale": "Maturity and infrastructure commoditization compress the center by Y8."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 1.2,
+            "mode": 3.6,
+            "max": 7.0,
+            "provenance": "model_assumption",
+            "rationale": "Schema>=1.0.2 reference revenue bridge for crossover/negative-FCF paths. Center 3.6x is parity-consistent with ~18% FCF margin ×20x FCF, so it is a primary valuation parameter rather than an emergency placeholder."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.4,
+          "growth__valuation": 0.3,
+          "margin__valuation": 0.35
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Contract conversion/utilization links growth to cash normalization; leverage and customer concentration preserve substantial independent margin/valuation risk."
+        },
+        "default_loading": 0.58,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Lower than mature/platform names because customer concentration, site commissioning and refinancing risk are strongly idiosyncratic."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.65,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Young leveraged AI-infrastructure equity; used only by the path/drawdown layer."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 2.25,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Capacity/refinancing repricing can persist through multi-year build cycles."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:CRWV_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 0.2916466877,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of reverse_valuation 1.2.0 equation; replace run_ref with authoritative sidecar run."
+        },
+        "discount_rate": 0.135,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from CRWV RV base case."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.09276442,
+              0.09276442
+            ],
+            "margin_nodes_pp": [
+              -0.03354064,
+              0.03354064
+            ],
+            "terminal_multiple_pct": [
+              -0.06757918,
+              0.07247712
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 local robustness: growth sigma=base-revenue-weighted RMS segment initial_growth sigma_eq; margin sigma=sqrt(sigma_ocf_Y5^2 + sigma_capex_Y5^2); multiple sigma=Y5 log-space sigma_eq; perturbation=0.25*sigma with accepted ceilings."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Accepted v1.1.2 probability-delta tolerance for CRWV."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "AI_COMPUTE_DEMAND",
+          "HYPERSCALER_CAPEX",
+          "CLOUD_SOFTWARE_DEMAND",
+          "DATA_CENTER_POWER",
+          "INTEREST_RATES",
+          "CAPITAL_MARKETS",
+          "TAIWAN_SUPPLY",
+          "AI_CLOUD_PRICING"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "CRWV_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.7,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Contract conversion, site commissioning, customer concentration and refinancing execution persist across adjacent quarters."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.CoreCloud.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.018,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI compute demand supports utilization and contract conversion."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.CoreCloud.initial_growth.mode",
+              "contribution": 0.04,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central growth assumes continued AI-compute demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "CRWV-FM-01 AI_OVERBUILD / CRWV-FM-06 CONTRACT_CONVERSION_FAILURE."
+        },
+        {
+          "driver_id": "HYPERSCALER_CAPEX",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.CoreCloud.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Hyperscaler infrastructure budgets support demand for contracted GPU capacity."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Demand channel only; capex intensity itself is modeled under DATA_CENTER_POWER/CAPITAL_MARKETS to avoid overloading one target."
+        },
+        {
+          "driver_id": "CLOUD_SOFTWARE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.CoreCloud.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Broader cloud/software demand supports enterprise AI workload growth."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Secondary demand channel."
+        },
+        {
+          "driver_id": "AI_CLOUD_PRICING",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.CoreCloud.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.014,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Stronger AI-cloud pricing/economics improves revenue conversion."
+              }
+            },
+            {
+              "path": "margin_model.ocf_margin_nodes.Y3",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.008,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Pricing economics improve cash conversion after commissioning."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.CoreCloud.initial_growth.mode",
+              "contribution": 0.025,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central case assumes pricing remains economically supportive."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "CRWV-FM-01 price compression."
+        },
+        {
+          "driver_id": "DATA_CENTER_POWER",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.capex_revenue_nodes.Y2",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": -0.0153,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Better power/site availability lowers effective capex intensity by reducing delay and duplicate capacity cost."
+              }
+            },
+            {
+              "path": "revenue_model.segments.CoreCloud.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.01,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Power availability enables committed capacity to become billable."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "CRWV-FM-03 DATA_CENTER_POWER_CONSTRAINT."
+        },
+        {
+          "driver_id": "TAIWAN_SUPPLY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.capex_revenue_nodes.Y2",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": -0.0119,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Healthier GPU/HBM supply reduces procurement friction and effective construction cost."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "CRWV-FM-04 TAIWAN_SUPPLY_DISRUPTION. ADVANCED_PACKAGING/HBM_MEMORY ±1 are not separately activated to avoid double counting this root channel."
+        },
+        {
+          "driver_id": "CAPITAL_MARKETS",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.capex_revenue_nodes.Y2",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": -0.0119,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 10.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Better financing availability reduces project financing friction and delayed-capacity cost."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": 0.025,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Capital-market access lowers equity risk premium for a leveraged buildout."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "margin_model.capex_revenue_nodes.Y2.mode",
+              "contribution": -0.05,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central normalization assumes continued financing access."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "CRWV-FM-05 CAPITAL_MARKETS_TIGHTENING; customer concentration has no canonical taxonomy root and is not forced into this driver."
+        },
+        {
+          "driver_id": "INTEREST_RATES",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.ocf_margin_nodes.Y3",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": -0.01,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates increase debt-service burden and reduce cash conversion."
+              }
+            },
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "multiplicative_pct",
+              "effect_per_plus_1sigma": -0.025,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher discount/refinancing rates compress terminal valuation."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "CRWV-FM-07 LEVERAGE_DEBT_SERVICE."
+        }
+      ]
+    },
+    "folders": [
+      "crwv"
+    ],
+    "equity_value_0": 44873017938.72,
+    "dispersion_paths": 20000,
+    "joint_layer_spec_path": "/data/workspace-invest/methodology/Joint_Simulation_Layer_Schema_v1.1.yaml"
+  },
+  "outputs": {
+    "model_version": "1.7.0",
+    "schema_version": "1.0.2",
+    "mode": "calibration",
+    "ticker": "CRWV",
+    "archetype": "capital_intensive_transition",
+    "schema_errors": [],
+    "integrity": [
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/ADVANCED_PACKAGING",
+        "message": "драйвер 'ADVANCED_PACKAGING' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/HBM_MEMORY",
+        "message": "драйвер 'HBM_MEMORY' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/ACQUISITION_INTEGRATION",
+        "message": "драйвер 'ACQUISITION_INTEGRATION' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/ELECTRIFICATION_GRID",
+        "message": "драйвер 'ELECTRIFICATION_GRID' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-001",
+        "severity": "warning",
+        "path": "driver_parameter_mapping/UTILITY_CAPEX",
+        "message": "драйвер 'UTILITY_CAPEX' (exposure 1) без mapping"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.CoreCloud.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.112 ≤ 0.15 (growth; драйверов 5)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → margin_model.ocf_margin_nodes.Y3",
+        "message": "σ суммарного сдвига q12 = 0.023 ≤ 0.05 (margin; драйверов 2)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → margin_model.capex_revenue_nodes.Y2",
+        "message": "σ суммарного сдвига q20 = 0.048 ≤ 0.05 (margin; драйверов 3)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → valuation.Y5.multiple",
+        "message": "σ суммарного сдвига q20 = 0.090 ≤ 0.15 (multiple; драйверов 2)"
+      }
+    ],
+    "engine_dry_run": {
+      "engine_version": "2.4.1",
+      "mapping_warnings": [],
+      "deterministic": true,
+      "median_CAGR_5Y": 1.836537150697171,
+      "P_loss_gt_30pct_5Y": 0.0,
+      "paths": 2000
+    },
+    "aggregate_shift": {
+      "revenue_model.segments.CoreCloud.initial_growth": {
+        "sigma": 0.1115,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 5,
+        "sum_abs_effect": 0.066,
+        "ok": true
+      },
+      "margin_model.ocf_margin_nodes.Y3": {
+        "sigma": 0.0226,
+        "cap": 0.05,
+        "kind": "margin",
+        "quarter": 12,
+        "drivers": 2,
+        "sum_abs_effect": 0.018,
+        "ok": true
+      },
+      "margin_model.capex_revenue_nodes.Y2": {
+        "sigma": 0.0479,
+        "cap": 0.05,
+        "kind": "margin",
+        "quarter": 20,
+        "drivers": 3,
+        "sum_abs_effect": 0.0391,
+        "ok": true
+      },
+      "valuation.Y5.multiple": {
+        "sigma": 0.0896,
+        "cap": 0.15,
+        "kind": "multiple",
+        "quarter": 20,
+        "drivers": 2,
+        "sum_abs_effect": 0.05,
+        "ok": true
+      }
+    },
+    "dispersion": {
+      "paths": 20000,
+      "equity_value_0": 44873017938.72,
+      "intrinsic": {
+        "W": 0.6052,
+        "q05": 0.010209426383307695,
+        "q95": 0.6154495303821239,
+        "median_CAGR_5Y": 0.31621410689803453,
+        "P_loss_gt_30pct_5Y": 0.0161,
+        "P_2x_5Y": 0.80445
+      },
+      "full": {
+        "W": 0.6466,
+        "q05": -0.010617129467840814,
+        "q95": 0.6359773151861445,
+        "median_CAGR_5Y": 0.3135953039744601,
+        "P_loss_gt_30pct_5Y": 0.02255,
+        "P_2x_5Y": 0.7917
+      },
+      "full_to_intrinsic_ratio": 1.068,
+      "bands": {
+        "intrinsic_W": [
+          0.4,
+          0.85
+        ],
+        "full_W": [
+          0.45,
+          1.0
+        ],
+        "full_to_intrinsic_width_ratio_max": 1.5
+      }
+    },
+    "pass": true,
+    "note": "MC-G5-013 — hard gate по Joint_Simulation_Layer_Rules_v1.1 (strict_aggregate=false → warning); MC-G5-009 (антицикличность) и MC-G5-010 (полнота provenance сверх схемы) статически не проверяются",
+    "decision": "none"
+  },
+  "elapsed_ms": 4918.7,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

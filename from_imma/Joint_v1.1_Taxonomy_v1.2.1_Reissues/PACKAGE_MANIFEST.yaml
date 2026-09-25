@@ -1,0 +1,56 @@
+package: IMMA_Joint_v1.1_Taxonomy_v1.2.1_Company_Reissues
+package_version: '1.0'
+as_of: '2026-09-25'
+status: proposed_for_host_acceptance
+normative_contracts:
+  joint_simulation_layer_schema: '1.1'
+  mpc_driver_taxonomy: 1.2.1
+  company_mc_calibration_schema: 1.0.2
+  conditional_mc: 1.1.3
+  joint_rules: 1.1.2
+  host_validator: 1.7.0
+  host_company_mc: 2.3.2
+compatibility_notes:
+- Company MC files retain calculation_engine_version='company_mc 2.3.1' because schema v1.0.2 requires that const.
+- Company MC files retain joint_simulation.layer_version='1.0' because schema v1.0.2 requires that const; Joint v1.1 is the external runtime contract.
+- NBIS/NVDA old schema-1.0.1 host runs remain reproducibility records; new v1.0.3 requires fresh BASE and scenario runs.
+files:
+- path: ASML_mc_calibration_v1.0.2.yaml
+  sha256: d114cacef77daf78cfaea1f39ed0250ba01f582f30cef9e9eda688cf050f9e89
+  bytes: 24446
+- path: Company_MC_Reissues_Patch_Notes.md
+  sha256: e32a8d17fd0bf2a2ea8e770fc5676fe10173b22e037d8e25d340cedc1e96733d
+  bytes: 2970
+- path: Joint_Simulation_Layer_Schema_v1.1.yaml
+  sha256: e7066e33ad6cb6828f5cf40945b46d07d37731bac8b803f7b0e34c17e7975eda
+  bytes: 7880
+- path: Joint_Simulation_Layer_Schema_v1.1_Patch_Notes.md
+  sha256: 888b1c1e3478bfe523f31ba4c0019e5266818d76c2458e974f7d47c8cddfa070
+  bytes: 2086
+- path: LOCAL_VALIDATION_REPORT.md
+  sha256: 5fcea00a3befb0b53d721bf333914793b6640a5b7ae4944ed6ad6426a3395474
+  bytes: 3885
+- path: META_mc_calibration_v1.0.2.yaml
+  sha256: dbbdb1d82ab605faf97b4a15d75ebf41bb38c833d02cb91e983b18de65f09a35
+  bytes: 21210
+- path: MPC_Driver_Taxonomy_v1.2.1.yaml
+  sha256: 6925c0d1fa863a9c97d2bdb8e2de698f8381b8af15aa9e98f91dfb8378fde883
+  bytes: 5620
+- path: MPC_Driver_Taxonomy_v1.2.1_Patch_Notes.md
+  sha256: ed92601dd471b5780e201ac33bad552c02a851bd762f498ac672fe1c68e8d8ff
+  bytes: 535
+- path: MSFT_mc_calibration_v1.0.1.yaml
+  sha256: 5cae95e534957093864e1eaf37c6827c4de18e2a3932c601901d80816a096c86
+  bytes: 20909
+- path: NBIS_mc_calibration_v1.0.3.yaml
+  sha256: c8357c4798f4543a0a9bbae38bf622baa776fd561da64ac2291723e49d6aa30c
+  bytes: 27503
+- path: NVDA_mc_calibration_v1.0.3.yaml
+  sha256: c98b3820742c4480262b30dede9497412284765819f44c21263e663998db45ff
+  bytes: 26467
+- path: PACKAGE_README.md
+  sha256: 39298bd5f18524067184e9973d49749f02519959d19cbd0ce62fc4ee1320db37
+  bytes: 766
+- path: Scenario_Company_Exposure_Patch_v1.1.yaml
+  sha256: 95709d539ff730cdcd355f90b04241209a93090c82de3a0ec9b3d4f492b759a9
+  bytes: 2180

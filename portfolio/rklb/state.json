@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T08:00:00Z",
+  "updated": "2026-09-25T14:00:00Z",
   "price": {
     "last": 64.57,
     "last_at": "2026-09-18",
@@ -42,6 +42,11 @@
       "timestamp": "2026-09-24T08:00:00Z",
       "kind": "calc",
       "summary": "Нормативный прогон company_mc 2.3.2 20260924T074358Z-company_mc-224958 (исправление: собственные розыгрыши компании от (seed, ticker); прежний 20260923T211620Z-company_mc-dbbce2 — исторический, сводка в пределах MC-шума)."
+    },
+    {
+      "timestamp": "2026-09-25T14:00:00Z",
+      "kind": "calc",
+      "summary": "Joint_Simulation_Layer_Schema v1.1 принята (25.09): калибровка RKLB v1.0.1 не менялась, валидатор 1.7.0 …-5858af pass под v1.1; нормативный BASE перепрогнан под v1.1: 20260925T130337Z-company_mc-8c5da8 (supersedes 224958; отличие в пределах шума)"
     }
   ],
   "scenario_state": {
@@ -328,6 +333,49 @@
       },
       "paths_file": "portfolio/_runs/20260924T074358Z-company_mc-224958-paths.npz",
       "valuation_crossover": "parity_gated_linear_blend_v1"
+    },
+    {
+      "run_id": "20260925T130337Z-company_mc-8c5da8",
+      "model": "company_mc",
+      "version": "2.4.1",
+      "timestamp": "20260925T130337",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Schema v1.1, Rules v1.1.2; company_mc 2.3.2)",
+      "calibration": "mc_calibration_v1.0.1.yaml",
+      "supersedes": "20260924T074358Z-company_mc-224958",
+      "purpose": "нормативный BASE RKLB v1.0.1 под Joint_Simulation_Layer_Schema v1.1 (INDUSTRIAL_RESHORING получил корни AI_CAPEX_CYCLE/POWER_BUILDOUT/GLOBAL_GROWTH → пути драйвера изменились; калибровка не менялась; валидатор 1.7.0 …-5858af pass под v1.1, post_service_growth σ 0.113/0.15). Отличие от 224958 в пределах шума (P(2x) 0.1206 → 0.1214); прежний прогон остаётся записью воспроизводимости",
+      "equity_value_0_b": 41.3,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": -0.1107,
+        "median_CAGR_5Y": 0.0395,
+        "median_CAGR_8Y": 0.1173,
+        "CAGR_5Y_q05_q95": [
+          -0.334,
+          0.192
+        ],
+        "P_2x_5Y": 0.1214,
+        "P_loss_gt_30pct_5Y": 0.1597,
+        "P_loss_gt_50pct_5Y": 0.106,
+        "ES5": -0.8943,
+        "median_equity_value_5Y_b": 50.1,
+        "RV_Growth_Gap": 0.3405,
+        "Price_Expectation_Gap": 1.485,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          1.0
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260925T130337Z-company_mc-8c5da8-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.30338222941455006,
+        "q05": 0.2174978394175672,
+        "q95": 0.40304264044113686,
+        "paths_share": 0.901402
+      }
     }
   ],
   "schema_version": "1.0.5"

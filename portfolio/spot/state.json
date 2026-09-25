@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.5",
-  "updated": "2026-09-25T00:00:00Z",
+  "updated": "2026-09-25T14:30:00Z",
   "price": {
     "last": 509.45,
     "last_at": "2026-09-18",
@@ -28,6 +28,11 @@
       "timestamp": "2026-09-25T00:00:00Z",
       "kind": "onboarding",
       "summary": "SPOT model v1.0 created by IMMA from Q2 2026 SEC 6-K/Q2 Update and FY2025 20-F; Dozor verification pending."
+    },
+    {
+      "timestamp": "2026-09-25T14:30:00Z",
+      "kind": "calc",
+      "summary": "Интеграция калибровки SPOT v1.0 (партия 6, 25.09; EUR): calibration_v1.0.yaml + mc_calibration_v1.0.yaml приняты (валидатор 1.7.0 режим calibration pass под Joint v1.1); RV …-66a42b: implied CAGR 5Y 10.1 %, TV share 0.859, terminal_dependent (предрасчёт IMMA 9.25 % / 0.828 — расхождение вынесено IMMA); нормативные прогоны: 20260925T133204Z-reverse_valuation-66a42b, 20260925T133257Z-company_mc-ca4799"
     }
   ],
   "scenario_state": {
@@ -216,5 +221,63 @@
       "note": "Protocol verification pending."
     }
   ],
-  "calc_runs": []
+  "calc_runs": [
+    {
+      "run_id": "20260925T133204Z-reverse_valuation-66a42b",
+      "model": "reverse_valuation 1.2.0",
+      "spec": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+      "calibration": "SPOT_calibration_v1.0 (EUR)",
+      "valuation_date": "2026-09-25",
+      "price": 444.5462478185,
+      "currency": "EUR",
+      "shares_outstanding": 205584205,
+      "equity_value_b": 91.39,
+      "implied_revenue_cagr_5y": 0.1008,
+      "terminal_value_share_of_pv": 0.8594,
+      "model_stability": "terminal_dependent",
+      "note": "Первый нормативный RV-прогон SPOT; калибровка целиком в EUR (цена NYSE 18.09 / курс ЕЦБ 1.1460); класс устойчивости по Reverse_Valuation_Rules_v1.1 §1 — terminal_dependent; предрасчёт IMMA 9.25 % / TV share 0.828 против хоста 10.08 % / 0.859 — расхождение (вероятно, вычет чистого кэша в предрасчёте) передано IMMA, хост авторитетен"
+    },
+    {
+      "run_id": "20260925T133257Z-company_mc-ca4799",
+      "model": "company_mc",
+      "version": "2.4.1",
+      "timestamp": "20260925T133257",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Schema v1.1, Rules v1.1.2; company_mc 2.3.2, parity-gated blend)",
+      "calibration": "mc_calibration_v1.0.yaml",
+      "purpose": "нормативный прогон принятой калибровки SPOT v1.0 партии 6 (архетип A, калибровка целиком в EUR: equity_value_0 = USD 509.45 × 205.58 млн акций / 1.1460 = 91.39 млрд EUR; валидатор 1.7.0 …-1848a3 pass под Joint v1.1, MC-G5-013 в норме; intrinsic W 0.232 ниже ориентира A 0.25 — задокументировано IMMA, не подгонялось; 3 предупреждения MC-G5-001 — reviewed-immaterial по решению IMMA)",
+      "equity_value_0_b": 91.4,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": 0.164,
+        "median_CAGR_5Y": 0.1145,
+        "median_CAGR_8Y": 0.1,
+        "CAGR_5Y_q05_q95": [
+          -0.0,
+          0.233
+        ],
+        "P_2x_5Y": 0.3147,
+        "P_loss_gt_30pct_5Y": 0.0032,
+        "P_loss_gt_50pct_5Y": 0.0,
+        "ES5": -0.1266,
+        "median_equity_value_5Y_b": 157.2,
+        "RV_Growth_Gap": -0.0138,
+        "Price_Expectation_Gap": 0.9365,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          1.0
+        ]
+      },
+      "paths_file": "portfolio/_runs/20260925T133257Z-company_mc-ca4799-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.17967696191852295,
+        "q05": 0.11506136162416618,
+        "q95": 0.276154101440215,
+        "paths_share": 1.0
+      }
+    }
+  ]
 }

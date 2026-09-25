@@ -1,0 +1,1926 @@
+{
+  "run_id": "20260925T141641Z-company_mc-1bc553",
+  "model": "company_mc",
+  "version": "2.4.1",
+  "seed": 20260920,
+  "inputs": {
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "ASTS",
+      "as_of": "2026-09-25",
+      "archetype": "pre_service_or_milestone_driven",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "Constellation_Deployment": "D2",
+        "Commercial_Contracting": "C3",
+        "Service_Monetization": "M1",
+        "Regulatory_Spectrum": "R2",
+        "Funding_Dilution": "F2"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "existing_segments": {
+          "Gateway_Government": {
+            "base_revenue_quarterly": 31520000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "Q2 products 24.428M + U.S.-government services 7.092M = 31.520M.",
+              "source_ref": "2026-08-06 | https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.35,
+              "mode": 0.45,
+              "max": 1.4,
+              "provenance": "model_assumption",
+              "rationale": "Gateway/government revenue is lumpy and grew from a tiny base; center discounts extraordinary percentage growth while allowing contract milestones and backlog conversion."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.05,
+              "mode": 0.12,
+              "max": 0.35,
+              "provenance": "model_assumption",
+              "rationale": "Existing gateway/government revenue remains ancillary to SpaceMobile and should not dominate long-run value."
+            },
+            "growth_half_life_years": 1.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Pre-service gateway/government recognition is milestone-driven and mean-reverts quickly."
+            },
+            "latent_loading": {
+              "growth": 0.45
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Government/contract cycles are shared, but recognition is highly idiosyncratic."
+            }
+          }
+        },
+        "service_segments": {
+          "SpaceMobile": {
+            "initial_annual_revenue": {
+              "distribution": "triangular",
+              "min": 300000000.0,
+              "mode": 1000000000.0,
+              "max": 2500000000.0,
+              "provenance": "model_assumption",
+              "rationale": "First full service-year revenue assumption after commercial onset; supported qualitatively by 1.30B contracted backlog and >60 MNO relationships but not equated to backlog or company guidance."
+            },
+            "post_service_growth": {
+              "distribution": "triangular",
+              "min": 0.1,
+              "mode": 0.7,
+              "max": 1.7,
+              "provenance": "model_assumption",
+              "rationale": "Early service ramp can be very steep from a low base, but is constrained by satellite coverage, MNO activation and regulation."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.02,
+              "mode": 0.25,
+              "max": 0.6,
+              "provenance": "model_assumption",
+              "rationale": "Long-run direct-to-device service growth after the initial constellation ramp."
+            },
+            "growth_half_life_years": 2.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Service growth decays across several constellation and MNO activation cycles."
+            }
+          }
+        }
+      },
+      "milestone_model": {
+        "service_onset_milestone": "COMMERCIAL_SERVICE_ONSET",
+        "reference_value": {
+          "distribution": "triangular",
+          "min": 8000000000.0,
+          "mode": 24000000000.0,
+          "max": 60000000000.0,
+          "provenance": "model_assumption",
+          "rationale": "Reduced-form milestone-conditioned reference value for SpaceMobile service economics, deliberately independent of current ASTS market price."
+        },
+        "residual_on_failure": 0.12,
+        "residual_on_failure_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Gateway/government assets, spectrum/IP and remaining constellation assets retain some value if commercial SpaceMobile fails, but most current optionality is service-dependent."
+        },
+        "milestones": [
+          {
+            "id": "LAUNCH_CADENCE_SCALE",
+            "probability": 0.78,
+            "probability_meta": {
+              "provenance": "model_assumption",
+              "rationale": "13 spacecraft are in orbit, six launched within 50 days and 30 more were in production; launch/manufacturing execution remains material."
+            },
+            "requires": [],
+            "timing": {
+              "distribution": "triangular",
+              "min": 1.0,
+              "mode": 2.0,
+              "max": 4.0,
+              "provenance": "model_assumption",
+              "rationale": "Quarters from 2026-09-25 to demonstrate sustained launch/manufacturing cadence; distribution, not a company date."
+            },
+            "value_uplift": 0.18,
+            "value_uplift_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Cadence reduces deployment risk but does not itself create recurring service revenue."
+            },
+            "on_failure": {
+              "branch": "delay_retry",
+              "retry_probability": 0.65,
+              "retry_probability_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Launch/manufacturing setbacks can be retried after remediation."
+              },
+              "retry_delay_quarters": 2,
+              "retry_delay_quarters_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Reduced-form recovery period."
+              }
+            }
+          },
+          {
+            "id": "REGULATORY_MULTI_MARKET_READY",
+            "probability": 0.75,
+            "probability_meta": {
+              "provenance": "model_assumption",
+              "rationale": "FCC has authorized the 248-satellite planned network, but operating/spectrum approvals remain market-by-market internationally."
+            },
+            "requires": [],
+            "timing": {
+              "distribution": "triangular",
+              "min": 1.0,
+              "mode": 3.0,
+              "max": 6.0,
+              "provenance": "model_assumption",
+              "rationale": "Quarters to sufficient multi-market operating approvals for initial commercial launch; FCC U.S. network authorization is already a verified fact."
+            },
+            "value_uplift": 0.15,
+            "value_uplift_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Multi-market readiness reduces spectrum/regulatory bottleneck risk."
+            },
+            "on_failure": {
+              "branch": "delay_retry",
+              "retry_probability": 0.7,
+              "retry_probability_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Approval delay is more likely to shift timing than permanently destroy all service value."
+              },
+              "retry_delay_quarters": 2,
+              "retry_delay_quarters_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Reduced-form regulatory retry/approval delay."
+              }
+            }
+          },
+          {
+            "id": "COMMERCIAL_SERVICE_ONSET",
+            "probability": 0.82,
+            "probability_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Conditional on launch cadence and regulatory readiness, signed MNO agreements/backlog support a majority onset prior; no SpaceMobile Service revenue existed at Q2."
+            },
+            "requires": [
+              "LAUNCH_CADENCE_SCALE",
+              "REGULATORY_MULTI_MARKET_READY"
+            ],
+            "timing": {
+              "distribution": "triangular",
+              "min": 1.0,
+              "mode": 2.0,
+              "max": 4.0,
+              "provenance": "model_assumption",
+              "rationale": "Quarters after prerequisites to initial recurring SpaceMobile Service revenue; not a hard company date."
+            },
+            "value_uplift": 0.35,
+            "value_uplift_meta": {
+              "provenance": "model_assumption",
+              "rationale": "First recurring service revenue validates the core business model."
+            },
+            "on_failure": {
+              "branch": "delay_retry",
+              "retry_probability": 0.6,
+              "retry_probability_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Commercial onset can be delayed by integration/coverage issues without immediate terminal failure."
+              },
+              "retry_delay_quarters": 2,
+              "retry_delay_quarters_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Reduced-form commercial retry period."
+              }
+            }
+          },
+          {
+            "id": "CONTINUOUS_KEY_MARKET_COVERAGE",
+            "probability": 0.7,
+            "probability_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Company states approximately 45–60 BB satellites can enable continuous coverage in key markets; reaching that deployed, functioning fleet remains a material execution hurdle."
+            },
+            "requires": [
+              "COMMERCIAL_SERVICE_ONSET"
+            ],
+            "timing": {
+              "distribution": "triangular",
+              "min": 2.0,
+              "mode": 5.0,
+              "max": 9.0,
+              "provenance": "model_assumption",
+              "rationale": "Quarters after service onset to continuous key-market coverage; grounded in 45–60 satellite requirement but not a company timing commitment."
+            },
+            "value_uplift": 0.25,
+            "value_uplift_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Continuous coverage supports materially broader usage and service economics."
+            },
+            "on_failure": {
+              "branch": "terminal_failure"
+            }
+          }
+        ]
+      },
+      "cash_model": {
+        "net_cash_0": 3700000000.0,
+        "net_cash_0_meta": {
+          "provenance": "derived_fact",
+          "formula": "Legacy C-engine liquidity-reserve field uses >3.7B pro-forma cash/cash equivalents/restricted cash after July 2026 financing as burn reserve; it is NOT GAAP net cash after debt.",
+          "source_ref": "2026-08-10 | https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm"
+        },
+        "pre_service_burn_quarterly": {
+          "distribution": "triangular",
+          "min": 350000000.0,
+          "mode": 500000000.0,
+          "max": 750000000.0,
+          "provenance": "model_assumption",
+          "rationale": "H1 OCF + PP&E cash use was 1.004B, ~0.502B/quarter; range includes launch/satellite procurement volatility."
+        },
+        "dilution_penalty": 0.25,
+        "dilution_penalty_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Latest July 2026 financing reported <2% effective dilution, but future funding across a pre-service capital program can be more dilutive; 25% is a reduced-form downside penalty, not a forecast."
+        },
+        "core_margin": {
+          "distribution": "triangular",
+          "min": -0.2,
+          "mode": 0.03,
+          "max": 0.22,
+          "provenance": "model_assumption",
+          "rationale": "Gateway/government activities are small and lumpy; mature core economics are uncertain and not treated as the primary value engine."
+        },
+        "service_margin": {
+          "current_margin_at_onset": -0.25,
+          "current_margin_at_onset_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Initial service onset is assumed loss-making while coverage/utilization ramp."
+          },
+          "terminal_margin_Y5": {
+            "distribution": "triangular",
+            "min": 0.03,
+            "mode": 0.22,
+            "max": 0.44,
+            "provenance": "model_assumption",
+            "rationale": "Scaled operator-partner revenue-sharing can produce strong cash margins, with wide tails for network cost, partner economics and capacity utilization."
+          },
+          "half_life_years": 2.5,
+          "half_life_years_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Service margin converges over multiple coverage/utilization cycles."
+          }
+        }
+      },
+      "valuation": {
+        "fcf_maturity_margin": 0.08,
+        "fcf_maturity_margin_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Below 8% FCF margin, a revenue bridge is more informative than a mature FCF multiple."
+        },
+        "multiple_fcf": {
+          "distribution": "triangular",
+          "min": 15.0,
+          "mode": 25.0,
+          "max": 40.0,
+          "provenance": "model_assumption",
+          "rationale": "Mature satellite-connectivity FCF multiple after service validation, with broad technical/regulatory/competitive tails."
+        },
+        "multiple_revenue_bridge": {
+          "distribution": "triangular",
+          "min": 2.5,
+          "mode": 5.5,
+          "max": 11.0,
+          "provenance": "model_assumption",
+          "rationale": "Primary reference revenue bridge before FCF maturity. Center 5.5x is parity-consistent with 22% terminal service margin ×25x FCF, limiting artificial basis cliffs."
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.35,
+          "growth__valuation": 0.25,
+          "margin__valuation": 0.3
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Successful deployment/activation supports growth and margins, while technical and regulatory outcomes preserve high idiosyncratic risk."
+        },
+        "default_loading": 0.55,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Milestone-driven company-specific launch/manufacturing/regulatory execution dominates common market factors."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.85,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Pre-service milestone equity has very high path volatility; used only in drawdown layer."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 2.5,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Milestone repricing can persist until the next launch/regulatory/coverage resolution."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:ASTS_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 1.3002885477,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of reverse_valuation 1.2.0 equation; replace run_ref with authoritative sidecar run."
+        },
+        "discount_rate": 0.14,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from ASTS RV base case."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.09512022,
+              0.09512022
+            ],
+            "margin_nodes_pp": [
+              -0.02227806,
+              0.02227806
+            ],
+            "terminal_multiple_pct": [
+              -0.05040812,
+              0.05308398
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 archetype-C local robustness: growth sigma=base-revenue-weighted RMS existing-segment initial_growth sigma_eq; margin sigma=service terminal Y5 margin sigma_eq; multiple sigma=multiple_fcf log-space sigma_eq; perturbation=0.25*sigma with accepted ceilings."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Accepted v1.1.2 probability-delta tolerance for ASTS."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "LAUNCH_ECONOMICS",
+          "SATELLITE_CONNECTIVITY",
+          "CAPITAL_MARKETS",
+          "SPACE_REGULATION",
+          "GOVERNMENT_DEFENSE",
+          "INTEREST_RATES",
+          "AEROSPACE_CYCLE"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "ASTS_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.65,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Satellite production, launch cadence, MNO activation and regulatory execution persist across adjacent quarters."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "LAUNCH_ECONOMICS",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability",
+              "transform": "probability_logit_shift",
+              "effect_per_plus_1sigma": 0.035,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Launch economics/availability supports sustained cadence."
+              }
+            },
+            {
+              "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.timing",
+              "transform": "timing_quarters_shift",
+              "effect_per_plus_1sigma": -0.1,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Better launch economics shortens cadence scaling."
+              }
+            },
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Launch availability supports service capacity ramp."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability",
+              "contribution": 0.02,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Base cadence prior assumes continued access to launch."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support",
+              "shifts": [
+                {
+                  "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability",
+                  "delta": -0.25,
+                  "meta": {
+                    "provenance": "model_assumption",
+                    "rationale": "Critical launch-operations failure reduces cadence-success probability in knockout stability test."
+                  }
+                }
+              ]
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-01 LAUNCH_OPERATIONS_FAILURE / ASTS-FM-03 LAUNCH_ECONOMICS_DOWNSIDE."
+        },
+        {
+          "driver_id": "SATELLITE_CONNECTIVITY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.probability",
+              "transform": "probability_logit_shift",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "MNO/direct-to-device demand supports commercial activation."
+              }
+            },
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.025,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Connectivity demand supports service adoption after onset."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth.mode",
+              "contribution": 0.03,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central ramp assumes material MNO activation."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-05 SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE."
+        },
+        {
+          "driver_id": "CAPITAL_MARKETS",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.timing",
+              "transform": "timing_quarters_shift",
+              "effect_per_plus_1sigma": -0.08,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Capital access protects manufacturing/launch schedule."
+              }
+            },
+            {
+              "path": "cash_model.service_margin.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.006,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Financing flexibility reduces punitive funding drag during ramp."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.probability",
+              "contribution": 0.01,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Base onset probability assumes access to funded deployment resources."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-06 CAPITAL_MARKETS_TIGHTENING."
+        },
+        {
+          "driver_id": "SPACE_REGULATION",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.probability",
+              "transform": "probability_logit_shift",
+              "effect_per_plus_1sigma": -0.04,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Positive SPACE_REGULATION shock means tighter restrictions, reducing multi-market readiness probability."
+              }
+            },
+            {
+              "path": "milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.timing",
+              "transform": "timing_quarters_shift",
+              "effect_per_plus_1sigma": 0.12,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Tighter spectrum/space regulation delays multi-market readiness."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support",
+              "shifts": [
+                {
+                  "path": "milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.probability",
+                  "delta": -0.3,
+                  "meta": {
+                    "provenance": "model_assumption",
+                    "rationale": "Critical regulatory-spectrum failure reduces multi-market readiness probability in knockout stability test."
+                  }
+                }
+              ]
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-04 SPACE_REGULATORY_SPECTRUM_DELAY; ASTS-FM-08 SPACE_REGULATORY_RANGE_DELAY."
+        },
+        {
+          "driver_id": "GOVERNMENT_DEFENSE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Government demand can support post-onset service utilization without inventing a separate pre-service stochastic target unsupported by the schema."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-07 GOVERNMENT_SPACE_BUDGET."
+        },
+        {
+          "driver_id": "INTEREST_RATES",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.timing",
+              "transform": "timing_quarters_shift",
+              "effect_per_plus_1sigma": 0.06,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates modestly worsen funding-dependent deployment timing."
+              }
+            },
+            {
+              "path": "cash_model.service_margin.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": -0.004,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher financing burden modestly reduces service cash economics."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Secondary capital-cost channel."
+        },
+        {
+          "driver_id": "AEROSPACE_CYCLE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability",
+              "transform": "probability_logit_shift",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "A healthier aerospace/space industrial cycle supports launch/manufacturing availability."
+              }
+            },
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Broader space-industry capacity supports service ramp."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Secondary industrial-cycle channel. SPACE_SYSTEMS_EXECUTION critical failure has no canonical taxonomy root; it remains intrinsic milestone risk and a recalibration trigger rather than a fabricated mapping."
+        }
+      ]
+    },
+    "equity_value_0": 22774081748.88,
+    "joint_layer_spec": {
+      "version": "1.1",
+      "artifact": "joint_simulation_layer",
+      "supersedes": "Joint_Simulation_Layer_Schema_v1.0",
+      "as_of": "2026-09-25",
+      "status": "proposed_normative",
+      "scenario_interface": {
+        "scenario_engine_required_for_multiscenario": true,
+        "fallback_without_scenario_engine": {
+          "id": "BASE",
+          "probability": 1.0,
+          "driver_overrides": {},
+          "root_correlation_overrides": []
+        }
+      },
+      "root_factors": {
+        "distribution": "stationary_standard_normal_AR1",
+        "timestep": "quarterly",
+        "factors": {
+          "GLOBAL_GROWTH": {
+            "phi": 0.65
+          },
+          "AI_CAPEX_CYCLE": {
+            "phi": 0.75
+          },
+          "SEMI_SUPPLY_HEALTH": {
+            "phi": 0.55
+          },
+          "POWER_BUILDOUT": {
+            "phi": 0.8
+          },
+          "FINANCIAL_CONDITIONS": {
+            "phi": 0.6
+          },
+          "SPACE_GOVERNMENT_DEMAND": {
+            "phi": 0.75
+          },
+          "SPACE_REGULATORY_ACCESS": {
+            "phi": 0.7
+          },
+          "HEALTHCARE_DEMAND_ACCESS": {
+            "phi": 0.7
+          },
+          "CONSUMER_RISK_APPETITE": {
+            "phi": 0.55
+          },
+          "DIGITAL_PLATFORM_DEMAND": {
+            "phi": 0.6
+          },
+          "CHINA_MARKET_ACCESS": {
+            "phi": 0.7
+          }
+        },
+        "provenance": "model_assumption"
+      },
+      "root_correlation": {
+        "diagonal": 1.0,
+        "default_off_diagonal": 0.0,
+        "pair_overrides": {
+          "GLOBAL_GROWTH__AI_CAPEX_CYCLE": 0.35,
+          "GLOBAL_GROWTH__FINANCIAL_CONDITIONS": 0.35,
+          "GLOBAL_GROWTH__CONSUMER_RISK_APPETITE": 0.45,
+          "GLOBAL_GROWTH__DIGITAL_PLATFORM_DEMAND": 0.55,
+          "GLOBAL_GROWTH__HEALTHCARE_DEMAND_ACCESS": 0.1,
+          "GLOBAL_GROWTH__POWER_BUILDOUT": 0.25,
+          "GLOBAL_GROWTH__SEMI_SUPPLY_HEALTH": 0.15,
+          "GLOBAL_GROWTH__CHINA_MARKET_ACCESS": 0.1,
+          "AI_CAPEX_CYCLE__SEMI_SUPPLY_HEALTH": 0.3,
+          "AI_CAPEX_CYCLE__POWER_BUILDOUT": 0.45,
+          "AI_CAPEX_CYCLE__DIGITAL_PLATFORM_DEMAND": 0.3,
+          "AI_CAPEX_CYCLE__FINANCIAL_CONDITIONS": 0.2,
+          "SEMI_SUPPLY_HEALTH__CHINA_MARKET_ACCESS": 0.2,
+          "FINANCIAL_CONDITIONS__CONSUMER_RISK_APPETITE": 0.4,
+          "FINANCIAL_CONDITIONS__DIGITAL_PLATFORM_DEMAND": 0.2,
+          "FINANCIAL_CONDITIONS__CHINA_MARKET_ACCESS": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__GLOBAL_GROWTH": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__FINANCIAL_CONDITIONS": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__SPACE_REGULATORY_ACCESS": 0.1,
+          "SPACE_REGULATORY_ACCESS__GLOBAL_GROWTH": 0.05,
+          "HEALTHCARE_DEMAND_ACCESS__CONSUMER_RISK_APPETITE": 0.05
+        },
+        "provenance": "model_assumption",
+        "psd_checked_v1_0": true
+      },
+      "scenario_persistence_override": {
+        "semantics": "innovation_level_driver_persistence",
+        "null_behavior": "bypass_use_base_or_phase_root_driver_path",
+        "root_phi_unchanged": true,
+        "company_mapping_decay_unchanged": true,
+        "innovation_formula": "eta_d,t = standardize(sum(lambda_d,r * u_r,t) + w_d * epsilon_d,t), with u_r,t root innovations after the current phase root-correlation state and epsilon_d,t the same driver idiosyncratic innovation used by BASE",
+        "recursion_formula": "y_d,t = rho_t * y_d,t-1 + sqrt(1-rho_t^2) * eta_d,t",
+        "scenario_driver_formula": "driver_scenario_d,t = mean_shift_d,t + volatility_multiplier_d,t * y_d,t",
+        "initialization": "when override begins, y_d,t-1 equals the last emitted standardized driver shock; do not initialize to zero",
+        "ramp_rule": "numeric-to-numeric rho is linearly interpolated by phase weight; null is bypass and is not interpreted as rho=0",
+        "validation_rule": "on a constant-rho plateau after warm-up, Var(y) must remain approximately 1 and empirical lag-1 correlation must approximate rho; insufficient plateau length is diagnostic, not failure",
+        "provenance": "normative_rule"
+      },
+      "driver_generation": {
+        "formula": "standardize(sum(root_loading * root_factor) + idio_weight * epsilon_driver)",
+        "unspecified_driver_default": "idiosyncratic",
+        "explicit_idiosyncratic_drivers": [
+          "ACQUISITION_INTEGRATION",
+          "DRUG_PIPELINE",
+          "BIOPHARMA_MANUFACTURING_CAPACITY",
+          "PHARMA_REGULATION",
+          "PATENT_EXCLUSIVITY",
+          "FINTECH_REGULATION"
+        ],
+        "explicit_idiosyncratic_rule": "These taxonomy drivers intentionally have no root mapping in v1.1. They retain independent standardized driver innovations; scenario mean/volatility overrides may still apply if a scenario explicitly names them. No root covariance is implied until a future normative reissue adds a mapping.",
+        "mappings": {
+          "AI_COMPUTE_DEMAND": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.85,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "HYPERSCALER_CAPEX": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.8,
+              "FINANCIAL_CONDITIONS": 0.15
+            },
+            "idio_weight": 0.35
+          },
+          "SEMICONDUCTOR_WFE": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.5,
+              "GLOBAL_GROWTH": 0.3
+            },
+            "idio_weight": 0.45
+          },
+          "ADVANCED_PACKAGING": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.65,
+              "AI_CAPEX_CYCLE": 0.35
+            },
+            "idio_weight": 0.35
+          },
+          "HBM_MEMORY": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.55,
+              "AI_CAPEX_CYCLE": 0.45
+            },
+            "idio_weight": 0.35
+          },
+          "EDA_DESIGN_COMPLEXITY": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.4,
+              "DIGITAL_PLATFORM_DEMAND": 0.25
+            },
+            "idio_weight": 0.6
+          },
+          "CLOUD_SOFTWARE_DEMAND": {
+            "roots": {
+              "DIGITAL_PLATFORM_DEMAND": 0.75,
+              "GLOBAL_GROWTH": 0.25
+            },
+            "idio_weight": 0.35
+          },
+          "DATA_CENTER_POWER": {
+            "roots": {
+              "POWER_BUILDOUT": 0.75,
+              "AI_CAPEX_CYCLE": 0.3
+            },
+            "idio_weight": 0.35
+          },
+          "LAUNCH_ECONOMICS": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.25,
+              "SPACE_REGULATORY_ACCESS": 0.2
+            },
+            "idio_weight": 0.75
+          },
+          "SATELLITE_CONNECTIVITY": {
+            "roots": {
+              "GLOBAL_GROWTH": 0.25,
+              "SPACE_GOVERNMENT_DEMAND": 0.25
+            },
+            "idio_weight": 0.7
+          },
+          "GOVERNMENT_DEFENSE": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.8,
+              "GLOBAL_GROWTH": 0.1
+            },
+            "idio_weight": 0.35
+          },
+          "INTEREST_RATES": {
+            "roots": {
+              "FINANCIAL_CONDITIONS": -0.9
+            },
+            "idio_weight": 0.25
+          },
+          "CAPITAL_MARKETS": {
+            "roots": {
+              "FINANCIAL_CONDITIONS": 0.9
+            },
+            "idio_weight": 0.25
+          },
+          "CHINA_REVENUE": {
+            "roots": {
+              "CHINA_MARKET_ACCESS": 0.8,
+              "GLOBAL_GROWTH": 0.15
+            },
+            "idio_weight": 0.35
+          },
+          "TAIWAN_SUPPLY": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.9
+            },
+            "idio_weight": 0.25
+          },
+          "AI_CLOUD_PRICING": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.6
+            },
+            "idio_weight": 0.55
+          },
+          "HEALTHCARE_DEMAND": {
+            "roots": {
+              "HEALTHCARE_DEMAND_ACCESS": 0.8,
+              "GLOBAL_GROWTH": 0.1
+            },
+            "idio_weight": 0.4
+          },
+          "REIMBURSEMENT_PRICING": {
+            "roots": {
+              "HEALTHCARE_DEMAND_ACCESS": 0.6
+            },
+            "idio_weight": 0.6
+          },
+          "ELECTRIFICATION_GRID": {
+            "roots": {
+              "POWER_BUILDOUT": 0.75,
+              "GLOBAL_GROWTH": 0.15
+            },
+            "idio_weight": 0.4
+          },
+          "UTILITY_CAPEX": {
+            "roots": {
+              "POWER_BUILDOUT": 0.65,
+              "GLOBAL_GROWTH": 0.2,
+              "FINANCIAL_CONDITIONS": 0.15
+            },
+            "idio_weight": 0.4
+          },
+          "INDUSTRIAL_RESHORING": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.3,
+              "POWER_BUILDOUT": 0.35,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.6
+          },
+          "AEROSPACE_CYCLE": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.5,
+              "GLOBAL_GROWTH": 0.25
+            },
+            "idio_weight": 0.55
+          },
+          "CONSUMER_CREDIT": {
+            "roots": {
+              "CONSUMER_RISK_APPETITE": 0.8,
+              "FINANCIAL_CONDITIONS": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "CRYPTO_CYCLE": {
+            "roots": {
+              "CONSUMER_RISK_APPETITE": 0.55,
+              "FINANCIAL_CONDITIONS": 0.35
+            },
+            "idio_weight": 0.5
+          },
+          "DIGITAL_AD_DEMAND": {
+            "roots": {
+              "DIGITAL_PLATFORM_DEMAND": 0.7,
+              "CONSUMER_RISK_APPETITE": 0.2,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "SPACE_REGULATION": {
+            "roots": {
+              "SPACE_REGULATORY_ACCESS": -0.9
+            },
+            "idio_weight": 0.25
+          },
+          "ACCELERATOR_PRICE_COMPETITION": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.35,
+              "SEMI_SUPPLY_HEALTH": 0.3
+            },
+            "idio_weight": 0.65
+          }
+        }
+      },
+      "company_calibration_required_sections": [
+        "joint_simulation",
+        "driver_parameter_mapping"
+      ],
+      "material_driver_rule": {
+        "any_of": [
+          "abs(driver_exposure_vector) == 2",
+          "terminal_value_sensitivity_share >= 0.10",
+          "one_sigma_driver_shift_changes_median_CAGR_5Y_by_at_least_0.01",
+          "driver participates in critical_or_high_failure_mode"
+        ],
+        "provenance": "model_assumption"
+      },
+      "joint_path_algorithm": [
+        "sample_scenario",
+        "generate_root_paths",
+        "apply_scenario_overrides",
+        "generate_standardized_driver_paths",
+        "map_drivers_to_company_parameters",
+        "add_company_idiosyncratic_shocks",
+        "run_company_models",
+        "store_relative_values_with_same_path_id"
+      ],
+      "scenario_override_execution_v1_1": [
+        "apply_scenario_root_correlation_state",
+        "derive_root_innovations_for_persistence_override",
+        "generate_or_reuse_standardized_driver_path",
+        "apply_scenario_driver_mean_volatility_and_persistence_overrides",
+        "preserve_same_global_path_id_and_base_innovations"
+      ],
+      "validation": [
+        "root_matrix_psd",
+        "all_material_drivers_have_mapping",
+        "scenario_probabilities_sum_to_one",
+        "driver_long_run_variance_approximately_one",
+        "scenario_persistence_plateau_variance_approximately_one",
+        "scenario_persistence_plateau_lag1_matches_override",
+        "same_factor_path_for_all_companies",
+        "standalone_marginals_match_joint_marginals_within_tolerance",
+        "no_double_counting"
+      ]
+    },
+    "paths": 500000,
+    "chunk": 50000,
+    "convergence_check": false,
+    "robustness": false,
+    "store_paths": true,
+    "scenario": {
+      "schema_version": "1.0",
+      "scenario_id": "CHIP_COLD_WAR",
+      "description": "US–China semiconductor technology race: Western subsidized capacity buildout, uncertain 3–5Y parity boundary, then persistent bifurcated production systems and accelerator price competition.",
+      "status": "proposed_normative",
+      "mutual_exclusion_set": "GEOTECH_REGIME_8Y_V1",
+      "probability": null,
+      "probability_status": "pending_owner_judgment",
+      "probability_meta": {
+        "provenance": "owner_judgment",
+        "rationale": "Owner explicitly requested separate probability judgment; calibration must not infer it."
+      },
+      "phases": [
+        {
+          "phase_id": "RACE_TO_PARITY",
+          "name": "Race before technological parity",
+          "effective_from": {
+            "kind": "fixed_quarter",
+            "anchor": "t0",
+            "quarter": 0,
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Scenario is conditioned on an ongoing strategic race at t0."
+            }
+          },
+          "ramp_quarters": 2,
+          "duration_quarters": "until_next_phase",
+          "decay_quarters": 0,
+          "driver_overrides": {
+            "SEMICONDUCTOR_WFE": {
+              "mean_shift_sigma": 1.0,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Western and Chinese fab buildout raises equipment cycle."
+              }
+            },
+            "INDUSTRIAL_RESHORING": {
+              "mean_shift_sigma": 1.0,
+              "volatility_multiplier": 1.15,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Sovereign localization accelerates."
+              }
+            },
+            "GOVERNMENT_DEFENSE": {
+              "mean_shift_sigma": 0.75,
+              "volatility_multiplier": 1.15,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Defense/strategic procurement rises."
+              }
+            },
+            "HYPERSCALER_CAPEX": {
+              "mean_shift_sigma": 0.75,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI infrastructure race sustains capex."
+              }
+            },
+            "DATA_CENTER_POWER": {
+              "mean_shift_sigma": 0.5,
+              "volatility_multiplier": 1.15,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Power infrastructure buildout follows compute investment."
+              }
+            },
+            "INTEREST_RATES": {
+              "mean_shift_sigma": 0.25,
+              "volatility_multiplier": 1.1,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Fiscal/industrial investment pressure modestly raises rate environment."
+              }
+            },
+            "CHINA_REVENUE": {
+              "mean_shift_sigma": -0.25,
+              "volatility_multiplier": 1.15,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Export controls mildly reduce cross-border addressability."
+              }
+            },
+            "TAIWAN_SUPPLY": {
+              "mean_shift_sigma": 0.0,
+              "volatility_multiplier": 1.1,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "No physical Taiwan supply impairment is assumed before parity."
+              }
+            },
+            "AI_CLOUD_PRICING": {
+              "mean_shift_sigma": 0.0,
+              "volatility_multiplier": 1.1,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Compute service pricing not yet structurally reset."
+              }
+            },
+            "ACCELERATOR_PRICE_COMPETITION": {
+              "mean_shift_sigma": 0.25,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Competition rises but parity has not yet been reached."
+              }
+            }
+          },
+          "root_correlation_overrides": [
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "POWER_BUILDOUT",
+              "correlation": 0.55,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Compute and power buildout become more synchronized."
+              }
+            },
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "SEMI_SUPPLY_HEALTH",
+              "correlation": 0.4,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Capex race depends more on semiconductor supply capability."
+              }
+            }
+          ],
+          "meta": {
+            "provenance": "model_assumption",
+            "rationale": "Phase 1 encodes the owner thesis of strategic subsidy/capacity race before parity."
+          }
+        },
+        {
+          "phase_id": "PARITY_BOUNDARY",
+          "name": "Technology parity boundary and repricing",
+          "effective_from": {
+            "kind": "triangular_quarter",
+            "anchor": "t0",
+            "min": 12,
+            "mode": 16,
+            "max": 20,
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Owner thesis explicitly states a 3–5 year lag; triangular q12/q16/q20 encodes that uncertainty without selecting a point estimate."
+            }
+          },
+          "ramp_quarters": 2,
+          "duration_quarters": 4,
+          "decay_quarters": 0,
+          "driver_overrides": {
+            "SEMICONDUCTOR_WFE": {
+              "mean_shift_sigma": 1.5,
+              "volatility_multiplier": 1.5,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Both systems accelerate equipment investment around parity."
+              }
+            },
+            "INDUSTRIAL_RESHORING": {
+              "mean_shift_sigma": 1.5,
+              "volatility_multiplier": 1.35,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Western localization response intensifies."
+              }
+            },
+            "GOVERNMENT_DEFENSE": {
+              "mean_shift_sigma": 1.25,
+              "volatility_multiplier": 1.3,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Strategic/defense procurement intensifies."
+              }
+            },
+            "HYPERSCALER_CAPEX": {
+              "mean_shift_sigma": 1.0,
+              "volatility_multiplier": 1.4,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI infrastructure spending remains elevated but more volatile."
+              }
+            },
+            "DATA_CENTER_POWER": {
+              "mean_shift_sigma": 0.75,
+              "volatility_multiplier": 1.3,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Power buildout accelerates with duplicated compute systems."
+              }
+            },
+            "INTEREST_RATES": {
+              "mean_shift_sigma": 0.5,
+              "volatility_multiplier": 1.2,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Investment/fiscal intensity raises rate pressure."
+              }
+            },
+            "CHINA_REVENUE": {
+              "mean_shift_sigma": -1.0,
+              "volatility_multiplier": 1.5,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Technology/export-control bifurcation reduces cross-border revenue."
+              }
+            },
+            "TAIWAN_SUPPLY": {
+              "mean_shift_sigma": -0.5,
+              "volatility_multiplier": 1.4,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Negative shift represents access friction/duplication risk, not loss of Taiwan strategic value."
+              }
+            },
+            "AI_CLOUD_PRICING": {
+              "mean_shift_sigma": -0.5,
+              "volatility_multiplier": 1.35,
+              "persistence_override": 0.75,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Cheaper compute begins to pressure service pricing/economics."
+              }
+            },
+            "ACCELERATOR_PRICE_COMPETITION": {
+              "mean_shift_sigma": 1.0,
+              "volatility_multiplier": 1.6,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Parity sharply increases accelerator price/performance competition."
+              }
+            }
+          },
+          "root_correlation_overrides": [
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "POWER_BUILDOUT",
+              "correlation": 0.6,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Duplicated systems tightly couple compute and power investment."
+              }
+            },
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "SEMI_SUPPLY_HEALTH",
+              "correlation": 0.5,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Parity-boundary capex is supply capability dependent."
+              }
+            },
+            {
+              "root_a": "SEMI_SUPPLY_HEALTH",
+              "root_b": "CHINA_MARKET_ACCESS",
+              "correlation": 0.05,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Technology capability and cross-border market access begin decoupling."
+              }
+            }
+          ],
+          "meta": {
+            "provenance": "model_assumption",
+            "rationale": "Phase 2 is deliberately volatile and temporary; it is the boundary the owner explicitly asked to study."
+          }
+        },
+        {
+          "phase_id": "TWO_SYSTEMS",
+          "name": "Persistent Western and Chinese semiconductor systems",
+          "effective_from": {
+            "kind": "triangular_quarter",
+            "anchor": "phase:PARITY_BOUNDARY",
+            "min": 4,
+            "mode": 4,
+            "max": 4,
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Phase 3 starts after a four-quarter parity-boundary repricing window."
+            }
+          },
+          "ramp_quarters": 4,
+          "duration_quarters": "until_end",
+          "decay_quarters": 0,
+          "driver_overrides": {
+            "SEMICONDUCTOR_WFE": {
+              "mean_shift_sigma": 1.0,
+              "volatility_multiplier": 1.25,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Duplicated supply chains keep equipment demand above BASE."
+              }
+            },
+            "INDUSTRIAL_RESHORING": {
+              "mean_shift_sigma": 1.25,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Strategic localization persists."
+              }
+            },
+            "GOVERNMENT_DEFENSE": {
+              "mean_shift_sigma": 1.0,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.85,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Defense/sovereign compute demand remains elevated."
+              }
+            },
+            "HYPERSCALER_CAPEX": {
+              "mean_shift_sigma": 0.75,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Western AI buildout remains structurally above BASE."
+              }
+            },
+            "DATA_CENTER_POWER": {
+              "mean_shift_sigma": 0.75,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Power infrastructure remains structurally elevated."
+              }
+            },
+            "INTEREST_RATES": {
+              "mean_shift_sigma": 0.25,
+              "volatility_multiplier": 1.1,
+              "persistence_override": null,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Rate pressure moderates but stays above BASE."
+              }
+            },
+            "CHINA_REVENUE": {
+              "mean_shift_sigma": -1.5,
+              "volatility_multiplier": 1.35,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Cross-border technology revenue remains structurally impaired."
+              }
+            },
+            "TAIWAN_SUPPLY": {
+              "mean_shift_sigma": -0.5,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Supply-access friction remains; driver is not used as a proxy for Taiwan strategic relevance."
+              }
+            },
+            "AI_CLOUD_PRICING": {
+              "mean_shift_sigma": -1.0,
+              "volatility_multiplier": 1.2,
+              "persistence_override": 0.8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Cheaper non-Western chips pressure global compute service economics."
+              }
+            },
+            "ACCELERATOR_PRICE_COMPETITION": {
+              "mean_shift_sigma": 1.5,
+              "volatility_multiplier": 1.35,
+              "persistence_override": 0.9,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Sustained two-system competition compresses accelerator economics."
+              }
+            }
+          },
+          "root_correlation_overrides": [
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "POWER_BUILDOUT",
+              "correlation": 0.55,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Persistent synchronized sovereign compute/power buildout."
+              }
+            },
+            {
+              "root_a": "AI_CAPEX_CYCLE",
+              "root_b": "SEMI_SUPPLY_HEALTH",
+              "correlation": 0.45,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Buildout remains supply-capability dependent."
+              }
+            },
+            {
+              "root_a": "SEMI_SUPPLY_HEALTH",
+              "root_b": "CHINA_MARKET_ACCESS",
+              "correlation": -0.1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Two production systems can improve local supply health while cross-border market access remains poor."
+              }
+            }
+          ],
+          "meta": {
+            "provenance": "model_assumption",
+            "rationale": "Persistent bifurcation, not an assumption that either bloc disappears."
+          }
+        }
+      ],
+      "fact_catalog": [
+        {
+          "fact_id": "CW-F01",
+          "signal": "SMIC/Chinese foundry disclosed process capability, production scale, yield or advanced-node revenue evidence narrowing the leading-edge gap.",
+          "phase_relevance": [
+            "RACE_TO_PARITY",
+            "PARITY_BOUNDARY"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "SMIC annual/interim reports and exchange filings",
+            "official Chinese industry disclosures where metric is explicit"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "If yield/process metric is not separately disclosed, record not_disclosed; do not infer."
+        },
+        {
+          "fact_id": "CW-F02",
+          "signal": "New or tightened U.S./allied semiconductor export controls affecting advanced compute, equipment or China market access.",
+          "phase_relevance": [
+            "RACE_TO_PARITY",
+            "PARITY_BOUNDARY",
+            "TWO_SYSTEMS"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "U.S. BIS / Federal Register",
+            "allied government export-control notices"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "Link to EXPORT_CONTROLS_CHINA."
+        },
+        {
+          "fact_id": "CW-F03",
+          "signal": "Government semiconductor/AI infrastructure subsidies, awards or procurement commitments in U.S./EU/China.",
+          "phase_relevance": [
+            "RACE_TO_PARITY",
+            "PARITY_BOUNDARY",
+            "TWO_SYSTEMS"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "U.S. Department of Commerce CHIPS office",
+            "EU/Member State official award notices",
+            "official Chinese central/provincial notices where quantified"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "Track amount, beneficiary and effective date; announcement != disbursement."
+        },
+        {
+          "fact_id": "CW-F04",
+          "signal": "China share of semiconductor equipment demand/revenue and evidence of domestic WFE substitution.",
+          "phase_relevance": [
+            "RACE_TO_PARITY",
+            "PARITY_BOUNDARY",
+            "TWO_SYSTEMS"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "ASML/AMAT/LRCX/KLAC issuer filings and earnings materials",
+            "Chinese listed WFE vendor filings"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "Use issuer-reported geography/segment facts; do not synthesize undisclosed market share."
+        },
+        {
+          "fact_id": "CW-F05",
+          "signal": "Observed accelerator price/performance competition from Chinese suppliers or material price compression in comparable accelerator classes.",
+          "phase_relevance": [
+            "PARITY_BOUNDARY",
+            "TWO_SYSTEMS"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "issuer product/pricing disclosures",
+            "customer procurement disclosures"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "This is the trigger family for ACCELERATOR_PRICE_COMPETITION; comparable product class must be explicit."
+        },
+        {
+          "fact_id": "CW-F06",
+          "signal": "Material divergence of Western vs China semiconductor supply chains, including restricted cross-sales or duplicated fab capacity.",
+          "phase_relevance": [
+            "PARITY_BOUNDARY",
+            "TWO_SYSTEMS"
+          ],
+          "verification_status": "pending_dozor",
+          "preferred_sources": [
+            "government export-control/customs publications",
+            "issuer capacity/geography disclosures"
+          ],
+          "fallback_sources": [
+            "Reuters"
+          ],
+          "note": "Used for recalibration of bifurcation persistence, not for owner probability automatically."
+        }
+      ],
+      "links": {
+        "common_causes": [
+          "TAIWAN_SUPPLY_DISRUPTION",
+          "EXPORT_CONTROLS_CHINA"
+        ],
+        "legacy_action_scenario_refs": []
+      },
+      "notes": [
+        "Owner thesis preserved in accompanying rationale verbatim.",
+        "Probability remains pending_owner_judgment.",
+        "TAIWAN_SUPPLY retains supply-health semantics; it is not redefined as Taiwan strategic value."
+      ]
+    }
+  },
+  "outputs": {
+    "model_version": "2.4.1",
+    "paths_file": "/data/workspace-invest/portfolio/_runs/20260925T141641Z-company_mc-1bc553-paths.npz",
+    "spec_version": "MC_Calibration_Archetypes_v1.0+Rules_v1.1+Joint_Simulation_Layer_v1.0+Conditional_MC_v1.1.3",
+    "ticker": "ASTS",
+    "archetype": "pre_service_or_milestone_driven",
+    "margin_method": "milestone_model",
+    "adapted_from": null,
+    "state_vector": {
+      "Constellation_Deployment": "D2",
+      "Commercial_Contracting": "C3",
+      "Service_Monetization": "M1",
+      "Regulatory_Spectrum": "R2",
+      "Funding_Dilution": "F2"
+    },
+    "inputs_hash": "6140887a314b1bea",
+    "seed": 20260920,
+    "paths": 500000,
+    "equity_value_0": 22774081748.88,
+    "factor_correlation_psd_fixed": false,
+    "dependency_structure": "latent_factor_plus_idiosyncratic_shock (Archetypes §2.1); общий ранг не используется",
+    "joint_simulation": {
+      "layer_version": "1.3.0",
+      "global_seed": 20260920,
+      "active_drivers": [
+        "LAUNCH_ECONOMICS",
+        "SATELLITE_CONNECTIVITY",
+        "CAPITAL_MARKETS",
+        "SPACE_REGULATION",
+        "GOVERNMENT_DEFENSE",
+        "INTEREST_RATES",
+        "AEROSPACE_CYCLE"
+      ],
+      "scenario": "CHIP_COLD_WAR",
+      "adverse_driver_stress": [],
+      "scenario_phases": {
+        "phased": true,
+        "scenario_id": "CHIP_COLD_WAR",
+        "phase_start_quantiles": {
+          "RACE_TO_PARITY": {
+            "0.1": 0.0,
+            "0.5": 0.0,
+            "0.9": 0.0
+          },
+          "PARITY_BOUNDARY": {
+            "0.1": 14.0,
+            "0.5": 16.0,
+            "0.9": 18.0
+          },
+          "TWO_SYSTEMS": {
+            "0.1": 18.0,
+            "0.5": 20.0,
+            "0.9": 22.0
+          }
+        },
+        "phase_active_share": {
+          "RACE_TO_PARITY": 0.50040375,
+          "PARITY_BOUNDARY": 0.125,
+          "TWO_SYSTEMS": 0.37459625
+        },
+        "n_corr_states": 9,
+        "scenario_drivers_applicable": [
+          "GOVERNMENT_DEFENSE",
+          "INTEREST_RATES"
+        ],
+        "scenario_drivers_unmapped": [
+          "ACCELERATOR_PRICE_COMPETITION",
+          "AI_CLOUD_PRICING",
+          "CHINA_REVENUE",
+          "DATA_CENTER_POWER",
+          "HYPERSCALER_CAPEX",
+          "INDUSTRIAL_RESHORING",
+          "SEMICONDUCTOR_WFE",
+          "TAIWAN_SUPPLY"
+        ]
+      },
+      "scenario_mode": "phased",
+      "knockout_applied": [],
+      "path_id_rule": "path_id = chunk_index*chunk + i; шоки по SeedSequence([global_seed, chunk_index])"
+    },
+    "base": {
+      "paths": 500000,
+      "return": {
+        "median_CAGR_3Y": -0.23985843223779946,
+        "median_CAGR_5Y": 0.01765077366322909,
+        "median_CAGR_8Y": 0.1619028332266771,
+        "P_2x_3Y": 0.003738,
+        "P_2x_5Y": 0.238576,
+        "P_2x_8Y": 0.63603,
+        "P_5x_5Y": 0.020936,
+        "P_5x_8Y": 0.370634,
+        "CAGR_5Y_quantiles": {
+          "0.01": -0.9915177352238763,
+          "0.05": -0.9915177352238763,
+          "0.1": -0.9915177352238763,
+          "0.25": -0.14967217360888574,
+          "0.5": 0.01765077366322909,
+          "0.75": 0.1423257227689757,
+          "0.9": 0.24951119763420865,
+          "0.95": 0.3128208441644166,
+          "0.99": 0.42828200004941863
+        },
+        "bridge_dependent": {
+          "Y3": true,
+          "Y5": true,
+          "Y8": true
+        }
+      },
+      "downside": {
+        "P_loss_gt_30pct_5Y": 0.342922,
+        "P_loss_gt_50pct_5Y": 0.267754,
+        "expected_shortfall_5pct_5Y": -0.9999999999560905,
+        "max_drawdown_5Y_quantiles": {
+          "0.05": -0.999999999985285,
+          "0.25": -0.9597996701712465,
+          "0.5": -0.865234032741018,
+          "0.75": -0.7484998066827866,
+          "0.95": -0.564955777437007
+        },
+        "max_drawdown_model_dependent": true
+      },
+      "scenario": {
+        "variance_within_state_CAGR_5Y": 0.19582532419609744,
+        "variance_between_state_scenarios": null,
+        "persistence_ratio": 9.172562988780518,
+        "persistence_class": "strong",
+        "scenario_concentration": null
+      },
+      "valuation_basis_share": {
+        "Y3": {
+          "multiple": 0.0,
+          "revenue_bridge": 0.797336,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.004264,
+          "failure_residual": 0.1984,
+          "crossover_bridge": 0.0,
+          "basis_blend": 0.0
+        },
+        "Y5": {
+          "multiple": 1.8e-05,
+          "revenue_bridge": 0.74693,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.1984,
+          "crossover_bridge": 0.054314,
+          "basis_blend": 0.000338
+        },
+        "Y8": {
+          "multiple": 0.033436,
+          "revenue_bridge": 0.228478,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.1984,
+          "crossover_bridge": 0.491808,
+          "basis_blend": 0.047878
+        }
+      },
+      "basis_parity_margin": {
+        "Y3": {
+          "median": 0.23440111870884095,
+          "q05": 0.13981039396391676,
+          "q95": 0.37203813975252636,
+          "paths_share": 0.797336
+        },
+        "Y5": {
+          "median": 0.23440775334810937,
+          "q05": 0.13980566586496102,
+          "q95": 0.3719939740044197,
+          "paths_share": 0.8016
+        },
+        "Y8": {
+          "median": 0.23440775334810937,
+          "q05": 0.13980566586496102,
+          "q95": 0.3719939740044197,
+          "paths_share": 0.8016
+        }
+      },
+      "valuation_crossover": {
+        "mode": "parity_gated_linear_blend_v1",
+        "blend_width": 0.04,
+        "bridge_dependent_rule": "доля кодов 1/2/5/6 ≥ 5 % (зафиксировано IMMA 24.09.2026; spec v1.1.3 §10)"
+      },
+      "gap_metrics": {
+        "median_revenue_CAGR_5Y": 1.029894041755271,
+        "median_fcf_margin_Y5": -0.013710656349291079,
+        "RV_Growth_Gap": 0.2703945059447288,
+        "Price_Expectation_Gap": 1.764129332648152,
+        "note": "диагностика (ответ LLM 21.09): без автоматического перехода оси Valuation"
+      },
+      "median_equity_value_5Y_b": 24.856198629292265,
+      "milestone_state_share": {
+        "Y3": {
+          "pre_service": 0.004264,
+          "service_started": 0.797336,
+          "terminal_failure": 0.1984
+        },
+        "Y5": {
+          "pre_service": 0.0,
+          "service_started": 0.8016,
+          "terminal_failure": 0.1984
+        },
+        "Y8": {
+          "pre_service": 0.0,
+          "service_started": 0.8016,
+          "terminal_failure": 0.1984
+        }
+      },
+      "service_onset": {
+        "P_onset_within_8Y": 0.8016,
+        "median_onset_quarter": 6.29079075247386,
+        "P_onset_by_Y3": 0.797336,
+        "P_onset_by_Y5": 0.8016
+      },
+      "mapping_warnings": []
+    }
+  },
+  "elapsed_ms": 100585.7,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

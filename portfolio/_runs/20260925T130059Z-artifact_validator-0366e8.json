@@ -1,0 +1,994 @@
+{
+  "run_id": "20260925T130059Z-artifact_validator-0366e8",
+  "model": "artifact_validator",
+  "version": "1.7.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "calibration",
+    "workspace": "/data/workspace-invest",
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "ASTS",
+      "as_of": "2026-09-25",
+      "archetype": "pre_service_or_milestone_driven",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "Constellation_Deployment": "D2",
+        "Commercial_Contracting": "C3",
+        "Service_Monetization": "M1",
+        "Regulatory_Spectrum": "R2",
+        "Funding_Dilution": "F2"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "existing_segments": {
+          "Gateway_Government": {
+            "base_revenue_quarterly": 31520000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "derived_fact",
+              "formula": "Q2 products 24.428M + U.S.-government services 7.092M = 31.520M.",
+              "source_ref": "2026-08-06 | https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.35,
+              "mode": 0.45,
+              "max": 1.4,
+              "provenance": "model_assumption",
+              "rationale": "Gateway/government revenue is lumpy and grew from a tiny base; center discounts extraordinary percentage growth while allowing contract milestones and backlog conversion."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.05,
+              "mode": 0.12,
+              "max": 0.35,
+              "provenance": "model_assumption",
+              "rationale": "Existing gateway/government revenue remains ancillary to SpaceMobile and should not dominate long-run value."
+            },
+            "growth_half_life_years": 1.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Pre-service gateway/government recognition is milestone-driven and mean-reverts quickly."
+            },
+            "latent_loading": {
+              "growth": 0.45
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Government/contract cycles are shared, but recognition is highly idiosyncratic."
+            }
+          }
+        },
+        "service_segments": {
+          "SpaceMobile": {
+            "initial_annual_revenue": {
+              "distribution": "triangular",
+              "min": 300000000.0,
+              "mode": 1000000000.0,
+              "max": 2500000000.0,
+              "provenance": "model_assumption",
+              "rationale": "First full service-year revenue assumption after commercial onset; supported qualitatively by 1.30B contracted backlog and >60 MNO relationships but not equated to backlog or company guidance."
+            },
+            "post_service_growth": {
+              "distribution": "triangular",
+              "min": 0.1,
+              "mode": 0.7,
+              "max": 1.7,
+              "provenance": "model_assumption",
+              "rationale": "Early service ramp can be very steep from a low base, but is constrained by satellite coverage, MNO activation and regulation."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.02,
+              "mode": 0.25,
+              "max": 0.6,
+              "provenance": "model_assumption",
+              "rationale": "Long-run direct-to-device service growth after the initial constellation ramp."
+            },
+            "growth_half_life_years": 2.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Service growth decays across several constellation and MNO activation cycles."
+            }
+          }
+        }
+      },
+      "milestone_model": {
+        "service_onset_milestone": "COMMERCIAL_SERVICE_ONSET",
+        "reference_value": {
+          "distribution": "triangular",
+          "min": 8000000000.0,
+          "mode": 24000000000.0,
+          "max": 60000000000.0,
+          "provenance": "model_assumption",
+          "rationale": "Reduced-form milestone-conditioned reference value for SpaceMobile service economics, deliberately independent of current ASTS market price."
+        },
+        "residual_on_failure": 0.12,
+        "residual_on_failure_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Gateway/government assets, spectrum/IP and remaining constellation assets retain some value if commercial SpaceMobile fails, but most current optionality is service-dependent."
+        },
+        "milestones": [
+          {
+            "id": "LAUNCH_CADENCE_SCALE",
+            "probability": 0.78,
+            "probability_meta": {
+              "provenance": "model_assumption",
+              "rationale": "13 spacecraft are in orbit, six launched within 50 days and 30 more were in production; launch/manufacturing execution remains material."
+            },
+            "requires": [],
+            "timing": {
+              "distribution": "triangular",
+              "min": 1.0,
+              "mode": 2.0,
+              "max": 4.0,
+              "provenance": "model_assumption",
+              "rationale": "Quarters from 2026-09-25 to demonstrate sustained launch/manufacturing cadence; distribution, not a company date."
+            },
+            "value_uplift": 0.18,
+            "value_uplift_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Cadence reduces deployment risk but does not itself create recurring service revenue."
+            },
+            "on_failure": {
+              "branch": "delay_retry",
+              "retry_probability": 0.65,
+              "retry_probability_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Launch/manufacturing setbacks can be retried after remediation."
+              },
+              "retry_delay_quarters": 2,
+              "retry_delay_quarters_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Reduced-form recovery period."
+              }
+            }
+          },
+          {
+            "id": "REGULATORY_MULTI_MARKET_READY",
+            "probability": 0.75,
+            "probability_meta": {
+              "provenance": "model_assumption",
+              "rationale": "FCC has authorized the 248-satellite planned network, but operating/spectrum approvals remain market-by-market internationally."
+            },
+            "requires": [],
+            "timing": {
+              "distribution": "triangular",
+              "min": 1.0,
+              "mode": 3.0,
+              "max": 6.0,
+              "provenance": "model_assumption",
+              "rationale": "Quarters to sufficient multi-market operating approvals for initial commercial launch; FCC U.S. network authorization is already a verified fact."
+            },
+            "value_uplift": 0.15,
+            "value_uplift_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Multi-market readiness reduces spectrum/regulatory bottleneck risk."
+            },
+            "on_failure": {
+              "branch": "delay_retry",
+              "retry_probability": 0.7,
+              "retry_probability_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Approval delay is more likely to shift timing than permanently destroy all service value."
+              },
+              "retry_delay_quarters": 2,
+              "retry_delay_quarters_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Reduced-form regulatory retry/approval delay."
+              }
+            }
+          },
+          {
+            "id": "COMMERCIAL_SERVICE_ONSET",
+            "probability": 0.82,
+            "probability_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Conditional on launch cadence and regulatory readiness, signed MNO agreements/backlog support a majority onset prior; no SpaceMobile Service revenue existed at Q2."
+            },
+            "requires": [
+              "LAUNCH_CADENCE_SCALE",
+              "REGULATORY_MULTI_MARKET_READY"
+            ],
+            "timing": {
+              "distribution": "triangular",
+              "min": 1.0,
+              "mode": 2.0,
+              "max": 4.0,
+              "provenance": "model_assumption",
+              "rationale": "Quarters after prerequisites to initial recurring SpaceMobile Service revenue; not a hard company date."
+            },
+            "value_uplift": 0.35,
+            "value_uplift_meta": {
+              "provenance": "model_assumption",
+              "rationale": "First recurring service revenue validates the core business model."
+            },
+            "on_failure": {
+              "branch": "delay_retry",
+              "retry_probability": 0.6,
+              "retry_probability_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Commercial onset can be delayed by integration/coverage issues without immediate terminal failure."
+              },
+              "retry_delay_quarters": 2,
+              "retry_delay_quarters_meta": {
+                "provenance": "model_assumption",
+                "rationale": "Reduced-form commercial retry period."
+              }
+            }
+          },
+          {
+            "id": "CONTINUOUS_KEY_MARKET_COVERAGE",
+            "probability": 0.7,
+            "probability_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Company states approximately 45–60 BB satellites can enable continuous coverage in key markets; reaching that deployed, functioning fleet remains a material execution hurdle."
+            },
+            "requires": [
+              "COMMERCIAL_SERVICE_ONSET"
+            ],
+            "timing": {
+              "distribution": "triangular",
+              "min": 2.0,
+              "mode": 5.0,
+              "max": 9.0,
+              "provenance": "model_assumption",
+              "rationale": "Quarters after service onset to continuous key-market coverage; grounded in 45–60 satellite requirement but not a company timing commitment."
+            },
+            "value_uplift": 0.25,
+            "value_uplift_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Continuous coverage supports materially broader usage and service economics."
+            },
+            "on_failure": {
+              "branch": "terminal_failure"
+            }
+          }
+        ]
+      },
+      "cash_model": {
+        "net_cash_0": 3700000000.0,
+        "net_cash_0_meta": {
+          "provenance": "derived_fact",
+          "formula": "Legacy C-engine liquidity-reserve field uses >3.7B pro-forma cash/cash equivalents/restricted cash after July 2026 financing as burn reserve; it is NOT GAAP net cash after debt.",
+          "source_ref": "2026-08-10 | https://www.sec.gov/Archives/edgar/data/1780312/000119312526342540/asts-ex99_1.htm"
+        },
+        "pre_service_burn_quarterly": {
+          "distribution": "triangular",
+          "min": 350000000.0,
+          "mode": 500000000.0,
+          "max": 750000000.0,
+          "provenance": "model_assumption",
+          "rationale": "H1 OCF + PP&E cash use was 1.004B, ~0.502B/quarter; range includes launch/satellite procurement volatility."
+        },
+        "dilution_penalty": 0.25,
+        "dilution_penalty_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Latest July 2026 financing reported <2% effective dilution, but future funding across a pre-service capital program can be more dilutive; 25% is a reduced-form downside penalty, not a forecast."
+        },
+        "core_margin": {
+          "distribution": "triangular",
+          "min": -0.2,
+          "mode": 0.03,
+          "max": 0.22,
+          "provenance": "model_assumption",
+          "rationale": "Gateway/government activities are small and lumpy; mature core economics are uncertain and not treated as the primary value engine."
+        },
+        "service_margin": {
+          "current_margin_at_onset": -0.25,
+          "current_margin_at_onset_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Initial service onset is assumed loss-making while coverage/utilization ramp."
+          },
+          "terminal_margin_Y5": {
+            "distribution": "triangular",
+            "min": 0.03,
+            "mode": 0.22,
+            "max": 0.44,
+            "provenance": "model_assumption",
+            "rationale": "Scaled operator-partner revenue-sharing can produce strong cash margins, with wide tails for network cost, partner economics and capacity utilization."
+          },
+          "half_life_years": 2.5,
+          "half_life_years_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Service margin converges over multiple coverage/utilization cycles."
+          }
+        }
+      },
+      "valuation": {
+        "fcf_maturity_margin": 0.08,
+        "fcf_maturity_margin_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Below 8% FCF margin, a revenue bridge is more informative than a mature FCF multiple."
+        },
+        "multiple_fcf": {
+          "distribution": "triangular",
+          "min": 15.0,
+          "mode": 25.0,
+          "max": 40.0,
+          "provenance": "model_assumption",
+          "rationale": "Mature satellite-connectivity FCF multiple after service validation, with broad technical/regulatory/competitive tails."
+        },
+        "multiple_revenue_bridge": {
+          "distribution": "triangular",
+          "min": 2.5,
+          "mode": 5.5,
+          "max": 11.0,
+          "provenance": "model_assumption",
+          "rationale": "Primary reference revenue bridge before FCF maturity. Center 5.5x is parity-consistent with 22% terminal service margin ×25x FCF, limiting artificial basis cliffs."
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.35,
+          "growth__valuation": 0.25,
+          "margin__valuation": 0.3
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Successful deployment/activation supports growth and margins, while technical and regulatory outcomes preserve high idiosyncratic risk."
+        },
+        "default_loading": 0.55,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Milestone-driven company-specific launch/manufacturing/regulatory execution dominates common market factors."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.85,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Pre-service milestone equity has very high path volatility; used only in drawdown layer."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 2.5,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Milestone repricing can persist until the next launch/regulatory/coverage resolution."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:ASTS_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 1.3002885477,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of reverse_valuation 1.2.0 equation; replace run_ref with authoritative sidecar run."
+        },
+        "discount_rate": 0.14,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from ASTS RV base case."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.09512022,
+              0.09512022
+            ],
+            "margin_nodes_pp": [
+              -0.02227806,
+              0.02227806
+            ],
+            "terminal_multiple_pct": [
+              -0.05040812,
+              0.05308398
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 archetype-C local robustness: growth sigma=base-revenue-weighted RMS existing-segment initial_growth sigma_eq; margin sigma=service terminal Y5 margin sigma_eq; multiple sigma=multiple_fcf log-space sigma_eq; perturbation=0.25*sigma with accepted ceilings."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Accepted v1.1.2 probability-delta tolerance for ASTS."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "LAUNCH_ECONOMICS",
+          "SATELLITE_CONNECTIVITY",
+          "CAPITAL_MARKETS",
+          "SPACE_REGULATION",
+          "GOVERNMENT_DEFENSE",
+          "INTEREST_RATES",
+          "AEROSPACE_CYCLE"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "ASTS_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.65,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Satellite production, launch cadence, MNO activation and regulatory execution persist across adjacent quarters."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "LAUNCH_ECONOMICS",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability",
+              "transform": "probability_logit_shift",
+              "effect_per_plus_1sigma": 0.035,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Launch economics/availability supports sustained cadence."
+              }
+            },
+            {
+              "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.timing",
+              "transform": "timing_quarters_shift",
+              "effect_per_plus_1sigma": -0.1,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Better launch economics shortens cadence scaling."
+              }
+            },
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Launch availability supports service capacity ramp."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability",
+              "contribution": 0.02,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Base cadence prior assumes continued access to launch."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support",
+              "shifts": [
+                {
+                  "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability",
+                  "delta": -0.25,
+                  "meta": {
+                    "provenance": "model_assumption",
+                    "rationale": "Critical launch-operations failure reduces cadence-success probability in knockout stability test."
+                  }
+                }
+              ]
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-01 LAUNCH_OPERATIONS_FAILURE / ASTS-FM-03 LAUNCH_ECONOMICS_DOWNSIDE."
+        },
+        {
+          "driver_id": "SATELLITE_CONNECTIVITY",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.probability",
+              "transform": "probability_logit_shift",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "MNO/direct-to-device demand supports commercial activation."
+              }
+            },
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.025,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Connectivity demand supports service adoption after onset."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth.mode",
+              "contribution": 0.03,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Central ramp assumes material MNO activation."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-05 SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE."
+        },
+        {
+          "driver_id": "CAPITAL_MARKETS",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.timing",
+              "transform": "timing_quarters_shift",
+              "effect_per_plus_1sigma": -0.08,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Capital access protects manufacturing/launch schedule."
+              }
+            },
+            {
+              "path": "cash_model.service_margin.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.006,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Financing flexibility reduces punitive funding drag during ramp."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.probability",
+              "contribution": 0.01,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Base onset probability assumes access to funded deployment resources."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-06 CAPITAL_MARKETS_TIGHTENING."
+        },
+        {
+          "driver_id": "SPACE_REGULATION",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.probability",
+              "transform": "probability_logit_shift",
+              "effect_per_plus_1sigma": -0.04,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Positive SPACE_REGULATION shock means tighter restrictions, reducing multi-market readiness probability."
+              }
+            },
+            {
+              "path": "milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.timing",
+              "transform": "timing_quarters_shift",
+              "effect_per_plus_1sigma": 0.12,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Tighter spectrum/space regulation delays multi-market readiness."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support",
+              "shifts": [
+                {
+                  "path": "milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.probability",
+                  "delta": -0.3,
+                  "meta": {
+                    "provenance": "model_assumption",
+                    "rationale": "Critical regulatory-spectrum failure reduces multi-market readiness probability in knockout stability test."
+                  }
+                }
+              ]
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-04 SPACE_REGULATORY_SPECTRUM_DELAY; ASTS-FM-08 SPACE_REGULATORY_RANGE_DELAY."
+        },
+        {
+          "driver_id": "GOVERNMENT_DEFENSE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Government demand can support post-onset service utilization without inventing a separate pre-service stochastic target unsupported by the schema."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "ASTS-FM-07 GOVERNMENT_SPACE_BUDGET."
+        },
+        {
+          "driver_id": "INTEREST_RATES",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.timing",
+              "transform": "timing_quarters_shift",
+              "effect_per_plus_1sigma": 0.06,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates modestly worsen funding-dependent deployment timing."
+              }
+            },
+            {
+              "path": "cash_model.service_margin.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": -0.004,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher financing burden modestly reduces service cash economics."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Secondary capital-cost channel."
+        },
+        {
+          "driver_id": "AEROSPACE_CYCLE",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability",
+              "transform": "probability_logit_shift",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "A healthier aerospace/space industrial cycle supports launch/manufacturing availability."
+              }
+            },
+            {
+              "path": "revenue_model.service_segments.SpaceMobile.post_service_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8.0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Broader space-industry capacity supports service ramp."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "One-sigma adverse direction under the accepted driver sign convention."
+              }
+            }
+          },
+          "note": "Secondary industrial-cycle channel. SPACE_SYSTEMS_EXECUTION critical failure has no canonical taxonomy root; it remains intrinsic milestone risk and a recalibration trigger rather than a fabricated mapping."
+        }
+      ]
+    },
+    "folders": [
+      "asts"
+    ],
+    "equity_value_0": 22774081748.88,
+    "dispersion_paths": 20000,
+    "joint_layer_spec_path": "/data/workspace-invest/methodology/Joint_Simulation_Layer_Schema_v1.1.yaml"
+  },
+  "outputs": {
+    "model_version": "1.7.0",
+    "schema_version": "1.0.2",
+    "mode": "calibration",
+    "ticker": "ASTS",
+    "archetype": "pre_service_or_milestone_driven",
+    "schema_errors": [],
+    "integrity": [
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability",
+        "message": "σ суммарного сдвига q3 = 0.031 ≤ 0.35 (milestone_probability; драйверов 2)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → milestone_model.milestones.LAUNCH_CADENCE_SCALE.timing",
+        "message": "σ суммарного сдвига q3 = 0.078 ≤ 1.0 (milestone_timing; драйверов 1)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.service_segments.SpaceMobile.post_service_growth",
+        "message": "σ суммарного сдвига q20 = 0.081 ≤ 0.15 (growth; драйверов 4)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.probability",
+        "message": "σ суммарного сдвига q3 = 0.017 ≤ 0.35 (milestone_probability; драйверов 1)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.timing",
+        "message": "σ суммарного сдвига q3 = 0.133 ≤ 1.0 (milestone_timing; драйверов 2)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → cash_model.service_margin.terminal_margin_Y5",
+        "message": "σ суммарного сдвига q20 = 0.018 ≤ 0.05 (margin; драйверов 2)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.probability",
+        "message": "σ суммарного сдвига q4 = 0.044 ≤ 0.35 (milestone_probability; драйверов 1)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.timing",
+        "message": "σ суммарного сдвига q4 = 0.133 ≤ 1.0 (milestone_timing; драйверов 1)"
+      }
+    ],
+    "engine_dry_run": {
+      "engine_version": "2.4.1",
+      "mapping_warnings": [],
+      "deterministic": true,
+      "median_CAGR_5Y": 0.851193274352473,
+      "P_loss_gt_30pct_5Y": 0.218,
+      "paths": 2000
+    },
+    "aggregate_shift": {
+      "milestone_model.milestones.LAUNCH_CADENCE_SCALE.probability": {
+        "sigma": 0.0314,
+        "cap": 0.35,
+        "kind": "milestone_probability",
+        "quarter": 3,
+        "drivers": 2,
+        "sum_abs_effect": 0.05,
+        "ok": true
+      },
+      "milestone_model.milestones.LAUNCH_CADENCE_SCALE.timing": {
+        "sigma": 0.0781,
+        "cap": 1.0,
+        "kind": "milestone_timing",
+        "quarter": 3,
+        "drivers": 1,
+        "sum_abs_effect": 0.1,
+        "ok": true
+      },
+      "revenue_model.service_segments.SpaceMobile.post_service_growth": {
+        "sigma": 0.0813,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 4,
+        "sum_abs_effect": 0.064,
+        "ok": true
+      },
+      "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.probability": {
+        "sigma": 0.0174,
+        "cap": 0.35,
+        "kind": "milestone_probability",
+        "quarter": 3,
+        "drivers": 1,
+        "sum_abs_effect": 0.03,
+        "ok": true
+      },
+      "milestone_model.milestones.COMMERCIAL_SERVICE_ONSET.timing": {
+        "sigma": 0.133,
+        "cap": 1.0,
+        "kind": "milestone_timing",
+        "quarter": 3,
+        "drivers": 2,
+        "sum_abs_effect": 0.14,
+        "ok": true
+      },
+      "cash_model.service_margin.terminal_margin_Y5": {
+        "sigma": 0.0179,
+        "cap": 0.05,
+        "kind": "margin",
+        "quarter": 20,
+        "drivers": 2,
+        "sum_abs_effect": 0.01,
+        "ok": true
+      },
+      "milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.probability": {
+        "sigma": 0.0443,
+        "cap": 0.35,
+        "kind": "milestone_probability",
+        "quarter": 4,
+        "drivers": 1,
+        "sum_abs_effect": 0.04,
+        "ok": true
+      },
+      "milestone_model.milestones.REGULATORY_MULTI_MARKET_READY.timing": {
+        "sigma": 0.1329,
+        "cap": 1.0,
+        "kind": "milestone_timing",
+        "quarter": 4,
+        "drivers": 1,
+        "sum_abs_effect": 0.12,
+        "ok": true
+      }
+    },
+    "dispersion": {
+      "paths": 20000,
+      "equity_value_0": 22774081748.88,
+      "intrinsic": {
+        "W": 1.2956,
+        "q05": -0.9915177352238763,
+        "q95": 0.304084125943043,
+        "median_CAGR_5Y": 0.009191322830998216,
+        "P_loss_gt_30pct_5Y": 0.35215,
+        "P_2x_5Y": 0.22325
+      },
+      "full": {
+        "W": 1.296,
+        "q05": -0.9915177352238763,
+        "q95": 0.30453077257116473,
+        "median_CAGR_5Y": 0.008879471438134612,
+        "P_loss_gt_30pct_5Y": 0.3564,
+        "P_2x_5Y": 0.22265
+      },
+      "full_to_intrinsic_ratio": 1.0,
+      "bands": {
+        "intrinsic_W": [
+          0.6,
+          1.3
+        ],
+        "full_W": [
+          0.7,
+          1.5
+        ],
+        "full_to_intrinsic_width_ratio_max": 1.6
+      }
+    },
+    "pass": true,
+    "note": "MC-G5-013 — hard gate по Joint_Simulation_Layer_Rules_v1.1 (strict_aggregate=false → warning); MC-G5-009 (антицикличность) и MC-G5-010 (полнота provenance сверх схемы) статически не проверяются",
+    "decision": "none"
+  },
+  "elapsed_ms": 5627.5,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

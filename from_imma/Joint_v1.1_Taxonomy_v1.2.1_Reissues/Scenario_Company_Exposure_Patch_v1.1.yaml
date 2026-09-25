@@ -1,0 +1,48 @@
+version: '1.1'
+artifact: scenario_company_exposure_patch
+as_of: '2026-09-25'
+status: proposed_requires_host_integration
+supersedes: Scenario_Company_Mapping_Patch_v1.0 exposure components only
+taxonomy_ref: MPC_Driver_Taxonomy_v1.2.1
+joint_ref: Joint_Simulation_Layer_Schema_v1.1
+rule: Company MC calibration stores driver_parameter_mapping but not driver_exposure_vector; apply these values to canonical mpc_inputs.yaml so taxonomy sign/materiality and MC mapping remain consistent.
+companies:
+  NBIS:
+    ACCELERATOR_PRICE_COMPETITION:
+      value: 1
+      provenance: model_assumption
+      rationale: Lower accelerator prices/unit economics are beneficial to an AI infrastructure buyer.
+  NVDA:
+    ACCELERATOR_PRICE_COMPETITION:
+      value: -2
+      provenance: model_assumption
+      rationale: Stronger accelerator price/performance competition directly pressures producer ASP/economics and scarcity rents.
+  MSFT:
+    ACCELERATOR_PRICE_COMPETITION:
+      value: 1
+      provenance: model_assumption
+      rationale: Lower accelerator unit costs benefit a hyperscale compute buyer.
+    TAIWAN_SUPPLY:
+      from: -1
+      value: 1
+      provenance: normative_semantic_correction
+      rationale: Canonical TAIWAN_SUPPLY means healthier/more available Taiwan-linked semiconductor supply; strategic dependence must not invert the sign.
+  META:
+    ACCELERATOR_PRICE_COMPETITION:
+      value: 1
+      provenance: model_assumption
+      rationale: Lower accelerator unit costs benefit a large AI infrastructure buyer.
+    TAIWAN_SUPPLY:
+      from: -1
+      value: 1
+      provenance: normative_semantic_correction
+      rationale: Canonical TAIWAN_SUPPLY means healthier/more available Taiwan-linked semiconductor supply; strategic dependence must not invert the sign.
+  ASML:
+    ACCELERATOR_PRICE_COMPETITION:
+      value: -1
+      provenance: model_assumption
+      rationale: Stronger two-system accelerator competition modestly pressures Western leading-edge scarcity economics.
+acceptance:
+- apply only with corresponding host-accepted MC reissue
+- validate canonical mpc_inputs against Company Artifact Schema v1.0.5
+- preserve all unrelated driver exposures verbatim

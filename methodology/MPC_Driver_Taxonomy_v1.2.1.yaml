@@ -1,0 +1,94 @@
+version: '1.2.1'
+artifact: driver_taxonomy
+supersedes: MPC_Driver_Taxonomy_v1.2
+as_of: '2026-09-25'
+scale:
+  '-2': strong_negative
+  '-1': negative
+  '0': immaterial
+  '1': positive
+  '2': strong_positive
+direction_rule: 'Знак показывает влияние УВЕЛИЧЕНИЯ/усиления названного драйвера на компанию. INTEREST_RATES=-2 означает,
+  что рост ставок сильно отрицателен; PATENT_EXCLUSIVITY=+2 означает, что более сильная/длинная эксклюзивность положительна.
+
+  '
+driver_vs_common_cause:
+  driver: 'Нормализованный экономический/структурный фактор с направленным воздействием, пригодный для сравнения экспозиций
+    между компаниями и сценариями.
+
+    '
+  common_cause_id: 'Конкретный механизм отказа/шока, объединяющий failure modes. Он не обязан иметь непрерывную шкалу и не
+    обязан присутствовать у всех компаний.
+
+    '
+  promotion_rule: 'common_cause_id переносится в driver taxonomy только если фактор имеет осмысленное направление, ожидается
+    минимум у двух компаний/будущих кандидатов либо нужен Scenario Engine как самостоятельная ось риска.
+
+    '
+  example: 'PREDICTION_MARKETS_REGULATION остаётся common_cause_id конкретного failure mode HOOD; более широкий систематический
+    фактор FINTECH_REGULATION является driver.
+
+    '
+drivers:
+  existing_v1_0:
+  - AI_COMPUTE_DEMAND
+  - HYPERSCALER_CAPEX
+  - SEMICONDUCTOR_WFE
+  - ADVANCED_PACKAGING
+  - HBM_MEMORY
+  - EDA_DESIGN_COMPLEXITY
+  - CLOUD_SOFTWARE_DEMAND
+  - DATA_CENTER_POWER
+  - LAUNCH_ECONOMICS
+  - SATELLITE_CONNECTIVITY
+  - GOVERNMENT_DEFENSE
+  - INTEREST_RATES
+  - CAPITAL_MARKETS
+  - CHINA_REVENUE
+  - TAIWAN_SUPPLY
+  - ACQUISITION_INTEGRATION
+  added_v1_1:
+  - id: AI_CLOUD_PRICING
+    meaning: Уровень цены/экономики AI-cloud capacity.
+  - id: HEALTHCARE_DEMAND
+    meaning: Спрос на медицинские/фармацевтические терапии.
+  - id: DRUG_PIPELINE
+    meaning: Качество/успешность клинического pipeline.
+  - id: REIMBURSEMENT_PRICING
+    meaning: Благоприятность reimbursement и реализуемого pricing.
+  - id: BIOPHARMA_MANUFACTURING_CAPACITY
+    meaning: Доступность биофармацевтических производственных мощностей.
+  - id: PHARMA_REGULATION
+    meaning: Жёсткость регуляторной среды для лекарств; усиление обычно отрицательно.
+  - id: PATENT_EXCLUSIVITY
+    meaning: Сила/длительность патентной и регуляторной эксклюзивности.
+  - id: ELECTRIFICATION_GRID
+    meaning: Темп электрификации и расширения/модернизации энергосети.
+  - id: UTILITY_CAPEX
+    meaning: Капитальные расходы utilities/grid operators.
+  - id: INDUSTRIAL_RESHORING
+    meaning: Темп локализации/возврата промышленного производства и новых заводов.
+  - id: AEROSPACE_CYCLE
+    meaning: Широкий цикл aerospace/space manufacturing and procurement.
+  - id: CONSUMER_CREDIT
+    meaning: Качество потребительского кредита; рост означает улучшение credit health.
+  - id: CRYPTO_CYCLE
+    meaning: Рост активности/цен/торгового спроса crypto markets.
+  - id: FINTECH_REGULATION
+    meaning: Жёсткость регулирования retail trading/fintech; рост означает ужесточение.
+  - id: DIGITAL_AD_DEMAND
+    meaning: Спрос рекламодателей на digital advertising.
+  - id: SPACE_REGULATION
+    meaning: Жёсткость/ограничительность launch/spectrum/space regulation; рост означает ужесточение.
+  added_v1_2:
+  - id: ACCELERATOR_PRICE_COMPETITION
+    meaning: Интенсивность ценовой/price-performance конкуренции в AI accelerators; рост означает более сильную конкуренцию
+      и давление на accelerator ASP/economics. Знак company exposure определяется её ролью (производитель vs покупатель вычислителей).
+    promotion_reason: Нужен Scenario Engine CHIP_COLD_WAR и имеет осмысленные разнонаправленные экспозиции минимум у NVDA/NBIS/MSFT/META/ASML.
+not_promoted:
+- common_cause_id: PREDICTION_MARKETS_REGULATION
+  reason: Слишком узкий, событийный и юрисдикционный; отражается через FINTECH_REGULATION + failure mode.
+- common_cause_id: PHARMA_LITIGATION
+  reason: Дискретный litigation failure mechanism, не систематический направленный driver.
+- common_cause_id: CONTRACT_CONVERSION_FAILURE
+  reason: Failure mechanism; направленность зависит от типа контракта.

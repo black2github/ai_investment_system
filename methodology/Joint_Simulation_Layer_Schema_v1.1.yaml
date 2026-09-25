@@ -1,0 +1,151 @@
+version: "1.1"
+artifact: joint_simulation_layer
+supersedes: Joint_Simulation_Layer_Schema_v1.0
+as_of: "2026-09-25"
+status: proposed_normative
+
+scenario_interface:
+  scenario_engine_required_for_multiscenario: true
+  fallback_without_scenario_engine:
+    id: BASE
+    probability: 1.0
+    driver_overrides: {}
+    root_correlation_overrides: []
+
+root_factors:
+  distribution: stationary_standard_normal_AR1
+  timestep: quarterly
+  factors:
+    GLOBAL_GROWTH: {phi: 0.65}
+    AI_CAPEX_CYCLE: {phi: 0.75}
+    SEMI_SUPPLY_HEALTH: {phi: 0.55}
+    POWER_BUILDOUT: {phi: 0.80}
+    FINANCIAL_CONDITIONS: {phi: 0.60}
+    SPACE_GOVERNMENT_DEMAND: {phi: 0.75}
+    SPACE_REGULATORY_ACCESS: {phi: 0.70}
+    HEALTHCARE_DEMAND_ACCESS: {phi: 0.70}
+    CONSUMER_RISK_APPETITE: {phi: 0.55}
+    DIGITAL_PLATFORM_DEMAND: {phi: 0.60}
+    CHINA_MARKET_ACCESS: {phi: 0.70}
+  provenance: model_assumption
+
+root_correlation:
+  diagonal: 1.0
+  default_off_diagonal: 0.0
+  pair_overrides:
+    GLOBAL_GROWTH__AI_CAPEX_CYCLE: 0.35
+    GLOBAL_GROWTH__FINANCIAL_CONDITIONS: 0.35
+    GLOBAL_GROWTH__CONSUMER_RISK_APPETITE: 0.45
+    GLOBAL_GROWTH__DIGITAL_PLATFORM_DEMAND: 0.55
+    GLOBAL_GROWTH__HEALTHCARE_DEMAND_ACCESS: 0.10
+    GLOBAL_GROWTH__POWER_BUILDOUT: 0.25
+    GLOBAL_GROWTH__SEMI_SUPPLY_HEALTH: 0.15
+    GLOBAL_GROWTH__CHINA_MARKET_ACCESS: 0.10
+    AI_CAPEX_CYCLE__SEMI_SUPPLY_HEALTH: 0.30
+    AI_CAPEX_CYCLE__POWER_BUILDOUT: 0.45
+    AI_CAPEX_CYCLE__DIGITAL_PLATFORM_DEMAND: 0.30
+    AI_CAPEX_CYCLE__FINANCIAL_CONDITIONS: 0.20
+    SEMI_SUPPLY_HEALTH__CHINA_MARKET_ACCESS: 0.20
+    FINANCIAL_CONDITIONS__CONSUMER_RISK_APPETITE: 0.40
+    FINANCIAL_CONDITIONS__DIGITAL_PLATFORM_DEMAND: 0.20
+    FINANCIAL_CONDITIONS__CHINA_MARKET_ACCESS: 0.05
+    SPACE_GOVERNMENT_DEMAND__GLOBAL_GROWTH: 0.05
+    SPACE_GOVERNMENT_DEMAND__FINANCIAL_CONDITIONS: 0.05
+    SPACE_GOVERNMENT_DEMAND__SPACE_REGULATORY_ACCESS: 0.10
+    SPACE_REGULATORY_ACCESS__GLOBAL_GROWTH: 0.05
+    HEALTHCARE_DEMAND_ACCESS__CONSUMER_RISK_APPETITE: 0.05
+  provenance: model_assumption
+  psd_checked_v1_0: true
+
+scenario_persistence_override:
+  semantics: innovation_level_driver_persistence
+  null_behavior: bypass_use_base_or_phase_root_driver_path
+  root_phi_unchanged: true
+  company_mapping_decay_unchanged: true
+  innovation_formula: "eta_d,t = standardize(sum(lambda_d,r * u_r,t) + w_d * epsilon_d,t), with u_r,t root innovations after the current phase root-correlation state and epsilon_d,t the same driver idiosyncratic innovation used by BASE"
+  recursion_formula: "y_d,t = rho_t * y_d,t-1 + sqrt(1-rho_t^2) * eta_d,t"
+  scenario_driver_formula: "driver_scenario_d,t = mean_shift_d,t + volatility_multiplier_d,t * y_d,t"
+  initialization: "when override begins, y_d,t-1 equals the last emitted standardized driver shock; do not initialize to zero"
+  ramp_rule: "numeric-to-numeric rho is linearly interpolated by phase weight; null is bypass and is not interpreted as rho=0"
+  validation_rule: "on a constant-rho plateau after warm-up, Var(y) must remain approximately 1 and empirical lag-1 correlation must approximate rho; insufficient plateau length is diagnostic, not failure"
+  provenance: normative_rule
+
+driver_generation:
+  formula: "standardize(sum(root_loading * root_factor) + idio_weight * epsilon_driver)"
+  unspecified_driver_default: idiosyncratic
+  explicit_idiosyncratic_drivers:
+  - ACQUISITION_INTEGRATION
+  - DRUG_PIPELINE
+  - BIOPHARMA_MANUFACTURING_CAPACITY
+  - PHARMA_REGULATION
+  - PATENT_EXCLUSIVITY
+  - FINTECH_REGULATION
+  explicit_idiosyncratic_rule: "These taxonomy drivers intentionally have no root mapping in v1.1. They retain independent standardized driver innovations; scenario mean/volatility overrides may still apply if a scenario explicitly names them. No root covariance is implied until a future normative reissue adds a mapping."
+  mappings:
+    AI_COMPUTE_DEMAND: {roots: {AI_CAPEX_CYCLE: 0.85, GLOBAL_GROWTH: 0.20}, idio_weight: 0.35}
+    HYPERSCALER_CAPEX: {roots: {AI_CAPEX_CYCLE: 0.80, FINANCIAL_CONDITIONS: 0.15}, idio_weight: 0.35}
+    SEMICONDUCTOR_WFE: {roots: {AI_CAPEX_CYCLE: 0.50, GLOBAL_GROWTH: 0.30}, idio_weight: 0.45}
+    ADVANCED_PACKAGING: {roots: {SEMI_SUPPLY_HEALTH: 0.65, AI_CAPEX_CYCLE: 0.35}, idio_weight: 0.35}
+    HBM_MEMORY: {roots: {SEMI_SUPPLY_HEALTH: 0.55, AI_CAPEX_CYCLE: 0.45}, idio_weight: 0.35}
+    EDA_DESIGN_COMPLEXITY: {roots: {AI_CAPEX_CYCLE: 0.40, DIGITAL_PLATFORM_DEMAND: 0.25}, idio_weight: 0.60}
+    CLOUD_SOFTWARE_DEMAND: {roots: {DIGITAL_PLATFORM_DEMAND: 0.75, GLOBAL_GROWTH: 0.25}, idio_weight: 0.35}
+    DATA_CENTER_POWER: {roots: {POWER_BUILDOUT: 0.75, AI_CAPEX_CYCLE: 0.30}, idio_weight: 0.35}
+    LAUNCH_ECONOMICS: {roots: {SPACE_GOVERNMENT_DEMAND: 0.25, SPACE_REGULATORY_ACCESS: 0.20}, idio_weight: 0.75}
+    SATELLITE_CONNECTIVITY: {roots: {GLOBAL_GROWTH: 0.25, SPACE_GOVERNMENT_DEMAND: 0.25}, idio_weight: 0.70}
+    GOVERNMENT_DEFENSE: {roots: {SPACE_GOVERNMENT_DEMAND: 0.80, GLOBAL_GROWTH: 0.10}, idio_weight: 0.35}
+    INTEREST_RATES: {roots: {FINANCIAL_CONDITIONS: -0.90}, idio_weight: 0.25}
+    CAPITAL_MARKETS: {roots: {FINANCIAL_CONDITIONS: 0.90}, idio_weight: 0.25}
+    CHINA_REVENUE: {roots: {CHINA_MARKET_ACCESS: 0.80, GLOBAL_GROWTH: 0.15}, idio_weight: 0.35}
+    TAIWAN_SUPPLY: {roots: {SEMI_SUPPLY_HEALTH: 0.90}, idio_weight: 0.25}
+    AI_CLOUD_PRICING: {roots: {AI_CAPEX_CYCLE: 0.60}, idio_weight: 0.55}
+    HEALTHCARE_DEMAND: {roots: {HEALTHCARE_DEMAND_ACCESS: 0.80, GLOBAL_GROWTH: 0.10}, idio_weight: 0.40}
+    REIMBURSEMENT_PRICING: {roots: {HEALTHCARE_DEMAND_ACCESS: 0.60}, idio_weight: 0.60}
+    ELECTRIFICATION_GRID: {roots: {POWER_BUILDOUT: 0.75, GLOBAL_GROWTH: 0.15}, idio_weight: 0.40}
+    UTILITY_CAPEX: {roots: {POWER_BUILDOUT: 0.65, GLOBAL_GROWTH: 0.20, FINANCIAL_CONDITIONS: 0.15}, idio_weight: 0.40}
+    INDUSTRIAL_RESHORING: {roots: {AI_CAPEX_CYCLE: 0.30, POWER_BUILDOUT: 0.35, GLOBAL_GROWTH: 0.20}, idio_weight: 0.60}
+    AEROSPACE_CYCLE: {roots: {SPACE_GOVERNMENT_DEMAND: 0.50, GLOBAL_GROWTH: 0.25}, idio_weight: 0.55}
+    CONSUMER_CREDIT: {roots: {CONSUMER_RISK_APPETITE: 0.80, FINANCIAL_CONDITIONS: 0.20}, idio_weight: 0.35}
+    CRYPTO_CYCLE: {roots: {CONSUMER_RISK_APPETITE: 0.55, FINANCIAL_CONDITIONS: 0.35}, idio_weight: 0.50}
+    DIGITAL_AD_DEMAND: {roots: {DIGITAL_PLATFORM_DEMAND: 0.70, CONSUMER_RISK_APPETITE: 0.20, GLOBAL_GROWTH: 0.20}, idio_weight: 0.35}
+    SPACE_REGULATION: {roots: {SPACE_REGULATORY_ACCESS: -0.90}, idio_weight: 0.25}
+    ACCELERATOR_PRICE_COMPETITION: {roots: {AI_CAPEX_CYCLE: 0.35, SEMI_SUPPLY_HEALTH: 0.30}, idio_weight: 0.65}
+
+company_calibration_required_sections:
+  - joint_simulation
+  - driver_parameter_mapping
+
+material_driver_rule:
+  any_of:
+    - "abs(driver_exposure_vector) == 2"
+    - "terminal_value_sensitivity_share >= 0.10"
+    - "one_sigma_driver_shift_changes_median_CAGR_5Y_by_at_least_0.01"
+    - "driver participates in critical_or_high_failure_mode"
+  provenance: model_assumption
+
+joint_path_algorithm:
+  - sample_scenario
+  - generate_root_paths
+  - apply_scenario_overrides
+  - generate_standardized_driver_paths
+  - map_drivers_to_company_parameters
+  - add_company_idiosyncratic_shocks
+  - run_company_models
+  - store_relative_values_with_same_path_id
+
+scenario_override_execution_v1_1:
+  - apply_scenario_root_correlation_state
+  - derive_root_innovations_for_persistence_override
+  - generate_or_reuse_standardized_driver_path
+  - apply_scenario_driver_mean_volatility_and_persistence_overrides
+  - preserve_same_global_path_id_and_base_innovations
+
+validation:
+  - root_matrix_psd
+  - all_material_drivers_have_mapping
+  - scenario_probabilities_sum_to_one
+  - driver_long_run_variance_approximately_one
+  - scenario_persistence_plateau_variance_approximately_one
+  - scenario_persistence_plateau_lag1_matches_override
+  - same_factor_path_for_all_companies
+  - standalone_marginals_match_joint_marginals_within_tolerance
+  - no_double_counting

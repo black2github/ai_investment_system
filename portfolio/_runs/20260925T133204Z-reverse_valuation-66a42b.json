@@ -1,0 +1,138 @@
+{
+  "run_id": "20260925T133204Z-reverse_valuation-66a42b",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "SPOT",
+    "valuation_date": "2026-09-25",
+    "calibration": "SPOT_calibration_v1.0 (A3+P3+D1+M3+C3; EUR)",
+    "market": {
+      "price": 444.5462478185,
+      "shares_outstanding": 205584205,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm"
+    },
+    "balance_sheet": {
+      "net_debt": -9388000000.0,
+      "cash": 9388000000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 18113000000.0,
+      "current_fcf_margin": 0.1741138560687433,
+      "revenue_source": "FY2025 revenue 17.186B + H1 2026 9.310B - H1 2025 8.383B = 18.113B EUR TTM.",
+      "source": "H1 2026 Spotify-defined FCF 1.621B / H1 revenue 9.310B = 17.4114%."
+    },
+    "discounting": {
+      "discount_rate": 0.1,
+      "stress_rates": [
+        0.085,
+        0.12
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.12,
+        "base": 0.18,
+        "max": 0.24
+      },
+      "multiple_range": {
+        "min": 16,
+        "base": 24,
+        "max": 32
+      }
+    },
+    "margin_transition": {
+      "type": "mature_mean_reversion",
+      "path": {
+        "1": 0.175,
+        "2": 0.176,
+        "3": 0.178,
+        "4": 0.179,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "Audience_Scale": "A3",
+      "Premium_Monetization": "P3",
+      "Ad_Monetization": "D1",
+      "Unit_Economics": "M3",
+      "Profitability_Cash": "C3"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "be6c2b57711ea42a",
+    "scenario_state": {
+      "Audience_Scale": "A3",
+      "Premium_Monetization": "P3",
+      "Ad_Monetization": "D1",
+      "Unit_Economics": "M3",
+      "Profitability_Cash": "C3"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 91391686943.4993,
+      "enterprise_value": 82003686943.4993,
+      "terminal_fcf_margin": 0.18,
+      "terminal_multiple": 24.0,
+      "discount_rate": 0.1,
+      "current_fcf_margin": 0.1741138560687433,
+      "revenue_ttm": 18113000000.0,
+      "implied_revenue_cagr_5y": 0.100829,
+      "terminal_revenue": 29281238244.71,
+      "terminal_fcf": 5270622884.05,
+      "pv_interim_fcf": 12848275657.23,
+      "pv_terminal_value": 78543411228.21,
+      "terminal_value_share_of_pv": 0.8594,
+      "control_cagr": 0.100829
+    },
+    "validation": {
+      "converged": true,
+      "residual": -58.068267822265625,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.12|multiple=16": 0.2744,
+        "margin=0.12|multiple=24": 0.1856,
+        "margin=0.12|multiple=32": 0.125,
+        "margin=0.18|multiple=16": 0.1856,
+        "margin=0.18|multiple=24": 0.1008,
+        "margin=0.18|multiple=32": 0.0435,
+        "margin=0.24|multiple=16": 0.125,
+        "margin=0.24|multiple=24": 0.0435,
+        "margin=0.24|multiple=32": -0.0115
+      },
+      "discount_rate_grid": {
+        "r=0.085": 0.0858,
+        "r=0.12": 0.1208
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "terminal_dependent",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": false
+    }
+  },
+  "elapsed_ms": 11.7,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

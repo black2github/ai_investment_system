@@ -38,6 +38,7 @@ driver_exposure_vector:
   FINTECH_REGULATION: 0
   DIGITAL_AD_DEMAND: 0
   SPACE_REGULATION: 0
+  ACCELERATOR_PRICE_COMPETITION: -2
 driver_vector_provenance: model_assumption
 failure_modes:
 - failure_id: NVDA-FM-01
@@ -72,7 +73,7 @@ failure_modes:
   common_cause_id: CUSTOMER_CONCENTRATION
   severity: medium
   name: Customer concentration amplifies demand shock
-driver_taxonomy_version: '1.1'
+driver_taxonomy_version: '1.2.1'
 changelog:
 - date: '2026-09-21'
   change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

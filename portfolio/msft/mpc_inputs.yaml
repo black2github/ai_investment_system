@@ -21,7 +21,7 @@ driver_exposure_vector:
   INTEREST_RATES: -1
   CAPITAL_MARKETS: 0
   CHINA_REVENUE: 0
-  TAIWAN_SUPPLY: -1
+  TAIWAN_SUPPLY: 1
   ACQUISITION_INTEGRATION: 1
   AI_CLOUD_PRICING: 2
   HEALTHCARE_DEMAND: 0
@@ -39,6 +39,7 @@ driver_exposure_vector:
   FINTECH_REGULATION: 0
   DIGITAL_AD_DEMAND: 1
   SPACE_REGULATION: 0
+  ACCELERATOR_PRICE_COMPETITION: 1
 driver_interpretation:
   HYPERSCALER_CAPEX:
     directionality: dual
@@ -76,7 +77,7 @@ failure_modes:
   name: Regulatory/antitrust pressure
   common_cause_id: PLATFORM_REGULATORY_PRESSURE
   severity: medium
-driver_taxonomy_version: '1.1'
+driver_taxonomy_version: '1.2.1'
 changelog:
 - date: '2026-09-21'
   change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'

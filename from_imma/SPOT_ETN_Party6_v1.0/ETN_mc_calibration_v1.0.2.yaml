@@ -1,3 +1,9 @@
+# calibration_version: 1.0.2
+# supersedes: ETN_mc_calibration_v1.0.1.yaml
+# normative_schema: Company_MC_Calibration_Schema_v1.0.2
+# joint_contract_runtime: Joint_Simulation_Layer_Schema_v1.1
+# engine_schema_tag: company_mc 2.3.1
+# host_engine: company_mc 2.3.2
 schema_version: 1.0.2
 artifact: company_mc_calibration
 ticker: ETN
@@ -18,7 +24,8 @@ simulation:
   seed: 20260920
   seed_meta:
     provenance: model_assumption
-    rationale: Fixed reproducibility seed; host company_mc 2.3.2 derives company-specific RNG stream, while schema field remains company_mc 2.3.1.
+    rationale: Fixed reproducibility seed; host company_mc 2.3.2 derives company-specific RNG stream, while schema field remains
+      company_mc 2.3.1.
   antithetic_variates: true
   store_summary_quantiles:
   - 0.01
@@ -53,8 +60,8 @@ revenue_model:
         mode: 0.14
         max: 0.38
         provenance: model_assumption
-        rationale: Q2 organic +18%, TTM orders +41% and backlog +33% support strong initial conditions but industrial/data-center cycles allow
-          contraction.
+        rationale: Q2 organic +18%, TTM orders +41% and backlog +33% support strong initial conditions but industrial/data-center
+          cycles allow contraction.
       long_run_growth_y8:
         distribution: triangular
         min: 0.0
@@ -110,7 +117,8 @@ revenue_model:
         mode: 0.06
         max: 0.28
         provenance: model_assumption
-        rationale: Aerospace plus Mobility has mixed cycle exposure; current perimeter retains Mobility until transaction close.
+        rationale: Aerospace plus Mobility has mixed cycle exposure; current perimeter retains Mobility until transaction
+          close.
       long_run_growth_y8:
         distribution: triangular
         min: -0.03
@@ -139,7 +147,8 @@ margin_model:
     mode: 0.14
     max: 0.24
     provenance: model_assumption
-    rationale: Y5 cash margin spans debt/integration/cycle pressure through successful high-margin electrical mix; center is independent of price.
+    rationale: Y5 cash margin spans debt/integration/cycle pressure through successful high-margin electrical mix; center
+      is independent of price.
   terminal_margin_Y8:
     distribution: triangular
     min: 0.06
@@ -203,8 +212,8 @@ valuation:
       mode: 3.1
       max: 5.8
       provenance: model_assumption
-      rationale: Primary parity reference bridge. Mode 3.1x / 22x Y5 FCF multiple implies ~14.1% parity margin, aligned with the 14% Y5 margin
-        center; not an emergency-only fallback.
+      rationale: Primary parity reference bridge. Mode 3.1x / 22x Y5 FCF multiple implies ~14.1% parity margin, aligned with
+        the 14% Y5 margin center; not an emergency-only fallback.
 dependencies:
   latent_factors:
   - growth
@@ -216,7 +225,8 @@ dependencies:
     margin__valuation: 0.35
   factor_correlations_meta:
     provenance: model_assumption
-    rationale: Positive co-movement between operating growth, cash economics and duration; idiosyncratic uncertainty remains material.
+    rationale: Positive co-movement between operating growth, cash economics and duration; idiosyncratic uncertainty remains
+      material.
   default_loading: 0.68
   default_loading_meta:
     provenance: model_assumption
@@ -236,7 +246,8 @@ reverse_valuation_ref:
   implied_revenue_cagr_5y: 0.20114768849457165
   implied_revenue_cagr_5y_meta:
     provenance: derived_fact
-    formula: Local deterministic preflight of Reverse Valuation v1.2.0 equation from ETN_calibration_v1.0.yaml; host run_ref remains authoritative.
+    formula: Local deterministic preflight of Reverse Valuation v1.2.0 equation from ETN_calibration_v1.0.yaml; host run_ref
+      remains authoritative.
   discount_rate: 0.1
   discount_rate_meta:
     provenance: model_assumption
@@ -258,9 +269,9 @@ robustness_tests:
       - 0.15
     perturbations_meta:
       provenance: derived_fact
-      formula: 'v1.1.2 local robustness: sigma_eq=(Q84-Q16)/2; growth=base-revenue-weighted RMS segment initial_growth sigma_eq; margin=Y5 terminal
-        margin sigma_eq; multiple=Y5 log-space sigma_eq; perturbation=0.25*sigma with absolute ceilings growth 10pp, margin 5pp, multiple 20%
-        relative.'
+      formula: 'v1.1.2 local robustness: sigma_eq=(Q84-Q16)/2; growth=base-revenue-weighted RMS segment initial_growth sigma_eq;
+        margin=Y5 terminal margin sigma_eq; multiple=Y5 log-space sigma_eq; perturbation=0.25*sigma with absolute ceilings
+        growth 10pp, margin 5pp, multiple 20% relative.'
     delta_tolerance: 0.1
     delta_tolerance_meta:
       provenance: model_assumption
@@ -290,7 +301,7 @@ driver_parameter_mapping:
   stochastic_targets:
   - path: revenue_model.segments.ElectricalAmericas.initial_growth
     transform: additive_pp
-    effect_per_plus_1sigma: 0.01875
+    effect_per_plus_1sigma: 0.016875
     lag_quarters: 1
     decay_half_life_quarters: 8
     meta:
@@ -324,7 +335,7 @@ driver_parameter_mapping:
   stochastic_targets:
   - path: revenue_model.segments.ElectricalAmericas.initial_growth
     transform: additive_pp
-    effect_per_plus_1sigma: 0.015
+    effect_per_plus_1sigma: 0.0135
     lag_quarters: 0
     decay_half_life_quarters: 8
     meta:
@@ -400,7 +411,7 @@ driver_parameter_mapping:
   stochastic_targets:
   - path: revenue_model.segments.ElectricalAmericas.initial_growth
     transform: additive_pp
-    effect_per_plus_1sigma: 0.015
+    effect_per_plus_1sigma: 0.0135
     lag_quarters: 1
     decay_half_life_quarters: 10
     meta:
@@ -434,7 +445,7 @@ driver_parameter_mapping:
   stochastic_targets:
   - path: revenue_model.segments.ElectricalAmericas.initial_growth
     transform: additive_pp
-    effect_per_plus_1sigma: 0.015
+    effect_per_plus_1sigma: 0.0135
     lag_quarters: 1
     decay_half_life_quarters: 8
     meta:
@@ -463,7 +474,7 @@ driver_parameter_mapping:
   stochastic_targets:
   - path: revenue_model.segments.ElectricalAmericas.initial_growth
     transform: additive_pp
-    effect_per_plus_1sigma: 0.01125
+    effect_per_plus_1sigma: 0.010125
     lag_quarters: 2
     decay_half_life_quarters: 10
     meta:
@@ -492,7 +503,7 @@ driver_parameter_mapping:
   stochastic_targets:
   - path: revenue_model.segments.ElectricalAmericas.initial_growth
     transform: additive_pp
-    effect_per_plus_1sigma: 0.009
+    effect_per_plus_1sigma: 0.0081
     lag_quarters: 1
     decay_half_life_quarters: 8
     meta:

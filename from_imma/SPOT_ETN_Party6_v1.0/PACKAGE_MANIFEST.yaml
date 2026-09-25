@@ -1,0 +1,40 @@
+package: IMMA_SPOT_ETN_Party6_v1.0
+package_version: '1.0'
+as_of: '2026-09-25'
+status: proposed_for_host_acceptance
+normative_contracts:
+  company_mc_schema: 1.0.2
+  conditional_mc: 1.1.3
+  joint_simulation_runtime: '1.1'
+  joint_rules: 1.1.2
+  mpc_driver_taxonomy: 1.2.1
+  reverse_valuation_rules: '1.1'
+compatibility:
+  company_mc_yaml_engine_const: company_mc 2.3.1
+  host_engine: company_mc 2.3.2
+  joint_simulation_layer_version_const: '1.0'
+  runtime_joint_schema: '1.1'
+supersedes:
+  ETN_mc_calibration_v1.0.2.yaml: ETN_mc_calibration_v1.0.1.yaml
+files:
+- path: SPOT_calibration_v1.0.yaml
+  sha256: 1f192bec844015ac6be7b3c7a4ad0ab65b0a51bf40bdab0816a6894f40ad3cca
+  bytes: 6705
+- path: SPOT_mc_calibration_v1.0.yaml
+  sha256: cb846986a900aa2d5df232dc76e679963c55a9a456399f7919f418237845affe
+  bytes: 13156
+- path: ETN_mc_calibration_v1.0.2.yaml
+  sha256: feeb4aaa705c16b4a49098bf6c2ad1fd58b2c4a862181dc60bdd0df3acb19af5
+  bytes: 18745
+- path: ETN_mc_calibration_v1.0.2_patch_notes.md
+  sha256: 1fd457292bc415c660a241fb1f53aaa26d76ea63c1d8572171b453e06cbe5c22
+  bytes: 1531
+- path: SPOT_ETN_Calibration_Rationale_v1.0.md
+  sha256: c0156708888cb4bb046866bcdd54b9d905bb6d06c7b6e9d3eb28ad4c4a4672ed
+  bytes: 7334
+- path: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: 3b014715dd59a600bce238ce0580c4bc4dbfa7df5f07bb9559844d200ae93859
+  bytes: 1201
+- path: PACKAGE_README.md
+  sha256: 7cbb1c4c47fa11223ac69440accb4e888236c5f13e09cac47bdf7dca98233970
+  bytes: 693

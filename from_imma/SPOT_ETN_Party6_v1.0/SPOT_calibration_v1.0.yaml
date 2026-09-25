@@ -1,0 +1,147 @@
+calibration_v1.0:
+  ticker: SPOT
+  as_of: '2026-09-25'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  currency: EUR
+  scenario_state:
+    Audience_Scale: A3
+    Premium_Monetization: P3
+    Ad_Monetization: D1
+    Unit_Economics: M3
+    Profitability_Cash: C3
+  market:
+    price: 444.5462478185
+    price_as_of: '2026-09-18'
+    price_source: https://uk.finance.yahoo.com/quote/SPOT/history/
+    listing: NYSE
+    currency: EUR
+    shares_outstanding: 205584205
+    shares_as_of: '2026-06-30'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+    equity_value: 91391686943.5
+  balance_sheet:
+    cash: 9388000000.0
+    debt_current: 0.0
+    debt_noncurrent: 0.0
+    net_debt: -9388000000.0
+    as_of: '2026-06-30'
+    currency: EUR
+    source: https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+    note: cash = cash and cash equivalents + short-term investments. Exchangeable Notes matured 2026-03-15 and were settled;
+      Spotify disclosed no outstanding indebtedness other than leases at 2026-06-30. Equity-FCF terminal method does not subtract
+      net cash twice.
+  base_period:
+    revenue_ttm: 18113000000.0
+    current_fcf_margin: 0.1741138560687433
+    revenue_formula: FY2025 revenue 17.186B + H1 2026 9.310B - H1 2025 8.383B = 18.113B EUR TTM.
+    fcf_margin_formula: H1 2026 Spotify-defined FCF 1.621B / H1 revenue 9.310B = 17.4114%.
+  discount_rate:
+    base: 0.1
+    stress:
+      min: 0.085
+      max: 0.12
+  terminal_fcf_margin:
+    min: 0.12
+    base: 0.18
+    max: 0.24
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 16
+    base: 24
+    max: 32
+  margin_transition:
+    type: mature_mean_reversion
+    path:
+      '1': 0.175
+      '2': 0.176
+      '3': 0.178
+      '4': 0.179
+      '5': terminal
+    critical_assumption:
+      linked_state: M3/C3
+      description: 'H1 FCF margin is already positive at 17.4%. Base case assumes a modest convergence toward an 18% mature
+        cash margin: gross margin around one-third of revenue provides operating-leverage headroom, while content royalties,
+        product investment and working-capital variability prevent software-like terminal cash margins.'
+      falsification: Two consecutive reporting periods with FCF margin <12%, or consolidated gross margin <29%, or sustained
+        content-cost growth materially above revenue growth require recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.085
+    - 0.1
+    - 0.12
+    terminal_fcf_margin:
+    - 0.12
+    - 0.18
+    - 0.24
+    terminal_fcf_multiple:
+    - 16
+    - 24
+    - 32
+  base_case:
+    discount_rate: 0.1
+    terminal_fcf_margin: 0.18
+    terminal_fcf_multiple: 24
+    margin_path:
+      Y0: 0.1741138560687433
+      Y1: 0.175
+      Y2: 0.176
+      Y3: 0.178
+      Y4: 0.179
+      Y5: 0.18
+  provenance:
+    market.price:
+      provenance: derived_fact
+      formula: NYSE close USD 509.45 on 2026-09-18 / ECB EURUSD 1.1460 (USD per EUR, same date) = EUR 444.5462478185 per share.
+      source_ref: 2026-09-18 | https://uk.finance.yahoo.com/quote/SPOT/history/; 2026-09-18 | https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html
+    market.shares_outstanding:
+      provenance: derived_fact
+      formula: 210,241,268 issued shares - 4,657,063 treasury shares = 205,584,205 shares outstanding.
+      source_ref: 2026-08-04 filing for period 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: USD 509.45 * 205,584,205 shares / 1.1460 USD per EUR = EUR 91,391,686,943.50.
+    balance_sheet.cash:
+      provenance: derived_fact
+      formula: 5.938B cash and cash equivalents + 3.450B short-term investments = 9.388B EUR.
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+    balance_sheet.debt_current:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm; no
+        outstanding indebtedness other than lease liabilities after Exchangeable Notes settlement.
+    balance_sheet.debt_noncurrent:
+      provenance: verified_fact
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm; no
+        outstanding indebtedness other than lease liabilities after Exchangeable Notes settlement.
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 0 debt current + 0 debt noncurrent - 9.388B cash+short-term investments = -9.388B EUR net debt.
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: 17.186B + 9.310B - 8.383B = 18.113B EUR.
+      source_ref: FY2025 | https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm; H1
+        2026/H1 2025 | https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: 1.621B / 9.310B = 17.4114%.
+      source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+    discount_rate:
+      provenance: model_assumption
+      rationale: Mature global subscription platform with net cash and positive FCF merits a lower rate than young capital-intensive
+        names; content-rights concentration, competition, consumer elasticity and platform/regulatory risk keep it above the
+        lowest-risk mega-cap range. No separate FX premium is added because the calibration is fully in EUR.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Anchored near current H1 FCF margin and well below consolidated gross margin. The range allows further operating
+        leverage or renewed royalty/content and product-investment pressure; not fitted to market price.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: 'Mature consumer subscription/media platform multiple: recurring Premium revenue and net cash support duration,
+        while content royalties, ad cyclicality and lower structural margins than software constrain the terminal multiple.'
+    margin_transition:
+      provenance: model_assumption
+      rationale: Small mean reversion from current H1 FCF margin to 18% avoids extrapolating a single half-year cash-conversion
+        peak while preserving the already demonstrated positive cash economics.

@@ -1,0 +1,363 @@
+schema_version: 1.0.2
+artifact: company_mc_calibration
+ticker: SPOT
+as_of: '2026-09-25'
+archetype: mature_positive_margin
+calculation_engine_version: company_mc 2.3.1
+state_vector:
+  Audience_Scale: A3
+  Premium_Monetization: P3
+  Ad_Monetization: D1
+  Unit_Economics: M3
+  Profitability_Cash: C3
+simulation:
+  paths: 500000
+  paths_meta:
+    provenance: model_assumption
+    rationale: Normative production path count.
+  seed: 20260920
+  seed_meta:
+    provenance: model_assumption
+    rationale: Fixed reproducibility seed.
+  antithetic_variates: true
+  store_summary_quantiles:
+  - 0.01
+  - 0.05
+  - 0.1
+  - 0.25
+  - 0.5
+  - 0.75
+  - 0.9
+  - 0.95
+  - 0.99
+  store_summary_quantiles_meta:
+    provenance: model_assumption
+    rationale: Standard system summary grid.
+  horizons_years:
+  - 3
+  - 5
+  - 8
+  horizons_years_meta:
+    provenance: model_assumption
+    rationale: Current Thesis / Primary Optimization / Persistence horizons.
+revenue_model:
+  segments:
+    Premium:
+      base_revenue_quarterly: 4331000000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+      initial_growth:
+        distribution: triangular
+        min: 0.02
+        mode: 0.14
+        max: 0.28
+        provenance: model_assumption
+        rationale: Q2 Premium revenue grew 15% YoY with Premium subscribers +9% and ARPU +7%. Mode 14% recognizes both subscriber
+          and pricing origins while avoiding mechanical addition of the two growth rates; tails capture pricing elasticity,
+          mix/FX and engagement uncertainty.
+      long_run_growth_y8:
+        distribution: triangular
+        min: 0.02
+        mode: 0.08
+        max: 0.16
+        provenance: model_assumption
+        rationale: Scaled subscription growth mean-reverts toward mature high-single digits with upside from penetration,
+          bundles and pricing.
+      growth_half_life_years: 2.5
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Subscriber and pricing growth normalize over several annual pricing/product cycles.
+      latent_loading:
+        growth: 0.62
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Premium growth has meaningful shared consumer/platform exposure but substantial company-specific pricing
+          and engagement risk.
+    AdSupported:
+      base_revenue_quarterly: 446000000.0
+      base_revenue_quarterly_meta:
+        provenance: verified_fact
+        source_ref: 2026-06-30 | https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+      initial_growth:
+        distribution: triangular
+        min: -0.2
+        mode: 0.05
+        max: 0.35
+        provenance: model_assumption
+        rationale: 'Q2 Ad-Supported revenue grew only 1% while Ad-Supported MAUs grew 14%. D1 therefore receives a wide monetization
+          tail: downside allows continuing direct-channel weakness; upside allows biddable/automated monetization to catch
+          up with audience growth.'
+      long_run_growth_y8:
+        distribution: triangular
+        min: -0.02
+        mode: 0.08
+        max: 0.2
+        provenance: model_assumption
+        rationale: Long-run advertising growth can range from structural under-monetization to successful scaled automated
+          advertising.
+      growth_half_life_years: 2.0
+      growth_half_life_years_meta:
+        provenance: model_assumption
+        rationale: Advertising cycles and monetization fixes mean-revert faster than subscription scale.
+      latent_loading:
+        growth: 0.7
+      latent_loading_meta:
+        provenance: model_assumption
+        rationale: Advertising is more exposed to common digital-ad and macro demand cycles than Premium.
+margin_model:
+  method: mean_reverting_positive_margin
+  current_margin: 0.1741138560687433
+  current_margin_meta:
+    provenance: derived_fact
+    formula: H1 2026 Spotify-defined FCF 1.621B / H1 revenue 9.310B = 17.4114%.
+  terminal_margin_Y5:
+    distribution: triangular
+    min: 0.1
+    mode: 0.18
+    max: 0.27
+    provenance: model_assumption
+    rationale: Current FCF is positive, but content royalties remain the dominant cost base. The range spans renewed content/product-cost
+      pressure through continued gross-margin and operating leverage; center is not price-implied.
+  terminal_margin_Y8:
+    distribution: triangular
+    min: 0.1
+    mode: 0.18
+    max: 0.28
+    provenance: model_assumption
+    rationale: Long-run platform scale can modestly improve cash conversion, but royalty/content economics cap software-like
+      margins.
+  half_life_years: 2.0
+  half_life_years_meta:
+    provenance: model_assumption
+    rationale: Cash margins are already mature-positive and should converge over a few reporting cycles.
+  shock_sigma: 0.035
+  shock_sigma_meta:
+    provenance: model_assumption
+    rationale: Quarterly content-cost, advertising mix, working-capital and product-spend uncertainty; separate from Joint
+      Layer.
+  shock_persistence: 0.45
+  shock_persistence_meta:
+    provenance: model_assumption
+    rationale: Content and monetization shocks persist across adjacent quarters but mean-revert.
+  lower_bound: 0.02
+  lower_bound_meta:
+    provenance: model_assumption
+    rationale: Severe but still positive mature-state cash-margin floor; discrete business-model break belongs to failure/recalibration
+      logic.
+  upper_bound: 0.3
+  upper_bound_meta:
+    provenance: model_assumption
+    rationale: Caps extrapolation well below gross margin after content, operating costs and taxes.
+valuation:
+  Y3:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 16.0
+      mode: 30.0
+      max: 46.0
+      provenance: model_assumption
+      rationale: Near-term premium possible if monetization and cash margins hold; wide lower tail reflects consumer/content
+        and rate risk.
+  Y5:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 12.0
+      mode: 24.0
+      max: 38.0
+      provenance: model_assumption
+      rationale: Mature global subscription/media platform multiple with net cash and recurring revenue, constrained by content
+        royalties and ad cyclicality.
+  Y8:
+    basis: FCF_multiple
+    multiple:
+      distribution: triangular
+      min: 10.0
+      mode: 20.0
+      max: 32.0
+      provenance: model_assumption
+      rationale: Further duration compression as audience/subscriber growth matures.
+  negative_fcf_fallback:
+    basis: revenue_bridge
+    multiple:
+      distribution: triangular
+      min: 2.0
+      mode: 4.3
+      max: 7.0
+      provenance: model_assumption
+      rationale: Revenue-bridge reference multiple under parity-gated valuation, not an emergency-only fallback. Mode 4.3x
+        / Y5 FCF multiple 24x implies ~17.9% parity margin, intentionally close to the 18% Y5 margin center.
+dependencies:
+  latent_factors:
+  - growth
+  - margin
+  - valuation
+  factor_correlations:
+    growth__margin: 0.35
+    growth__valuation: 0.3
+    margin__valuation: 0.35
+  factor_correlations_meta:
+    provenance: model_assumption
+    rationale: Engagement/monetization, cash margin and valuation co-move, but content economics and ad cycles retain independent
+      components.
+  default_loading: 0.62
+  default_loading_meta:
+    provenance: model_assumption
+    rationale: Scaled platform has meaningful common demand/market exposure with material company-specific consumer, pricing
+      and content risk.
+market_path_model:
+  quarterly_log_price_noise:
+    annualized_sigma: 0.4
+    annualized_sigma_meta:
+      provenance: model_assumption
+      rationale: High-duration consumer internet equity path noise, used only for drawdown/path diagnostics and not terminal
+        calibration.
+  valuation_mean_reversion_half_life_years: 1.5
+  valuation_mean_reversion_half_life_years_meta:
+    provenance: model_assumption
+    rationale: Liquid platform-equity valuation dislocations can mean-revert over several quarters.
+reverse_valuation_ref:
+  run_ref: PENDING_HOST_RUN:SPOT_calibration_v1.0.yaml
+  implied_revenue_cagr_5y: 0.09254675652392497
+  implied_revenue_cagr_5y_meta:
+    provenance: derived_fact
+    formula: Local deterministic preflight of Reverse Valuation v1.2.0-style equity-FCF equation from SPOT_calibration_v1.0.yaml;
+      host run_ref remains authoritative.
+  discount_rate: 0.1
+  discount_rate_meta:
+    provenance: model_assumption
+    rationale: Inherited from SPOT RV base calibration.
+robustness_tests:
+  Scenario_Robustness:
+    perturbations:
+      growth_modes_pp:
+      - -0.01626197
+      - 0.01626197
+      margin_nodes_pp:
+      - -0.00923439
+      - 0.00923439
+      terminal_multiple_pct:
+      - -0.05653049
+      - 0.05991766
+      correlation_rho:
+      - -0.15
+      - 0.15
+    perturbations_meta:
+      provenance: derived_fact
+      formula: 'v1.1.2 local robustness: sigma_eq=(Q84-Q16)/2; growth=base-revenue-weighted RMS segment initial_growth sigma_eq;
+        margin=Y5 terminal margin sigma_eq; multiple=Y5 log-space sigma_eq; perturbation=0.25*sigma with accepted ceilings.'
+    delta_tolerance: 0.1
+    delta_tolerance_meta:
+      provenance: model_assumption
+      rationale: Accepted v1.1.2 tolerance for |ΔP(2x,5Y)| and |ΔP(loss>30%,5Y)|.
+joint_simulation:
+  layer_version: '1.0'
+  active_drivers:
+  - DIGITAL_AD_DEMAND
+  - CAPITAL_MARKETS
+  - INTEREST_RATES
+  - AI_CLOUD_PRICING
+  company_idiosyncratic_factors:
+  - id: SPOT_EXECUTION
+    distribution: standard_normal
+    persistence: 0.55
+    persistence_meta:
+      provenance: model_assumption
+      rationale: Consumer engagement, pricing execution, ad monetization and content economics persist across adjacent quarters.
+  path_alignment:
+    use_global_path_id: true
+driver_parameter_mapping:
+- driver_id: DIGITAL_AD_DEMAND
+  material: true
+  stochastic_targets:
+  - path: revenue_model.segments.AdSupported.initial_growth
+    transform: additive_pp
+    effect_per_plus_1sigma: 0.025
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Digital-ad demand directly changes Ad-Supported monetization; effect is deliberately concentrated on the
+        ad segment.
+  structural_support:
+  - path: revenue_model.segments.AdSupported.initial_growth.mode
+    contribution: 0.01
+    meta:
+      provenance: model_assumption
+      rationale: D1 central case assumes ad demand does not deteriorate materially while automated channels scale.
+  stability:
+    knockout:
+      mode: remove_structural_support
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction is weaker digital-ad demand.
+  note: 'Failure link: SPOT-FM-03 DIGITAL_AD_DEMAND_SLOWDOWN. FM-01 consumer engagement remains intrinsic because no canonical
+    root exists.'
+- driver_id: CAPITAL_MARKETS
+  material: true
+  stochastic_targets:
+  - path: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: 0.012
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Broader risk appetite affects duration/valuation even though Spotify is net cash and not funding-dependent.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: -1.0
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction is tighter/less supportive capital markets.
+  note: Valuation-only channel; net cash prevents a funding-liquidity channel.
+- driver_id: INTEREST_RATES
+  material: true
+  stochastic_targets:
+  - path: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: -0.018
+    lag_quarters: 0
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Higher discount rates compress terminal valuation; no operating revenue mapping is introduced.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: 1.0
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction is higher rates.
+  note: Vector score -1; valuation channel only.
+- driver_id: AI_CLOUD_PRICING
+  material: true
+  stochastic_targets:
+  - path: margin_model.terminal_margin_Y5
+    transform: additive_pp
+    effect_per_plus_1sigma: -0.004
+    lag_quarters: 1
+    decay_half_life_quarters: 6.0
+    meta:
+      provenance: model_assumption
+      rationale: Higher AI/cloud service economics are a small infrastructure/personalization cost pressure; explicitly not
+        a Spotify revenue driver.
+  structural_support: []
+  stability:
+    knockout:
+      mode: not_applicable
+    adverse_driver_stress:
+      driver_sigma: 1.0
+      meta:
+        provenance: model_assumption
+        rationale: Adverse direction is higher AI/cloud pricing because SPOT exposure is cost-side.
+  note: Failure linkage is only partial to SPOT-FM-05 AI_CONTENT_INVESTMENT_OVERRUN; no synthetic knockout is used.

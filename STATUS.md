@@ -1662,3 +1662,43 @@ TAIWAN_SUPPLY_DISRUPTION 35 %, потолки NVDA/RKLB/SPOT), а вклад с�
 вероятностей по критерию весов; ScenarioConcentration = 100 % по определению (вопрос 3.4). Долг: перенести проверку в
 portfolio_stability (семейство scenario_probability). Открытое: результат оптимизатора условен до ответа IMMA
 3.1/3.2/W.
+
+## 25.09 ночь: приёмка Joint v1.1 + партия 6 отправлена IMMA
+
+Приёмка Joint v1.1 + партия 6 (joint-v11-reissues.feedback.md; вопросы 3.1 migration delta NBIS, 3.2 доля bridge-базы,
+3.4 ScenarioConcentration, предрасчёт RV SPOT) ОТПРАВЛЕНА IMMA владельцем. Коммиты: lab 044bb74, workspace f4d5c70.
+Очередь к IMMA: заказ scenario-taiwan-quarantine.request.md (после ответа на приёмку), затем
+calibration-lifecycle.request.md. Ожидаем: ответы 3.1/3.2 → перепрогон оптимизатора (заход 6) при изменении семантики;
+3.4 → правило концентрации.
+
+## 25.09 ночь: ОТВЕТ IMMA ПО 3.1–3.4 — by design; SPCX мигрировать; концентрация — вариант (а)
+
+ОТВЕТ IMMA НА ПРИЁМКУ Joint v1.1 + партия 6 (share 6ab6cc2f): всё принято нормативно. 3.1 — migration delta NBIS by
+design: parity-gated держит revenue bridge, пока FCF-маржа < m_parity = M_R/M_F (NBIS 8x/28x ≈ 28.6 %), устраняя
+провал стоимости при переходе FCF через ноль; компенсировать параметрами нельзя. 3.2 — большая доля bridge у
+positive-FCF компаний by design, но не цель: eligibility FCF-базы наступает при достижении parity-маржи, не при FCF >
+0; правило parity и blend 4 п.п. не менять; negative_fcf_fallback = revenue_bridge_reference_multiple; формулировка
+для следующей редакции Conditional MC дана; ДОБАВИТЬ диагностику positive_fcf_bridge_share (bridge при FCF ≤ 0 vs
+bridge при FCF > 0 ниже parity). 3.3 — SPCX мигрировать на схему 1.0.2 (SPCX mc v1.1.3, без правки центров/хвостов;
+полная приёмка: MC-G5-013, 500k, basis shares, robustness, оба сценария; старый run — reproducibility record);
+финальную смесь/ScenarioConcentration/оптимизатор строить ПОСЛЕ миграции SPCX (одна семантика на весь набор) → заход
+6. 3.4 — вариант (а): A = {s: B_s > 0}; |A| = 0 → not_applicable_no_adverse_scenario; |A| = 1 → raw = 1.0, лимит
+not_applicable_single_adverse_scenario; |A| ≥ 2 → max/sum ≤ 0.60; BASE в знаменатель не добавлять. RV SPOT —
+предрасчёт IMMA ошибся не в чистом кэше, а в terminal timing (FCF Y5 учтён дважды: interim + terminal); хост-конвенция
+PV(FCF Y1..Y4) + PV(FCF Y5 × M) верна, правило для будущих предрасчётов зафиксировано. ДЕЛАТЬ: portfolio_paths —
+правило (а) для ScenarioConcentration; company_mc — positive_fcf_bridge_share; заказ SPCX v1.1.3 добавить в заказ
+QUARANTINE (партия 7).
+
+## 25.09 ночь: по ответу IMMA — company_mc 2.4.2 (positive_fcf_bridge_share), концентрация по варианту «а», заказ дополнен SPCX
+
+По ответу IMMA сделано в движке: company_mc 2.4.2 — диагностика positive_fcf_bridge_share (Y3/Y5/Y8: bridge при FCF ≤
+0 / при FCF > 0 ниже parity / доля positive среди bridge-путей; живая проверка: MSFT bridge 52.4 % — все при
+положительном FCF, NBIS 81.3 % — все при положительном FCF, т. е. continuity region по 3.2); portfolio_paths 1.3.0 —
+scenario_concentration() по варианту «а» (|A| < 2 → лимит не применяется, status not_applicable_*, raw показывается;
+|A| ≥ 2 → max/Σ по A ≤ 0.60; BASE вне знаменателя; живой прогон …-da72e2: raw 1.0, status
+not_applicable_single_adverse_scenario). Тесты: test_positive_fcf_bridge_share_diagnostic,
+test_scenario_concentration_rule_a; company_mc + portfolio_paths + milestone 23/23; полный набор — в фоне. Заказ
+QUARANTINE дополнен разделом 5 (SPCX mc v1.1.3 — миграция на схему 1.0.2, партия 7) и подтверждением ответов; владелец
+отправляет. Очередь: ответ IMMA (партия 7) → приёмка SPCX v1.1.3 + TAIWAN_QUARANTINE → раунд 3 (16 прогонов сценария +
+SPCX) → DR по p(QUARANTINE) → заход 6 оптимизатора на единой семантике. Долг: §3.3 в portfolio_stability; формулировка
+IMMA для Conditional MC — в её следующей редакции.

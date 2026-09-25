@@ -1,0 +1,49 @@
+package: IMMA_CRWV_ASTS_SPOT_v1.0
+package_version: '1.0'
+as_of: '2026-09-25'
+status: proposed_for_host_acceptance
+normative_contracts:
+  company_mc_schema: 1.0.2
+  conditional_mc: 1.1.3
+  joint_rules: 1.1.2
+  reverse_valuation_rules: '1.1'
+  company_artifact_schema: 1.0.5
+host_engine_note: MC YAML retains calculation_engine_version company_mc 2.3.1 per schema const; host may execute company_mc
+  2.3.2 seed-isolation-compatible engine.
+files:
+- path: ASTS_calibration_v1.0.yaml
+  sha256: 7a831bbfd8811a81120cc7cbc0349fd455250ba6e9e96c9992639a25340716f1
+  bytes: 5118
+- path: ASTS_mc_calibration_v1.0.yaml
+  sha256: 6f10aab0b61a9cdcdcff0e158199708682f17241f0527cca4b44f5ffdfcf8ed4
+  bytes: 22991
+- path: CRWV_ASTS_SPOT_Rationale_v1.0.md
+  sha256: 277d96d9788509895a5b2a26d20a6f20a7c129d0c291dc1439fb70a577a06ed5
+  bytes: 6824
+- path: CRWV_calibration_v1.0.yaml
+  sha256: a9bde85145cc809cdbf5aca2f78a0a0ca3cbb731773a3965d272ff240c0bb996
+  bytes: 4922
+- path: CRWV_mc_calibration_v1.0.yaml
+  sha256: 6d9db5287fe100ec5de4d20dba8dbf51391198c7c49347baa0ff4bd2367abb8a
+  bytes: 17456
+- path: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: e948279251a39f540737b01d07dcee712909fa0d294e9c2bb9bb74b69dacbc0c
+  bytes: 1558
+- path: spot/kpis.yaml
+  sha256: 0df066dc10e3c2a26674f59c3783634ed9b0eb6f7e5c69181eb61643fff255b7
+  bytes: 5231
+- path: spot/mpc_inputs.yaml
+  sha256: a219aeeb922ee1ca50ac323cc1570bd84f3bda24f8d86e5fcf698fa5a8fa9c95
+  bytes: 3159
+- path: spot/state.json
+  sha256: 39464b29de3b03830adbb20e471de20cba7d788d9a8d87c155c3513b5ef390e9
+  bytes: 7912
+- path: spot/states.yaml
+  sha256: 7858e2b10140a0ecd1ad6c178be6f2c9d424be2a5d65186e859fdf7739cd3358
+  bytes: 5585
+- path: spot/thesis.md
+  sha256: 8b8a7b0badea4fc935d57a82b0ae4a19895095527b79d609b816a936ccf35622
+  bytes: 1282
+- path: spot/triggers.yaml
+  sha256: 1f69a14b7b833cea7604c47e26102454335c90227b1303a9f10e1f040780c733
+  bytes: 7619

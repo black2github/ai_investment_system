@@ -1,0 +1,130 @@
+calibration_v1.0:
+  ticker: ASTS
+  as_of: '2026-09-25'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  scenario_state:
+    Constellation_Deployment: D2
+    Commercial_Contracting: C3
+    Service_Monetization: M1
+    Regulatory_Spectrum: R2
+    Funding_Dilution: F2
+  market:
+    price: 58.52
+    price_as_of: '2026-09-18'
+    price_source: https://finance.yahoo.com/quote/ASTS/history/
+    shares_outstanding: 389167494
+    shares_as_of: '2026-08-06'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
+    equity_value: 22774081748.88
+    shares_note: Common-equivalent economic-unit convention = Class A 299,789,305 + Class B 11,215,111 + Class C 78,163,078.
+      Class B/C shares are non-economic voting shares paired with AST LLC units redeemable/exchangeable into Class A; this
+      convention is a derived economic-share proxy.
+  balance_sheet:
+    cash_and_restricted_cash: 2700000000.0
+    debt: 3022152000.0
+    net_debt_approx: 322152000.0
+    as_of: '2026-06-30'
+    source: https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
+    note: July 2026 1.15B convertible financing is post-quarter and handled separately in MC liquidity proxy.
+  base_period:
+    revenue_ttm: 115299000.0
+    current_fcf_margin: -21.714992973732567
+    revenue_formula: FY2025 70.918M + H1 2026 (37.834M products + 8.421M services) - H1 2025 (0.425M + 1.449M) = 115.299M.
+    fcf_margin_formula: H1 raw pre-service burn proxy = OCF -145.212M - PP&E 859.215M = -1,004.427M; /46.255M H1 revenue =
+      -21.714x. This ratio is not extrapolated as a mature margin.
+  discount_rate:
+    base: 0.14
+    stress:
+      min: 0.11
+      max: 0.18
+  terminal_fcf_margin:
+    min: 0.12
+    base: 0.25
+    max: 0.4
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 16.0
+    base: 24.0
+    max: 36.0
+  margin_transition:
+    type: two_phase_capex_normalization
+    path:
+      1: -2.0
+      2: -0.5
+      3: 0.05
+      4: 0.15
+      5: terminal
+    critical_assumption:
+      linked_state: D2/M1/R2/F2
+      description: Pre-service satellite manufacturing/launch burn transitions to operator-partner service economics only
+        after commercial service onset and continued constellation/regulatory progress.
+      falsification: Material launch/regulatory failure, inability to reach initial service, or continued burn above available
+        liquidity without service revenue requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.11
+    - 0.14
+    - 0.18
+    terminal_fcf_margin:
+    - 0.12
+    - 0.25
+    - 0.4
+    terminal_fcf_multiple:
+    - 16
+    - 24
+    - 36
+  base_case:
+    discount_rate: 0.14
+    terminal_fcf_margin: 0.25
+    terminal_fcf_multiple: 24
+    margin_path:
+      Y0: -21.714992973732567
+      Y1: -2.0
+      Y2: -0.5
+      Y3: 0.05
+      Y4: 0.15
+      Y5: 0.25
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-09-18 close | https://finance.yahoo.com/quote/ASTS/history/
+    market.shares_outstanding:
+      provenance: derived_fact
+      formula: 299,789,305 Class A + 11,215,111 Class B + 78,163,078 Class C common-equivalent economic units
+      source_ref: 2026-08-06 | https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 58.52 * 389,167,494 common-equivalent units
+    balance_sheet.cash_and_restricted_cash:
+      provenance: verified_fact
+      source_ref: 2026-08-10 issuer release / 2026-08-06 10-Q | SEC
+    balance_sheet.debt:
+      provenance: verified_fact
+      source_ref: 2026-08-06 | https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: 70.918M + 46.255M - 1.874M = 115.299M
+      source_ref: FY2025 10-K + Q2 2026 10-Q
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: (-145.212M - 859.215M)/46.255M = -21.714x
+      source_ref: 2026-08-06 | https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm
+    discount_rate:
+      provenance: model_assumption
+      rationale: Pre-service milestone-driven satellite network with launch, spectrum, manufacturing and capital-market risk.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Operator-partner revenue-sharing can support attractive scaled cash economics, but the range explicitly allows
+        launch/network cost and partner-share pressure.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Scaled satellite-connectivity FCF multiple after service validation; broad range reflects milestone and competitive
+        uncertainty and is not price-fitted.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Pre-service burn is not treated as a scalable margin; the path is a reduced-form bridge to post-onset service
+        economics.

@@ -1,0 +1,94 @@
+schema_version: 1.0.5
+driver_vector_provenance: model_assumption
+version: '1.0'
+ticker: SPOT
+artifact: mpc_inputs
+as_of: '2026-09-25'
+source_artifact: IMMA party 6 model build 2026-09-25
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 1
+  HYPERSCALER_CAPEX: 0
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 1
+  DATA_CENTER_POWER: 0
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 1
+  AI_CLOUD_PRICING: -1
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 2
+  SPACE_REGULATION: 0
+driver_interpretation:
+  DIGITAL_AD_DEMAND:
+    directionality: positive
+    vector_score: 2
+    positive_channel: Ad-Supported revenue is directly exposed to advertising demand.
+    negative_channel: null
+    net_rule_v1: Primary cyclical revenue exposure.
+  AI_CLOUD_PRICING:
+    directionality: negative
+    vector_score: -1
+    positive_channel: null
+    negative_channel: Higher cloud/AI service economics can raise infrastructure/content-personalization cost; this is secondary
+      to content royalties.
+    net_rule_v1: Small cost exposure only; do not treat as AI revenue driver.
+failure_modes:
+- failure_id: SPOT-FM-01
+  name: Audience/subscriber growth slows materially
+  common_cause_id: CONSUMER_ENGAGEMENT_SLOWDOWN
+  severity: high
+- failure_id: SPOT-FM-02
+  name: Price increases raise churn or weaken conversion
+  common_cause_id: SUBSCRIPTION_PRICING_ELASTICITY
+  severity: high
+- failure_id: SPOT-FM-03
+  name: Ad monetization remains below audience growth
+  common_cause_id: DIGITAL_AD_DEMAND_SLOWDOWN
+  severity: high
+- failure_id: SPOT-FM-04
+  name: Music/podcast/audiobook content economics deteriorate
+  common_cause_id: CONTENT_COST_INFLATION
+  severity: high
+- failure_id: SPOT-FM-05
+  name: Cloud/AI and product reinvestment outpaces monetization
+  common_cause_id: AI_CONTENT_INVESTMENT_OVERRUN
+  severity: medium
+- failure_id: SPOT-FM-06
+  name: Platform/app-store or regulatory constraints impair distribution or payments
+  common_cause_id: PLATFORM_REGULATORY_PRESSURE
+  severity: medium
+failure_modes_provenance: model_assumption
+cross_portfolio_common_causes:
+  DIGITAL_AD_DEMAND_SLOWDOWN: SPOT-FM-03
+  PLATFORM_REGULATORY_PRESSURE: SPOT-FM-06
+benchmark:
+  sector_id: INTERNET_PLATFORMS
+  recommendation: provisional
+  reason: Business economics are a subscription + ad-supported internet platform; no approved sector benchmark exists yet,
+    so sector assignment is provisional and benchmark_id remains null.
+  benchmark_id: null
+  methodology_ref: null
+driver_taxonomy_version: '1.1'
+taxonomy_gap: []
+taxonomy_gap_note: No new taxonomy driver is required for initial SPOT model; content-cost/common-cause risks remain failure
+  modes rather than forced MPC drivers.

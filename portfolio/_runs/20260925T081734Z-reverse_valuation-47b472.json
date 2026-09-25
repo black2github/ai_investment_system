@@ -1,0 +1,138 @@
+{
+  "run_id": "20260925T081734Z-reverse_valuation-47b472",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "ASTS",
+    "valuation_date": "2026-09-24",
+    "calibration": "ASTS_calibration_v1.0 (D2+C3+M1+R2+F2)",
+    "market": {
+      "price": 58.52,
+      "shares_outstanding": 389167494,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm"
+    },
+    "balance_sheet": {
+      "net_debt": 322152000.0,
+      "cash": 2700000000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526342550/asts-20260630.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 115299000.0,
+      "current_fcf_margin": -21.714992973732567,
+      "revenue_source": "FY2025 70.918M + H1 2026 (37.834M products + 8.421M services) - H1 2025 (0.425M + 1.449M) = 115.299M.",
+      "source": "H1 raw pre-service burn proxy = OCF -145.212M - PP&E 859.215M = -1,004.427M; /46.255M H1 revenue = -21.714x. This ratio is not extrapolated as a mature margin."
+    },
+    "discounting": {
+      "discount_rate": 0.14,
+      "stress_rates": [
+        0.11,
+        0.18
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.12,
+        "base": 0.25,
+        "max": 0.4
+      },
+      "multiple_range": {
+        "min": 16.0,
+        "base": 24.0,
+        "max": 36.0
+      }
+    },
+    "margin_transition": {
+      "type": "two_phase_capex_normalization",
+      "path": {
+        "1": -2.0,
+        "2": -0.5,
+        "3": 0.05,
+        "4": 0.15,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "Constellation_Deployment": "D2",
+      "Commercial_Contracting": "C3",
+      "Service_Monetization": "M1",
+      "Regulatory_Spectrum": "R2",
+      "Funding_Dilution": "F2"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "64d77a3098afe23a",
+    "scenario_state": {
+      "Constellation_Deployment": "D2",
+      "Commercial_Contracting": "C3",
+      "Service_Monetization": "M1",
+      "Regulatory_Spectrum": "R2",
+      "Funding_Dilution": "F2"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 22774081748.88,
+      "enterprise_value": 23096233748.88,
+      "terminal_fcf_margin": 0.25,
+      "terminal_multiple": 24.0,
+      "discount_rate": 0.14,
+      "current_fcf_margin": -21.714992973732567,
+      "revenue_ttm": 115299000.0,
+      "implied_revenue_cagr_5y": 1.300289,
+      "terminal_revenue": 7425695339.21,
+      "terminal_fcf": 1856423834.8,
+      "pv_interim_fcf": -365959059.29,
+      "pv_terminal_value": 23140040821.6,
+      "terminal_value_share_of_pv": 1.0161,
+      "control_cagr": 1.300289
+    },
+    "validation": {
+      "converged": true,
+      "residual": 13.427547454833984,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.12|multiple=16.0": 1.8836,
+        "margin=0.12|multiple=24.0": 1.6617,
+        "margin=0.12|multiple=36.0": 1.4558,
+        "margin=0.25|multiple=16.0": 1.4937,
+        "margin=0.25|multiple=24.0": 1.3003,
+        "margin=0.25|multiple=36.0": 1.1214,
+        "margin=0.4|multiple=16.0": 1.2709,
+        "margin=0.4|multiple=24.0": 1.0943,
+        "margin=0.4|multiple=36.0": 0.9311
+      },
+      "discount_rate_grid": {
+        "r=0.11": 1.2398,
+        "r=0.18": 1.381
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "model_fragile",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": true
+    }
+  },
+  "elapsed_ms": 4.9,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

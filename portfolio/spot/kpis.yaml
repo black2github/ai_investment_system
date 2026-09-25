@@ -1,0 +1,180 @@
+schema_version: 1.0.5
+version: '1.0'
+artifact: SPOT KPI Dashboard
+as_of: '2026-09-25'
+ticker: SPOT
+max_critical_kpis: 10
+source_artifact: IMMA party 6 model build 2026-09-25
+zone_semantics:
+  thresholds_provenance: model_assumption
+source_policy:
+  primary:
+  - SEC
+  - Spotify Investor Relations
+  secondary:
+  - Yahoo Finance
+  rule: Runtime transition requires Dozor verification; IMMA source matching does not substitute for protocol verification.
+critical_kpis:
+- id: SPOT-KPI-01
+  source_class: issuer_ir_release
+  provenance: derived_fact
+  value_type: actual
+  name: Revenue YoY
+  unit: fraction
+  period: quarterly
+  thresholds:
+    green: '.12'
+    yellow: .08 to <.12
+    red: <.08
+  last_value: 0.139
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm
+  verified: null
+  verification_status: pending_verification
+  formula: (4.777B / 4.193B) - 1 = 13.93%
+- id: SPOT-KPI-02
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
+  name: MAU YoY growth
+  unit: fraction
+  period: quarterly
+  thresholds:
+    green: '>=0.10'
+    yellow: '>=0.08 and <0.10'
+    red: <0.08
+  last_value: 0.12
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm
+  verified: null
+  verification_status: pending_verification
+- id: SPOT-KPI-03
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
+  name: Premium subscriber YoY growth
+  unit: fraction
+  period: quarterly
+  thresholds:
+    green: '>=0.08'
+    yellow: '>=0.06 and <0.08'
+    red: <0.06
+  last_value: 0.09
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm
+  verified: null
+  verification_status: pending_verification
+- id: SPOT-KPI-04
+  source_class: regulatory_filing
+  provenance: verified_fact
+  value_type: actual
+  name: Premium ARPU YoY growth
+  unit: fraction
+  period: quarterly
+  thresholds:
+    green: '>=0.03'
+    yellow: '>=0 and <0.03'
+    red: <0
+  last_value: 0.07
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+  verified: null
+  verification_status: pending_verification
+- id: SPOT-KPI-05
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
+  name: Premium revenue YoY growth
+  unit: fraction
+  period: quarterly
+  thresholds:
+    green: '>=0.12'
+    yellow: '>=0.08 and <0.12'
+    red: <0.08
+  last_value: 0.15
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm
+  verified: null
+  verification_status: pending_verification
+- id: SPOT-KPI-06
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
+  name: Ad-Supported revenue YoY growth
+  unit: fraction
+  period: quarterly
+  thresholds:
+    green: '>=0.10'
+    yellow: '>=0.05 and <0.10'
+    red: <0.05
+  last_value: 0.01
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm
+  verified: null
+  verification_status: pending_verification
+- id: SPOT-KPI-07
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
+  name: Consolidated gross margin
+  unit: fraction
+  period: quarterly
+  thresholds:
+    green: '>=0.32'
+    yellow: '>=0.29 and <0.32'
+    red: <0.29
+  last_value: 0.334
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm
+  verified: null
+  verification_status: pending_verification
+- id: SPOT-KPI-08
+  source_class: issuer_ir_release
+  provenance: verified_fact
+  value_type: actual
+  name: Premium gross margin
+  unit: fraction
+  period: quarterly
+  thresholds:
+    green: '>=0.34'
+    yellow: '>=0.31 and <0.34'
+    red: <0.31
+  last_value: 0.349
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm
+  verified: null
+  verification_status: pending_verification
+- id: SPOT-KPI-09
+  source_class: issuer_ir_release
+  provenance: derived_fact
+  value_type: actual
+  name: Operating margin
+  unit: fraction
+  period: quarterly
+  thresholds:
+    green: '>=0.10'
+    yellow: '>=0.05 and <0.10'
+    red: <0.05
+  last_value: 0.137
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm
+  verified: null
+  verification_status: pending_verification
+  formula: 655M / 4,777M = 13.71%
+- id: SPOT-KPI-10
+  source_class: regulatory_filing
+  provenance: derived_fact
+  value_type: actual
+  name: H1 free cash flow margin
+  unit: fraction
+  period: six_months
+  thresholds:
+    green: '>=0.15'
+    yellow: '>=0.10 and <0.15'
+    red: <0.10
+  last_value: 0.1741138560687433
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+  verified: null
+  verification_status: pending_verification
+  formula: 1,621M FCF / 9,310M H1 revenue = 17.41%; FCF = OCF 1,652M - capex 34M + restricted-cash change 3M.

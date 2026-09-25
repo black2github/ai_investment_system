@@ -1,0 +1,222 @@
+schema_version: 1.0.5
+profile: full_model
+meta:
+  ticker: SPOT
+  company: Spotify Technology S.A.
+  exchange: NYSE
+  yahoo_symbol: SPOT
+  registry_updated: '2026-09-25'
+  source_artifact: IMMA party 6 model build 2026-09-25
+  price_source: https://finance.yahoo.com/quote/SPOT/history/
+  price_at_registry: 509.45
+  position: фактическая позиция владельца, ~1.1% NAV; см. portfolio registry
+  currency: USD
+automations: {}
+route:
+  steps:
+  - id: vector
+    kind: axis
+    name: Вектор состояний Spotify по states.yaml
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+triggers:
+- id: SPOT-E-01
+  class: event
+  step: vector
+  axis: Audience_Scale
+  transition:
+    from: A3
+    to: A2
+  level: E2
+  kpis:
+  - SPOT-KPI-02
+  condition: MAU YoY growth <10% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Audience_Scale A3→A2 после Dozor verification и отправить Decision Request владельцу; инвестиционное
+    действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: SPOT-E-02
+  class: event
+  step: vector
+  axis: Audience_Scale
+  transition:
+    from: A3
+    to: A4
+  level: E2
+  kpis:
+  - SPOT-KPI-02
+  condition: MAUs >=850M AND MAU YoY growth >=12% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Audience_Scale A3→A4 после Dozor verification и отправить Decision Request владельцу; инвестиционное
+    действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: SPOT-E-03
+  class: event
+  step: vector
+  axis: Premium_Monetization
+  transition:
+    from: P3
+    to: P2
+  level: E2
+  kpis:
+  - SPOT-KPI-03
+  - SPOT-KPI-04
+  - SPOT-KPI-05
+  condition: Premium revenue YoY <12% OR subscriber growth <8% OR Premium ARPU YoY <3% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Premium_Monetization P3→P2 после Dozor verification и отправить Decision Request владельцу;
+    инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: SPOT-E-04
+  class: event
+  step: vector
+  axis: Premium_Monetization
+  transition:
+    from: P3
+    to: P4
+  level: E2
+  kpis:
+  - SPOT-KPI-03
+  - SPOT-KPI-04
+  - SPOT-KPI-05
+  condition: Premium revenue YoY >=15% AND subscriber growth >=10% AND Premium ARPU YoY >=5% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Premium_Monetization P3→P4 после Dozor verification и отправить Decision Request владельцу;
+    инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: SPOT-E-05
+  class: event
+  step: vector
+  axis: Ad_Monetization
+  transition:
+    from: D1
+    to: D0
+  level: E2
+  kpis:
+  - SPOT-KPI-06
+  condition: Ad-Supported revenue YoY <0% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Ad_Monetization D1→D0 после Dozor verification и отправить Decision Request владельцу; инвестиционное
+    действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: SPOT-E-06
+  class: event
+  step: vector
+  axis: Ad_Monetization
+  transition:
+    from: D1
+    to: D2
+  level: E2
+  kpis:
+  - SPOT-KPI-06
+  condition: Ad-Supported revenue YoY >=5% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Ad_Monetization D1→D2 после Dozor verification и отправить Decision Request владельцу; инвестиционное
+    действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: SPOT-E-07
+  class: event
+  step: vector
+  axis: Unit_Economics
+  transition:
+    from: M3
+    to: M2
+  level: E2
+  kpis:
+  - SPOT-KPI-07
+  - SPOT-KPI-08
+  condition: consolidated gross margin <32% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Unit_Economics M3→M2 после Dozor verification и отправить Decision Request владельцу; инвестиционное
+    действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: SPOT-E-08
+  class: event
+  step: vector
+  axis: Unit_Economics
+  transition:
+    from: M3
+    to: M4
+  level: E2
+  kpis:
+  - SPOT-KPI-07
+  condition: consolidated gross margin >=35% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Unit_Economics M3→M4 после Dozor verification и отправить Decision Request владельцу; инвестиционное
+    действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: SPOT-E-09
+  class: event
+  step: vector
+  axis: Profitability_Cash
+  transition:
+    from: C3
+    to: C2
+  level: E2
+  kpis:
+  - SPOT-KPI-09
+  - SPOT-KPI-10
+  condition: operating margin <10% OR FCF margin <15% for 2 consecutive reporting periods
+  condition_provenance: model_assumption
+  period: 2 reporting periods
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Profitability_Cash C3→C2 после Dozor verification и отправить Decision Request владельцу;
+    инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+- id: SPOT-E-10
+  class: event
+  step: vector
+  axis: Profitability_Cash
+  transition:
+    from: C3
+    to: C4
+  level: E2
+  kpis:
+  - SPOT-KPI-09
+  - SPOT-KPI-10
+  condition: operating margin >=15% AND FCF margin >=20% for 2 consecutive reporting periods
+  condition_provenance: model_assumption
+  period: 2 reporting periods
+  source: primary source per kpis.yaml (Spotify SEC 6-K/20-F or issuer IR)
+  action: Зафиксировать переход Profitability_Cash C3→C4 после Dozor verification и отправить Decision Request владельцу;
+    инвестиционное действие не предопределено
+  automation: null
+  status: planned
+  fired: []
+automations_note: Дозор по SPOT ещё не выполнен; все переходы planned до протокольной верификации.

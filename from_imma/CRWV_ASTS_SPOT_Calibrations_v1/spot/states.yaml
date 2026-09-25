@@ -1,0 +1,157 @@
+schema_version: 1.0.5
+version: '1.0'
+artifact: SPOT State Vector
+as_of: '2026-09-25'
+ticker: SPOT
+source_artifact: IMMA party 6 model build 2026-09-25
+purpose: Five-axis company state model for Spotify Technology S.A.; transitions live in triggers.yaml and runtime state in
+  state.json.
+semantics:
+  evidence_required: true
+  primary_only: true
+  numeric_thresholds_provenance: model_assumption
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  accounting_note: Spotify is a Luxembourg foreign private issuer; Q2 2026 interim financial statements are furnished/filed
+    on Form 6-K under IFRS/IAS 34, not Form 10-Q.
+sources:
+  SPOT_Q2_2026_6K:
+    source_class: regulatory_filing
+    as_of: '2026-08-04'
+    url: https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm
+    type: SEC Form 6-K / IAS 34 interim report
+  SPOT_Q2_2026_UPDATE:
+    source_class: issuer_ir_release
+    as_of: '2026-08-04'
+    url: https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm
+    type: Q2 2026 Update furnished as Exhibit 99.1
+  SPOT_2025_20F:
+    source_class: regulatory_filing
+    as_of: '2026-02-10'
+    url: https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm
+    type: SEC Form 20-F for FY2025
+axes:
+  Audience_Scale:
+    name: Audience Scale
+    name_ru: масштаб аудитории
+    states:
+      A0:
+        name: stalled
+        criteria: MAUs <500M OR MAU YoY growth <5%
+      A1:
+        name: mature_growth
+        criteria: MAUs >=500M AND MAU YoY growth >=5% and <8%
+      A2:
+        name: healthy_scale
+        criteria: MAUs >=650M AND MAU YoY growth >=8% and <10%
+      A3:
+        name: scaled_double_digit
+        criteria: MAUs >=750M AND MAU YoY growth >=10%
+      A4:
+        name: scaled_accelerating
+        criteria: MAUs >=850M AND MAU YoY growth >=12% for 2 consecutive quarters
+    current: A3
+    current_evidence:
+    - Q2 2026 MAUs 777M, +12% YoY.
+    source_refs:
+    - SPOT_Q2_2026_UPDATE
+  Premium_Monetization:
+    name: Premium Monetization
+    name_ru: монетизация Premium
+    states:
+      P0:
+        name: weak
+        criteria: Premium revenue YoY <5% OR Premium subscriber YoY growth <3%
+      P1:
+        name: stable
+        criteria: Premium revenue YoY >=5% and <10% AND subscriber growth >=3%
+      P2:
+        name: healthy
+        criteria: Premium revenue YoY >=10% AND subscriber growth >=6% AND Premium ARPU YoY >=0%
+      P3:
+        name: strong
+        criteria: Premium revenue YoY >=12% AND subscriber growth >=8% AND Premium ARPU YoY >=3%
+      P4:
+        name: exceptional
+        criteria: Premium revenue YoY >=15% AND subscriber growth >=10% AND Premium ARPU YoY >=5% for 2 consecutive quarters
+    current: P3
+    current_evidence:
+    - Q2 Premium revenue +15% YoY; Premium subscribers 300M, +9%; Premium ARPU €4.89, +7%.
+    source_refs:
+    - SPOT_Q2_2026_6K
+    - SPOT_Q2_2026_UPDATE
+  Ad_Monetization:
+    name: Ad Monetization
+    name_ru: монетизация рекламной аудитории
+    states:
+      D0:
+        name: contracting
+        criteria: Ad-Supported revenue YoY <0%
+      D1:
+        name: audience_outpaces_revenue
+        criteria: Ad-Supported revenue YoY >=0% and <5% while Ad-Supported MAUs YoY >=8%
+      D2:
+        name: healthy
+        criteria: Ad-Supported revenue YoY >=5% and <10%
+      D3:
+        name: strong
+        criteria: Ad-Supported revenue YoY >=10% and <15%
+      D4:
+        name: scaled_operating_leverage
+        criteria: Ad-Supported revenue YoY >=15% for 2 consecutive quarters
+    current: D1
+    current_evidence:
+    - Q2 Ad-Supported revenue +1% YoY while Ad-Supported MAUs were 494M, +14% YoY.
+    source_refs:
+    - SPOT_Q2_2026_UPDATE
+  Unit_Economics:
+    name: Unit Economics
+    name_ru: валовая экономика платформы
+    states:
+      M0:
+        name: weak
+        criteria: consolidated gross margin <25%
+      M1:
+        name: recovering
+        criteria: gross margin >=25% and <29%
+      M2:
+        name: healthy
+        criteria: gross margin >=29% and <32%
+      M3:
+        name: strong
+        criteria: gross margin >=32% and <35%
+      M4:
+        name: durable_high_margin
+        criteria: gross margin >=35% for 2 consecutive quarters
+    current: M3
+    current_evidence:
+    - Q2 consolidated gross margin 33.4%; Premium gross margin 34.9%; Ad-Supported gross margin 19.1%.
+    source_refs:
+    - SPOT_Q2_2026_6K
+    - SPOT_Q2_2026_UPDATE
+  Profitability_Cash:
+    name: Profitability and Cash
+    name_ru: операционная прибыль и денежный поток
+    states:
+      C0:
+        name: cash_or_operating_negative
+        criteria: operating margin <0% OR FCF margin <=0%
+      C1:
+        name: early_positive
+        criteria: operating margin >=0% and <5% AND FCF margin >0% and <10%
+      C2:
+        name: scaled_positive
+        criteria: operating margin >=5% and <10% AND FCF margin >=10% and <15%
+      C3:
+        name: strong_cash_profitability
+        criteria: operating margin >=10% AND H1/LTM FCF margin >=15%
+      C4:
+        name: durable_high_cash_margin
+        criteria: operating margin >=15% AND FCF margin >=20% for 2 consecutive reporting periods
+    current: C3
+    current_evidence:
+    - Q2 operating income €655M on €4.777B revenue = 13.7% operating margin.
+    - H1 2026 FCF €1.621B on €9.310B revenue = 17.41% FCF margin.
+    source_refs:
+    - SPOT_Q2_2026_6K
+    - SPOT_Q2_2026_UPDATE

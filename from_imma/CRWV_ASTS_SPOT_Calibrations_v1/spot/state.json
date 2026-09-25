@@ -1,0 +1,220 @@
+{
+  "schema_version": "1.0.5",
+  "updated": "2026-09-25T00:00:00Z",
+  "price": {
+    "last": 509.45,
+    "last_at": "2026-09-18",
+    "zone": null,
+    "source_url": "https://finance.yahoo.com/quote/SPOT/history/",
+    "symbol": "SPOT",
+    "note": "NYSE close, USD."
+  },
+  "fired": [],
+  "events_reported": [],
+  "pending_verification": [
+    "Initial SPOT model awaits Dozor v1.2.1 verification; source facts are attached but runtime verified flags remain null."
+  ],
+  "notes": [
+    "Spotify is a foreign private issuer; Q2 2026 interim reporting is Form 6-K/IAS 34, not Form 10-Q."
+  ],
+  "route": {
+    "current": "vector",
+    "done_steps": [],
+    "changed_at": "2026-09-25",
+    "note": "Initial five-axis company model; owner strategy phases not defined."
+  },
+  "info_log": [
+    {
+      "timestamp": "2026-09-25T00:00:00Z",
+      "kind": "onboarding",
+      "summary": "SPOT model v1.0 created by IMMA from Q2 2026 SEC 6-K/Q2 Update and FY2025 20-F; Dozor verification pending."
+    }
+  ],
+  "scenario_state": {
+    "Audience_Scale": {
+      "state": "A3",
+      "since": "2026-09-25",
+      "evidence": [
+        "Q2 2026 MAUs 777M, +12% YoY."
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": false,
+      "verified_note": "IMMA source construction complete; Dozor protocol verification not yet performed."
+    },
+    "Premium_Monetization": {
+      "state": "P3",
+      "since": "2026-09-25",
+      "evidence": [
+        "Q2 Premium revenue +15% YoY; Premium subscribers 300M, +9%; Premium ARPU €4.89, +7%."
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": false,
+      "verified_note": "IMMA source construction complete; Dozor protocol verification not yet performed."
+    },
+    "Ad_Monetization": {
+      "state": "D1",
+      "since": "2026-09-25",
+      "evidence": [
+        "Q2 Ad-Supported revenue +1% YoY while Ad-Supported MAUs were 494M, +14% YoY."
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": false,
+      "verified_note": "IMMA source construction complete; Dozor protocol verification not yet performed."
+    },
+    "Unit_Economics": {
+      "state": "M3",
+      "since": "2026-09-25",
+      "evidence": [
+        "Q2 consolidated gross margin 33.4%; Premium gross margin 34.9%; Ad-Supported gross margin 19.1%."
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": false,
+      "verified_note": "IMMA source construction complete; Dozor protocol verification not yet performed."
+    },
+    "Profitability_Cash": {
+      "state": "C3",
+      "since": "2026-09-25",
+      "evidence": [
+        "Q2 operating income €655M on €4.777B revenue = 13.7% operating margin.",
+        "H1 2026 FCF €1.621B on €9.310B revenue = 17.41% FCF margin."
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm",
+      "verified": false,
+      "verified_note": "IMMA source construction complete; Dozor protocol verification not yet performed."
+    }
+  },
+  "state_transitions": [],
+  "kpi_observations": [
+    {
+      "kpi_id": "SPOT-KPI-01",
+      "name": "Revenue YoY",
+      "period_end": "2026-06-30",
+      "value": 0.139,
+      "value_raw": "(4.777B / 4.193B) - 1 = 13.93%",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "derived_fact",
+      "note": "Protocol verification pending."
+    },
+    {
+      "kpi_id": "SPOT-KPI-02",
+      "name": "MAU YoY growth",
+      "period_end": "2026-06-30",
+      "value": 0.12,
+      "value_raw": null,
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "verified_fact",
+      "note": "Protocol verification pending."
+    },
+    {
+      "kpi_id": "SPOT-KPI-03",
+      "name": "Premium subscriber YoY growth",
+      "period_end": "2026-06-30",
+      "value": 0.09,
+      "value_raw": null,
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "verified_fact",
+      "note": "Protocol verification pending."
+    },
+    {
+      "kpi_id": "SPOT-KPI-04",
+      "name": "Premium ARPU YoY growth",
+      "period_end": "2026-06-30",
+      "value": 0.07,
+      "value_raw": null,
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "verified_fact",
+      "note": "Protocol verification pending."
+    },
+    {
+      "kpi_id": "SPOT-KPI-05",
+      "name": "Premium revenue YoY growth",
+      "period_end": "2026-06-30",
+      "value": 0.15,
+      "value_raw": null,
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "verified_fact",
+      "note": "Protocol verification pending."
+    },
+    {
+      "kpi_id": "SPOT-KPI-06",
+      "name": "Ad-Supported revenue YoY growth",
+      "period_end": "2026-06-30",
+      "value": 0.01,
+      "value_raw": null,
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "verified_fact",
+      "note": "Protocol verification pending."
+    },
+    {
+      "kpi_id": "SPOT-KPI-07",
+      "name": "Consolidated gross margin",
+      "period_end": "2026-06-30",
+      "value": 0.334,
+      "value_raw": null,
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "verified_fact",
+      "note": "Protocol verification pending."
+    },
+    {
+      "kpi_id": "SPOT-KPI-08",
+      "name": "Premium gross margin",
+      "period_end": "2026-06-30",
+      "value": 0.349,
+      "value_raw": null,
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "verified_fact",
+      "note": "Protocol verification pending."
+    },
+    {
+      "kpi_id": "SPOT-KPI-09",
+      "name": "Operating margin",
+      "period_end": "2026-06-30",
+      "value": 0.137,
+      "value_raw": "655M / 4,777M = 13.71%",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000114036126031044/ef20078867_ex99-1.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "derived_fact",
+      "note": "Protocol verification pending."
+    },
+    {
+      "kpi_id": "SPOT-KPI-10",
+      "name": "H1 free cash flow margin",
+      "period_end": "2026-06-30",
+      "value": 0.1741138560687433,
+      "value_raw": "1,621M FCF / 9,310M H1 revenue = 17.41%; FCF = OCF 1,652M - capex 34M + restricted-cash change 3M.",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026052543/spot-20260630x6xk.htm",
+      "verified": null,
+      "value_type": "actual",
+      "provenance": "derived_fact",
+      "note": "Protocol verification pending."
+    }
+  ],
+  "calc_runs": []
+}

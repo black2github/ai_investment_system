@@ -4,11 +4,11 @@ description: 'US–China semiconductor technology race: Western subsidized capac
   then persistent bifurcated production systems and accelerator price competition.'
 status: proposed_normative
 mutual_exclusion_set: GEOTECH_REGIME_8Y_V1
-probability: null
-probability_status: pending_owner_judgment
+probability: 0.07
+probability_status: owner_judgment
 probability_meta:
   provenance: owner_judgment
-  rationale: Owner explicitly requested separate probability judgment; calibration must not infer it.
+  rationale: "Owner judgment 2026-09-25 (DR-2026-09-25-01): 0.07 = intersection of owner estimates (full chain 3-7%, leading-edge parity 5-10%); the semiconductor/military-AI race itself is treated as BASE (~90% already under way), so BASE 0.83 = race continues without parity and without Taiwan seizure. Review rule: CW-F01..F06 + owner watch list; each reissue; at least quarterly."
 phases:
 - phase_id: RACE_TO_PARITY
   name: Race before technological parity

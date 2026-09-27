@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "artifact": "scenario_state",
+  "updated_at": "2026-09-27T15:37:27Z",
+  "scenario_set_id": "GEOTECH_REGIME_8Y_V1",
+  "event_catalog_ref": "Scenario_Event_Catalog_v1.0.yaml",
+  "set_state": {
+    "classification": "BASE",
+    "status": "normal",
+    "last_probability_review_at": "2026-09-27T00:00:00Z"
+  },
+  "scenarios": {
+    "TAIWAN_SEIZURE": {
+      "status": "not_observed",
+      "current_phase_id": null,
+      "probability": 0.1,
+      "probability_status": "owner_judgment",
+      "last_probability_review_at": "2026-09-25T00:00:00Z",
+      "conditional_anchor": null,
+      "phases": {
+        "RESTRICTIONS": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        },
+        "BLOCKADE": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        },
+        "CONFLICT": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        },
+        "RECOVERY": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        }
+      }
+    },
+    "TAIWAN_QUARANTINE": {
+      "status": "not_observed",
+      "current_phase_id": null,
+      "probability": 0.175,
+      "probability_status": "owner_judgment",
+      "last_probability_review_at": "2026-09-27T00:00:00Z",
+      "conditional_anchor": null,
+      "phases": {
+        "RESTRICTIONS": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        },
+        "QUARANTINE": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        },
+        "NORMALIZATION_OR_FROZEN": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        }
+      }
+    },
+    "CHIP_COLD_WAR": {
+      "status": "not_observed",
+      "current_phase_id": null,
+      "probability": 0.07,
+      "probability_status": "owner_judgment",
+      "last_probability_review_at": "2026-09-25T00:00:00Z",
+      "conditional_anchor": null,
+      "phases": {
+        "RACE_TO_PARITY": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        },
+        "PARITY_BOUNDARY": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        },
+        "TWO_SYSTEMS": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": []
+        }
+      }
+    }
+  }
+}

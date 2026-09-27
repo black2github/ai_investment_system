@@ -1,0 +1,56 @@
+package: IMMA_Party8_Scenario_Engine_v1.1
+package_version: '1.1'
+as_of: '2026-09-27'
+status: proposed_for_host_acceptance
+normative_contracts:
+  scenario_engine_spec: '1.1'
+  scenario_engine_schema: '1.1'
+  scenario_event_catalog: '1.0'
+  scenario_state_schema: '1.0'
+  joint_simulation_layer_schema: '1.1'
+  joint_rules: 1.1.2
+  mpc_driver_taxonomy: 1.2.1
+supersedes:
+  TAIWAN_SEIZURE_v1.1.yaml: TAIWAN_SEIZURE_v1.0.yaml
+  TAIWAN_QUARANTINE_v1.1.yaml: TAIWAN_QUARANTINE_v1.0.yaml
+  CHIP_COLD_WAR_v1.1.yaml: CHIP_COLD_WAR_v1.0.yaml
+files:
+- path: CHIP_COLD_WAR_v1.1.yaml
+  sha256: fd6d02316d732b36ebb60cac534f2e5846d23242a49f5ecd02d5754b546799cc
+  bytes: 18000
+- path: LOCAL_VALIDATION_REPORT_v1.1.md
+  sha256: fb5fe2c96ccf2e60f85d75d1c98f6db2df98bb85c968fd4e0d0d89652dc9ab9a
+  bytes: 1432
+- path: PACKAGE_README.md
+  sha256: bee3325c648166217fca6ac84e51c7b151e2c0f0d29b05a20a9d3e44e63a75b3
+  bytes: 698
+- path: Scenario_Calibrations_v1.1_Reissue_Delta.md
+  sha256: 150f896f6be6d2f3088577eabd05c709a814a0fa34ef20a233610f73b28f3f01
+  bytes: 1638
+- path: Scenario_Engine_Schema_v1.1.yaml
+  sha256: 145a1fabf00a38c94f6c7a1261dc98093bfe18c942b764abe518f724ca5a2894
+  bytes: 8153
+- path: Scenario_Engine_Specification_v1.1.md
+  sha256: 4609cf59318d37885f8cffd0a486e2afb5b8c2772e47e39b9c0856a9797f10d0
+  bytes: 22749
+- path: Scenario_Engine_v1.1_Patch_Notes.md
+  sha256: 052fb8d63d439fd1d0bf9a4c53960b14f6ab463f13a7d2818608546c84ee11f5
+  bytes: 1938
+- path: Scenario_Event_Catalog_Schema_v1.0.yaml
+  sha256: 2ec532b4893d1a1857b56881fd3db60ca1ceeafd7fbe3063605c0276789e5dde
+  bytes: 7248
+- path: Scenario_Event_Catalog_v1.0.yaml
+  sha256: fad6f11f010cf158fa2b5897cb59a782ead70401e97218568c962435b92e7f9b
+  bytes: 27626
+- path: Scenario_State_Example_v1.0.json
+  sha256: 784542278f5b05d3302520906e73c6395d0f70f9801394a2a7540162d2d48fa4
+  bytes: 4272
+- path: Scenario_State_Schema_v1.0.yaml
+  sha256: 92231e981aeff01906709d08a13c9a62774da55ceab47939d65e0147d83a1ccd
+  bytes: 4216
+- path: TAIWAN_QUARANTINE_v1.1.yaml
+  sha256: 02720eaf06bbde1270829bfe25db86b65d7ef43c5f4db0c5fe4cb9467704af89
+  bytes: 20145
+- path: TAIWAN_SEIZURE_v1.1.yaml
+  sha256: 4e32326b5117bd1c00e7c6f73c61bc663f2c678e4a9549060d5d8b8337ce5df4
+  bytes: 17382

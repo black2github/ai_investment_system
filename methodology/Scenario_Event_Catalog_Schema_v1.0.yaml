@@ -1,0 +1,369 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Scenario_Event_Catalog_Schema_v1.0
+title: Scenario Event Catalog v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- as_of
+- catalog_id
+- events
+- external_events
+- mutual_exclusion_sets
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: scenario_event_catalog
+  as_of:
+    type: string
+    format: date
+  catalog_id:
+    type: string
+    minLength: 1
+  events:
+    type: array
+    items:
+      $ref: '#/$defs/event'
+    minItems: 1
+  external_events:
+    type: array
+    items:
+      $ref: '#/$defs/external_event'
+  mutual_exclusion_sets:
+    type: array
+    items:
+      $ref: '#/$defs/set'
+    minItems: 1
+$defs:
+  meta:
+    type: object
+    additionalProperties: false
+    required:
+    - provenance
+    - rationale
+    properties:
+      provenance:
+        enum:
+        - verified_fact
+        - derived_fact
+        - model_assumption
+        - owner_judgment
+        - company_guidance
+      rationale:
+        type: string
+      source_ref:
+        type:
+        - string
+        - 'null'
+  threshold:
+    type:
+    - number
+    - string
+    - boolean
+    - 'null'
+  observable_criterion:
+    type: object
+    additionalProperties: false
+    required:
+    - criterion_id
+    - fact_ids
+    - observation_key
+    - operator
+    - threshold
+    - unit
+    - window_days
+    - verification_required
+    - meta
+    properties:
+      criterion_id:
+        type: string
+        minLength: 1
+      fact_ids:
+        type: array
+        items:
+          type: string
+        minItems: 1
+        uniqueItems: true
+      observation_key:
+        type: string
+        minLength: 1
+      operator:
+        enum:
+        - verified_true
+        - count_gte
+        - gte
+        - lte
+        - eq
+        - in
+        - sustained_for_days
+        - change_gte_pct
+        - no_event_for_days
+      threshold:
+        $ref: '#/$defs/threshold'
+      unit:
+        type:
+        - string
+        - 'null'
+      window_days:
+        type:
+        - integer
+        - 'null'
+        minimum: 1
+      verification_required:
+        const: true
+      meta:
+        $ref: '#/$defs/meta'
+  event_base:
+    type: object
+    additionalProperties: false
+    required:
+    - event_id
+    - name
+    - definition
+    - observable_logic
+    - required_count
+    - observable_criteria
+    - disambiguation
+    - meta
+    properties:
+      event_id:
+        type: string
+        pattern: ^EV-[A-Z0-9-]{3,80}$
+      name:
+        type: string
+        minLength: 1
+      definition:
+        type: string
+        minLength: 1
+      observable_logic:
+        enum:
+        - all_of
+        - any_of
+        - k_of_n
+      required_count:
+        type:
+        - integer
+        - 'null'
+        minimum: 1
+      observable_criteria:
+        type: array
+        items:
+          $ref: '#/$defs/observable_criterion'
+        minItems: 1
+      disambiguation:
+        type: string
+        minLength: 1
+      meta:
+        $ref: '#/$defs/meta'
+    allOf:
+    - if:
+        properties:
+          observable_logic:
+            const: k_of_n
+      then:
+        properties:
+          required_count:
+            type: integer
+            minimum: 1
+      else:
+        properties:
+          required_count:
+            type: 'null'
+  event:
+    type: object
+    additionalProperties: false
+    required:
+    - event_id
+    - name
+    - definition
+    - observable_logic
+    - required_count
+    - observable_criteria
+    - disambiguation
+    - meta
+    - assigned_member
+    properties:
+      event_id:
+        type: string
+        pattern: ^EV-[A-Z0-9-]{3,80}$
+      name:
+        type: string
+        minLength: 1
+      definition:
+        type: string
+        minLength: 1
+      observable_logic:
+        enum:
+        - all_of
+        - any_of
+        - k_of_n
+      required_count:
+        type:
+        - integer
+        - 'null'
+        minimum: 1
+      observable_criteria:
+        type: array
+        items:
+          $ref: '#/$defs/observable_criterion'
+        minItems: 1
+      disambiguation:
+        type: string
+        minLength: 1
+      meta:
+        $ref: '#/$defs/meta'
+      assigned_member:
+        type: string
+        minLength: 1
+    allOf:
+    - if:
+        properties:
+          observable_logic:
+            const: k_of_n
+      then:
+        properties:
+          required_count:
+            type: integer
+            minimum: 1
+      else:
+        properties:
+          required_count:
+            type: 'null'
+  external_event:
+    type: object
+    additionalProperties: false
+    required:
+    - event_id
+    - name
+    - definition
+    - observable_logic
+    - required_count
+    - observable_criteria
+    - disambiguation
+    - meta
+    - modeling_status
+    properties:
+      event_id:
+        type: string
+        pattern: ^EV-[A-Z0-9-]{3,80}$
+      name:
+        type: string
+        minLength: 1
+      definition:
+        type: string
+        minLength: 1
+      observable_logic:
+        enum:
+        - all_of
+        - any_of
+        - k_of_n
+      required_count:
+        type:
+        - integer
+        - 'null'
+        minimum: 1
+      observable_criteria:
+        type: array
+        items:
+          $ref: '#/$defs/observable_criterion'
+        minItems: 1
+      disambiguation:
+        type: string
+        minLength: 1
+      meta:
+        $ref: '#/$defs/meta'
+      modeling_status:
+        const: outside_set
+    allOf:
+    - if:
+        properties:
+          observable_logic:
+            const: k_of_n
+      then:
+        properties:
+          required_count:
+            type: integer
+            minimum: 1
+      else:
+        properties:
+          required_count:
+            type: 'null'
+  outcome:
+    type: object
+    additionalProperties: false
+    required:
+    - outcome_id
+    - owner_wording
+    - aliases
+    - assigned_member
+    - modeling_status
+    - defining_event_ids
+    - rationale
+    - meta
+    properties:
+      outcome_id:
+        type: string
+        pattern: ^OUT-[A-Z0-9-]{3,80}$
+      owner_wording:
+        type: string
+        minLength: 1
+      aliases:
+        type: array
+        items:
+          type: string
+      assigned_member:
+        type: string
+        minLength: 1
+      modeling_status:
+        enum:
+        - modeled
+        - outside_set
+        - future_extension
+      defining_event_ids:
+        type: array
+        items:
+          type: string
+        minItems: 1
+        uniqueItems: true
+      rationale:
+        type: string
+        minLength: 1
+      meta:
+        $ref: '#/$defs/meta'
+  set:
+    type: object
+    additionalProperties: false
+    required:
+    - set_id
+    - base_member_id
+    - members
+    - outcome_mapping
+    - future_extensions
+    - notes
+    properties:
+      set_id:
+        type: string
+        minLength: 1
+      base_member_id:
+        const: BASE
+      members:
+        type: array
+        items:
+          type: string
+        minItems: 2
+        uniqueItems: true
+      outcome_mapping:
+        type: array
+        items:
+          $ref: '#/$defs/outcome'
+        minItems: 1
+      future_extensions:
+        type: array
+        items:
+          type: string
+      notes:
+        type: array
+        items:
+          type: string

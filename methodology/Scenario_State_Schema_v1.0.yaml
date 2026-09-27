@@ -1,0 +1,209 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Scenario_State_Schema_v1.0
+title: Portfolio Scenario Runtime State v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- updated_at
+- scenario_set_id
+- event_catalog_ref
+- set_state
+- scenarios
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: scenario_state
+  updated_at:
+    type: string
+    format: date-time
+  scenario_set_id:
+    type: string
+    minLength: 1
+  event_catalog_ref:
+    type: string
+    minLength: 1
+  set_state:
+    type: object
+    additionalProperties: false
+    required:
+    - classification
+    - status
+    - last_probability_review_at
+    properties:
+      classification:
+        type: string
+        minLength: 1
+      status:
+        enum:
+        - normal
+        - ambiguous_set_conflict
+        - outside_set_review
+      last_probability_review_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+  scenarios:
+    type: object
+    additionalProperties:
+      $ref: '#/$defs/scenario_runtime'
+$defs:
+  evidence:
+    type: object
+    additionalProperties: false
+    required:
+    - event_id
+    - fact_id
+    - observed_at
+    - source_ref
+    - verification_status
+    - verification_run_id
+    properties:
+      event_id:
+        type:
+        - string
+        - 'null'
+      fact_id:
+        type:
+        - string
+        - 'null'
+      observed_at:
+        type: string
+        format: date-time
+      source_ref:
+        type: string
+        minLength: 1
+      verification_status:
+        enum:
+        - pending_verification
+        - verified
+        - not_disclosed
+        - source_unavailable_technical
+        - source_conflict
+      verification_run_id:
+        type:
+        - string
+        - 'null'
+    anyOf:
+    - properties:
+        event_id:
+          type: string
+    - properties:
+        fact_id:
+          type: string
+  phase_runtime:
+    type: object
+    additionalProperties: false
+    required:
+    - status
+    - first_observed_at
+    - confirmed_at
+    - exited_at
+    - confirmed_quarter
+    - confirmed_event_ids
+    - confirmed_fact_ids
+    - evidence
+    properties:
+      status:
+        enum:
+        - not_observed
+        - candidate
+        - confirmed
+        - exited
+      first_observed_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+      confirmed_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+      exited_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+      confirmed_quarter:
+        type:
+        - integer
+        - 'null'
+        minimum: 0
+      confirmed_event_ids:
+        type: array
+        items:
+          type: string
+        uniqueItems: true
+      confirmed_fact_ids:
+        type: array
+        items:
+          type: string
+        uniqueItems: true
+      evidence:
+        type: array
+        items:
+          $ref: '#/$defs/evidence'
+  conditional_anchor:
+    type:
+    - object
+    - 'null'
+    additionalProperties: false
+    required:
+    - phase_id
+    - confirmed_at
+    - t0_definition
+    properties:
+      phase_id:
+        type: string
+      confirmed_at:
+        type: string
+        format: date-time
+      t0_definition:
+        const: confirmed_phase_quarter
+  scenario_runtime:
+    type: object
+    additionalProperties: false
+    required:
+    - status
+    - current_phase_id
+    - probability
+    - probability_status
+    - last_probability_review_at
+    - conditional_anchor
+    - phases
+    properties:
+      status:
+        enum:
+        - not_observed
+        - candidate
+        - confirmed
+        - exited
+      current_phase_id:
+        type:
+        - string
+        - 'null'
+      probability:
+        type:
+        - number
+        - 'null'
+        minimum: 0
+        maximum: 1
+      probability_status:
+        enum:
+        - owner_judgment
+        - pending_owner_judgment
+      last_probability_review_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+      conditional_anchor:
+        $ref: '#/$defs/conditional_anchor'
+      phases:
+        type: object
+        additionalProperties:
+          $ref: '#/$defs/phase_runtime'

@@ -1,0 +1,636 @@
+schema_version: '1.0'
+artifact: scenario_event_catalog
+as_of: '2026-09-27'
+catalog_id: SCENARIO_EVENT_CATALOG_V1
+events:
+- event_id: EV-TW-RESTRICTIONS
+  name: Material Taiwan shipping/airspace restrictions below quarantine threshold
+  definition: Officially announced or independently verified restriction affecting commercial shipping or air traffic around Taiwan, but
+    not yet meeting the quarantine or full-blockade definitions.
+  assigned_member: BASE
+  observable_logic: any_of
+  required_count: null
+  observable_criteria:
+  - criterion_id: EVTWRES-C01
+    fact_ids:
+    - TW-F01
+    observation_key: official_commercial_restriction_confirmed
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: One verified official or Tier-1-confirmed commercial restriction is sufficient to recognize RESTRICTIONS; military exercises
+        or patrols alone are insufficient.
+  - criterion_id: EVTWRES-C02
+    fact_ids:
+    - TQ-F08
+    observation_key: principal_route_or_port_compulsory_restriction_confirmed
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: A verified compulsory commercial routing/port restriction is a machine-checkable alternative entry signal.
+  disambiguation: Routine patrols, ADIZ incursions or exercises without commercial restriction are below this event. Repeated inspections/boardings
+    or sustained partial port/route restrictions belong to EV-TW-QUARANTINE; sustained closure of principal routes belongs to EV-TW-FULL-BLOCKADE.
+  meta:
+    provenance: model_assumption
+    rationale: Shared precursor assigned to BASE because it is insufficient by itself to choose TAIWAN_SEIZURE or TAIWAN_QUARANTINE.
+- event_id: EV-TW-QUARANTINE
+  name: Gray-zone quarantine / partial blockade without kinetic conflict
+  definition: PRC coast-guard/law-enforcement coercion materially interferes with commercial traffic through inspections, boardings, compulsory
+    routing or partial port/route restrictions, while principal trade routes are not fully closed and no armed conflict is confirmed.
+  assigned_member: TAIWAN_QUARANTINE
+  observable_logic: any_of
+  required_count: null
+  observable_criteria:
+  - criterion_id: EVTWQ-C01
+    fact_ids:
+    - TQ-F01
+    observation_key: commercial_vessel_inspection_or_boarding_count
+    operator: count_gte
+    threshold: 3
+    unit: vessels
+    window_days: 30
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Three verified compulsory commercial inspections/boardings in 30 days is a model threshold separating a persistent quarantine
+        regime from isolated patrol activity.
+  - criterion_id: EVTWQ-C02
+    fact_ids:
+    - TQ-F01
+    observation_key: official_quarantine_or_inspection_regime_announced
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: An official compulsory inspection/quarantine regime is sufficient even before three individual boardings are observed.
+  - criterion_id: EVTWQ-C03
+    fact_ids:
+    - TQ-F08
+    observation_key: partial_principal_port_or_route_restriction_duration
+    operator: sustained_for_days
+    threshold: 3
+    unit: days
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: A verified partial restriction lasting at least 72 hours is treated as persistent gray-zone interference, provided full-blockade
+        criteria are not met.
+  disambiguation: Unlike EV-TW-FULL-BLOCKADE, at least one principal commercial route remains materially usable and the event is non-kinetic.
+    If full-blockade or armed-conflict criteria are confirmed, classification leaves this scenario set member.
+  meta:
+    provenance: model_assumption
+    rationale: Defining event for TAIWAN_QUARANTINE.
+- event_id: EV-TW-NORMALIZATION-OR-FROZEN
+  name: Quarantine normalization or frozen gray-zone new normal
+  definition: The acute quarantine regime has ceased escalating and either materially normalized or stabilized into a persistent lower-intensity
+    gray-zone regime with residual insurance/logistics friction.
+  assigned_member: TAIWAN_QUARANTINE
+  observable_logic: k_of_n
+  required_count: 2
+  observable_criteria:
+  - criterion_id: EVTWNORM-C01
+    fact_ids:
+    - TQ-F01
+    observation_key: days_without_new_compulsory_boarding_or_inspection
+    operator: gte
+    threshold: 30
+    unit: days
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Thirty days without a new compulsory commercial boarding/inspection is a model threshold for the acute phase ending.
+  - criterion_id: EVTWNORM-C02
+    fact_ids:
+    - TQ-F08
+    observation_key: principal_routes_materially_reopened
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Verified reopening/material normalization of principal commercial routes is evidence of normalization.
+  - criterion_id: EVTWNORM-C03
+    fact_ids:
+    - TQ-F05
+    observation_key: residual_shipping_risk_premium_or_rerouting_present
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Residual insurance/logistics friction distinguishes a frozen new normal from full return to pre-event conditions.
+  disambiguation: This event does not imply post-war recovery; no armed conflict is part of TAIWAN_QUARANTINE.
+  meta:
+    provenance: model_assumption
+    rationale: Two of three observations are required so either normalization or a stable residual gray-zone regime can be recognized without
+      forcing a branch inside Scenario Engine v1.1.
+- event_id: EV-TW-FULL-BLOCKADE
+  name: Effective full blockade of Taiwan commercial access
+  definition: Principal commercial maritime/air access is effectively closed or prohibited on a sustained basis, whether or not kinetic combat
+    has begun.
+  assigned_member: TAIWAN_SEIZURE
+  observable_logic: any_of
+  required_count: null
+  observable_criteria:
+  - criterion_id: EVTWBLK-C01
+    fact_ids:
+    - TW-F02
+    observation_key: effective_blockade_confirmed
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: The existing TW-F02 binary is the primary event definition.
+  - criterion_id: EVTWBLK-C02
+    fact_ids:
+    - TQ-F08
+    observation_key: principal_commercial_routes_closed_count
+    operator: count_gte
+    threshold: 2
+    unit: principal routes/ports
+    window_days: 7
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Two or more principal routes/ports effectively unavailable for seven consecutive days is a model threshold for full blockade
+        rather than partial quarantine.
+  disambiguation: Full blockade can be recognized without kinetic conflict. Under the current owner scenario partition it maps to TAIWAN_SEIZURE
+    because that calibration is intentionally conservative and later contains a conflict phase.
+  meta:
+    provenance: model_assumption
+    rationale: Defining event for TAIWAN_SEIZURE; owner outcome mapping explicitly includes full blockade without combat.
+- event_id: EV-TW-ARMED-CONFLICT
+  name: Armed conflict / kinetic use of force around Taiwan
+  definition: Verified kinetic use of force, missile/air/naval strike, invasion or armed engagement directly associated with the Taiwan crisis.
+  assigned_member: TAIWAN_SEIZURE
+  observable_logic: any_of
+  required_count: null
+  observable_criteria:
+  - criterion_id: EVTWCON-C01
+    fact_ids:
+    - TW-F03
+    observation_key: kinetic_hostilities_confirmed
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: A single verified kinetic event is sufficient; rumor, exercise or mobilization alone is not.
+  disambiguation: Mobilization, exercises, patrols, inspections and non-kinetic blockade are not armed conflict until force is verified.
+  meta:
+    provenance: model_assumption
+    rationale: Defining kinetic event for the CONFLICT phase.
+- event_id: EV-TW-RECOVERY
+  name: Post-conflict semiconductor/logistics recovery
+  definition: Material restoration of Taiwan semiconductor production/shipment capability and principal commercial logistics after the conflict/blockade
+    shock.
+  assigned_member: TAIWAN_SEIZURE
+  observable_logic: all_of
+  required_count: null
+  observable_criteria:
+  - criterion_id: EVTWREC-C01
+    fact_ids:
+    - TW-F04
+    observation_key: key_semiconductor_production_or_shipment_restoration
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Recovery requires issuer/government evidence of restored production or geographic substitution, not only market-price recovery.
+  - criterion_id: EVTWREC-C02
+    fact_ids:
+    - TQ-F08
+    observation_key: principal_commercial_routes_reopened
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Physical logistics restoration is separately required from semiconductor production restoration.
+  disambiguation: This is post-blockade/conflict recovery, not the non-kinetic NORMALIZATION_OR_FROZEN event.
+  meta:
+    provenance: model_assumption
+    rationale: Terminal event for TAIWAN_SEIZURE recovery recognition.
+- event_id: EV-CN-RACE-BASELINE
+  name: Observed 2026 semiconductor/AI strategic race baseline
+  definition: Ongoing strategic competition is observable through export controls, subsidized semiconductor/AI investment and domestic equipment
+    substitution, without requiring leading-edge parity.
+  assigned_member: BASE
+  observable_logic: k_of_n
+  required_count: 2
+  observable_criteria:
+  - criterion_id: EVCNRACEBASE-C01
+    fact_ids:
+    - CW-F02
+    observation_key: advanced_compute_or_equipment_export_controls_active
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: 730
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Existing export-control architecture is one baseline indicator; no new tightening is required.
+  - criterion_id: EVCNRACEBASE-C02
+    fact_ids:
+    - CW-F03
+    observation_key: quantified_semiconductor_or_ai_state_support_active
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: 730
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Current quantified state support/procurement is another baseline indicator.
+  - criterion_id: EVCNRACEBASE-C03
+    fact_ids:
+    - CW-F04
+    observation_key: domestic_wfe_substitution_or_china_equipment_demand_evidence
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: 730
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Domestic equipment substitution or China WFE demand is the third structural indicator.
+  disambiguation: This event says the race exists; it does not mean the race has accelerated enough to enter CHIP_COLD_WAR and does not imply
+    parity.
+  meta:
+    provenance: model_assumption
+    rationale: BASE is calibrated to the observed 2026 regime, so the existence of this race is not itself a non-BASE scenario.
+- event_id: EV-CN-RACE-ACCELERATION
+  name: Acceleration of the semiconductor/AI race above BASE
+  definition: At least two independent policy/capacity signals show a material step-up from the observed 2026 strategic-race baseline toward
+    rapid parity.
+  assigned_member: CHIP_COLD_WAR
+  observable_logic: k_of_n
+  required_count: 2
+  observable_criteria:
+  - criterion_id: EVCNRACEACC-C01
+    fact_ids:
+    - CW-F02
+    observation_key: new_or_tightened_export_control_since_baseline
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: 365
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: A new or materially tightened control within the trailing year is a discrete acceleration signal.
+  - criterion_id: EVCNRACEACC-C02
+    fact_ids:
+    - CW-F03
+    observation_key: new_or_expanded_quantified_state_support_since_baseline
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: 365
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: A new quantified program or material expansion of an existing program is a second independent acceleration signal.
+  - criterion_id: EVCNRACEACC-C03
+    fact_ids:
+    - CW-F04
+    observation_key: domestic_wfe_share_or_vendor_revenue_change
+    operator: change_gte_pct
+    threshold: 5
+    unit: percentage points
+    window_days: 365
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: If separately disclosed, a >=5pp annual increase in domestic substitution/share is a model threshold for meaningful acceleration;
+        not_disclosed must not be estimated.
+  disambiguation: The current race alone is BASE. This event requires a step-up beyond that baseline and still does not require leading-edge
+    parity.
+  meta:
+    provenance: model_assumption
+    rationale: Defining entry event for CHIP_COLD_WAR/RACE_TO_PARITY.
+- event_id: EV-CN-PARITY-LEADING-EDGE
+  name: Chinese leading-edge compute parity boundary
+  definition: Chinese-produced accelerator/logic capability reaches commercially meaningful proximity to the leading Western/Taiwan compute
+    class, not merely sufficiency for domestic military AI workloads.
+  assigned_member: CHIP_COLD_WAR
+  observable_logic: all_of
+  required_count: null
+  observable_criteria:
+  - criterion_id: EVCNPAR-C01
+    fact_ids:
+    - CW-F01
+    observation_key: commercial_compute_process_or_perf_gap_to_leading_class
+    operator: lte
+    threshold: 1
+    unit: leading logic generation equivalent
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: A one-generation-equivalent gap is a model threshold for parity proximity. Direct comparable performance/power evidence
+        may substitute for node nomenclature when explicit.
+  - criterion_id: EVCNPAR-C02
+    fact_ids:
+    - CW-F01
+    observation_key: commercial_scale_or_mass_production_confirmed
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Lab samples or one-off demonstrations are insufficient; commercial/mass-production evidence is required.
+  disambiguation: Military-AI sufficiency can occur earlier and remains BASE-compatible. EUV use is neither necessary nor sufficient by itself;
+    first domestic-EUV series production is supporting evidence only if it also satisfies commercial capability/scale criteria.
+  meta:
+    provenance: model_assumption
+    rationale: Defining event for the PARITY_BOUNDARY phase; thresholds are scenario-model definitions, not claims that parity has occurred.
+- event_id: EV-CN-MILITARY-AI-SUFFICIENCY
+  name: Chinese domestic compute sufficient for operational military AI
+  definition: Domestic Chinese compute is demonstrably sufficient for operational military/strategic AI workloads even if it remains materially
+    behind the global leading edge.
+  assigned_member: BASE
+  observable_logic: all_of
+  required_count: null
+  observable_criteria:
+  - criterion_id: EVCNMAI-C01
+    fact_ids:
+    - CW-F01
+    observation_key: domestic_compute_capability_sufficient_for_large_model_workloads
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Capability must be supported by disclosed process/product or deployment evidence; no leading-edge parity is required.
+  - criterion_id: EVCNMAI-C02
+    fact_ids:
+    - CW-F03
+    observation_key: official_military_or_strategic_ai_procurement_or_deployment
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: An official procurement/deployment signal distinguishes operational sufficiency from generic commercial availability.
+  disambiguation: This event is explicitly below EV-CN-PARITY-LEADING-EDGE and therefore does not by itself select CHIP_COLD_WAR.
+  meta:
+    provenance: model_assumption
+    rationale: Owner explicitly classified military-AI sufficiency as compatible with BASE.
+- event_id: EV-CN-BIFURCATED-SUPPLY-SYSTEMS
+  name: Persistent Western and Chinese semiconductor production systems
+  definition: Cross-sales restrictions and duplicated/localized capacity are both materially present such that Western and Chinese semiconductor
+    supply systems operate persistently with limited interchangeability.
+  assigned_member: CHIP_COLD_WAR
+  observable_logic: all_of
+  required_count: null
+  observable_criteria:
+  - criterion_id: EVCNBIF-C01
+    fact_ids:
+    - CW-F06
+    observation_key: duplicated_or_geographically_separated_capacity_confirmed
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Issuer/government evidence of duplicated/localized capacity is required.
+  - criterion_id: EVCNBIF-C02
+    fact_ids:
+    - CW-F02
+    observation_key: material_cross_sales_restrictions_active
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Persistent cross-border control/restriction is separately required so simple geographic diversification is not misclassified
+        as bifurcation.
+  disambiguation: Localization alone is not enough; the event requires both duplicated capacity and persistent access restrictions.
+  meta:
+    provenance: model_assumption
+    rationale: Defining structural event for TWO_SYSTEMS.
+- event_id: EV-TWO-SYSTEMS-PRICE-COMPETITION
+  name: Material accelerator price/performance competition across two systems
+  definition: Comparable Chinese accelerators exert observable price/performance pressure on accelerator or compute-service economics while
+    bifurcated supply systems persist.
+  assigned_member: CHIP_COLD_WAR
+  observable_logic: all_of
+  required_count: null
+  observable_criteria:
+  - criterion_id: EV2SYS-C01
+    fact_ids:
+    - CW-F05
+    observation_key: comparable_accelerator_price_performance_pressure_confirmed
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Comparable product class and explicit price/performance evidence are required; generic low-end chip price declines are insufficient.
+  - criterion_id: EV2SYS-C02
+    fact_ids:
+    - CW-F06
+    observation_key: bifurcated_supply_systems_confirmed
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: null
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: Price competition is classified as the scenario's two-system outcome only when persistent supply-chain bifurcation is also
+        observed.
+  disambiguation: Cheaper compute within one integrated global supply system is not this event; the two-system structure is required.
+  meta:
+    provenance: model_assumption
+    rationale: Defining economic event for the mature TWO_SYSTEMS phase.
+external_events:
+- event_id: EV-WEST-DISENGAGEMENT-TAIWAN
+  name: Western strategic disengagement from Taiwan / semiconductor-security support
+  definition: A durable policy shift in which major Western governments materially withdraw strategic, defense or semiconductor-security
+    support connected to Taiwan rather than merely changing timing or one program.
+  modeling_status: outside_set
+  observable_logic: k_of_n
+  required_count: 2
+  observable_criteria:
+  - criterion_id: EVWEST-C01
+    fact_ids:
+    - TQ-F03
+    observation_key: material_taiwan_security_support_cancelled_or_withdrawn
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: 365
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: One delayed package is insufficient; cancellation/withdrawal of material support is required.
+  - criterion_id: EVWEST-C02
+    fact_ids:
+    - CW-F03
+    observation_key: western_semiconductor_or_sovereign_ai_support_materially_reversed
+    operator: verified_true
+    threshold: true
+    unit: null
+    window_days: 365
+    verification_required: true
+    meta:
+      provenance: model_assumption
+      rationale: A durable reversal of strategic industrial support is a second independent signal.
+  disambiguation: 'This outcome is not CHIP_COLD_WAR: that scenario assumes persistent competing Western and Chinese systems. It is also
+    not the future CHIP_COLD_WAR_THEN_SEIZURE composite.'
+  meta:
+    provenance: model_assumption
+    rationale: Explicitly represented so owner wording can map to OUTSIDE_SET without silently forcing it into an existing member.
+mutual_exclusion_sets:
+- set_id: GEOTECH_REGIME_8Y_V1
+  base_member_id: BASE
+  members:
+  - BASE
+  - TAIWAN_SEIZURE
+  - TAIWAN_QUARANTINE
+  - CHIP_COLD_WAR
+  outcome_mapping:
+  - outcome_id: OUT-BASE-RACE-CONTINUES
+    owner_wording: Гонка США–Китай в чипах и военном ИИ продолжается, но без паритета, карантина, полной блокады или силового Тайваня.
+    aliases:
+    - затянувшаяся гонка
+    - гонка как режим 2026
+    assigned_member: BASE
+    modeling_status: modeled
+    defining_event_ids:
+    - EV-CN-RACE-BASELINE
+    rationale: BASE is the observed 2026 race regime; no separate ~90% race scenario is created.
+    meta:
+      provenance: owner_judgment
+      rationale: Owner clarified on 2026-09-25 that the strategic race is already the base regime.
+  - outcome_id: OUT-TW-INVASION
+    owner_wording: Вторжение / силовой захват Тайваня.
+    aliases:
+    - силовой Тайвань
+    - вооружённый конфликт
+    assigned_member: TAIWAN_SEIZURE
+    modeling_status: modeled
+    defining_event_ids:
+    - EV-TW-ARMED-CONFLICT
+    rationale: Direct match to the armed-conflict phase.
+    meta:
+      provenance: owner_judgment
+      rationale: Maps the owner's forceful-seizure wording to the accepted TAIWAN_SEIZURE calibration.
+  - outcome_id: OUT-TW-FULL-BLOCKADE-NO-CONFLICT
+    owner_wording: Полная военная/морская блокада без подтверждённого вооружённого конфликта.
+    aliases:
+    - полная блокада
+    assigned_member: TAIWAN_SEIZURE
+    modeling_status: modeled
+    defining_event_ids:
+    - EV-TW-FULL-BLOCKADE
+    rationale: 'Conservative owner mapping: full blockade is priced with TAIWAN_SEIZURE even if observed reality has not yet entered armed
+      conflict; the numeric calibration itself later contains a conflict phase.'
+    meta:
+      provenance: owner_judgment
+      rationale: Owner's 0.10 definition covers forceful seizure or full blockade; this mapping prevents full blockade from falling silently
+        into BASE.
+  - outcome_id: OUT-TW-QUARANTINE
+    owner_wording: Карантин / частичная блокада силами береговой охраны или ограничение части портов/маршрутов без боевых действий.
+    aliases:
+    - серая зона
+    - частичная блокада
+    assigned_member: TAIWAN_QUARANTINE
+    modeling_status: modeled
+    defining_event_ids:
+    - EV-TW-QUARANTINE
+    rationale: Direct match to the non-kinetic gray-zone scenario.
+    meta:
+      provenance: owner_judgment
+      rationale: Owner identified this as a distinct, more likely Taiwan outcome requiring its own calibration.
+  - outcome_id: OUT-CN-LEADING-EDGE-PARITY
+    owner_wording: Китай достигает паритета в передовых чипах и возникает устойчивая двухсистемная конкуренция.
+    aliases:
+    - паритет в передовых чипах
+    assigned_member: CHIP_COLD_WAR
+    modeling_status: modeled
+    defining_event_ids:
+    - EV-CN-PARITY-LEADING-EDGE
+    - EV-CN-BIFURCATED-SUPPLY-SYSTEMS
+    rationale: Parity is the defining boundary that separates CHIP_COLD_WAR from the already-existing BASE race.
+    meta:
+      provenance: owner_judgment
+      rationale: Owner probability 0.07 is for the modeled parity/two-system path, not for existence of the race.
+  - outcome_id: OUT-CN-MILITARY-AI-SUFFICIENCY
+    owner_wording: Китай достигает достаточного уровня собственных чипов для использования LLM/ИИ в военных нуждах, но без паритета с передовым
+      Западом.
+    aliases:
+    - достаточный уровень для военного ИИ
+    assigned_member: BASE
+    modeling_status: modeled
+    defining_event_ids:
+    - EV-CN-MILITARY-AI-SUFFICIENCY
+    rationale: Military-AI sufficiency is explicitly below the parity threshold and therefore remains compatible with BASE.
+    meta:
+      provenance: owner_judgment
+      rationale: Owner asked whether this means CHIP_COLD_WAR; methodology answer is no unless leading-edge parity/two-system criteria are
+        met.
+  - outcome_id: OUT-FULL-CHAIN-SUPERIORITY-WEST-DISENGAGEMENT
+    owner_wording: 'Полная цепочка: технологическое превосходство Китая → Запад теряет стратегический интерес к Тайваню.'
+    aliases:
+    - Запад теряет интерес
+    - китайское превосходство и disengagement
+    assigned_member: OUTSIDE_SET
+    modeling_status: outside_set
+    defining_event_ids:
+    - EV-CN-PARITY-LEADING-EDGE
+    - EV-WEST-DISENGAGEMENT-TAIWAN
+    rationale: Current CHIP_COLD_WAR assumes persistent competing Western and Chinese systems, not Western strategic withdrawal. A new member
+      is required before assigning probability.
+    meta:
+      provenance: owner_judgment
+      rationale: Explicitly kept outside GEOTECH_REGIME_8Y_V1 so it cannot be silently mis-mapped again.
+  future_extensions:
+  - CHIP_COLD_WAR_THEN_SEIZURE
+  notes:
+  - Simultaneously confirmed defining events from different members produce ambiguous_set_conflict; the engine/agent must not silently choose
+    a winner.
+  - OUTSIDE_SET outcomes are explicit owner-wording mappings but are not members and receive no probability until a new scenario calibration
+    is accepted.

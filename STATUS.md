@@ -1810,3 +1810,24 @@ scratchpad новой сессии.
 TAIWAN_SUPPLY_DISRUPTION, потолки NVDA/RKLB/SPOT). Скрипты приёмок/раундов/заходов перенесены в lab
 calc/tools/invest_runs (коммит lab). Коммит workspace: решение DR-02, заказ v1.1 «отправлен», STATUS, дополнение
 заметки раунда 3, прогоны 27.09 (валидаторы, смеси, экспорт, оптимизатор захода 6 и §3.3).
+
+## 27.09: ПАРТИЯ 8 — Scenario Engine v1.1 ПРИНЯТ; валидатор 1.8.0 (SCN-012…016); state.json сценариев создан
+
+ПАРТИЯ 8 (Scenario Engine v1.1, share 6ab935c6; zip sha256 b257698c…, 13 файлов по манифесту сошлись;
+from_imma/Party8_Scenario_Engine_v1.1): семантический слой без изменения численной семантики — Specification v1.1
+(§14–24), Schema v1.1, Scenario_Event_Catalog v1.0 (+схема; 12 событий, 1 внешнее EV-WEST-DISENGAGEMENT-TAIWAN,
+mutual_exclusion_sets с outcome_mapping по формулировкам владельца), Scenario_State_Schema v1.0 (+пример), три
+калибровки v1.1 со scope (includes/excludes/base_when/narrative), entry/exit_criteria фаз, strategy_ref/state_ref
+(null), event_id в fact_catalog. ПРИЁМКА: check_supersedes ×4 — пропаж 0, численные деревья не менялись; побитовая
+проверка NVDA × QUARANTINE 20k: v1.0 = v1.1. ВАЛИДАТОР 1.8.0: схема по schema_version файла; каталог по схеме; SCN-012
+(уникальность includes в наборе), SCN-013 (принадлежность событий, external → только OUTSIDE_SET), SCN-014 (критерии
+фаз, ссылки на каталог/факты), SCN-015 (includes ∩ excludes, coverage gap warning), SCN-016 (state.json по схеме) — на
+v1.1 pass (…-2f4690), негативный тест ловит порчу; test_scenario_semantics_v11_scn012_015 (33/33 в файле). ИНТЕГРАЦИЯ:
+v1.1 в portfolio/_scenarios (v1.0 сняты; в from_imma/git), p(Q)=0.175 перенесён в v1.1 (пакет собран до DR-02 —
+расхождение закрыто интегратором, IMMA уведомлена), нормативы в methodology, создан portfolio/_scenarios/state.json
+(все not_observed, set BASE/normal, вероятности 0.10/0.07/0.175). ФАЙЛЫ:
+to_imma/party8-scenario-engine-v11.feedback.md (приёмка + расхождение п. 2 + заход 6 к сведению + вопрос о
+сценарно-условных ограничениях для v1.2). Очередь IMMA: приёмка партии 8 → заказ Lifecycle → заказ слоя действий v1.2
+(условный прогон §21 в движке, стратегии по фазам, условные оптимумы, сценарно-условные ограничения, контракт
+сигнала). Не закоммичено: lab (validator 1.8.0, тест), workspace (пакет партии 8, нормативы, _scenarios v1.1 +
+state.json, приёмка, прогоны, STATUS).

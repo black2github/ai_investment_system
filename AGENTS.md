@@ -358,6 +358,11 @@ verify-ASTS-20260923T060714Z), сводная v1.2.1 — в тот же день
    появления отдельного поля в протоколе (запрошено у IMMA) пометка в `evidence_locator` обязательна. Канонические KPI в kpis.yaml, критерии состояний, условия
    триггеров и ID дозор НЕ переписывает: расхождение → Decision Request владельцу с текстом «PATCH_REQUIRED: <id>:
    <статус>, найдено <значение> (<период>, <url>)».
+   **Перекалибровка (Calibration_Lifecycle_Rules v1.0, принят 27.09.2026):** если расхождение касается verified_fact, на
+   который опирается принятая RV/MC-калибровка, либо новый отчёт делает базовый период устаревшим — дозор только фиксирует
+   результат проверки; нужна ли правка калибровки и какого типа, определяется по CLR-1 (новые факты) / CLR-2 (переход
+   состояния, recalibration-триггер) реестра `methodology/Calibration_Lifecycle_Registry_v1.0.yaml`; дозор параметры
+   калибровки не выбирает. Состояния калибровок — `portfolio/_calibration_lifecycle.yaml`.
 10. **Итог прогона** по старшинству: `BLOCKED_SOURCE_CONFLICT` > `BLOCKED_TECHNICAL` > `PATCH_REQUIRED` >
     `PASS_WITH_DECLARED_PENDING` > `PASS`. Pending создают только: KPI `not_found` (кандидат уже null +
     pending_verification), ось `state_pending_verification` без правки, `event_unconfirmed`,

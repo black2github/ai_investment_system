@@ -1849,3 +1849,20 @@ in_flight_budget_exhausted» — веб-поиск OpenClaw идёт через 
 OPENROUTER_API_KEY; отдельного Perplexity нет — плагин perplexity лишь включён); баланс OpenRouter: credits 36,
 использовано 35.73 → остаток ≈ $0.27; 8 ошибок 402 за 7 дней. Это не ошибка конфигурации, а исчерпанный баланс
 OpenRouter — на нём же Sonnet 5 для news-watch и DeepSeek; нужно пополнение (решение владельца).
+
+## 27.09: ПАРТИЯ 9 — Calibration_Lifecycle_Rules v1.0 ПРИНЯТ; реестр состояний калибровок; SemVer в глоссарии
+
+ПАРТИЯ 9 (Calibration_Lifecycle_Rules v1.0, share 6ab954ef; zip sha256 fd1dbfe5…, 6 файлов по манифесту сошлись;
+from_imma/Party9_Calibration_Lifecycle_Rules_v1.0): Rules (17 разделов: состояния lifecycle, что НЕ основание — цена,
+вероятности сценариев, выход оптимизатора; типы отклика rerun_only / revalidate_no_change / patch / reissue /
+archetype_change; CLR-1…6 с подправилами; срок годности базового периода 2 квартала; материальность 5 % / 10 % backlog
+/ 2 п.п. / 1 % акций + автоматически материальные события; срочность; пакетирование «один пакет на одно нормативное
+изменение»; SemVer §13; приёмка не меняется), Registry v1.0 (+схема; проверена check_schema.py: OK), Cross_References
+(строки для дозора, схемы артефактов/triggers, RV Rules §3, Joint/MC-G5-013, Conditional MC, правило переиздания).
+ПРИЁМКА: sha256 OK; реестр по схеме OK; термины OK; нормативы скопированы в methodology. ХОСТ:
+calc/tools/check_schema.py (общая проверка документов по JSON Schema 2020-12 — реестр CLR, каталог событий, state.json
+— все OK); portfolio/_calibration_lifecycle.yaml — реестр состояний 15 калибровок (все current; anchor Q2 2026;
+следующая обязательная проверка — после отчётов за Q3 2026, второй новый квартал без обновления →
+recalibration_required); GLOSSARY — статья «Версии калибровок (SemVer) и состояния lifecycle» (замечание владельца) и
+ссылка в «Калибровка»; AGENTS.md — перекрёстная ссылка CLR-1/CLR-2 в разделе сверки (п. 9). Далее: приёмка партии 9 в
+IMMA, затем заказ слоя действий v1.2 (часть A).

@@ -1,0 +1,25 @@
+package: IMMA_Party9_Calibration_Lifecycle_Rules_v1.0
+package_version: '1.0'
+party: 9
+as_of: '2026-09-27'
+status: proposed_for_host_acceptance
+artifact_role: normative_calibration_lifecycle
+files:
+- path: Calibration_Lifecycle_Cross_References_v1.0.md
+  sha256: 66f24e93cfd120f1e678ea46b4b4bd325218498d52454e656ee9629da420143d
+  bytes: 3146
+- path: Calibration_Lifecycle_Registry_Schema_v1.0.yaml
+  sha256: f8b582a6676bd3d63fcb218358d9f740d146e591d8c3c6a94a22b916f256dfd3
+  bytes: 4768
+- path: Calibration_Lifecycle_Registry_v1.0.yaml
+  sha256: 89cf497b6894e2538ecc077185074f3a9491d9b4c5c835a83a94ddc43cb3c10f
+  bytes: 7851
+- path: Calibration_Lifecycle_Rules_v1.0.md
+  sha256: f75472778d67d19f865c8dde8f70eae8a7c398dbf1e5408424dda8b1ec015f00
+  bytes: 26798
+- path: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: 52d624869e2168fd07ad3c881a7277a57057d64f5dca2662e6c33ed034b0dd4f
+  bytes: 1212
+- path: PACKAGE_README.md
+  sha256: 80da518a5018dceaa99490061040e6f74332ee56e8087687ef7feba2ef2af2a6
+  bytes: 690

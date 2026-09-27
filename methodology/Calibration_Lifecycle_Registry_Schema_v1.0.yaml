@@ -1,0 +1,233 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Calibration_Lifecycle_Registry_Schema_v1.0
+title: Calibration Lifecycle Registry v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- rules_version
+- as_of
+- party
+- semantics
+- materiality
+- excluded_recalibration_bases
+- basis_classes
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: calibration_lifecycle_registry
+  rules_version:
+    const: '1.0'
+  as_of:
+    type: string
+    format: date
+  party:
+    type: integer
+    minimum: 1
+  semantics:
+    type: object
+    additionalProperties: false
+    required:
+    - trigger_not_decision
+    - price_fit_forbidden
+    - base_period_max_age_quarters
+    - materiality_policy_ref
+    - response_policy_ref
+    - versioning_policy_ref
+    properties:
+      trigger_not_decision:
+        const: true
+      price_fit_forbidden:
+        const: true
+      base_period_max_age_quarters:
+        type: integer
+        minimum: 1
+        maximum: 8
+      materiality_policy_ref:
+        type: string
+        minLength: 1
+      response_policy_ref:
+        type: string
+        minLength: 1
+      versioning_policy_ref:
+        type: string
+        minLength: 1
+  materiality:
+    type: object
+    additionalProperties: false
+    required:
+    - money_or_operating_quantity_relative
+    - backlog_rpo_relative
+    - rate_margin_growth_abs
+    - shares_relative
+    - automatic_material_events
+    - comparison_anchor
+    - note
+    properties:
+      money_or_operating_quantity_relative:
+        type: number
+        exclusiveMinimum: 0
+        maximum: 1
+      backlog_rpo_relative:
+        type: number
+        exclusiveMinimum: 0
+        maximum: 1
+      rate_margin_growth_abs:
+        type: number
+        exclusiveMinimum: 0
+        maximum: 1
+      shares_relative:
+        type: number
+        exclusiveMinimum: 0
+        maximum: 1
+      automatic_material_events:
+        type: array
+        items:
+          type: string
+          minLength: 1
+        minItems: 1
+        uniqueItems: true
+      comparison_anchor:
+        const: current_accepted_calibration_anchor
+      note:
+        type: string
+        minLength: 1
+  excluded_recalibration_bases:
+    type: array
+    items:
+      $ref: '#/$defs/excluded'
+    minItems: 1
+  basis_classes:
+    type: array
+    items:
+      $ref: '#/$defs/basis'
+    minItems: 6
+$defs:
+  detector:
+    enum:
+    - dozor
+    - triggers
+    - validator
+    - imma
+    - owner
+  artifact_scope:
+    enum:
+    - RV
+    - MC
+    - both
+  response_type:
+    enum:
+    - no_file_change
+    - rerun_only
+    - revalidate_no_change
+    - patch
+    - reissue
+    - archetype_change
+    - route_to_clr_2_or_3
+  urgency:
+    enum:
+    - scheduled_review
+    - next_party
+    - revalidate_before_next_round
+    - immediate_before_next_normative_run
+  excluded:
+    type: object
+    additionalProperties: false
+    required:
+    - id
+    - name
+    - response
+    properties:
+      id:
+        type: string
+        pattern: ^CLR-X[1-9][0-9]*$
+      name:
+        type: string
+        minLength: 1
+      response:
+        const: rerun_only
+  response:
+    type: object
+    additionalProperties: false
+    required:
+    - default
+    - allowed
+    - decision_ref
+    properties:
+      default:
+        $ref: '#/$defs/response_type'
+      allowed:
+        type: array
+        items:
+          $ref: '#/$defs/response_type'
+        minItems: 1
+        uniqueItems: true
+      decision_ref:
+        type: string
+        minLength: 1
+  subrule:
+    type: object
+    additionalProperties: false
+    required:
+    - id
+    - when
+    - response
+    - artifact
+    - urgency
+    properties:
+      id:
+        type: string
+        pattern: ^CLR-[1-6][A-Z][0-9]*$
+      when:
+        type: string
+        minLength: 1
+      response:
+        $ref: '#/$defs/response_type'
+      artifact:
+        $ref: '#/$defs/artifact_scope'
+      urgency:
+        $ref: '#/$defs/urgency'
+  basis:
+    type: object
+    additionalProperties: false
+    required:
+    - id
+    - name
+    - detector
+    - artifact
+    - response
+    - urgency
+    - references
+    - subrules
+    properties:
+      id:
+        type: string
+        pattern: ^CLR-[1-6]$
+      name:
+        type: string
+        minLength: 1
+      detector:
+        type: array
+        items:
+          $ref: '#/$defs/detector'
+        minItems: 1
+        uniqueItems: true
+      artifact:
+        $ref: '#/$defs/artifact_scope'
+      response:
+        $ref: '#/$defs/response'
+      urgency:
+        $ref: '#/$defs/urgency'
+      references:
+        type: array
+        items:
+          type: string
+          minLength: 1
+        minItems: 1
+      subrules:
+        type: array
+        items:
+          $ref: '#/$defs/subrule'
+        minItems: 1

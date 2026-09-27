@@ -1,0 +1,234 @@
+schema_version: '1.0'
+artifact: calibration_lifecycle_state
+rules_ref: Calibration_Lifecycle_Rules_v1.0.md
+registry_ref: Calibration_Lifecycle_Registry_v1.0.yaml
+updated: '2026-09-27'
+base_period_max_age_quarters: 2
+note: 'Хост-реестр состояний lifecycle принятых калибровок (§2: current | review_required | revalidation_required | recalibration_required | superseded).
+  Ведёт интегратор; основания классифицируются по CLR-1…6 реестра IMMA; неприятный результат модели основанием не является (§3).'
+calibrations:
+- ticker: ASML
+  folder: asml
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.2.yaml
+  mc_as_of: '2026-09-25'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-24'
+  base_period_anchor: '2026-06-28'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: ASTS
+  folder: asts
+  archetype: pre_service_or_milestone_driven
+  mc_file: mc_calibration_v1.0.yaml
+  mc_as_of: '2026-09-25'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-25'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: CRWV
+  folder: crwv
+  archetype: capital_intensive_transition
+  mc_file: mc_calibration_v1.0.1.yaml
+  mc_as_of: '2026-09-25'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-25'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: ETN
+  folder: etn
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.2.yaml
+  mc_as_of: '2026-09-24'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-24'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: HOOD
+  folder: hood
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.1.yaml
+  mc_as_of: '2026-09-23'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-23'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: LLY
+  folder: lly
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.yaml
+  mc_as_of: '2026-09-24'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-24'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: META
+  folder: meta
+  archetype: capital_intensive_transition
+  mc_file: mc_calibration_v1.0.2.yaml
+  mc_as_of: '2026-09-25'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-24'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: MSFT
+  folder: msft
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.1.yaml
+  mc_as_of: '2026-09-25'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-24'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: NBIS
+  folder: nbis
+  archetype: capital_intensive_transition
+  mc_file: mc_calibration_v1.0.3.yaml
+  mc_as_of: '2026-09-25'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-23'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: NET
+  folder: net
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.yaml
+  mc_as_of: '2026-09-24'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-24'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: NVDA
+  folder: nvda
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.3.yaml
+  mc_as_of: '2026-09-25'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-23'
+  base_period_anchor: '2026-07-26'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: PLTR
+  folder: pltr
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.yaml
+  mc_as_of: '2026-09-24'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-24'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: RKLB
+  folder: rklb
+  archetype: pre_service_or_milestone_driven
+  mc_file: mc_calibration_v1.0.1.yaml
+  mc_as_of: '2026-09-23'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-23'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: SPCX
+  folder: spacex
+  archetype: capital_intensive_transition
+  mc_file: mc_calibration_v1.1.3.yaml
+  mc_as_of: '2026-09-25'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-20'
+  base_period_anchor: 2026-06-30 (Q2 2026; у SPCX — по калибровке v1.1.2)
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []
+- ticker: SPOT
+  folder: spot
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.yaml
+  mc_as_of: '2026-09-25'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-09-25'
+  base_period_anchor: '2026-06-30'
+  base_period_fiscal_quarter: Q2 2026
+  lifecycle_state: current
+  last_check: '2026-09-27'
+  last_check_basis: 'CLR-4 (Joint v1.1, схема 1.0.2): ревалидация всех 15 пройдена 25–27.09; ETN → v1.0.2 (patch), SPCX/NBIS/NVDA → reissue'
+  next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; §5.2 — второй новый квартал (Q4 2026) без обновления
+    anchor → recalibration_required)
+  open_bases: []

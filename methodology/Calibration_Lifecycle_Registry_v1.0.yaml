@@ -1,0 +1,262 @@
+schema_version: '1.0'
+artifact: calibration_lifecycle_registry
+rules_version: '1.0'
+as_of: '2026-09-27'
+party: 9
+semantics:
+  trigger_not_decision: true
+  price_fit_forbidden: true
+  base_period_max_age_quarters: 2
+  materiality_policy_ref: Calibration_Lifecycle_Rules_v1.0.md#5-clr-1
+  response_policy_ref: Calibration_Lifecycle_Rules_v1.0.md#4
+  versioning_policy_ref: Calibration_Lifecycle_Rules_v1.0.md#13
+materiality:
+  money_or_operating_quantity_relative: 0.05
+  backlog_rpo_relative: 0.1
+  rate_margin_growth_abs: 0.02
+  shares_relative: 0.01
+  automatic_material_events:
+  - accounting_definition_change
+  - currency_change
+  - primary_listing_change
+  - material_perimeter_change
+  - new_convertible_debt_affecting_equity_bridge
+  - material_equity_issuance_or_buyback
+  - material_mna_spin_disposal
+  comparison_anchor: current_accepted_calibration_anchor
+  note: Lifecycle tolerances only; they do not redefine Dozor match semantics, company trigger thresholds, or MC-G5-013.
+excluded_recalibration_bases:
+- id: CLR-X1
+  name: market_price_or_equity_value_change
+  response: rerun_only
+- id: CLR-X2
+  name: scenario_probability_portfolio_limit_or_regime_change
+  response: rerun_only
+- id: CLR-X3
+  name: stability_or_optimizer_output_alone
+  response: rerun_only
+- id: CLR-X4
+  name: valuation_basis_or_dispersion_diagnostic_alone
+  response: rerun_only
+- id: CLR-X5
+  name: owner_conviction_or_target_weight_change
+  response: rerun_only
+basis_classes:
+- id: CLR-1
+  name: new_verified_facts_and_base_period_freshness
+  detector:
+  - dozor
+  - triggers
+  - imma
+  artifact: both
+  response:
+    default: patch
+    allowed:
+    - no_file_change
+    - rerun_only
+    - patch
+    - reissue
+    - archetype_change
+    decision_ref: Calibration_Lifecycle_Rules_v1.0.md#5
+  urgency: immediate_before_next_normative_run
+  references:
+  - Dozor_Verification_Protocol_v1.2.1
+  - Company_Artifact_Schema_v1.0.5
+  subrules:
+  - id: CLR-1A
+    when: verified discrepancy below lifecycle materiality and base period not stale
+    response: no_file_change
+    artifact: both
+    urgency: scheduled_review
+  - id: CLR-1B
+    when: localized material verified fact with unchanged topology
+    response: patch
+    artifact: both
+    urgency: immediate_before_next_normative_run
+  - id: CLR-1C
+    when: currency/perimeter/capital-structure or multi-block material event
+    response: reissue
+    artifact: both
+    urgency: immediate_before_next_normative_run
+  - id: CLR-1D
+    when: verified fact crosses archetype boundary
+    response: archetype_change
+    artifact: both
+    urgency: immediate_before_next_normative_run
+- id: CLR-2
+  name: state_transition_or_in_state_recalibration_trigger
+  detector:
+  - triggers
+  - dozor
+  artifact: both
+  response:
+    default: patch
+    allowed:
+    - no_file_change
+    - patch
+    - reissue
+    - archetype_change
+    decision_ref: Calibration_Lifecycle_Rules_v1.0.md#6
+  urgency: immediate_before_next_normative_run
+  references:
+  - Company_Artifact_Schema_v1.0.5#triggers.yaml
+  - Reverse_Valuation_Rules_v1.1#3
+  subrules:
+  - id: CLR-2A
+    when: confirmed transition does not affect calibration semantics or parameter anchors
+    response: no_file_change
+    artifact: both
+    urgency: scheduled_review
+  - id: CLR-2B
+    when: same topology; localized calibration nodes change
+    response: patch
+    artifact: both
+    urgency: immediate_before_next_normative_run
+  - id: CLR-2C
+    when: same archetype but structural calibration topology/semantics change
+    response: reissue
+    artifact: both
+    urgency: immediate_before_next_normative_run
+  - id: CLR-2D
+    when: transition crosses archetype boundary
+    response: archetype_change
+    artifact: both
+    urgency: immediate_before_next_normative_run
+- id: CLR-3
+  name: archetype_transition
+  detector:
+  - dozor
+  - triggers
+  - imma
+  artifact: both
+  response:
+    default: archetype_change
+    allowed:
+    - archetype_change
+    decision_ref: Calibration_Lifecycle_Rules_v1.0.md#7
+  urgency: immediate_before_next_normative_run
+  references:
+  - MC_Calibration_Archetypes_Specification_v1.0
+  - Company_Conditional_Monte_Carlo_Specification_v1.1.3
+  subrules:
+  - id: CLR-3A
+    when: C service/commercial onset verified and actual service revenue disclosed for 2 consecutive reporting quarters
+    response: archetype_change
+    artifact: both
+    urgency: immediate_before_next_normative_run
+  - id: CLR-3B
+    when: B has positive TTM OCF-capex and positive company FCF for 2 consecutive reporting quarters
+    response: archetype_change
+    artifact: both
+    urgency: immediate_before_next_normative_run
+  - id: CLR-3C
+    when: A has non-positive TTM FCF and negative company FCF for 2 consecutive reporting quarters, not only a verified temporary timing
+      item
+    response: archetype_change
+    artifact: both
+    urgency: immediate_before_next_normative_run
+- id: CLR-4
+  name: normative_taxonomy_joint_or_engine_change
+  detector:
+  - validator
+  - imma
+  artifact: both
+  response:
+    default: revalidate_no_change
+    allowed:
+    - rerun_only
+    - revalidate_no_change
+    - patch
+    - reissue
+    decision_ref: Calibration_Lifecycle_Rules_v1.0.md#8
+  urgency: revalidate_before_next_round
+  references:
+  - Joint_Simulation_Layer_Rules_v1.1.2#MC-G5-013
+  - Company_Conditional_Monte_Carlo_Specification_v1.1.3#13
+  subrules:
+  - id: CLR-4A
+    when: Joint root mapping/correlation/persistence/construction changes
+    response: revalidate_no_change
+    artifact: MC
+    urgency: revalidate_before_next_round
+  - id: CLR-4B
+    when: Joint revalidation fails current hard criterion
+    response: patch
+    artifact: MC
+    urgency: immediate_before_next_normative_run
+  - id: CLR-4C
+    when: new/redefined taxonomy driver is material for company
+    response: reissue
+    artifact: MC
+    urgency: next_party
+  - id: CLR-4D
+    when: engine RNG/seeding/computation changes without calibration semantic change
+    response: rerun_only
+    artifact: MC
+    urgency: revalidate_before_next_round
+  - id: CLR-4E
+    when: schema/engine valuation semantics change
+    response: reissue
+    artifact: both
+    urgency: next_party
+- id: CLR-5
+  name: realized_failure_mode_or_common_cause
+  detector:
+  - dozor
+  - triggers
+  artifact: both
+  response:
+    default: route_to_clr_2_or_3
+    allowed:
+    - route_to_clr_2_or_3
+    decision_ref: Calibration_Lifecycle_Rules_v1.0.md#9
+  urgency: immediate_before_next_normative_run
+  references:
+  - Company_Artifact_Schema_v1.0.5#mpc_inputs.failure_modes
+  - Calibration_Lifecycle_Rules_v1.0#CLR-2
+  - Calibration_Lifecycle_Rules_v1.0#CLR-3
+  subrules:
+  - id: CLR-5A
+    when: realized failure changes state but not archetype
+    response: route_to_clr_2_or_3
+    artifact: both
+    urgency: immediate_before_next_normative_run
+  - id: CLR-5B
+    when: realized failure invalidates current archetype
+    response: route_to_clr_2_or_3
+    artifact: both
+    urgency: immediate_before_next_normative_run
+- id: CLR-6
+  name: calibration_defect
+  detector:
+  - validator
+  - imma
+  - dozor
+  - owner
+  artifact: both
+  response:
+    default: patch
+    allowed:
+    - patch
+    - reissue
+    - archetype_change
+    decision_ref: Calibration_Lifecycle_Rules_v1.0.md#10
+  urgency: immediate_before_next_normative_run
+  references:
+  - Calibration_Lifecycle_Rules_v1.0.md#10
+  subrules:
+  - id: CLR-6A
+    when: localized formula/unit/sign/source/mapping defect
+    response: patch
+    artifact: both
+    urgency: immediate_before_next_normative_run
+  - id: CLR-6B
+    when: structural semantic/topology defect inside same archetype
+    response: reissue
+    artifact: both
+    urgency: immediate_before_next_normative_run
+  - id: CLR-6C
+    when: defect proves archetype invalid
+    response: archetype_change
+    artifact: both
+    urgency: immediate_before_next_normative_run

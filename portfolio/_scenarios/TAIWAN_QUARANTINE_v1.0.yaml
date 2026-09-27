@@ -5,12 +5,11 @@ description: 'Gray-zone Taiwan quarantine led by PRC coast-guard/law-enforcement
   a persistent frozen gray-zone regime.'
 status: proposed_normative
 mutual_exclusion_set: GEOTECH_REGIME_8Y_V1
-probability: null
-probability_status: pending_owner_judgment
+probability: 0.175
+probability_status: owner_judgment
 probability_meta:
   provenance: owner_judgment
-  rationale: Owner has not yet set the normative probability. Owner orientation supplied with the order is 15–20% through
-    end-2028; calibration must not convert that range into a point estimate.
+  rationale: "Owner judgment 2026-09-27 (DR-2026-09-25-02, variant V1): 0.175 = midpoint of owner estimate 15-20% by end-2028 for a coast-guard quarantine / partial blockade without armed conflict; mutually exclusive with TAIWAN_SEIZURE (0.10) and CHIP_COLD_WAR (0.07), BASE residual 0.655. Review rule: TQ-F01..F08 fact catalog; each scenario reissue (incl. scope v1.1); at least quarterly."
 phases:
 - phase_id: RESTRICTIONS
   name: Partial shipping/airspace restrictions

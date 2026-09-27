@@ -1,0 +1,312 @@
+{
+  "run_id": "20260927T150235Z-portfolio_paths-ee84fa",
+  "model": "portfolio_paths",
+  "version": "1.3.0",
+  "seed": 0,
+  "inputs": {
+    "paths_files": {
+      "HOOD": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-HOOD-paths.npz",
+      "LLY": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-LLY-paths.npz",
+      "PLTR": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-PLTR-paths.npz",
+      "NET": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-NET-paths.npz",
+      "ASTS": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-ASTS-paths.npz",
+      "CRWV": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-CRWV-paths.npz",
+      "RKLB": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-RKLB-paths.npz",
+      "NVDA": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-NVDA-paths.npz",
+      "MSFT": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-MSFT-paths.npz",
+      "META": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-META-paths.npz",
+      "ASML": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-ASML-paths.npz",
+      "NBIS": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-NBIS-paths.npz",
+      "ETN": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-ETN-paths.npz",
+      "SPOT": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-SPOT-paths.npz",
+      "SPCX": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-SPCX-paths.npz"
+    },
+    "weights": {
+      "HOOD": 0.14575437877701528,
+      "LLY": 0.08419543173204956,
+      "PLTR": 0.017924818191129777,
+      "NET": 0.018129673256171257,
+      "ASTS": 0.010447608317115642,
+      "CRWV": 0.005018949093516337,
+      "RKLB": 0.023148622349687592,
+      "NVDA": 0.21817064426917954,
+      "MSFT": 0.0194612311789409,
+      "META": 0.056027860288845634,
+      "ASML": 0.028372426508245414,
+      "NBIS": 0.3383181399160094,
+      "ETN": 0.01188159377240602,
+      "SPOT": 0.011471883642323056,
+      "SPCX": 0.006862644678889685
+    },
+    "dry_powder_weight": 0.004814094028474854,
+    "dry_powder_return_annual": 0.04
+  },
+  "outputs": {
+    "model_version": "1.3.0",
+    "paths": 500000,
+    "alignment": {
+      "aligned": true,
+      "joint_layer_all": true,
+      "global_seed": 20260920,
+      "chunk": 50000,
+      "companies": {
+        "HOOD": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "LLY": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "PLTR": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "NET": {
+          "model_version": "2.3.2",
+          "joint": true
+        },
+        "ASTS": {
+          "model_version": "2.4.0",
+          "joint": true
+        },
+        "CRWV": {
+          "model_version": "2.4.1",
+          "joint": true
+        },
+        "RKLB": {
+          "model_version": "2.4.1",
+          "joint": true
+        },
+        "NVDA": {
+          "model_version": "2.4.1",
+          "joint": true
+        },
+        "MSFT": {
+          "model_version": "2.4.1",
+          "joint": true
+        },
+        "META": {
+          "model_version": "2.4.1",
+          "joint": true
+        },
+        "ASML": {
+          "model_version": "2.4.1",
+          "joint": true
+        },
+        "NBIS": {
+          "model_version": "2.4.1",
+          "joint": true
+        },
+        "ETN": {
+          "model_version": "2.4.1",
+          "joint": true
+        },
+        "SPOT": {
+          "model_version": "2.4.1",
+          "joint": true
+        },
+        "SPCX": {
+          "model_version": "2.4.2",
+          "joint": true
+        }
+      }
+    },
+    "weights": {
+      "HOOD": 0.14575437877701528,
+      "LLY": 0.08419543173204956,
+      "PLTR": 0.017924818191129777,
+      "NET": 0.018129673256171257,
+      "ASTS": 0.010447608317115642,
+      "CRWV": 0.005018949093516337,
+      "RKLB": 0.023148622349687592,
+      "NVDA": 0.21817064426917954,
+      "MSFT": 0.0194612311789409,
+      "META": 0.056027860288845634,
+      "ASML": 0.028372426508245414,
+      "NBIS": 0.3383181399160094,
+      "ETN": 0.01188159377240602,
+      "SPOT": 0.011471883642323056,
+      "SPCX": 0.006862644678889685
+    },
+    "dry_powder_weight": 0.004814094028474854,
+    "dry_powder_return_annual": 0.04,
+    "horizons": {
+      "Y3": {
+        "median_CAGR": 0.19558205624530212,
+        "P_2x": 0.283982,
+        "P_loss_gt_30pct": 0.000286,
+        "P_loss_gt_50pct": 2e-06,
+        "expected_shortfall_5pct": 0.005614523259906714,
+        "CAGR_quantiles": {
+          "0.05": 0.036420739744150346,
+          "0.25": 0.1257645829949136,
+          "0.5": 0.19558205624530212,
+          "0.75": 0.2722183010039822,
+          "0.95": 0.39084319573303566
+        }
+      },
+      "Y5": {
+        "median_CAGR": 0.2112229321296316,
+        "P_2x": 0.715636,
+        "P_loss_gt_30pct": 0.002794,
+        "P_loss_gt_50pct": 0.000246,
+        "expected_shortfall_5pct": 0.02004462197013472,
+        "CAGR_quantiles": {
+          "0.05": 0.04228931152706519,
+          "0.25": 0.1378628424821322,
+          "0.5": 0.2112229321296316,
+          "0.75": 0.29282124818054955,
+          "0.95": 0.42025769378754024
+        },
+        "median_portfolio_value_rel": 2.6068762998454176
+      },
+      "Y8": {
+        "median_CAGR": 0.24361876319796538,
+        "P_2x": 0.928406,
+        "P_loss_gt_30pct": 0.001644,
+        "P_loss_gt_50pct": 0.000206,
+        "expected_shortfall_5pct": 0.34992280516570873,
+        "CAGR_quantiles": {
+          "0.05": 0.07358066907451082,
+          "0.25": 0.16793398084899092,
+          "0.5": 0.24361876319796538,
+          "0.75": 0.3301094298906067,
+          "0.95": 0.4637290342597703
+        }
+      }
+    },
+    "median_contribution_Y5": {
+      "HOOD": 0.09079129248857498,
+      "LLY": 0.1227935329079628,
+      "PLTR": 0.016831958666443825,
+      "NET": 0.0071722958236932755,
+      "ASTS": 0.011039887554943562,
+      "CRWV": 0.01935502327978611,
+      "RKLB": 0.028554441407322884,
+      "NVDA": 0.5590789914131165,
+      "MSFT": 0.025996914133429527,
+      "META": 0.09540888667106628,
+      "ASML": 0.021490277722477913,
+      "NBIS": 1.4293407201766968,
+      "ETN": 0.013514820486307144,
+      "SPOT": 0.019661372527480125,
+      "SPCX": 0.005788685288280249,
+      "dry_powder": 0.00585708147217044
+    },
+    "log_value_correlation_Y5": {
+      "HOOD__LLY": 0.0193963922020053,
+      "HOOD__PLTR": 0.031862228794388894,
+      "HOOD__NET": 0.06806097559073104,
+      "HOOD__ASTS": 0.0010197117772003422,
+      "HOOD__CRWV": 0.05155917077456103,
+      "HOOD__RKLB": 0.007181172914229749,
+      "HOOD__NVDA": 0.13406343882595498,
+      "HOOD__MSFT": 0.046179756950111644,
+      "HOOD__META": 0.07689335996454481,
+      "HOOD__ASML": 0.08629471552792092,
+      "HOOD__NBIS": 0.06736159021853665,
+      "HOOD__ETN": 0.04211810287394384,
+      "HOOD__SPOT": 0.027026235908531652,
+      "HOOD__SPCX": 0.050153483272974406,
+      "LLY__PLTR": 0.012581199519529728,
+      "LLY__NET": 0.023031555159836594,
+      "LLY__ASTS": -3.65917973586682e-05,
+      "LLY__CRWV": 0.01017533724339936,
+      "LLY__RKLB": 0.0025569170270918064,
+      "LLY__NVDA": 0.04320848039769882,
+      "LLY__MSFT": 0.011125416308152617,
+      "LLY__META": 0.023554855500688397,
+      "LLY__ASML": 0.03104346694176177,
+      "LLY__NBIS": 0.019197365954102753,
+      "LLY__ETN": 0.013794841915241404,
+      "LLY__SPOT": 0.002183600180065432,
+      "LLY__SPCX": 0.01457124738176059,
+      "PLTR__NET": 0.1230078851004833,
+      "PLTR__ASTS": 0.00338298360360585,
+      "PLTR__CRWV": 0.08056751286688171,
+      "PLTR__RKLB": 0.0346034647500934,
+      "PLTR__NVDA": 0.09371440276133146,
+      "PLTR__MSFT": 0.05251030532351805,
+      "PLTR__META": 0.09946683708435898,
+      "PLTR__ASML": 0.07928768437681458,
+      "PLTR__NBIS": 0.06414701079090024,
+      "PLTR__ETN": 0.08761417782276543,
+      "PLTR__SPOT": 0.004276372456273497,
+      "PLTR__SPCX": 0.06220707041478834,
+      "NET__ASTS": 0.002375769257811841,
+      "NET__CRWV": 0.17475068264194643,
+      "NET__RKLB": 0.01739759559691563,
+      "NET__NVDA": 0.2594541500153909,
+      "NET__MSFT": 0.12791239717886907,
+      "NET__META": 0.2107110903109261,
+      "NET__ASML": 0.21649534554634065,
+      "NET__NBIS": 0.1658715560659889,
+      "NET__ETN": 0.18558754741542255,
+      "NET__SPOT": 0.008740723383338056,
+      "NET__SPCX": 0.12003069626376245,
+      "ASTS__CRWV": 0.0013257357094544082,
+      "ASTS__RKLB": 0.0007668928520868443,
+      "ASTS__NVDA": -0.0006039094827785819,
+      "ASTS__MSFT": 0.002211159532146907,
+      "ASTS__META": 0.0003992973025118461,
+      "ASTS__ASML": -0.000673389085967755,
+      "ASTS__NBIS": -0.0026606813492966635,
+      "ASTS__ETN": 0.0018648688528092744,
+      "ASTS__SPOT": 0.002864962034250977,
+      "ASTS__SPCX": 0.0018516055763701843,
+      "CRWV__RKLB": 0.013293695840227694,
+      "CRWV__NVDA": 0.20339591346722544,
+      "CRWV__MSFT": 0.0739942627118724,
+      "CRWV__META": 0.14436536314055556,
+      "CRWV__ASML": 0.17109373802217473,
+      "CRWV__NBIS": 0.13481185718951894,
+      "CRWV__ETN": 0.16373033739035817,
+      "CRWV__SPOT": 0.002248992159181094,
+      "CRWV__SPCX": 0.09426494906288513,
+      "RKLB__NVDA": 0.009946756776201432,
+      "RKLB__MSFT": 0.006190900167096237,
+      "RKLB__META": 0.015996830796346107,
+      "RKLB__ASML": 0.01235182606117055,
+      "RKLB__NBIS": 0.00684228357687235,
+      "RKLB__ETN": 0.019916275039972467,
+      "RKLB__SPOT": 0.0008197934555506802,
+      "RKLB__SPCX": 0.016301593746620418,
+      "NVDA__MSFT": 0.14641527830526108,
+      "NVDA__META": 0.24673228176889636,
+      "NVDA__ASML": 0.37144071096052045,
+      "NVDA__NBIS": 0.26523390272577957,
+      "NVDA__ETN": 0.20962914115112566,
+      "NVDA__SPOT": 0.017847366614214055,
+      "NVDA__SPCX": 0.174130151893217,
+      "MSFT__META": 0.11138338855915172,
+      "MSFT__ASML": 0.11660765957096059,
+      "MSFT__NBIS": 0.08133724737597217,
+      "MSFT__ETN": 0.034351856563335156,
+      "MSFT__SPOT": 0.009817065345980397,
+      "MSFT__SPCX": 0.0544616037309928,
+      "META__ASML": 0.19968961779672692,
+      "META__NBIS": 0.15267993157762674,
+      "META__ETN": 0.156607552924052,
+      "META__SPOT": 0.013895021412464268,
+      "META__SPCX": 0.10577905011713236,
+      "ASML__NBIS": 0.2106432554586118,
+      "ASML__ETN": 0.18820151714798342,
+      "ASML__SPOT": 0.006682386937256143,
+      "ASML__SPCX": 0.13655567338550928,
+      "NBIS__ETN": 0.15614174570422742,
+      "NBIS__SPOT": 0.0051516487094410935,
+      "NBIS__SPCX": 0.1017797484619188,
+      "ETN__SPOT": -0.0022616243945905224,
+      "ETN__SPCX": 0.11417583191594764,
+      "SPOT__SPCX": 0.008035077842320052
+    },
+    "decision": "none",
+    "note": "не торговый сигнал; вход для MPC (P0 vs P1(w)) и Optimizer; без joint-слоя корреляции между компаниями — только через общий seed идиосинкратики (диагностика)"
+  },
+  "elapsed_ms": 2140.1,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

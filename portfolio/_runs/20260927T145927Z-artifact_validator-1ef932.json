@@ -1,0 +1,3191 @@
+{
+  "run_id": "20260927T145927Z-artifact_validator-1ef932",
+  "model": "artifact_validator",
+  "version": "1.7.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "scenario",
+    "workspace": "/data/workspace-invest",
+    "scenarios": [
+      {
+        "schema_version": "1.0",
+        "scenario_id": "TAIWAN_SEIZURE",
+        "description": "Escalating restrictions/blockade/conflict around Taiwan followed by partial supply-chain recovery; valuation-only action plan TAIWAN-S1..S3 is referenced but not used as model input.",
+        "status": "proposed_normative",
+        "mutual_exclusion_set": "GEOTECH_REGIME_8Y_V1",
+        "probability": 0.1,
+        "probability_status": "owner_judgment",
+        "probability_meta": {
+          "provenance": "owner_judgment",
+          "rationale": "Owner judgment 2026-09-25 (DR-2026-09-25-01): 0.10 = midpoint of owner estimate 8-12% by end-2028 for seizure by force or full blockade; conservative because the calibration escalates every blockade into conflict. Review rule: TW-F01..F04 fact catalog + owner watch list; each scenario reissue; at least quarterly."
+        },
+        "phases": [
+          {
+            "phase_id": "RESTRICTIONS",
+            "name": "Partial shipping/airspace restrictions",
+            "effective_from": {
+              "kind": "fixed_quarter",
+              "anchor": "t0",
+              "quarter": 0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Scenario is conditioned on onset of material restrictions at t0."
+              }
+            },
+            "ramp_quarters": 1,
+            "duration_quarters": "until_next_phase",
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": -0.75,
+                "volatility_multiplier": 1.25,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Material access friction without assuming full physical outage."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.2,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Cross-strait/export friction weakens China-linked revenue."
+                }
+              },
+              "AI_COMPUTE_DEMAND": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.15,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Near-term deployment caution offsets some substitution demand."
+                }
+              },
+              "HBM_MEMORY": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.25,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Packaging/memory logistics tighten."
+                }
+              },
+              "ADVANCED_PACKAGING": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.25,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Advanced packaging access becomes less reliable."
+                }
+              },
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.2,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Near-term fab/equipment activity pauses before reconstruction response."
+                }
+              },
+              "CAPITAL_MARKETS": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.3,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Risk-off financing shock."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 0.25,
+                "volatility_multiplier": 1.15,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Defense demand rises modestly."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "SEMI_SUPPLY_HEALTH",
+                "root_b": "CHINA_MARKET_ACCESS",
+                "correlation": 0.35,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Cross-strait supply and China access become more coupled."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.4,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "AI capex becomes more dependent on semiconductor supply health."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Initial restrictions corresponding economically to legacy TAIWAN-S1; legacy actions are not model inputs."
+            }
+          },
+          {
+            "phase_id": "BLOCKADE",
+            "name": "Effective maritime/air blockade",
+            "effective_from": {
+              "kind": "triangular_quarter",
+              "anchor": "t0",
+              "min": 1,
+              "mode": 2,
+              "max": 3,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Conditional seizure path assumes escalation from restrictions to blockade within roughly one to three quarters; timing is model uncertainty."
+              }
+            },
+            "ramp_quarters": 1,
+            "duration_quarters": "until_next_phase",
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": -2.0,
+                "volatility_multiplier": 1.6,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Large sustained supply-health shock."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -1.25,
+                "volatility_multiplier": 1.5,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Market-access/export shock."
+                }
+              },
+              "AI_COMPUTE_DEMAND": {
+                "mean_shift_sigma": -0.75,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Capacity deployment is constrained by unavailable compute inputs."
+                }
+              },
+              "HBM_MEMORY": {
+                "mean_shift_sigma": -1.0,
+                "volatility_multiplier": 1.55,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "HBM supply becomes strongly constrained."
+                }
+              },
+              "ADVANCED_PACKAGING": {
+                "mean_shift_sigma": -1.0,
+                "volatility_multiplier": 1.55,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Advanced packaging becomes strongly constrained."
+                }
+              },
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": -0.75,
+                "volatility_multiplier": 1.45,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Equipment demand/shipments are disrupted before geographic substitution."
+                }
+              },
+              "CAPITAL_MARKETS": {
+                "mean_shift_sigma": -1.0,
+                "volatility_multiplier": 1.6,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Global risk-off shock."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 0.75,
+                "volatility_multiplier": 1.3,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Defense procurement rises materially."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "SEMI_SUPPLY_HEALTH",
+                "root_b": "CHINA_MARKET_ACCESS",
+                "correlation": 0.5,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Blockade couples semiconductor supply and China market access."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.5,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "AI infrastructure becomes supply constrained."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "FINANCIAL_CONDITIONS",
+                "correlation": 0.35,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Funding and AI buildout co-move more strongly during blockade."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Economic analogue of legacy TAIWAN-S2; conditional on actual blockade."
+            }
+          },
+          {
+            "phase_id": "CONFLICT",
+            "name": "Armed conflict / seizure attempt",
+            "effective_from": {
+              "kind": "triangular_quarter",
+              "anchor": "phase:BLOCKADE",
+              "min": 1,
+              "mode": 2,
+              "max": 4,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Conflict timing is conditional on blockade and uncertain; no unconditional escalation probability is encoded here."
+              }
+            },
+            "ramp_quarters": 1,
+            "duration_quarters": "until_next_phase",
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": -3.0,
+                "volatility_multiplier": 2.0,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Extreme disruption to Taiwan-linked semiconductor supply."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -2.0,
+                "volatility_multiplier": 1.8,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Severe sanctions/market-access fragmentation."
+                }
+              },
+              "AI_COMPUTE_DEMAND": {
+                "mean_shift_sigma": -1.25,
+                "volatility_multiplier": 1.6,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Physical compute availability dominates demand willingness."
+                }
+              },
+              "HBM_MEMORY": {
+                "mean_shift_sigma": -1.5,
+                "volatility_multiplier": 1.9,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Severe HBM supply shock."
+                }
+              },
+              "ADVANCED_PACKAGING": {
+                "mean_shift_sigma": -1.5,
+                "volatility_multiplier": 1.9,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Severe packaging shock."
+                }
+              },
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": -1.0,
+                "volatility_multiplier": 1.7,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Equipment supply/demand shock during conflict."
+                }
+              },
+              "CAPITAL_MARKETS": {
+                "mean_shift_sigma": -1.5,
+                "volatility_multiplier": 2.0,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Severe risk-off and financing stress."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 1.5,
+                "volatility_multiplier": 1.6,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "War-economy procurement impulse."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "SEMI_SUPPLY_HEALTH",
+                "root_b": "CHINA_MARKET_ACCESS",
+                "correlation": 0.55,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Conflict links supply and sanctions/market access."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.55,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Compute investment becomes tightly supply constrained."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "FINANCIAL_CONDITIONS",
+                "correlation": 0.4,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Financial and capex cycles become unusually coupled."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Economic analogue of legacy TAIWAN-S3; conditional on armed conflict."
+            }
+          },
+          {
+            "phase_id": "RECOVERY",
+            "name": "Partial geographic substitution and reconstruction",
+            "effective_from": {
+              "kind": "triangular_quarter",
+              "anchor": "phase:CONFLICT",
+              "min": 6,
+              "mode": 10,
+              "max": 16,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Recovery onset is highly uncertain; six to sixteen quarters is a model-assumption range, not a forecast."
+              }
+            },
+            "ramp_quarters": 4,
+            "duration_quarters": "until_end",
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": -1.25,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Supply remains structurally impaired even after acute conflict shock fades."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -1.0,
+                "volatility_multiplier": 1.3,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Sanctions/market fragmentation persist."
+                }
+              },
+              "AI_COMPUTE_DEMAND": {
+                "mean_shift_sigma": 0.25,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.7,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Replacement and sovereign compute buildout supports demand."
+                }
+              },
+              "HBM_MEMORY": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.3,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Memory supply partially normalizes."
+                }
+              },
+              "ADVANCED_PACKAGING": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.3,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Packaging partially normalizes."
+                }
+              },
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": 0.75,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Reconstruction/localization drives equipment demand."
+                }
+              },
+              "CAPITAL_MARKETS": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.65,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Risk premium remains above BASE but acute stress fades."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 0.5,
+                "volatility_multiplier": 1.25,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Defense procurement remains elevated."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "SEMI_SUPPLY_HEALTH",
+                "root_b": "CHINA_MARKET_ACCESS",
+                "correlation": 0.35,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Persistent bifurcation remains after acute conflict."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.45,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "AI capex remains more sensitive to supply health than BASE."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Recovery means partial normalization, not return to pre-shock geopolitics."
+            }
+          }
+        ],
+        "fact_catalog": [
+          {
+            "fact_id": "TW-F01",
+            "signal": "Official restrictions on shipping/airspace around Taiwan affecting commercial traffic.",
+            "phase_relevance": [
+              "RESTRICTIONS"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "Taiwan MND",
+              "Taiwan Ministry of Transportation/port authorities",
+              "official PRC notices"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Legacy TAIWAN-S1 signal; action plan remains separate."
+          },
+          {
+            "fact_id": "TW-F02",
+            "signal": "Effective blockade or sustained closure of principal commercial maritime/air routes.",
+            "phase_relevance": [
+              "BLOCKADE"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "Taiwan MND",
+              "Taiwan port/aviation authorities"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Requires observed restriction, not exercises alone."
+          },
+          {
+            "fact_id": "TW-F03",
+            "signal": "Confirmed use of force / armed hostilities around Taiwan.",
+            "phase_relevance": [
+              "CONFLICT"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "Taiwan MND",
+              "official PRC statements"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Binary event for phase monitoring; does not encode owner action."
+          },
+          {
+            "fact_id": "TW-F04",
+            "signal": "TSMC / key supplier production and shipment restoration or geographic substitution milestones.",
+            "phase_relevance": [
+              "RECOVERY"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "TSMC filings/IR",
+              "supplier filings",
+              "Taiwan MOEA"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Used to judge whether recovery calibration requires revision."
+          }
+        ],
+        "links": {
+          "common_causes": [
+            "TAIWAN_SUPPLY_DISRUPTION",
+            "EXPORT_CONTROLS_CHINA"
+          ],
+          "legacy_action_scenario_refs": [
+            "portfolio/_scenarios/taiwan.yaml#TAIWAN-S1",
+            "portfolio/_scenarios/taiwan.yaml#TAIWAN-S2",
+            "portfolio/_scenarios/taiwan.yaml#TAIWAN-S3"
+          ]
+        },
+        "notes": [
+          "All magnitudes/timings are model_assumption unless explicitly fact-catalogued.",
+          "Scenario does not prescribe buying/selling."
+        ]
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "CHIP_COLD_WAR",
+        "description": "US–China semiconductor technology race: Western subsidized capacity buildout, uncertain 3–5Y parity boundary, then persistent bifurcated production systems and accelerator price competition.",
+        "status": "proposed_normative",
+        "mutual_exclusion_set": "GEOTECH_REGIME_8Y_V1",
+        "probability": 0.07,
+        "probability_status": "owner_judgment",
+        "probability_meta": {
+          "provenance": "owner_judgment",
+          "rationale": "Owner judgment 2026-09-25 (DR-2026-09-25-01): 0.07 = intersection of owner estimates (full chain 3-7%, leading-edge parity 5-10%); the semiconductor/military-AI race itself is treated as BASE (~90% already under way), so BASE 0.83 = race continues without parity and without Taiwan seizure. Review rule: CW-F01..F06 + owner watch list; each reissue; at least quarterly."
+        },
+        "phases": [
+          {
+            "phase_id": "RACE_TO_PARITY",
+            "name": "Race before technological parity",
+            "effective_from": {
+              "kind": "fixed_quarter",
+              "anchor": "t0",
+              "quarter": 0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Scenario is conditioned on an ongoing strategic race at t0."
+              }
+            },
+            "ramp_quarters": 2,
+            "duration_quarters": "until_next_phase",
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": 1.0,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Western and Chinese fab buildout raises equipment cycle."
+                }
+              },
+              "INDUSTRIAL_RESHORING": {
+                "mean_shift_sigma": 1.0,
+                "volatility_multiplier": 1.15,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Sovereign localization accelerates."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 0.75,
+                "volatility_multiplier": 1.15,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Defense/strategic procurement rises."
+                }
+              },
+              "HYPERSCALER_CAPEX": {
+                "mean_shift_sigma": 0.75,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "AI infrastructure race sustains capex."
+                }
+              },
+              "DATA_CENTER_POWER": {
+                "mean_shift_sigma": 0.5,
+                "volatility_multiplier": 1.15,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Power infrastructure buildout follows compute investment."
+                }
+              },
+              "INTEREST_RATES": {
+                "mean_shift_sigma": 0.25,
+                "volatility_multiplier": 1.1,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Fiscal/industrial investment pressure modestly raises rate environment."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.15,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Export controls mildly reduce cross-border addressability."
+                }
+              },
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": 0.0,
+                "volatility_multiplier": 1.1,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "No physical Taiwan supply impairment is assumed before parity."
+                }
+              },
+              "AI_CLOUD_PRICING": {
+                "mean_shift_sigma": 0.0,
+                "volatility_multiplier": 1.1,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Compute service pricing not yet structurally reset."
+                }
+              },
+              "ACCELERATOR_PRICE_COMPETITION": {
+                "mean_shift_sigma": 0.25,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Competition rises but parity has not yet been reached."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "POWER_BUILDOUT",
+                "correlation": 0.55,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Compute and power buildout become more synchronized."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.4,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Capex race depends more on semiconductor supply capability."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Phase 1 encodes the owner thesis of strategic subsidy/capacity race before parity."
+            }
+          },
+          {
+            "phase_id": "PARITY_BOUNDARY",
+            "name": "Technology parity boundary and repricing",
+            "effective_from": {
+              "kind": "triangular_quarter",
+              "anchor": "t0",
+              "min": 12,
+              "mode": 16,
+              "max": 20,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Owner thesis explicitly states a 3–5 year lag; triangular q12/q16/q20 encodes that uncertainty without selecting a point estimate."
+              }
+            },
+            "ramp_quarters": 2,
+            "duration_quarters": 4,
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": 1.5,
+                "volatility_multiplier": 1.5,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Both systems accelerate equipment investment around parity."
+                }
+              },
+              "INDUSTRIAL_RESHORING": {
+                "mean_shift_sigma": 1.5,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Western localization response intensifies."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 1.25,
+                "volatility_multiplier": 1.3,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Strategic/defense procurement intensifies."
+                }
+              },
+              "HYPERSCALER_CAPEX": {
+                "mean_shift_sigma": 1.0,
+                "volatility_multiplier": 1.4,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "AI infrastructure spending remains elevated but more volatile."
+                }
+              },
+              "DATA_CENTER_POWER": {
+                "mean_shift_sigma": 0.75,
+                "volatility_multiplier": 1.3,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Power buildout accelerates with duplicated compute systems."
+                }
+              },
+              "INTEREST_RATES": {
+                "mean_shift_sigma": 0.5,
+                "volatility_multiplier": 1.2,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Investment/fiscal intensity raises rate pressure."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -1.0,
+                "volatility_multiplier": 1.5,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Technology/export-control bifurcation reduces cross-border revenue."
+                }
+              },
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.4,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Negative shift represents access friction/duplication risk, not loss of Taiwan strategic value."
+                }
+              },
+              "AI_CLOUD_PRICING": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Cheaper compute begins to pressure service pricing/economics."
+                }
+              },
+              "ACCELERATOR_PRICE_COMPETITION": {
+                "mean_shift_sigma": 1.0,
+                "volatility_multiplier": 1.6,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Parity sharply increases accelerator price/performance competition."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "POWER_BUILDOUT",
+                "correlation": 0.6,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Duplicated systems tightly couple compute and power investment."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.5,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Parity-boundary capex is supply capability dependent."
+                }
+              },
+              {
+                "root_a": "SEMI_SUPPLY_HEALTH",
+                "root_b": "CHINA_MARKET_ACCESS",
+                "correlation": 0.05,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Technology capability and cross-border market access begin decoupling."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Phase 2 is deliberately volatile and temporary; it is the boundary the owner explicitly asked to study."
+            }
+          },
+          {
+            "phase_id": "TWO_SYSTEMS",
+            "name": "Persistent Western and Chinese semiconductor systems",
+            "effective_from": {
+              "kind": "triangular_quarter",
+              "anchor": "phase:PARITY_BOUNDARY",
+              "min": 4,
+              "mode": 4,
+              "max": 4,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Phase 3 starts after a four-quarter parity-boundary repricing window."
+              }
+            },
+            "ramp_quarters": 4,
+            "duration_quarters": "until_end",
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": 1.0,
+                "volatility_multiplier": 1.25,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Duplicated supply chains keep equipment demand above BASE."
+                }
+              },
+              "INDUSTRIAL_RESHORING": {
+                "mean_shift_sigma": 1.25,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Strategic localization persists."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 1.0,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Defense/sovereign compute demand remains elevated."
+                }
+              },
+              "HYPERSCALER_CAPEX": {
+                "mean_shift_sigma": 0.75,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Western AI buildout remains structurally above BASE."
+                }
+              },
+              "DATA_CENTER_POWER": {
+                "mean_shift_sigma": 0.75,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Power infrastructure remains structurally elevated."
+                }
+              },
+              "INTEREST_RATES": {
+                "mean_shift_sigma": 0.25,
+                "volatility_multiplier": 1.1,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Rate pressure moderates but stays above BASE."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -1.5,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Cross-border technology revenue remains structurally impaired."
+                }
+              },
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Supply-access friction remains; driver is not used as a proxy for Taiwan strategic relevance."
+                }
+              },
+              "AI_CLOUD_PRICING": {
+                "mean_shift_sigma": -1.0,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Cheaper non-Western chips pressure global compute service economics."
+                }
+              },
+              "ACCELERATOR_PRICE_COMPETITION": {
+                "mean_shift_sigma": 1.5,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.9,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Sustained two-system competition compresses accelerator economics."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "POWER_BUILDOUT",
+                "correlation": 0.55,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Persistent synchronized sovereign compute/power buildout."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.45,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Buildout remains supply-capability dependent."
+                }
+              },
+              {
+                "root_a": "SEMI_SUPPLY_HEALTH",
+                "root_b": "CHINA_MARKET_ACCESS",
+                "correlation": -0.1,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Two production systems can improve local supply health while cross-border market access remains poor."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Persistent bifurcation, not an assumption that either bloc disappears."
+            }
+          }
+        ],
+        "fact_catalog": [
+          {
+            "fact_id": "CW-F01",
+            "signal": "SMIC/Chinese foundry disclosed process capability, production scale, yield or advanced-node revenue evidence narrowing the leading-edge gap.",
+            "phase_relevance": [
+              "RACE_TO_PARITY",
+              "PARITY_BOUNDARY"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "SMIC annual/interim reports and exchange filings",
+              "official Chinese industry disclosures where metric is explicit"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "If yield/process metric is not separately disclosed, record not_disclosed; do not infer."
+          },
+          {
+            "fact_id": "CW-F02",
+            "signal": "New or tightened U.S./allied semiconductor export controls affecting advanced compute, equipment or China market access.",
+            "phase_relevance": [
+              "RACE_TO_PARITY",
+              "PARITY_BOUNDARY",
+              "TWO_SYSTEMS"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "U.S. BIS / Federal Register",
+              "allied government export-control notices"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Link to EXPORT_CONTROLS_CHINA."
+          },
+          {
+            "fact_id": "CW-F03",
+            "signal": "Government semiconductor/AI infrastructure subsidies, awards or procurement commitments in U.S./EU/China.",
+            "phase_relevance": [
+              "RACE_TO_PARITY",
+              "PARITY_BOUNDARY",
+              "TWO_SYSTEMS"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "U.S. Department of Commerce CHIPS office",
+              "EU/Member State official award notices",
+              "official Chinese central/provincial notices where quantified"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Track amount, beneficiary and effective date; announcement != disbursement."
+          },
+          {
+            "fact_id": "CW-F04",
+            "signal": "China share of semiconductor equipment demand/revenue and evidence of domestic WFE substitution.",
+            "phase_relevance": [
+              "RACE_TO_PARITY",
+              "PARITY_BOUNDARY",
+              "TWO_SYSTEMS"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "ASML/AMAT/LRCX/KLAC issuer filings and earnings materials",
+              "Chinese listed WFE vendor filings"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Use issuer-reported geography/segment facts; do not synthesize undisclosed market share."
+          },
+          {
+            "fact_id": "CW-F05",
+            "signal": "Observed accelerator price/performance competition from Chinese suppliers or material price compression in comparable accelerator classes.",
+            "phase_relevance": [
+              "PARITY_BOUNDARY",
+              "TWO_SYSTEMS"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "issuer product/pricing disclosures",
+              "customer procurement disclosures"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "This is the trigger family for ACCELERATOR_PRICE_COMPETITION; comparable product class must be explicit."
+          },
+          {
+            "fact_id": "CW-F06",
+            "signal": "Material divergence of Western vs China semiconductor supply chains, including restricted cross-sales or duplicated fab capacity.",
+            "phase_relevance": [
+              "PARITY_BOUNDARY",
+              "TWO_SYSTEMS"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "government export-control/customs publications",
+              "issuer capacity/geography disclosures"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Used for recalibration of bifurcation persistence, not for owner probability automatically."
+          }
+        ],
+        "links": {
+          "common_causes": [
+            "TAIWAN_SUPPLY_DISRUPTION",
+            "EXPORT_CONTROLS_CHINA"
+          ],
+          "legacy_action_scenario_refs": []
+        },
+        "notes": [
+          "Owner thesis preserved in accompanying rationale verbatim.",
+          "Probability remains pending_owner_judgment.",
+          "TAIWAN_SUPPLY retains supply-health semantics; it is not redefined as Taiwan strategic value."
+        ]
+      },
+      {
+        "schema_version": "1.0",
+        "scenario_id": "TAIWAN_QUARANTINE",
+        "description": "Gray-zone Taiwan quarantine led by PRC coast-guard/law-enforcement pressure: inspections, partial port/route restrictions, shipping/insurance and capital-market friction without armed conflict; followed by partial normalization or a persistent frozen gray-zone regime.",
+        "status": "proposed_normative",
+        "mutual_exclusion_set": "GEOTECH_REGIME_8Y_V1",
+        "probability": 0.175,
+        "probability_status": "owner_judgment",
+        "probability_meta": {
+          "provenance": "owner_judgment",
+          "rationale": "Owner judgment 2026-09-27 (DR-2026-09-25-02, variant V1): 0.175 = midpoint of owner estimate 15-20% by end-2028 for a coast-guard quarantine / partial blockade without armed conflict; mutually exclusive with TAIWAN_SEIZURE (0.10) and CHIP_COLD_WAR (0.07), BASE residual 0.655. Review rule: TQ-F01..F08 fact catalog; each scenario reissue (incl. scope v1.1); at least quarterly."
+        },
+        "phases": [
+          {
+            "phase_id": "RESTRICTIONS",
+            "name": "Partial shipping/airspace restrictions",
+            "effective_from": {
+              "kind": "fixed_quarter",
+              "anchor": "t0",
+              "quarter": 0,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Scenario is conditioned on onset of material restrictions at t0."
+              }
+            },
+            "ramp_quarters": 1,
+            "duration_quarters": "until_next_phase",
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": -0.75,
+                "volatility_multiplier": 1.25,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Material access friction without assuming full physical outage."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.2,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Cross-strait/export friction weakens China-linked revenue."
+                }
+              },
+              "AI_COMPUTE_DEMAND": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.15,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Near-term deployment caution offsets some substitution demand."
+                }
+              },
+              "HBM_MEMORY": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.25,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Packaging/memory logistics tighten."
+                }
+              },
+              "ADVANCED_PACKAGING": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.25,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Advanced packaging access becomes less reliable."
+                }
+              },
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": -0.25,
+                "volatility_multiplier": 1.2,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Near-term fab/equipment activity pauses before reconstruction response."
+                }
+              },
+              "CAPITAL_MARKETS": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.3,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Risk-off financing shock."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 0.25,
+                "volatility_multiplier": 1.15,
+                "persistence_override": null,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Defense demand rises modestly."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "SEMI_SUPPLY_HEALTH",
+                "root_b": "CHINA_MARKET_ACCESS",
+                "correlation": 0.35,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Cross-strait supply and China access become more coupled."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.4,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "AI capex becomes more dependent on semiconductor supply health."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Shared entry state with TAIWAN_SEIZURE for comparability: material restrictions/friction are present at t0, but this scenario is conditioned on escalation to gray-zone quarantine rather than armed conflict."
+            }
+          },
+          {
+            "phase_id": "QUARANTINE",
+            "name": "Gray-zone coast-guard quarantine / partial route and port restriction",
+            "effective_from": {
+              "kind": "triangular_quarter",
+              "anchor": "t0",
+              "min": 1,
+              "mode": 2,
+              "max": 4,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Quarantine onset after the common restrictions phase is uncertain; q1/q2/q4 represents a one-to-four-quarter escalation window without armed conflict."
+              }
+            },
+            "ramp_quarters": 1,
+            "duration_quarters": "until_next_phase",
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": -1.25,
+                "volatility_multiplier": 1.45,
+                "persistence_override": 0.85,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Sustained inspections, routing frictions and partial port restrictions impair Taiwan-linked supply, but less than a full blockade/conflict."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -0.75,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Export-control escalation and cross-strait commercial friction reduce China-linked addressability without assuming full sanctions separation."
+                }
+              },
+              "AI_COMPUTE_DEMAND": {
+                "mean_shift_sigma": -0.4,
+                "volatility_multiplier": 1.25,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Deployment caution and delayed hardware availability temporarily outweigh replacement demand; shock is milder than blockade/conflict."
+                }
+              },
+              "HBM_MEMORY": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Shipping and insurance friction delays HBM delivery without assuming physical production loss."
+                }
+              },
+              "ADVANCED_PACKAGING": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.35,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Packaging logistics and Taiwan concentration create persistent delay/cost friction, milder than armed-conflict disruption."
+                }
+              },
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": -0.35,
+                "volatility_multiplier": 1.25,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Near-term installation/shipment uncertainty and Taiwan project delays dominate before localization response."
+                }
+              },
+              "CAPITAL_MARKETS": {
+                "mean_shift_sigma": -0.75,
+                "volatility_multiplier": 1.45,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Persistent geopolitical risk premium, Taiwan capital outflow and shipping-risk repricing create material risk-off conditions."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 0.5,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Deterrence, munitions replenishment and regional readiness spending rise, but without war-economy intensity."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "SEMI_SUPPLY_HEALTH",
+                "root_b": "CHINA_MARKET_ACCESS",
+                "correlation": 0.45,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Quarantine couples Taiwan supply friction with China market/export access more strongly than BASE, but below conflict calibration."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.45,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "AI buildout becomes more dependent on semiconductor logistics and supply health."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "FINANCIAL_CONDITIONS",
+                "correlation": 0.3,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Risk premia and compute deployment become more coupled under persistent gray-zone pressure."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "Gray-zone quarantine is explicitly non-kinetic: coast-guard/law-enforcement pressure, inspections and partial route/port restrictions without armed hostilities."
+            }
+          },
+          {
+            "phase_id": "NORMALIZATION_OR_FROZEN",
+            "name": "Partial normalization or persistent gray-zone new normal",
+            "effective_from": {
+              "kind": "triangular_quarter",
+              "anchor": "phase:QUARANTINE",
+              "min": 4,
+              "mode": 8,
+              "max": 12,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Acute quarantine pressure is assumed to begin easing or freezing into a lower-intensity regime four to twelve quarters after quarantine onset; this is uncertainty, not a forecast."
+              }
+            },
+            "ramp_quarters": 4,
+            "duration_quarters": "until_end",
+            "decay_quarters": 0,
+            "driver_overrides": {
+              "TAIWAN_SUPPLY": {
+                "mean_shift_sigma": -0.5,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Most traffic normalizes, but insurance, rerouting and contingency inventory keep Taiwan-linked supply below BASE."
+                }
+              },
+              "CHINA_REVENUE": {
+                "mean_shift_sigma": -0.4,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Export-control and market-access friction remains part of the post-quarantine new normal."
+                }
+              },
+              "AI_COMPUTE_DEMAND": {
+                "mean_shift_sigma": 0.0,
+                "volatility_multiplier": 1.1,
+                "persistence_override": 0.65,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Acute deployment drag fades; no separate structural demand boom is assumed absent conflict/reconstruction."
+                }
+              },
+              "HBM_MEMORY": {
+                "mean_shift_sigma": -0.15,
+                "volatility_multiplier": 1.15,
+                "persistence_override": 0.7,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "HBM logistics mostly recover but retain a modest risk premium and inventory friction."
+                }
+              },
+              "ADVANCED_PACKAGING": {
+                "mean_shift_sigma": -0.15,
+                "volatility_multiplier": 1.15,
+                "persistence_override": 0.7,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Packaging access mostly normalizes but contingency logistics remain costlier than BASE."
+                }
+              },
+              "SEMICONDUCTOR_WFE": {
+                "mean_shift_sigma": 0.25,
+                "volatility_multiplier": 1.2,
+                "persistence_override": 0.75,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "After acute delays, diversification and contingency capacity support a modest WFE/localization response."
+                }
+              },
+              "CAPITAL_MARKETS": {
+                "mean_shift_sigma": -0.2,
+                "volatility_multiplier": 1.15,
+                "persistence_override": 0.65,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Acute risk-off fades, but Taiwan/geopolitical risk premium remains above BASE."
+                }
+              },
+              "GOVERNMENT_DEFENSE": {
+                "mean_shift_sigma": 0.35,
+                "volatility_multiplier": 1.15,
+                "persistence_override": 0.8,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Deterrence and readiness spending remain structurally elevated after the acute quarantine phase."
+                }
+              }
+            },
+            "root_correlation_overrides": [
+              {
+                "root_a": "SEMI_SUPPLY_HEALTH",
+                "root_b": "CHINA_MARKET_ACCESS",
+                "correlation": 0.3,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Supply and market-access risks remain somewhat coupled in the frozen gray-zone regime."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "SEMI_SUPPLY_HEALTH",
+                "correlation": 0.4,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Compute buildout remains more supply-sensitive than BASE after firms adopt contingency sourcing."
+                }
+              },
+              {
+                "root_a": "AI_CAPEX_CYCLE",
+                "root_b": "FINANCIAL_CONDITIONS",
+                "correlation": 0.25,
+                "meta": {
+                  "provenance": "model_assumption",
+                  "rationale": "Residual risk premium keeps funding and AI deployment slightly more coupled than BASE."
+                }
+              }
+            ],
+            "meta": {
+              "provenance": "model_assumption",
+              "rationale": "This is a single target state spanning partial normalization through a persistent frozen gray zone; Scenario Engine v1.0 has no internal branch probabilities. Escalation to armed seizure belongs to the mutually exclusive TAIWAN_SEIZURE scenario."
+            }
+          }
+        ],
+        "fact_catalog": [
+          {
+            "fact_id": "TQ-F01",
+            "signal": "Number/location of PRC China Coast Guard or other official vessels around Taiwan, especially east of the island, and any transition from patrol to inspection/boarding of commercial traffic.",
+            "phase_relevance": [
+              "RESTRICTIONS",
+              "QUARANTINE"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "Taiwan Coast Guard Administration (CGA)",
+              "Taiwan Ministry of National Defense daily PLA/official-ship activity",
+              "PRC China Coast Guard / Maritime Safety Administration notices"
+            ],
+            "fallback_sources": [
+              "Reuters",
+              "CSIS/AMTI"
+            ],
+            "note": "Patrol count alone is not quarantine. Phase evidence requires inspection/boarding, compulsory routing, port/route restriction or equivalent coercive law-enforcement action."
+          },
+          {
+            "fact_id": "TQ-F02",
+            "signal": "Mobilization, requisition or concentrated exercise use of civilian roll-on/roll-off ferries or other dual-use sealift near the Taiwan theater.",
+            "phase_relevance": [
+              "RESTRICTIONS",
+              "QUARANTINE"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "Taiwan MND",
+              "PRC transport/maritime authorities where explicit",
+              "official exercise notices"
+            ],
+            "fallback_sources": [
+              "Reuters",
+              "CSIS/ChinaPower",
+              "USNI News"
+            ],
+            "note": "Track vessel count, dates and operating area; exercise appearance is a signal, not proof of an imminent kinetic operation."
+          },
+          {
+            "fact_id": "TQ-F03",
+            "signal": "Status of the delayed U.S. Taiwan arms package reported at about USD 14B after the U.S.–China summit: approval, notification, modification, cancellation or continued hold.",
+            "phase_relevance": [
+              "RESTRICTIONS",
+              "QUARANTINE",
+              "NORMALIZATION_OR_FROZEN"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "U.S. DSCA",
+              "U.S. Department of State / Congress notifications",
+              "Taiwan MND"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Current baseline reported by Reuters in September 2026 is that a roughly USD 14B package remained delayed; Dozor should verify only official disposition changes."
+          },
+          {
+            "fact_id": "TQ-F04",
+            "signal": "Explicit production/output cadence, contracted quantities or delivery acceleration for Patriot interceptors and LRASM / related anti-ship missiles relevant to Taiwan/regional deterrence.",
+            "phase_relevance": [
+              "RESTRICTIONS",
+              "QUARANTINE",
+              "NORMALIZATION_OR_FROZEN"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "U.S. Department of Defense / service budget and contract notices",
+              "DSCA",
+              "RTX/Raytheon filings and releases",
+              "Lockheed Martin filings and releases"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Use only explicitly disclosed quantities/cadence. If a production rate is not disclosed, record not_disclosed rather than estimating."
+          },
+          {
+            "fact_id": "TQ-F05",
+            "signal": "War-risk / additional-premium insurance rates, exclusions or availability changes for commercial shipping serving Taiwan or transiting the Taiwan Strait.",
+            "phase_relevance": [
+              "QUARANTINE",
+              "NORMALIZATION_OR_FROZEN"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "Lloyd's/JCC notices",
+              "major marine insurers/reinsurers",
+              "Aon/Marsh/Gallagher broker bulletins"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Track quoted premium change with vessel class/route/date where available; generic geopolitical commentary is insufficient."
+          },
+          {
+            "fact_id": "TQ-F06",
+            "signal": "TSMC or key Taiwan semiconductor suppliers disclose shipment delays, customer-delivery disruption, logistics rerouting, inventory build or production interruption attributable to cross-strait restrictions.",
+            "phase_relevance": [
+              "QUARANTINE",
+              "NORMALIZATION_OR_FROZEN"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "TSMC filings/IR",
+              "supplier/customer filings",
+              "Taiwan MOEA / port authorities"
+            ],
+            "fallback_sources": [
+              "Reuters"
+            ],
+            "note": "Differentiate logistics delay from fab-production outage; the latter would imply calibration toward TAIWAN_SEIZURE severity."
+          },
+          {
+            "fact_id": "TQ-F07",
+            "signal": "Daily PLA aircraft, PLAN ships and PRC official-ship counts around Taiwan, including eastern ADIZ / median-line activity and persistent coast-guard presence.",
+            "phase_relevance": [
+              "RESTRICTIONS",
+              "QUARANTINE"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "Taiwan Ministry of National Defense daily PLA activities",
+              "Taiwan Coast Guard Administration"
+            ],
+            "fallback_sources": [
+              "Reuters",
+              "CSIS/ChinaPower"
+            ],
+            "note": "ADIZ or ship activity is a pressure indicator only; it does not by itself satisfy the quarantine phase."
+          },
+          {
+            "fact_id": "TQ-F08",
+            "signal": "Port throughput, vessel waiting times, cancellations or compulsory rerouting at Taiwan's principal commercial ports/routes.",
+            "phase_relevance": [
+              "QUARANTINE",
+              "NORMALIZATION_OR_FROZEN"
+            ],
+            "verification_status": "pending_dozor",
+            "preferred_sources": [
+              "Taiwan Ministry of Transportation and Communications",
+              "Taiwan International Ports Corporation",
+              "port/aviation authority notices"
+            ],
+            "fallback_sources": [
+              "Reuters",
+              "major shipping-line notices"
+            ],
+            "note": "Preferred machine-checkable metrics are vessel calls, throughput, waiting time and formally closed/restricted routes."
+          }
+        ],
+        "links": {
+          "common_causes": [
+            "TAIWAN_SUPPLY_DISRUPTION",
+            "EXPORT_CONTROLS_CHINA"
+          ],
+          "legacy_action_scenario_refs": [
+            "portfolio/_scenarios/taiwan.yaml#TAIWAN-S1",
+            "portfolio/_scenarios/taiwan.yaml#TAIWAN-S2"
+          ]
+        },
+        "notes": [
+          "TAIWAN_QUARANTINE is mutually exclusive with TAIWAN_SEIZURE: this calibration never escalates into armed conflict.",
+          "NORMALIZATION_OR_FROZEN is a single conditional target state because Scenario Engine v1.0 has no branching; it is not a probability-weighted internal mixture.",
+          "BASE contains the observed 2026 strategic technology/defense race through company-state centers and zero-centered Joint shocks around the current regime; scenario overrides are deviations from that regime.",
+          "CHIP_COLD_WAR/RACE_TO_PARITY should be read as acceleration of the existing race toward parity, not as the initial existence of the race.",
+          "Scenario does not prescribe portfolio action."
+        ]
+      }
+    ],
+    "calibrations": {
+      "spacex": "mc_calibration_v1.1.3.yaml",
+      "nbis": "mc_calibration_v1.0.3.yaml",
+      "nvda": "mc_calibration_v1.0.3.yaml",
+      "hood": "mc_calibration_v1.0.1.yaml",
+      "rklb": "mc_calibration_v1.0.1.yaml",
+      "lly": "mc_calibration_v1.0.yaml",
+      "meta": "mc_calibration_v1.0.2.yaml",
+      "asml": "mc_calibration_v1.0.2.yaml",
+      "msft": "mc_calibration_v1.0.1.yaml",
+      "pltr": "mc_calibration_v1.0.yaml",
+      "net": "mc_calibration_v1.0.yaml",
+      "etn": "mc_calibration_v1.0.2.yaml",
+      "asts": "mc_calibration_v1.0.yaml",
+      "crwv": "mc_calibration_v1.0.1.yaml",
+      "spot": "mc_calibration_v1.0.yaml"
+    },
+    "coverage_audit": {},
+    "joint_layer_spec_path": "/data/workspace-invest/methodology/Joint_Simulation_Layer_Schema_v1.1.yaml",
+    "taxonomy_version": "1.2.1",
+    "replay_paths": 4000
+  },
+  "outputs": {
+    "model_version": "1.7.0",
+    "mode": "scenario",
+    "scenario_schema_version": "1.0",
+    "taxonomy_version": "1.2.1",
+    "scenarios": {
+      "TAIWAN_SEIZURE": {
+        "schema_errors": [],
+        "integrity": [
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/0/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.2096"
+          },
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/1/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.1091"
+          },
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/2/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.0420"
+          },
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/3/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.1989"
+          }
+        ],
+        "replay": {
+          "deterministic": true,
+          "phase_start_quantiles": {
+            "RESTRICTIONS": {
+              "0.1": 0.0,
+              "0.5": 0.0,
+              "0.9": 0.0
+            },
+            "BLOCKADE": {
+              "0.1": 1.0,
+              "0.5": 2.0,
+              "0.9": 3.0
+            },
+            "CONFLICT": {
+              "0.1": 3.0,
+              "0.5": 4.0,
+              "0.9": 5.0
+            },
+            "RECOVERY": {
+              "0.1": 12.0,
+              "0.5": 15.0,
+              "0.9": 18.0
+            }
+          },
+          "phase_active_share": {
+            "RESTRICTIONS": 0.062515625,
+            "BLOCKADE": 0.0727890625,
+            "CONFLICT": 0.3306015625,
+            "RECOVERY": 0.53409375
+          },
+          "n_corr_states": 8,
+          "persistence": {
+            "BLOCKADE/ADVANCED_PACKAGING": {
+              "rho": 0.8,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "CONFLICT/ADVANCED_PACKAGING": {
+              "rho": 0.9,
+              "paths": 3761,
+              "var_y": 1.0092477616037374,
+              "lag1_corr": 0.9015193425233501,
+              "ok": true
+            },
+            "RECOVERY/ADVANCED_PACKAGING": {
+              "rho": 0.75,
+              "paths": 3995,
+              "var_y": 0.9915713071141798,
+              "lag1_corr": 0.7640487971956345,
+              "ok": true
+            },
+            "BLOCKADE/AI_COMPUTE_DEMAND": {
+              "rho": 0.75,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "CONFLICT/AI_COMPUTE_DEMAND": {
+              "rho": 0.85,
+              "paths": 3761,
+              "var_y": 1.0242990819539182,
+              "lag1_corr": 0.8563797373081204,
+              "ok": true
+            },
+            "RECOVERY/AI_COMPUTE_DEMAND": {
+              "rho": 0.7,
+              "paths": 3995,
+              "var_y": 0.9865689591427924,
+              "lag1_corr": 0.7066240645514957,
+              "ok": true
+            },
+            "BLOCKADE/CAPITAL_MARKETS": {
+              "rho": 0.75,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "CONFLICT/CAPITAL_MARKETS": {
+              "rho": 0.85,
+              "paths": 3761,
+              "var_y": 1.0142827601883895,
+              "lag1_corr": 0.8506629330521458,
+              "ok": true
+            },
+            "RECOVERY/CAPITAL_MARKETS": {
+              "rho": 0.65,
+              "paths": 3995,
+              "var_y": 1.0149431187378082,
+              "lag1_corr": 0.6609885825241941,
+              "ok": true
+            },
+            "BLOCKADE/CHINA_REVENUE": {
+              "rho": 0.8,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "CONFLICT/CHINA_REVENUE": {
+              "rho": 0.9,
+              "paths": 3761,
+              "var_y": 1.0139765465542934,
+              "lag1_corr": 0.9022498656304513,
+              "ok": true
+            },
+            "RECOVERY/CHINA_REVENUE": {
+              "rho": 0.8,
+              "paths": 3995,
+              "var_y": 0.9665577185561465,
+              "lag1_corr": 0.7956504257379255,
+              "ok": true
+            },
+            "BLOCKADE/GOVERNMENT_DEFENSE": {
+              "rho": 0.8,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "CONFLICT/GOVERNMENT_DEFENSE": {
+              "rho": 0.9,
+              "paths": 3761,
+              "var_y": 0.9762087142254624,
+              "lag1_corr": 0.9027582685797773,
+              "ok": true
+            },
+            "RECOVERY/GOVERNMENT_DEFENSE": {
+              "rho": 0.8,
+              "paths": 3995,
+              "var_y": 1.034560898222713,
+              "lag1_corr": 0.7999227286256064,
+              "ok": true
+            },
+            "BLOCKADE/HBM_MEMORY": {
+              "rho": 0.8,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "CONFLICT/HBM_MEMORY": {
+              "rho": 0.9,
+              "paths": 3761,
+              "var_y": 0.9927480853349905,
+              "lag1_corr": 0.8990971224791122,
+              "ok": true
+            },
+            "RECOVERY/HBM_MEMORY": {
+              "rho": 0.75,
+              "paths": 3995,
+              "var_y": 0.9849274839988706,
+              "lag1_corr": 0.7503882272102514,
+              "ok": true
+            },
+            "BLOCKADE/SEMICONDUCTOR_WFE": {
+              "rho": 0.75,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "CONFLICT/SEMICONDUCTOR_WFE": {
+              "rho": 0.85,
+              "paths": 3761,
+              "var_y": 1.0206158040980529,
+              "lag1_corr": 0.8554495556236736,
+              "ok": true
+            },
+            "RECOVERY/SEMICONDUCTOR_WFE": {
+              "rho": 0.75,
+              "paths": 3995,
+              "var_y": 1.0163469431256416,
+              "lag1_corr": 0.7635259876698978,
+              "ok": true
+            },
+            "BLOCKADE/TAIWAN_SUPPLY": {
+              "rho": 0.8,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "CONFLICT/TAIWAN_SUPPLY": {
+              "rho": 0.9,
+              "paths": 3761,
+              "var_y": 0.9818314103402349,
+              "lag1_corr": 0.9019861030945325,
+              "ok": true
+            },
+            "RECOVERY/TAIWAN_SUPPLY": {
+              "rho": 0.75,
+              "paths": 3995,
+              "var_y": 0.989502928176049,
+              "lag1_corr": 0.7548860147384391,
+              "ok": true
+            }
+          }
+        },
+        "coverage": {
+          "spacex": {
+            "ticker": "SPCX",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CHINA_REVENUE",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "nbis": {
+            "ticker": "NBIS",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "HBM_MEMORY",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "nvda": {
+            "ticker": "NVDA",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "hood": {
+            "ticker": "HOOD",
+            "scenario_drivers_applicable": [
+              "CAPITAL_MARKETS"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "rklb": {
+            "ticker": "RKLB",
+            "scenario_drivers_applicable": [
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "lly": {
+            "ticker": "LLY",
+            "scenario_drivers_applicable": [
+              "CHINA_REVENUE"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "meta": {
+            "ticker": "META",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "HBM_MEMORY",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "asml": {
+            "ticker": "ASML",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "msft": {
+            "ticker": "MSFT",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "HBM_MEMORY",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "pltr": {
+            "ticker": "PLTR",
+            "scenario_drivers_applicable": [
+              "AI_COMPUTE_DEMAND",
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "net": {
+            "ticker": "NET",
+            "scenario_drivers_applicable": [
+              "AI_COMPUTE_DEMAND"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "etn": {
+            "ticker": "ETN",
+            "scenario_drivers_applicable": [
+              "AI_COMPUTE_DEMAND"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "asts": {
+            "ticker": "ASTS",
+            "scenario_drivers_applicable": [
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "crwv": {
+            "ticker": "CRWV",
+            "scenario_drivers_applicable": [
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "spot": {
+            "ticker": "SPOT",
+            "scenario_drivers_applicable": [
+              "CAPITAL_MARKETS"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          }
+        },
+        "probability": 0.1,
+        "probability_status": "owner_judgment",
+        "pass": true
+      },
+      "CHIP_COLD_WAR": {
+        "schema_errors": [],
+        "integrity": [
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/0/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.1844"
+          },
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/1/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.1235"
+          },
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/2/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.1634"
+          }
+        ],
+        "replay": {
+          "deterministic": true,
+          "phase_start_quantiles": {
+            "RACE_TO_PARITY": {
+              "0.1": 0.0,
+              "0.5": 0.0,
+              "0.9": 0.0
+            },
+            "PARITY_BOUNDARY": {
+              "0.1": 14.0,
+              "0.5": 16.0,
+              "0.9": 18.0
+            },
+            "TWO_SYSTEMS": {
+              "0.1": 18.0,
+              "0.5": 20.0,
+              "0.9": 22.0
+            }
+          },
+          "phase_active_share": {
+            "RACE_TO_PARITY": 0.49928125,
+            "PARITY_BOUNDARY": 0.125,
+            "TWO_SYSTEMS": 0.37571875
+          },
+          "n_corr_states": 9,
+          "persistence": {
+            "RACE_TO_PARITY/ACCELERATOR_PRICE_COMPETITION": {
+              "rho": 0.75,
+              "paths": 4000,
+              "var_y": 1.0187601440009333,
+              "lag1_corr": 0.7447922831161308,
+              "ok": true
+            },
+            "PARITY_BOUNDARY/ACCELERATOR_PRICE_COMPETITION": {
+              "rho": 0.85,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "TWO_SYSTEMS/ACCELERATOR_PRICE_COMPETITION": {
+              "rho": 0.9,
+              "paths": 3252,
+              "var_y": 1.0261627745103912,
+              "lag1_corr": 0.9020254469923258,
+              "ok": true
+            },
+            "PARITY_BOUNDARY/AI_CLOUD_PRICING": {
+              "rho": 0.75,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "TWO_SYSTEMS/AI_CLOUD_PRICING": {
+              "rho": 0.8,
+              "paths": 3252,
+              "var_y": 0.9814659266349033,
+              "lag1_corr": 0.7944595610924652,
+              "ok": true
+            },
+            "RACE_TO_PARITY/CHINA_REVENUE": {
+              "rho": 0.75,
+              "paths": 4000,
+              "var_y": 1.0077082012657612,
+              "lag1_corr": 0.7586776146430652,
+              "ok": true
+            },
+            "PARITY_BOUNDARY/CHINA_REVENUE": {
+              "rho": 0.85,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "TWO_SYSTEMS/CHINA_REVENUE": {
+              "rho": 0.9,
+              "paths": 3252,
+              "var_y": 0.9971218431270317,
+              "lag1_corr": 0.8992979886348129,
+              "ok": true
+            },
+            "RACE_TO_PARITY/DATA_CENTER_POWER": {
+              "rho": 0.85,
+              "paths": 4000,
+              "var_y": 1.0203411267799716,
+              "lag1_corr": 0.8534654288610054,
+              "ok": true
+            },
+            "PARITY_BOUNDARY/DATA_CENTER_POWER": {
+              "rho": 0.9,
+              "paths": 4000,
+              "var_y": 0.9694094006260744,
+              "lag1_corr": 0.8965147933584671,
+              "ok": true
+            },
+            "TWO_SYSTEMS/DATA_CENTER_POWER": {
+              "rho": 0.9,
+              "paths": 3252,
+              "var_y": 0.9548343442096358,
+              "lag1_corr": 0.8966380224314037,
+              "ok": true
+            },
+            "RACE_TO_PARITY/GOVERNMENT_DEFENSE": {
+              "rho": 0.8,
+              "paths": 4000,
+              "var_y": 1.011704313791369,
+              "lag1_corr": 0.8028155494460432,
+              "ok": true
+            },
+            "PARITY_BOUNDARY/GOVERNMENT_DEFENSE": {
+              "rho": 0.85,
+              "paths": 4000,
+              "var_y": 1.03588215117667,
+              "lag1_corr": 0.8557729996168479,
+              "ok": true
+            },
+            "TWO_SYSTEMS/GOVERNMENT_DEFENSE": {
+              "rho": 0.85,
+              "paths": 3252,
+              "var_y": 1.04350872872398,
+              "lag1_corr": 0.8556067522249474,
+              "ok": true
+            },
+            "RACE_TO_PARITY/HYPERSCALER_CAPEX": {
+              "rho": 0.8,
+              "paths": 4000,
+              "var_y": 1.0411600217908312,
+              "lag1_corr": 0.8054079332917489,
+              "ok": true
+            },
+            "PARITY_BOUNDARY/HYPERSCALER_CAPEX": {
+              "rho": 0.85,
+              "paths": 0,
+              "status": "insufficient_paths"
+            },
+            "TWO_SYSTEMS/HYPERSCALER_CAPEX": {
+              "rho": 0.8,
+              "paths": 3252,
+              "var_y": 0.9844323063703645,
+              "lag1_corr": 0.8016878128990805,
+              "ok": true
+            },
+            "RACE_TO_PARITY/INDUSTRIAL_RESHORING": {
+              "rho": 0.85,
+              "paths": 4000,
+              "var_y": 1.0197015566115522,
+              "lag1_corr": 0.8508139824129037,
+              "ok": true
+            },
+            "PARITY_BOUNDARY/INDUSTRIAL_RESHORING": {
+              "rho": 0.9,
+              "paths": 4000,
+              "var_y": 1.0451122035173648,
+              "lag1_corr": 0.9058227295897027,
+              "ok": true
+            },
+            "TWO_SYSTEMS/INDUSTRIAL_RESHORING": {
+              "rho": 0.9,
+              "paths": 3252,
+              "var_y": 0.9805772436466587,
+              "lag1_corr": 0.8956078167861471,
+              "ok": true
+            },
+            "RACE_TO_PARITY/SEMICONDUCTOR_WFE": {
+              "rho": 0.8,
+              "paths": 4000,
+              "var_y": 0.9865586072677232,
+              "lag1_corr": 0.7969614994142661,
+              "ok": true
+            },
+            "PARITY_BOUNDARY/SEMICONDUCTOR_WFE": {
+              "rho": 0.85,
+              "paths": 4000,
+              "var_y": 1.023185761492516,
+              "lag1_corr": 0.8594635751763945,
+              "ok": true
+            },
+            "TWO_SYSTEMS/SEMICONDUCTOR_WFE": {
+              "rho": 0.85,
+              "paths": 3252,
+              "var_y": 0.9763935555150807,
+              "lag1_corr": 0.8536321828758037,
+              "ok": true
+            },
+            "PARITY_BOUNDARY/TAIWAN_SUPPLY": {
+              "rho": 0.8,
+              "paths": 4000,
+              "var_y": 1.0132143900364863,
+              "lag1_corr": 0.8033609147389573,
+              "ok": true
+            },
+            "TWO_SYSTEMS/TAIWAN_SUPPLY": {
+              "rho": 0.8,
+              "paths": 3252,
+              "var_y": 0.9821145603870681,
+              "lag1_corr": 0.8072488871267528,
+              "ok": true
+            }
+          }
+        },
+        "coverage": {
+          "spacex": {
+            "ticker": "SPCX",
+            "scenario_drivers_applicable": [
+              "AI_CLOUD_PRICING",
+              "DATA_CENTER_POWER",
+              "GOVERNMENT_DEFENSE",
+              "HYPERSCALER_CAPEX",
+              "INTEREST_RATES",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "CHINA_REVENUE",
+              "INDUSTRIAL_RESHORING",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "nbis": {
+            "ticker": "NBIS",
+            "scenario_drivers_applicable": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "AI_CLOUD_PRICING",
+              "DATA_CENTER_POWER",
+              "HYPERSCALER_CAPEX",
+              "INTEREST_RATES",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "INDUSTRIAL_RESHORING",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "nvda": {
+            "ticker": "NVDA",
+            "scenario_drivers_applicable": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "CHINA_REVENUE",
+              "DATA_CENTER_POWER",
+              "GOVERNMENT_DEFENSE",
+              "HYPERSCALER_CAPEX",
+              "INTEREST_RATES",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "AI_CLOUD_PRICING",
+              "INDUSTRIAL_RESHORING"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "hood": {
+            "ticker": "HOOD",
+            "scenario_drivers_applicable": [
+              "INTEREST_RATES"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "AI_CLOUD_PRICING",
+              "CHINA_REVENUE",
+              "DATA_CENTER_POWER",
+              "GOVERNMENT_DEFENSE",
+              "HYPERSCALER_CAPEX",
+              "INDUSTRIAL_RESHORING",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "rklb": {
+            "ticker": "RKLB",
+            "scenario_drivers_applicable": [
+              "GOVERNMENT_DEFENSE",
+              "INDUSTRIAL_RESHORING",
+              "INTEREST_RATES"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "AI_CLOUD_PRICING",
+              "CHINA_REVENUE",
+              "DATA_CENTER_POWER",
+              "HYPERSCALER_CAPEX",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "lly": {
+            "ticker": "LLY",
+            "scenario_drivers_applicable": [
+              "CHINA_REVENUE",
+              "INTEREST_RATES"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "AI_CLOUD_PRICING",
+              "DATA_CENTER_POWER",
+              "GOVERNMENT_DEFENSE",
+              "HYPERSCALER_CAPEX",
+              "INDUSTRIAL_RESHORING",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "meta": {
+            "ticker": "META",
+            "scenario_drivers_applicable": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "DATA_CENTER_POWER",
+              "HYPERSCALER_CAPEX",
+              "INTEREST_RATES",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "AI_CLOUD_PRICING",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "INDUSTRIAL_RESHORING",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "asml": {
+            "ticker": "ASML",
+            "scenario_drivers_applicable": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "CHINA_REVENUE",
+              "DATA_CENTER_POWER",
+              "HYPERSCALER_CAPEX",
+              "INDUSTRIAL_RESHORING",
+              "INTEREST_RATES",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "AI_CLOUD_PRICING",
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "msft": {
+            "ticker": "MSFT",
+            "scenario_drivers_applicable": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "AI_CLOUD_PRICING",
+              "DATA_CENTER_POWER",
+              "HYPERSCALER_CAPEX",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "INDUSTRIAL_RESHORING",
+              "INTEREST_RATES",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "pltr": {
+            "ticker": "PLTR",
+            "scenario_drivers_applicable": [
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "AI_CLOUD_PRICING",
+              "CHINA_REVENUE",
+              "DATA_CENTER_POWER",
+              "HYPERSCALER_CAPEX",
+              "INDUSTRIAL_RESHORING",
+              "INTEREST_RATES",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "net": {
+            "ticker": "NET",
+            "scenario_drivers_applicable": [
+              "AI_CLOUD_PRICING"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "CHINA_REVENUE",
+              "DATA_CENTER_POWER",
+              "GOVERNMENT_DEFENSE",
+              "HYPERSCALER_CAPEX",
+              "INDUSTRIAL_RESHORING",
+              "INTEREST_RATES",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "etn": {
+            "ticker": "ETN",
+            "scenario_drivers_applicable": [
+              "DATA_CENTER_POWER",
+              "HYPERSCALER_CAPEX",
+              "INDUSTRIAL_RESHORING"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "AI_CLOUD_PRICING",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "INTEREST_RATES",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "asts": {
+            "ticker": "ASTS",
+            "scenario_drivers_applicable": [
+              "GOVERNMENT_DEFENSE",
+              "INTEREST_RATES"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "AI_CLOUD_PRICING",
+              "CHINA_REVENUE",
+              "DATA_CENTER_POWER",
+              "HYPERSCALER_CAPEX",
+              "INDUSTRIAL_RESHORING",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "crwv": {
+            "ticker": "CRWV",
+            "scenario_drivers_applicable": [
+              "AI_CLOUD_PRICING",
+              "DATA_CENTER_POWER",
+              "HYPERSCALER_CAPEX",
+              "INTEREST_RATES",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "INDUSTRIAL_RESHORING",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "spot": {
+            "ticker": "SPOT",
+            "scenario_drivers_applicable": [
+              "AI_CLOUD_PRICING",
+              "INTEREST_RATES"
+            ],
+            "scenario_drivers_unmapped": [
+              "ACCELERATOR_PRICE_COMPETITION",
+              "CHINA_REVENUE",
+              "DATA_CENTER_POWER",
+              "GOVERNMENT_DEFENSE",
+              "HYPERSCALER_CAPEX",
+              "INDUSTRIAL_RESHORING",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          }
+        },
+        "probability": 0.07,
+        "probability_status": "owner_judgment",
+        "pass": true
+      },
+      "TAIWAN_QUARANTINE": {
+        "schema_errors": [],
+        "integrity": [
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/0/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.2096"
+          },
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/1/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.1685"
+          },
+          {
+            "rule": "SCN-006",
+            "severity": "info",
+            "path": "phases/2/root_correlation_overrides",
+            "message": "PSD ok, min eig 0.2089"
+          }
+        ],
+        "replay": {
+          "deterministic": true,
+          "phase_start_quantiles": {
+            "RESTRICTIONS": {
+              "0.1": 0.0,
+              "0.5": 0.0,
+              "0.9": 0.0
+            },
+            "QUARANTINE": {
+              "0.1": 2.0,
+              "0.5": 2.0,
+              "0.9": 3.0
+            },
+            "NORMALIZATION_OR_FROZEN": {
+              "0.1": 8.0,
+              "0.5": 10.0,
+              "0.9": 13.0
+            }
+          },
+          "phase_active_share": {
+            "RESTRICTIONS": 0.0730859375,
+            "QUARANTINE": 0.2499296875,
+            "NORMALIZATION_OR_FROZEN": 0.676984375
+          },
+          "n_corr_states": 7,
+          "persistence": {
+            "QUARANTINE/ADVANCED_PACKAGING": {
+              "rho": 0.8,
+              "paths": 2452,
+              "var_y": 1.0035491247141137,
+              "lag1_corr": 0.7864155716030014,
+              "ok": true
+            },
+            "NORMALIZATION_OR_FROZEN/ADVANCED_PACKAGING": {
+              "rho": 0.7,
+              "paths": 4000,
+              "var_y": 0.9863284964787217,
+              "lag1_corr": 0.6903288747332387,
+              "ok": true
+            },
+            "QUARANTINE/AI_COMPUTE_DEMAND": {
+              "rho": 0.75,
+              "paths": 2452,
+              "var_y": 1.0382408355597954,
+              "lag1_corr": 0.7468965393064838,
+              "ok": true
+            },
+            "NORMALIZATION_OR_FROZEN/AI_COMPUTE_DEMAND": {
+              "rho": 0.65,
+              "paths": 4000,
+              "var_y": 0.9633958343482176,
+              "lag1_corr": 0.6393336410761586,
+              "ok": true
+            },
+            "QUARANTINE/CAPITAL_MARKETS": {
+              "rho": 0.8,
+              "paths": 2452,
+              "var_y": 0.9950341758994713,
+              "lag1_corr": 0.8025806868635654,
+              "ok": true
+            },
+            "NORMALIZATION_OR_FROZEN/CAPITAL_MARKETS": {
+              "rho": 0.65,
+              "paths": 4000,
+              "var_y": 1.0097503853622536,
+              "lag1_corr": 0.6524622581754433,
+              "ok": true
+            },
+            "QUARANTINE/CHINA_REVENUE": {
+              "rho": 0.8,
+              "paths": 4000,
+              "var_y": 1.0006946847120368,
+              "lag1_corr": 0.7989163028432615,
+              "ok": true
+            },
+            "NORMALIZATION_OR_FROZEN/CHINA_REVENUE": {
+              "rho": 0.8,
+              "paths": 4000,
+              "var_y": 0.9764340850802278,
+              "lag1_corr": 0.7925083189431411,
+              "ok": true
+            },
+            "QUARANTINE/GOVERNMENT_DEFENSE": {
+              "rho": 0.8,
+              "paths": 4000,
+              "var_y": 0.9899366278061736,
+              "lag1_corr": 0.7994015628070067,
+              "ok": true
+            },
+            "NORMALIZATION_OR_FROZEN/GOVERNMENT_DEFENSE": {
+              "rho": 0.8,
+              "paths": 4000,
+              "var_y": 0.9924068894592256,
+              "lag1_corr": 0.8049844563253289,
+              "ok": true
+            },
+            "QUARANTINE/HBM_MEMORY": {
+              "rho": 0.8,
+              "paths": 2452,
+              "var_y": 0.9813105354154259,
+              "lag1_corr": 0.7805381746679346,
+              "ok": true
+            },
+            "NORMALIZATION_OR_FROZEN/HBM_MEMORY": {
+              "rho": 0.7,
+              "paths": 4000,
+              "var_y": 0.9722181264625956,
+              "lag1_corr": 0.691908010635891,
+              "ok": true
+            },
+            "QUARANTINE/SEMICONDUCTOR_WFE": {
+              "rho": 0.75,
+              "paths": 4000,
+              "var_y": 1.0157670564618677,
+              "lag1_corr": 0.7457287687030615,
+              "ok": true
+            },
+            "NORMALIZATION_OR_FROZEN/SEMICONDUCTOR_WFE": {
+              "rho": 0.75,
+              "paths": 4000,
+              "var_y": 0.9964215334949507,
+              "lag1_corr": 0.7538690716671651,
+              "ok": true
+            },
+            "QUARANTINE/TAIWAN_SUPPLY": {
+              "rho": 0.85,
+              "paths": 2452,
+              "var_y": 0.9640036371331769,
+              "lag1_corr": 0.83643803915289,
+              "ok": true
+            },
+            "NORMALIZATION_OR_FROZEN/TAIWAN_SUPPLY": {
+              "rho": 0.75,
+              "paths": 4000,
+              "var_y": 0.9790731280866314,
+              "lag1_corr": 0.7424424836338394,
+              "ok": true
+            }
+          }
+        },
+        "coverage": {
+          "spacex": {
+            "ticker": "SPCX",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CHINA_REVENUE",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "nbis": {
+            "ticker": "NBIS",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "HBM_MEMORY",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "nvda": {
+            "ticker": "NVDA",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "hood": {
+            "ticker": "HOOD",
+            "scenario_drivers_applicable": [
+              "CAPITAL_MARKETS"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "rklb": {
+            "ticker": "RKLB",
+            "scenario_drivers_applicable": [
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "lly": {
+            "ticker": "LLY",
+            "scenario_drivers_applicable": [
+              "CHINA_REVENUE"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "meta": {
+            "ticker": "META",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "HBM_MEMORY",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "asml": {
+            "ticker": "ASML",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "msft": {
+            "ticker": "MSFT",
+            "scenario_drivers_applicable": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "HBM_MEMORY",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "pltr": {
+            "ticker": "PLTR",
+            "scenario_drivers_applicable": [
+              "AI_COMPUTE_DEMAND",
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "net": {
+            "ticker": "NET",
+            "scenario_drivers_applicable": [
+              "AI_COMPUTE_DEMAND"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "etn": {
+            "ticker": "ETN",
+            "scenario_drivers_applicable": [
+              "AI_COMPUTE_DEMAND"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "CAPITAL_MARKETS",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "asts": {
+            "ticker": "ASTS",
+            "scenario_drivers_applicable": [
+              "CAPITAL_MARKETS",
+              "GOVERNMENT_DEFENSE"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "crwv": {
+            "ticker": "CRWV",
+            "scenario_drivers_applicable": [
+              "AI_COMPUTE_DEMAND",
+              "CAPITAL_MARKETS",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          },
+          "spot": {
+            "ticker": "SPOT",
+            "scenario_drivers_applicable": [
+              "CAPITAL_MARKETS"
+            ],
+            "scenario_drivers_unmapped": [
+              "ADVANCED_PACKAGING",
+              "AI_COMPUTE_DEMAND",
+              "CHINA_REVENUE",
+              "GOVERNMENT_DEFENSE",
+              "HBM_MEMORY",
+              "SEMICONDUCTOR_WFE",
+              "TAIWAN_SUPPLY"
+            ],
+            "scenario_drivers_explicitly_immaterial": [],
+            "excluded_semantic_mismatch": []
+          }
+        },
+        "probability": 0.175,
+        "probability_status": "owner_judgment",
+        "pass": true
+      }
+    },
+    "set_findings": [
+      {
+        "rule": "SCN-010",
+        "severity": "info",
+        "path": "probability",
+        "message": "p_BASE = 0.6550 (остаток)"
+      }
+    ],
+    "pass": true,
+    "rules": {
+      "implemented": [
+        "ART-REF-001",
+        "ART-REF-002",
+        "ART-REF-003",
+        "ART-REF-004",
+        "ART-REF-005",
+        "ART-REF-007",
+        "ART-REF-008",
+        "ART-REF-009",
+        "ART-REF-010",
+        "ART-REF-011",
+        "ART-REF-012",
+        "ART-REF-014",
+        "ART-REF-015",
+        "ART-REF-016",
+        "ART-REF-017",
+        "ART-REF-018",
+        "ART-REF-019",
+        "ART-REF-020",
+        "ART-REF-021",
+        "ART-REF-022",
+        "ART-REF-023",
+        "ART-REF-024",
+        "ART-REF-030",
+        "ART-REF-031",
+        "CAND-REF-001",
+        "CAND-REF-002",
+        "CAND-REF-003",
+        "CAND-REF-004",
+        "CAND-REF-005",
+        "CAND-REF-006",
+        "CAND-REF-007",
+        "CAND-REF-008",
+        "CAND-REF-009",
+        "CAND-REF-010",
+        "CAND-REF-012",
+        "CAND-REF-013",
+        "CAND-REF-014",
+        "CAND-REF-015",
+        "CAND-REF-016",
+        "CAND-REF-017"
+      ],
+      "partial_or_not_implemented": {
+        "ART-REF-005": "класс источника проверяется по enum схемы; иерархия/допустимость по типу факта — Source Policy v1.0 (партия 2)",
+        "ART-REF-006": "provenance проверяется у KPI/наблюдений/вектора драйверов (обязательные поля схемы); «каждое материальное число» в свободных полях не трассируется",
+        "ART-REF-013": "авторитет присвоения ID — свойство интегратора (процесс), статически не проверяется; проверяется только уникальность и шаблон <TK>-...",
+        "ART-REF-023": "качественные оси: проверяется наличие source/evidence при evidence_type=qualitative_primary_source; декларация бинарной деривации — semantic review (IMA-08)",
+        "CAND-REF-011": "как ART-REF-006"
+      }
+    },
+    "decision": "none"
+  },
+  "elapsed_ms": 22824.6,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

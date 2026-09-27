@@ -1,0 +1,489 @@
+{
+  "run_id": "20260925T204811Z-portfolio_paths-3f47d3",
+  "model": "portfolio_paths",
+  "version": "1.3.0",
+  "seed": 0,
+  "inputs": {
+    "scenarios": [
+      {
+        "id": "BASE",
+        "paths_files": {
+          "SPCX": "/data/workspace-invest/portfolio/_runs/20260925T201435Z-company_mc-ad0175-paths.npz",
+          "NBIS": "/data/workspace-invest/portfolio/_runs/20260925T125909Z-company_mc-d5e46a-paths.npz",
+          "NVDA": "/data/workspace-invest/portfolio/_runs/20260925T130452Z-company_mc-edb3bb-paths.npz",
+          "HOOD": "/data/workspace-invest/portfolio/_runs/20260924T074150Z-company_mc-038894-paths.npz",
+          "RKLB": "/data/workspace-invest/portfolio/_runs/20260925T130337Z-company_mc-8c5da8-paths.npz",
+          "LLY": "/data/workspace-invest/portfolio/_runs/20260924T074630Z-company_mc-89318c-paths.npz",
+          "META": "/data/workspace-invest/portfolio/_runs/20260925T131401Z-company_mc-24fee7-paths.npz",
+          "ASML": "/data/workspace-invest/portfolio/_runs/20260925T131715Z-company_mc-d0c0a0-paths.npz",
+          "MSFT": "/data/workspace-invest/portfolio/_runs/20260925T131014Z-company_mc-0893a1-paths.npz",
+          "PLTR": "/data/workspace-invest/portfolio/_runs/20260924T180209Z-company_mc-460fe8-paths.npz",
+          "NET": "/data/workspace-invest/portfolio/_runs/20260924T180403Z-company_mc-a8783a-paths.npz",
+          "ETN": "/data/workspace-invest/portfolio/_runs/20260925T133631Z-company_mc-f7afc9-paths.npz",
+          "ASTS": "/data/workspace-invest/portfolio/_runs/20260925T082018Z-company_mc-17e2e2-paths.npz",
+          "CRWV": "/data/workspace-invest/portfolio/_runs/20260925T115341Z-company_mc-a1b31f-paths.npz",
+          "SPOT": "/data/workspace-invest/portfolio/_runs/20260925T133257Z-company_mc-ca4799-paths.npz"
+        }
+      },
+      {
+        "id": "TAIWAN_SEIZURE",
+        "probability": 0.1,
+        "paths_files": {
+          "SPCX": "/data/workspace-invest/portfolio/_runs/20260925T204251Z-company_mc-227acd-paths.npz",
+          "NBIS": "/data/workspace-invest/portfolio/_runs/20260925T132442Z-company_mc-cc4c7b-paths.npz",
+          "NVDA": "/data/workspace-invest/portfolio/_runs/20260925T132706Z-company_mc-b183d7-paths.npz",
+          "HOOD": "/data/workspace-invest/portfolio/_runs/20260925T133012Z-company_mc-68dd8f-paths.npz",
+          "RKLB": "/data/workspace-invest/portfolio/_runs/20260925T133227Z-company_mc-c5b6a6-paths.npz",
+          "LLY": "/data/workspace-invest/portfolio/_runs/20260925T133526Z-company_mc-5b0f28-paths.npz",
+          "META": "/data/workspace-invest/portfolio/_runs/20260925T133825Z-company_mc-37ea96-paths.npz",
+          "ASML": "/data/workspace-invest/portfolio/_runs/20260925T134220Z-company_mc-319a55-paths.npz",
+          "MSFT": "/data/workspace-invest/portfolio/_runs/20260925T134524Z-company_mc-f162c6-paths.npz",
+          "PLTR": "/data/workspace-invest/portfolio/_runs/20260925T134713Z-company_mc-8d8b95-paths.npz",
+          "NET": "/data/workspace-invest/portfolio/_runs/20260925T134818Z-company_mc-b24c52-paths.npz",
+          "ETN": "/data/workspace-invest/portfolio/_runs/20260925T134919Z-company_mc-004eab-paths.npz",
+          "ASTS": "/data/workspace-invest/portfolio/_runs/20260925T135043Z-company_mc-5b3a3a-paths.npz",
+          "CRWV": "/data/workspace-invest/portfolio/_runs/20260925T135209Z-company_mc-a2a418-paths.npz",
+          "SPOT": "/data/workspace-invest/portfolio/_runs/20260925T135336Z-company_mc-5dcb6e-paths.npz"
+        }
+      },
+      {
+        "id": "CHIP_COLD_WAR",
+        "probability": 0.07,
+        "paths_files": {
+          "SPCX": "/data/workspace-invest/portfolio/_runs/20260925T204503Z-company_mc-6315bc-paths.npz",
+          "NBIS": "/data/workspace-invest/portfolio/_runs/20260925T135640Z-company_mc-35c9e9-paths.npz",
+          "NVDA": "/data/workspace-invest/portfolio/_runs/20260925T135856Z-company_mc-69c058-paths.npz",
+          "HOOD": "/data/workspace-invest/portfolio/_runs/20260925T140222Z-company_mc-d4857b-paths.npz",
+          "RKLB": "/data/workspace-invest/portfolio/_runs/20260925T140353Z-company_mc-e8d208-paths.npz",
+          "LLY": "/data/workspace-invest/portfolio/_runs/20260925T140547Z-company_mc-d24156-paths.npz",
+          "META": "/data/workspace-invest/portfolio/_runs/20260925T140728Z-company_mc-aa5b84-paths.npz",
+          "ASML": "/data/workspace-invest/portfolio/_runs/20260925T140933Z-company_mc-7c2422-paths.npz",
+          "MSFT": "/data/workspace-invest/portfolio/_runs/20260925T141154Z-company_mc-cf7e62-paths.npz",
+          "PLTR": "/data/workspace-invest/portfolio/_runs/20260925T141326Z-company_mc-e42fb5-paths.npz",
+          "NET": "/data/workspace-invest/portfolio/_runs/20260925T141423Z-company_mc-081723-paths.npz",
+          "ETN": "/data/workspace-invest/portfolio/_runs/20260925T141522Z-company_mc-2adec4-paths.npz",
+          "ASTS": "/data/workspace-invest/portfolio/_runs/20260925T141641Z-company_mc-1bc553-paths.npz",
+          "CRWV": "/data/workspace-invest/portfolio/_runs/20260925T141822Z-company_mc-68a67b-paths.npz",
+          "SPOT": "/data/workspace-invest/portfolio/_runs/20260925T141958Z-company_mc-081d3d-paths.npz"
+        }
+      },
+      {
+        "id": "TAIWAN_QUARANTINE",
+        "probability": 0.175,
+        "paths_files": {
+          "SPCX": "/data/workspace-invest/portfolio/_runs/20260925T201905Z-company_mc-b0ff51-paths.npz",
+          "NBIS": "/data/workspace-invest/portfolio/_runs/20260925T202109Z-company_mc-d77132-paths.npz",
+          "NVDA": "/data/workspace-invest/portfolio/_runs/20260925T202253Z-company_mc-7b00b3-paths.npz",
+          "HOOD": "/data/workspace-invest/portfolio/_runs/20260925T202443Z-company_mc-999d79-paths.npz",
+          "RKLB": "/data/workspace-invest/portfolio/_runs/20260925T202554Z-company_mc-685099-paths.npz",
+          "LLY": "/data/workspace-invest/portfolio/_runs/20260925T202716Z-company_mc-47eee3-paths.npz",
+          "META": "/data/workspace-invest/portfolio/_runs/20260925T202910Z-company_mc-9ea02b-paths.npz",
+          "ASML": "/data/workspace-invest/portfolio/_runs/20260925T203149Z-company_mc-85292a-paths.npz",
+          "MSFT": "/data/workspace-invest/portfolio/_runs/20260925T203356Z-company_mc-d49736-paths.npz",
+          "PLTR": "/data/workspace-invest/portfolio/_runs/20260925T203523Z-company_mc-9c382f-paths.npz",
+          "NET": "/data/workspace-invest/portfolio/_runs/20260925T203624Z-company_mc-db5b00-paths.npz",
+          "ETN": "/data/workspace-invest/portfolio/_runs/20260925T203724Z-company_mc-6ab9cf-paths.npz",
+          "ASTS": "/data/workspace-invest/portfolio/_runs/20260925T203839Z-company_mc-466cbd-paths.npz",
+          "CRWV": "/data/workspace-invest/portfolio/_runs/20260925T203955Z-company_mc-e9208b-paths.npz",
+          "SPOT": "/data/workspace-invest/portfolio/_runs/20260925T204147Z-company_mc-99c133-paths.npz"
+        }
+      }
+    ],
+    "weights": {
+      "SPCX": 0.006862644678889685,
+      "NBIS": 0.3383181399160094,
+      "NVDA": 0.21817064426917954,
+      "HOOD": 0.14575437877701528,
+      "RKLB": 0.023148622349687592,
+      "LLY": 0.08419543173204956,
+      "META": 0.056027860288845634,
+      "ASML": 0.028372426508245414,
+      "MSFT": 0.0194612311789409,
+      "PLTR": 0.017924818191129777,
+      "NET": 0.018129673256171257,
+      "ETN": 0.01188159377240602,
+      "ASTS": 0.010447608317115642,
+      "CRWV": 0.005018949093516337,
+      "SPOT": 0.011471883642323056
+    },
+    "dry_powder_weight": 0.004814094028474854,
+    "dry_powder_return_annual": 0.04
+  },
+  "outputs": {
+    "model_version": "1.3.0",
+    "mode": "scenario_mixture",
+    "spec": "Scenario_Engine_Specification_v1.0",
+    "paths": 500000,
+    "weights": {
+      "SPCX": 0.006862644678889685,
+      "NBIS": 0.3383181399160094,
+      "NVDA": 0.21817064426917954,
+      "HOOD": 0.14575437877701528,
+      "RKLB": 0.023148622349687592,
+      "LLY": 0.08419543173204956,
+      "META": 0.056027860288845634,
+      "ASML": 0.028372426508245414,
+      "MSFT": 0.0194612311789409,
+      "PLTR": 0.017924818191129777,
+      "NET": 0.018129673256171257,
+      "ETN": 0.01188159377240602,
+      "ASTS": 0.010447608317115642,
+      "CRWV": 0.005018949093516337,
+      "SPOT": 0.011471883642323056
+    },
+    "dry_powder_weight": 0.004814094028474854,
+    "dry_powder_return_annual": 0.04,
+    "scenarios": [
+      {
+        "id": "BASE",
+        "probability": 0.655
+      },
+      {
+        "id": "TAIWAN_SEIZURE",
+        "probability": 0.1
+      },
+      {
+        "id": "CHIP_COLD_WAR",
+        "probability": 0.07
+      },
+      {
+        "id": "TAIWAN_QUARANTINE",
+        "probability": 0.175
+      }
+    ],
+    "by_scenario": {
+      "BASE": {
+        "Y3": {
+          "median_CAGR": 0.2056306409599591,
+          "P_2x": 0.31065,
+          "P_loss_gt_30pct": 8e-06,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": 0.0748297823155003,
+          "CAGR_quantiles": {
+            "0.05": 0.054577926752798114,
+            "0.25": 0.13815810123046673,
+            "0.5": 0.2056306409599591,
+            "0.75": 0.28081346962994613,
+            "0.95": 0.39745976685541035
+          }
+        },
+        "Y5": {
+          "median_CAGR": 0.22495510957822562,
+          "P_2x": 0.773406,
+          "P_loss_gt_30pct": 5.2e-05,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": 0.24126858029429823,
+          "CAGR_quantiles": {
+            "0.05": 0.07319169552335669,
+            "0.25": 0.15579544951983543,
+            "0.5": 0.22495510957822562,
+            "0.75": 0.3039179633946223,
+            "0.95": 0.4280284570993336
+          }
+        },
+        "Y8": {
+          "median_CAGR": 0.25769101460412225,
+          "P_2x": 0.966262,
+          "P_loss_gt_30pct": 1e-05,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": 0.8081776729896821,
+          "CAGR_quantiles": {
+            "0.05": 0.10374034159197813,
+            "0.25": 0.18598072816690903,
+            "0.5": 0.25769101460412225,
+            "0.75": 0.341699424945852,
+            "0.95": 0.47200377709169955
+          }
+        }
+      },
+      "TAIWAN_SEIZURE": {
+        "Y3": {
+          "median_CAGR": 0.14142808602588441,
+          "P_2x": 0.164222,
+          "P_loss_gt_30pct": 0.00227,
+          "P_loss_gt_50pct": 1.2e-05,
+          "expected_shortfall_5pct": -0.1516363384420043,
+          "CAGR_quantiles": {
+            "0.05": -0.020857793466853052,
+            "0.25": 0.06898600452616449,
+            "0.5": 0.14142808602588441,
+            "0.75": 0.22184740186433244,
+            "0.95": 0.3456711876482387
+          }
+        },
+        "Y5": {
+          "median_CAGR": 0.1260033767720138,
+          "P_2x": 0.428308,
+          "P_loss_gt_30pct": 0.024608,
+          "P_loss_gt_50pct": 0.002408,
+          "expected_shortfall_5pct": -0.3179450560753214,
+          "CAGR_quantiles": {
+            "0.05": -0.042979727756836075,
+            "0.25": 0.04857665142343437,
+            "0.5": 0.1260033767720138,
+            "0.75": 0.214178617180517,
+            "0.95": 0.3531011464069182
+          }
+        },
+        "Y8": {
+          "median_CAGR": 0.1540245621400156,
+          "P_2x": 0.705428,
+          "P_loss_gt_30pct": 0.015146,
+          "P_loss_gt_50pct": 0.002012,
+          "expected_shortfall_5pct": -0.24374190429015333,
+          "CAGR_quantiles": {
+            "0.05": -0.008871966492934069,
+            "0.25": 0.07626050948727331,
+            "0.5": 0.1540245621400156,
+            "0.75": 0.24590783240530956,
+            "0.95": 0.39098677385851455
+          }
+        }
+      },
+      "CHIP_COLD_WAR": {
+        "Y3": {
+          "median_CAGR": 0.21082132752731064,
+          "P_2x": 0.329154,
+          "P_loss_gt_30pct": 6e-06,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": 0.08129141505947753,
+          "CAGR_quantiles": {
+            "0.05": 0.057151469465738756,
+            "0.25": 0.14230422347398414,
+            "0.5": 0.21082132752731064,
+            "0.75": 0.2870391162739992,
+            "0.95": 0.40503788397441864
+          }
+        },
+        "Y5": {
+          "median_CAGR": 0.23602476198868938,
+          "P_2x": 0.79839,
+          "P_loss_gt_30pct": 6.2e-05,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": 0.2644686459689503,
+          "CAGR_quantiles": {
+            "0.05": 0.07812470081714581,
+            "0.25": 0.1644083403838701,
+            "0.5": 0.23602476198868938,
+            "0.75": 0.3168899482284637,
+            "0.95": 0.4441157326965835
+          }
+        },
+        "Y8": {
+          "median_CAGR": 0.26830594729410806,
+          "P_2x": 0.965776,
+          "P_loss_gt_30pct": 2.8e-05,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": 0.7890994627700859,
+          "CAGR_quantiles": {
+            "0.05": 0.10428678464776321,
+            "0.25": 0.1924008438449728,
+            "0.5": 0.26830594729410806,
+            "0.75": 0.35608333018852484,
+            "0.95": 0.49196715235882915
+          }
+        }
+      },
+      "TAIWAN_QUARANTINE": {
+        "Y3": {
+          "median_CAGR": 0.17729295775472131,
+          "P_2x": 0.23644,
+          "P_loss_gt_30pct": 0.000216,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": -0.03235150571523546,
+          "CAGR_quantiles": {
+            "0.05": 0.020628784992128602,
+            "0.25": 0.1074750771568182,
+            "0.5": 0.17729295775472131,
+            "0.75": 0.2545962063224158,
+            "0.95": 0.3743505747973478
+          }
+        },
+        "Y5": {
+          "median_CAGR": 0.18623396263888414,
+          "P_2x": 0.631912,
+          "P_loss_gt_30pct": 0.00139,
+          "P_loss_gt_50pct": 2.8e-05,
+          "expected_shortfall_5pct": -0.017513269717725048,
+          "CAGR_quantiles": {
+            "0.05": 0.02658206257653891,
+            "0.25": 0.11355436620460169,
+            "0.5": 0.18623396263888414,
+            "0.75": 0.2686585794238706,
+            "0.95": 0.3979778219476659
+          }
+        },
+        "Y8": {
+          "median_CAGR": 0.22025222386084276,
+          "P_2x": 0.899534,
+          "P_loss_gt_30pct": 0.000472,
+          "P_loss_gt_50pct": 1.4e-05,
+          "expected_shortfall_5pct": 0.3075932673711131,
+          "CAGR_quantiles": {
+            "0.05": 0.06122582517638692,
+            "0.25": 0.14622454620177838,
+            "0.5": 0.22025222386084276,
+            "0.75": 0.3065325570344552,
+            "0.95": 0.4408771074640311
+          }
+        }
+      }
+    },
+    "scenario_delta_vs_BASE": {
+      "TAIWAN_SEIZURE": {
+        "Y3": {
+          "median_CAGR": -0.06420255493407467,
+          "P_loss_gt_30pct": 0.0022619999999999997,
+          "P_loss_gt_50pct": 1.2e-05,
+          "expected_shortfall_5pct": -0.2264661207575046,
+          "P_2x": -0.14642799999999997
+        },
+        "Y5": {
+          "median_CAGR": -0.09895173280621183,
+          "P_loss_gt_30pct": 0.024556,
+          "P_loss_gt_50pct": 0.002408,
+          "expected_shortfall_5pct": -0.5592136363696196,
+          "P_2x": -0.345098
+        },
+        "Y8": {
+          "median_CAGR": -0.10366645246410666,
+          "P_loss_gt_30pct": 0.015136,
+          "P_loss_gt_50pct": 0.002012,
+          "expected_shortfall_5pct": -1.0519195772798355,
+          "P_2x": -0.2608339999999999
+        }
+      },
+      "CHIP_COLD_WAR": {
+        "Y3": {
+          "median_CAGR": 0.0051906865673515545,
+          "P_loss_gt_30pct": -1.9999999999999995e-06,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": 0.006461632743977222,
+          "P_2x": 0.01850400000000002
+        },
+        "Y5": {
+          "median_CAGR": 0.01106965241046376,
+          "P_loss_gt_30pct": 1.0000000000000006e-05,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": 0.023200065674652076,
+          "P_2x": 0.024984000000000006
+        },
+        "Y8": {
+          "median_CAGR": 0.010614932689985812,
+          "P_loss_gt_30pct": 1.7999999999999997e-05,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": -0.019078210219596214,
+          "P_2x": -0.00048599999999998644
+        }
+      },
+      "TAIWAN_QUARANTINE": {
+        "Y3": {
+          "median_CAGR": -0.028337683205237774,
+          "P_loss_gt_30pct": 0.000208,
+          "P_loss_gt_50pct": 0.0,
+          "expected_shortfall_5pct": -0.10718128803073576,
+          "P_2x": -0.07420999999999997
+        },
+        "Y5": {
+          "median_CAGR": -0.03872114693934148,
+          "P_loss_gt_30pct": 0.001338,
+          "P_loss_gt_50pct": 2.8e-05,
+          "expected_shortfall_5pct": -0.2587818500120233,
+          "P_2x": -0.141494
+        },
+        "Y8": {
+          "median_CAGR": -0.03743879074327949,
+          "P_loss_gt_30pct": 0.00046199999999999995,
+          "P_loss_gt_50pct": 1.4e-05,
+          "expected_shortfall_5pct": -0.5005844056185691,
+          "P_2x": -0.06672800000000001
+        }
+      }
+    },
+    "decision": "none",
+    "probability_status": "owner_judgment",
+    "horizons": {
+      "Y3": {
+        "median_CAGR": 0.19556821433214555,
+        "P_2x": 0.28431573000000004,
+        "P_loss_gt_30pct": 0.0002704600000000001,
+        "P_loss_gt_50pct": 1.2000000000000004e-06,
+        "expected_shortfall_5pct": 0.0057007681452128315,
+        "CAGR_quantiles": {
+          "0.05": 0.03634730176274137,
+          "0.25": 0.12571516272756567,
+          "0.5": 0.19556821433214555,
+          "0.75": 0.272307818905009,
+          "0.95": 0.3908005344505854
+        }
+      },
+      "Y5": {
+        "median_CAGR": 0.21128943405493117,
+        "P_2x": 0.71588363,
+        "P_loss_gt_30pct": 0.0027424500000000004,
+        "P_loss_gt_50pct": 0.0002457000000000001,
+        "expected_shortfall_5pct": 0.01907721009842719,
+        "CAGR_quantiles": {
+          "0.05": 0.04213610970943282,
+          "0.25": 0.1379093918595926,
+          "0.5": 0.21128943405493117,
+          "0.75": 0.29290060469307355,
+          "0.95": 0.42013445979265773
+        }
+      },
+      "Y8": {
+        "median_CAGR": 0.24369015636060687,
+        "P_2x": 0.92846718,
+        "P_loss_gt_30pct": 0.0016057100000000004,
+        "P_loss_gt_50pct": 0.00020365000000000007,
+        "expected_shortfall_5pct": 0.3469839641585737,
+        "CAGR_quantiles": {
+          "0.05": 0.07343642135849482,
+          "0.25": 0.1680225468771286,
+          "0.5": 0.24369015636060687,
+          "0.75": 0.3302421101568722,
+          "0.95": 0.46384215638155
+        }
+      }
+    },
+    "scenario_impacts": {
+      "TAIWAN_SEIZURE": {
+        "probability": 0.1,
+        "MedianImpact_Y5": -0.009895173280621184,
+        "ES5Impact_Y5": -0.055921363636961964,
+        "adverse_ES_burden_B": 0.055921363636961964
+      },
+      "CHIP_COLD_WAR": {
+        "probability": 0.07,
+        "MedianImpact_Y5": 0.0007748756687324632,
+        "ES5Impact_Y5": 0.0016240045972256455,
+        "adverse_ES_burden_B": 0.0
+      },
+      "TAIWAN_QUARANTINE": {
+        "probability": 0.175,
+        "MedianImpact_Y5": -0.006776200714384758,
+        "ES5Impact_Y5": -0.04528682375210408,
+        "adverse_ES_burden_B": 0.04528682375210408
+      }
+    },
+    "scenario_concentration": {
+      "value": 0.5525379426269954,
+      "raw_value": 0.5525379426269954,
+      "adverse_scenarios": [
+        "TAIWAN_QUARANTINE",
+        "TAIWAN_SEIZURE"
+      ],
+      "applicable": true,
+      "status": "applicable",
+      "warning": true,
+      "hard_limit_breach": false,
+      "rule": "A = {s: B_s > 0}; |A| < 2 → лимит не применяется (raw показывается); |A| ≥ 2 → max B_s / Σ B_s ≤ 0.60 (warning > 0.50); BASE вне знаменателя (IMMA 25.09.2026, вариант а)"
+    },
+    "note": "медиана и ES5 нелинейны — impacts диагностические, не аддитивное разложение (§7)"
+  },
+  "elapsed_ms": 17523.9,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

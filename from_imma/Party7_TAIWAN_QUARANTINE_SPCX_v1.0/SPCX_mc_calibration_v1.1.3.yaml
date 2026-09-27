@@ -1,9 +1,14 @@
-schema_version: 1.0.1
+# calibration_version: 1.1.3
+# supersedes: SPCX_mc_calibration_v1.1.2.yaml
+# migration: Company_MC_Calibration_Schema 1.0.1 -> 1.0.2
+# runtime_joint_contract: Joint_Simulation_Layer_Schema v1.1
+# host_engine: company_mc 2.3.2
+schema_version: 1.0.2
 artifact: company_mc_calibration
 ticker: SPCX
-as_of: '2026-09-23'
+as_of: '2026-09-25'
 archetype: capital_intensive_transition
-calculation_engine_version: company_mc 2.3.0
+calculation_engine_version: company_mc 2.3.1
 state_vector:
   AI: A2
   Starlink: B2
@@ -52,7 +57,8 @@ revenue_model:
         mode: 0.6
         max: 1.5
         provenance: model_assumption
-        rationale: v1.1.2 intrinsic-uncertainty widening; center 60% unchanged. Tails cover severe demand/capacity shortfall through faster conversion.
+        rationale: v1.1.2 intrinsic-uncertainty widening; center 60% unchanged. Tails cover severe demand/capacity shortfall
+          through faster conversion.
       long_run_growth_y8:
         distribution: triangular
         min: 0.0
@@ -206,7 +212,9 @@ valuation:
       mode: 14.0
       max: 30.0
       provenance: model_assumption
-      rationale: v1.1.2 wider fallback valuation uncertainty; center unchanged.
+      rationale: 'Schema >=1.0.2 semantics: this is the revenue_bridge_reference_multiple used through the parity-gated crossover
+        region, not only an emergency negative-FCF fallback. v1.1.2 distribution 2/14/30x and center 14x are preserved unchanged;
+        the reissue changes valuation semantics, not calibration centers/tails.'
 dependencies:
   latent_factors:
   - growth
@@ -218,8 +226,8 @@ dependencies:
     margin__valuation: 0.35
   factor_correlations_meta:
     provenance: model_assumption
-    rationale: 'v2 translation: growth-margin anchored to the strongest legacy growth/margin dependence; margin-valuation retains legacy terminal-margin/multiple rho=0.35; growth-valuation
-      remains incomplete.'
+    rationale: 'v2 translation: growth-margin anchored to the strongest legacy growth/margin dependence; margin-valuation
+      retains legacy terminal-margin/multiple rho=0.35; growth-valuation remains incomplete.'
   default_loading: 0.7
   default_loading_meta:
     provenance: model_assumption
@@ -261,8 +269,9 @@ robustness_tests:
       - 0.15
     perturbations_meta:
       provenance: derived_fact
-      formula: 'local robustness v1.1.2: sigma_equiv=(Q84-Q16)/2; growth sigma=base-revenue-weighted RMS of segment initial_growth sigma_equiv; margin sigma=Y5 margin sigma_equiv (or
-        sqrt(ocf^2+capex^2) for decomposition); multiple sigma=log-space sigma_equiv of Y5 multiple; local shift=0.25*sigma with ceilings 10pp growth, 5pp margin, 20% multiple; correlation
+      formula: 'local robustness v1.1.2: sigma_equiv=(Q84-Q16)/2; growth sigma=base-revenue-weighted RMS of segment initial_growth
+        sigma_equiv; margin sigma=Y5 margin sigma_equiv (or sqrt(ocf^2+capex^2) for decomposition); multiple sigma=log-space
+        sigma_equiv of Y5 multiple; local shift=0.25*sigma with ceilings 10pp growth, 5pp margin, 20% multiple; correlation
         remains ±0.15'
     delta_tolerance: 0.1
     delta_tolerance_meta:
@@ -308,7 +317,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: AI compute demand directly shifts near-term AI-cloud growth. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: AI compute demand directly shifts near-term AI-cloud growth. Re-sized under MC-G5-013 aggregate target budget;
+        common factor scaling=0.136364.
   - path: margin_model.nodes.Y3
     transform: additive_pp
     effect_per_plus_1sigma: 0.00833313
@@ -316,8 +326,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Demand/utilization improves the transition to positive FCF. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.666667. v1.1.2 re-sized from measured
-        MC-G5-013 sigma 0.064 to design sigma 0.04.
+      rationale: Demand/utilization improves the transition to positive FCF. Re-sized under MC-G5-013 aggregate target budget;
+        common factor scaling=0.666667. v1.1.2 re-sized from measured MC-G5-013 sigma 0.064 to design sigma 0.04.
   structural_support:
   - path: revenue_model.segments.AI.initial_growth.mode
     contribution: 0.1
@@ -332,7 +342,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure links: AI_OVERBUILD; AI_CLOUD_CUSTOMER_FINANCING_STRESS. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure links: AI_OVERBUILD; AI_CLOUD_CUSTOMER_FINANCING_STRESS. v1.1.1 sizing: effect is marginal within aggregate
+    per-target Joint variance budget, not a standalone full shock.'
 - driver_id: HYPERSCALER_CAPEX
   material: true
   stochastic_targets:
@@ -343,7 +354,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Hyperscaler/AI-lab capex is a demand signal but partly competes with self-build. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: Hyperscaler/AI-lab capex is a demand signal but partly competes with self-build. Re-sized under MC-G5-013
+        aggregate target budget; common factor scaling=0.136364.
   structural_support: []
   stability:
     knockout:
@@ -353,8 +365,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Dual channel; no structural support to avoid double-counting AI_COMPUTE_DEMAND. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone
-    full shock.'
+  note: 'Dual channel; no structural support to avoid double-counting AI_COMPUTE_DEMAND. v1.1.1 sizing: effect is marginal
+    within aggregate per-target Joint variance budget, not a standalone full shock.'
 - driver_id: ADVANCED_PACKAGING
   material: true
   stochastic_targets:
@@ -365,7 +377,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Packaging availability gates GPU deployment. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: Packaging availability gates GPU deployment. Re-sized under MC-G5-013 aggregate target budget; common factor
+        scaling=0.136364.
   structural_support: []
   stability:
     knockout:
@@ -375,7 +388,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: TAIWAN_SUPPLY_DISRUPTION / component bottlenecks. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: TAIWAN_SUPPLY_DISRUPTION / component bottlenecks. v1.1.1 sizing: effect is marginal within aggregate
+    per-target Joint variance budget, not a standalone full shock.'
 - driver_id: HBM_MEMORY
   material: true
   stochastic_targets:
@@ -386,7 +400,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: HBM availability gates accelerator deployment. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: HBM availability gates accelerator deployment. Re-sized under MC-G5-013 aggregate target budget; common factor
+        scaling=0.136364.
   structural_support: []
   stability:
     knockout:
@@ -396,7 +411,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: TAIWAN_SUPPLY_DISRUPTION / memory bottlenecks. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: TAIWAN_SUPPLY_DISRUPTION / memory bottlenecks. v1.1.1 sizing: effect is marginal within aggregate per-target
+    Joint variance budget, not a standalone full shock.'
 - driver_id: CLOUD_SOFTWARE_DEMAND
   material: true
   stochastic_targets:
@@ -407,7 +423,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Cloud/software workload growth raises compute utilization. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: Cloud/software workload growth raises compute utilization. Re-sized under MC-G5-013 aggregate target budget;
+        common factor scaling=0.136364.
   structural_support: []
   stability:
     knockout:
@@ -417,7 +434,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Demand-side AI cloud channel. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Demand-side AI cloud channel. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget,
+    not a standalone full shock.'
 - driver_id: DATA_CENTER_POWER
   material: true
   stochastic_targets:
@@ -428,7 +446,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Power/site availability gates commissioned compute. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: Power/site availability gates commissioned compute. Re-sized under MC-G5-013 aggregate target budget; common
+        factor scaling=0.136364.
   - path: margin_model.nodes.Y2
     transform: additive_pp
     effect_per_plus_1sigma: 0.02
@@ -444,8 +463,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Better utilization supports Y3 cash conversion. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.666667. v1.1.2 re-sized from measured MC-G5-013
-        sigma 0.064 to design sigma 0.04.
+      rationale: Better utilization supports Y3 cash conversion. Re-sized under MC-G5-013 aggregate target budget; common
+        factor scaling=0.666667. v1.1.2 re-sized from measured MC-G5-013 sigma 0.064 to design sigma 0.04.
   structural_support:
   - path: revenue_model.segments.AI.initial_growth.mode
     contribution: 0.06
@@ -460,7 +479,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: DATA_CENTER_POWER_CONSTRAINT. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: DATA_CENTER_POWER_CONSTRAINT. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance
+    budget, not a standalone full shock.'
 - driver_id: LAUNCH_ECONOMICS
   material: true
   stochastic_targets:
@@ -471,8 +491,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Launch economics directly shifts Space segment growth. Re-sized under v1.1.1 per-target variance budget; capped from 0.080000 to 0.040000. v1.1.2 re-sized from measured
-        MC-G5-013 sigma 0.210 to design sigma 0.12.
+      rationale: Launch economics directly shifts Space segment growth. Re-sized under v1.1.1 per-target variance budget;
+        capped from 0.080000 to 0.040000. v1.1.2 re-sized from measured MC-G5-013 sigma 0.210 to design sigma 0.12.
   structural_support:
   - path: revenue_model.segments.Space.initial_growth.mode
     contribution: 0.05
@@ -487,8 +507,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure links: LAUNCH_VEHICLE_DEVELOPMENT_FAILURE; LAUNCH_OPERATIONS_FAILURE. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone
-    full shock.'
+  note: 'Failure links: LAUNCH_VEHICLE_DEVELOPMENT_FAILURE; LAUNCH_OPERATIONS_FAILURE. v1.1.1 sizing: effect is marginal within
+    aggregate per-target Joint variance budget, not a standalone full shock.'
 - driver_id: SATELLITE_CONNECTIVITY
   material: true
   stochastic_targets:
@@ -499,7 +519,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Connectivity adoption/pricing shifts Starlink growth. Re-sized under v1.1.1 per-target variance budget; capped from 0.080000 to 0.030000.
+      rationale: Connectivity adoption/pricing shifts Starlink growth. Re-sized under v1.1.1 per-target variance budget; capped
+        from 0.080000 to 0.030000.
   structural_support:
   - path: revenue_model.segments.Connectivity.initial_growth.mode
     contribution: 0.06
@@ -514,7 +535,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE. v1.1.1 sizing: effect is marginal within aggregate per-target
+    Joint variance budget, not a standalone full shock.'
 - driver_id: GOVERNMENT_DEFENSE
   material: true
   stochastic_targets:
@@ -525,8 +547,9 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Government/defense programs support launch and Starshield-related growth. Re-sized under v1.1.1 per-target variance budget; capped from 0.050000 to 0.040000. v1.1.2
-        re-sized from measured MC-G5-013 sigma 0.210 to design sigma 0.12.
+      rationale: Government/defense programs support launch and Starshield-related growth. Re-sized under v1.1.1 per-target
+        variance budget; capped from 0.050000 to 0.040000. v1.1.2 re-sized from measured MC-G5-013 sigma 0.210 to design sigma
+        0.12.
   structural_support: []
   stability:
     knockout:
@@ -536,7 +559,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: GOVERNMENT_SPACE_BUDGET. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: GOVERNMENT_SPACE_BUDGET. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance
+    budget, not a standalone full shock.'
 - driver_id: INTEREST_RATES
   material: true
   stochastic_targets:
@@ -547,8 +571,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Higher rates compress long-duration terminal valuation. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.857143. v1.1.2 re-sized from measured
-        MC-G5-013 sigma 0.214 to design log-multiple sigma 0.12.
+      rationale: Higher rates compress long-duration terminal valuation. Re-sized under MC-G5-013 aggregate target budget;
+        common factor scaling=0.857143. v1.1.2 re-sized from measured MC-G5-013 sigma 0.214 to design log-multiple sigma 0.12.
   - path: valuation.Y8.multiple
     transform: multiplicative_pct
     effect_per_plus_1sigma: -0.08
@@ -566,7 +590,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Negative exposure; adverse direction is +1σ rates. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Negative exposure; adverse direction is +1σ rates. v1.1.1 sizing: effect is marginal within aggregate per-target
+    Joint variance budget, not a standalone full shock.'
 - driver_id: CAPITAL_MARKETS
   material: true
   stochastic_targets:
@@ -577,7 +602,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Funding availability supports pace of capacity buildout. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: Funding availability supports pace of capacity buildout. Re-sized under MC-G5-013 aggregate target budget;
+        common factor scaling=0.136364.
   - path: valuation.Y5.multiple
     transform: multiplicative_pct
     effect_per_plus_1sigma: 0.02883869
@@ -585,8 +611,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Risk-capital availability affects long-duration valuation. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.857143. v1.1.2 re-sized from measured
-        MC-G5-013 sigma 0.214 to design log-multiple sigma 0.12.
+      rationale: Risk-capital availability affects long-duration valuation. Re-sized under MC-G5-013 aggregate target budget;
+        common factor scaling=0.857143. v1.1.2 re-sized from measured MC-G5-013 sigma 0.214 to design log-multiple sigma 0.12.
   structural_support: []
   stability:
     knockout:
@@ -596,8 +622,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure links: CAPITAL_MARKETS_TIGHTENING; CAPITAL_INTENSITY_OVERBUILD. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone
-    full shock.'
+  note: 'Failure links: CAPITAL_MARKETS_TIGHTENING; CAPITAL_INTENSITY_OVERBUILD. v1.1.1 sizing: effect is marginal within
+    aggregate per-target Joint variance budget, not a standalone full shock.'
 - driver_id: TAIWAN_SUPPLY
   material: true
   stochastic_targets:
@@ -608,7 +634,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Accelerator/advanced-package availability affects compute commissioning. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: Accelerator/advanced-package availability affects compute commissioning. Re-sized under MC-G5-013 aggregate
+        target budget; common factor scaling=0.136364.
   structural_support:
   - path: revenue_model.segments.AI.initial_growth.mode
     contribution: 0.05
@@ -623,7 +650,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: TAIWAN_SUPPLY_DISRUPTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: TAIWAN_SUPPLY_DISRUPTION. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance
+    budget, not a standalone full shock.'
 - driver_id: AI_CLOUD_PRICING
   material: true
   stochastic_targets:
@@ -634,7 +662,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Pricing realization affects AI-cloud revenue growth. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: Pricing realization affects AI-cloud revenue growth. Re-sized under MC-G5-013 aggregate target budget; common
+        factor scaling=0.136364.
   - path: margin_model.nodes.Y3
     transform: additive_pp
     effect_per_plus_1sigma: 0.00833313
@@ -642,8 +671,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 6.0
     meta:
       provenance: model_assumption
-      rationale: Pricing realization affects cash-conversion path. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.666667. v1.1.2 re-sized from measured MC-G5-013
-        sigma 0.064 to design sigma 0.04.
+      rationale: Pricing realization affects cash-conversion path. Re-sized under MC-G5-013 aggregate target budget; common
+        factor scaling=0.666667. v1.1.2 re-sized from measured MC-G5-013 sigma 0.064 to design sigma 0.04.
   structural_support: []
   stability:
     knockout:
@@ -653,7 +682,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure link: AI_OVERBUILD / pricing compression. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure link: AI_OVERBUILD / pricing compression. v1.1.1 sizing: effect is marginal within aggregate per-target Joint
+    variance budget, not a standalone full shock.'
 - driver_id: ELECTRIFICATION_GRID
   material: true
   stochastic_targets:
@@ -664,7 +694,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 10.0
     meta:
       provenance: model_assumption
-      rationale: Grid buildout expands feasible data-center power over a lag. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: Grid buildout expands feasible data-center power over a lag. Re-sized under MC-G5-013 aggregate target budget;
+        common factor scaling=0.136364.
   structural_support: []
   stability:
     knockout:
@@ -674,7 +705,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Upstream enabling driver; kept stochastic-only. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Upstream enabling driver; kept stochastic-only. v1.1.1 sizing: effect is marginal within aggregate per-target Joint
+    variance budget, not a standalone full shock.'
 - driver_id: UTILITY_CAPEX
   material: true
   stochastic_targets:
@@ -685,7 +717,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 10.0
     meta:
       provenance: model_assumption
-      rationale: Utility capex expands interconnect/generation capacity over a lag. Re-sized under MC-G5-013 aggregate target budget; common factor scaling=0.136364.
+      rationale: Utility capex expands interconnect/generation capacity over a lag. Re-sized under MC-G5-013 aggregate target
+        budget; common factor scaling=0.136364.
   structural_support: []
   stability:
     knockout:
@@ -695,7 +728,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Upstream enabling driver; kept stochastic-only. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Upstream enabling driver; kept stochastic-only. v1.1.1 sizing: effect is marginal within aggregate per-target Joint
+    variance budget, not a standalone full shock.'
 - driver_id: AEROSPACE_CYCLE
   material: true
   stochastic_targets:
@@ -706,8 +740,8 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Aerospace launch/satellite cycle affects Space demand. Re-sized under v1.1.1 per-target variance budget; capped from 0.060000 to 0.040000. v1.1.2 re-sized from measured
-        MC-G5-013 sigma 0.210 to design sigma 0.12.
+      rationale: Aerospace launch/satellite cycle affects Space demand. Re-sized under v1.1.1 per-target variance budget;
+        capped from 0.060000 to 0.040000. v1.1.2 re-sized from measured MC-G5-013 sigma 0.210 to design sigma 0.12.
   structural_support: []
   stability:
     knockout:
@@ -717,7 +751,8 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Failure links overlap launch/government-space channels. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Failure links overlap launch/government-space channels. v1.1.1 sizing: effect is marginal within aggregate per-target
+    Joint variance budget, not a standalone full shock.'
 - driver_id: SPACE_REGULATION
   material: true
   stochastic_targets:
@@ -728,8 +763,9 @@ driver_parameter_mapping:
     decay_half_life_quarters: 8.0
     meta:
       provenance: model_assumption
-      rationale: Positive SPACE_REGULATION shock means more restrictive regulation in taxonomy semantics. Re-sized under v1.1.1 per-target variance budget; capped from -0.060000 to -0.040000.
-        v1.1.2 re-sized from measured MC-G5-013 sigma 0.210 to design sigma 0.12.
+      rationale: Positive SPACE_REGULATION shock means more restrictive regulation in taxonomy semantics. Re-sized under v1.1.1
+        per-target variance budget; capped from -0.060000 to -0.040000. v1.1.2 re-sized from measured MC-G5-013 sigma 0.210
+        to design sigma 0.12.
   - path: valuation.Y3.multiple
     transform: multiplicative_pct
     effect_per_plus_1sigma: -0.05
@@ -747,5 +783,6 @@ driver_parameter_mapping:
       meta:
         provenance: model_assumption
         rationale: One-sigma adverse direction under the accepted driver sign convention.
-  note: 'Negative exposure; adverse direction is +1σ restrictive regulation. Failure links: SPACE_REGULATORY_RANGE_DELAY; SPACE_REGULATORY_SPECTRUM_DELAY. v1.1.1 sizing: effect is marginal
-    within aggregate per-target Joint variance budget, not a standalone full shock.'
+  note: 'Negative exposure; adverse direction is +1σ restrictive regulation. Failure links: SPACE_REGULATORY_RANGE_DELAY;
+    SPACE_REGULATORY_SPECTRUM_DELAY. v1.1.1 sizing: effect is marginal within aggregate per-target Joint variance budget,
+    not a standalone full shock.'

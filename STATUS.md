@@ -1702,3 +1702,64 @@ QUARANTINE дополнен разделом 5 (SPCX mc v1.1.3 — миграц�
 отправляет. Очередь: ответ IMMA (партия 7) → приёмка SPCX v1.1.3 + TAIWAN_QUARANTINE → раунд 3 (16 прогонов сценария +
 SPCX) → DR по p(QUARANTINE) → заход 6 оптимизатора на единой семантике. Долг: §3.3 в portfolio_stability; формулировка
 IMMA для Conditional MC — в её следующей редакции.
+
+## 25.09 ночь: ПАРТИЯ 7 — TAIWAN_QUARANTINE v1.0 и SPCX v1.1.3 в приёмке; ответы IMMA 3.5/3.6
+
+ПАРТИЯ 7 (share 6ab6d4d5; zip sha256 ee32b995…, 7 файлов по манифесту сошлись;
+from_imma/Party7_TAIWAN_QUARANTINE_SPCX_v1.0). Ответы IMMA: 3.5 — BASE УЖЕ содержит гонку как наблюдаемый режим 2026
+(центры компаний по фактам, Joint-шоки нулевые относительно него) → RACE_TO_PARITY = ускорение сверх BASE;
+перецентровка не нужна; 3.6 — составной сценарий CHIP_COLD_WAR_THEN_SEIZURE как отдельный взаимоисключающий член (в
+будущем), с переразложением 0.10/0.07 владельцем; пока паритет = триггер пересмотра, без автообновления.
+TAIWAN_QUARANTINE v1.0: фазы RESTRICTIONS (как у TS) → QUARANTINE (старт 1/2/4 кв.; TAIWAN_SUPPLY −1.25σ,
+CHINA_REVENUE −0.75σ, CAPITAL_MARKETS −0.75σ, HBM/ADV_PACK −0.5σ, AI_COMPUTE −0.4σ, WFE −0.35σ, GOVERNMENT_DEFENSE
++0.5σ) → NORMALIZATION_OR_FROZEN (4/8/12 кв. после, ramp 4, до конца); каталог TQ-F01…F08 с признаками владельца;
+mutual_exclusion_set GEOTECH_REGIME_8Y_V1; probability pending. Валидатор сценариев ×3 (…-7b33c3): pass, PSD
+0.210/0.168/0.209, replay детерминирован, покрытие 15 (SPCX 6 драйверов, NVDA 8, узкие HOOD/LLY/NET/ETN/SPOT по 1).
+Файл скопирован в portfolio/_scenarios. SPCX mc v1.1.3: check_supersedes 1.1.2→1.1.3 — пропаж 0, изменено 4 (schema
+1.0.2, engine 2.3.1, as_of, rationale fallback); валидатор …-1998a2 pass под Joint v1.1 (σ все в норме; W 0.396/0.407
+— warning ниже ориентира, как раньше). Предпросмотр 20k: v1.1.2 median5 −13.5 % / P(l30) 0.678 / ES5 −0.91 / medE5 987
+млрд → v1.1.3 −2.7 % / 0.368 / −0.78 / 1777 млрд (parity Y5 медиана 0.46 = 14x/32x) — большая migration delta,
+принимается как смена семантики (IMMA 3.1/3.3). Запущен норматив 500k SPCX v1.1.3 с robustness (фон, _spcx113_mc.log →
+_spcx113_run.json); далее раунд 3 (_scenario_round3.py: 15 × QUARANTINE + SPCX × TS/CW; портфель по 4 сценариям с p(Q)
+pending), интеграция (_integrate_party7.py), DR по p(QUARANTINE), заход 6.
+
+## 25.09 ночь: SPCX v1.1.3 принят и интегрирован; папка spacex — старый формат (предсуществующий долг); раунд 3 запущен
+
+SPCX v1.1.3 НОРМАТИВ 500k …-ad0175 (под Joint v1.1, 2.4.2): CAGR 3/5/8 −19.3 / −2.7 / +7.7 %; q5..q95 −22.4..+18.7 %;
+P(l30) 0.368, P(l50) 0.201; P(2x) 0.088; ES5 −0.79; medE5 1777 млрд; gap RV 0.46 / price 1.93; conv stable; robustness
+pass 0.875/0.75. Y5 базы: bridge 85.9 % (все при положительном FCF ниже parity 0.46), multiple 9.3 %, blend 4.9 %;
+bridge_dependent Y3/Y5/Y8. Против v1.1.2 (e55d7d: −13.5 %, P(l30) 0.68, ES5 −0.91, 987 млрд) — migration delta,
+принята по правилу IMMA. ИНТЕГРАЦИЯ (_integrate_party7.py --apply): portfolio/spacex/mc_calibration_v1.1.3.yaml,
+v1.1.2 снят из папки, calc_runs + info_log (supersedes e55d7d); _norm_runs_joint11.json дополнен SPCX. ВАЛИДАТОР ПАПКИ
+spacex …-d3623f — FAIL (248 ошибок схемы, 35 целостности): ПРЕДСУЩЕСТВУЮЩЕЕ — модель SPCX в старом формате (не
+Company_Artifact_Schema v1.0.5: нет schema_version, старые поля kpis/triggers/state.json), прежних проверок папки
+spacex не было; к сегодняшней интеграции не относится. Долг: миграция артефактов SPCX на v1.0.5 (заказ IMMA или
+migrate_artifacts_v1_0_1.py) — вынести владельцу отдельно. РАУНД 3 запущен (_scenario_round3.py): 15 × QUARANTINE +
+SPCX × TS/CW × 500k; затем портфель по 4 сценариям (p(Q) pending).
+
+## 25.09 ночь: РАУНД 3 (карантин) ВЫПОЛНЕН — DR-02 по p(QUARANTINE), приёмка партии 7 и заказ Scenario Engine v1.1 готовы
+
+РАУНД 3 ВЫПОЛНЕН (_scenario_round3.py, 17 прогонов × 500k): TAIWAN_QUARANTINE на 15 компаниях + SPCX v1.1.3 по TS/CW.
+Карантин — «половина» силового Тайваня по медиане у чувствительных (NVDA −6.9 п.п. vs −17.8, NBIS −4.2 vs −11.2, ASML
+−3.3 vs −9.3), хвосты тяжелеют (NVDA ES5 +5 % → −34 %); узкие ±1 п.п. Портфель Y5 (текущие, …-fcc542): BASE +22.5 % /
+ES5 +24 %; TS +12.6 % / −32 %; CW +23.6 % / +26 %; Q +18.6 % / −2 %; оптимум 5 (…-90678e, с SPCX v1.1.3): +20.5 /
++13.8 / +21.5 / +17.8 %. Сетка смесей по p(Q) 0.15/0.175/0.20 (_mixture_grid_q.json; сохранены 3f47d3 / e09fd8 при
+0.175): медиана −0.6…−0.8 п.п., ES5 −3.9…−5.2 п.п.; ScenarioConcentration с двумя adverse становится применимой: 59 %
+(0.15, впритык к 60 %) … 52 % (0.20) — warning. СДЕЛАНО: notes/scenario-round3-2026-09-25.md;
+decisions/DR-2026-09-25-02-quarantine-probability.md (V0…V3, рекомендация V1 p(Q)=0.175, BASE 0.655; V3 — ждать
+Scenario Engine v1.1); to_imma/party7-quarantine-spcx.feedback.md (приёмка партии 7, готова к отправке);
+to_imma/scenario-engine-v11-scope.request.md (заказ по замечанию владельца: каталог событий, scope
+includes/excludes/base_when, entry/exit criteria фаз, outcome_mapping, SCN-012…015; отправлять после приёмки партии 7,
+до Lifecycle). Очередь отправки IMMA: приёмка партии 7 → заказ v1.1 scope → Lifecycle. Ждём решение владельца по DR-02
+→ смесь с 4 сценариями нормативно, заход 6 оптимизатора (лимит концентрации включить после решения). Долги: миграция
+артефактов SPCX на v1.0.5; §3.3 в portfolio_stability. Не закоммичено: workspace (партия 7 в from_imma, сценарий в
+_scenarios, SPCX v1.1.3 в spacex + state.json, ~25 прогонов, заметка, DR-02, два файла to_imma, STATUS); lab чист.
+
+## 27.09: приёмка партии 7 отправлена IMMA; заказ v1.1 дополнен заделом под слой действий
+
+Приёмка партии 7 ОТПРАВЛЕНА IMMA владельцем (party7-quarantine-spcx.feedback.md). Заказ Scenario Engine v1.1 дополнен
+разделом 5 «Задел под слой действий» (парадигма владельца: заблаговременные действия по признакам продвижения сценария
+— scenario_state, режим «фаза подтверждена на дату», strategy_ref, контракт сигнала агента; слой действий v1.2 —
+отдельный заказ). Очередь к IMMA: ответ на приёмку → заказ v1.1 scope → Lifecycle. Ждём решение владельца по DR-02
+(p(QUARANTINE)). Рецидив термина «провенанс» 27.09 — в чат-ответе (check_terms проверяет файлы): правило в памяти
+расширено на реплики.

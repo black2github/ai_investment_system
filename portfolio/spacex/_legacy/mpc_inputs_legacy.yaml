@@ -1,0 +1,24 @@
+# Перенесено дословно из mpc_inputs.yaml профилем MIG-SPCX (migrate_artifacts_v1_0_1 1.1.0): поля старого формата вне
+# Company Artifact Schema v1.0.5. Невалидируемый файл; значения, комментарии и порядок ключей — как в исходнике.
+methodology_refs:
+  mpc_schema: Marginal_Portfolio_Contribution_Schema_v1.0
+  driver_taxonomy: MPC_Driver_Taxonomy_v1.1
+  states: SPCX states/kpis v1.3
+  reverse_valuation: reverse_valuation v1.0
+  conditional_mc: conditional_mc v1.0
+status: complete
+model_notes:
+- 'HYPERSCALER_CAPEX is intentionally only +1: it is partly a demand signal, but hyperscaler self-build also increases competitive
+  supply.
+
+  '
+- 'CAPITAL_MARKETS is +1 rather than +2 because SPCX currently has net cash and established cash-generating businesses; it
+  is less financing-dependent than NBIS/CRWV.
+
+  '
+- 'TAIWAN_SUPPLY=+2 is an input-supply exposure for AI compute, not geographic revenue exposure.
+
+  '
+- 'SPACE_REGULATION=-2 follows taxonomy v1.1 sign semantics: stricter regulation is strongly negative.
+
+  '

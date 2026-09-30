@@ -1,0 +1,99 @@
+# Перенесено дословно из kpis.yaml профилем MIG-SPCX (migrate_artifacts_v1_0_1 1.1.0): поля старого формата вне
+# Company Artifact Schema v1.0.5. Невалидируемый файл; значения, комментарии и порядок ключей — как в исходнике.
+derived_checks:
+  revenue_q2_2026:
+    value: 7.814
+    unit: USD B
+    source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  AI_contract_sales:
+    value: 14.1
+    unit: USD B
+    source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  starship_next_scheduled_event:
+    event: Starship Flight 14
+    primary_date: '2026-09-22'
+    backup_date: '2026-09-23'
+    event_level: E1
+    source_url: https://www.fly.faa.gov/adv/adv_otherdis?adv_date=09182026&advn=20&facId=ATCSCC&title=ATCSCC+ADVZY+020+DCC+09%2F18%2F2026+OPERATIONS+PLAN&titleDate=09%2F18%2F2026
+data_quality:
+  current_state_date: '2026-09-20'
+  latest_financial_observation: '2026-06-30'
+  market_observation: '2026-09-18'
+  rule: До публикации Q3 финансовые KPI остаются на Q2; календарные события могут обновляться отдельно.
+kpi_observation_rule: Каждое новое значение записывается в state.json → kpi_observations (kpi_id, period_end, value,
+  source_url, verified). Цвет KPI = сравнение last_value с thresholds.
+supporting_metrics:
+- id: SPCX-METRIC-01
+  name: Contracted cloud sales (Cloud Services Agreements, non-cancellable)
+  unit: USD B
+  period: quarter-end
+  source: SEC
+  formula: Сумма законтрактованных продаж по CSA на конец периода
+  used_by:
+  - SPCX-E-10
+  last_value: 14.1
+  last_date: '2026-06-30'
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  note: 'из derived_checks.AI_contract_sales; порог перехода E-10: >= $1B'
+- id: SPCX-METRIC-02
+  name: Company revenue YoY
+  unit: '%'
+  period: quarter
+  source: SEC
+  formula: (Revenue_t / Revenue_t-4 - 1) * 100
+  used_by:
+  - SPCX-E-25
+  last_value: 91.9
+  last_date: '2026-06-30'
+  last_value_raw: $7.814B vs год назад
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  note: значение +91.9% — из сценарной сессии другой LLM со ссылкой на релиз Q2; проверить по релизу при report-check
+    Q3
+- id: SPCX-METRIC-03
+  name: Capex / revenue
+  unit: '%'
+  period: quarter
+  source: SEC (расчёт из KPI-08 и выручки)
+  formula: Total capex_t / Revenue_t * 100
+  used_by:
+  - SPCX-E-26
+  last_value: 235.1
+  last_date: '2026-06-30'
+  last_value_raw: $18.369B / $7.814B
+  source_url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm
+  note: производная от KPI-08 и derived_checks.revenue_q2_2026
+calculated_metrics:
+  owner: 'invest-calc: model reverse_valuation (Investment_System_Reverse_Valuation_Specification_v1.0)'
+  metrics:
+  - implied_revenue_cagr_5y
+  - terminal_fcf_margin
+  - terminal_multiple
+  used_by:
+  - SPCX-E-31
+  - SPCX-E-32
+  - SPCX-E-33
+  note: 'Не KPI: вычисляются движком по проверенным входам; без утверждённой калибровки допущений для A2+B2+C1+D3
+    нормативно не рассчитываются'
+critical_kpis:
+  SPCX-KPI-05:
+    last_yoy_growth: 100
+  SPCX-KPI-06:
+    last_yoy_change: -22.35
+  SPCX-KPI-10:
+    last_value_raw: $152.71 × 13.1818 млрд / $23.044 млрд (invest-calc valuation_multiple)
+    inputs:
+      price_source: https://query1.finance.yahoo.com/v8/finance/chart/SPCX
+      shares_outstanding:
+        value: 13181779945
+        as_of: '2026-07-28'
+        source: 'SEC 10-Q Q2 2026, титульная страница: Class A 7 696 293 669 + Class B 5 485 486 276'
+        verified: true
+        note: сумма классов A и B — для капитализации всей компании
+      ttm_revenue_usd_b:
+        value: 23.044
+        formula: FY2025 18.674 + H1 2026 12.508 − H1 2025 8.138
+        sources:
+          fy_2025: SEC 10-K FY2025
+          h1_2026: SEC 10-Q Q2 2026
+          h1_2025: SEC 10-Q Q2 2026 (сравнительный период)
+        verified: true

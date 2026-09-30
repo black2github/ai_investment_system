@@ -1,0 +1,118 @@
+# Перенесено дословно из triggers.yaml профилем MIG-SPCX (migrate_artifacts_v1_0_1 1.1.0): поля старого формата вне
+# Company Artifact Schema v1.0.5. Невалидируемый файл; значения, комментарии и порядок ключей — как в исходнике.
+meta:
+  reference_price_in_strategy: 124        # «НЕ входить lump-sum на $124»
+  target_average_price: "95–110 к марту 2027"
+  position_plan:
+    opening_2026: "5–8% портфеля"
+    mittelspiel_2027: "15–20% портфеля"
+    endspiel_2028: "10–15% портфеля после фиксации"
+automations:
+  spacex-price-watch:
+    pilot: true
+  spacex-dca-reminder:
+    pilot: true
+  spacex-news-watch:
+    pilot: true
+triggers:
+  SPCX-P-01:
+    strategy_ref: "Фаза 1, ход 1.3; ход 2.2"
+    probability_in_strategy: "40%"
+  SPCX-P-02:
+    strategy_ref: "Ход 1.2; ход 2.2"
+  SPCX-P-03:
+    strategy_ref: "Ход 3.3"
+  SPCX-P-04:
+    strategy_ref: "Ход 3.3"
+  SPCX-P-05:
+    strategy_ref: "Ход 3.3"
+  SPCX-C-01:
+    strategy_ref: "Ход 1.1"
+  SPCX-C-02:
+    strategy_ref: "Ход 2.2"
+  SPCX-C-03:
+    strategy_ref: "Ход 1.1"
+  SPCX-C-04:
+    strategy_ref: "Ход 1.2"
+  SPCX-C-05:
+    strategy_ref: "Ход 2.3"
+  SPCX-C-06:
+    strategy_ref: "Ход 3.1"
+  SPCX-C-07:
+    strategy_ref: "Ход 3.3"
+  SPCX-E-01:
+    strategy_ref: "Ход 1.3"
+    probability_in_strategy: "50%"
+  SPCX-E-02:
+    strategy_ref: "Ход 1.3"
+    probability_in_strategy: "20%"
+  SPCX-E-03:
+    strategy_ref: "Ход 1.3"
+    probability_in_strategy: "35%"
+  SPCX-E-04:
+    strategy_ref: "Ход 2.3"
+  SPCX-E-05:
+    strategy_ref: "Ход 2.1"
+  SPCX-E-06:
+    strategy_ref: "Ход 2.2"
+  SPCX-E-07:
+    strategy_ref: "Ход 3.1"
+  SPCX-E-08:
+    strategy_ref: "Ход 3.1"
+  SPCX-E-09:
+    strategy_ref: "Ход 1.2"
+  SPCX-D-01:
+    strategy_ref: "Ход 3.2"
+  SPCX-E-10:
+    notes_kpi: "Вторая ветвь OR — non-cancellable cloud contracts >= $1B — не представлена отдельным\
+  \ KPI в kpis.yaml."
+    supporting_metrics: [SPCX-METRIC-01]
+  SPCX-E-16:
+    notes_kpi: "SPCX-KPI-05 хранит subscriber count и YoY; condition использует абсолютное число\
+  \ subscribers >= 12M."
+  SPCX-E-20:
+    notes_kpi: "Событийный переход: результат миссии Starship и доля выполненных objectives не определены\
+  \ KPI в kpis.yaml."
+  SPCX-E-21:
+    notes_kpi: "Событийный переход: orbital mission success и доля выполненных objectives не определены\
+  \ KPI в kpis.yaml."
+  SPCX-E-22:
+    notes_kpi: "Событийный переход: повторное использование того же flight-capable hardware и интервал\
+  \ <=90 дней не определены KPI в kpis.yaml."
+  SPCX-E-23:
+    notes_kpi: "Событийный переход: число успешных полётов rolling 12m и median interval не определены\
+  \ KPI в kpis.yaml."
+  SPCX-E-24:
+    notes_kpi: "Событийный переход: measured cost-to-orbit и число operational flights не определены\
+  \ KPI в kpis.yaml."
+  SPCX-E-25:
+    notes_kpi: "Condition также использует company revenue YoY >=20%; отдельного KPI общей выручки/YoY\
+  \ в текущем kpis.yaml нет."
+    supporting_metrics: [SPCX-METRIC-02]
+  SPCX-E-26:
+    notes_kpi: "Condition также использует capex/revenue >=100%; отдельного KPI отношения capex/revenue\
+  \ в текущем kpis.yaml нет."
+    supporting_metrics: [SPCX-METRIC-03]
+  SPCX-E-30:
+    notes_kpi: "Market cap / TTM revenue. Переход остаётся planned до разрешения оценки после утверждения\
+  \ reverse valuation."
+    calculated_metrics: []
+  SPCX-E-31:
+    notes_kpi: "Метрики являются выходами deterministic reverse valuation engine, а не KPI из kpis.yaml."
+    calculated_metrics: [implied_revenue_cagr_5y, terminal_fcf_margin, terminal_multiple]
+  SPCX-E-32:
+    notes_kpi: "Метрики являются выходами deterministic reverse valuation engine, а не KPI из kpis.yaml."
+    calculated_metrics: [implied_revenue_cagr_5y, terminal_fcf_margin, terminal_multiple]
+  SPCX-E-33:
+    notes_kpi: "Метрики являются выходами deterministic reverse valuation engine, а не KPI из kpis.yaml."
+    calculated_metrics: [implied_revenue_cagr_5y, terminal_fcf_margin, terminal_multiple]
+  SPCX-E-34:
+    supporting_metrics: [SPCX-METRIC-02]
+  SPCX-E-35:
+    supporting_metrics: [SPCX-METRIC-02]
+  SPCX-E-36:
+    supporting_metrics: [SPCX-METRIC-02]
+  SPCX-E-37:
+    supporting_metrics: [SPCX-METRIC-02]
+  SPCX-E-38:
+    calculated_metrics: [fcf_quarterly, fcf_margin_quarterly]

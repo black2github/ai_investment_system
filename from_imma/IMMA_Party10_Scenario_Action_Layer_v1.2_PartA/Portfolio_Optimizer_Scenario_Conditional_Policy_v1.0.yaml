@@ -1,0 +1,48 @@
+schema_version: '1.0'
+artifact: portfolio_optimizer_scenario_conditional_policy
+optimizer_contract_version: '1.1'
+host_engine_version: portfolio_optimizer 1.1.0
+as_of: '2026-09-30'
+owner_decision_ref: DR-2026-09-27-01
+scenario_set_id: GEOTECH_REGIME_8Y_V1
+conditional_constraints:
+  probability_min:
+    value: 0.1
+    provenance: owner_judgment
+    source_ref: DR-2026-09-27-01
+  es5_5y_min:
+    value: -0.4
+    provenance: owner_judgment
+    source_ref: DR-2026-09-27-01
+  p_loss_30_5y_max:
+    value: 0.25
+    provenance: owner_judgment
+    source_ref: DR-2026-09-27-01
+  eligible_scenario_rule: non-BASE AND probability_status=owner_judgment AND p_s >= probability_min AND B_s > 0
+  path_rule: scenario-specific paths with common path_id; evaluate scenario conditionally with probability=1.0; do not rewrite owner mixture
+    probabilities
+  silent_relaxation_forbidden: true
+scenario_concentration:
+  burden_formula_ref: Scenario_Engine_Specification_v1.1.md#7-scenario-contribution-и-scenarioconcentration
+  hard_max:
+    value: 0.6
+    provenance: owner_judgment
+    source_ref: DR-2026-09-27-01
+  applicability: hard limit applies only when at least 2 non-BASE scenarios have B_s > 0; otherwise raw diagnostic only
+  eligible_burdens: all non-BASE scenarios with known owner probabilities, including scenarios below probability_min
+  tie_break: after ES5 when ScenarioConcentration is defined; minimize concentration among otherwise lexicographically equivalent feasible
+    portfolios
+feasibility_order:
+- portfolio_accounting_and_allowed_instruments
+- owner_structural_constraints_single_name_sector_top3_common_cause_challenger_cash_hedge_limits
+- BASE_risk_5y_constraints
+- scenario_conditional_ES5_and_P30_constraints_for_eligible_scenarios
+- ScenarioConcentration_hard_limit_when_applicable
+- existing_optimizer_lexicographic_objectives_unchanged
+probability_change_rule:
+  recompute_on_any_owner_probability_change: true
+  crossing_probability_min_changes_eligible_scenario_set: true
+  recompute_scenario_concentration_on_every_probability_change: true
+  calibrations_unchanged: true
+  stored_conditional_optima_mark_stale_if_feasible_set_changes: true
+  strategy_files_not_auto_rewritten: true

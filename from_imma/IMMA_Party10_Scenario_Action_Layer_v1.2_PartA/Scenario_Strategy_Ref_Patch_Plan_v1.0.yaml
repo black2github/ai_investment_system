@@ -1,0 +1,20 @@
+schema_version: '1.0'
+artifact: scenario_strategy_ref_patch_plan
+as_of: '2026-09-30'
+status: deferred_until_part_b
+reason: ACT-004 forbids dangling strategy_ref. Part A defines schema/contracts only; actual refs are patched after strategy files and
+  conditional _runs exist.
+planned_patches:
+- scenario_id: TAIWAN_SEIZURE
+  from_version: '1.1'
+  to_version: 1.1.1
+  strategy_ref: portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml
+- scenario_id: TAIWAN_QUARANTINE
+  from_version: '1.1'
+  to_version: 1.1.1
+  strategy_ref: portfolio/_scenarios/strategies/TAIWAN_QUARANTINE_strategy_v1.0.yaml
+- scenario_id: CHIP_COLD_WAR
+  from_version: '1.1'
+  to_version: 1.1.1
+  strategy_ref: portfolio/_scenarios/strategies/CHIP_COLD_WAR_strategy_v1.0.yaml
+numeric_scenario_semantics_change: false

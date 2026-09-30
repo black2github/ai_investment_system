@@ -1,0 +1,199 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Hedge_Instrument_Model_Schema_v1.0
+title: Hedge Instrument Model Schema v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- instrument_id
+- ticker
+- as_of
+- status
+- currency
+- market_model
+- joint_linkage
+- scenario_overrides
+- validation
+- provenance
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: hedge_instrument_model
+  instrument_id:
+    type: string
+  ticker:
+    type: string
+  as_of:
+    type: string
+    format: date
+  status:
+    enum:
+    - draft
+    - accepted
+    - retired
+  currency:
+    type: string
+  market_model:
+    type: object
+    additionalProperties: false
+    required:
+    - frequency
+    - return_family
+    - drift
+    - volatility
+    - estimation_window
+    - price_source_ref
+    properties:
+      frequency:
+        const: quarterly
+      return_family:
+        enum:
+        - normal_log_return
+        - empirical_bootstrap
+      drift:
+        $ref: '#/$defs/number_origin'
+      volatility:
+        $ref: '#/$defs/number_origin'
+      estimation_window:
+        type: string
+      price_source_ref:
+        type: string
+  joint_linkage:
+    type: object
+    additionalProperties: false
+    required:
+    - root_loadings
+    - local_factors
+    - cross_root_correlations
+    - idiosyncratic_weight
+    - rationale
+    properties:
+      root_loadings:
+        type: object
+        additionalProperties:
+          type: number
+      idiosyncratic_weight:
+        type: number
+        minimum: 0
+      rationale:
+        type: string
+      local_factors:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - factor_id
+          - persistence
+          - loading
+          - provenance
+          - rationale
+          properties:
+            factor_id:
+              type: string
+              minLength: 1
+            persistence:
+              type: number
+              minimum: 0
+              maximum: 0.99
+            loading:
+              type: number
+            provenance:
+              enum:
+              - derived_fact
+              - model_assumption
+            rationale:
+              type: string
+              minLength: 1
+      cross_root_correlations:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - local_factor_id
+          - root_factor_id
+          - correlation
+          - provenance
+          - rationale
+          properties:
+            local_factor_id:
+              type: string
+            root_factor_id:
+              type: string
+            correlation:
+              type: number
+              minimum: -1
+              maximum: 1
+            provenance:
+              enum:
+              - derived_fact
+              - model_assumption
+            rationale:
+              type: string
+  scenario_overrides:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - scenario_id
+      - mean_shift_sigma
+      - volatility_multiplier
+      - provenance
+      - rationale
+      properties:
+        scenario_id:
+          type: string
+        mean_shift_sigma:
+          type: number
+        volatility_multiplier:
+          type: number
+          exclusiveMinimum: 0
+        provenance:
+          enum:
+          - model_assumption
+          - derived_fact
+        rationale:
+          type: string
+  validation:
+    type: object
+    additionalProperties: false
+    required:
+    - common_path_id
+    - no_double_count_with_cash
+    - stress_backtest_required
+    properties:
+      common_path_id:
+        const: true
+      no_double_count_with_cash:
+        const: true
+      stress_backtest_required:
+        const: true
+  provenance:
+    enum:
+    - model_assumption
+    - derived_fact
+$defs:
+  number_origin:
+    type: object
+    additionalProperties: false
+    required:
+    - value
+    - provenance
+    - rationale
+    properties:
+      value:
+        type: number
+      provenance:
+        enum:
+        - derived_fact
+        - model_assumption
+      rationale:
+        type: string
+      source_ref:
+        type:
+        - string
+        - 'null'

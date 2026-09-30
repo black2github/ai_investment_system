@@ -1919,3 +1919,29 @@ action-layer-v12.request.md отправлена IMMA 30.09 — ждём Scenari
 Scenario_Strategy_Schema v1.0 (стратегии по фазам, условный оптимум, нормативная формулировка сценарно-условных
 ограничений с порогами владельца, контракт дозора и сигнала, ACT-правила, модель GLD — вопрос 2.7). Часть B (первые
 стратегии) — после отбора портфеля; вопросы владельцу 2, 4, 5 остаются открытыми.
+
+## 30.09: партия 10 (часть A, слой действий v1.2) ПРИНЯТА и внедрена; optimizer 1.1.1 по contract v1.1; state.json
+1.1; задание облаку по SPCX
+Партия 10 (IMMA_Party10_Scenario_Action_Layer_v1.2_PartA, share 6ab62c72, zip sha256 1ab76072…, 17 файлов — сошлись,
+термины pass): Scenario_Action_Layer_Specification v1.0 (четыре объекта, Trigger ≠ Decision, статусы draft →
+owner_approved → active → executed → retired, активация только отдельным решением владельца, candidate без сделок,
+ambiguous_set_conflict блокирует; §5 условный оптимум → действия: deadband 0.5 п.п., округление к нулю 0.25 п.п.,
+turnover cap владельца, сокращения раньше докупок; §6 live-сверка D_inf > 2 п.п. → review_required),
+Scenario_Strategy_Schema v1.0, ACT-001…020, контракты дозора и сигнала, Optimizer v1.1 addendum + Policy v1.0 (по
+схеме 0 ошибок), Scenario_State_Schema 1.1 (reissue без пропаж: check_supersedes 0/3), Hedge_Instrument_Model
+spec+schema v1.0, Owner_Hedge_Instrument_Constraints v1.0, patch-plan strategy_ref (часть B). Решение IMMA по GLD:
+плоская 0 % — не хедж-модель; до принятой модели GLD только owner_rule/review ≤ 10 % (ACT-019).
+Внедрено: 14 нормативов в methodology, owner_hedge_instrument_constraints_v1.0.yaml в _scenarios, пакет в from_imma;
+state.json мигрирован 1.0 → 1.1 (поля strategy_ref/strategy_status/last_signal_at/last_signal_id,
+strategy_review_required/reason — null/false); artifact_validator 1.8.1 — схема состояния по schema_version файла,
+SCN-016 pass v1.1; portfolio_optimizer 1.1.1 — сверка с contract v1.1: S_cond требует B_s > 0 (сценарий, не ухудшающий
+ES5 против BASE, гейтом не является; без BASE-путей — консервативно), выход contract_version + gated_at_optimum; тест
+адаптирован. Полный набор lab: 130 passed, 2 skipped. Приёмка to_imma/party10-action-layer-partA.feedback.md написана
+(не отправлена): вопросы 3.1 полный текст Optimizer v1.1 (сделаем сами), 3.2 заказ модели GLD — по решению владельца,
+3.3 трактовка исторических фаз §21, 3.4 перенормировка §3.3.
+Облако: задание calc/docs/cloud-tasks/2026-09-30-spcx-artifacts-migration-v105.md — миграция portfolio/spacex на схему
+v1.0.5 (сейчас 250 ошибок схемы + 35 целостности: нет
+schema_version/value_type/source_class/provenance/criteria/condition_provenance, лишние legacy-ключи, пустые
+transition у E-34…38), два репозитория в одной сессии, инварианты И1–И4, тесты на фикстуре, приёмка валидатором папки.
+НЕ закоммичено: lab (optimizer 1.1.1, validator 1.8.1, тест, задание), workspace (партия 10: from_imma, methodology,
+state.json, owner hedge constraints, приёмка, STATUS).

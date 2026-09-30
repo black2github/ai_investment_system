@@ -1,0 +1,571 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Scenario_Strategy_Schema_v1.0
+title: Scenario Strategy Schema v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- strategy_id
+- scenario_id
+- scenario_ref
+- scenario_set_id
+- as_of
+- portfolio_registry_ref
+- owner_constraints_ref
+- hedge_constraints_ref
+- derivation_policy
+- phase_strategies
+- changelog
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: scenario_strategy
+  strategy_id:
+    type: string
+    pattern: ^[A-Z0-9_]+_STRATEGY$
+  scenario_id:
+    type: string
+    minLength: 1
+  scenario_ref:
+    type: string
+    minLength: 1
+  scenario_set_id:
+    type: string
+    minLength: 1
+  as_of:
+    type: string
+    format: date
+  portfolio_registry_ref:
+    type: string
+    minLength: 1
+  owner_constraints_ref:
+    type: string
+    minLength: 1
+  hedge_constraints_ref:
+    type: string
+    minLength: 1
+  derivation_policy:
+    $ref: '#/$defs/derivation_policy'
+  phase_strategies:
+    type: array
+    items:
+      $ref: '#/$defs/phase_strategy'
+    minItems: 1
+  changelog:
+    type: array
+    items:
+      $ref: '#/$defs/changelog_item'
+$defs:
+  origin:
+    enum:
+    - model_assumption
+    - owner_judgment
+    - derived_fact
+    - verified_fact
+    - normative_rule
+    - legacy
+  origin_value:
+    type: object
+    additionalProperties: false
+    required:
+    - value
+    - provenance
+    properties:
+      value:
+        type: number
+      provenance:
+        $ref: '#/$defs/origin'
+      rationale:
+        type:
+        - string
+        - 'null'
+      source_ref:
+        type:
+        - string
+        - 'null'
+  origin_int:
+    type: object
+    additionalProperties: false
+    required:
+    - value
+    - provenance
+    properties:
+      value:
+        type: integer
+        minimum: 0
+      provenance:
+        $ref: '#/$defs/origin'
+      rationale:
+        type:
+        - string
+        - 'null'
+      source_ref:
+        type:
+        - string
+        - 'null'
+  status:
+    type: object
+    additionalProperties: false
+    required:
+    - state
+    - prepared_at
+    - owner_approved_at
+    - owner_approval_ref
+    - activated_at
+    - activation_decision_ref
+    - executed_at
+    - retired_at
+    properties:
+      state:
+        enum:
+        - draft
+        - owner_approved
+        - active
+        - executed
+        - retired
+      prepared_at:
+        type: string
+        format: date-time
+      owner_approved_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+      owner_approval_ref:
+        type:
+        - string
+        - 'null'
+      activated_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+      activation_decision_ref:
+        type:
+        - string
+        - 'null'
+      executed_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+      retired_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+    allOf:
+    - if:
+        properties:
+          state:
+            enum:
+            - owner_approved
+            - active
+            - executed
+            - retired
+      then:
+        properties:
+          owner_approved_at:
+            type: string
+          owner_approval_ref:
+            type: string
+            minLength: 1
+    - if:
+        properties:
+          state:
+            enum:
+            - active
+            - executed
+      then:
+        properties:
+          activated_at:
+            type: string
+          activation_decision_ref:
+            type: string
+            minLength: 1
+    - if:
+        properties:
+          state:
+            const: executed
+      then:
+        properties:
+          executed_at:
+            type: string
+  trigger:
+    type: object
+    additionalProperties: false
+    required:
+    - activate_on_phase_status
+    - candidate_policy
+    - requires_set_state_normal
+    - state_ref
+    properties:
+      activate_on_phase_status:
+        const: confirmed
+      candidate_policy:
+        enum:
+        - none
+        - signal_only
+        - prepare_only
+      requires_set_state_normal:
+        const: true
+      state_ref:
+        type: string
+        minLength: 1
+  precondition:
+    type: object
+    additionalProperties: false
+    required:
+    - condition_id
+    - expression
+    - provenance
+    - rationale
+    properties:
+      condition_id:
+        type: string
+        minLength: 1
+      expression:
+        type: string
+        minLength: 1
+      provenance:
+        $ref: '#/$defs/origin'
+      rationale:
+        type: string
+        minLength: 1
+      source_ref:
+        type:
+        - string
+        - 'null'
+  timing:
+    type: object
+    additionalProperties: false
+    required:
+    - start_after_trading_days
+    - tranches
+    - tranche_interval_trading_days
+    - no_buy_first_trading_days
+    - provenance
+    - rationale
+    properties:
+      start_after_trading_days:
+        type: integer
+        minimum: 0
+      tranches:
+        type: integer
+        minimum: 1
+      tranche_interval_trading_days:
+        type: integer
+        minimum: 0
+      no_buy_first_trading_days:
+        type: integer
+        minimum: 0
+      provenance:
+        $ref: '#/$defs/origin'
+      rationale:
+        type: string
+        minLength: 1
+  target:
+    type: object
+    additionalProperties: false
+    required:
+    - kind
+    - id
+    properties:
+      kind:
+        enum:
+        - ticker
+        - instrument
+        - cash
+      id:
+        type: string
+        minLength: 1
+  magnitude:
+    type: object
+    additionalProperties: false
+    required:
+    - kind
+    - amount
+    - provenance
+    - rationale
+    properties:
+      kind:
+        enum:
+        - target_weight_nav
+        - delta_weight_nav
+        - position_fraction
+      amount:
+        type: number
+        minimum: -1
+        maximum: 1
+      provenance:
+        $ref: '#/$defs/origin'
+      rationale:
+        type: string
+        minLength: 1
+      source_ref:
+        type:
+        - string
+        - 'null'
+  action:
+    type: object
+    additionalProperties: false
+    required:
+    - action_id
+    - action_type
+    - target
+    - magnitude
+    - basis
+    - timing
+    - preconditions
+    - provenance
+    - rationale
+    properties:
+      action_id:
+        type: string
+        minLength: 1
+      action_type:
+        enum:
+        - reduce
+        - add
+        - hold
+        - hedge
+        - cash_target
+        - review
+      target:
+        $ref: '#/$defs/target'
+      magnitude:
+        $ref: '#/$defs/magnitude'
+      basis:
+        enum:
+        - conditional_optimum
+        - owner_rule
+        - legacy
+      conditional_optimum_ref:
+        type:
+        - string
+        - 'null'
+      timing:
+        $ref: '#/$defs/timing'
+      preconditions:
+        type: array
+        items:
+          $ref: '#/$defs/precondition'
+      provenance:
+        $ref: '#/$defs/origin'
+      rationale:
+        type: string
+        minLength: 1
+    allOf:
+    - if:
+        properties:
+          basis:
+            const: conditional_optimum
+      then:
+        required:
+        - conditional_optimum_ref
+        properties:
+          conditional_optimum_ref:
+            type: string
+            minLength: 1
+  metric:
+    type: object
+    additionalProperties: false
+    required:
+    - value
+    - provenance
+    - run_ref
+    properties:
+      value:
+        type: number
+      provenance:
+        const: derived_fact
+      run_ref:
+        type: string
+        minLength: 1
+  risk_budget:
+    type: object
+    additionalProperties: false
+    required:
+    - scenario_run_ref
+    - before
+    - after
+    properties:
+      scenario_run_ref:
+        type: string
+        minLength: 1
+      before:
+        type: object
+        additionalProperties: false
+        required:
+        - median_cagr_5y
+        - es5_5y
+        - p_loss_30_5y
+        properties:
+          median_cagr_5y:
+            $ref: '#/$defs/metric'
+          es5_5y:
+            $ref: '#/$defs/metric'
+          p_loss_30_5y:
+            $ref: '#/$defs/metric'
+      after:
+        type: object
+        additionalProperties: false
+        required:
+        - median_cagr_5y
+        - es5_5y
+        - p_loss_30_5y
+        properties:
+          median_cagr_5y:
+            $ref: '#/$defs/metric'
+          es5_5y:
+            $ref: '#/$defs/metric'
+          p_loss_30_5y:
+            $ref: '#/$defs/metric'
+  exit_rule:
+    type: object
+    additionalProperties: false
+    required:
+    - mode
+    - provenance
+    - rationale
+    properties:
+      mode:
+        enum:
+        - review_only
+        - rerun_conditional_optimum
+        - hold_until_owner_review
+        - owner_defined_reversal
+      provenance:
+        $ref: '#/$defs/origin'
+      rationale:
+        type: string
+        minLength: 1
+      owner_rule_ref:
+        type:
+        - string
+        - 'null'
+  staleness:
+    type: object
+    additionalProperties: false
+    required:
+    - review_required
+    - last_checked_at
+    - max_abs_target_diff
+    - reasons
+    properties:
+      review_required:
+        type: boolean
+      last_checked_at:
+        type:
+        - string
+        - 'null'
+        format: date-time
+      max_abs_target_diff:
+        type:
+        - number
+        - 'null'
+        minimum: 0
+        maximum: 1
+      reasons:
+        type: array
+        items:
+          type: string
+  derivation_policy:
+    type: object
+    additionalProperties: false
+    required:
+    - min_action_delta_weight
+    - rounding_increment_weight
+    - live_optimum_review_threshold
+    - reductions_before_additions
+    - rounding_mode
+    - turnover_cap_source
+    - provenance
+    properties:
+      min_action_delta_weight:
+        type: number
+        minimum: 0
+        maximum: 1
+      rounding_increment_weight:
+        type: number
+        exclusiveMinimum: 0
+        maximum: 1
+      live_optimum_review_threshold:
+        type: number
+        minimum: 0
+        maximum: 1
+      reductions_before_additions:
+        const: true
+      rounding_mode:
+        const: toward_zero
+      turnover_cap_source:
+        const: owner_strategy_limit_required
+      provenance:
+        const: model_assumption
+      rationale:
+        type: string
+        minLength: 1
+  phase_strategy:
+    type: object
+    additionalProperties: false
+    required:
+    - phase_id
+    - trigger
+    - conditional_run_ref
+    - conditional_optimum_ref
+    - turnover_cap_nav
+    - actions
+    - exit_rule
+    - risk_budget_under_scenario
+    - status
+    - staleness
+    properties:
+      phase_id:
+        type: string
+        minLength: 1
+      trigger:
+        $ref: '#/$defs/trigger'
+      conditional_run_ref:
+        type:
+        - string
+        - 'null'
+      conditional_optimum_ref:
+        type:
+        - string
+        - 'null'
+      turnover_cap_nav:
+        oneOf:
+        - $ref: '#/$defs/origin_value'
+        - type: 'null'
+      actions:
+        type: array
+        items:
+          $ref: '#/$defs/action'
+      exit_rule:
+        $ref: '#/$defs/exit_rule'
+      risk_budget_under_scenario:
+        type:
+        - object
+        - 'null'
+        oneOf:
+        - $ref: '#/$defs/risk_budget'
+        - type: 'null'
+      status:
+        $ref: '#/$defs/status'
+      staleness:
+        $ref: '#/$defs/staleness'
+  changelog_item:
+    type: object
+    additionalProperties: false
+    required:
+    - date
+    - change
+    properties:
+      date:
+        type: string
+        format: date
+      change:
+        type: string
+        minLength: 1

@@ -1,0 +1,95 @@
+schema_version: '1.0'
+artifact: scenario_action_validation_rules
+as_of: '2026-09-30'
+rules:
+- id: ACT-001
+  severity: error
+  rule: strategy validates against Scenario_Strategy_Schema_v1.0
+  message: Strategy schema must pass.
+- id: ACT-002
+  severity: error
+  rule: scenario_id resolves to an accepted Scenario Engine calibration in the declared scenario_set_id
+  message: Strategy scenario must exist.
+- id: ACT-003
+  severity: error
+  rule: every phase_strategy.phase_id exists in referenced scenario; no duplicate phase_id
+  message: Strategy phases must resolve uniquely.
+- id: ACT-004
+  severity: error
+  rule: scenario/phase strategy_ref, when non-null, resolves to the same strategy file and matching scenario_id/phase_id
+  message: strategy_ref must be referentially consistent.
+- id: ACT-005
+  severity: error
+  rule: ticker targets resolve to portfolio registry; hedge instruments resolve to owner allowlist; cash target id == CASH
+  message: Action targets must be known and allowed.
+- id: ACT-006
+  severity: error
+  rule: GLD weight <= 0.10 NAV; cash obeys active owner cash regime; all ticker weights obey existing owner single-name/sector/top3/common-cause/Challenger
+    constraints
+  message: Actions must stay inside owner limits.
+- id: ACT-007
+  severity: error
+  rule: every action magnitude/timing/precondition numeric threshold has provenance directly or through the enclosing numeric-bearing
+    object
+  message: All strategy numbers need origin.
+- id: ACT-008
+  severity: error
+  rule: phase status in {active,executed} requires owner_approved_at+owner_approval_ref and activation_decision_ref; phase confirmation
+    alone cannot activate
+  message: Confirmed trigger cannot auto-activate a strategy.
+- id: ACT-009
+  severity: error
+  rule: conditional_optimum_ref used by an action resolves to an immutable _runs artifact produced with scenario probability=1, common
+    path_id and confirmed-phase fixed_quarter semantics when applicable
+  message: Conditional optimum must be auditable.
+- id: ACT-010
+  severity: error
+  rule: candidate phase may emit only recognition/preparation; no reduce/add/hedge/cash_target action may become active from candidate
+    status
+  message: Candidate is non-trading.
+- id: ACT-011
+  severity: error
+  rule: if scenario set_state == ambiguous_set_conflict, no phase strategy may transition to active; signal must request owner review
+  message: Ambiguous scenario classification blocks action activation.
+- id: ACT-012
+  severity: error
+  rule: live conditional optimum max_abs_target_diff > 0.02 OR optimizer/constraints/calibration lifecycle incompatibility => strategy_review_required=true
+    and no auto-activation
+  message: Material live optimum drift requires review.
+- id: ACT-013
+  severity: error
+  rule: stored actions derived from conditional optimum ignore abs(delta_weight)<0.005 and round retained deltas toward zero to 0.0025
+    NAV increments before turnover cap
+  message: Action derivation deadband/rounding must be deterministic.
+- id: ACT-014
+  severity: error
+  rule: turnover_cap_nav is owner_judgment and required for every phase with reduce/add/hedge/cash_target actions; reductions are budgeted
+    before additions when cash is insufficient
+  message: Turnover and funding order must be explicit.
+- id: ACT-015
+  severity: error
+  rule: risk_budget_under_scenario before/after metrics are derived_fact and reference scenario-specific run artifacts
+  message: Risk budget must be derived from runs.
+- id: ACT-016
+  severity: error
+  rule: Scenario conditional optimizer policy uses p_min=0.10, ES5>=-0.40, P(loss>30)<=0.25 and ScenarioConcentration<=0.60 per owner
+    decision unless superseded by later owner_judgment
+  message: Optimizer thresholds must match owner policy.
+- id: ACT-017
+  severity: error
+  rule: ScenarioConcentration hard limit applies only with >=2 non-BASE positive burdens; all non-BASE burdens with known probabilities
+    enter concentration even when p_s < p_min
+  message: Concentration applicability must match Scenario Engine semantics.
+- id: ACT-018
+  severity: error
+  rule: strategy exit_rule exists; exited phase never silently reverses positions; reversal/reoptimization still requires owner decision
+  message: Exit behavior must be predeclared and non-automatic.
+- id: ACT-019
+  severity: error
+  rule: GLD conditional_optimum basis is prohibited unless referenced Hedge_Instrument_Model.status == accepted; flat-0 GLD placeholder
+    cannot support hedge-benefit claims
+  message: GLD requires an accepted hedge model for optimizer use.
+- id: ACT-020
+  severity: error
+  rule: agent signal must end with owner-decision statement; agent never executes trade actions
+  message: Trigger != Decision is mandatory.

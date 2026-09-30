@@ -1,0 +1,202 @@
+{
+  "schema_version": "1.1",
+  "artifact": "scenario_state",
+  "updated_at": "2026-09-30T00:00:00Z",
+  "scenario_set_id": "GEOTECH_REGIME_8Y_V1",
+  "event_catalog_ref": "Scenario_Event_Catalog_v1.0.yaml",
+  "set_state": {
+    "classification": "BASE",
+    "status": "normal",
+    "last_probability_review_at": "2026-09-27T00:00:00Z"
+  },
+  "scenarios": {
+    "TAIWAN_SEIZURE": {
+      "status": "not_observed",
+      "current_phase_id": null,
+      "probability": 0.1,
+      "probability_status": "owner_judgment",
+      "last_probability_review_at": "2026-09-27T00:00:00Z",
+      "conditional_anchor": null,
+      "strategy_ref": null,
+      "strategy_status": null,
+      "last_signal_at": null,
+      "last_signal_id": null,
+      "strategy_review_required": false,
+      "strategy_review_reason": null,
+      "phases": {
+        "RESTRICTIONS": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        },
+        "BLOCKADE": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        },
+        "CONFLICT": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        },
+        "RECOVERY": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        }
+      }
+    },
+    "TAIWAN_QUARANTINE": {
+      "status": "not_observed",
+      "current_phase_id": null,
+      "probability": 0.175,
+      "probability_status": "owner_judgment",
+      "last_probability_review_at": "2026-09-27T00:00:00Z",
+      "conditional_anchor": null,
+      "strategy_ref": null,
+      "strategy_status": null,
+      "last_signal_at": null,
+      "last_signal_id": null,
+      "strategy_review_required": false,
+      "strategy_review_reason": null,
+      "phases": {
+        "RESTRICTIONS": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        },
+        "QUARANTINE": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        },
+        "NORMALIZATION_OR_FROZEN": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        }
+      }
+    },
+    "CHIP_COLD_WAR": {
+      "status": "not_observed",
+      "current_phase_id": null,
+      "probability": 0.07,
+      "probability_status": "owner_judgment",
+      "last_probability_review_at": "2026-09-27T00:00:00Z",
+      "conditional_anchor": null,
+      "strategy_ref": null,
+      "strategy_status": null,
+      "last_signal_at": null,
+      "last_signal_id": null,
+      "strategy_review_required": false,
+      "strategy_review_reason": null,
+      "phases": {
+        "RACE_TO_PARITY": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        },
+        "PARITY_BOUNDARY": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        },
+        "TWO_SYSTEMS": {
+          "status": "not_observed",
+          "first_observed_at": null,
+          "confirmed_at": null,
+          "exited_at": null,
+          "confirmed_quarter": null,
+          "confirmed_event_ids": [],
+          "confirmed_fact_ids": [],
+          "evidence": [],
+          "strategy_ref": null,
+          "strategy_status": null,
+          "last_signal_at": null,
+          "last_signal_id": null
+        }
+      }
+    }
+  }
+}

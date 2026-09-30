@@ -1,0 +1,22 @@
+schema_version: '1.0'
+artifact: owner_hedge_instrument_constraints
+as_of: '2026-09-30'
+owner_decision_ref: DR-2026-09-27-01/V1
+allowed_instruments:
+- instrument_id: CASH
+  kind: cash
+  max_weight_ref: owner_portfolio_constraints.cash_regime
+  model_required_for_conditional_optimum: false
+- instrument_id: GLD
+  kind: hedge_etf
+  ticker: GLD
+  max_weight: 0.1
+  max_weight_provenance: owner_judgment
+  model_required_for_conditional_optimum: true
+forbidden_instruments:
+- short_sales
+- inverse_etf
+- leveraged_inverse_etf
+- options
+rule: A hedge action may reference only an allowed instrument. GLD conditional-optimum use requires an accepted Hedge_Instrument_Model;
+  otherwise GLD may appear only in owner_rule/review actions and is excluded from optimizer alpha/risk improvement claims.

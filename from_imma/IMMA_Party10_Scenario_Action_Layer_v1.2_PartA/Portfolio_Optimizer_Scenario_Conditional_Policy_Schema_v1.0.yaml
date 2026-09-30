@@ -1,0 +1,119 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Portfolio_Optimizer_Scenario_Conditional_Policy_Schema_v1.0
+title: Portfolio Optimizer Scenario Conditional Policy Schema v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- optimizer_contract_version
+- host_engine_version
+- as_of
+- owner_decision_ref
+- scenario_set_id
+- conditional_constraints
+- scenario_concentration
+- feasibility_order
+- probability_change_rule
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: portfolio_optimizer_scenario_conditional_policy
+  optimizer_contract_version:
+    const: '1.1'
+  host_engine_version:
+    type: string
+  as_of:
+    type: string
+    format: date
+  owner_decision_ref:
+    type: string
+  scenario_set_id:
+    type: string
+  conditional_constraints:
+    type: object
+    additionalProperties: false
+    required:
+    - probability_min
+    - es5_5y_min
+    - p_loss_30_5y_max
+    - eligible_scenario_rule
+    - path_rule
+    - silent_relaxation_forbidden
+    properties:
+      probability_min:
+        $ref: '#/$defs/owner_num'
+      es5_5y_min:
+        $ref: '#/$defs/owner_num'
+      p_loss_30_5y_max:
+        $ref: '#/$defs/owner_num'
+      eligible_scenario_rule:
+        type: string
+      path_rule:
+        type: string
+      silent_relaxation_forbidden:
+        const: true
+  scenario_concentration:
+    type: object
+    additionalProperties: false
+    required:
+    - burden_formula_ref
+    - hard_max
+    - applicability
+    - eligible_burdens
+    - tie_break
+    properties:
+      burden_formula_ref:
+        type: string
+      hard_max:
+        $ref: '#/$defs/owner_num'
+      applicability:
+        type: string
+      eligible_burdens:
+        type: string
+      tie_break:
+        type: string
+  feasibility_order:
+    type: array
+    items:
+      type: string
+    minItems: 6
+  probability_change_rule:
+    type: object
+    additionalProperties: false
+    required:
+    - recompute_on_any_owner_probability_change
+    - crossing_probability_min_changes_eligible_scenario_set
+    - recompute_scenario_concentration_on_every_probability_change
+    - calibrations_unchanged
+    - stored_conditional_optima_mark_stale_if_feasible_set_changes
+    - strategy_files_not_auto_rewritten
+    properties:
+      recompute_on_any_owner_probability_change:
+        const: true
+      crossing_probability_min_changes_eligible_scenario_set:
+        const: true
+      recompute_scenario_concentration_on_every_probability_change:
+        const: true
+      calibrations_unchanged:
+        const: true
+      stored_conditional_optima_mark_stale_if_feasible_set_changes:
+        const: true
+      strategy_files_not_auto_rewritten:
+        const: true
+$defs:
+  owner_num:
+    type: object
+    additionalProperties: false
+    required:
+    - value
+    - provenance
+    - source_ref
+    properties:
+      value:
+        type: number
+      provenance:
+        const: owner_judgment
+      source_ref:
+        type: string

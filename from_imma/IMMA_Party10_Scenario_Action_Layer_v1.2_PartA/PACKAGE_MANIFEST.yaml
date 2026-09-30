@@ -1,0 +1,65 @@
+package: IMMA_Party10_Scenario_Action_Layer_v1.2_PartA
+package_version: '1.0'
+party: 10
+part: A
+as_of: '2026-09-30'
+status: proposed_for_host_acceptance
+normative_contracts:
+  scenario_action_layer: '1.0'
+  scenario_strategy_schema: '1.0'
+  optimizer_contract: '1.1'
+  scenario_state_schema: '1.1'
+  hedge_instrument_model_schema: '1.0'
+  act_rules: '1.0'
+files:
+- path: Agent_Scenario_Signal_Contract_v1.0.md
+  sha256: 84e46a663d8c8cfeaa57c921a09cacf8be3e5a07d9fb76bf463b7da95fc512f3
+  bytes: 2495
+- path: Dozor_Scenario_Action_Contract_v1.0.md
+  sha256: 17e8cebbe09af9cba6eecd0e29b21f7414d2306862e414b98901785958e2ca5e
+  bytes: 2429
+- path: Hedge_Instrument_Model_Schema_v1.0.yaml
+  sha256: afea6bf5b26f996af8f4cf8b351863cb9d442aa8fca9e3a3fa1b56bfc26ecfa4
+  bytes: 4244
+- path: Hedge_Instrument_Model_Specification_v1.0.md
+  sha256: 6511957e024e3d599337f0ab6e357a47bd68f5abb4ec8ddbf2ec22a397599107
+  bytes: 1808
+- path: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: 2f0aa80ae3ee9d1df6e8869db0b8793431a30c143bfc5066c38bb84ae139bfc2
+  bytes: 1270
+- path: Owner_Hedge_Instrument_Constraints_v1.0.yaml
+  sha256: 669cb465a245af9bf41126ff37108af9f92c840a938b640cc2ea91173210f800
+  bytes: 791
+- path: PACKAGE_README.md
+  sha256: 660cd63d22d918903c6d0832f93929670d3dfa7cc359051d6dd6937be02f7e38
+  bytes: 746
+- path: Portfolio_Optimizer_Scenario_Conditional_Policy_Schema_v1.0.yaml
+  sha256: dc3bd848d25bd6a97836bdf8ca197faf3206067950b0b8da1ca15cfc302d8932
+  bytes: 2972
+- path: Portfolio_Optimizer_Scenario_Conditional_Policy_v1.0.yaml
+  sha256: 77756daff754623863d47c2cc248d3ec39319a1cf785865850849605e8a9a621
+  bytes: 2211
+- path: Portfolio_Optimizer_v1.1_Scenario_Conditional_Addendum.md
+  sha256: 6ef1cd5e5ea76b16091c1db4fe6842df998f30dcd7c51d035e7719dd6187c4fe
+  bytes: 2496
+- path: Scenario_Action_Layer_Specification_v1.0.md
+  sha256: e3596377d7bd9bf963eac101694f7a68b3e34d9ddfc5cbcedeb47d610b3d387b
+  bytes: 18795
+- path: Scenario_Action_Validation_Rules_v1.0.yaml
+  sha256: 75ac33f90d57fdc67a705e648e27d80d8d64beeaad268eaa47a14038dce67988
+  bytes: 4741
+- path: Scenario_State_Example_v1.1.json
+  sha256: da925643143b59397a1ac8a3ae7cf083a6d7faa9a7dd5e8ff6be944cf63b308c
+  bytes: 6227
+- path: Scenario_State_Schema_v1.1.yaml
+  sha256: 700a4f5cb308ad2d95c4fadea88820ddbc73f00deece13df0c069ee0d99eb88a
+  bytes: 5432
+- path: Scenario_State_Schema_v1.1_Patch_Notes.md
+  sha256: 48b971599f9721cf19eb23227e2ee3f15f6b99b03802dd030db6e675f315b6dd
+  bytes: 570
+- path: Scenario_Strategy_Ref_Patch_Plan_v1.0.yaml
+  sha256: 120bdcb9cd66b82884d4b23162e3ec2c816ab434f3cae250f1ae565cf8babee4
+  bytes: 800
+- path: Scenario_Strategy_Schema_v1.0.yaml
+  sha256: 9f4dbe5fbb162e1cf80d316982050bb1d3c94d2601d544c7702b1aef65a900dd
+  bytes: 11517

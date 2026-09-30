@@ -1,0 +1,51 @@
+{
+  "info_log": [
+    {
+      "timestamp": "2026-09-25T08:15:26Z",
+      "trigger_id": "SPCX-WATCH",
+      "level": "E1"
+    },
+    {
+      "timestamp": "2026-09-25T00:15:15Z",
+      "trigger_id": "SPCX-WATCH",
+      "level": "E1"
+    },
+    {
+      "timestamp": "2026-09-23T06:00:46Z",
+      "trigger_id": "SPCX-E-21",
+      "level": "E1"
+    },
+    {
+      "timestamp": "2026-09-20T18:39:13Z",
+      "trigger_id": "SPCX-E-31/E-33",
+      "level": "E1"
+    },
+    {
+      "timestamp": "2026-09-20T19:13:46Z",
+      "trigger_id": "MC-SPCX",
+      "level": "E1"
+    }
+  ],
+  "calc_inputs": {
+    "reverse_valuation": {
+      "as_of": "2026-06-30",
+      "cash_usd": 93522000000,
+      "marketable_securities_usd": 6487000000,
+      "debt_usd": 38433000000,
+      "net_debt_usd": -55089000000,
+      "ocf_q2_usd": null,
+      "capex_q2_usd": null,
+      "fcf_q2_usd": null,
+      "fcf_margin_q2": null,
+      "ocf_h1_usd": 3466000000,
+      "capex_h1_usd": 28476000000,
+      "fcf_h1_usd": -25010000000,
+      "fcf_margin_h1": -1.9997,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm (10-Q Q2 2026, filed 2026-08-04); индекс https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/0001628280-26-052535-index.htm",
+      "verified": true,
+      "checked_at": "2026-09-20T18:27:03Z",
+      "note": "cash_usd — Cash and cash equivalents на балансе (Note 2, тождественно балансовому отчёту). debt_usd — Total debt (принципал, Note 9 «Debt»: SpaceX Notes 25,000 + X 2027/2030 Notes 27 + Other financings 13,406 = 38,433 млн; чистый учётный номинал за вычетом deferred financing costs = 38,285 млн, не использован для net_debt). Finance lease liability ($1,079 млн) в debt_usd НЕ включён — в 10-Q показан отдельной строкой от Total debt; при необходимости Total debt and finance leases = 39,512 млн. net_debt_usd = debt_usd − cash_usd (без учёта marketable_securities_usd по методологии) = 38,433 − 93,522 = −55,089 млн, т.е. чистая денежная позиция (net cash) $55.089 млрd. ocf_h1/capex_h1 — из Consolidated Statements of Cash Flows, six months ended June 30, 2026 (стр. 9 10-Q): Net cash provided by operating activities = 3,466; Purchases of property, plant, and equipment = 28,476 (включает related party $329 млн, без capitalized interest $20 млн — отдельная строка). fcf_h1 = 3,466 − 28,476 = −25,010. fcf_margin_h1 = fcf_h1 / выручка H1 2026 ($12,508 млн, Note 3 Revenue — задание указало '2.508B', это опечатка задания: фактическая выручка H1 2026 по 10-Q = $12,508 млн, использована фактическая цифра) = −199.97%. Квартальный (Q2) операционный/инвестиционный денежный поток и capex в 10-Q не раскрываются отдельно — только консолидированный отчёт за six months; вычислять Q2 как разность (H1 минус Q1) запрещено заданием, поэтому ocf_q2/capex_q2/fcf_q2/fcf_margin_q2 = null."
+    }
+  },
+  "gaap_profit_quarters": []
+}

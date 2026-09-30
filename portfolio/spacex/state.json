@@ -83,7 +83,6 @@
       "checked_at": "2026-09-20"
     }
   ],
-  "gaap_profit_quarters": [],
   "notes": [
     "2026-09-17: реестр составлен по стратегии июля 2026; окно SPCX-C-01 (первый транш) уже открыто — статус due",
     "2026-09-17: тестовые прогоны news-watch — модель не соблюдает правило «первоисточник или два СМИ первого ряда» и не записала событие в state.json; решение о сильной модели за владельцем",
@@ -98,27 +97,6 @@
     "2026-09-20: приняты Rules v1.1 (устойчивость модели, переходы по базовому случаю); заведены E-34..E-38 (фальсификация D3, planned до контрольных точек Y1 30.06.2027 / Y2 30.06.2028); прогон …-ab1fb7 классифицирован model_fragile",
     "2026-09-20: приняты схема портфеля v1.0 и правила просадок/режимов; MC-калибровка v1.0 SPCX; первый нормативный прогон conditional_mc — см. calc_runs"
   ],
-  "calc_inputs": {
-    "reverse_valuation": {
-      "as_of": "2026-06-30",
-      "cash_usd": 93522000000,
-      "marketable_securities_usd": 6487000000,
-      "debt_usd": 38433000000,
-      "net_debt_usd": -55089000000,
-      "ocf_q2_usd": null,
-      "capex_q2_usd": null,
-      "fcf_q2_usd": null,
-      "fcf_margin_q2": null,
-      "ocf_h1_usd": 3466000000,
-      "capex_h1_usd": 28476000000,
-      "fcf_h1_usd": -25010000000,
-      "fcf_margin_h1": -1.9997,
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm (10-Q Q2 2026, filed 2026-08-04); индекс https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/0001628280-26-052535-index.htm",
-      "verified": true,
-      "checked_at": "2026-09-20T18:27:03Z",
-      "note": "cash_usd — Cash and cash equivalents на балансе (Note 2, тождественно балансовому отчёту). debt_usd — Total debt (принципал, Note 9 «Debt»: SpaceX Notes 25,000 + X 2027/2030 Notes 27 + Other financings 13,406 = 38,433 млн; чистый учётный номинал за вычетом deferred financing costs = 38,285 млн, не использован для net_debt). Finance lease liability ($1,079 млн) в debt_usd НЕ включён — в 10-Q показан отдельной строкой от Total debt; при необходимости Total debt and finance leases = 39,512 млн. net_debt_usd = debt_usd − cash_usd (без учёта marketable_securities_usd по методологии) = 38,433 − 93,522 = −55,089 млн, т.е. чистая денежная позиция (net cash) $55.089 млрd. ocf_h1/capex_h1 — из Consolidated Statements of Cash Flows, six months ended June 30, 2026 (стр. 9 10-Q): Net cash provided by operating activities = 3,466; Purchases of property, plant, and equipment = 28,476 (включает related party $329 млн, без capitalized interest $20 млн — отдельная строка). fcf_h1 = 3,466 − 28,476 = −25,010. fcf_margin_h1 = fcf_h1 / выручка H1 2026 ($12,508 млн, Note 3 Revenue — задание указало '2.508B', это опечатка задания: фактическая выручка H1 2026 по 10-Q = $12,508 млн, использована фактическая цифра) = −199.97%. Квартальный (Q2) операционный/инвестиционный денежный поток и capex в 10-Q не раскрываются отдельно — только консолидированный отчёт за six months; вычислять Q2 как разность (H1 минус Q1) запрещено заданием, поэтому ocf_q2/capex_q2/fcf_q2/fcf_margin_q2 = null."
-    }
-  },
   "route": {
     "current": "opening",
     "done_steps": [],
@@ -128,35 +106,28 @@
   "info_log": [
     {
       "timestamp": "2026-09-25T08:15:26Z",
-      "trigger_id": "SPCX-WATCH",
       "kind": "price_source_unavailable",
-      "text": "Источник котировок price-watch (Yahoo chart, query1.finance.yahoo.com) недоступен 2 проверки подряд (повторный случай после 2026-09-25T00:15Z). Триггеры SPCX-P-01 (<$100) и SPCX-P-02 (<$80) в этот момент автоматическим скриптом не отслеживались. Цена не пересекала пороги — это сбой доступа к источнику, не ценовой сигнал.",
-      "level": "E1"
+      "summary": "Источник котировок price-watch (Yahoo chart, query1.finance.yahoo.com) недоступен 2 проверки подряд (повторный случай после 2026-09-25T00:15Z). Триггеры SPCX-P-01 (<$100) и SPCX-P-02 (<$80) в этот момент автоматическим скриптом не отслеживались. Цена не пересекала пороги — это сбой доступа к источнику, не ценовой сигнал."
     },
     {
       "timestamp": "2026-09-25T00:15:15Z",
-      "trigger_id": "SPCX-WATCH",
       "kind": "price_source_unavailable",
-      "text": "Источник котировок price-watch (Yahoo chart, query1.finance.yahoo.com) недоступен 2 проверки подряд. Триггеры SPCX-P-01 (<$100) и SPCX-P-02 (<$80) в этот момент автоматическим скриптом не отслеживались. Цена не пересекала пороги — это сбой доступа к источнику, не ценовой сигнал.",
-      "level": "E1"
+      "summary": "Источник котировок price-watch (Yahoo chart, query1.finance.yahoo.com) недоступен 2 проверки подряд. Триггеры SPCX-P-01 (<$100) и SPCX-P-02 (<$80) в этот момент автоматическим скриптом не отслеживались. Цена не пересекала пороги — это сбой доступа к источнику, не ценовой сигнал."
     },
     {
       "timestamp": "2026-09-23T06:00:46Z",
-      "trigger_id": "SPCX-E-21",
-      "text": "Starship Flight 14 (окно 22.09.2026, резерв 23.09 по FAA от 18.09) не состоялся в заявленное окно: SpaceX перенесла старт на 28.09.2026, окно открытия 12:15 UTC (space.com, со ссылкой на обновление SpaceX; публичная причина не названа, ряд источников связывает с завершением согласования профиля полёта с FAA). Переход не оценивался, событие не наступило.",
-      "level": "E1"
+      "kind": "legacy_trigger_log",
+      "summary": "Starship Flight 14 (окно 22.09.2026, резерв 23.09 по FAA от 18.09) не состоялся в заявленное окно: SpaceX перенесла старт на 28.09.2026, окно открытия 12:15 UTC (space.com, со ссылкой на обновление SpaceX; публичная причина не названа, ряд источников связывает с завершением согласования профиля полёта с FAA). Переход не оценивался, событие не наступило."
     },
     {
       "timestamp": "2026-09-20T18:39:13Z",
-      "trigger_id": "SPCX-E-31/E-33",
-      "text": "Обратная оценка (run 20260920T183913Z-reverse_valuation-ab1fb7): цена $152.71 требует роста выручки 76% в год 5 лет (сетка 61–97%); переходов оси Valuation нет, V4 сохраняется; действий не требуется",
-      "level": "E1"
+      "kind": "legacy_trigger_log",
+      "summary": "Обратная оценка (run 20260920T183913Z-reverse_valuation-ab1fb7): цена $152.71 требует роста выручки 76% в год 5 лет (сетка 61–97%); переходов оси Valuation нет, V4 сохраняется; действий не требуется"
     },
     {
       "timestamp": "2026-09-20T19:13:46Z",
-      "trigger_id": "MC-SPCX",
-      "text": "Условный Монте-Карло (run …-861006, 500k путей): медианный CAGR 5 лет −14.9%, P(потеря >30%) 97%, медианная стоимость 2031 $0.9 трлн против $2.0 трлн сегодня; reverse valuation требует 76% роста в год. Расхождение моделей — сигнал к обсуждению, действий по правилам нет",
-      "level": "E1"
+      "kind": "legacy_trigger_log",
+      "summary": "Условный Монте-Карло (run …-861006, 500k путей): медианный CAGR 5 лет −14.9%, P(потеря >30%) 97%, медианная стоимость 2031 $0.9 трлн против $2.0 трлн сегодня; reverse valuation требует 76% роста в год. Расхождение моделей — сигнал к обсуждению, действий по правилам нет"
     },
     {
       "timestamp": "2026-09-20T20:10:00Z",
@@ -200,7 +171,9 @@
         "Nameplate compute = 1.4 GW.",
         "Cloud Service Agreements = $14.1B contracted sales."
       ],
-      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": false,
+      "verified_note": "флаг добавлен миграцией MIG-SPCX-18: протокольной проверки дозором не было (нет verification_run_id)"
     },
     "Starlink": {
       "state": "B2",
@@ -211,7 +184,9 @@
         "Connectivity operating income = $1.656B; operating margin ~38.6%.",
         "ARPU = $66/month vs $85 a year earlier."
       ],
-      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": false,
+      "verified_note": "флаг добавлен миграцией MIG-SPCX-18: протокольной проверки дозором не было (нет verification_run_id)"
     },
     "Starship": {
       "state": "C1",
@@ -221,7 +196,9 @@
         "Flight 13: company reported all flight objectives achieved.",
         "FAA operational plan dated 2026-09-18 listed Starship Flight 14 primary 2026-09-22 and backup 2026-09-23."
       ],
-      "source": "SEC earnings release; FAA ATCSCC operational plan"
+      "source": "SEC earnings release; FAA ATCSCC operational plan",
+      "verified": false,
+      "verified_note": "флаг добавлен миграцией MIG-SPCX-18: протокольной проверки дозором не было (нет verification_run_id)"
     },
     "Capital_Intensity": {
       "state": "D3",
@@ -232,7 +209,9 @@
         "AI capex H1 2026 = $23.551B.",
         "AI revenue Q2 = $2.561B."
       ],
-      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm"
+      "source": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
+      "verified": false,
+      "verified_note": "флаг добавлен миграцией MIG-SPCX-18: протокольной проверки дозором не было (нет verification_run_id)"
     },
     "Valuation": {
       "state": "V4",
@@ -245,7 +224,9 @@
         "Reverse valuation has not yet been approved as a calculation-engine version.",
         "Reverse valuation 20.09.2026 (run 20260920T183913Z-reverse_valuation-ab1fb7): implied 5Y revenue CAGR 76.3% при базе 11% / 27% / 32x; сетка 61–97%; V4 сохраняется"
       ],
-      "source": "https://finance.yahoo.com/quote/SPCX/; https://stockanalysis.com/stocks/spcx/market-cap/"
+      "source": "https://finance.yahoo.com/quote/SPCX/; https://stockanalysis.com/stocks/spcx/market-cap/",
+      "verified": false,
+      "verified_note": "флаг добавлен миграцией MIG-SPCX-18: протокольной проверки дозором не было (нет verification_run_id)"
     }
   },
   "state_transitions": [],
@@ -258,7 +239,9 @@
       "value_raw": "$2.561B",
       "unit": "%",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
-      "verified": true
+      "verified": true,
+      "provenance": "derived_fact",
+      "value_type": "actual"
     },
     {
       "kpi_id": "SPCX-KPI-02",
@@ -268,7 +251,9 @@
       "value_raw": "$2.561B",
       "unit": "USD",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
-      "verified": true
+      "verified": true,
+      "provenance": "verified_fact",
+      "value_type": "actual"
     },
     {
       "kpi_id": "SPCX-KPI-03",
@@ -278,7 +263,9 @@
       "value_raw": "+$1.146B",
       "unit": "USD",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
-      "verified": true
+      "verified": true,
+      "provenance": "verified_fact",
+      "value_type": "actual"
     },
     {
       "kpi_id": "SPCX-KPI-04",
@@ -288,7 +275,9 @@
       "value_raw": "1.4 GW",
       "unit": "GW",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
-      "verified": true
+      "verified": true,
+      "provenance": "verified_fact",
+      "value_type": "actual"
     },
     {
       "kpi_id": "SPCX-KPI-05",
@@ -298,7 +287,9 @@
       "value_raw": "12.0M",
       "unit": "million subscribers",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
-      "verified": true
+      "verified": true,
+      "provenance": "verified_fact",
+      "value_type": "actual"
     },
     {
       "kpi_id": "SPCX-KPI-06",
@@ -308,7 +299,9 @@
       "value_raw": "$66/month",
       "unit": "USD/month",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
-      "verified": true
+      "verified": true,
+      "provenance": "verified_fact",
+      "value_type": "actual"
     },
     {
       "kpi_id": "SPCX-KPI-07",
@@ -318,7 +311,9 @@
       "value_raw": "$1.656B / $4.291B",
       "unit": "%",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
-      "verified": true
+      "verified": true,
+      "provenance": "derived_fact",
+      "value_type": "actual"
     },
     {
       "kpi_id": "SPCX-KPI-08",
@@ -328,7 +323,9 @@
       "value_raw": "$18.369B",
       "unit": "USD",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
-      "verified": true
+      "verified": true,
+      "provenance": "verified_fact",
+      "value_type": "actual"
     },
     {
       "kpi_id": "SPCX-KPI-09",
@@ -338,7 +335,9 @@
       "value_raw": "$15.828B",
       "unit": "USD",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm",
-      "verified": true
+      "verified": true,
+      "provenance": "verified_fact",
+      "value_type": "actual"
     },
     {
       "kpi_id": "SPCX-KPI-10",
@@ -349,7 +348,9 @@
       "unit": "x",
       "source_url": "SEC 10-Q (акции), SEC 10-K/10-Q (выручка), Yahoo chart (цена)",
       "verified": true,
-      "run_id": "20260920T150722Z-valuation_multiple-b55b3b"
+      "provenance": "derived_fact",
+      "note": "run_id: 20260920T150722Z-valuation_multiple-b55b3b",
+      "value_type": "actual"
     }
   ],
   "calc_runs": [
@@ -565,5 +566,6 @@
         "positive_share_of_bridge_paths": 1.0
       }
     }
-  ]
+  ],
+  "schema_version": "1.0.5"
 }

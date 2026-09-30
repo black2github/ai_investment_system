@@ -1,26 +1,21 @@
 # Входы MPC для SPCX: вектор экспозиций по 32 драйверам (таксономия v1.1), интерпретации, 12 failure modes, общие причины SPACE/AI-кластеров.
+# MIG-SPCX: поля старого формата перенесены дословно в _legacy/mpc_inputs_legacy.yaml (migrate_artifacts_v1_0_1 1.1.0)
+schema_version: '1.0.5'
 version: '1.0'
 ticker: SPCX
 artifact: mpc_inputs
 as_of: '2026-09-21'
 driver_taxonomy_version: '1.1'
 source_artifact: from_imma/SPCX_mpc_inputs_v1.0.yaml (другая LLM, 21.09.2026, share 6ab13b5b-bbc8-83eb-9f43-f996394edc9b)
-status: complete
-methodology_refs:
-  mpc_schema: Marginal_Portfolio_Contribution_Schema_v1.0
-  driver_taxonomy: MPC_Driver_Taxonomy_v1.1
-  states: SPCX states/kpis v1.3
-  reverse_valuation: reverse_valuation v1.0
-  conditional_mc: conditional_mc v1.0
-semantics:
-  driver_scale:
+driver_exposure_semantics:
+  scale:
     '-2': strong_negative
     '-1': negative
     '0': immaterial
     '1': positive
     '2': strong_positive
   provenance: model_assumption
-  rule: 'Знак показывает влияние усиления соответствующего драйвера на экономику SPCX. Failure modes являются отдельными механизмами
+  direction_rule: 'Знак показывает влияние усиления соответствующего драйвера на экономику SPCX. Failure modes являются отдельными механизмами
     отказа и не заменяют driver exposures. Trigger != Decision.
 
     '
@@ -57,6 +52,7 @@ driver_exposure_vector:
   FINTECH_REGULATION: 0
   DIGITAL_AD_DEMAND: 0
   SPACE_REGULATION: -2
+driver_vector_provenance: model_assumption  # MIG-SPCX-15: перенос из v1.0 — экспертная оценка вектора (source_artifact), не проверялась
 driver_interpretation:
   AI_COMPUTE_DEMAND:
     vector_score: 2
@@ -382,18 +378,3 @@ cross_portfolio_common_causes:
     - AI_CLOUD_CUSTOMER_FINANCING_STRESS
     - CAPITAL_MARKETS_TIGHTENING
     - CAPITAL_INTENSITY_OVERBUILD
-model_notes:
-- 'HYPERSCALER_CAPEX is intentionally only +1: it is partly a demand signal, but hyperscaler self-build also increases competitive
-  supply.
-
-  '
-- 'CAPITAL_MARKETS is +1 rather than +2 because SPCX currently has net cash and established cash-generating businesses; it
-  is less financing-dependent than NBIS/CRWV.
-
-  '
-- 'TAIWAN_SUPPLY=+2 is an input-supply exposure for AI compute, not geographic revenue exposure.
-
-  '
-- 'SPACE_REGULATION=-2 follows taxonomy v1.1 sign semantics: stricter regulation is strongly negative.
-
-  '

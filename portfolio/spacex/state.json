@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-25T21:00:00Z",
+  "updated": "2026-09-30T06:03:08Z",
   "price": {
     "last": 150.88,
     "last_at": "2026-09-16",
@@ -52,6 +52,15 @@
       "summary": "SpaceX включена в Nasdaq-100 с 7 июля 2026 после изменения правил биржи для крупных новых публичных компаний",
       "action": "Ожидать притоки $22–27 млрд — пол цены; план DCA не менять",
       "confirmation": "strong"
+    },
+    {
+      "trigger_id": "SPCX-E-20",
+      "timestamp": "2026-09-30T06:02:00Z",
+      "source": "https://www.spacex.com/launches/starship-flight-14 (company official); https://www.reuters.com/business/media-telecom/spacexs-starship-engine-failure-could-impact-nasas-moon-mission-objectives-2026-09-29/; https://www.usatoday.com/story/tech/space/2026/09/29/spacex-starship-orbit-flight-14-recap/91788376007/",
+      "summary": "Starship Flight 14 (28.09.2026): первый орбитальный полёт успешен, развёрнуто 26 спутников Starlink V3, выполнено >= 80% заявленных миссионных целей (орбита + payload), несмотря на отказ одного Raptor 3 в режиме ascent",
+      "action": "Зафиксировать переход Starship C0→C1 в state.json (state_transitions, scenario_state) и отправить Decision Request владельцу",
+      "confirmation": "strong",
+      "note": "первоисточник (SpaceX official) + два независимых СМИ первого ряда (Reuters, USA Today)"
     }
   ],
   "pending_verification": [
@@ -95,7 +104,8 @@
     "2026-09-20T18:27:03Z: разовая проверка балансовых и денежных потоков (balance-verify) по 10-Q Q2 2026 (SEC EDGAR) — записано в calc_inputs.reverse_valuation. 10-Q раскрывает денежные потоки только за полугодие (six months ended June 30, 2026), поэтому квартальные OCF/capex/FCF за Q2 не вычислялись (запрет на подсчёт по разности) — поля *_q2 = null",
     "2026-09-20: калибровка calibration_v1.0 принята владельцем; первый нормативный прогон reverse valuation — см. calc_runs",
     "2026-09-20: приняты Rules v1.1 (устойчивость модели, переходы по базовому случаю); заведены E-34..E-38 (фальсификация D3, planned до контрольных точек Y1 30.06.2027 / Y2 30.06.2028); прогон …-ab1fb7 классифицирован model_fragile",
-    "2026-09-20: приняты схема портфеля v1.0 и правила просадок/режимов; MC-калибровка v1.0 SPCX; первый нормативный прогон conditional_mc — см. calc_runs"
+    "2026-09-20: приняты схема портфеля v1.0 и правила просадок/режимов; MC-калибровка v1.0 SPCX; первый нормативный прогон conditional_mc — см. calc_runs",
+    "2026-09-30T06:02:00Z: дозор новостей за 36 часов (28–30.09): Starship Flight 14 достиг орбиты 28.09.2026, выполнил >= 80% миссионных целей (орбита + 26 Starlink V3) — подтверждено по первоисточнику + два СМИ первого ряда; переход Starship C0→C1 зафиксирован, Decision Request владельцу"
   ],
   "route": {
     "current": "opening",
@@ -104,6 +114,11 @@
     "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>»"
   },
   "info_log": [
+    {
+      "timestamp": "2026-09-30T06:02:00Z",
+      "kind": "state_transition",
+      "summary": "Starship Flight 14 (28.09.2026): первый орбитальный полёт, развёрнуто 26 спутников Starlink V3, выполнено >= 80% миссионных целей. Переход состояния оси Starship C0→C1 подтверждён. Decision Request владельцу — инвестиционное действие не предопределено по правилам."
+    },
     {
       "timestamp": "2026-09-25T08:15:26Z",
       "kind": "price_source_unavailable",
@@ -190,13 +205,13 @@
     },
     "Starship": {
       "state": "C1",
-      "since": "2026-09-20",
+      "since": "2026-09-30",
       "evidence": [
         "Flight 12: successful suborbital mission.",
-        "Flight 13: company reported all flight objectives achieved.",
-        "FAA operational plan dated 2026-09-18 listed Starship Flight 14 primary 2026-09-22 and backup 2026-09-23."
+        "Flight 13 (IFT-13, 24.07.2026): all flight objectives achieved, 20 Starlink V3 deployed.",
+        "Flight 14 (28.09.2026): first orbital flight achieved, 26 Starlink V3 deployed, >= 80% mission objectives met; Raptor 3 shutdown during ascent did not prevent orbital success; mission shortened from planned 10 hours to ~3 hours due to engine issue."
       ],
-      "source": "SEC earnings release; FAA ATCSCC operational plan",
+      "source": "SpaceX official; Reuters; USA Today. Transition trigger: SPCX-E-20 (condition met: one Starship V3 mission with >= 80% objectives)",
       "verified": false,
       "verified_note": "флаг добавлен миграцией MIG-SPCX-18: протокольной проверки дозором не было (нет verification_run_id)"
     },
@@ -229,7 +244,22 @@
       "verified_note": "флаг добавлен миграцией MIG-SPCX-18: протокольной проверки дозором не было (нет verification_run_id)"
     }
   },
-  "state_transitions": [],
+  "state_transitions": [
+    {
+      "timestamp": "2026-09-30T06:02:00Z",
+      "axis": "Starship",
+      "from": "C0",
+      "to": "C1",
+      "trigger_id": "SPCX-E-20",
+      "evidence": "Starship Flight 14 (28.09.2026): first orbital mission successfully completed, >= 80% mission objectives achieved (reached orbit, deployed 26 Starlink V3 satellites). Raptor 3 shutdown during ascent; mission duration shortened but primary objectives met.",
+      "source": "https://www.spacex.com/launches/starship-flight-14 (SpaceX official); https://www.reuters.com/business/media-telecom/spacexs-starship-engine-failure-could-impact-nasas-moon-mission-objectives-2026-09-29/; https://www.usatoday.com/story/tech/space/2026/09/29/spacex-starship-orbit-flight-14-recap/91788376007/",
+      "confidence": "strong",
+      "fired": {
+        "status": "pending_owner",
+        "timestamp": "2026-09-30T06:02:00Z"
+      }
+    }
+  ],
   "kpi_observations": [
     {
       "kpi_id": "SPCX-KPI-01",

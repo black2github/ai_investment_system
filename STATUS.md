@@ -1945,3 +1945,41 @@ schema_version/value_type/source_class/provenance/criteria/condition_provenance,
 transition у E-34…38), два репозитория в одной сессии, инварианты И1–И4, тесты на фикстуре, приёмка валидатором папки.
 НЕ закоммичено: lab (optimizer 1.1.1, validator 1.8.1, тест, задание), workspace (партия 10: from_imma, methodology,
 state.json, owner hedge constraints, приёмка, STATUS).
+
+## 30.09: push обоих репо; приёмка партии 10 отправлена IMMA; облачная сессия по миграции SPCX запущена
+Lab 71f63f7 и workspace cde08f1 запушены владельцем. Приёмка to_imma/party10-action-layer-partA.feedback.md отправлена
+(ждём ответ на уточнения 3.1–3.4). Облачная сессия по calc/docs/cloud-tasks/2026-09-30-spcx-artifacts-
+migration-v105.md запущена (два репозитория) — ждём два PR. Следующее без внешних зависимостей: подготовка части B —
+условные прогоны по фазам TAIWAN_SEIZURE / TAIWAN_QUARANTINE (company_mc 2.5.0 conditional_run) и условные оптимумы
+(optimizer 1.1.1) — план на согласование владельцу.
+
+## 01.10: IMMA подтвердила партию 10 и трактовки §21 / §3.3; условные прогоны части B запущены
+Ответ IMMA (share 6ab62c72): партия 10 часть A принята и внедрена; optimizer 1.1.1 (S_cond при p_s ≥ p_min и B_s > 0)
+совместим с нормативом — включить в полный reissue Portfolio_Optimizer_Specification v1.1. §21: трактовка хоста верна
+(«исторические фазы схлопываются в q0 как состояние до горизонта, от которого P идёт по ramp») с уточнением: в q0
+нельзя повторно применять накопленные шоки исторических фаз как новые forward-шоки — только как унаследованное
+начальное состояние на t0 (наша реализация так и делает: overrides исторической фазы активны в нулевом числе
+кварталов, используются только как стартовая точка ramp P). Нормативная формулировка для следующей редакции:
+«Historical phases preceding the confirmed phase are not replayed in the forward horizon. Their realized effect may
+enter only through the observed initial state at conditional-run t0; historical phase overrides must not be re-applied
+as forward shocks». §3.3: перенормировка = raw-веса (p̃_s = f·p_s, остальные без изменений, включая BASE), затем
+деление всех на Z = 1 + (f − 1)·p_s — ровно реализация portfolio_stability 1.3.0 (p_BASE после нормировки меняется;
+неизменна BASE-модель, не вероятность); up10 — прежняя семантика. Расхождений нет.
+Часть B: скрипт calc/tools/invest_runs/_conditional_runs_partB.py запущен в фоне (01.10 ночь): условные прогоны 15
+бумаг × 5 фаз (TS: BLOCKADE/CONFLICT/RECOVERY; Q: QUARANTINE/NORMALIZATION_OR_FROZEN; RESTRICTIONS = пути раундов 2–3,
+fixed_quarter 0) × 500k на общих path_id, seed 20260920, затем 7 условных оптимумов (лимиты v1_0, потолки захода 6,
+старты current/equal/empty/given от C2; без сценарно-условных ограничений — условная картина сама есть сценарий при p
+= 1). Результаты — _conditional_runs_partB.json.
+
+## 01.10: PR облака по SPCX влиты и проверены; state.json SpaceX слит с работой агента (Flight 14, Starship C0→C1)
+Lab 7cdbca4 (PR#2: migrate_artifacts 1.1.0, профиль MIG-SPCX-01…19, тесты), workspace cec2052 (PR#1: portfolio/spacex
+на схему 1.0.5 + _legacy/ с перенесённым дословно). Отклонение от постановки, принятое: condition_provenance у
+переходов — model_assumption (enum схемы не допускает owner_judgment); exchange NASDAQ выведен из факта включения в
+Nasdaq-100. Полный набор lab на слитом коде — pass (см. итог теста ниже по хронике). ВАЖНО: локальный
+portfolio/spacex/state.json содержал незакоммиченную работу агента от 30.09 06:02 — Starship Flight 14 (28.09.2026,
+первый орбитальный полёт, 26 Starlink V3, ≥ 80 % целей; SpaceX official + Reuters + USA Today): переход оси Starship
+C0 → C1 (E2, SPCX-E-20, fired pending_owner), events_reported +1, info_log +1, notes +1. PR миграции был сделан на
+версии от 25.09 и этого не содержал. Слияние: файл агента сохранён, PR подтянут, файл агента возвращён и прогнан
+инструментом миграции 1.1.0 (--apply --only spacex; _legacy/state_legacy.json пересобран из версии агента) → schema
+1.0.5, событие и переход сохранены, валидатор папки pass 0/0/0 (…-49321c), повторный прогон — идемпотентен. Изменённые
+файлы (state.json, _legacy/state_legacy.json) — результат миграции над данными агента; коммит — по слову владельца.

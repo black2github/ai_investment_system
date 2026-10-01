@@ -1,0 +1,928 @@
+schema_version: '1.0'
+artifact: scenario_strategy
+strategy_id: TAIWAN_SEIZURE_STRATEGY
+scenario_id: TAIWAN_SEIZURE
+scenario_ref: portfolio/_scenarios/TAIWAN_SEIZURE_v1.1.1.yaml
+scenario_set_id: GEOTECH_REGIME_8Y_V1
+as_of: '2026-10-01'
+portfolio_registry_ref: portfolio/_portfolio.yaml
+owner_constraints_ref: portfolio/_portfolio.yaml#approved_limits_v1_1
+hedge_constraints_ref: portfolio/_scenarios/owner_hedge_instrument_constraints_v1.0.yaml
+derivation_policy:
+  min_action_delta_weight: 0.005
+  rounding_increment_weight: 0.0025
+  live_optimum_review_threshold: 0.02
+  reductions_before_additions: true
+  rounding_mode: toward_zero
+  turnover_cap_source: owner_strategy_limit_required
+  provenance: model_assumption
+  rationale: §5–6 Action Layer. Дельты от C2 20260929T225008Z-portfolio_optimizer-5a6da6; security weights C2 сохранены, fixed GLD=0.0220,
+    UFO=0.0017, cash=0.1763. До завершения отбора действует общий rebalance-to-C2 signal, не фазовая стратегия.
+phase_strategies:
+- phase_id: RESTRICTIONS
+  trigger:
+    activate_on_phase_status: confirmed
+    candidate_policy: signal_only
+    requires_set_state_normal: true
+    state_ref: portfolio/_scenarios/state.json
+  conditional_run_ref: portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|RESTRICTIONS
+  conditional_optimum_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+  turnover_cap_nav:
+    value: 0.15
+    provenance: owner_judgment
+    rationale: 'ACT-2026-10-01/execution: оборот на один сигнал не более 15% NAV.'
+    source_ref: ACT-2026-10-01/execution
+  actions:
+  - action_id: TAIWAN_SEIZURE-RESTRICTIONS-01-REDUCE-NBIS
+    action_type: reduce
+    target:
+      kind: ticker
+      id: NBIS
+    magnitude:
+      kind: delta_weight_nav
+      amount: -0.07
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230041Z-portfolio_optimizer-ea1b90; raw_delta=-0.0700000000;
+        retained=-0.0700000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+    timing:
+      start_after_trading_days: 0
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RESTRICTIONS; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-RESTRICTIONS-02-CASH_TARGET-CASH
+    action_type: cash_target
+    target:
+      kind: cash
+      id: CASH
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.02
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230041Z-portfolio_optimizer-ea1b90; raw_delta=0.0200000000;
+        retained=0.0200000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+    timing:
+      start_after_trading_days: 0
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RESTRICTIONS; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-RESTRICTIONS-03-ADD-ASTS
+    action_type: add
+    target:
+      kind: ticker
+      id: ASTS
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.03
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230041Z-portfolio_optimizer-ea1b90; raw_delta=0.0300000000;
+        retained=0.0300000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RESTRICTIONS; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-RESTRICTIONS-04-ADD-META
+    action_type: add
+    target:
+      kind: ticker
+      id: META
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.015
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230041Z-portfolio_optimizer-ea1b90; raw_delta=0.0150000000;
+        retained=0.0150000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RESTRICTIONS; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-RESTRICTIONS-05-ADD-LLY
+    action_type: add
+    target:
+      kind: ticker
+      id: LLY
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.005
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230041Z-portfolio_optimizer-ea1b90; raw_delta=0.0050000000;
+        retained=0.0050000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RESTRICTIONS; baseline is post-selection normalized C2, not current 18.09 weights.
+  exit_rule:
+    mode: rerun_conditional_optimum
+    provenance: model_assumption
+    rationale: 'Exit to BLOCKADE: use BLOCKADE conditional picture as next anchor; no automatic trade/reversal.'
+    owner_rule_ref: null
+  risk_budget_under_scenario:
+    scenario_run_ref: portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|RESTRICTIONS
+    before:
+      median_cagr_5y:
+        value: 0.12360454679567956
+        provenance: derived_fact
+        run_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+      es5_5y:
+        value: -0.31040975824633626
+        provenance: derived_fact
+        run_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+      p_loss_30_5y:
+        value: 0.023214
+        provenance: derived_fact
+        run_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+    after:
+      median_cagr_5y:
+        value: 0.1338303272518726
+        provenance: derived_fact
+        run_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+      es5_5y:
+        value: 0.1011570417694958
+        provenance: derived_fact
+        run_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+      p_loss_30_5y:
+        value: 8.0e-06
+        provenance: derived_fact
+        run_ref: 20260930T230041Z-portfolio_optimizer-ea1b90
+  status:
+    state: draft
+    prepared_at: '2026-10-01T08:41:00+03:00'
+    owner_approved_at: null
+    owner_approval_ref: null
+    activated_at: null
+    activation_decision_ref: null
+    executed_at: null
+    retired_at: null
+  staleness:
+    review_required: false
+    last_checked_at: '2026-10-01T08:41:00+03:00'
+    max_abs_target_diff: 0.0
+    reasons: []
+- phase_id: BLOCKADE
+  trigger:
+    activate_on_phase_status: confirmed
+    candidate_policy: signal_only
+    requires_set_state_normal: true
+    state_ref: portfolio/_scenarios/state.json
+  conditional_run_ref: portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|BLOCKADE
+  conditional_optimum_ref: 20260930T230630Z-portfolio_optimizer-052179
+  turnover_cap_nav:
+    value: 0.15
+    provenance: owner_judgment
+    rationale: 'ACT-2026-10-01/execution: оборот на один сигнал не более 15% NAV.'
+    source_ref: ACT-2026-10-01/execution
+  actions:
+  - action_id: TAIWAN_SEIZURE-BLOCKADE-01-REDUCE-NBIS
+    action_type: reduce
+    target:
+      kind: ticker
+      id: NBIS
+    magnitude:
+      kind: delta_weight_nav
+      amount: -0.06
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230630Z-portfolio_optimizer-052179; raw_delta=-0.0600000000;
+        retained=-0.0600000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230630Z-portfolio_optimizer-052179
+    timing:
+      start_after_trading_days: 0
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/BLOCKADE; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-BLOCKADE-02-CASH_TARGET-CASH
+    action_type: cash_target
+    target:
+      kind: cash
+      id: CASH
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.02
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230630Z-portfolio_optimizer-052179; raw_delta=0.0200000000;
+        retained=0.0200000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230630Z-portfolio_optimizer-052179
+    timing:
+      start_after_trading_days: 0
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/BLOCKADE; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-BLOCKADE-03-ADD-ASTS
+    action_type: add
+    target:
+      kind: ticker
+      id: ASTS
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.025
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230630Z-portfolio_optimizer-052179; raw_delta=0.0250000000;
+        retained=0.0250000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230630Z-portfolio_optimizer-052179
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/BLOCKADE; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-BLOCKADE-04-ADD-LLY
+    action_type: add
+    target:
+      kind: ticker
+      id: LLY
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.005
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230630Z-portfolio_optimizer-052179; raw_delta=0.0050000000;
+        retained=0.0050000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230630Z-portfolio_optimizer-052179
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/BLOCKADE; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-BLOCKADE-05-ADD-META
+    action_type: add
+    target:
+      kind: ticker
+      id: META
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.005
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230630Z-portfolio_optimizer-052179; raw_delta=0.0050000000;
+        retained=0.0050000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230630Z-portfolio_optimizer-052179
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/BLOCKADE; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-BLOCKADE-06-ADD-MSFT
+    action_type: add
+    target:
+      kind: ticker
+      id: MSFT
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.005
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T230630Z-portfolio_optimizer-052179; raw_delta=0.0050000000;
+        retained=0.0050000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T230630Z-portfolio_optimizer-052179
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/BLOCKADE; baseline is post-selection normalized C2, not current 18.09 weights.
+  exit_rule:
+    mode: rerun_conditional_optimum
+    provenance: model_assumption
+    rationale: 'Exit to CONFLICT: live-check CONFLICT optimum; new owner decision required.'
+    owner_rule_ref: null
+  risk_budget_under_scenario:
+    scenario_run_ref: portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|BLOCKADE
+    before:
+      median_cagr_5y:
+        value: 0.11725354934520982
+        provenance: derived_fact
+        run_ref: 20260930T230630Z-portfolio_optimizer-052179
+      es5_5y:
+        value: -0.3411636917986469
+        provenance: derived_fact
+        run_ref: 20260930T230630Z-portfolio_optimizer-052179
+      p_loss_30_5y:
+        value: 0.030126
+        provenance: derived_fact
+        run_ref: 20260930T230630Z-portfolio_optimizer-052179
+    after:
+      median_cagr_5y:
+        value: 0.13295763951995376
+        provenance: derived_fact
+        run_ref: 20260930T230630Z-portfolio_optimizer-052179
+      es5_5y:
+        value: 0.08206748281440693
+        provenance: derived_fact
+        run_ref: 20260930T230630Z-portfolio_optimizer-052179
+      p_loss_30_5y:
+        value: 1.2e-05
+        provenance: derived_fact
+        run_ref: 20260930T230630Z-portfolio_optimizer-052179
+  status:
+    state: draft
+    prepared_at: '2026-10-01T08:41:00+03:00'
+    owner_approved_at: null
+    owner_approval_ref: null
+    activated_at: null
+    activation_decision_ref: null
+    executed_at: null
+    retired_at: null
+  staleness:
+    review_required: false
+    last_checked_at: '2026-10-01T08:41:00+03:00'
+    max_abs_target_diff: 0.0
+    reasons: []
+- phase_id: CONFLICT
+  trigger:
+    activate_on_phase_status: confirmed
+    candidate_policy: signal_only
+    requires_set_state_normal: true
+    state_ref: portfolio/_scenarios/state.json
+  conditional_run_ref: portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|CONFLICT
+  conditional_optimum_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+  turnover_cap_nav:
+    value: 0.15
+    provenance: owner_judgment
+    rationale: 'ACT-2026-10-01/execution: оборот на один сигнал не более 15% NAV.'
+    source_ref: ACT-2026-10-01/execution
+  actions:
+  - action_id: TAIWAN_SEIZURE-CONFLICT-01-REDUCE-NBIS
+    action_type: reduce
+    target:
+      kind: ticker
+      id: NBIS
+    magnitude:
+      kind: delta_weight_nav
+      amount: -0.065
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231229Z-portfolio_optimizer-e0569e; raw_delta=-0.0650000000;
+        retained=-0.0650000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+    timing:
+      start_after_trading_days: 0
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/CONFLICT; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-CONFLICT-02-CASH_TARGET-CASH
+    action_type: cash_target
+    target:
+      kind: cash
+      id: CASH
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.02
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231229Z-portfolio_optimizer-e0569e; raw_delta=0.0200000000;
+        retained=0.0200000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+    timing:
+      start_after_trading_days: 0
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/CONFLICT; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-CONFLICT-03-ADD-ASTS
+    action_type: add
+    target:
+      kind: ticker
+      id: ASTS
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.025
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231229Z-portfolio_optimizer-e0569e; raw_delta=0.0250000000;
+        retained=0.0250000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/CONFLICT; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-CONFLICT-04-ADD-MSFT
+    action_type: add
+    target:
+      kind: ticker
+      id: MSFT
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.01
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231229Z-portfolio_optimizer-e0569e; raw_delta=0.0100000000;
+        retained=0.0100000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/CONFLICT; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-CONFLICT-05-ADD-LLY
+    action_type: add
+    target:
+      kind: ticker
+      id: LLY
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.005
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231229Z-portfolio_optimizer-e0569e; raw_delta=0.0050000000;
+        retained=0.0050000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/CONFLICT; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-CONFLICT-06-ADD-META
+    action_type: add
+    target:
+      kind: ticker
+      id: META
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.005
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231229Z-portfolio_optimizer-e0569e; raw_delta=0.0050000000;
+        retained=0.0050000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/CONFLICT; baseline is post-selection normalized C2, not current 18.09 weights.
+  exit_rule:
+    mode: rerun_conditional_optimum
+    provenance: model_assumption
+    rationale: 'Exit to RECOVERY: use RECOVERY optimum as next target picture; no automatic reversal.'
+    owner_rule_ref: null
+  risk_budget_under_scenario:
+    scenario_run_ref: portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|CONFLICT
+    before:
+      median_cagr_5y:
+        value: 0.11992061426664613
+        provenance: derived_fact
+        run_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+      es5_5y:
+        value: -0.3348120141996746
+        provenance: derived_fact
+        run_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+      p_loss_30_5y:
+        value: 0.028464
+        provenance: derived_fact
+        run_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+    after:
+      median_cagr_5y:
+        value: 0.1335997174492497
+        provenance: derived_fact
+        run_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+      es5_5y:
+        value: 0.08900570543954942
+        provenance: derived_fact
+        run_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+      p_loss_30_5y:
+        value: 1.0e-05
+        provenance: derived_fact
+        run_ref: 20260930T231229Z-portfolio_optimizer-e0569e
+  status:
+    state: draft
+    prepared_at: '2026-10-01T08:41:00+03:00'
+    owner_approved_at: null
+    owner_approval_ref: null
+    activated_at: null
+    activation_decision_ref: null
+    executed_at: null
+    retired_at: null
+  staleness:
+    review_required: false
+    last_checked_at: '2026-10-01T08:41:00+03:00'
+    max_abs_target_diff: 0.0
+    reasons: []
+- phase_id: RECOVERY
+  trigger:
+    activate_on_phase_status: confirmed
+    candidate_policy: signal_only
+    requires_set_state_normal: true
+    state_ref: portfolio/_scenarios/state.json
+  conditional_run_ref: portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|RECOVERY
+  conditional_optimum_ref: 20260930T231749Z-portfolio_optimizer-cad140
+  turnover_cap_nav:
+    value: 0.15
+    provenance: owner_judgment
+    rationale: 'ACT-2026-10-01/execution: оборот на один сигнал не более 15% NAV.'
+    source_ref: ACT-2026-10-01/execution
+  actions:
+  - action_id: TAIWAN_SEIZURE-RECOVERY-01-REDUCE-NVDA
+    action_type: reduce
+    target:
+      kind: ticker
+      id: NVDA
+    magnitude:
+      kind: delta_weight_nav
+      amount: -0.025
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231749Z-portfolio_optimizer-cad140; raw_delta=-0.0250000000;
+        retained=-0.0250000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231749Z-portfolio_optimizer-cad140
+    timing:
+      start_after_trading_days: 0
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RECOVERY; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-RECOVERY-02-REDUCE-NBIS
+    action_type: reduce
+    target:
+      kind: ticker
+      id: NBIS
+    magnitude:
+      kind: delta_weight_nav
+      amount: -0.02
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231749Z-portfolio_optimizer-cad140; raw_delta=-0.0200000000;
+        retained=-0.0200000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231749Z-portfolio_optimizer-cad140
+    timing:
+      start_after_trading_days: 0
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RECOVERY; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-RECOVERY-03-REDUCE-LLY
+    action_type: reduce
+    target:
+      kind: ticker
+      id: LLY
+    magnitude:
+      kind: delta_weight_nav
+      amount: -0.01
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231749Z-portfolio_optimizer-cad140; raw_delta=-0.0100000000;
+        retained=-0.0100000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231749Z-portfolio_optimizer-cad140
+    timing:
+      start_after_trading_days: 0
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RECOVERY; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-RECOVERY-04-ADD-META
+    action_type: add
+    target:
+      kind: ticker
+      id: META
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.05
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231749Z-portfolio_optimizer-cad140; raw_delta=0.0500000000;
+        retained=0.0500000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231749Z-portfolio_optimizer-cad140
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RECOVERY; baseline is post-selection normalized C2, not current 18.09 weights.
+  - action_id: TAIWAN_SEIZURE-RECOVERY-05-ADD-ASTS
+    action_type: add
+    target:
+      kind: ticker
+      id: ASTS
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.005
+      provenance: derived_fact
+      rationale: conditional optimum − normalized C2; deadband 0.005 NAV; retained delta rounded toward zero by 0.0025 NAV.
+      source_ref: 20260929T225008Z-portfolio_optimizer-5a6da6 normalized -> 20260930T231749Z-portfolio_optimizer-cad140; raw_delta=0.0050000000;
+        retained=0.0050000000
+    basis: conditional_optimum
+    conditional_optimum_ref: 20260930T231749Z-portfolio_optimizer-cad140
+    timing:
+      start_after_trading_days: 5
+      tranches: 3
+      tranche_interval_trading_days: 1
+      no_buy_first_trading_days: 5
+      provenance: owner_judgment
+      rationale: 'Owner: 3 tranches; no purchases / cash deployment during first 5 trading days; reductions may start immediately after separate
+        activation decision.'
+    preconditions:
+    - condition_id: LIVE_OPTIMUM_CURRENT
+      expression: scenario_state.strategy_review_required == false AND max_abs_target_diff <= 0.02
+      provenance: normative_rule
+      rationale: 'Action Layer §6: >2pp NAV live-optimum drift requires review and renewed owner approval.'
+      source_ref: Scenario_Action_Layer_Specification_v1.0.md#6
+    provenance: derived_fact
+    rationale: Scenario-specific component for TAIWAN_SEIZURE/RECOVERY; baseline is post-selection normalized C2, not current 18.09 weights.
+  exit_rule:
+    mode: hold_until_owner_review
+    provenance: model_assumption
+    rationale: 'Terminal recovery: retain last approved state until owner review.'
+    owner_rule_ref: null
+  risk_budget_under_scenario:
+    scenario_run_ref: portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|RECOVERY
+    before:
+      median_cagr_5y:
+        value: 0.182114313641214
+        provenance: derived_fact
+        run_ref: 20260930T231749Z-portfolio_optimizer-cad140
+      es5_5y:
+        value: -0.01377297169803117
+        provenance: derived_fact
+        run_ref: 20260930T231749Z-portfolio_optimizer-cad140
+      p_loss_30_5y:
+        value: 0.001082
+        provenance: derived_fact
+        run_ref: 20260930T231749Z-portfolio_optimizer-cad140
+    after:
+      median_cagr_5y:
+        value: 0.1805799164130416
+        provenance: derived_fact
+        run_ref: 20260930T231749Z-portfolio_optimizer-cad140
+      es5_5y:
+        value: 0.30140888037720737
+        provenance: derived_fact
+        run_ref: 20260930T231749Z-portfolio_optimizer-cad140
+      p_loss_30_5y:
+        value: 0.0
+        provenance: derived_fact
+        run_ref: 20260930T231749Z-portfolio_optimizer-cad140
+  status:
+    state: draft
+    prepared_at: '2026-10-01T08:41:00+03:00'
+    owner_approved_at: null
+    owner_approval_ref: null
+    activated_at: null
+    activation_decision_ref: null
+    executed_at: null
+    retired_at: null
+  staleness:
+    review_required: false
+    last_checked_at: '2026-10-01T08:41:00+03:00'
+    max_abs_target_diff: 0.0
+    reasons: []
+changelog:
+- date: '2026-10-01'
+  change: Initial v1.0 phase strategy from host conditional optima; draft; owner execution constraints 2026-10-01.

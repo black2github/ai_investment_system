@@ -1,0 +1,160 @@
+schema_version: '1.0'
+artifact: scenario_strategy
+strategy_id: CHIP_COLD_WAR_STRATEGY
+scenario_id: CHIP_COLD_WAR
+scenario_ref: portfolio/_scenarios/CHIP_COLD_WAR_v1.1.1.yaml
+scenario_set_id: GEOTECH_REGIME_8Y_V1
+as_of: '2026-10-01'
+portfolio_registry_ref: portfolio/_portfolio.yaml
+owner_constraints_ref: portfolio/_portfolio.yaml#approved_limits_v1_1
+hedge_constraints_ref: portfolio/_scenarios/owner_hedge_instrument_constraints_v1.0.yaml
+derivation_policy:
+  min_action_delta_weight: 0.005
+  rounding_increment_weight: 0.0025
+  live_optimum_review_threshold: 0.02
+  reductions_before_additions: true
+  rounding_mode: toward_zero
+  turnover_cap_source: owner_strategy_limit_required
+  provenance: model_assumption
+  rationale: §5–6 Action Layer. Дельты от C2 20260929T225008Z-portfolio_optimizer-5a6da6; security weights C2 сохранены, fixed GLD=0.0220,
+    UFO=0.0017, cash=0.1763. До завершения отбора действует общий rebalance-to-C2 signal, не фазовая стратегия.
+phase_strategies:
+- phase_id: RACE_TO_PARITY
+  trigger:
+    activate_on_phase_status: confirmed
+    candidate_policy: signal_only
+    requires_set_state_normal: true
+    state_ref: portfolio/_scenarios/state.json
+  conditional_run_ref: null
+  conditional_optimum_ref: null
+  turnover_cap_nav: null
+  actions: []
+  exit_rule:
+    mode: review_only
+    provenance: model_assumption
+    rationale: Phase transition requires review only.
+    owner_rule_ref: null
+  risk_budget_under_scenario: null
+  status:
+    state: draft
+    prepared_at: '2026-10-01T08:41:00+03:00'
+    owner_approved_at: null
+    owner_approval_ref: null
+    activated_at: null
+    activation_decision_ref: null
+    executed_at: null
+    retired_at: null
+  staleness:
+    review_required: false
+    last_checked_at: '2026-10-01T08:41:00+03:00'
+    max_abs_target_diff: 0.0
+    reasons: []
+- phase_id: PARITY_BOUNDARY
+  trigger:
+    activate_on_phase_status: confirmed
+    candidate_policy: signal_only
+    requires_set_state_normal: true
+    state_ref: portfolio/_scenarios/state.json
+  conditional_run_ref: null
+  conditional_optimum_ref: null
+  turnover_cap_nav: null
+  actions:
+  - action_id: CHIP_COLD_WAR-PARITY_BOUNDARY-01-REVIEW-NVDA
+    action_type: review
+    target:
+      kind: ticker
+      id: NVDA
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.0
+      provenance: owner_judgment
+      rationale: Owner chose review-only for CHIP_COLD_WAR; zero delta means no precommitted trade.
+      source_ref: ACT-2026-10-01/execution
+    basis: owner_rule
+    conditional_optimum_ref: null
+    timing:
+      start_after_trading_days: 0
+      tranches: 1
+      tranche_interval_trading_days: 0
+      no_buy_first_trading_days: 0
+      provenance: owner_judgment
+      rationale: Review-only; no trade timing is precommitted.
+    preconditions: []
+    provenance: owner_judgment
+    rationale: At PARITY_BOUNDARY review scenario probabilities and NVDA exposure; no transaction is pre-authorized.
+  - action_id: CHIP_COLD_WAR-PARITY_BOUNDARY-02-REVIEW-ASML
+    action_type: review
+    target:
+      kind: ticker
+      id: ASML
+    magnitude:
+      kind: delta_weight_nav
+      amount: 0.0
+      provenance: owner_judgment
+      rationale: Owner chose review-only for CHIP_COLD_WAR; zero delta means no precommitted trade.
+      source_ref: ACT-2026-10-01/execution
+    basis: owner_rule
+    conditional_optimum_ref: null
+    timing:
+      start_after_trading_days: 0
+      tranches: 1
+      tranche_interval_trading_days: 0
+      no_buy_first_trading_days: 0
+      provenance: owner_judgment
+      rationale: Review-only; no trade timing is precommitted.
+    preconditions: []
+    provenance: owner_judgment
+    rationale: At PARITY_BOUNDARY review scenario probabilities and ASML exposure; no transaction is pre-authorized.
+  exit_rule:
+    mode: review_only
+    provenance: owner_judgment
+    rationale: Owner review only; no precommitted trades.
+    owner_rule_ref: ACT-2026-10-01/execution
+  risk_budget_under_scenario: null
+  status:
+    state: draft
+    prepared_at: '2026-10-01T08:41:00+03:00'
+    owner_approved_at: null
+    owner_approval_ref: null
+    activated_at: null
+    activation_decision_ref: null
+    executed_at: null
+    retired_at: null
+  staleness:
+    review_required: false
+    last_checked_at: '2026-10-01T08:41:00+03:00'
+    max_abs_target_diff: 0.0
+    reasons: []
+- phase_id: TWO_SYSTEMS
+  trigger:
+    activate_on_phase_status: confirmed
+    candidate_policy: signal_only
+    requires_set_state_normal: true
+    state_ref: portfolio/_scenarios/state.json
+  conditional_run_ref: null
+  conditional_optimum_ref: null
+  turnover_cap_nav: null
+  actions: []
+  exit_rule:
+    mode: hold_until_owner_review
+    provenance: model_assumption
+    rationale: 'Terminal phase: hold until owner review.'
+    owner_rule_ref: null
+  risk_budget_under_scenario: null
+  status:
+    state: draft
+    prepared_at: '2026-10-01T08:41:00+03:00'
+    owner_approved_at: null
+    owner_approval_ref: null
+    activated_at: null
+    activation_decision_ref: null
+    executed_at: null
+    retired_at: null
+  staleness:
+    review_required: false
+    last_checked_at: '2026-10-01T08:41:00+03:00'
+    max_abs_target_diff: 0.0
+    reasons: []
+changelog:
+- date: '2026-10-01'
+  change: Initial review-only strategy; PARITY_BOUNDARY reviews probabilities and NVDA/ASML exposures; no precommitted trades.

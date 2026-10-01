@@ -23,7 +23,10 @@ portfolio/<тикер>/triggers.yaml — РЕЕСТР ТРИГГЕРОВ: еди
 portfolio/<тикер>/state.json    — состояние дозора: последняя цена, зона, о чём уже сообщено,
                                   pending_verification (непроверенные предпосылки), owner_decisions
 portfolio/_ideas.yaml           — лист наблюдения и идей (watch / idea / rejected), цены на дату идеи
-portfolio/_scenarios/<имя>.yaml — сценарии-пакеты действий на несколько компаний (например taiwan)
+portfolio/_scenarios/<SCENARIO>_v<ver>.yaml — сценарные калибровки (Scenario Engine v1.1: scope, фазы, каталог событий);
+portfolio/_scenarios/state.json  — состояние сценариев (Scenario_State_Schema v1.1): статусы фаз, strategy_ref, последний сигнал
+portfolio/_scenarios/strategies/<SCENARIO>_strategy_v1.0.yaml — стратегии по фазам (Scenario Action Layer v1.0, партия 10)
+portfolio/_scenarios/taiwan.yaml — legacy-пакет действий (форма; содержание заменено стратегиями)
 portfolio/_watch/*.js           — скрипты условных наблюдателей (без модели)
 to_imma/                          — разборы обсуждений и вопросники (черновики онбординга)
 templates/                      — шаблон финального блока «для дозора»
@@ -380,6 +383,35 @@ verify-ASTS-20260923T060714Z), сводная v1.2.1 — в тот же день
     «условие не выполнено» (not_met), «ожидается история наблюдений» (pending_history); итоги — «пройдено»,
     «пройдено, есть заявленные ожидания», «нужна правка», «заблокировано технически», «заблокировано: источники
     противоречат». В файлах отчёта и state.json — только оригинальные коды.
+
+## Сценарии: распознавание, состояние, сигнал по стратегии (Scenario Action Layer v1.0, с 02.10.2026)
+
+Нормативы: `methodology/Scenario_Engine_Specification_v1.1.md` (сценарии, фазы, каталог событий `Scenario_Event_Catalog_v1.0.yaml`),
+`Scenario_Action_Layer_Specification_v1.0.md`, `Dozor_Scenario_Action_Contract_v1.0.md`, `Agent_Scenario_Signal_Contract_v1.0.md`.
+Три разных вещи: подтверждение события (дозор) → изменение состояния фазы (детерминированный evaluator, не LLM) → сигнал владельцу
+со стратегией (агент). **Trigger ≠ Decision: подтверждённая фаза никогда не исполняет сделки и не активирует стратегию.**
+
+1. **Дозор событий сценария.** Проверяются только наблюдаемые критерии каталога событий (`observable_criteria`: оператор, порог,
+   окно — копируются из каталога, не редактируются). Запись подтверждения: event_id, criterion_id, fact_id, наблюдённое значение,
+   источник и дата, verification_status, immutable run_id. Статусы `pending_verification`, `not_disclosed`,
+   `source_unavailable_technical` критерий НЕ закрывают; `source_conflict` блокирует подтверждение события.
+2. **Состояние** (`portfolio/_scenarios/state.json`): статусы фаз `not_observed | candidate | confirmed | exited`; набор —
+   `normal | ambiguous_set_conflict | outside_set_review`. Переход статуса — по entry/exit_criteria фаз из калибровки; агент пишет
+   свидетельства и run_id, статус меняет интегратор по правилу (до появления evaluator в сайдкаре). Файл пишется целиком
+   инструментом `write`, поля не переименовывать.
+3. **Сигнал владельцу** при переходе фазы в `confirmed` — ДОСЛОВНО по `Agent_Scenario_Signal_Contract_v1.0.md`: первая строка
+   `AG: invest`, затем `СЦЕНАРИЙ: <id>`, `ФАЗА: <id> — CONFIRMED <дата>`, блок «ПОДТВЕРЖДАЮЩИЕ ФАКТЫ» (event_id / fact_id, источник,
+   дата, проверка run_id), «УСЛОВНАЯ КАРТИНА ПОРТФЕЛЯ» (run условного прогона, медиана CAGR 5Y, P(loss>30 %), ES5, условный оптимум),
+   «СТРАТЕГИЯ» (strategy_ref, статус draft/owner_approved/active, проверка актуальности D_inf и review_required), «ДЕЙСТВИЯ ИЗ
+   СТРАТЕГИИ (ДОСЛОВНО)» — action_id, тип, цель, величина, timing, preconditions без перефразирования, «ПЕРЕСМОТР ВЕРОЯТНОСТЕЙ»
+   (дата последнего review, новые defining-события, probability_review_due). Последняя строка всегда:
+   `Решение за владельцем. Автоисполнение запрещено.` Если `strategy_ref` = null — только распознавание и условная картина, текст
+   действий не генерируется. При `candidate` — только свидетельства и недостающие критерии, торговых действий нет (решение владельца
+   01.10: candidate = только уведомление). При `ambiguous_set_conflict` первая строка после заголовка:
+   `СТАТУС НАБОРА: AMBIGUOUS_SET_CONFLICT — автоматическая активация всех стратегий заблокирована.`
+4. **Карточка сценария по запросу** («сценарий Тайвань», «TAIWAN_SEIZURE»): scope (includes/excludes/narrative из калибровки),
+   вероятность владельца и дата пересмотра, статус фаз из state.json, стратегия (статус, число действий по фазам), последний сигнал.
+   Числа — только из калибровки, state.json и записей `portfolio/_runs`; ничего не досчитывать.
 
 ## Расчётный движок (сайдкар invest-calc)
 

@@ -1996,3 +1996,40 @@ ASTS/META небольшие докупки); под подтверждённо�
 −6…−7 п.п., ASTS +2.5…+3, META +0.5…+1.5; RECOVERY/NORMALIZATION — возврат NBIS/NVDA и META +2.5…+5. Часть B к IMMA —
 после ответов владельца на вопросы 2/4/5 заказа v1.2 (turnover cap и транши, стадия candidate, стратегия
 CHIP_COLD_WAR). НЕ закоммичено: заметка, STATUS, _conditional_runs_partB.json (lab), ~82 прогона в _runs.
+
+## 01.10: решение владельца по ограничителям исполнения; заказ части B (партия 11) написан, вложение собрано
+Владелец 01.10: оборот на сигнал ≤ 15 % NAV, 3 транша по торговым дням, 5 дней без покупки падения (ориентир принят);
+candidate — только уведомление; CHIP_COLD_WAR — «пересмотр без сделок». Записано: _portfolio.yaml →
+approved_limits_v1_1.strategy_execution и owner_decisions ACT-2026-10-01/execution; вопросы 2/4/5 заказа v1.2 помечены
+решёнными. Коммиты: lab a86bcc1 (карта результатов), workspace 2df56ca (заметка, лимиты, 82 прогона). Заказ
+to_imma/scenario-action-layer-v12-partB.request.md (НЕ отправлен): стратегии TS/Q по условным оптимумам (база дельт —
+рекомендация от оптимума отбора C2), CHIP_COLD_WAR review only, ограничители владельца, risk budget из прогонов,
+exit_rule, status draft, patch v1.1.1 калибровок со strategy_ref, GLD только owner_rule/review. Вложение
+Downloads/partB-action-layer-to-llm (+zip, 12 файлов: заметка, карта прогонов, 7 записей условных оптимумов,
+state.json 1.1, ограничения владельца, манифест). НЕ закоммичено: заказ части B, STATUS.
+
+## 01.10: заказ части B (партия 11) отправлен IMMA; push обоих репо выполнен
+Ждём стратегии TAIWAN_SEIZURE / TAIWAN_QUARANTINE / CHIP_COLD_WAR (review) и patch v1.1.1 калибровок со strategy_ref.
+На приёмке: ACT-001…020 в валидаторе (mode strategy), стратегии в portfolio/_scenarios/strategies/,
+strategy_ref/strategy_status в state.json, проверка дельт по §5 от выбранной базы. Параллельно без внешних
+зависимостей: заход 8 отбора (старт given от C2) → DR владельцу по целевым весам.
+
+## 02.10: партия 11 (часть B слоя действий) ПРИНЯТА и внедрена; валидатор 1.9.0 с ACT-001…020; поправка факта по GLD в
+C2
+Пакет IMMA_Party10_Scenario_Action_Layer_v1.2_PartB (share 6abed02a, zip sha256 1ba3d736…, 12 файлов — сошлись,
+термины pass): стратегии TAIWAN_SEIZURE (4 фазы), TAIWAN_QUARANTINE (3), CHIP_COLD_WAR (review only), все draft; patch
+v1.1.1 калибровок со strategy_ref (check_supersedes: пропало 0, изменены as_of/supersedes/strategy_ref). База дельт —
+C2 …-5a6da6, нормализованная IMMA: веса бумаг C2 + фиксированные GLD 2.2 % / UFO 0.17 %, кэш 17.63 %. ПОПРАВКА ФАКТА:
+в прогоне C2 (GLD как переменная с плоской доходностью) оптимизатор вывел GLD в 0, а не «оставил 2.2 % без изменений»,
+как написано в записи 30.09 и заметке захода 7 — артефакт плоской модели (кэш под 4 % лучше нуля), не решение;
+нормализация IMMA это корректно нейтрализует. Внедрено: strategies/ (3), калибровки v1.1.1 (v1.1 сняты),
+_runs/_conditional_runs_partB.json (цель conditional_run_ref), state.json strategy_ref/strategy_status=draft,
+AGENTS.md — раздел «Сценарии: распознавание, состояние, сигнал по стратегии» (контракт сигнала дословно, candidate =
+уведомление, ambiguous_set_conflict). Валидатор 1.9.0, режим strategy (ACT-001…020 машинно: схема, сценарий/фазы,
+strategy_ref, цели, GLD-лимит и допустимость оптимума, статусы, candidate, set_state, §5-дельты от базы — все 7 фаз
+совпали с IMMA до знака, cap и порядок, risk budget = прогон, exit_rule, GLD без модели, staleness, policy = решение
+владельца) — PASS на трёх файлах; тест с негативом (ACT-013/005/014); сценарный режим на v1.1.1 — pass (SCN-008
+warning прежний), SCN-016 pass. Приёмка to_imma/party11-action-layer-partB.feedback.md (НЕ отправлена). НЕ
+закоммичено: lab (validator 1.9.0 + тест), workspace (партия 11, стратегии, калибровки, state.json, карта прогонов,
+AGENTS.md, приёмка, STATUS). Далее: заход 8 отбора (старт given от C2) → DR владельцу по целевым весам →
+owner_approved стратегий.

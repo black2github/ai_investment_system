@@ -1,6 +1,8 @@
+# artifact_version: 1.1.1
+# semantic_patch: strategy_ref linkage only; numerical scenario semantics unchanged
 schema_version: '1.1'
-as_of: '2026-09-27'
-supersedes: CHIP_COLD_WAR_v1.0.yaml
+as_of: '2026-10-01'
+supersedes: CHIP_COLD_WAR_v1.1.yaml
 scenario_id: CHIP_COLD_WAR
 description: 'US–China semiconductor technology race: Western subsidized capacity buildout, uncertain 3–5Y parity boundary, then persistent
   bifurcated production systems and accelerator price competition.'
@@ -52,7 +54,7 @@ scope:
   narrative: Acceleration of the already-existing race above BASE -> leading-edge parity boundary -> persistent bifurcated production systems
     with material accelerator price/performance competition.
 state_ref: portfolio/_scenarios/state.json
-strategy_ref: null
+strategy_ref: portfolio/_scenarios/strategies/CHIP_COLD_WAR_strategy_v1.0.yaml
 phases:
 - phase_id: RACE_TO_PARITY
   name: Race before technological parity
@@ -161,7 +163,7 @@ phases:
   - event_id: EV-CN-PARITY-LEADING-EDGE
     condition: verification_status == verified
     verification_required: true
-  strategy_ref: null
+  strategy_ref: portfolio/_scenarios/strategies/CHIP_COLD_WAR_strategy_v1.0.yaml
 - phase_id: PARITY_BOUNDARY
   name: Technology parity boundary and repricing
   effective_from:
@@ -281,7 +283,7 @@ phases:
   - event_id: EV-TWO-SYSTEMS-PRICE-COMPETITION
     condition: verification_status == verified
     verification_required: true
-  strategy_ref: null
+  strategy_ref: portfolio/_scenarios/strategies/CHIP_COLD_WAR_strategy_v1.0.yaml
 - phase_id: TWO_SYSTEMS
   name: Persistent Western and Chinese semiconductor systems
   effective_from:
@@ -400,7 +402,7 @@ phases:
   - system_condition: scenario_horizon_reached
     condition: scenario horizon reached; two-system state persists to end of modeled horizon
     verification_required: false
-  strategy_ref: null
+  strategy_ref: portfolio/_scenarios/strategies/CHIP_COLD_WAR_strategy_v1.0.yaml
 fact_catalog:
 - fact_id: CW-F01
   signal: SMIC/Chinese foundry disclosed process capability, production scale, yield or advanced-node revenue evidence narrowing the leading-edge

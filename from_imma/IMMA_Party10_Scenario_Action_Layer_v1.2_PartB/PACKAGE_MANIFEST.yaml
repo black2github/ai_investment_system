@@ -1,0 +1,46 @@
+package: IMMA_Party10_Scenario_Action_Layer_v1.2_PartB
+package_version: '1.0'
+party: 10
+part: B
+as_of: '2026-10-01'
+status: proposed_for_host_acceptance
+source_package: host_partB_conditional_runs_2026-10-01
+baseline:
+  selection_optimum_run_id: 20260929T225008Z-portfolio_optimizer-5a6da6
+  fixed_GLD: 0.022
+  fixed_UFO: 0.0017
+  normalized_cash: 0.1763
+files:
+- path: CHIP_COLD_WAR_strategy_v1.0.yaml
+  sha256: ed4471e783db7d99f3e5902e8ef11a99bab69bf0e0ba77ee57dd9ab786537202
+  bytes: 5420
+- path: CHIP_COLD_WAR_v1.1.1.yaml
+  sha256: ed516cd88ee9cdcf1cbd0331624607dd5d277daf633a619bf72c44aa61deb4f1
+  bytes: 18350
+- path: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: 0ccf0dd6048caba8bbb6b2c96d0c6e76b9893f0b5df3122ccf325f00b51cd2e6
+  bytes: 1328
+- path: PACKAGE_README.md
+  sha256: 7caec3317dc77163f8f8b4756bf1bf67eb0d511930faf2ad9acfb5a1b6d7541a
+  bytes: 472
+- path: PartB_Strategy_Summary.md
+  sha256: d2ee8ad65654e8fd4d51eb6ee6c081f1f806ef6e96fd39c757d4d5bd40c86e50
+  bytes: 503
+- path: Scenario_Action_PartB_Derivation_Report.md
+  sha256: 20c0c225849f3389fd1fbb3c5d09fd23cc7ab21652a1d3c22218b804982863b7
+  bytes: 2568
+- path: Scenario_v1.1.1_StrategyRef_Patch_Notes.md
+  sha256: 4b950fa3eba46e639901daa6d701548c0e217317eba3e90076d250ed36795d3a
+  bytes: 2317
+- path: TAIWAN_QUARANTINE_strategy_v1.0.yaml
+  sha256: af3d3dbda6672b9e605d5e8fa3596203df87578c2b3072efba78ee8eff652c49
+  bytes: 33831
+- path: TAIWAN_QUARANTINE_v1.1.1.yaml
+  sha256: dc410309a9e3a4d3e03c7fe72502e9aa4775829e08589844ab84114d84fd6baf
+  bytes: 20463
+- path: TAIWAN_SEIZURE_strategy_v1.0.yaml
+  sha256: a4db1749367d38f958d21c068032a991b7462f1017cf71ca7bfcba6706da44ff
+  bytes: 42919
+- path: TAIWAN_SEIZURE_v1.1.1.yaml
+  sha256: a5445bceb90cdb4f3decd556c634ee360a5b46a07d106319ccdf2f12843063ac
+  bytes: 17797

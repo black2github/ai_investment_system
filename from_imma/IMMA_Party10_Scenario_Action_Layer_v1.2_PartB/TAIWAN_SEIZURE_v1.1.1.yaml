@@ -1,6 +1,8 @@
+# artifact_version: 1.1.1
+# semantic_patch: strategy_ref linkage only; numerical scenario semantics unchanged
 schema_version: '1.1'
-as_of: '2026-09-27'
-supersedes: TAIWAN_SEIZURE_v1.0.yaml
+as_of: '2026-10-01'
+supersedes: TAIWAN_SEIZURE_v1.1.yaml
 scenario_id: TAIWAN_SEIZURE
 description: Escalating restrictions/blockade/conflict around Taiwan followed by partial supply-chain recovery; valuation-only action plan
   TAIWAN-S1..S3 is referenced but not used as model input.
@@ -48,7 +50,7 @@ scope:
   narrative: Material restrictions -> effective full blockade -> armed conflict -> recovery. Full blockade without observed conflict still
     maps to this scenario for probability/scenario-set purposes because the numerical calibration is deliberately conservative.
 state_ref: portfolio/_scenarios/state.json
-strategy_ref: null
+strategy_ref: portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml
 phases:
 - phase_id: RESTRICTIONS
   name: Partial shipping/airspace restrictions
@@ -143,7 +145,7 @@ phases:
   - event_id: EV-TW-FULL-BLOCKADE
     condition: verification_status == verified
     verification_required: true
-  strategy_ref: null
+  strategy_ref: portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml
 - phase_id: BLOCKADE
   name: Effective maritime/air blockade
   effective_from:
@@ -246,7 +248,7 @@ phases:
   - event_id: EV-TW-ARMED-CONFLICT
     condition: verification_status == verified
     verification_required: true
-  strategy_ref: null
+  strategy_ref: portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml
 - phase_id: CONFLICT
   name: Armed conflict / seizure attempt
   effective_from:
@@ -348,7 +350,7 @@ phases:
   - event_id: EV-TW-RECOVERY
     condition: verification_status == verified
     verification_required: true
-  strategy_ref: null
+  strategy_ref: portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml
 - phase_id: RECOVERY
   name: Partial geographic substitution and reconstruction
   effective_from:
@@ -444,7 +446,7 @@ phases:
   - system_condition: scenario_horizon_reached
     condition: scenario horizon reached; no further phase transition in this calibration
     verification_required: false
-  strategy_ref: null
+  strategy_ref: portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml
 fact_catalog:
 - fact_id: TW-F01
   signal: Official restrictions on shipping/airspace around Taiwan affecting commercial traffic.

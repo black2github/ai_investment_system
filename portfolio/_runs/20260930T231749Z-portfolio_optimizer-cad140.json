@@ -1,0 +1,2034 @@
+{
+  "run_id": "20260930T231749Z-portfolio_optimizer-cad140",
+  "model": "portfolio_optimizer",
+  "version": "1.1.1",
+  "seed": 0,
+  "inputs": {
+    "paths_files": {
+      "SPCX": "/data/workspace-invest/portfolio/_runs/20260930T215213Z-company_mc-d44a73-paths.npz",
+      "NBIS": "/data/workspace-invest/portfolio/_runs/20260930T215443Z-company_mc-e5fdb5-paths.npz",
+      "NVDA": "/data/workspace-invest/portfolio/_runs/20260930T215651Z-company_mc-563048-paths.npz",
+      "HOOD": "/data/workspace-invest/portfolio/_runs/20260930T215901Z-company_mc-722935-paths.npz",
+      "RKLB": "/data/workspace-invest/portfolio/_runs/20260930T220022Z-company_mc-c87515-paths.npz",
+      "LLY": "/data/workspace-invest/portfolio/_runs/20260930T220213Z-company_mc-a75f58-paths.npz",
+      "META": "/data/workspace-invest/portfolio/_runs/20260930T220343Z-company_mc-860795-paths.npz",
+      "ASML": "/data/workspace-invest/portfolio/_runs/20260930T220542Z-company_mc-37134d-paths.npz",
+      "MSFT": "/data/workspace-invest/portfolio/_runs/20260930T220747Z-company_mc-0bd84e-paths.npz",
+      "PLTR": "/data/workspace-invest/portfolio/_runs/20260930T220942Z-company_mc-2497bb-paths.npz",
+      "NET": "/data/workspace-invest/portfolio/_runs/20260930T221050Z-company_mc-4393ea-paths.npz",
+      "ETN": "/data/workspace-invest/portfolio/_runs/20260930T221145Z-company_mc-23625a-paths.npz",
+      "ASTS": "/data/workspace-invest/portfolio/_runs/20260930T221304Z-company_mc-994cd5-paths.npz",
+      "CRWV": "/data/workspace-invest/portfolio/_runs/20260930T221414Z-company_mc-378195-paths.npz",
+      "SPOT": "/data/workspace-invest/portfolio/_runs/20260930T221524Z-company_mc-439f32-paths.npz"
+    },
+    "weights_current": {
+      "NBIS": 0.3303,
+      "NVDA": 0.213,
+      "HOOD": 0.1423,
+      "LLY": 0.0822,
+      "META": 0.0547,
+      "ASML": 0.0277,
+      "RKLB": 0.0226,
+      "GLD": 0.022,
+      "MSFT": 0.019,
+      "NET": 0.0177,
+      "PLTR": 0.0175,
+      "ETN": 0.0116,
+      "SPOT": 0.0112,
+      "ASTS": 0.0102,
+      "SPCX": 0.0067,
+      "CRWV": 0.0049,
+      "UFO": 0.0017
+    },
+    "fixed_weights": {
+      "GLD": 0.022,
+      "UFO": 0.0017
+    },
+    "dry_powder_current": 0.0047,
+    "dry_powder_return_annual": 0.04,
+    "regime": "Stress",
+    "limits": {
+      "sector_max": 0.35,
+      "top3_aggregate_max": 0.5,
+      "common_cause_effective_max": 0.35,
+      "roles": {
+        "Challenger_max_per_name": 0.08,
+        "Challenger_aggregate_max": 0.25
+      },
+      "dry_powder": {
+        "Normal": {
+          "min": 0.05,
+          "preferred_max": 0.1,
+          "hard_max": 0.15
+        },
+        "Stress": {
+          "min": 0.05,
+          "preferred_max": 0.15,
+          "hard_max": 0.2
+        },
+        "Shock": {
+          "min": 0.1,
+          "preferred_max": 0.2,
+          "hard_max": 0.3
+        }
+      },
+      "risk_5y": {
+        "p_loss_gt_30_max": 0.2,
+        "p_loss_gt_50_max": 0.1,
+        "es5_min": -0.55,
+        "scenario_concentration_max": 0.6
+      }
+    },
+    "per_name_caps": {
+      "HOOD": 0.0951,
+      "LLY": 0.1435,
+      "PLTR": 0.0952,
+      "NET": 0.0844,
+      "ASTS": 0.0833,
+      "CRWV": 0.1064,
+      "RKLB": 0.0839,
+      "NVDA": 0.1412,
+      "MSFT": 0.145,
+      "META": 0.1358,
+      "ASML": 0.1058,
+      "NBIS": 0.2947,
+      "ETN": 0.1198,
+      "SPOT": 0.1362,
+      "SPCX": 0.0911
+    },
+    "roles": {},
+    "sectors": {
+      "RKLB": "SPACE",
+      "NVDA": "SEMICONDUCTORS",
+      "NET": "SOFTWARE",
+      "NBIS": "AI_COMPUTE",
+      "MSFT": "SOFTWARE",
+      "META": "INTERNET_PLATFORMS",
+      "LLY": "HEALTHCARE",
+      "HOOD": "FINTECH",
+      "GLD": "GOLD",
+      "ETN": "ELECTRIFICATION",
+      "ASML": "SEMICONDUCTORS",
+      "UFO": "SPACE",
+      "ASTS": "SPACE",
+      "CRWV": "AI_COMPUTE",
+      "PLTR": "SOFTWARE",
+      "SPCX": "SPACE",
+      "SPOT": "INTERNET_PLATFORMS"
+    },
+    "common_cause": {
+      "SEMICONDUCTOR_WFE_DOWNTURN": {
+        "ASML": 0.75
+      },
+      "TAIWAN_SUPPLY_DISRUPTION": {
+        "ASML": 1.0,
+        "CRWV": 0.75,
+        "META": 0.75,
+        "MSFT": 0.75,
+        "NBIS": 0.75,
+        "NVDA": 1.0,
+        "SPCX": 0.75
+      },
+      "EXPORT_CONTROLS_CHINA": {
+        "ASML": 0.75,
+        "NVDA": 0.75
+      },
+      "CUSTOMER_CAPEX_CONCENTRATION": {
+        "ASML": 0.75
+      },
+      "SINGLE_SOURCE_SUPPLIER_DISRUPTION": {
+        "ASML": 1.0
+      },
+      "LITHOGRAPHY_TECHNOLOGY_EXECUTION": {
+        "ASML": 0.75
+      },
+      "HYPERSCALER_CAPEX_SLOWDOWN": {
+        "ASML": 0.75,
+        "ETN": 0.75,
+        "META": 0.5,
+        "MSFT": 0.5,
+        "NVDA": 0.75
+      },
+      "MEMORY_CYCLE_DOWNTURN": {
+        "ASML": 0.5
+      },
+      "LAUNCH_OPERATIONS_FAILURE": {
+        "ASTS": 1.0,
+        "RKLB": 0.75,
+        "SPCX": 1.0
+      },
+      "SPACE_SYSTEMS_EXECUTION": {
+        "ASTS": 1.0,
+        "RKLB": 0.75
+      },
+      "LAUNCH_ECONOMICS_DOWNSIDE": {
+        "ASTS": 0.75
+      },
+      "SPACE_REGULATORY_SPECTRUM_DELAY": {
+        "ASTS": 1.0,
+        "SPCX": 0.75
+      },
+      "SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE": {
+        "ASTS": 0.75,
+        "SPCX": 0.75
+      },
+      "CAPITAL_MARKETS_TIGHTENING": {
+        "ASTS": 0.75,
+        "CRWV": 1.0,
+        "ETN": 0.5,
+        "NBIS": 0.75,
+        "NET": 0.5,
+        "RKLB": 0.5,
+        "SPCX": 0.5
+      },
+      "GOVERNMENT_SPACE_BUDGET": {
+        "ASTS": 0.5,
+        "RKLB": 0.75,
+        "SPCX": 0.75
+      },
+      "SPACE_REGULATORY_RANGE_DELAY": {
+        "ASTS": 0.75,
+        "RKLB": 0.5,
+        "SPCX": 0.75
+      },
+      "AI_OVERBUILD": {
+        "CRWV": 0.75,
+        "META": 0.75,
+        "MSFT": 0.75,
+        "NBIS": 0.75,
+        "NET": 0.5,
+        "NVDA": 0.75,
+        "SPCX": 0.75
+      },
+      "CUSTOMER_CONCENTRATION": {
+        "CRWV": 1.0,
+        "NVDA": 0.5
+      },
+      "DATA_CENTER_POWER_CONSTRAINT": {
+        "CRWV": 0.75,
+        "ETN": 0.75,
+        "META": 0.75,
+        "MSFT": 0.75,
+        "NBIS": 0.75,
+        "SPCX": 0.75
+      },
+      "CONTRACT_CONVERSION_FAILURE": {
+        "CRWV": 0.75,
+        "PLTR": 0.75
+      },
+      "LEVERAGE_DEBT_SERVICE": {
+        "CRWV": 0.75
+      },
+      "ACQUISITION_INTEGRATION_FAILURE": {
+        "CRWV": 0.5,
+        "ETN": 0.75,
+        "HOOD": 0.5,
+        "LLY": 0.5,
+        "NBIS": 0.5,
+        "RKLB": 0.75
+      },
+      "ELECTRIFICATION_GRID_SLOWDOWN": {
+        "ETN": 0.75
+      },
+      "PORTFOLIO_SEPARATION_EXECUTION": {
+        "ETN": 0.5
+      },
+      "INDUSTRIAL_CAPACITY_EXECUTION": {
+        "ETN": 0.75
+      },
+      "CAPITAL_MARKETS_RISK_OFF": {
+        "HOOD": 0.75
+      },
+      "REGULATORY_PREDICTION_MARKETS": {
+        "HOOD": 0.75
+      },
+      "CRYPTO_CYCLE_DOWNTURN": {
+        "HOOD": 0.5
+      },
+      "INTEREST_RATE_DECLINE": {
+        "HOOD": 0.5
+      },
+      "CONSUMER_CREDIT_DETERIORATION": {
+        "HOOD": 0.75
+      },
+      "MARKET_STRUCTURE_COUNTERPARTY_CONCENTRATION": {
+        "HOOD": 0.5
+      },
+      "GLP1_PRICING_REIMBURSEMENT": {
+        "LLY": 0.75
+      },
+      "PHARMA_MANUFACTURING_CAPACITY": {
+        "LLY": 0.75
+      },
+      "CLINICAL_REGULATORY_FAILURE": {
+        "LLY": 0.75
+      },
+      "PRODUCT_CONCENTRATION": {
+        "LLY": 1.0
+      },
+      "GLP1_COMPETITIVE_INTENSITY": {
+        "LLY": 0.75
+      },
+      "PHARMA_LITIGATION": {
+        "LLY": 0.5
+      },
+      "DIGITAL_AD_DEMAND_SLOWDOWN": {
+        "META": 0.75,
+        "SPOT": 0.75
+      },
+      "LONG_DURATION_NEW_BET_BURN": {
+        "META": 0.5
+      },
+      "PLATFORM_REGULATORY_PRESSURE": {
+        "META": 0.75,
+        "MSFT": 0.5,
+        "SPOT": 0.5
+      },
+      "CLOUD_SOFTWARE_DEMAND_SLOWDOWN": {
+        "MSFT": 0.75,
+        "NET": 0.75,
+        "PLTR": 0.75
+      },
+      "AI_CLOUD_CUSTOMER_FINANCING_STRESS": {
+        "MSFT": 0.75,
+        "NBIS": 0.75,
+        "NVDA": 0.75,
+        "SPCX": 0.75
+      },
+      "AI_MONETIZATION_FAILURE": {
+        "NET": 0.75,
+        "PLTR": 0.75
+      },
+      "CLOUD_PLATFORM_COMPETITION": {
+        "NET": 0.75
+      },
+      "INTERNET_INFRASTRUCTURE_OUTAGE": {
+        "NET": 1.0
+      },
+      "ENTERPRISE_EXPANSION_SLOWDOWN": {
+        "NET": 0.75
+      },
+      "ADVANCED_PACKAGING_HBM_BOTTLENECK": {
+        "NVDA": 0.75
+      },
+      "ARCHITECTURE_TRANSITION_EXECUTION": {
+        "NVDA": 0.75
+      },
+      "GOVERNMENT_DEFENSE_BUDGET_SLOWDOWN": {
+        "PLTR": 0.75
+      },
+      "GOVERNMENT_CONTRACT_COMPLIANCE": {
+        "PLTR": 1.0
+      },
+      "GEOGRAPHIC_REVENUE_CONCENTRATION": {
+        "PLTR": 0.5
+      },
+      "EQUITY_COMPENSATION_DILUTION": {
+        "PLTR": 0.5
+      },
+      "LAUNCH_VEHICLE_DEVELOPMENT_FAILURE": {
+        "RKLB": 1.0,
+        "SPCX": 1.0
+      },
+      "CAPITAL_INTENSITY_OVERBUILD": {
+        "SPCX": 1.0
+      },
+      "CONSUMER_ENGAGEMENT_SLOWDOWN": {
+        "SPOT": 0.75
+      },
+      "SUBSCRIPTION_PRICING_ELASTICITY": {
+        "SPOT": 0.75
+      },
+      "CONTENT_COST_INFLATION": {
+        "SPOT": 0.75
+      },
+      "AI_CONTENT_INVESTMENT_OVERRUN": {
+        "SPOT": 0.5
+      }
+    },
+    "objective_tolerance_pp": 0.5,
+    "starts": [
+      "current",
+      "equal",
+      "empty",
+      "given"
+    ],
+    "start_weights": {
+      "ASML": 0.0,
+      "ASTS": 0.0,
+      "CRWV": 0.105,
+      "ETN": 0.0,
+      "HOOD": 0.0,
+      "LLY": 0.135,
+      "META": 0.02,
+      "MSFT": 0.0,
+      "NBIS": 0.185,
+      "NET": 0.0,
+      "NVDA": 0.11,
+      "PLTR": 0.02,
+      "RKLB": 0.08,
+      "SPCX": 0.01,
+      "SPOT": 0.135
+    },
+    "start_dry_powder": 0.1983
+  },
+  "outputs": {
+    "model_version": "1.1.1",
+    "stage": "A_continuous_target",
+    "paths": 500000,
+    "search_paths": 100000,
+    "companies": [
+      "ASML",
+      "ASTS",
+      "CRWV",
+      "ETN",
+      "HOOD",
+      "LLY",
+      "META",
+      "MSFT",
+      "NBIS",
+      "NET",
+      "NVDA",
+      "PLTR",
+      "RKLB",
+      "SPCX",
+      "SPOT"
+    ],
+    "regime": "Stress",
+    "scenario_constraints": null,
+    "hedge_instruments": null,
+    "fixed_positions": {
+      "weights": {
+        "GLD": 0.022,
+        "UFO": 0.0017
+      },
+      "total": 0.0237,
+      "return_assumption": "flat (относительная стоимость 1.0): без калибровок; участвуют в лимитах, не в распределении доходности"
+    },
+    "budget_optimizable_plus_dry_powder": 0.9763,
+    "objective": {
+      "primary": "median_CAGR_5Y",
+      "tolerance": 0.005,
+      "secondary": [
+        "ES5_5Y",
+        "scenario_concentration (BASE only: n/a)",
+        "turnover"
+      ]
+    },
+    "feasible": true,
+    "start_used": "given",
+    "violations_at_optimum": [],
+    "minimum_relaxations": {},
+    "proposed_weights": {
+      "ASML": 0.0,
+      "ASTS": 0.005,
+      "CRWV": 0.105,
+      "ETN": 0.0,
+      "HOOD": 0.0,
+      "LLY": 0.125,
+      "META": 0.07,
+      "MSFT": 0.0,
+      "NBIS": 0.165,
+      "NET": 0.0,
+      "NVDA": 0.085,
+      "PLTR": 0.02,
+      "RKLB": 0.08,
+      "SPCX": 0.01,
+      "SPOT": 0.135
+    },
+    "dry_powder_weight": 0.1763,
+    "dry_powder_preferred_max": 0.15,
+    "dry_powder_above_preferred": true,
+    "per_name_caps": {
+      "ASML": 0.1058,
+      "ASTS": 0.0833,
+      "CRWV": 0.1064,
+      "ETN": 0.1198,
+      "HOOD": 0.0951,
+      "LLY": 0.1435,
+      "META": 0.1358,
+      "MSFT": 0.145,
+      "NBIS": 0.2947,
+      "NET": 0.0844,
+      "NVDA": 0.1412,
+      "PLTR": 0.0952,
+      "RKLB": 0.0839,
+      "SPCX": 0.0911,
+      "SPOT": 0.1362
+    },
+    "feasible_weight_bands": {
+      "ASML": [
+        0.0,
+        0.02
+      ],
+      "ASTS": [
+        0.0,
+        0.05
+      ],
+      "CRWV": [
+        0.06,
+        0.105
+      ],
+      "ETN": [
+        0.0,
+        0.04
+      ],
+      "HOOD": [
+        0.0,
+        0.04
+      ],
+      "LLY": [
+        0.09,
+        0.14
+      ],
+      "META": [
+        0.0,
+        0.085
+      ],
+      "MSFT": [
+        0.0,
+        0.04
+      ],
+      "NBIS": [
+        0.145,
+        0.24
+      ],
+      "NET": [
+        0.0,
+        0.04
+      ],
+      "NVDA": [
+        0.07,
+        0.11
+      ],
+      "PLTR": [
+        0.02,
+        0.06
+      ],
+      "RKLB": [
+        0.08,
+        0.08
+      ],
+      "SPCX": [
+        0.01,
+        0.03
+      ],
+      "SPOT": [
+        0.13,
+        0.135
+      ]
+    },
+    "portfolio_return_distribution": {
+      "Y3": {
+        "median_CAGR": 0.1847447356395704,
+        "P_2x": 0.164676,
+        "CAGR_quantiles": {
+          "0.05": 0.07468179010223273,
+          "0.25": 0.13678428578679447,
+          "0.5": 0.1847447356395704,
+          "0.75": 0.23610549390963104,
+          "0.95": 0.3140509828706779
+        }
+      },
+      "Y5": {
+        "median_CAGR": 0.1805799164130416,
+        "P_2x": 0.670938,
+        "CAGR_quantiles": {
+          "0.05": 0.07469704285032774,
+          "0.25": 0.13294368855363864,
+          "0.5": 0.1805799164130416,
+          "0.75": 0.23394651149932577,
+          "0.95": 0.3193125424038622
+        }
+      },
+      "Y8": {
+        "median_CAGR": 0.19665667512803142,
+        "P_2x": 0.942568,
+        "CAGR_quantiles": {
+          "0.05": 0.08693522583321714,
+          "0.25": 0.14558145026935976,
+          "0.5": 0.19665667512803142,
+          "0.75": 0.25651464093072984,
+          "0.95": 0.35544135143158595
+        }
+      }
+    },
+    "portfolio_downside": {
+      "Y3": {
+        "P_loss_gt_30pct": 0.0,
+        "P_loss_gt_50pct": 0.0,
+        "expected_shortfall_5pct": 0.1614222955380907
+      },
+      "Y5": {
+        "P_loss_gt_30pct": 0.0,
+        "P_loss_gt_50pct": 0.0,
+        "expected_shortfall_5pct": 0.30140888037720737
+      },
+      "Y8": {
+        "P_loss_gt_30pct": 0.0,
+        "P_loss_gt_50pct": 0.0,
+        "expected_shortfall_5pct": 0.693647528724033
+      }
+    },
+    "turnover_from_current": 0.5168,
+    "scenario_concentration": null,
+    "concentrations": {
+      "sector": {
+        "AI_COMPUTE": 0.27,
+        "ELECTRIFICATION": 0.0,
+        "FINTECH": 0.0,
+        "GOLD": 0.022,
+        "HEALTHCARE": 0.125,
+        "INTERNET_PLATFORMS": 0.20500000000000002,
+        "SEMICONDUCTORS": 0.085,
+        "SOFTWARE": 0.02,
+        "SPACE": 0.0967
+      },
+      "top3": 0.42500000000000004,
+      "common_cause": {
+        "SEMICONDUCTOR_WFE_DOWNTURN": 0.0,
+        "TAIWAN_SUPPLY_DISRUPTION": 0.3475,
+        "EXPORT_CONTROLS_CHINA": 0.06375,
+        "CUSTOMER_CAPEX_CONCENTRATION": 0.0,
+        "SINGLE_SOURCE_SUPPLIER_DISRUPTION": 0.0,
+        "LITHOGRAPHY_TECHNOLOGY_EXECUTION": 0.0,
+        "HYPERSCALER_CAPEX_SLOWDOWN": 0.09875,
+        "MEMORY_CYCLE_DOWNTURN": 0.0,
+        "LAUNCH_OPERATIONS_FAILURE": 0.07500000000000001,
+        "SPACE_SYSTEMS_EXECUTION": 0.065,
+        "LAUNCH_ECONOMICS_DOWNSIDE": 0.00375,
+        "SPACE_REGULATORY_SPECTRUM_DELAY": 0.0125,
+        "SATELLITE_CONNECTIVITY_MONETIZATION_FAILURE": 0.01125,
+        "CAPITAL_MARKETS_TIGHTENING": 0.2775,
+        "GOVERNMENT_SPACE_BUDGET": 0.07,
+        "SPACE_REGULATORY_RANGE_DELAY": 0.051250000000000004,
+        "AI_OVERBUILD": 0.32625,
+        "CUSTOMER_CONCENTRATION": 0.1475,
+        "DATA_CENTER_POWER_CONSTRAINT": 0.2625,
+        "CONTRACT_CONVERSION_FAILURE": 0.09375,
+        "LEVERAGE_DEBT_SERVICE": 0.07875,
+        "ACQUISITION_INTEGRATION_FAILURE": 0.2575,
+        "ELECTRIFICATION_GRID_SLOWDOWN": 0.0,
+        "PORTFOLIO_SEPARATION_EXECUTION": 0.0,
+        "INDUSTRIAL_CAPACITY_EXECUTION": 0.0,
+        "CAPITAL_MARKETS_RISK_OFF": 0.0,
+        "REGULATORY_PREDICTION_MARKETS": 0.0,
+        "CRYPTO_CYCLE_DOWNTURN": 0.0,
+        "INTEREST_RATE_DECLINE": 0.0,
+        "CONSUMER_CREDIT_DETERIORATION": 0.0,
+        "MARKET_STRUCTURE_COUNTERPARTY_CONCENTRATION": 0.0,
+        "GLP1_PRICING_REIMBURSEMENT": 0.09375,
+        "PHARMA_MANUFACTURING_CAPACITY": 0.09375,
+        "CLINICAL_REGULATORY_FAILURE": 0.09375,
+        "PRODUCT_CONCENTRATION": 0.125,
+        "GLP1_COMPETITIVE_INTENSITY": 0.09375,
+        "PHARMA_LITIGATION": 0.0625,
+        "DIGITAL_AD_DEMAND_SLOWDOWN": 0.15375,
+        "LONG_DURATION_NEW_BET_BURN": 0.035,
+        "PLATFORM_REGULATORY_PRESSURE": 0.12000000000000001,
+        "CLOUD_SOFTWARE_DEMAND_SLOWDOWN": 0.015,
+        "AI_CLOUD_CUSTOMER_FINANCING_STRESS": 0.195,
+        "AI_MONETIZATION_FAILURE": 0.015,
+        "CLOUD_PLATFORM_COMPETITION": 0.0,
+        "INTERNET_INFRASTRUCTURE_OUTAGE": 0.0,
+        "ENTERPRISE_EXPANSION_SLOWDOWN": 0.0,
+        "ADVANCED_PACKAGING_HBM_BOTTLENECK": 0.06375,
+        "ARCHITECTURE_TRANSITION_EXECUTION": 0.06375,
+        "GOVERNMENT_DEFENSE_BUDGET_SLOWDOWN": 0.015,
+        "GOVERNMENT_CONTRACT_COMPLIANCE": 0.02,
+        "GEOGRAPHIC_REVENUE_CONCENTRATION": 0.01,
+        "EQUITY_COMPENSATION_DILUTION": 0.01,
+        "LAUNCH_VEHICLE_DEVELOPMENT_FAILURE": 0.09,
+        "CAPITAL_INTENSITY_OVERBUILD": 0.01,
+        "CONSUMER_ENGAGEMENT_SLOWDOWN": 0.10125,
+        "SUBSCRIPTION_PRICING_ELASTICITY": 0.10125,
+        "CONTENT_COST_INFLATION": 0.10125,
+        "AI_CONTENT_INVESTMENT_OVERRUN": 0.0675
+      },
+      "challenger_aggregate": 0.0,
+      "dry_powder": 0.1763
+    },
+    "binding_constraints": [
+      "common_cause_max:TAIWAN_SUPPLY_DISRUPTION",
+      "per_name_cap:CRWV",
+      "per_name_cap:RKLB",
+      "per_name_cap:SPOT"
+    ],
+    "current_portfolio": {
+      "weights": {
+        "ASML": 0.0277,
+        "ASTS": 0.0102,
+        "CRWV": 0.0049,
+        "ETN": 0.0116,
+        "HOOD": 0.1423,
+        "LLY": 0.0822,
+        "META": 0.0547,
+        "MSFT": 0.019,
+        "NBIS": 0.3303,
+        "NET": 0.0177,
+        "NVDA": 0.213,
+        "PLTR": 0.0175,
+        "RKLB": 0.0226,
+        "SPCX": 0.0067,
+        "SPOT": 0.0112
+      },
+      "dry_powder": 0.0047,
+      "return_distribution_Y5": {
+        "median_CAGR": 0.182114313641214,
+        "P_2x": 0.619632,
+        "P_loss_gt_30pct": 0.001082,
+        "P_loss_gt_50pct": 3e-05,
+        "expected_shortfall_5pct": -0.01377297169803117
+      },
+      "violations": [
+        {
+          "constraint": "per_name_cap:HOOD",
+          "value": 0.1423,
+          "bound": 0.0951,
+          "excess": 0.047200000000000006
+        },
+        {
+          "constraint": "per_name_cap:NBIS",
+          "value": 0.3303,
+          "bound": 0.2947,
+          "excess": 0.035599999999999965
+        },
+        {
+          "constraint": "per_name_cap:NVDA",
+          "value": 0.213,
+          "bound": 0.1412,
+          "excess": 0.0718
+        },
+        {
+          "constraint": "top3_aggregate_max",
+          "value": 0.6856,
+          "bound": 0.5,
+          "excess": 0.1856
+        },
+        {
+          "constraint": "common_cause_max:TAIWAN_SUPPLY_DISRUPTION",
+          "value": 0.5523999999999999,
+          "bound": 0.35,
+          "excess": 0.2023999999999999
+        },
+        {
+          "constraint": "common_cause_max:AI_OVERBUILD",
+          "value": 0.4803,
+          "bound": 0.35,
+          "excess": 0.13030000000000003
+        },
+        {
+          "constraint": "common_cause_max:AI_CLOUD_CUSTOMER_FINANCING_STRESS",
+          "value": 0.42674999999999996,
+          "bound": 0.35,
+          "excess": 0.07674999999999998
+        },
+        {
+          "constraint": "dry_powder_min:Stress",
+          "value": 0.0047,
+          "bound": 0.05,
+          "excess": 0.0453
+        }
+      ]
+    },
+    "constraint_gaps_vs_current": [
+      {
+        "constraint": "per_name_cap:HOOD",
+        "value": 0.1423,
+        "bound": 0.0951,
+        "excess": 0.047200000000000006,
+        "note": "разрыв, не приказ продавать (§3.1)"
+      },
+      {
+        "constraint": "per_name_cap:NBIS",
+        "value": 0.3303,
+        "bound": 0.2947,
+        "excess": 0.035599999999999965,
+        "note": "разрыв, не приказ продавать (§3.1)"
+      },
+      {
+        "constraint": "per_name_cap:NVDA",
+        "value": 0.213,
+        "bound": 0.1412,
+        "excess": 0.0718,
+        "note": "разрыв, не приказ продавать (§3.1)"
+      },
+      {
+        "constraint": "top3_aggregate_max",
+        "value": 0.6856,
+        "bound": 0.5,
+        "excess": 0.1856,
+        "note": "разрыв, не приказ продавать (§3.1)"
+      },
+      {
+        "constraint": "common_cause_max:TAIWAN_SUPPLY_DISRUPTION",
+        "value": 0.5523999999999999,
+        "bound": 0.35,
+        "excess": 0.2023999999999999,
+        "note": "разрыв, не приказ продавать (§3.1)"
+      },
+      {
+        "constraint": "common_cause_max:AI_OVERBUILD",
+        "value": 0.4803,
+        "bound": 0.35,
+        "excess": 0.13030000000000003,
+        "note": "разрыв, не приказ продавать (§3.1)"
+      },
+      {
+        "constraint": "common_cause_max:AI_CLOUD_CUSTOMER_FINANCING_STRESS",
+        "value": 0.42674999999999996,
+        "bound": 0.35,
+        "excess": 0.07674999999999998,
+        "note": "разрыв, не приказ продавать (§3.1)"
+      },
+      {
+        "constraint": "dry_powder_min:Stress",
+        "value": 0.0047,
+        "bound": 0.05,
+        "excess": 0.0453,
+        "note": "разрыв, не приказ продавать (§3.1)"
+      }
+    ],
+    "marginal_curves": {
+      "ASML": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.1805799164130416,
+          "ES5": 0.30140888037720737,
+          "feasible": true
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.17866997816386765,
+          "ES5": 0.29569445400953187,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.17676763430392461,
+          "ES5": 0.2880519644647801,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.17493516533544962,
+          "ES5": 0.28036463362939945,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.17308157464776763,
+          "ES5": 0.2726201532101826,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.1712539201593828,
+          "ES5": 0.2648180652157781,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.16938097442651734,
+          "ES5": 0.2569597945994806,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.1674751829026122,
+          "ES5": 0.24904953312596922,
+          "feasible": false
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.1655107024376663,
+          "ES5": 0.24107565742720105,
+          "feasible": false
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.16358300206566279,
+          "ES5": 0.23301782524717463,
+          "feasible": false
+        },
+        {
+          "weight": 0.1,
+          "median_CAGR_5Y": 0.16160708564222204,
+          "ES5": 0.22487892461953418,
+          "feasible": false
+        }
+      ],
+      "ASTS": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.18113444847627913,
+          "ES5": 0.30365090998204436,
+          "feasible": true
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.17988163968685167,
+          "ES5": 0.3027323419047616,
+          "feasible": true
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.17863099191846898,
+          "ES5": 0.30113068916369934,
+          "feasible": true
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.17738202006460346,
+          "ES5": 0.2987124691809546,
+          "feasible": true
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.17607845788111254,
+          "ES5": 0.29551374486005466,
+          "feasible": true
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.17485976300664885,
+          "ES5": 0.2916369083719157,
+          "feasible": true
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.17361758876155164,
+          "ES5": 0.2871043123795367,
+          "feasible": true
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.17237278326106376,
+          "ES5": 0.281988728789508,
+          "feasible": true
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.17110451865595833,
+          "ES5": 0.2762788213314704,
+          "feasible": true
+        }
+      ],
+      "CRWV": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.1510807431708936,
+          "ES5": 0.19543752570504713,
+          "feasible": false
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.1540579614498534,
+          "ES5": 0.2173371000537816,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.15704235440087566,
+          "ES5": 0.23489940017101296,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.15998324377956963,
+          "ES5": 0.24925923862681798,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.1629986812247468,
+          "ES5": 0.26116099010052096,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.16589542646036803,
+          "ES5": 0.2710281674822921,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.1687334478216489,
+          "ES5": 0.27936294046860133,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.1714583886747909,
+          "ES5": 0.2864198143360577,
+          "feasible": false
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.17414177754229465,
+          "ES5": 0.29239011681981175,
+          "feasible": false
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.17673392828914358,
+          "ES5": 0.29739476977124957,
+          "feasible": false
+        },
+        {
+          "weight": 0.1,
+          "median_CAGR_5Y": 0.17928828135641162,
+          "ES5": 0.30154838671230544,
+          "feasible": true
+        }
+      ],
+      "ETN": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.1805799164130416,
+          "ES5": 0.30140888037720737,
+          "feasible": true
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.17911228528786882,
+          "ES5": 0.29954076099770743,
+          "feasible": true
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.17771906368129464,
+          "ES5": 0.29567395812631725,
+          "feasible": true
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.17631754460146354,
+          "ES5": 0.2916920700023955,
+          "feasible": true
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.1749442047904528,
+          "ES5": 0.28758677565616897,
+          "feasible": true
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.1735409029020678,
+          "ES5": 0.2833373126666259,
+          "feasible": true
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.172125415511855,
+          "ES5": 0.27894533580629366,
+          "feasible": true
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.17073354009192565,
+          "ES5": 0.2744295871239433,
+          "feasible": true
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.169357775615123,
+          "ES5": 0.2697843116489895,
+          "feasible": true
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.1679377629019907,
+          "ES5": 0.26500398713547435,
+          "feasible": true
+        },
+        {
+          "weight": 0.1,
+          "median_CAGR_5Y": 0.16653600998315188,
+          "ES5": 0.26008111756362995,
+          "feasible": true
+        },
+        {
+          "weight": 0.11,
+          "median_CAGR_5Y": 0.16511711902716097,
+          "ES5": 0.2550191222389575,
+          "feasible": true
+        }
+      ],
+      "HOOD": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.1805799164130416,
+          "ES5": 0.30140888037720737,
+          "feasible": true
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.17854760006963555,
+          "ES5": 0.296122315817394,
+          "feasible": true
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.17653820622801186,
+          "ES5": 0.288918923577939,
+          "feasible": true
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.17456316495927582,
+          "ES5": 0.2816665469863644,
+          "feasible": true
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.17251535682759034,
+          "ES5": 0.2743722485800839,
+          "feasible": true
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.17054949380583762,
+          "ES5": 0.26702939579929197,
+          "feasible": true
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.16845133162411186,
+          "ES5": 0.25963094283763866,
+          "feasible": true
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.16640334699787762,
+          "ES5": 0.25217637407591464,
+          "feasible": true
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.16433130132166607,
+          "ES5": 0.24467142047506196,
+          "feasible": true
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.16222362724957362,
+          "ES5": 0.23710267478134628,
+          "feasible": true
+        }
+      ],
+      "LLY": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.19552089119803595,
+          "ES5": 0.29889255249802127,
+          "feasible": false
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.19434392184359495,
+          "ES5": 0.3004817307261496,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.19316534676558983,
+          "ES5": 0.3018567050750123,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.19195474709119664,
+          "ES5": 0.30299713322245303,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.1907839704701404,
+          "ES5": 0.303921613280715,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.1895800929531446,
+          "ES5": 0.30465482694120816,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.18829339499751874,
+          "ES5": 0.3051839187971601,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.1871125600864858,
+          "ES5": 0.3054833735041931,
+          "feasible": false
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.18590115289669074,
+          "ES5": 0.3055700088531894,
+          "feasible": false
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.18470423069004882,
+          "ES5": 0.30544464423990547,
+          "feasible": false
+        },
+        {
+          "weight": 0.1,
+          "median_CAGR_5Y": 0.1835199660969642,
+          "ES5": 0.3050980164837884,
+          "feasible": false
+        },
+        {
+          "weight": 0.11,
+          "median_CAGR_5Y": 0.1822990370849089,
+          "ES5": 0.3045216400397879,
+          "feasible": false
+        },
+        {
+          "weight": 0.12,
+          "median_CAGR_5Y": 0.18112246363415174,
+          "ES5": 0.3037461758711839,
+          "feasible": false
+        },
+        {
+          "weight": 0.13,
+          "median_CAGR_5Y": 0.17991932296182722,
+          "ES5": 0.3027539659710521,
+          "feasible": true
+        },
+        {
+          "weight": 0.14,
+          "median_CAGR_5Y": 0.1786324206063985,
+          "ES5": 0.301558049294113,
+          "feasible": true
+        }
+      ],
+      "META": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.1865109450322664,
+          "ES5": 0.30051303061634393,
+          "feasible": false
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.18558978328330755,
+          "ES5": 0.3016095609016851,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.18474487266726713,
+          "ES5": 0.30249754850601174,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.18394900248695634,
+          "ES5": 0.30313700297147483,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.18305423318972114,
+          "ES5": 0.30354007908569947,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.18225529439512145,
+          "ES5": 0.3037023934251597,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.18136028034880947,
+          "ES5": 0.3036149088832074,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.1805799164130416,
+          "ES5": 0.30140888037720737,
+          "feasible": true
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.17966563167265237,
+          "ES5": 0.3027097858612713,
+          "feasible": false
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.17879936050541456,
+          "ES5": 0.3019336313104384,
+          "feasible": false
+        },
+        {
+          "weight": 0.1,
+          "median_CAGR_5Y": 0.17792614096694281,
+          "ES5": 0.3009635689958414,
+          "feasible": false
+        },
+        {
+          "weight": 0.11,
+          "median_CAGR_5Y": 0.17705623874084186,
+          "ES5": 0.2997790471488915,
+          "feasible": false
+        },
+        {
+          "weight": 0.12,
+          "median_CAGR_5Y": 0.17615033515671485,
+          "ES5": 0.29837033111633526,
+          "feasible": false
+        },
+        {
+          "weight": 0.13,
+          "median_CAGR_5Y": 0.17523541481735694,
+          "ES5": 0.29674877885100437,
+          "feasible": false
+        }
+      ],
+      "MSFT": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.1805799164130416,
+          "ES5": 0.30140888037720737,
+          "feasible": true
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.17934672226927018,
+          "ES5": 0.30272152835879673,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.17820822693124772,
+          "ES5": 0.30198149302575206,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.17704527847972695,
+          "ES5": 0.3010583628279764,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.1758878718728285,
+          "ES5": 0.29994069680383073,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.17475765899833018,
+          "ES5": 0.29863060992159496,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.17357149119222082,
+          "ES5": 0.29714623369499593,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.17241864243382077,
+          "ES5": 0.2954955643757835,
+          "feasible": false
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.1711782008746383,
+          "ES5": 0.29367496718323505,
+          "feasible": false
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.1699742222870151,
+          "ES5": 0.2916808386034775,
+          "feasible": false
+        },
+        {
+          "weight": 0.1,
+          "median_CAGR_5Y": 0.16875631394091628,
+          "ES5": 0.2895082356688534,
+          "feasible": false
+        },
+        {
+          "weight": 0.11,
+          "median_CAGR_5Y": 0.16756466330064468,
+          "ES5": 0.28717763299257926,
+          "feasible": false
+        },
+        {
+          "weight": 0.12,
+          "median_CAGR_5Y": 0.16637112162987,
+          "ES5": 0.2846875379352274,
+          "feasible": false
+        },
+        {
+          "weight": 0.13,
+          "median_CAGR_5Y": 0.16515766117771258,
+          "ES5": 0.28200747823823114,
+          "feasible": false
+        },
+        {
+          "weight": 0.14,
+          "median_CAGR_5Y": 0.16395312145545415,
+          "ES5": 0.2791520628976021,
+          "feasible": false
+        }
+      ],
+      "NBIS": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.13789181821210605,
+          "ES5": 0.20027783114850561,
+          "feasible": false
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.14111229186095975,
+          "ES5": 0.22198553315589642,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.14428491072738248,
+          "ES5": 0.23908013670937533,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.14745482206750848,
+          "ES5": 0.252604029936355,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.15051128985269502,
+          "ES5": 0.26361520679056394,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.1534181106563257,
+          "ES5": 0.2726944702751859,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.15630056952714844,
+          "ES5": 0.28001272640310626,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.15893402475169283,
+          "ES5": 0.2859529228376225,
+          "feasible": false
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.16154670469117205,
+          "ES5": 0.29087162927466403,
+          "feasible": false
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.1640995782774699,
+          "ES5": 0.2947566144445639,
+          "feasible": false
+        },
+        {
+          "weight": 0.1,
+          "median_CAGR_5Y": 0.16655623869340053,
+          "ES5": 0.2977811989946131,
+          "feasible": false
+        },
+        {
+          "weight": 0.11,
+          "median_CAGR_5Y": 0.16888696658470947,
+          "ES5": 0.30018578108172034,
+          "feasible": false
+        },
+        {
+          "weight": 0.12,
+          "median_CAGR_5Y": 0.1711515916449271,
+          "ES5": 0.3019664748348627,
+          "feasible": false
+        },
+        {
+          "weight": 0.13,
+          "median_CAGR_5Y": 0.17337236875035145,
+          "ES5": 0.3031569266244156,
+          "feasible": false
+        },
+        {
+          "weight": 0.14,
+          "median_CAGR_5Y": 0.17556627089980537,
+          "ES5": 0.3038006319961031,
+          "feasible": false
+        },
+        {
+          "weight": 0.15,
+          "median_CAGR_5Y": 0.1775444428322115,
+          "ES5": 0.30394663266678323,
+          "feasible": false
+        },
+        {
+          "weight": 0.16,
+          "median_CAGR_5Y": 0.17948609491139522,
+          "ES5": 0.3036002473790458,
+          "feasible": true
+        },
+        {
+          "weight": 0.17,
+          "median_CAGR_5Y": 0.18143743568351156,
+          "ES5": 0.3028730849006347,
+          "feasible": true
+        },
+        {
+          "weight": 0.18,
+          "median_CAGR_5Y": 0.18328043712431574,
+          "ES5": 0.3017657134087206,
+          "feasible": false
+        },
+        {
+          "weight": 0.19,
+          "median_CAGR_5Y": 0.1850957259396584,
+          "ES5": 0.3002913187200953,
+          "feasible": false
+        },
+        {
+          "weight": 0.2,
+          "median_CAGR_5Y": 0.18686083914967844,
+          "ES5": 0.29850252398373023,
+          "feasible": false
+        },
+        {
+          "weight": 0.21,
+          "median_CAGR_5Y": 0.1886619674930916,
+          "ES5": 0.2963898251723527,
+          "feasible": false
+        },
+        {
+          "weight": 0.22,
+          "median_CAGR_5Y": 0.19034531364519292,
+          "ES5": 0.293965064145276,
+          "feasible": false
+        },
+        {
+          "weight": 0.23,
+          "median_CAGR_5Y": 0.1920488594215397,
+          "ES5": 0.29127477139157576,
+          "feasible": false
+        },
+        {
+          "weight": 0.24,
+          "median_CAGR_5Y": 0.19366663227509973,
+          "ES5": 0.28830296502013697,
+          "feasible": false
+        },
+        {
+          "weight": 0.25,
+          "median_CAGR_5Y": 0.19532671534092838,
+          "ES5": 0.2850166000139871,
+          "feasible": false
+        },
+        {
+          "weight": 0.26,
+          "median_CAGR_5Y": 0.19694839080639603,
+          "ES5": 0.2814476210454704,
+          "feasible": false
+        },
+        {
+          "weight": 0.27,
+          "median_CAGR_5Y": 0.19850033879916862,
+          "ES5": 0.2776212617508791,
+          "feasible": false
+        },
+        {
+          "weight": 0.28,
+          "median_CAGR_5Y": 0.20011172379602726,
+          "ES5": 0.27355980862650875,
+          "feasible": false
+        },
+        {
+          "weight": 0.29,
+          "median_CAGR_5Y": 0.20156970810129748,
+          "ES5": 0.2693039855874473,
+          "feasible": false
+        }
+      ],
+      "NET": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.1805799164130416,
+          "ES5": 0.30140888037720737,
+          "feasible": true
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.17837383844295962,
+          "ES5": 0.2934086640469953,
+          "feasible": true
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.17620972705430726,
+          "ES5": 0.283508099634455,
+          "feasible": true
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.17403706144566988,
+          "ES5": 0.2735815277507816,
+          "feasible": true
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.17181814100656023,
+          "ES5": 0.2636250896661634,
+          "feasible": true
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.16961865312266045,
+          "ES5": 0.2536391061958587,
+          "feasible": true
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.1673461592129497,
+          "ES5": 0.2436304386177135,
+          "feasible": true
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.16512726530675148,
+          "ES5": 0.2335937896691347,
+          "feasible": true
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.16283942725098055,
+          "ES5": 0.22352452863673378,
+          "feasible": true
+        }
+      ],
+      "NVDA": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.18329764794031322,
+          "ES5": 0.29417923258595446,
+          "feasible": false
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.18287833999408165,
+          "ES5": 0.2968330340400258,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.1825883577848224,
+          "ES5": 0.29904884881691807,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.1822604496011404,
+          "ES5": 0.30080635352700913,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.1820102115234501,
+          "ES5": 0.302129396409732,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.1816790730812916,
+          "ES5": 0.3030112590834608,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.18134701746462767,
+          "ES5": 0.3034949833893448,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.18099495343152738,
+          "ES5": 0.3036348970390341,
+          "feasible": false
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.18064546922653224,
+          "ES5": 0.3034697257750174,
+          "feasible": true
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.18035615402081273,
+          "ES5": 0.3030015848767311,
+          "feasible": false
+        },
+        {
+          "weight": 0.1,
+          "median_CAGR_5Y": 0.18000277652608543,
+          "ES5": 0.30220147125408103,
+          "feasible": false
+        },
+        {
+          "weight": 0.11,
+          "median_CAGR_5Y": 0.1796027123790751,
+          "ES5": 0.30110823996231506,
+          "feasible": false
+        },
+        {
+          "weight": 0.12,
+          "median_CAGR_5Y": 0.17922852323763672,
+          "ES5": 0.2997385167603108,
+          "feasible": false
+        },
+        {
+          "weight": 0.13,
+          "median_CAGR_5Y": 0.17892531066674988,
+          "ES5": 0.298096525587803,
+          "feasible": false
+        },
+        {
+          "weight": 0.14,
+          "median_CAGR_5Y": 0.17853844400681695,
+          "ES5": 0.29620514339713133,
+          "feasible": false
+        }
+      ],
+      "PLTR": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.1835777207295941,
+          "ES5": 0.3110569472110074,
+          "feasible": false
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.18204555304500447,
+          "ES5": 0.3072329888054137,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.1805799164130416,
+          "ES5": 0.30140888037720737,
+          "feasible": true
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.1789726782207215,
+          "ES5": 0.29921532539721873,
+          "feasible": true
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.17741578710762784,
+          "ES5": 0.29503283569389094,
+          "feasible": true
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.17584454222325796,
+          "ES5": 0.2907322028915016,
+          "feasible": true
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.17432253050438917,
+          "ES5": 0.2862979182427148,
+          "feasible": true
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.17271640072276928,
+          "ES5": 0.2817305845102547,
+          "feasible": true
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.17113417624778005,
+          "ES5": 0.27701727902813755,
+          "feasible": true
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.16960126700756528,
+          "ES5": 0.2721837166720409,
+          "feasible": true
+        }
+      ],
+      "RKLB": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.19154504393150007,
+          "ES5": 0.3191442805416034,
+          "feasible": false
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.19018717179248634,
+          "ES5": 0.31801723480996014,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.1888457703810258,
+          "ES5": 0.3166501318512229,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.18749186627830627,
+          "ES5": 0.31503679817649544,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.18613841707736523,
+          "ES5": 0.3131832651631852,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.18474079629754558,
+          "ES5": 0.31106437597084047,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.18332621804493243,
+          "ES5": 0.30869629916933317,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.1819437973721112,
+          "ES5": 0.30609697255732016,
+          "feasible": false
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.1805799164130416,
+          "ES5": 0.30140888037720737,
+          "feasible": true
+        }
+      ],
+      "SPCX": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.1822098081586645,
+          "ES5": 0.3090800913126823,
+          "feasible": false
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.1805799164130416,
+          "ES5": 0.30140888037720737,
+          "feasible": true
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.1787913657840816,
+          "ES5": 0.29733500187203177,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.17711327347103833,
+          "ES5": 0.2912637447844879,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.17539643662349658,
+          "ES5": 0.28506000124120545,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.17370762001663187,
+          "ES5": 0.2787297747330266,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.17197133999984748,
+          "ES5": 0.27227194243015473,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.1701946507288874,
+          "ES5": 0.2656741091267827,
+          "feasible": false
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.16851282098416487,
+          "ES5": 0.25893773299502243,
+          "feasible": false
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.16675407281847932,
+          "ES5": 0.25206426829916495,
+          "feasible": false
+        }
+      ],
+      "SPOT": [
+        {
+          "weight": 0.0,
+          "median_CAGR_5Y": 0.19291931526051065,
+          "ES5": 0.2476164854331575,
+          "feasible": false
+        },
+        {
+          "weight": 0.01,
+          "median_CAGR_5Y": 0.1920422701019815,
+          "ES5": 0.2528506492863609,
+          "feasible": false
+        },
+        {
+          "weight": 0.02,
+          "median_CAGR_5Y": 0.19110011750576983,
+          "ES5": 0.2579259025236118,
+          "feasible": false
+        },
+        {
+          "weight": 0.03,
+          "median_CAGR_5Y": 0.19022689631200396,
+          "ES5": 0.2628476647126987,
+          "feasible": false
+        },
+        {
+          "weight": 0.04,
+          "median_CAGR_5Y": 0.18928747577518235,
+          "ES5": 0.2675775064100472,
+          "feasible": false
+        },
+        {
+          "weight": 0.05,
+          "median_CAGR_5Y": 0.1883387238822405,
+          "ES5": 0.27209703207002844,
+          "feasible": false
+        },
+        {
+          "weight": 0.06,
+          "median_CAGR_5Y": 0.18738074124139792,
+          "ES5": 0.2764608498658332,
+          "feasible": false
+        },
+        {
+          "weight": 0.07,
+          "median_CAGR_5Y": 0.18650609749025815,
+          "ES5": 0.28065126606169444,
+          "feasible": false
+        },
+        {
+          "weight": 0.08,
+          "median_CAGR_5Y": 0.18557868232664299,
+          "ES5": 0.28467513091672725,
+          "feasible": false
+        },
+        {
+          "weight": 0.09,
+          "median_CAGR_5Y": 0.18461345057801504,
+          "ES5": 0.28850616563783116,
+          "feasible": false
+        },
+        {
+          "weight": 0.1,
+          "median_CAGR_5Y": 0.18366041887064455,
+          "ES5": 0.29213983936843224,
+          "feasible": false
+        },
+        {
+          "weight": 0.11,
+          "median_CAGR_5Y": 0.18274751944522905,
+          "ES5": 0.2955561146063068,
+          "feasible": false
+        },
+        {
+          "weight": 0.12,
+          "median_CAGR_5Y": 0.18180332969743773,
+          "ES5": 0.2987916722676818,
+          "feasible": false
+        },
+        {
+          "weight": 0.13,
+          "median_CAGR_5Y": 0.18097414943907508,
+          "ES5": 0.30182661284017165,
+          "feasible": false
+        }
+      ]
+    },
+    "candidates": [
+      {
+        "start": "current",
+        "feasible": true,
+        "median_CAGR_5Y": 0.17192775796484638,
+        "ES5": 0.20065667149955516,
+        "evals": 3036
+      },
+      {
+        "start": "equal",
+        "feasible": true,
+        "median_CAGR_5Y": 0.16433789865190496,
+        "ES5": 0.20739304915517742,
+        "evals": 3375
+      },
+      {
+        "start": "empty",
+        "feasible": true,
+        "median_CAGR_5Y": 0.0946257530282808,
+        "ES5": -0.03299255214402293,
+        "evals": 11493
+      },
+      {
+        "start": "given",
+        "feasible": true,
+        "median_CAGR_5Y": 0.1805799164130416,
+        "ES5": 0.30140888037720737,
+        "evals": 7091
+      }
+    ],
+    "execution_projection_by_account": null,
+    "ex_post_initial_hypothesis_comparison": null,
+    "stability_test_ref": null,
+    "assumptions": [
+      "позиции без калибровок фиксированы на текущих весах с плоской доходностью",
+      "единственный сценарий BASE — Scenario Concentration не определена",
+      "оборот = Σ|Δw|/2 по оптимизируемым бумагам и dry powder",
+      "стадия B (проекция на счета, лоты, издержки) не выполняется"
+    ],
+    "decision": "none"
+  },
+  "elapsed_ms": 356291.9,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

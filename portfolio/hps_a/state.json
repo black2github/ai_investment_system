@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.5",
-  "updated": "2026-10-03T19:30:00+03:00",
+  "updated": "2026-10-03T21:30:00Z",
   "price": {
     "last": 296.97,
     "last_at": "2026-10-02",
@@ -34,6 +34,11 @@
       "timestamp": "2026-10-03T19:30:00+03:00",
       "kind": "model_created",
       "summary": "Party 13 company model generated; Trigger != Decision."
+    },
+    {
+      "timestamp": "2026-10-03T21:30:00Z",
+      "kind": "calc",
+      "summary": "Интеграция калибровки HPS.A v1.0 (партия 14, 2026-10-03): calibration_v1.0.yaml + mc_calibration_v1.0.yaml приняты (RV 445a1a, валидатор calibration pass 91e257); нормативный прогон: 20261003T210242Z-company_mc-98b0da"
     }
   ],
   "scenario_state": {
@@ -253,5 +258,63 @@
       "verification_run_id": null
     }
   ],
-  "calc_runs": []
+  "calc_runs": [
+    {
+      "run_id": "20261003T205836Z-reverse_valuation-445a1a",
+      "model": "reverse_valuation 1.2.0",
+      "spec": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+      "calibration": "calibration_v1.0.yaml",
+      "valuation_date": "2026-10-03",
+      "price": 296.97,
+      "shares_outstanding": 11904924,
+      "equity_value_b": 3.54,
+      "currency": null,
+      "implied_revenue_cagr_5y": 0.1586,
+      "terminal_value_share_of_pv": 0.8569,
+      "model_stability": "terminal_dependent",
+      "note": "Первый нормативный RV-прогон (партия 14); класс устойчивости по Reverse_Valuation_Rules_v1.1 §1 — terminal_dependent"
+    },
+    {
+      "run_id": "20261003T210242Z-company_mc-98b0da",
+      "model": "company_mc",
+      "version": "2.5.0",
+      "timestamp": "20261003T210242",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Rules_v1.1.2; company_mc 2.5.0, parity-gated blend)",
+      "calibration": "mc_calibration_v1.0.yaml",
+      "purpose": "нормативный прогон принятой калибровки HPS.A v1.0 партии 14 (архетип A с M&A-переходом: база без AEG до Q3 2026; валидатор 1.10.1: схема 1.0.2, MC-G5-013 pass σ 0.114/0.015/0.032, 5× MC-G5-001 reviewed-immaterial; intrinsic W 0.270 в ориентире; robustness 1.0/1.0)",
+      "equity_value_0_b": 3.54,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": 0.1825,
+        "median_CAGR_5Y": 0.151,
+        "median_CAGR_8Y": 0.1329,
+        "CAGR_5Y_q05_q95": [
+          -0.012,
+          0.332
+        ],
+        "P_2x_5Y": 0.5089,
+        "P_loss_gt_30pct_5Y": 0.0118,
+        "P_loss_gt_50pct_5Y": 0.0015,
+        "ES5": -0.2177,
+        "median_equity_value_5Y_b": 7.14,
+        "RV_Growth_Gap": -0.0076,
+        "Price_Expectation_Gap": 0.7973,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          1.0
+        ]
+      },
+      "paths_file": "portfolio/_runs/20261003T210242Z-company_mc-98b0da-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.10955580718865474,
+        "q05": 0.06995637033613113,
+        "q95": 0.16820438904662396,
+        "paths_share": 1.0
+      }
+    }
+  ]
 }

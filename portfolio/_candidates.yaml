@@ -45,7 +45,7 @@ pool:
   - {ticker: UFO,  exchange: NASDAQ, yahoo: UFO,  currency: USD, sector_id: SPACE,              origin: actual_holding, stage: candidate, held: true, weight_nav: 0.0017, asset_class: sector_etf, note: "секторный ETF, он же benchmark SPACE"}
   - {ticker: SPOT, exchange: NYSE, yahoo: SPOT, currency: USD, sector_id: INTERNET_PLATFORMS, origin: actual_holding, stage: conditional_mc, model_received: "2026-09-25", folder: spot, held: true, weight_nav: 0.0112, note: "модель компании — партия 6 IMMA (6-K/IAS 34; сектор INTERNET_PLATFORMS provisional); калибровка — следующей партией"}
   # --- кандидаты вне портфеля по решению владельца 03.10.2026 (досье notes/candidates-dossier-2026-10-03.md; заказ партии 13) ---
-  - {ticker: HPS.A, exchange: TSX, yahoo: HPS-A.TO, currency: CAD, sector_id: ELECTRIFICATION, origin: owner_candidate_2026_10_03, folder: hps_a, stage: company_model, model_received: "2026-10-03",
+  - {ticker: HPS.A, exchange: TSX, yahoo: HPS-A.TO, currency: CAD, sector_id: ELECTRIFICATION, origin: owner_candidate_2026_10_03, folder: hps_a, stage: conditional_mc, model_received: "2026-10-03",
      note: "Hammond Power Solutions: из ideas (17.09) в конвейер по решению владельца; модель компании — партия 13 IMMA"}
   - {ticker: S, exchange: NYSE, yahoo: S, currency: USD, sector_id: SOFTWARE, origin: owner_candidate_2026_10_03, folder: s, stage: company_model, model_received: "2026-10-03", theme: AI,
      note: "SentinelOne: парный анализ с CRWD; модель компании — партия 13 IMMA"}

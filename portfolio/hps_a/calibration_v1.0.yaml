@@ -1,0 +1,162 @@
+calibration_v1.0:
+  ticker: HPS.A
+  as_of: '2026-10-02'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  currency: CAD
+  scenario_state:
+    Demand_Backlog: B3
+    Margin_Quality: M2
+    Cash_Conversion: C1
+    AEG_Integration: I1
+    US_DataCenter_Exposure: D3
+    FX_Tariff_Execution: T2
+  market:
+    price: 296.97
+    price_as_of: '2026-10-02'
+    price_source: https://finance.yahoo.com/quote/HPS-A.TO/history/
+    listing: TSX
+    currency: CAD
+    shares_outstanding: 11904924
+    shares_as_of: '2026-06-27'
+    shares_source: https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf
+    equity_value: 3535405280.28
+  balance_sheet:
+    cash: 33631000.0
+    debt_current: 70109000.0
+    debt_noncurrent: 0.0
+    net_debt: 36478000.0
+    as_of: '2026-06-27'
+    currency: CAD
+    source: https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf
+    note: Pre-AEG-close Q2 balance sheet. Lease liabilities excluded from financial debt. AEG closed 2026-06-29, after quarter
+      end; exact funded post-close principal was not disclosed in the Q2 report and is not estimated.
+    subsequent_event_AEG_financing:
+      event_as_of: '2026-06-29'
+      purchase_price_cad: 365000000.0
+      term_debt_capacity_usd: 300000000.0
+      revolver_capacity_usd: 150000000.0
+      exact_funded_principal: null
+      source: https://asia.hammondpowersolutions.com/news/2026/june/hps-completes-acquisition-of-aeg-power-solutions
+      note: Capacity is not treated as drawn debt. First consolidated AEG operating period is Q3 2026 and is excluded from
+        this Q2 operating base.
+    fx_to_base:
+      base_currency: USD
+      quote_currency: CAD
+      cad_to_usd: 0.702
+      as_of: '2026-10-02'
+      source: https://www.bankofcanada.ca/rates/exchange/daily-exchange-rates-lookup/?dF=2026-10-02&dT=2026-10-02&se=FXUSDCAD
+  base_period:
+    revenue_ttm: 1062120000.0
+    current_fcf_margin: 0.09885659434029462
+    revenue_formula: FY2025 sales 898.3M + H1 2026 sales 589.642M - H1 2025 sales 425.822M = 1.062120B CAD TTM; AEG excluded
+      because first factual consolidated period is Q3 2026.
+    fcf_margin_formula: Normalized pre-AEG H1 FCF margin = (H1 operating cash flow 4.953M + working-capital outflow 68.232M
+      - capex 14.895M) / H1 sales 589.642M = 9.8857%. This is a model_assumption normalization, not reported FCF.
+  discount_rate:
+    base: 0.1
+    stress:
+      min: 0.085
+      max: 0.12000000000000001
+  terminal_fcf_margin:
+    min: 0.06
+    base: 0.11
+    max: 0.16
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 10
+    base: 20
+    max: 32
+  margin_transition:
+    type: mature_mean_reversion
+    path:
+      '1': 0.1
+      '2': 0.103
+      '3': 0.106
+      '4': 0.108
+      '5': terminal
+    critical_assumption:
+      linked_state: B3/M2/C1/I1/D3/T2
+      description: Operating base contains only pre-AEG HPS because Q2 ended before the 2026-06-29 AEG close. AEG revenue/margin
+        enter only after factual Q3 2026 consolidation. Working-capital normalization is explicit and not an actual.
+      falsification: Q3 factual AEG consolidation outside modeled revenue/margin range, backlog normalization below pre-acquisition
+        trend, or normalized cash margin below 6% for two reporting periods requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.085
+    - 0.1
+    - 0.12000000000000001
+    terminal_fcf_margin:
+    - 0.06
+    - 0.11
+    - 0.16
+    terminal_fcf_multiple:
+    - 10
+    - 20
+    - 32
+  base_case:
+    discount_rate: 0.1
+    terminal_fcf_margin: 0.11
+    terminal_fcf_multiple: 20
+    margin_path:
+      Y0: 0.09885659434029462
+      Y1: 0.1
+      Y2: 0.103
+      Y3: 0.106
+      Y4: 0.108
+      Y5: 0.11
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-10-02 | https://finance.yahoo.com/quote/HPS-A.TO/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-06-27 | https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf
+    market.equity_value:
+      provenance: derived_fact
+      formula: 296.97 CAD/share * 11,904,924 shares = 3,535,405,280.28 CAD.
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: FY2025 sales 898.3M + H1 2026 sales 589.642M - H1 2025 sales 425.822M = 1.062120B CAD TTM; AEG excluded because
+        first factual consolidated period is Q3 2026.
+    base_period.current_fcf_margin:
+      provenance: model_assumption
+      formula: Normalized pre-AEG H1 FCF margin = (H1 operating cash flow 4.953M + working-capital outflow 68.232M - capex
+        14.895M) / H1 sales 589.642M = 9.8857%. This is a model_assumption normalization, not reported FCF.
+      rationale: Normalization is explicitly separated from reported quarter cash flow and is not fitted to price.
+    discount_rate:
+      provenance: model_assumption
+      rationale: Profitable industrial compounder with backlog/data-center exposure, offset by cyclical demand, acquisition
+        integration/leverage and FX/tariff risks.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Terminal cash margin remains close to normalized pre-AEG economics; no unverified AEG synergy is capitalized
+        before consolidated facts.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Industrial/electrification growth and data-center exposure support duration, while cyclicality, integration
+        leverage, FX/tariff risk and lower software-like scalability constrain the multiple.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Explicit convergence from current/normalized FCF margin to the independently selected terminal cash-margin
+        center; not price-fitted.
+    balance_sheet.cash:
+      provenance: verified_fact
+      source_ref: 2026-06-27 | Q2 2026 report
+    balance_sheet.debt_current:
+      provenance: verified_fact
+      source_ref: 2026-06-27 | Q2 2026 report
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 70.109M bank operating lines - 33.631M cash = 36.478M CAD pre-close net financial debt.
+    balance_sheet.subsequent_event_AEG_financing:
+      provenance: verified_fact
+      source_ref: 2026-06-29 | https://asia.hammondpowersolutions.com/news/2026/june/hps-completes-acquisition-of-aeg-power-solutions
+      note: Purchase price and facility capacities disclosed; exact drawn principal not disclosed and therefore not estimated.
+    balance_sheet.fx_to_base:
+      provenance: verified_fact
+      source_ref: 2026-10-02 | Bank of Canada daily exchange rates lookup
+      formula: 1 CAD = 0.7020 USD on 2026-10-02.

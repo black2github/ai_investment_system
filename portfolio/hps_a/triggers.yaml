@@ -8,7 +8,7 @@ meta:
   registry_updated: '2026-10-03'
   source_artifact: HPS.A_candidate_v1.0.yaml
   price_source: https://finance.yahoo.com/quote/HPS-A.TO/
-  price_at_registry: 232.89
+  price_at_registry: 296.97   # хост 03.10: Yahoo HPS-A.TO закрытие 02.10.2026 (в пакете партии 13 стояло 232.89 — не бьётся с котировками недели; замечание 3.2 приёмки партии 14)
   position: null
   currency: CAD
   strategy_date: '2026-09-17'

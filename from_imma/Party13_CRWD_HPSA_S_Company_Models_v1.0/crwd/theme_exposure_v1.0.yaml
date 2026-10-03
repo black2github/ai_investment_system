@@ -1,0 +1,120 @@
+schema_version: '1.0'
+artifact: theme_exposure
+version: '1.0'
+ticker: CRWD
+exchange: NASDAQ
+as_of: '2026-10-03'
+base_period:
+  period_end: '2026-07-31'
+  period_type: fiscal_quarter
+theme_taxonomy_ref: Theme_Taxonomy_v1.0.1.yaml
+primary_theme_id: CYBERSECURITY
+owner_policy_binding_basis: revenue
+source_registry:
+  crwd_q2_10q:
+    url: https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm
+    source_class: SEC_filing
+    document_date: '2026-08-27'
+    period_end: '2026-07-31'
+basis_allocations:
+  revenue:
+    disclosure_status: disclosed
+    share_method: reported_value_share
+    total_raw_value: 1470.897
+    total_allocation_value: 1470.897
+    unit: USD_millions
+    rows:
+    - segment_id: SINGLE_REPORTABLE_SEGMENT
+      theme_id: CYBERSECURITY
+      raw_value: 1470.897
+      allocation_value: 1470.897
+      share: 1.0
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: crwd_q2_10q
+      formula: 1470.897 / 1470.897
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: crwd_q2_10q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported consolidated/single-segment value
+        share:
+          provenance: derived_fact
+          formula: 1470.897 / 1470.897
+    basis_provenance: derived_fact
+    fallback_reason: null
+  operating_income_abs:
+    disclosure_status: not_separately_disclosed
+    share_method: fallback_100pct_primary_theme
+    total_raw_value: null
+    total_allocation_value: 1.0
+    unit: share
+    rows:
+    - segment_id: NOT_SEPARATELY_DISCLOSED
+      theme_id: CYBERSECURITY
+      raw_value: 1.0
+      allocation_value: 1.0
+      share: 1.0
+      unit: share
+      provenance: model_assumption
+      source_ref: null
+      formula: null
+      fallback: fallback_100pct_primary_theme
+      number_provenance:
+        raw_value:
+          provenance: model_assumption
+          source_ref: null
+        allocation_value:
+          provenance: model_assumption
+          formula: null
+        share:
+          provenance: model_assumption
+          formula: fallback share = 1.0
+    basis_provenance: model_assumption
+    fallback_reason: Segment operating income by theme is not separately disclosed; diagnostic fallback only.
+  capex:
+    disclosure_status: not_separately_disclosed
+    share_method: fallback_100pct_primary_theme
+    total_raw_value: null
+    total_allocation_value: 1.0
+    unit: share
+    rows:
+    - segment_id: NOT_SEPARATELY_DISCLOSED
+      theme_id: CYBERSECURITY
+      raw_value: 1.0
+      allocation_value: 1.0
+      share: 1.0
+      unit: share
+      provenance: model_assumption
+      source_ref: null
+      formula: null
+      fallback: fallback_100pct_primary_theme
+      number_provenance:
+        raw_value:
+          provenance: model_assumption
+          source_ref: null
+        allocation_value:
+          provenance: model_assumption
+          formula: null
+        share:
+          provenance: model_assumption
+          formula: fallback share = 1.0
+    basis_provenance: model_assumption
+    fallback_reason: Segment capex by theme is not separately disclosed; diagnostic fallback only.
+driver_consistency:
+  mpc_driver_taxonomy_ref: MPC_Driver_Taxonomy_v1.2.1.yaml
+  canonical_mpc_inputs_ref: portfolio/crwd/mpc_inputs.yaml
+  strong_driver_abs_score: 2
+  minimum_materiality_share: 0.2
+  minimum_materiality_share_meta:
+    provenance: model_assumption
+    status: pending_owner_judgment
+  share_measure: max_non_fallback_revenue_or_capex_share
+  fallback_share_can_satisfy: false
+  exceptions: []
+notes:
+- CrowdStrike reports one operating/reportable segment; consolidated subscription/security platform revenue is allocated 100% to CYBERSECURITY
+  for look-through.

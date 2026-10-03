@@ -1,0 +1,219 @@
+schema_version: 1.0.5
+profile: full_model
+meta:
+  ticker: S
+  company: SentinelOne, Inc.
+  exchange: NYSE
+  yahoo_symbol: S
+  registry_updated: '2026-10-03'
+  source_artifact: S_candidate_v1.0.yaml
+  price_source: https://finance.yahoo.com/quote/S/
+  price_at_registry: 25.06
+  position: null
+  currency: USD
+  strategy_date: '2026-10-03'
+  strategy_source: Party 13 candidate order
+  status_in_basket: candidate
+route:
+  steps:
+  - id: model
+    kind: model
+    name: Company model accepted
+    ref: states.yaml
+  - id: dozor
+    kind: verification
+    name: Dozor KPI/source verification
+    ref: PENDING_HOST_RUN
+  - id: calibration
+    kind: calibration
+    name: RV + MC calibration after model acceptance
+    ref: null
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  all_numeric_thresholds_provenance: model_assumption
+triggers:
+- id: S-E-01
+  class: event
+  step: state_transition
+  axis: ARR_Momentum
+  transition:
+    from: A2
+    to: A3
+  level: E2
+  kpis:
+  - S-KPI-02
+  condition: ARR YoY >=27% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: S-E-02
+  class: event
+  step: state_transition
+  axis: ARR_Momentum
+  transition:
+    from: A2
+    to: A1
+  level: E2
+  kpis:
+  - S-KPI-02
+  condition: ARR YoY <20% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: S-E-03
+  class: event
+  step: state_transition
+  axis: Net_New_ARR
+  transition:
+    from: N2
+    to: N3
+  level: E2
+  kpis:
+  - S-KPI-03
+  condition: net new ARR >=$75M for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: S-E-04
+  class: event
+  step: state_transition
+  axis: Net_New_ARR
+  transition:
+    from: N2
+    to: N1
+  level: E2
+  kpis:
+  - S-KPI-03
+  condition: net new ARR < $55M for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: S-E-05
+  class: event
+  step: state_transition
+  axis: Platform_Adoption
+  transition:
+    from: P2
+    to: P3
+  level: E2
+  kpis:
+  - S-KPI-05
+  condition: non-endpoint ARR share >=60%
+  condition_provenance: model_assumption
+  period: one verified report
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: S-E-06
+  class: event
+  step: state_transition
+  axis: Platform_Adoption
+  transition:
+    from: P2
+    to: P1
+  level: E2
+  kpis:
+  - S-KPI-05
+  condition: non-endpoint ARR share <45% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: S-E-07
+  class: event
+  step: state_transition
+  axis: Profitability_Cash
+  transition:
+    from: M2
+    to: M3
+  level: E2
+  kpis:
+  - S-KPI-06
+  - S-KPI-08
+  condition: non-GAAP operating margin >=15% AND FCF margin >=5% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: S-E-08
+  class: event
+  step: state_transition
+  axis: Profitability_Cash
+  transition:
+    from: M2
+    to: M1
+  level: E2
+  kpis:
+  - S-KPI-06
+  - S-KPI-08
+  condition: non-GAAP operating margin <8% OR FCF margin <0% for 2 consecutive quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: S-E-09
+  class: event
+  step: state_transition
+  axis: Enterprise_Scale
+  transition:
+    from: E2
+    to: E3
+  level: E2
+  kpis:
+  - S-KPI-04
+  condition: customers >=$100k ARR reach 2000
+  condition_provenance: model_assumption
+  period: one verified report
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: S-E-10
+  class: event
+  step: state_transition
+  axis: Retention_Quality
+  transition:
+    from: R1
+    to: R2
+  level: E2
+  kpis:
+  - S-KPI-10
+  condition: company discloses DBNRR >=105%
+  condition_provenance: model_assumption
+  period: one verified disclosure
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+automations_note: Dozor checks state-transition conditions after primary earnings/filing updates; Trigger != Decision.

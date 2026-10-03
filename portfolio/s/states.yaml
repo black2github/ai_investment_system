@@ -1,0 +1,189 @@
+schema_version: 1.0.5
+version: '1.0'
+artifact: company_states
+as_of: '2026-10-03'
+ticker: S
+source_artifact: S_candidate_v1.0.yaml
+purpose: Machine-verifiable company state axes for monitoring and later RV/MC calibration; Trigger != Decision.
+semantics:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  numeric_thresholds_provenance: model_assumption
+  primary_only: true
+  existing_trigger_policy: Confirmed transitions create Decision Request and Calibration Lifecycle CLR-2 review; no automatic trade.
+sources:
+  s_q2_release:
+    source_class: regulatory_filing
+    url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm
+    as_of: '2026-08-27'
+    title: SentinelOne FY2027 Q2 Exhibit 99.1
+    access_note: null
+  s_q2_presentation:
+    source_class: issuer_investor_presentation
+    url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sq2fy27earningspresentat.htm
+    as_of: '2026-08-27'
+    title: SentinelOne FY2027 Q2 earnings presentation
+    access_note: null
+  s_q2_10q:
+    source_class: regulatory_filing
+    url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm
+    as_of: '2026-08-28'
+    title: SentinelOne FY2027 Q2 Form 10-Q
+    access_note: null
+  s_price:
+    source_class: market_data_provider
+    url: https://finance.yahoo.com/quote/S/
+    as_of: '2026-10-02'
+    title: Yahoo Finance S
+    access_note: null
+axes:
+  ARR_Momentum:
+    name: ARR Momentum
+    name_ru: темп ARR
+    states:
+      A0:
+        name: slow
+        criteria: ARR YoY <15%
+      A1:
+        name: moderate
+        criteria: ARR YoY >=15% and <20%
+      A2:
+        name: strong
+        criteria: ARR YoY >=20% and <27%
+      A3:
+        name: exceptional
+        criteria: ARR YoY >=27% for 2 quarters
+    current: A2
+    current_evidence:
+    - ARR $1.218B, +22% YoY.
+    source_refs:
+    - s_q2_release
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Net_New_ARR:
+    name: Net New ARR
+    name_ru: чистый новый ARR
+    states:
+      N0:
+        name: weak
+        criteria: quarterly net new ARR < $40M
+      N1:
+        name: healthy
+        criteria: net new ARR >=$40M and <$55M
+      N2:
+        name: strong
+        criteria: net new ARR >=$55M and <$75M
+      N3:
+        name: breakout
+        criteria: net new ARR >=$75M for 2 quarters
+    current: N2
+    current_evidence:
+    - Q2 net new ARR $56M, +4% YoY.
+    source_refs:
+    - s_q2_presentation
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Platform_Adoption:
+    name: Platform Adoption
+    name_ru: расширение за пределы endpoint
+    states:
+      P0:
+        name: endpoint_concentrated
+        criteria: non-endpoint ARR share <35%
+      P1:
+        name: expanding
+        criteria: non-endpoint ARR share >=35% and <45%
+      P2:
+        name: platform_scaled
+        criteria: non-endpoint ARR share >=45% and <60%
+      P3:
+        name: broad_platform
+        criteria: non-endpoint ARR share >=60%
+    current: P2
+    current_evidence:
+    - '>50% of ARR comes from non-endpoint products according to Q2 presentation.'
+    source_refs:
+    - s_q2_presentation
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Profitability_Cash:
+    name: Profitability and Cash Conversion
+    name_ru: прибыльность и FCF
+    states:
+      M0:
+        name: loss_heavy
+        criteria: non-GAAP operating margin <0%
+      M1:
+        name: breakeven
+        criteria: non-GAAP operating margin >=0% and <8%
+      M2:
+        name: positive_transition
+        criteria: non-GAAP operating margin >=8% and <15%
+      M3:
+        name: scaled_positive
+        criteria: non-GAAP operating margin >=15% AND quarterly FCF margin >=5%
+    current: M2
+    current_evidence:
+    - Non-GAAP operating margin about 10%; quarterly FCF -$13.2M while YTD FCF +$17.5M.
+    source_refs:
+    - s_q2_release
+    current_note: 'Current state provenance: derived_fact.'
+    evidence_type: mixed
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Enterprise_Scale:
+    name: Enterprise Scale
+    name_ru: масштаб крупных клиентов
+    states:
+      E0:
+        name: subscale
+        criteria: customers >=$100k ARR <1200
+      E1:
+        name: growing
+        criteria: 1200-1499
+      E2:
+        name: scaled
+        criteria: 1500-1999
+      E3:
+        name: large_scale
+        criteria: '>=2000'
+    current: E2
+    current_evidence:
+    - 1,715 customers with >=$100k ARR, +13% YoY.
+    source_refs:
+    - s_q2_release
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Retention_Quality:
+    name: Retention Quality
+    name_ru: качество удержания
+    states:
+      R0:
+        name: deteriorating
+        criteria: disclosed DBNRR <105% or material retention deterioration
+      R1:
+        name: visibility_limited
+        criteria: exact DBNRR/NRR not separately disclosed in selected quarterly release
+      R2:
+        name: healthy
+        criteria: DBNRR >=105% and <115%
+      R3:
+        name: strong
+        criteria: DBNRR >=115%
+    current: R1
+    current_evidence:
+    - Selected Q2 materials do not provide a machine-verifiable exact DBNRR value used by this model.
+    source_refs:
+    - s_q2_release
+    - s_q2_10q
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+changelog:
+- version: '1.0'
+  date: '2026-10-03'
+  change: Initial Party 13 company model.

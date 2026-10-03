@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.5",
-  "updated": "2026-10-03T18:10:00Z",
+  "updated": "2026-10-03T19:30:00+03:00",
   "price": {
     "last": 270.04,
     "last_at": "2026-10-02",
@@ -14,34 +14,20 @@
   "events_reported": [],
   "pending_verification": [
     {
-      "fact": "дата ближайшего квартального отчёта",
-      "value_in_discussion": "неизвестно",
-      "where_to_verify": "CRWD IR",
-      "found_at": "2026-09-17T12:00:00Z",
-      "status": "unverified"
-    },
-    {
-      "fact": "раскрытие Cloud Security ARR",
-      "value_in_discussion": "неизвестно",
-      "where_to_verify": "CRWD earnings presentation",
-      "found_at": "2026-09-17T12:00:00Z",
-      "status": "unverified"
-    },
-    {
       "kind": "dozor_full_model_verification",
       "run_id": "PENDING_HOST_RUN"
     }
   ],
   "notes": [
-    "2026-09-17: реестр заведён по финальному блоку обсуждения; предпосылки не проверены — разовое задание aiinfra-facts-verify",
-    "Party 13 initial full model. RV/MC calibration intentionally deferred until host Dozor/folder acceptance.",
-    "2026-10-03: модель компании (партия 13 IMMA) встроена в реестр корзины 17.09: legacy-триггеры сохранены, триггеры модели → CRWD-E-05..E-14; KPI сверены хостом с первоисточниками (досье 03.10), дозор-прогон — PENDING_HOST_RUN"
+    "Party 13 initial full model. RV/MC calibration intentionally deferred until host Dozor/folder acceptance."
   ],
   "route": {
-    "current": "watch",
-    "done_steps": [],
-    "changed_at": "2026-09-17",
-    "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>» Конвейер модели (партия 13): current=dozor_verification, done=[model] — см. triggers.yaml route.note."
+    "current": "dozor_verification",
+    "done_steps": [
+      "model"
+    ],
+    "changed_at": "2026-10-03",
+    "note": "After 100% source/KPI verification, route proceeds to separate RV+MC calibration order."
   },
   "info_log": [
     {
@@ -267,7 +253,5 @@
       "verification_run_id": null
     }
   ],
-  "calc_runs": [],
-  "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
-  "owner_decisions": []
+  "calc_runs": []
 }

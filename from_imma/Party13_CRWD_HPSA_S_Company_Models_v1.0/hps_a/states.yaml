@@ -1,0 +1,211 @@
+schema_version: 1.0.5
+version: '1.0'
+artifact: company_states
+as_of: '2026-10-03'
+ticker: HPS.A
+source_artifact: HPS.A_candidate_v1.0.yaml
+purpose: Machine-verifiable company state axes for monitoring and later RV/MC calibration; Trigger != Decision.
+semantics:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  numeric_thresholds_provenance: model_assumption
+  primary_only: true
+  existing_trigger_policy: Confirmed transitions create Decision Request and Calibration Lifecycle CLR-2 review; no automatic trade.
+sources:
+  hps_q2_release:
+    source_class: issuer_ir_release
+    url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+    as_of: '2026-07-30'
+    title: HPS Q2 2026 financial-results press release
+    access_note: null
+  hps_q2_report:
+    source_class: issuer_ir_release
+    url: https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf
+    as_of: '2026-07-30'
+    title: 'HPS Q2 2026 Report: MD&A + interim statements'
+    access_note: null
+  hps_aeg_close:
+    source_class: issuer_ir_release
+    url: https://asia.hammondpowersolutions.com/news/2026/june/hps-completes-acquisition-of-aeg-power-solutions
+    as_of: '2026-06-29'
+    title: HPS completes AEG Power Solutions acquisition
+    access_note: null
+  hps_aeg_initial:
+    source_class: issuer_ir_release
+    url: https://americas.hammondpowersolutions.com/news/2026/february/hps-aeg-power-solutions-aquisition
+    as_of: '2026-02-17'
+    title: HPS agreement to acquire AEG Power Solutions
+    access_note: null
+  hps_sedarplus:
+    source_class: regulatory_filing
+    url: https://www.sedarplus.ca/csa-party/relay.html?target=csa-party&url=https%3A%2F%2Fwww.sedarplus.ca%2Fcsa-party%2Fservice%2Fcreate.html%3FtargetAppCode%3Dcsa-party%26service%3DsearchDocuments
+    as_of: '2026-07-30'
+    title: SEDAR+ public document search
+    access_note: SEDAR+ Generate URL links are sessionized; no stable direct Q2 document URL was independently verified. The exact issuer-hosted
+      duplicate Q2 Report is hps_q2_report.
+  hps_price:
+    source_class: market_data_provider
+    url: https://finance.yahoo.com/quote/HPS-A.TO/
+    as_of: '2026-10-02'
+    title: Yahoo Finance HPS-A.TO
+    access_note: null
+axes:
+  Demand_Backlog:
+    name: Demand and Backlog
+    name_ru: спрос и backlog
+    states:
+      B0:
+        name: weak
+        criteria: backlog YoY <0%
+      B1:
+        name: normal
+        criteria: backlog YoY >=0% and <30%
+      B2:
+        name: strong
+        criteria: backlog YoY >=30% and <75%
+      B3:
+        name: very_strong_cooling
+        criteria: backlog YoY >=75% AND sequential backlog change <0%
+      B4:
+        name: very_strong_accelerating
+        criteria: backlog YoY >=75% AND sequential backlog change >=0%
+    current: B3
+    current_evidence:
+    - Backlog +96.9% YoY, but -6.9% vs Q1 2026 and -3.1% vs Q4 2025.
+    source_refs:
+    - hps_q2_release
+    - hps_q2_report
+    current_note: 'Current state provenance: derived_fact.'
+    evidence_type: mixed
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Margin_Quality:
+    name: Margin Quality
+    name_ru: качество маржи
+    states:
+      M0:
+        name: weak
+        criteria: gross margin <25% OR adjusted EBITDA margin <10%
+      M1:
+        name: normal
+        criteria: gross margin >=25% and <30% AND EBITDA margin >=10%
+      M2:
+        name: strong
+        criteria: gross margin >=30% and <32% AND EBITDA margin >=14%
+      M3:
+        name: high
+        criteria: gross margin >=32% AND adjusted EBITDA margin >=16%
+    current: M2
+    current_evidence:
+    - Gross margin 31.5%; adjusted EBITDA C$53.247M / C$324.802M = 16.39%.
+    source_refs:
+    - hps_q2_release
+    current_note: 'Current state provenance: derived_fact.'
+    evidence_type: mixed
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Cash_Conversion:
+    name: Cash Conversion and Working Capital
+    name_ru: денежная конверсия и оборотный капитал
+    states:
+      C0:
+        name: healthy
+        criteria: quarterly CFO >0 AND working capital/sales <15%
+      C1:
+        name: stretched
+        criteria: quarterly CFO <=0 OR working capital/sales >=15% and <20%
+      C2:
+        name: stress
+        criteria: quarterly CFO < -5% of sales OR working capital/sales >=20%
+      C3:
+        name: recovered
+        criteria: quarterly CFO >0 for 2 quarters AND working capital/sales <15%
+    current: C1
+    current_evidence:
+    - Q2 cash used in operations C$6.4M; working capital declined to 17.7% of sales.
+    source_refs:
+    - hps_q2_release
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  AEG_Integration:
+    name: AEG Integration
+    name_ru: интеграция AEG
+    states:
+      I0:
+        name: pre_close
+        criteria: AEG transaction not closed
+      I1:
+        name: closed_not_consolidated
+        criteria: transaction closed but no full-quarter AEG results yet
+      I2:
+        name: integration_on_track
+        criteria: AEG full-quarter revenue disclosed and combined adjusted EBITDA margin >=12%
+      I3:
+        name: integration_strain
+        criteria: combined adjusted EBITDA margin <10% OR integration costs >5% of quarterly sales for 2 quarters
+      I4:
+        name: integrated_scale
+        criteria: AEG included for >=4 quarters AND combined adjusted EBITDA margin >=15%
+    current: I1
+    current_evidence:
+    - AEG acquisition closed 2026-06-29 for about C$365M; Q2 excludes AEG revenue/costs; Q3 will include full quarter and associated debt.
+    source_refs:
+    - hps_aeg_close
+    - hps_q2_release
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  US_DataCenter_Exposure:
+    name: US/Data-Center Exposure
+    name_ru: экспозиция на США и ЦОД
+    states:
+      D0:
+        name: low
+        criteria: US & Mexico sales YoY <10%
+      D1:
+        name: normal
+        criteria: growth >=10% and <30%
+      D2:
+        name: strong
+        criteria: growth >=30% and <60%
+      D3:
+        name: very_strong
+        criteria: growth >=60%
+    current: D3
+    current_evidence:
+    - US & Mexico sales +73.0% YoY; management cites data-centre shipments as main driver.
+    source_refs:
+    - hps_q2_release
+    - hps_q2_report
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  FX_Tariff_Execution:
+    name: FX and Tariff Execution
+    name_ru: исполнение при FX/тарифах
+    states:
+      T0:
+        name: unmanaged
+        criteria: gross margin <28% while tariff/FX headwinds are cited
+      T1:
+        name: absorbing
+        criteria: gross margin 28-30% under tariff/FX headwinds
+      T2:
+        name: managed
+        criteria: gross margin >=30% while price actions offset tariff pressure
+      T3:
+        name: durably_managed
+        criteria: gross margin >=31% for 2 quarters while tariff pressure persists
+    current: T2
+    current_evidence:
+    - Gross margin 31.5%; company says pricing actions offset direct/indirect tariff input costs; USD/CAD Q2 rate weakened 0.4% YoY.
+    source_refs:
+    - hps_q2_release
+    - hps_q2_report
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+changelog:
+- version: '1.0'
+  date: '2026-10-03'
+  change: Initial Party 13 company model.

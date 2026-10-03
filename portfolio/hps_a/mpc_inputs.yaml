@@ -1,0 +1,117 @@
+schema_version: 1.0.5
+version: '1.0'
+ticker: HPS.A
+artifact: mpc_inputs
+as_of: '2026-10-03'
+source_artifact: HPS.A_candidate_v1.0.yaml
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 1
+  HYPERSCALER_CAPEX: 2
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 0
+  DATA_CENTER_POWER: 2
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: -1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: -1
+  ACQUISITION_INTEGRATION: 2
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 1
+  UTILITY_CAPEX: 1
+  INDUSTRIAL_RESHORING: 1
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+  ACCELERATOR_PRICE_COMPETITION: 0
+driver_vector_provenance: model_assumption
+driver_interpretation:
+  HYPERSCALER_CAPEX:
+    directionality: positive_dependency
+    rationale: Data-centre buildout directly supports transformer/power-quality demand; taxonomy link is dependency_not_share_binding.
+  DATA_CENTER_POWER:
+    directionality: positive_dependency
+    rationale: Power-density/infrastructure investment expands demand; not a business-share driver.
+  ACQUISITION_INTEGRATION:
+    directionality: positive_if_successful
+    rationale: AEG integration is material to future mix and margin; integration failure remains a failure mode.
+  TAIWAN_SUPPLY:
+    directionality: negative
+    rationale: Electronics/power-conversion components can face supply disruption; magnitude kept -1 because HPS transformer manufacturing is
+      geographically diversified.
+failure_modes:
+- failure_id: HPSA-FM-01
+  common_cause_id: DATA_CENTER_CAPEX_SLOWDOWN
+  severity: high
+  name: Large data-centre project orders/backlog decelerate
+  axis_refs:
+  - Demand_Backlog
+  - US_DataCenter_Exposure
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: HPSA-FM-02
+  common_cause_id: ACQUISITION_INTEGRATION_FAILURE
+  severity: critical
+  name: AEG integration, leverage or synergy realization fails
+  axis_refs:
+  - AEG_Integration
+  - Margin_Quality
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: HPSA-FM-03
+  common_cause_id: WORKING_CAPITAL_STRESS
+  severity: high
+  name: Receivables/inventory consume cash despite EBITDA growth
+  axis_refs:
+  - Cash_Conversion
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: HPSA-FM-04
+  common_cause_id: TRADE_TARIFF_INPUT_COST
+  severity: high
+  name: Tariffs/raw-material inflation outpace price realization
+  axis_refs:
+  - FX_Tariff_Execution
+  - Margin_Quality
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: HPSA-FM-05
+  common_cause_id: FX_TRANSLATION_VOLATILITY
+  severity: medium
+  name: CAD/USD and broader post-AEG currency moves impair reported margin/cash conversion
+  axis_refs:
+  - FX_Tariff_Execution
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: HPSA-FM-06
+  common_cause_id: ELECTRIFICATION_CYCLE_SLOWDOWN
+  severity: high
+  name: Grid/industrial electrification spending weakens
+  axis_refs:
+  - Demand_Backlog
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+failure_modes_provenance: model_assumption
+driver_taxonomy_version: 1.2.1
+taxonomy_gap: []
+taxonomy_gap_note: null
+driver_exposure_semantics:
+  scale:
+    '-2': strong negative
+    '-1': moderate negative
+    '0': neutral/not material
+    '1': moderate positive
+    '2': strong positive
+  provenance: normative_rule
+  direction_rule: Sign is company impact from a positive driver shock.
+changelog:
+- date: '2026-10-03'
+  change: Initial Party 13 MPC input vector on taxonomy v1.2.1.

@@ -1,47 +1,33 @@
 {
   "schema_version": "1.0.5",
-  "updated": "2026-10-03T18:10:00Z",
+  "updated": "2026-10-03T19:30:00+03:00",
   "price": {
-    "last": 270.04,
+    "last": 25.06,
     "last_at": "2026-10-02",
     "zone": null,
-    "source_url": "https://finance.yahoo.com/quote/CRWD/",
+    "source_url": "https://finance.yahoo.com/quote/S/",
     "provenance": "verified_fact",
-    "symbol": "CRWD",
+    "symbol": "S",
     "note": "Market observation only; not a valuation/calibration anchor."
   },
   "fired": [],
   "events_reported": [],
   "pending_verification": [
     {
-      "fact": "дата ближайшего квартального отчёта",
-      "value_in_discussion": "неизвестно",
-      "where_to_verify": "CRWD IR",
-      "found_at": "2026-09-17T12:00:00Z",
-      "status": "unverified"
-    },
-    {
-      "fact": "раскрытие Cloud Security ARR",
-      "value_in_discussion": "неизвестно",
-      "where_to_verify": "CRWD earnings presentation",
-      "found_at": "2026-09-17T12:00:00Z",
-      "status": "unverified"
-    },
-    {
       "kind": "dozor_full_model_verification",
       "run_id": "PENDING_HOST_RUN"
     }
   ],
   "notes": [
-    "2026-09-17: реестр заведён по финальному блоку обсуждения; предпосылки не проверены — разовое задание aiinfra-facts-verify",
-    "Party 13 initial full model. RV/MC calibration intentionally deferred until host Dozor/folder acceptance.",
-    "2026-10-03: модель компании (партия 13 IMMA) встроена в реестр корзины 17.09: legacy-триггеры сохранены, триггеры модели → CRWD-E-05..E-14; KPI сверены хостом с первоисточниками (досье 03.10), дозор-прогон — PENDING_HOST_RUN"
+    "Party 13 initial full model. RV/MC calibration intentionally deferred until host Dozor/folder acceptance."
   ],
   "route": {
-    "current": "watch",
-    "done_steps": [],
-    "changed_at": "2026-09-17",
-    "note": "current меняет агент по решениям владельца («сделано» для последнего триггера шага) или владелец командой «<тикер>: шаг <id>» Конвейер модели (партия 13): current=dozor_verification, done=[model] — см. triggers.yaml route.note."
+    "current": "dozor_verification",
+    "done_steps": [
+      "model"
+    ],
+    "changed_at": "2026-10-03",
+    "note": "After 100% source/KPI verification, route proceeds to separate RV+MC calibration order."
   },
   "info_log": [
     {
@@ -55,9 +41,9 @@
       "state": "A2",
       "since": "2026-07-31",
       "evidence": [
-        "ARR $5.84B; +25% YoY at 2026-07-31."
+        "ARR $1.218B, +22% YoY."
       ],
-      "source": "crwd_q2_release",
+      "source": "s_q2_release",
       "verified": true,
       "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
       "evidence_type": "quantitative",
@@ -67,9 +53,9 @@
       "state": "N2",
       "since": "2026-07-31",
       "evidence": [
-        "Q2 net new ARR $332.8M, +51% YoY; record quarter."
+        "Q2 net new ARR $56M, +4% YoY."
       ],
-      "source": "crwd_q2_release",
+      "source": "s_q2_presentation",
       "verified": true,
       "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
       "evidence_type": "quantitative",
@@ -79,61 +65,61 @@
       "state": "P2",
       "since": "2026-07-31",
       "evidence": [
-        "Module adoption: 6+/7+/8+ = 51%/35%/26%; Falcon Flex ending ARR >$2.29B (+101%)."
+        ">50% of ARR comes from non-endpoint products according to Q2 presentation."
       ],
-      "source": "crwd_q2_release",
-      "verified": true,
-      "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
-      "evidence_type": "mixed",
-      "verification_run_id": null
-    },
-    "Profitability_Cash": {
-      "state": "M3",
-      "since": "2026-07-31",
-      "evidence": [
-        "Non-GAAP op margin = 371.6/1470.9 ~=25.3%; FCF margin = 377.4/1470.9 ~=25.7%."
-      ],
-      "source": "crwd_q2_release",
-      "verified": true,
-      "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
-      "evidence_type": "mixed",
-      "verification_run_id": null
-    },
-    "Retention_Quality": {
-      "state": "R2",
-      "since": "2026-07-31",
-      "evidence": [
-        "CFO stated dollar-based gross and net retention rates increased in Q2."
-      ],
-      "source": "crwd_q2_release",
+      "source": "s_q2_presentation",
       "verified": true,
       "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
       "evidence_type": "quantitative",
       "verification_run_id": null
     },
-    "M&A_Integration": {
-      "state": "I2",
+    "Profitability_Cash": {
+      "state": "M2",
       "since": "2026-07-31",
       "evidence": [
-        "Goodwill rose from $1.363294B to $2.251426B (+65.15%) during H1; 10-Q identifies SGNL and Seraphic acquisitions."
+        "Non-GAAP operating margin about 10%; quarterly FCF -$13.2M while YTD FCF +$17.5M."
       ],
-      "source": "crwd_q2_10q,crwd_q2_release",
+      "source": "s_q2_release",
       "verified": true,
       "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
       "evidence_type": "mixed",
+      "verification_run_id": null
+    },
+    "Enterprise_Scale": {
+      "state": "E2",
+      "since": "2026-07-31",
+      "evidence": [
+        "1,715 customers with >=$100k ARR, +13% YoY."
+      ],
+      "source": "s_q2_release",
+      "verified": true,
+      "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
+      "evidence_type": "quantitative",
+      "verification_run_id": null
+    },
+    "Retention_Quality": {
+      "state": "R1",
+      "since": "2026-07-31",
+      "evidence": [
+        "Selected Q2 materials do not provide a machine-verifiable exact DBNRR value used by this model."
+      ],
+      "source": "s_q2_release,s_q2_10q",
+      "verified": true,
+      "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
+      "evidence_type": "quantitative",
       "verification_run_id": null
     }
   },
   "state_transitions": [],
   "kpi_observations": [
     {
-      "kpi_id": "CRWD-KPI-01",
-      "name": "ARR",
+      "kpi_id": "S-KPI-01",
+      "name": "Revenue YoY growth",
       "period_end": "2026-07-31",
-      "value": 5.84,
+      "value": 0.21,
       "observation_qualifier": "exact",
-      "unit": "USD B",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm",
       "verified": true,
       "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
       "value_type": "actual",
@@ -141,13 +127,13 @@
       "verification_run_id": null
     },
     {
-      "kpi_id": "CRWD-KPI-02",
+      "kpi_id": "S-KPI-02",
       "name": "ARR YoY growth",
       "period_end": "2026-07-31",
-      "value": 0.25,
+      "value": 0.22,
       "observation_qualifier": "exact",
       "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm",
       "verified": true,
       "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
       "value_type": "actual",
@@ -155,13 +141,13 @@
       "verification_run_id": null
     },
     {
-      "kpi_id": "CRWD-KPI-03",
+      "kpi_id": "S-KPI-03",
       "name": "Net new ARR",
       "period_end": "2026-07-31",
-      "value": 0.3328,
+      "value": 0.056,
       "observation_qualifier": "exact",
       "unit": "USD B",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sq2fy27earningspresentat.htm",
       "verified": true,
       "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
       "value_type": "actual",
@@ -169,13 +155,13 @@
       "verification_run_id": null
     },
     {
-      "kpi_id": "CRWD-KPI-04",
-      "name": "Net new ARR YoY growth",
+      "kpi_id": "S-KPI-04",
+      "name": "Customers with >=$100k ARR",
       "period_end": "2026-07-31",
-      "value": 0.51,
+      "value": 1715.0,
       "observation_qualifier": "exact",
-      "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
+      "unit": "count",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm",
       "verified": true,
       "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
       "value_type": "actual",
@@ -183,27 +169,13 @@
       "verification_run_id": null
     },
     {
-      "kpi_id": "CRWD-KPI-05",
-      "name": "Falcon Flex ending ARR",
+      "kpi_id": "S-KPI-05",
+      "name": "Non-endpoint ARR share",
       "period_end": "2026-07-31",
-      "value": 2.29,
+      "value": 0.5,
       "observation_qualifier": "lower_bound",
-      "unit": "USD B",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
-      "verified": true,
-      "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
-      "value_type": "actual",
-      "provenance": "verified_fact",
-      "verification_run_id": null
-    },
-    {
-      "kpi_id": "CRWD-KPI-06",
-      "name": "8+ module adoption share",
-      "period_end": "2026-07-31",
-      "value": 0.26,
-      "observation_qualifier": "exact",
       "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sq2fy27earningspresentat.htm",
       "verified": true,
       "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
       "value_type": "actual",
@@ -211,13 +183,41 @@
       "verification_run_id": null
     },
     {
-      "kpi_id": "CRWD-KPI-07",
+      "kpi_id": "S-KPI-06",
       "name": "Non-GAAP operating margin",
       "period_end": "2026-07-31",
-      "value": 0.2526349567644778,
+      "value": 0.1,
+      "observation_qualifier": "approximate",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm",
+      "verified": true,
+      "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+      "value_type": "actual",
+      "provenance": "verified_fact",
+      "verification_run_id": null
+    },
+    {
+      "kpi_id": "S-KPI-07",
+      "name": "GAAP operating margin",
+      "period_end": "2026-07-31",
+      "value": -0.31,
       "observation_qualifier": "exact",
       "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm",
+      "verified": true,
+      "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+      "value_type": "actual",
+      "provenance": "verified_fact",
+      "verification_run_id": null
+    },
+    {
+      "kpi_id": "S-KPI-08",
+      "name": "Quarterly FCF margin",
+      "period_end": "2026-07-31",
+      "value": -0.04520547945205479,
+      "observation_qualifier": "approximate",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm",
       "verified": true,
       "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
       "value_type": "actual",
@@ -225,49 +225,33 @@
       "verification_run_id": null
     },
     {
-      "kpi_id": "CRWD-KPI-08",
-      "name": "Free cash flow margin",
+      "kpi_id": "S-KPI-09",
+      "name": "FY2027 revenue guidance midpoint",
       "period_end": "2026-07-31",
-      "value": 0.2565781288560654,
+      "value": 1.2045,
       "observation_qualifier": "exact",
-      "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
-      "verified": true,
-      "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
-      "value_type": "actual",
-      "provenance": "derived_fact",
-      "verification_run_id": null
-    },
-    {
-      "kpi_id": "CRWD-KPI-09",
-      "name": "Goodwill six-month growth",
-      "period_end": "2026-07-31",
-      "value": 0.6514603599810458,
-      "observation_qualifier": "exact",
-      "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm",
-      "verified": true,
-      "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
-      "value_type": "actual",
-      "provenance": "derived_fact",
-      "verification_run_id": null
-    },
-    {
-      "kpi_id": "CRWD-KPI-10",
-      "name": "FY2027 net new ARR growth guidance midpoint",
-      "period_end": "2026-07-31",
-      "value": 0.34,
-      "observation_qualifier": "exact",
-      "unit": "fraction",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
+      "unit": "USD B",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm",
       "verified": true,
       "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
       "value_type": "company_guidance",
+      "provenance": "derived_fact",
+      "verification_run_id": null
+    },
+    {
+      "kpi_id": "S-KPI-10",
+      "name": "Dollar-based net retention",
+      "period_end": "2026-07-31",
+      "value": null,
+      "observation_qualifier": "not_separately_disclosed",
+      "unit": "fraction",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm",
+      "verified": true,
+      "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+      "value_type": "actual",
       "provenance": "verified_fact",
       "verification_run_id": null
     }
   ],
-  "calc_runs": [],
-  "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
-  "owner_decisions": []
+  "calc_runs": []
 }

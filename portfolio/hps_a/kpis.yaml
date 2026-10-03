@@ -1,0 +1,201 @@
+schema_version: 1.0.5
+version: '1.0'
+artifact: critical_kpis
+as_of: '2026-10-03'
+ticker: HPS.A
+max_critical_kpis: 10
+source_artifact: HPS.A_candidate_v1.0.yaml
+zone_semantics:
+  thresholds_provenance: model_assumption
+  green: thesis-supportive / lower risk
+  yellow: monitor / mixed
+  red: thesis-risk / Decision Request
+critical_kpis:
+- id: HPSA-KPI-01
+  name: Sales YoY growth
+  unit: fraction
+  period: quarterly
+  source_class: issuer_ir_release
+  source_ref: hps_q2_release
+  thresholds:
+    green: '>=0.30'
+    yellow: '>=0.10 and <0.30'
+    red: <0.10
+  last_value: 0.447
+  observation_qualifier: exact
+  last_date: '2026-06-27'
+  source_url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: HPSA-KPI-02
+  name: US & Mexico sales YoY growth
+  unit: fraction
+  period: quarterly
+  source_class: issuer_ir_release
+  source_ref: hps_q2_release
+  thresholds:
+    green: '>=0.40'
+    yellow: '>=0.15 and <0.40'
+    red: <0.15
+  last_value: 0.73
+  observation_qualifier: exact
+  last_date: '2026-06-27'
+  source_url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: HPSA-KPI-03
+  name: Backlog YoY growth
+  unit: fraction
+  period: quarterly
+  source_class: issuer_ir_release
+  source_ref: hps_q2_release
+  thresholds:
+    green: '>=0.50'
+    yellow: '>=0.20 and <0.50'
+    red: <0.20
+  last_value: 0.969
+  observation_qualifier: exact
+  last_date: '2026-06-27'
+  source_url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: HPSA-KPI-04
+  name: Backlog sequential change vs Q1
+  unit: fraction
+  period: quarterly
+  source_class: issuer_ir_release
+  source_ref: hps_q2_report
+  thresholds:
+    green: '>=0.00'
+    yellow: '>=-0.10 and <0.00'
+    red: <-0.10
+  last_value: -0.069
+  observation_qualifier: exact
+  last_date: '2026-06-27'
+  source_url: https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: HPSA-KPI-05
+  name: Gross margin
+  unit: fraction
+  period: quarterly
+  source_class: issuer_ir_release
+  source_ref: hps_q2_release
+  thresholds:
+    green: '>=0.31'
+    yellow: '>=0.28 and <0.31'
+    red: <0.28
+  last_value: 0.315
+  observation_qualifier: exact
+  last_date: '2026-06-27'
+  source_url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: HPSA-KPI-06
+  name: Adjusted EBITDA margin
+  unit: fraction
+  period: quarterly
+  source_class: issuer_ir_release
+  source_ref: hps_q2_release
+  thresholds:
+    green: '>=0.16'
+    yellow: '>=0.12 and <0.16'
+    red: <0.12
+  last_value: 0.16393679841872894
+  observation_qualifier: exact
+  last_date: '2026-06-27'
+  source_url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+  verified: true
+  provenance: derived_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+  formula: 53.247 / 324.802
+- id: HPSA-KPI-07
+  name: Cash generated/(used) by operations
+  unit: CAD M
+  period: quarterly
+  source_class: issuer_ir_release
+  source_ref: hps_q2_release
+  thresholds:
+    green: '>0'
+    yellow: <=0 and >-15
+    red: <=-15
+  last_value: -6.4
+  observation_qualifier: exact
+  last_date: '2026-06-27'
+  source_url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: HPSA-KPI-08
+  name: Working capital as share of sales
+  unit: fraction
+  period: quarterly
+  source_class: issuer_ir_release
+  source_ref: hps_q2_release
+  thresholds:
+    green: <0.15
+    yellow: '>=0.15 and <0.20'
+    red: '>=0.20'
+  last_value: 0.177
+  observation_qualifier: exact
+  last_date: '2026-06-27'
+  source_url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: HPSA-KPI-09
+  name: FY2026 capital spending guidance midpoint
+  unit: CAD M
+  period: annual_guidance
+  source_class: issuer_ir_release
+  source_ref: hps_q2_release
+  thresholds:
+    green: <=40
+    yellow: '>40 and <=50'
+    red: '>50'
+  last_value: 37.5
+  observation_qualifier: exact
+  last_date: '2026-06-27'
+  source_url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+  verified: true
+  provenance: derived_fact
+  value_type: company_guidance
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+  formula: (35 + 40) / 2
+  target_date: '2026-12-31'
+- id: HPSA-KPI-10
+  name: AEG quarterly revenue contribution
+  unit: CAD M
+  period: quarterly
+  source_class: issuer_ir_release
+  source_ref: hps_q2_report
+  thresholds:
+    green: '>=70'
+    yellow: '>=40 and <70'
+    red: <40
+  last_value: null
+  observation_qualifier: pending_verification
+  last_date: '2026-06-27'
+  source_url: https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+  verification_status: pending_verification
+changelog:
+- version: '1.0'
+  date: '2026-10-03'
+  change: Initial Party 13 KPI set.

@@ -1,12 +1,8 @@
-# Реестр триггеров: CrowdStrike (CRWD, NASDAQ) — реестр корзины ИИ-инфраструктуры 17.09 (legacy CRWD-E-01..04, C-01) + модель компании
-# партии 13 IMMA 03.10.2026 (CRWD-E-05..E-14; исходные id IMMA — в note; source_artifact CRWD_candidate_v1.0.yaml).
-# Триггер ≠ решение. route — степпер владельца (17.09); конвейер модели: model accepted → dozor verification (PENDING_HOST_RUN) → RV+MC
-# calibration (следующий заказ IMMA).
 schema_version: 1.0.5
 profile: full_model
 meta:
   ticker: CRWD
-  company: CrowdStrike
+  company: CrowdStrike Holdings, Inc.
   exchange: NASDAQ
   yahoo_symbol: CRWD
   registry_updated: '2026-10-03'
@@ -15,29 +11,23 @@ meta:
   price_at_registry: 270.04
   position: null
   currency: USD
-  strategy_date: 2026-09-17
-  strategy_source: https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b
-  status_in_basket: наблюдать (реестр корзины 17.09) → candidate (модель компании, партия 13 IMMA 03.10.2026)
-  target_weight: 0% (при подтверждении — до 5% + добавления)
-  price_at_strategy: 241.36
-  fiscal_year: до 31 января
+  strategy_date: '2026-10-03'
+  strategy_source: Party 13 candidate order
+  status_in_basket: candidate
 route:
   steps:
-  - id: watch
-    kind: stage
-    name: 'Наблюдение: ждём подтверждающий триггер по отчёту'
-  - id: entry
-    kind: stage
-    name: Вход траншами уровень не задан (вопрос владельцу)
-  - id: confirm
-    kind: stage
-    name: Подтверждение тезиса по квартальным отчётам (условия -E-) и контроль поломки (-X-)
-  - id: hold
-    kind: stage
-    name: Удержание до горизонта
-  - id: exit
-    kind: stage
-    name: Фиксация и выход не задано
+  - id: model
+    kind: model
+    name: Company model accepted
+    ref: states.yaml
+  - id: dozor
+    kind: verification
+    name: Dozor KPI/source verification
+    ref: PENDING_HOST_RUN
+  - id: calibration
+    kind: calibration
+    name: RV + MC calibration after model acceptance
+    ref: null
 rules:
   evidence_required: true
   pending_verification_blocks_transition: true
@@ -45,57 +35,6 @@ rules:
   all_numeric_thresholds_provenance: model_assumption
 triggers:
 - id: CRWD-E-01
-  class: event
-  step: confirm
-  condition: ARR growth ≥ 25% г/г
-  action: Перейти к покупке 5% при ценовом триггере (уровень входа не задан — вопрос владельцу)
-  source: CRWD quarterly report
-  automation: aiinfra-report-check
-  status: active
-  note: legacy-реестр корзины 17.09 (до модели компании); условия — owner_judgment
-  fired: []
-- id: CRWD-E-02
-  class: event
-  step: confirm
-  condition: Net new ARR ≥ $200 млн за квартал
-  action: Добавить 5%
-  source: CRWD earnings
-  automation: aiinfra-report-check
-  status: active
-  note: legacy-реестр корзины 17.09 (до модели компании); условия — owner_judgment
-  fired: []
-- id: CRWD-E-03
-  class: event
-  step: confirm
-  condition: Cloud Security ARR/revenue growth ≥ 30% г/г (если раскрывается)
-  action: Добавить 3%
-  source: CRWD earnings presentation
-  automation: aiinfra-report-check
-  status: active
-  notes: Если не раскрывается — сообщить об этом, не выдумывать
-  note: legacy-реестр корзины 17.09 (до модели компании); условия — owner_judgment
-  fired: []
-- id: CRWD-E-04
-  class: event
-  step: confirm
-  condition: ≥ 3 публично объявленных production-развёртываний AI-security у крупных enterprise/AI-клиентов + количественное раскрытие выручки AI Security
-  action: Добавить 3%
-  source: пресс-релизы компании
-  automation: aiinfra-news-watch
-  status: active
-  note: legacy-реестр корзины 17.09 (до модели компании); условия — owner_judgment
-  fired: []
-- id: CRWD-C-01
-  class: calendar
-  step: confirm
-  condition: Ближайший квартальный отчёт — дата неизвестна (обычно конец ноября / начало декабря для Q3 FY)
-  action: Проверить E-01..03
-  automation: null
-  status: planned
-  notes: 'dates-verify 17.09: на ir.crowdstrike.com дата не объявлена (пресс-релиз выходит позже); ожидаемо конец ноября — начало декабря'
-  note: legacy-реестр корзины 17.09 (до модели компании); условия — owner_judgment
-  fired: []
-- id: CRWD-E-05
   class: event
   step: state_transition
   axis: ARR_Momentum
@@ -113,8 +52,7 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-01); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
-- id: CRWD-E-06
+- id: CRWD-E-02
   class: event
   step: state_transition
   axis: ARR_Momentum
@@ -132,8 +70,7 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-02); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
-- id: CRWD-E-07
+- id: CRWD-E-03
   class: event
   step: state_transition
   axis: Net_New_ARR
@@ -151,8 +88,7 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-03); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
-- id: CRWD-E-08
+- id: CRWD-E-04
   class: event
   step: state_transition
   axis: Net_New_ARR
@@ -171,8 +107,7 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-04); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
-- id: CRWD-E-09
+- id: CRWD-E-05
   class: event
   step: state_transition
   axis: Platform_Adoption
@@ -191,8 +126,7 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-05); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
-- id: CRWD-E-10
+- id: CRWD-E-06
   class: event
   step: state_transition
   axis: Platform_Adoption
@@ -211,8 +145,7 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-06); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
-- id: CRWD-E-11
+- id: CRWD-E-07
   class: event
   step: state_transition
   axis: Profitability_Cash
@@ -231,8 +164,7 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-07); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
-- id: CRWD-E-12
+- id: CRWD-E-08
   class: event
   step: state_transition
   axis: Retention_Quality
@@ -249,8 +181,7 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-08); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
-- id: CRWD-E-13
+- id: CRWD-E-09
   class: event
   step: state_transition
   axis: M&A_Integration
@@ -270,8 +201,7 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-09); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
-- id: CRWD-E-14
+- id: CRWD-E-10
   class: event
   step: state_transition
   axis: M&A_Integration
@@ -289,16 +219,4 @@ triggers:
   automation: Dozor report-check after each earnings release
   status: planned
   fired: []
-  note: партия 13 IMMA (исходный id CRWD-E-10); legacy-триггеры корзины 17.09 — CRWD-E-01..E-04
 automations_note: Dozor checks state-transition conditions after primary earnings/filing updates; Trigger != Decision.
-automations:
-  aiinfra-report-check:
-    covers:
-    - CRWD-E-01
-    - CRWD-E-02
-    - CRWD-E-03
-    cadence: после квартального отчёта (дата — CRWD-C-01)
-  aiinfra-news-watch:
-    covers:
-    - CRWD-E-04
-    cadence: ежедневно

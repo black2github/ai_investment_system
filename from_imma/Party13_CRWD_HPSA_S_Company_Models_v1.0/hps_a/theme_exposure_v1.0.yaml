@@ -1,0 +1,121 @@
+schema_version: '1.0'
+artifact: theme_exposure
+version: '1.0'
+ticker: HPS.A
+exchange: TSX
+as_of: '2026-10-03'
+base_period:
+  period_end: '2026-06-27'
+  period_type: quarter
+theme_taxonomy_ref: Theme_Taxonomy_v1.0.1.yaml
+primary_theme_id: INDUSTRIAL_POWER
+owner_policy_binding_basis: revenue
+source_registry:
+  hps_q2_report:
+    url: https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf
+    source_class: issuer_primary
+    document_date: '2026-07-30'
+    period_end: '2026-06-27'
+basis_allocations:
+  revenue:
+    disclosure_status: not_separately_disclosed
+    share_method: fallback_100pct_primary_theme
+    total_raw_value: null
+    total_allocation_value: 1.0
+    unit: share
+    rows:
+    - segment_id: NOT_SEPARATELY_DISCLOSED
+      theme_id: INDUSTRIAL_POWER
+      raw_value: 1.0
+      allocation_value: 1.0
+      share: 1.0
+      unit: share
+      provenance: model_assumption
+      source_ref: null
+      formula: null
+      fallback: fallback_100pct_primary_theme
+      number_provenance:
+        raw_value:
+          provenance: model_assumption
+          source_ref: null
+        allocation_value:
+          provenance: model_assumption
+          formula: null
+        share:
+          provenance: model_assumption
+          formula: fallback share = 1.0
+    basis_provenance: model_assumption
+    fallback_reason: Q2 2026 disclosure is geographic/consolidated rather than a product/business-unit theme split; explicit 100% primary-theme
+      fallback per THM-005.
+  operating_income_abs:
+    disclosure_status: not_separately_disclosed
+    share_method: fallback_100pct_primary_theme
+    total_raw_value: null
+    total_allocation_value: 1.0
+    unit: share
+    rows:
+    - segment_id: NOT_SEPARATELY_DISCLOSED
+      theme_id: INDUSTRIAL_POWER
+      raw_value: 1.0
+      allocation_value: 1.0
+      share: 1.0
+      unit: share
+      provenance: model_assumption
+      source_ref: null
+      formula: null
+      fallback: fallback_100pct_primary_theme
+      number_provenance:
+        raw_value:
+          provenance: model_assumption
+          source_ref: null
+        allocation_value:
+          provenance: model_assumption
+          formula: null
+        share:
+          provenance: model_assumption
+          formula: fallback share = 1.0
+    basis_provenance: model_assumption
+    fallback_reason: Segment operating income by theme is not separately disclosed; diagnostic fallback only.
+  capex:
+    disclosure_status: not_separately_disclosed
+    share_method: fallback_100pct_primary_theme
+    total_raw_value: null
+    total_allocation_value: 1.0
+    unit: share
+    rows:
+    - segment_id: NOT_SEPARATELY_DISCLOSED
+      theme_id: INDUSTRIAL_POWER
+      raw_value: 1.0
+      allocation_value: 1.0
+      share: 1.0
+      unit: share
+      provenance: model_assumption
+      source_ref: null
+      formula: null
+      fallback: fallback_100pct_primary_theme
+      number_provenance:
+        raw_value:
+          provenance: model_assumption
+          source_ref: null
+        allocation_value:
+          provenance: model_assumption
+          formula: null
+        share:
+          provenance: model_assumption
+          formula: fallback share = 1.0
+    basis_provenance: model_assumption
+    fallback_reason: Segment capex by theme is not separately disclosed; diagnostic fallback only.
+driver_consistency:
+  mpc_driver_taxonomy_ref: MPC_Driver_Taxonomy_v1.2.1.yaml
+  canonical_mpc_inputs_ref: portfolio/hps_a/mpc_inputs.yaml
+  strong_driver_abs_score: 2
+  minimum_materiality_share: 0.2
+  minimum_materiality_share_meta:
+    provenance: model_assumption
+    status: pending_owner_judgment
+  share_measure: max_non_fallback_revenue_or_capex_share
+  fallback_share_can_satisfy: false
+  exceptions: []
+notes:
+- Q2 pre-AEG reporting provides geographic, not product/business-unit revenue. Theme allocation therefore uses explicit 100% primary-theme fallback
+  under THM-005. AEG/IES enters consolidated results only after quarter-end.

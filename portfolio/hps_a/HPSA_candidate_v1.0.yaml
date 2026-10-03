@@ -1,0 +1,580 @@
+candidate_schema_version: 1.0.1
+package_type: company_model_candidate
+ticker: HPS.A
+company: Hammond Power Solutions Inc.
+exchange: TSX
+as_of: '2026-10-03'
+methodology_refs:
+  provenance_schema: '1.0'
+  driver_taxonomy: 1.2.1
+  company_candidate_schema: 1.0.1
+sources:
+- source_ref: hps_q2_release
+  source_class: issuer_ir_release
+  url: https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf
+  as_of: '2026-07-30'
+  title: HPS Q2 2026 financial-results press release
+- source_ref: hps_q2_report
+  source_class: issuer_ir_release
+  url: https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf
+  as_of: '2026-07-30'
+  title: 'HPS Q2 2026 Report: MD&A + interim statements'
+- source_ref: hps_aeg_close
+  source_class: issuer_ir_release
+  url: https://asia.hammondpowersolutions.com/news/2026/june/hps-completes-acquisition-of-aeg-power-solutions
+  as_of: '2026-06-29'
+  title: HPS completes AEG Power Solutions acquisition
+- source_ref: hps_aeg_initial
+  source_class: issuer_ir_release
+  url: https://americas.hammondpowersolutions.com/news/2026/february/hps-aeg-power-solutions-aquisition
+  as_of: '2026-02-17'
+  title: HPS agreement to acquire AEG Power Solutions
+- source_ref: hps_sedarplus
+  source_class: regulatory_filing
+  url: https://www.sedarplus.ca/csa-party/relay.html?target=csa-party&url=https%3A%2F%2Fwww.sedarplus.ca%2Fcsa-party%2Fservice%2Fcreate.html%3FtargetAppCode%3Dcsa-party%26service%3DsearchDocuments
+  as_of: '2026-07-30'
+  title: SEDAR+ public document search
+  access_note: SEDAR+ Generate URL links are sessionized; no stable direct Q2 document URL was independently verified. The exact issuer-hosted
+    duplicate Q2 Report is hps_q2_report.
+- source_ref: hps_price
+  source_class: market_data_provider
+  url: https://finance.yahoo.com/quote/HPS-A.TO/
+  as_of: '2026-10-02'
+  title: Yahoo Finance HPS-A.TO
+states:
+  axes:
+    Demand_Backlog:
+      name: Demand and Backlog
+      name_ru: спрос и backlog
+      states:
+        B0:
+          name: weak
+          criteria: backlog YoY <0%
+          criteria_provenance: model_assumption
+        B1:
+          name: normal
+          criteria: backlog YoY >=0% and <30%
+          criteria_provenance: model_assumption
+        B2:
+          name: strong
+          criteria: backlog YoY >=30% and <75%
+          criteria_provenance: model_assumption
+        B3:
+          name: very_strong_cooling
+          criteria: backlog YoY >=75% AND sequential backlog change <0%
+          criteria_provenance: model_assumption
+        B4:
+          name: very_strong_accelerating
+          criteria: backlog YoY >=75% AND sequential backlog change >=0%
+          criteria_provenance: model_assumption
+      current: B3
+      current_provenance: derived_fact
+      current_evidence_refs:
+      - hps_q2_release
+      - hps_q2_report
+      current_note: Backlog +96.9% YoY, but -6.9% vs Q1 2026 and -3.1% vs Q4 2025.
+    Margin_Quality:
+      name: Margin Quality
+      name_ru: качество маржи
+      states:
+        M0:
+          name: weak
+          criteria: gross margin <25% OR adjusted EBITDA margin <10%
+          criteria_provenance: model_assumption
+        M1:
+          name: normal
+          criteria: gross margin >=25% and <30% AND EBITDA margin >=10%
+          criteria_provenance: model_assumption
+        M2:
+          name: strong
+          criteria: gross margin >=30% and <32% AND EBITDA margin >=14%
+          criteria_provenance: model_assumption
+        M3:
+          name: high
+          criteria: gross margin >=32% AND adjusted EBITDA margin >=16%
+          criteria_provenance: model_assumption
+      current: M2
+      current_provenance: derived_fact
+      current_evidence_refs:
+      - hps_q2_release
+      current_note: Gross margin 31.5%; adjusted EBITDA C$53.247M / C$324.802M = 16.39%.
+    Cash_Conversion:
+      name: Cash Conversion and Working Capital
+      name_ru: денежная конверсия и оборотный капитал
+      states:
+        C0:
+          name: healthy
+          criteria: quarterly CFO >0 AND working capital/sales <15%
+          criteria_provenance: model_assumption
+        C1:
+          name: stretched
+          criteria: quarterly CFO <=0 OR working capital/sales >=15% and <20%
+          criteria_provenance: model_assumption
+        C2:
+          name: stress
+          criteria: quarterly CFO < -5% of sales OR working capital/sales >=20%
+          criteria_provenance: model_assumption
+        C3:
+          name: recovered
+          criteria: quarterly CFO >0 for 2 quarters AND working capital/sales <15%
+          criteria_provenance: model_assumption
+      current: C1
+      current_provenance: verified_fact
+      current_evidence_refs:
+      - hps_q2_release
+      current_note: Q2 cash used in operations C$6.4M; working capital declined to 17.7% of sales.
+    AEG_Integration:
+      name: AEG Integration
+      name_ru: интеграция AEG
+      states:
+        I0:
+          name: pre_close
+          criteria: AEG transaction not closed
+          criteria_provenance: model_assumption
+        I1:
+          name: closed_not_consolidated
+          criteria: transaction closed but no full-quarter AEG results yet
+          criteria_provenance: model_assumption
+        I2:
+          name: integration_on_track
+          criteria: AEG full-quarter revenue disclosed and combined adjusted EBITDA margin >=12%
+          criteria_provenance: model_assumption
+        I3:
+          name: integration_strain
+          criteria: combined adjusted EBITDA margin <10% OR integration costs >5% of quarterly sales for 2 quarters
+          criteria_provenance: model_assumption
+        I4:
+          name: integrated_scale
+          criteria: AEG included for >=4 quarters AND combined adjusted EBITDA margin >=15%
+          criteria_provenance: model_assumption
+      current: I1
+      current_provenance: verified_fact
+      current_evidence_refs:
+      - hps_aeg_close
+      - hps_q2_release
+      current_note: AEG acquisition closed 2026-06-29 for about C$365M; Q2 excludes AEG revenue/costs; Q3 will include full quarter and associated
+        debt.
+    US_DataCenter_Exposure:
+      name: US/Data-Center Exposure
+      name_ru: экспозиция на США и ЦОД
+      states:
+        D0:
+          name: low
+          criteria: US & Mexico sales YoY <10%
+          criteria_provenance: model_assumption
+        D1:
+          name: normal
+          criteria: growth >=10% and <30%
+          criteria_provenance: model_assumption
+        D2:
+          name: strong
+          criteria: growth >=30% and <60%
+          criteria_provenance: model_assumption
+        D3:
+          name: very_strong
+          criteria: growth >=60%
+          criteria_provenance: model_assumption
+      current: D3
+      current_provenance: verified_fact
+      current_evidence_refs:
+      - hps_q2_release
+      - hps_q2_report
+      current_note: US & Mexico sales +73.0% YoY; management cites data-centre shipments as main driver.
+    FX_Tariff_Execution:
+      name: FX and Tariff Execution
+      name_ru: исполнение при FX/тарифах
+      states:
+        T0:
+          name: unmanaged
+          criteria: gross margin <28% while tariff/FX headwinds are cited
+          criteria_provenance: model_assumption
+        T1:
+          name: absorbing
+          criteria: gross margin 28-30% under tariff/FX headwinds
+          criteria_provenance: model_assumption
+        T2:
+          name: managed
+          criteria: gross margin >=30% while price actions offset tariff pressure
+          criteria_provenance: model_assumption
+        T3:
+          name: durably_managed
+          criteria: gross margin >=31% for 2 quarters while tariff pressure persists
+          criteria_provenance: model_assumption
+      current: T2
+      current_provenance: verified_fact
+      current_evidence_refs:
+      - hps_q2_release
+      - hps_q2_report
+      current_note: Gross margin 31.5%; company says pricing actions offset direct/indirect tariff input costs; USD/CAD Q2 rate weakened 0.4%
+        YoY.
+kpis:
+  items:
+  - local_id: kpi_01
+    name: Sales YoY growth
+    unit: fraction
+    period: quarterly
+    source_ref: hps_q2_release
+    provenance: verified_fact
+    last_value: 0.447
+    value_type: actual
+    observation_qualifier: exact
+    thresholds:
+      green: '>=0.30'
+      yellow: '>=0.10 and <0.30'
+      red: <0.10
+    thresholds_provenance: model_assumption
+  - local_id: kpi_02
+    name: US & Mexico sales YoY growth
+    unit: fraction
+    period: quarterly
+    source_ref: hps_q2_release
+    provenance: verified_fact
+    last_value: 0.73
+    value_type: actual
+    observation_qualifier: exact
+    thresholds:
+      green: '>=0.40'
+      yellow: '>=0.15 and <0.40'
+      red: <0.15
+    thresholds_provenance: model_assumption
+  - local_id: kpi_03
+    name: Backlog YoY growth
+    unit: fraction
+    period: quarterly
+    source_ref: hps_q2_release
+    provenance: verified_fact
+    last_value: 0.969
+    value_type: actual
+    observation_qualifier: exact
+    thresholds:
+      green: '>=0.50'
+      yellow: '>=0.20 and <0.50'
+      red: <0.20
+    thresholds_provenance: model_assumption
+  - local_id: kpi_04
+    name: Backlog sequential change vs Q1
+    unit: fraction
+    period: quarterly
+    source_ref: hps_q2_report
+    provenance: verified_fact
+    last_value: -0.069
+    value_type: actual
+    observation_qualifier: exact
+    thresholds:
+      green: '>=0.00'
+      yellow: '>=-0.10 and <0.00'
+      red: <-0.10
+    thresholds_provenance: model_assumption
+  - local_id: kpi_05
+    name: Gross margin
+    unit: fraction
+    period: quarterly
+    source_ref: hps_q2_release
+    provenance: verified_fact
+    last_value: 0.315
+    value_type: actual
+    observation_qualifier: exact
+    thresholds:
+      green: '>=0.31'
+      yellow: '>=0.28 and <0.31'
+      red: <0.28
+    thresholds_provenance: model_assumption
+  - local_id: kpi_06
+    name: Adjusted EBITDA margin
+    unit: fraction
+    period: quarterly
+    source_ref: hps_q2_release
+    provenance: derived_fact
+    last_value: 0.16393679841872894
+    value_type: actual
+    observation_qualifier: exact
+    thresholds:
+      green: '>=0.16'
+      yellow: '>=0.12 and <0.16'
+      red: <0.12
+    thresholds_provenance: model_assumption
+    formula: 53.247 / 324.802
+  - local_id: kpi_07
+    name: Cash generated/(used) by operations
+    unit: CAD M
+    period: quarterly
+    source_ref: hps_q2_release
+    provenance: verified_fact
+    last_value: -6.4
+    value_type: actual
+    observation_qualifier: exact
+    thresholds:
+      green: '>0'
+      yellow: <=0 and >-15
+      red: <=-15
+    thresholds_provenance: model_assumption
+  - local_id: kpi_08
+    name: Working capital as share of sales
+    unit: fraction
+    period: quarterly
+    source_ref: hps_q2_release
+    provenance: verified_fact
+    last_value: 0.177
+    value_type: actual
+    observation_qualifier: exact
+    thresholds:
+      green: <0.15
+      yellow: '>=0.15 and <0.20'
+      red: '>=0.20'
+    thresholds_provenance: model_assumption
+  - local_id: kpi_09
+    name: FY2026 capital spending guidance midpoint
+    unit: CAD M
+    period: annual_guidance
+    source_ref: hps_q2_release
+    provenance: derived_fact
+    last_value: 37.5
+    value_type: company_guidance
+    observation_qualifier: exact
+    thresholds:
+      green: <=40
+      yellow: '>40 and <=50'
+      red: '>50'
+    thresholds_provenance: model_assumption
+    formula: (35 + 40) / 2
+    target_date: '2026-12-31'
+  - local_id: kpi_10
+    name: AEG quarterly revenue contribution
+    unit: CAD M
+    period: quarterly
+    source_ref: hps_q2_report
+    provenance: verified_fact
+    last_value: null
+    value_type: actual
+    observation_qualifier: pending_verification
+    thresholds:
+      green: '>=70'
+      yellow: '>=40 and <70'
+      red: <40
+    thresholds_provenance: model_assumption
+    verification_status: pending_verification
+transitions:
+  items:
+  - local_id: transition_01
+    axis: Demand_Backlog
+    transition:
+      from: B3
+      to: B4
+    level: E2
+    kpi_refs:
+    - kpi_03
+    - kpi_04
+    condition: backlog YoY remains >=75% AND sequential backlog change becomes >=0%
+    condition_provenance: model_assumption
+    period: one verified report
+  - local_id: transition_02
+    axis: Demand_Backlog
+    transition:
+      from: B3
+      to: B2
+    level: E2
+    kpi_refs:
+    - kpi_03
+    - kpi_04
+    condition: backlog YoY <75% OR sequential decline worse than 10% for 2 quarters
+    condition_provenance: model_assumption
+    period: 2 quarters
+  - local_id: transition_03
+    axis: Margin_Quality
+    transition:
+      from: M2
+      to: M3
+    level: E2
+    kpi_refs:
+    - kpi_05
+    - kpi_06
+    condition: gross margin >=32% AND adjusted EBITDA margin >=16% for 2 quarters
+    condition_provenance: model_assumption
+    period: 2 quarters
+  - local_id: transition_04
+    axis: Margin_Quality
+    transition:
+      from: M2
+      to: M1
+    level: E2
+    kpi_refs:
+    - kpi_05
+    - kpi_06
+    condition: gross margin <30% OR adjusted EBITDA margin <14% for 2 quarters
+    condition_provenance: model_assumption
+    period: 2 quarters
+  - local_id: transition_05
+    axis: Cash_Conversion
+    transition:
+      from: C1
+      to: C3
+    level: E2
+    kpi_refs:
+    - kpi_07
+    - kpi_08
+    condition: quarterly CFO >0 for 2 quarters AND working capital/sales <15%
+    condition_provenance: model_assumption
+    period: 2 quarters
+  - local_id: transition_06
+    axis: Cash_Conversion
+    transition:
+      from: C1
+      to: C2
+    level: E2
+    kpi_refs:
+    - kpi_07
+    - kpi_08
+    condition: quarterly CFO <= -5% of sales OR working capital/sales >=20%
+    condition_provenance: model_assumption
+    period: one verified report
+  - local_id: transition_07
+    axis: AEG_Integration
+    transition:
+      from: I1
+      to: I2
+    level: E2
+    kpi_refs:
+    - kpi_10
+    - kpi_06
+    condition: AEG full-quarter revenue is disclosed AND combined adjusted EBITDA margin >=12%
+    condition_provenance: model_assumption
+    period: one full consolidated quarter
+  - local_id: transition_08
+    axis: AEG_Integration
+    transition:
+      from: I1
+      to: I3
+    level: E2
+    kpi_refs:
+    - kpi_10
+    - kpi_06
+    condition: combined adjusted EBITDA margin <10% for 2 quarters OR disclosed integration costs >5% of sales for 2 quarters
+    condition_provenance: model_assumption
+    period: 2 quarters
+  - local_id: transition_09
+    axis: US_DataCenter_Exposure
+    transition:
+      from: D3
+      to: D2
+    level: E2
+    kpi_refs:
+    - kpi_02
+    - kpi_03
+    condition: US & Mexico sales growth <60% AND backlog YoY <50% for 2 quarters
+    condition_provenance: model_assumption
+    period: 2 quarters
+  - local_id: transition_10
+    axis: FX_Tariff_Execution
+    transition:
+      from: T2
+      to: T3
+    level: E2
+    kpi_refs:
+    - kpi_05
+    condition: gross margin >=31% for 2 quarters while tariff pressure remains disclosed
+    condition_provenance: model_assumption
+    period: 2 quarters
+mpc_inputs:
+  driver_taxonomy_version: 1.2.1
+  driver_exposure_vector:
+    AI_COMPUTE_DEMAND: 1
+    HYPERSCALER_CAPEX: 2
+    SEMICONDUCTOR_WFE: 0
+    ADVANCED_PACKAGING: 0
+    HBM_MEMORY: 0
+    EDA_DESIGN_COMPLEXITY: 0
+    CLOUD_SOFTWARE_DEMAND: 0
+    DATA_CENTER_POWER: 2
+    LAUNCH_ECONOMICS: 0
+    SATELLITE_CONNECTIVITY: 0
+    GOVERNMENT_DEFENSE: 0
+    INTEREST_RATES: -1
+    CAPITAL_MARKETS: -1
+    CHINA_REVENUE: 0
+    TAIWAN_SUPPLY: -1
+    ACQUISITION_INTEGRATION: 2
+    AI_CLOUD_PRICING: 0
+    HEALTHCARE_DEMAND: 0
+    DRUG_PIPELINE: 0
+    REIMBURSEMENT_PRICING: 0
+    BIOPHARMA_MANUFACTURING_CAPACITY: 0
+    PHARMA_REGULATION: 0
+    PATENT_EXCLUSIVITY: 0
+    ELECTRIFICATION_GRID: 1
+    UTILITY_CAPEX: 1
+    INDUSTRIAL_RESHORING: 1
+    AEROSPACE_CYCLE: 0
+    CONSUMER_CREDIT: 0
+    CRYPTO_CYCLE: 0
+    FINTECH_REGULATION: 0
+    DIGITAL_AD_DEMAND: 0
+    SPACE_REGULATION: 0
+  driver_vector_provenance: model_assumption
+  driver_interpretation:
+    HYPERSCALER_CAPEX:
+      directionality: positive_dependency
+      rationale: Data-centre buildout directly supports transformer/power-quality demand; taxonomy link is dependency_not_share_binding.
+    DATA_CENTER_POWER:
+      directionality: positive_dependency
+      rationale: Power-density/infrastructure investment expands demand; not a business-share driver.
+    ACQUISITION_INTEGRATION:
+      directionality: positive_if_successful
+      rationale: AEG integration is material to future mix and margin; integration failure remains a failure mode.
+    TAIWAN_SUPPLY:
+      directionality: negative
+      rationale: Electronics/power-conversion components can face supply disruption; magnitude kept -1 because HPS transformer manufacturing is
+        geographically diversified.
+  failure_modes_provenance: model_assumption
+  failure_modes:
+  - local_id: fm_01
+    common_cause_id: DATA_CENTER_CAPEX_SLOWDOWN
+    severity: high
+    name: Large data-centre project orders/backlog decelerate
+    axis_refs:
+    - Demand_Backlog
+    - US_DataCenter_Exposure
+  - local_id: fm_02
+    common_cause_id: ACQUISITION_INTEGRATION_FAILURE
+    severity: critical
+    name: AEG integration, leverage or synergy realization fails
+    axis_refs:
+    - AEG_Integration
+    - Margin_Quality
+  - local_id: fm_03
+    common_cause_id: WORKING_CAPITAL_STRESS
+    severity: high
+    name: Receivables/inventory consume cash despite EBITDA growth
+    axis_refs:
+    - Cash_Conversion
+  - local_id: fm_04
+    common_cause_id: TRADE_TARIFF_INPUT_COST
+    severity: high
+    name: Tariffs/raw-material inflation outpace price realization
+    axis_refs:
+    - FX_Tariff_Execution
+    - Margin_Quality
+  - local_id: fm_05
+    common_cause_id: FX_TRANSLATION_VOLATILITY
+    severity: medium
+    name: CAD/USD and broader post-AEG currency moves impair reported margin/cash conversion
+    axis_refs:
+    - FX_Tariff_Execution
+  - local_id: fm_06
+    common_cause_id: ELECTRIFICATION_CYCLE_SLOWDOWN
+    severity: high
+    name: Grid/industrial electrification spending weakens
+    axis_refs:
+    - Demand_Backlog
+  taxonomy_gap:
+  - ACCELERATOR_PRICE_COMPETITION
+  taxonomy_gap_note: Candidate Schema v1.0.1 structurally contains the 32-driver v1.1 vector and cannot encode the v1.2-added ACCELERATOR_PRICE_COMPETITION
+    field. Canonical mpc_inputs.yaml includes the full v1.2.1 vector. This is a schema-contract gap, not an omitted economic assessment.
+  driver_exposure_semantics:
+    scale:
+      '-2': strong negative
+      '-1': moderate negative
+      '0': neutral/not material
+      '+1': moderate positive
+      '+2': strong positive
+    provenance: normative_rule
+    direction_rule: Sign is company impact from a positive driver shock.

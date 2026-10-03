@@ -1,0 +1,114 @@
+schema_version: 1.0.5
+version: '1.0'
+ticker: S
+artifact: mpc_inputs
+as_of: '2026-10-03'
+source_artifact: S_candidate_v1.0.yaml
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 1
+  HYPERSCALER_CAPEX: 0
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 2
+  DATA_CENTER_POWER: 0
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 1
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+  ACCELERATOR_PRICE_COMPETITION: 0
+driver_vector_provenance: model_assumption
+driver_interpretation:
+  CLOUD_SOFTWARE_DEMAND:
+    directionality: positive
+    rationale: Nearest systematic driver for enterprise cybersecurity subscriptions.
+  AI_COMPUTE_DEMAND:
+    directionality: positive_dependency
+    rationale: AI raises security demand and product relevance, but no separately disclosed AI revenue share; keep +1.
+  CAPITAL_MARKETS:
+    directionality: positive
+    rationale: Still loss-making on GAAP basis; stronger capital markets modestly reduce funding/valuation pressure, but liquidity is ample.
+failure_modes:
+- failure_id: S-FM-01
+  common_cause_id: CYBERSECURITY_PLATFORM_COMPETITION
+  severity: high
+  name: Platform competition slows ARR and net-new-ARR growth
+  axis_refs:
+  - ARR_Momentum
+  - Net_New_ARR
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: S-FM-02
+  common_cause_id: MAJOR_SECURITY_PLATFORM_INCIDENT
+  severity: critical
+  name: Product/security incident damages enterprise trust
+  axis_refs:
+  - Retention_Quality
+  - Enterprise_Scale
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: S-FM-03
+  common_cause_id: AI_SECURITY_MONETIZATION_FAILURE
+  severity: high
+  name: AI-native product expansion fails to support platform adoption
+  axis_refs:
+  - Platform_Adoption
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: S-FM-04
+  common_cause_id: MARGIN_CONVERSION_FAILURE
+  severity: high
+  name: Non-GAAP profitability fails to convert into durable FCF
+  axis_refs:
+  - Profitability_Cash
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: S-FM-05
+  common_cause_id: ENTERPRISE_EXPANSION_SLOWDOWN
+  severity: high
+  name: Large-customer expansion decelerates
+  axis_refs:
+  - Enterprise_Scale
+  - Net_New_ARR
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+- failure_id: S-FM-06
+  common_cause_id: CAPITAL_MARKETS_TIGHTENING
+  severity: medium
+  name: Risk-premium/funding environment raises cost of remaining loss-making phase
+  axis_refs:
+  - Profitability_Cash
+  rationale: Model-assumption failure mode for joint/common-cause monitoring.
+failure_modes_provenance: model_assumption
+driver_taxonomy_version: 1.2.1
+taxonomy_gap:
+- CYBERSECURITY_DEMAND
+taxonomy_gap_note: No dedicated CYBERSECURITY_DEMAND driver exists in v1.2.1; CLOUD_SOFTWARE_DEMAND is used as nearest systematic demand driver.
+driver_exposure_semantics:
+  scale:
+    '-2': strong negative
+    '-1': moderate negative
+    '0': neutral/not material
+    '1': moderate positive
+    '2': strong positive
+  provenance: normative_rule
+  direction_rule: Sign is company impact from a positive driver shock.
+changelog:
+- date: '2026-10-03'
+  change: Initial Party 13 MPC input vector on taxonomy v1.2.1.

@@ -1,0 +1,201 @@
+schema_version: 1.0.5
+version: '1.0'
+artifact: critical_kpis
+as_of: '2026-10-03'
+ticker: S
+max_critical_kpis: 10
+source_artifact: S_candidate_v1.0.yaml
+zone_semantics:
+  thresholds_provenance: model_assumption
+  green: thesis-supportive / lower risk
+  yellow: monitor / mixed
+  red: thesis-risk / Decision Request
+critical_kpis:
+- id: S-KPI-01
+  name: Revenue YoY growth
+  unit: fraction
+  period: quarterly
+  source_class: regulatory_filing
+  source_ref: s_q2_release
+  thresholds:
+    green: '>=0.20'
+    yellow: '>=0.15 and <0.20'
+    red: <0.15
+  last_value: 0.21
+  observation_qualifier: exact
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: S-KPI-02
+  name: ARR YoY growth
+  unit: fraction
+  period: quarterly
+  source_class: regulatory_filing
+  source_ref: s_q2_release
+  thresholds:
+    green: '>=0.20'
+    yellow: '>=0.15 and <0.20'
+    red: <0.15
+  last_value: 0.22
+  observation_qualifier: exact
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: S-KPI-03
+  name: Net new ARR
+  unit: USD B
+  period: quarterly
+  source_class: issuer_investor_presentation
+  source_ref: s_q2_presentation
+  thresholds:
+    green: '>=0.055'
+    yellow: '>=0.040 and <0.055'
+    red: <0.040
+  last_value: 0.056
+  observation_qualifier: exact
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sq2fy27earningspresentat.htm
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: S-KPI-04
+  name: Customers with >=$100k ARR
+  unit: count
+  period: quarterly
+  source_class: regulatory_filing
+  source_ref: s_q2_release
+  thresholds:
+    green: '>=1700'
+    yellow: '>=1400 and <1700'
+    red: <1400
+  last_value: 1715.0
+  observation_qualifier: exact
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: S-KPI-05
+  name: Non-endpoint ARR share
+  unit: fraction
+  period: quarterly
+  source_class: issuer_investor_presentation
+  source_ref: s_q2_presentation
+  thresholds:
+    green: '>=0.50'
+    yellow: '>=0.40 and <0.50'
+    red: <0.40
+  last_value: 0.5
+  observation_qualifier: lower_bound
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sq2fy27earningspresentat.htm
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: S-KPI-06
+  name: Non-GAAP operating margin
+  unit: fraction
+  period: quarterly
+  source_class: regulatory_filing
+  source_ref: s_q2_release
+  thresholds:
+    green: '>=0.10'
+    yellow: '>=0.00 and <0.10'
+    red: <0.00
+  last_value: 0.1
+  observation_qualifier: approximate
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: S-KPI-07
+  name: GAAP operating margin
+  unit: fraction
+  period: quarterly
+  source_class: regulatory_filing
+  source_ref: s_q2_release
+  thresholds:
+    green: '>=-0.15'
+    yellow: '>=-0.30 and <-0.15'
+    red: <-0.30
+  last_value: -0.31
+  observation_qualifier: exact
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+- id: S-KPI-08
+  name: Quarterly FCF margin
+  unit: fraction
+  period: quarterly
+  source_class: regulatory_filing
+  source_ref: s_q2_release
+  thresholds:
+    green: '>=0.05'
+    yellow: '>=0.00 and <0.05'
+    red: <0.00
+  last_value: -0.04520547945205479
+  observation_qualifier: approximate
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm
+  verified: true
+  provenance: derived_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+  formula: -13.2 / 292.0
+- id: S-KPI-09
+  name: FY2027 revenue guidance midpoint
+  unit: USD B
+  period: annual_guidance
+  source_class: regulatory_filing
+  source_ref: s_q2_release
+  thresholds:
+    green: '>=1.20'
+    yellow: '>=1.10 and <1.20'
+    red: <1.10
+  last_value: 1.2045
+  observation_qualifier: exact
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/sentineloneq227exhibit991.htm
+  verified: true
+  provenance: derived_fact
+  value_type: company_guidance
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+  formula: (1.202 + 1.207) / 2
+  target_date: '2027-01-31'
+- id: S-KPI-10
+  name: Dollar-based net retention
+  unit: fraction
+  period: quarterly
+  source_class: regulatory_filing
+  source_ref: s_q2_10q
+  thresholds:
+    green: '>=1.15'
+    yellow: '>=1.05 and <1.15'
+    red: <1.05
+  last_value: null
+  observation_qualifier: not_separately_disclosed
+  last_date: '2026-07-31'
+  source_url: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm
+  verified: true
+  provenance: verified_fact
+  value_type: actual
+  verified_note: Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.
+  verification_status: not_separately_disclosed
+changelog:
+- version: '1.0'
+  date: '2026-10-03'
+  change: Initial Party 13 KPI set.

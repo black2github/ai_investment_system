@@ -1,0 +1,241 @@
+schema_version: 1.0.5
+profile: full_model
+meta:
+  ticker: HPS.A
+  company: Hammond Power Solutions Inc.
+  exchange: TSX
+  yahoo_symbol: HPS-A.TO
+  registry_updated: '2026-10-03'
+  source_artifact: HPS.A_candidate_v1.0.yaml
+  price_source: https://finance.yahoo.com/quote/HPS-A.TO/
+  price_at_registry: 232.89
+  position: null
+  currency: CAD
+  strategy_date: '2026-09-17'
+  strategy_source: portfolio/_ideas.yaml
+  status_in_basket: idea
+route:
+  steps:
+  - id: model
+    kind: model
+    name: Company model accepted
+    ref: states.yaml
+  - id: dozor
+    kind: verification
+    name: Dozor KPI/source verification
+    ref: PENDING_HOST_RUN
+  - id: calibration
+    kind: calibration
+    name: RV + MC calibration after model acceptance
+    ref: null
+rules:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  all_numeric_thresholds_provenance: model_assumption
+triggers:
+- id: HPSA-E-01
+  class: event
+  step: state_transition
+  axis: Demand_Backlog
+  transition:
+    from: B3
+    to: B4
+  level: E2
+  kpis:
+  - HPSA-KPI-03
+  - HPSA-KPI-04
+  condition: backlog YoY remains >=75% AND sequential backlog change becomes >=0%
+  condition_provenance: model_assumption
+  period: one verified report
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-E-02
+  class: event
+  step: state_transition
+  axis: Demand_Backlog
+  transition:
+    from: B3
+    to: B2
+  level: E2
+  kpis:
+  - HPSA-KPI-03
+  - HPSA-KPI-04
+  condition: backlog YoY <75% OR sequential decline worse than 10% for 2 quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-E-03
+  class: event
+  step: state_transition
+  axis: Margin_Quality
+  transition:
+    from: M2
+    to: M3
+  level: E2
+  kpis:
+  - HPSA-KPI-05
+  - HPSA-KPI-06
+  condition: gross margin >=32% AND adjusted EBITDA margin >=16% for 2 quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-E-04
+  class: event
+  step: state_transition
+  axis: Margin_Quality
+  transition:
+    from: M2
+    to: M1
+  level: E2
+  kpis:
+  - HPSA-KPI-05
+  - HPSA-KPI-06
+  condition: gross margin <30% OR adjusted EBITDA margin <14% for 2 quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-E-05
+  class: event
+  step: state_transition
+  axis: Cash_Conversion
+  transition:
+    from: C1
+    to: C3
+  level: E2
+  kpis:
+  - HPSA-KPI-07
+  - HPSA-KPI-08
+  condition: quarterly CFO >0 for 2 quarters AND working capital/sales <15%
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-E-06
+  class: event
+  step: state_transition
+  axis: Cash_Conversion
+  transition:
+    from: C1
+    to: C2
+  level: E2
+  kpis:
+  - HPSA-KPI-07
+  - HPSA-KPI-08
+  condition: quarterly CFO <= -5% of sales OR working capital/sales >=20%
+  condition_provenance: model_assumption
+  period: one verified report
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-E-07
+  class: event
+  step: state_transition
+  axis: AEG_Integration
+  transition:
+    from: I1
+    to: I2
+  level: E2
+  kpis:
+  - HPSA-KPI-10
+  - HPSA-KPI-06
+  condition: AEG full-quarter revenue is disclosed AND combined adjusted EBITDA margin >=12%
+  condition_provenance: model_assumption
+  period: one full consolidated quarter
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-E-08
+  class: event
+  step: state_transition
+  axis: AEG_Integration
+  transition:
+    from: I1
+    to: I3
+  level: E2
+  kpis:
+  - HPSA-KPI-10
+  - HPSA-KPI-06
+  condition: combined adjusted EBITDA margin <10% for 2 quarters OR disclosed integration costs >5% of sales for 2 quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-E-09
+  class: event
+  step: state_transition
+  axis: US_DataCenter_Exposure
+  transition:
+    from: D3
+    to: D2
+  level: E2
+  kpis:
+  - HPSA-KPI-02
+  - HPSA-KPI-03
+  condition: US & Mexico sales growth <60% AND backlog YoY <50% for 2 quarters
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-E-10
+  class: event
+  step: state_transition
+  axis: FX_Tariff_Execution
+  transition:
+    from: T2
+    to: T3
+  level: E2
+  kpis:
+  - HPSA-KPI-05
+  condition: gross margin >=31% for 2 quarters while tariff pressure remains disclosed
+  condition_provenance: model_assumption
+  period: 2 quarters
+  source: primary company filing/release
+  action: 'Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.'
+  automation: Dozor report-check after each earnings release
+  status: planned
+  fired: []
+- id: HPSA-LEGACY-01
+  class: event
+  step: legacy_owner_registry
+  axis: null
+  level: null
+  kpis: []
+  condition: backlog + orders >=20% YoY AND valuation <=20x forward earnings
+  condition_provenance: null
+  period: owner registry condition
+  source: portfolio/_ideas.yaml 2026-09-17
+  action: Owner review only; this is historical owner_judgment and is not a model state transition.
+  automation: weekly idea review
+  status: planned
+  fired: []
+  note: Preserved from owner _ideas.yaml; not normalized into model-assumption thresholds.
+automations_note: Dozor checks state-transition conditions after primary earnings/filing updates; Trigger != Decision.

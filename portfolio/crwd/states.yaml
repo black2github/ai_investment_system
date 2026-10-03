@@ -1,0 +1,183 @@
+schema_version: 1.0.5
+version: '1.0'
+artifact: company_states
+as_of: '2026-10-03'
+ticker: CRWD
+source_artifact: CRWD_candidate_v1.0.yaml
+purpose: Machine-verifiable company state axes for monitoring and later RV/MC calibration; Trigger != Decision.
+semantics:
+  evidence_required: true
+  pending_verification_blocks_transition: true
+  trigger_not_decision: true
+  numeric_thresholds_provenance: model_assumption
+  primary_only: true
+  existing_trigger_policy: Confirmed transitions create Decision Request and Calibration Lifecycle CLR-2 review; no automatic trade.
+sources:
+  crwd_q2_release:
+    source_class: regulatory_filing
+    url: https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm
+    as_of: '2026-08-26'
+    title: CrowdStrike FY2027 Q2 Exhibit 99.1
+    access_note: null
+  crwd_q2_10q:
+    source_class: regulatory_filing
+    url: https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm
+    as_of: '2026-08-27'
+    title: CrowdStrike FY2027 Q2 Form 10-Q
+    access_note: null
+  crwd_price:
+    source_class: market_data_provider
+    url: https://finance.yahoo.com/quote/CRWD/
+    as_of: '2026-10-02'
+    title: Yahoo Finance CRWD
+    access_note: null
+axes:
+  ARR_Momentum:
+    name: ARR Momentum
+    name_ru: темп ARR
+    states:
+      A0:
+        name: slow
+        criteria: ARR YoY <15%
+      A1:
+        name: moderate
+        criteria: ARR YoY >=15% and <22%
+      A2:
+        name: strong
+        criteria: ARR YoY >=22% and <30%
+      A3:
+        name: exceptional
+        criteria: ARR YoY >=30% for 2 consecutive quarters
+    current: A2
+    current_evidence:
+    - ARR $5.84B; +25% YoY at 2026-07-31.
+    source_refs:
+    - crwd_q2_release
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Net_New_ARR:
+    name: Net New ARR
+    name_ru: чистый новый ARR
+    states:
+      N0:
+        name: weak
+        criteria: quarterly net new ARR < $0.20B
+      N1:
+        name: healthy
+        criteria: net new ARR >=$0.20B and <$0.30B
+      N2:
+        name: strong
+        criteria: net new ARR >=$0.30B and <$0.40B
+      N3:
+        name: breakout
+        criteria: net new ARR >=$0.40B for 2 quarters
+    current: N2
+    current_evidence:
+    - Q2 net new ARR $332.8M, +51% YoY; record quarter.
+    source_refs:
+    - crwd_q2_release
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Platform_Adoption:
+    name: Platform Adoption
+    name_ru: глубина платформенной консолидации
+    states:
+      P0:
+        name: module_limited
+        criteria: 8+ module adoption <15% AND Falcon Flex ARR < $1.0B
+      P1:
+        name: broadening
+        criteria: 8+ module adoption >=15% and <22%
+      P2:
+        name: platform_scale
+        criteria: 8+ module adoption >=22% OR Falcon Flex ARR >=$2.0B
+      P3:
+        name: deep_platform
+        criteria: 8+ module adoption >=30% AND Falcon Flex ARR >=$3.0B
+    current: P2
+    current_evidence:
+    - 'Module adoption: 6+/7+/8+ = 51%/35%/26%; Falcon Flex ending ARR >$2.29B (+101%).'
+    source_refs:
+    - crwd_q2_release
+    current_note: 'Current state provenance: derived_fact.'
+    evidence_type: mixed
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Profitability_Cash:
+    name: Profitability and Cash Conversion
+    name_ru: прибыльность и конверсия в FCF
+    states:
+      M0:
+        name: loss_heavy
+        criteria: non-GAAP operating margin <5% OR FCF margin <5%
+      M1:
+        name: positive
+        criteria: both margins >=5% and <15%
+      M2:
+        name: scaled
+        criteria: both margins >=15% and <25%
+      M3:
+        name: high_cash_margin
+        criteria: both margins >=25%
+    current: M3
+    current_evidence:
+    - Non-GAAP op margin = 371.6/1470.9 ~=25.3%; FCF margin = 377.4/1470.9 ~=25.7%.
+    source_refs:
+    - crwd_q2_release
+    current_note: 'Current state provenance: derived_fact.'
+    evidence_type: mixed
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  Retention_Quality:
+    name: Retention Quality
+    name_ru: качество удержания
+    states:
+      R0:
+        name: deteriorating
+        criteria: company reports declining dollar-based gross or net retention
+      R1:
+        name: stable_or_opaque
+        criteria: retention stable or exact/directional update not disclosed
+      R2:
+        name: improving
+        criteria: company reports both dollar-based gross and net retention increased
+      R3:
+        name: durably_improving
+        criteria: both increased for 2 consecutive quarters
+    current: R2
+    current_evidence:
+    - CFO stated dollar-based gross and net retention rates increased in Q2.
+    source_refs:
+    - crwd_q2_release
+    current_note: 'Current state provenance: verified_fact.'
+    evidence_type: quantitative
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+  M&A_Integration:
+    name: M&A Integration
+    name_ru: нагрузка M&A и интеграции
+    states:
+      I0:
+        name: low
+        criteria: goodwill growth <15% over trailing 6 months and no material acquisition integration
+      I1:
+        name: elevated
+        criteria: goodwill growth >=15% and <40% over trailing 6 months
+      I2:
+        name: high_integration_load
+        criteria: goodwill growth >=40% with acquired products/teams under integration
+      I3:
+        name: integration_strain
+        criteria: goodwill growth >=40% AND operating/FCF margin falls >=10pp YoY for 2 quarters
+    current: I2
+    current_evidence:
+    - Goodwill rose from $1.363294B to $2.251426B (+65.15%) during H1; 10-Q identifies SGNL and Seraphic acquisitions.
+    source_refs:
+    - crwd_q2_10q
+    - crwd_q2_release
+    current_note: 'Current state provenance: derived_fact.'
+    evidence_type: mixed
+    verification_rule: Use cited primary facts; numeric state thresholds are model_assumption.
+changelog:
+- version: '1.0'
+  date: '2026-10-03'
+  change: Initial Party 13 company model.

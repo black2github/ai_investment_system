@@ -1,0 +1,26 @@
+# Варианты состава портфеля для сравнения одним запуском (portfolio_compare 1.0.0; ROADMAP п. 2).
+# Владелец может добавлять свои варианты: id, веса бумаг (доли NAV, только бумаги с калибровками), dry_powder (кэш). GLD и UFO —
+# фиксированные позиции (fixed_weights ниже), в weights их не указывать. Сумма weights + dry_powder + fixed = 1 (кэш досчитывается).
+# Варианты из прогонов (optimum_run: run_id) подставляются скриптом автоматически из portfolio/_runs.
+reference_id: current
+fixed_weights: {GLD: 0.022, UFO: 0.0017}
+variants:
+  - id: current
+    source: machine_outputs.current_weights          # текущие веса (цены 18.09.2026)
+  - id: S8
+    optimum_run: 20261001T222051Z-portfolio_optimizer-56bdcc
+    note: оптимум отбора захода 8 (без лимита числа бумаг)
+  - id: R9_B_card8
+    optimum_run: 20261003T094303Z-portfolio_optimizer-70844a
+    note: заход 9, 6…8 бумаг, мин. 3 %
+  - id: R9_C_card6
+    optimum_run: 20261003T100625Z-portfolio_optimizer-5b06a5
+    note: заход 9, 6 бумаг, мин. 3 %
+  - id: R9_D_min3
+    optimum_run: 20261003T105058Z-portfolio_optimizer-97502f
+    note: заход 9, без лимита числа бумаг, мин. 3 %
+  # пример ручного варианта владельца (раскомментировать и поправить):
+  # - id: owner_v1
+  #   weights: {NBIS: 0.20, NVDA: 0.12, LLY: 0.12, SPOT: 0.10, CRWV: 0.08, RKLB: 0.08}
+  #   dry_powder: 0.2763
+  #   note: мой вариант

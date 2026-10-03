@@ -1,0 +1,539 @@
+{
+  "run_id": "20261003T161453Z-scenario_state-415bf2",
+  "model": "scenario_state",
+  "version": "1.0.0",
+  "seed": 0,
+  "inputs": {
+    "event_items": [
+      {
+        "event_id": "EV-TW-FULL-BLOCKADE",
+        "criterion_id": "EVTWBLK-C01",
+        "fact_id": "TW-F02",
+        "observed_at": "2026-10-03T08:00:00Z",
+        "observed_value": true,
+        "verification_status": "verified",
+        "verification_run_id": "verify-SCEN-DEMO-2026-10-03",
+        "source_refs": [
+          "СИНТЕТИЧЕСКИЙ ПРИМЕР — не факт; демонстрация формата сигнала"
+        ]
+      }
+    ],
+    "as_of": "2026-10-03T09:00:00Z",
+    "apply": false,
+    "conditional_pictures": {
+      "TAIWAN_SEIZURE|RESTRICTIONS": {
+        "conditional_run_ref": "portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|RESTRICTIONS",
+        "conditional_optimum_ref": "20260930T230041Z-portfolio_optimizer-ea1b90",
+        "median_CAGR_5Y": 0.12360454679567956,
+        "ES5": -0.31040975824633626,
+        "P_loss_gt_30pct": 0.023214,
+        "optimum_median_CAGR_5Y": 0.1338303272518726,
+        "optimum_ES5": 0.1011570417694958
+      },
+      "TAIWAN_SEIZURE|BLOCKADE": {
+        "conditional_run_ref": "portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|BLOCKADE",
+        "conditional_optimum_ref": "20260930T230630Z-portfolio_optimizer-052179",
+        "median_CAGR_5Y": 0.11725354934520982,
+        "ES5": -0.3411636917986469,
+        "P_loss_gt_30pct": 0.030126,
+        "optimum_median_CAGR_5Y": 0.13295763951995376,
+        "optimum_ES5": 0.08206748281440693
+      },
+      "TAIWAN_SEIZURE|CONFLICT": {
+        "conditional_run_ref": "portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|CONFLICT",
+        "conditional_optimum_ref": "20260930T231229Z-portfolio_optimizer-e0569e",
+        "median_CAGR_5Y": 0.11992061426664613,
+        "ES5": -0.3348120141996746,
+        "P_loss_gt_30pct": 0.028464,
+        "optimum_median_CAGR_5Y": 0.1335997174492497,
+        "optimum_ES5": 0.08900570543954942
+      },
+      "TAIWAN_SEIZURE|RECOVERY": {
+        "conditional_run_ref": "portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|RECOVERY",
+        "conditional_optimum_ref": "20260930T231749Z-portfolio_optimizer-cad140",
+        "median_CAGR_5Y": 0.182114313641214,
+        "ES5": -0.01377297169803117,
+        "P_loss_gt_30pct": 0.001082,
+        "optimum_median_CAGR_5Y": 0.1805799164130416,
+        "optimum_ES5": 0.30140888037720737
+      },
+      "TAIWAN_QUARANTINE|RESTRICTIONS": {
+        "conditional_run_ref": "portfolio/_runs/_conditional_runs_partB.json#TAIWAN_QUARANTINE|RESTRICTIONS",
+        "conditional_optimum_ref": "20260930T232346Z-portfolio_optimizer-9ef262",
+        "median_CAGR_5Y": 0.18298734072506717,
+        "ES5": -0.017098205225414848,
+        "P_loss_gt_30pct": 0.00124,
+        "optimum_median_CAGR_5Y": 0.17788867909441475,
+        "optimum_ES5": 0.28913622755667895
+      },
+      "TAIWAN_QUARANTINE|QUARANTINE": {
+        "conditional_run_ref": "portfolio/_runs/_conditional_runs_partB.json#TAIWAN_QUARANTINE|QUARANTINE",
+        "conditional_optimum_ref": "20260930T233041Z-portfolio_optimizer-49f452",
+        "median_CAGR_5Y": 0.18451119403677463,
+        "ES5": -0.010530204290552183,
+        "P_loss_gt_30pct": 0.001148,
+        "optimum_median_CAGR_5Y": 0.17922845993262126,
+        "optimum_ES5": 0.29425508087164276
+      },
+      "TAIWAN_QUARANTINE|NORMALIZATION_OR_FROZEN": {
+        "conditional_run_ref": "portfolio/_runs/_conditional_runs_partB.json#TAIWAN_QUARANTINE|NORMALIZATION_OR_FROZEN",
+        "conditional_optimum_ref": "20260930T233619Z-portfolio_optimizer-f449b4",
+        "median_CAGR_5Y": 0.2030051067183266,
+        "ES5": 0.11153301839778972,
+        "P_loss_gt_30pct": 0.00021,
+        "optimum_median_CAGR_5Y": 0.19459901001865698,
+        "optimum_ES5": 0.38903718513597296
+      }
+    }
+  },
+  "outputs": {
+    "model_version": "1.0.0",
+    "as_of": "2026-10-03T09:00:00Z",
+    "events": {
+      "EV-TW-RESTRICTIONS": {
+        "status": "none",
+        "logic": "any_of",
+        "required_count": null,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVTWRES-C01",
+          "EVTWRES-C02"
+        ],
+        "blocked": false,
+        "assigned_member": "BASE",
+        "verification_run_ids": []
+      },
+      "EV-TW-QUARANTINE": {
+        "status": "none",
+        "logic": "any_of",
+        "required_count": null,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVTWQ-C01",
+          "EVTWQ-C02",
+          "EVTWQ-C03"
+        ],
+        "blocked": false,
+        "assigned_member": "TAIWAN_QUARANTINE",
+        "verification_run_ids": []
+      },
+      "EV-TW-NORMALIZATION-OR-FROZEN": {
+        "status": "none",
+        "logic": "k_of_n",
+        "required_count": 2,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVTWNORM-C01",
+          "EVTWNORM-C02",
+          "EVTWNORM-C03"
+        ],
+        "blocked": false,
+        "assigned_member": "TAIWAN_QUARANTINE",
+        "verification_run_ids": []
+      },
+      "EV-TW-FULL-BLOCKADE": {
+        "status": "confirmed",
+        "logic": "any_of",
+        "required_count": null,
+        "satisfied_criteria": [
+          "EVTWBLK-C01"
+        ],
+        "missing_criteria": [
+          "EVTWBLK-C02"
+        ],
+        "blocked": false,
+        "assigned_member": "TAIWAN_SEIZURE",
+        "verification_run_ids": [
+          "verify-SCEN-DEMO-2026-10-03"
+        ]
+      },
+      "EV-TW-ARMED-CONFLICT": {
+        "status": "none",
+        "logic": "any_of",
+        "required_count": null,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVTWCON-C01"
+        ],
+        "blocked": false,
+        "assigned_member": "TAIWAN_SEIZURE",
+        "verification_run_ids": []
+      },
+      "EV-TW-RECOVERY": {
+        "status": "none",
+        "logic": "all_of",
+        "required_count": null,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVTWREC-C01",
+          "EVTWREC-C02"
+        ],
+        "blocked": false,
+        "assigned_member": "TAIWAN_SEIZURE",
+        "verification_run_ids": []
+      },
+      "EV-CN-RACE-BASELINE": {
+        "status": "none",
+        "logic": "k_of_n",
+        "required_count": 2,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVCNRACEBASE-C01",
+          "EVCNRACEBASE-C02",
+          "EVCNRACEBASE-C03"
+        ],
+        "blocked": false,
+        "assigned_member": "BASE",
+        "verification_run_ids": []
+      },
+      "EV-CN-RACE-ACCELERATION": {
+        "status": "none",
+        "logic": "k_of_n",
+        "required_count": 2,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVCNRACEACC-C01",
+          "EVCNRACEACC-C02",
+          "EVCNRACEACC-C03"
+        ],
+        "blocked": false,
+        "assigned_member": "CHIP_COLD_WAR",
+        "verification_run_ids": []
+      },
+      "EV-CN-PARITY-LEADING-EDGE": {
+        "status": "none",
+        "logic": "all_of",
+        "required_count": null,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVCNPAR-C01",
+          "EVCNPAR-C02"
+        ],
+        "blocked": false,
+        "assigned_member": "CHIP_COLD_WAR",
+        "verification_run_ids": []
+      },
+      "EV-CN-MILITARY-AI-SUFFICIENCY": {
+        "status": "none",
+        "logic": "all_of",
+        "required_count": null,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVCNMAI-C01",
+          "EVCNMAI-C02"
+        ],
+        "blocked": false,
+        "assigned_member": "BASE",
+        "verification_run_ids": []
+      },
+      "EV-CN-BIFURCATED-SUPPLY-SYSTEMS": {
+        "status": "none",
+        "logic": "all_of",
+        "required_count": null,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVCNBIF-C01",
+          "EVCNBIF-C02"
+        ],
+        "blocked": false,
+        "assigned_member": "CHIP_COLD_WAR",
+        "verification_run_ids": []
+      },
+      "EV-TWO-SYSTEMS-PRICE-COMPETITION": {
+        "status": "none",
+        "logic": "all_of",
+        "required_count": null,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EV2SYS-C01",
+          "EV2SYS-C02"
+        ],
+        "blocked": false,
+        "assigned_member": "CHIP_COLD_WAR",
+        "verification_run_ids": []
+      },
+      "EV-WEST-DISENGAGEMENT-TAIWAN": {
+        "status": "none",
+        "logic": "k_of_n",
+        "required_count": 2,
+        "satisfied_criteria": [],
+        "missing_criteria": [
+          "EVWEST-C01",
+          "EVWEST-C02"
+        ],
+        "blocked": false,
+        "assigned_member": null,
+        "verification_run_ids": []
+      }
+    },
+    "set_state": {
+      "classification": "TAIWAN_SEIZURE",
+      "status": "normal",
+      "last_probability_review_at": "2026-09-27T00:00:00Z"
+    },
+    "transitions": [
+      {
+        "scenario_id": "TAIWAN_SEIZURE",
+        "phase_id": "BLOCKADE",
+        "from": "not_observed",
+        "to": "confirmed",
+        "at": "2026-10-03T09:00:00Z",
+        "entry_events_confirmed": [
+          "EV-TW-FULL-BLOCKADE"
+        ],
+        "exit_events_confirmed": []
+      },
+      {
+        "scenario_id": null,
+        "phase_id": null,
+        "from": "set:BASE/normal",
+        "to": "set:TAIWAN_SEIZURE/normal",
+        "at": "2026-10-03T09:00:00Z"
+      }
+    ],
+    "signals": [
+      {
+        "scenario_id": "TAIWAN_SEIZURE",
+        "phase_id": "BLOCKADE",
+        "kind": "confirmed",
+        "signal_id": "SIG-TAIWAN_SEIZURE-BLOCKADE-20261003T090000Z",
+        "text": "AG: invest\nСЦЕНАРИЙ: TAIWAN_SEIZURE\nФАЗА: BLOCKADE — CONFIRMED 2026-10-03T09:00:00Z\n\nПОДТВЕРЖДАЮЩИЕ ФАКТЫ:\n- EV-TW-FULL-BLOCKADE / TW-F02: критерии EVTWBLK-C01\n  Источник: СИНТЕТИЧЕСКИЙ ПРИМЕР — не факт; демонстрация формата сигнала\n  Дата: 2026-10-03T08:00:00Z\n  Проверка: verified / verify-SCEN-DEMO-2026-10-03\n\nУСЛОВНАЯ КАРТИНА ПОРТФЕЛЯ:\nRun: portfolio/_runs/_conditional_runs_partB.json#TAIWAN_SEIZURE|BLOCKADE\nMedian CAGR 5Y: +11.7%\nP(loss>30%) 5Y: +3.0%\nES5 5Y: -34.1%\nУсловный оптимум: 20260930T230630Z-portfolio_optimizer-052179 (медиана +13.3%, ES5 +8.2%)\n\nСТРАТЕГИЯ: portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml\nСтатус: draft\nПроверка актуальности: D_inf=0.0; review_required=false\n\nДЕЙСТВИЯ ИЗ СТРАТЕГИИ (ДОСЛОВНО):\n1. TAIWAN_SEIZURE-BLOCKADE-01-REDUCE-NBIS: reduce ticker:NBIS delta_weight_nav=-0.06; timing=start_after_trading_days 0, tranches 3, interval 1, no_buy_first_trading_days 5; preconditions=['LIVE_OPTIMUM_CURRENT']\n2. TAIWAN_SEIZURE-BLOCKADE-02-CASH_TARGET-CASH: cash_target cash:CASH delta_weight_nav=0.02; timing=start_after_trading_days 0, tranches 3, interval 1, no_buy_first_trading_days 5; preconditions=['LIVE_OPTIMUM_CURRENT']\n3. TAIWAN_SEIZURE-BLOCKADE-03-ADD-ASTS: add ticker:ASTS delta_weight_nav=0.025; timing=start_after_trading_days 5, tranches 3, interval 1, no_buy_first_trading_days 5; preconditions=['LIVE_OPTIMUM_CURRENT']\n4. TAIWAN_SEIZURE-BLOCKADE-04-ADD-LLY: add ticker:LLY delta_weight_nav=0.005; timing=start_after_trading_days 5, tranches 3, interval 1, no_buy_first_trading_days 5; preconditions=['LIVE_OPTIMUM_CURRENT']\n5. TAIWAN_SEIZURE-BLOCKADE-05-ADD-META: add ticker:META delta_weight_nav=0.005; timing=start_after_trading_days 5, tranches 3, interval 1, no_buy_first_trading_days 5; preconditions=['LIVE_OPTIMUM_CURRENT']\n6. TAIWAN_SEIZURE-BLOCKADE-06-ADD-MSFT: add ticker:MSFT delta_weight_nav=0.005; timing=start_after_trading_days 5, tranches 3, interval 1, no_buy_first_trading_days 5; preconditions=['LIVE_OPTIMUM_CURRENT']\n\nПЕРЕСМОТР ВЕРОЯТНОСТЕЙ:\nПоследний review: 2026-09-27T00:00:00Z\nНовые defining events после review: EV-TW-FULL-BLOCKADE\nprobability_review_due: true\n\nРешение за владельцем. Автоисполнение запрещено."
+      }
+    ],
+    "state_after": {
+      "schema_version": "1.1",
+      "artifact": "scenario_state",
+      "updated_at": "2026-10-03T09:00:00Z",
+      "scenario_set_id": "GEOTECH_REGIME_8Y_V1",
+      "event_catalog_ref": "Scenario_Event_Catalog_v1.0.yaml",
+      "set_state": {
+        "classification": "TAIWAN_SEIZURE",
+        "status": "normal",
+        "last_probability_review_at": "2026-09-27T00:00:00Z"
+      },
+      "scenarios": {
+        "TAIWAN_SEIZURE": {
+          "status": "confirmed",
+          "current_phase_id": "BLOCKADE",
+          "probability": 0.1,
+          "probability_status": "owner_judgment",
+          "last_probability_review_at": "2026-09-25T00:00:00Z",
+          "conditional_anchor": {
+            "phase_id": "BLOCKADE",
+            "confirmed_at": "2026-10-03T09:00:00Z",
+            "t0_definition": "confirmed_phase_quarter"
+          },
+          "phases": {
+            "RESTRICTIONS": {
+              "status": "not_observed",
+              "first_observed_at": null,
+              "confirmed_at": null,
+              "exited_at": null,
+              "confirmed_quarter": null,
+              "confirmed_event_ids": [],
+              "confirmed_fact_ids": [],
+              "evidence": [],
+              "strategy_ref": "portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": null,
+              "last_signal_id": null
+            },
+            "BLOCKADE": {
+              "status": "confirmed",
+              "first_observed_at": "2026-10-03T09:00:00Z",
+              "confirmed_at": "2026-10-03T09:00:00Z",
+              "exited_at": null,
+              "confirmed_quarter": 0,
+              "confirmed_event_ids": [
+                "EV-TW-FULL-BLOCKADE"
+              ],
+              "confirmed_fact_ids": [
+                "TW-F02"
+              ],
+              "evidence": [
+                {
+                  "event_id": "EV-TW-FULL-BLOCKADE",
+                  "fact_id": "TW-F02",
+                  "observed_at": "2026-10-03T08:00:00Z",
+                  "source_ref": "СИНТЕТИЧЕСКИЙ ПРИМЕР — не факт; демонстрация формата сигнала",
+                  "verification_status": "verified",
+                  "verification_run_id": "verify-SCEN-DEMO-2026-10-03"
+                }
+              ],
+              "strategy_ref": "portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": "2026-10-03T09:00:00Z",
+              "last_signal_id": "SIG-TAIWAN_SEIZURE-BLOCKADE-20261003T090000Z"
+            },
+            "CONFLICT": {
+              "status": "not_observed",
+              "first_observed_at": null,
+              "confirmed_at": null,
+              "exited_at": null,
+              "confirmed_quarter": null,
+              "confirmed_event_ids": [],
+              "confirmed_fact_ids": [],
+              "evidence": [],
+              "strategy_ref": "portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": null,
+              "last_signal_id": null
+            },
+            "RECOVERY": {
+              "status": "not_observed",
+              "first_observed_at": null,
+              "confirmed_at": null,
+              "exited_at": null,
+              "confirmed_quarter": null,
+              "confirmed_event_ids": [],
+              "confirmed_fact_ids": [],
+              "evidence": [],
+              "strategy_ref": "portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": null,
+              "last_signal_id": null
+            }
+          },
+          "strategy_ref": "portfolio/_scenarios/strategies/TAIWAN_SEIZURE_strategy_v1.0.yaml",
+          "strategy_status": "draft",
+          "last_signal_at": "2026-10-03T09:00:00Z",
+          "last_signal_id": "SIG-TAIWAN_SEIZURE-BLOCKADE-20261003T090000Z",
+          "strategy_review_required": false,
+          "strategy_review_reason": null
+        },
+        "TAIWAN_QUARANTINE": {
+          "status": "not_observed",
+          "current_phase_id": null,
+          "probability": 0.175,
+          "probability_status": "owner_judgment",
+          "last_probability_review_at": "2026-09-27T00:00:00Z",
+          "conditional_anchor": null,
+          "phases": {
+            "RESTRICTIONS": {
+              "status": "not_observed",
+              "first_observed_at": null,
+              "confirmed_at": null,
+              "exited_at": null,
+              "confirmed_quarter": null,
+              "confirmed_event_ids": [],
+              "confirmed_fact_ids": [],
+              "evidence": [],
+              "strategy_ref": "portfolio/_scenarios/strategies/TAIWAN_QUARANTINE_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": null,
+              "last_signal_id": null
+            },
+            "QUARANTINE": {
+              "status": "not_observed",
+              "first_observed_at": null,
+              "confirmed_at": null,
+              "exited_at": null,
+              "confirmed_quarter": null,
+              "confirmed_event_ids": [],
+              "confirmed_fact_ids": [],
+              "evidence": [],
+              "strategy_ref": "portfolio/_scenarios/strategies/TAIWAN_QUARANTINE_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": null,
+              "last_signal_id": null
+            },
+            "NORMALIZATION_OR_FROZEN": {
+              "status": "not_observed",
+              "first_observed_at": null,
+              "confirmed_at": null,
+              "exited_at": null,
+              "confirmed_quarter": null,
+              "confirmed_event_ids": [],
+              "confirmed_fact_ids": [],
+              "evidence": [],
+              "strategy_ref": "portfolio/_scenarios/strategies/TAIWAN_QUARANTINE_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": null,
+              "last_signal_id": null
+            }
+          },
+          "strategy_ref": "portfolio/_scenarios/strategies/TAIWAN_QUARANTINE_strategy_v1.0.yaml",
+          "strategy_status": "draft",
+          "last_signal_at": null,
+          "last_signal_id": null,
+          "strategy_review_required": false,
+          "strategy_review_reason": null
+        },
+        "CHIP_COLD_WAR": {
+          "status": "not_observed",
+          "current_phase_id": null,
+          "probability": 0.07,
+          "probability_status": "owner_judgment",
+          "last_probability_review_at": "2026-09-25T00:00:00Z",
+          "conditional_anchor": null,
+          "phases": {
+            "RACE_TO_PARITY": {
+              "status": "not_observed",
+              "first_observed_at": null,
+              "confirmed_at": null,
+              "exited_at": null,
+              "confirmed_quarter": null,
+              "confirmed_event_ids": [],
+              "confirmed_fact_ids": [],
+              "evidence": [],
+              "strategy_ref": "portfolio/_scenarios/strategies/CHIP_COLD_WAR_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": null,
+              "last_signal_id": null
+            },
+            "PARITY_BOUNDARY": {
+              "status": "not_observed",
+              "first_observed_at": null,
+              "confirmed_at": null,
+              "exited_at": null,
+              "confirmed_quarter": null,
+              "confirmed_event_ids": [],
+              "confirmed_fact_ids": [],
+              "evidence": [],
+              "strategy_ref": "portfolio/_scenarios/strategies/CHIP_COLD_WAR_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": null,
+              "last_signal_id": null
+            },
+            "TWO_SYSTEMS": {
+              "status": "not_observed",
+              "first_observed_at": null,
+              "confirmed_at": null,
+              "exited_at": null,
+              "confirmed_quarter": null,
+              "confirmed_event_ids": [],
+              "confirmed_fact_ids": [],
+              "evidence": [],
+              "strategy_ref": "portfolio/_scenarios/strategies/CHIP_COLD_WAR_strategy_v1.0.yaml",
+              "strategy_status": "draft",
+              "last_signal_at": null,
+              "last_signal_id": null
+            }
+          },
+          "strategy_ref": "portfolio/_scenarios/strategies/CHIP_COLD_WAR_strategy_v1.0.yaml",
+          "strategy_status": "draft",
+          "last_signal_at": null,
+          "last_signal_id": null,
+          "strategy_review_required": false,
+          "strategy_review_reason": null
+        }
+      }
+    },
+    "schema_errors": [],
+    "applied": false,
+    "probability_review": {
+      "last_review": "2026-09-27T00:00:00Z",
+      "new_defining_events": [
+        "EV-TW-FULL-BLOCKADE"
+      ],
+      "due": true
+    },
+    "decision": "none",
+    "rule": "Trigger ≠ Decision: статусы фаз — по entry/exit_criteria и каталогу; сигналы — текст владельцу; сделок и активации стратегий нет"
+  },
+  "elapsed_ms": 390.4,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

@@ -396,10 +396,15 @@ verify-ASTS-20260923T060714Z), сводная v1.2.1 — в тот же день
    источник и дата, verification_status, immutable run_id. Статусы `pending_verification`, `not_disclosed`,
    `source_unavailable_technical` критерий НЕ закрывают; `source_conflict` блокирует подтверждение события.
 2. **Состояние** (`portfolio/_scenarios/state.json`): статусы фаз `not_observed | candidate | confirmed | exited`; набор —
-   `normal | ambiguous_set_conflict | outside_set_review`. Переход статуса — по entry/exit_criteria фаз из калибровки; агент пишет
-   свидетельства и run_id, статус меняет интегратор по правилу (до появления evaluator в сайдкаре). Файл пишется целиком
-   инструментом `write`, поля не переименовывать.
-3. **Сигнал владельцу** при переходе фазы в `confirmed` — ДОСЛОВНО по `Agent_Scenario_Signal_Contract_v1.0.md`: первая строка
+   `normal | ambiguous_set_conflict | outside_set_review`. Переходы считает детерминированный оценщик сайдкара (модель
+   `scenario_state`, с 03.10.2026), а не агент: после дозора событий сценария агент отправляет подтверждённые наблюдения в сайдкар:
+   `POST http://calc:8000/run {"model": "scenario_state", "inputs": {"event_items": [<записи по контракту §2: event_id, criterion_id,
+   fact_id, observed_at, observed_value, verification_status, verification_run_id, source_refs>], "as_of": "<date -u>", "apply": true},
+   "seed": 0, "save": true}`. Сайдкар сам применяет entry/exit_criteria и каталог, пишет state.json (целиком, по схеме 1.1) и возвращает
+   `transitions`, `set_state` и готовые тексты `signals[].text`. Агент state.json при этом НЕ редактирует; статус фаз руками не меняет.
+   Если `signals` пуст — ответ `NO_REPLY` (или справка в info_log). Пробный прогон без записи — `"apply": false`.
+3. **Сигнал владельцу** при переходе фазы в `confirmed` — текст из `signals[].text` сайдкара передаётся ДОСЛОВНО (он уже построен по
+   `Agent_Scenario_Signal_Contract_v1.0.md`); ниже — структура для справки: первая строка
    `AG: invest`, затем `СЦЕНАРИЙ: <id>`, `ФАЗА: <id> — CONFIRMED <дата>`, блок «ПОДТВЕРЖДАЮЩИЕ ФАКТЫ» (event_id / fact_id, источник,
    дата, проверка run_id), «УСЛОВНАЯ КАРТИНА ПОРТФЕЛЯ» (run условного прогона, медиана CAGR 5Y, P(loss>30 %), ES5, условный оптимум),
    «СТРАТЕГИЯ» (strategy_ref, статус draft/owner_approved/active, проверка актуальности D_inf и review_required), «ДЕЙСТВИЯ ИЗ

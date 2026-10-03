@@ -19,8 +19,20 @@ variants:
   - id: R9_D_min3
     optimum_run: 20261003T105058Z-portfolio_optimizer-97502f
     note: заход 9, без лимита числа бумаг, мин. 3 %
-  # пример ручного варианта владельца (раскомментировать и поправить):
+  # ВСЕЛЕННАЯ без весов (portfolio_compare 1.1.0, решение владельца 03.10): список бумаг → веса считает оптимизатор на смеси с лимитами
+  # владельца; плюс оптимум под каждым сценарием (0 = не покупать / продать под сценарием). Только бумаги с калибровкой IMMA (сейчас 15:
+  # ASML ASTS CRWV ETN HOOD LLY META MSFT NBIS NET NVDA PLTR RKLB SPCX SPOT; CRWD / HPS.A / S — после партии 13). Текущие позиции вне
+  # списка считаются проданными в кэш. ДОЛГО: ≈ 20–25 мин × (1 + число сценариев) на вариант — запуск по одобрению владельца.
+  # Примеры (раскомментировать / поправить):
+  # - id: U_current
+  #   universe: [NBIS, NVDA, HOOD, LLY, META, ASML, ETN, MSFT, NET, PLTR, RKLB, SPCX, ASTS, CRWV, SPOT]
+  #   note: текущий портфель как вселенная — что в нём лишнее
+  # - id: U_core6_plus
+  #   universe: [NBIS, LLY, SPOT, NVDA, CRWV, RKLB, PLTR, META]
+  #   note: ядро C + два претендента
+  # ручной вариант с весами (если нужно проверить гипотезу):
   # - id: owner_v1
   #   weights: {NBIS: 0.20, NVDA: 0.12, LLY: 0.12, SPOT: 0.10, CRWV: 0.08, RKLB: 0.08}
   #   dry_powder: 0.2763
   #   note: мой вариант
+universe_options: {per_scenario: true, conditional: false}   # conditional: true — ещё и под 7 условными фазами части B (+7 вызовов)

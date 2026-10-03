@@ -1,0 +1,134 @@
+calibration_v1.0:
+  ticker: CRWD
+  as_of: '2026-10-02'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  currency: USD
+  scenario_state:
+    ARR_Momentum: A2
+    Net_New_ARR: N2
+    Platform_Adoption: P2
+    Profitability_Cash: M3
+    Retention_Quality: R2
+    M&A_Integration: I2
+  market:
+    price: 270.04
+    price_as_of: '2026-10-02'
+    price_source: https://finance.yahoo.com/quote/CRWD/history/
+    listing: NASDAQ
+    currency: USD
+    shares_outstanding: 1023934842
+    shares_as_of: '2026-08-20'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm
+    equity_value: 276503364733.68
+  balance_sheet:
+    cash: 5013847000.0
+    debt_current: 0.0
+    debt_noncurrent: 746216000.0
+    net_debt: -4267631000.0
+    as_of: '2026-07-31'
+    currency: USD
+    source: https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm
+    note: Cash and long-term debt from Q2 FY2027 balance sheet; leases excluded from financial debt. Equity-FCF terminal method
+      does not subtract net cash twice.
+  base_period:
+    revenue_ttm: 5396145000.0
+    current_fcf_margin: 0.2565781288560654
+    revenue_formula: FY2026 revenue 4.812005B + H1 FY2027 2.856526B - H1 FY2026 2.272386B = 5.396145B USD TTM.
+    fcf_margin_formula: Q2 FY2027 free cash flow 377.4M / revenue 1.470897B = 25.6578%.
+  discount_rate:
+    base: 0.1
+    stress:
+      min: 0.085
+      max: 0.12000000000000001
+  terminal_fcf_margin:
+    min: 0.18
+    base: 0.28
+    max: 0.36
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 14
+    base: 26
+    max: 42
+  margin_transition:
+    type: mature_mean_reversion
+    path:
+      '1': 0.262
+      '2': 0.267
+      '3': 0.272
+      '4': 0.276
+      '5': terminal
+    critical_assumption:
+      linked_state: A2/N2/P2/M3/R2/I2
+      description: Q2 FCF margin is strongly positive. Base transition allows moderate long-run operating leverage but does
+        not capitalize SBC or acquisition goodwill as value; both remain separate dilution/integration risks.
+      falsification: Two consecutive periods with FCF margin below 15%, or sustained ARR growth below 15%, or material acquisition-integration
+        impairment requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.085
+    - 0.1
+    - 0.12000000000000001
+    terminal_fcf_margin:
+    - 0.18
+    - 0.28
+    - 0.36
+    terminal_fcf_multiple:
+    - 14
+    - 26
+    - 42
+  base_case:
+    discount_rate: 0.1
+    terminal_fcf_margin: 0.28
+    terminal_fcf_multiple: 26
+    margin_path:
+      Y0: 0.2565781288560654
+      Y1: 0.262
+      Y2: 0.267
+      Y3: 0.272
+      Y4: 0.276
+      Y5: 0.28
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-10-02 | https://finance.yahoo.com/quote/CRWD/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-08-20 | https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 270.04 USD/share * 1,023,934,842 shares = 276,503,364,733.68 USD.
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: FY2026 revenue 4.812005B + H1 FY2027 2.856526B - H1 FY2026 2.272386B = 5.396145B USD TTM.
+    base_period.current_fcf_margin:
+      provenance: derived_fact
+      formula: Q2 FY2027 free cash flow 377.4M / revenue 1.470897B = 25.6578%.
+    discount_rate:
+      provenance: model_assumption
+      rationale: Mature recurring software with net cash and positive FCF, offset by high-duration valuation, cybersecurity
+        competition and execution/integration risk.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Terminal cash-margin range permits scale leverage but remains below an unconstrained software ceiling; SBC
+        and M&A burden are not used to justify a higher central margin.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Recurring cybersecurity platform economics support a durable multiple, but rate sensitivity, competition,
+        SBC dilution and M&A integration risk constrain the terminal range. Chosen independently of observed price.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Explicit convergence from current/normalized FCF margin to the independently selected terminal cash-margin
+        center; not price-fitted.
+    balance_sheet.cash:
+      provenance: verified_fact
+      source_ref: 2026-07-31 | https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm
+    balance_sheet.debt_noncurrent:
+      provenance: verified_fact
+      source_ref: 2026-07-31 | same 10-Q
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 0 current debt + 746.216M long-term debt - 5.013847B cash = -4.267631B USD.

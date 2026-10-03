@@ -261,3 +261,17 @@ calibrations:
   last_check_basis: 'приёмка партии 14 (2026-10-03): RV d4986d, валидатор d65ac5, норматив 775457'
   next_mandatory_check: после публикации отчёта за Q3 FY2027 (CLR-1 §5.1)
   open_bases: []
+- ticker: CRWD
+  folder: crwd
+  archetype: mature_positive_margin
+  mc_file: mc_calibration_v1.0.1.yaml
+  mc_as_of: '2026-10-03'
+  rv_file: calibration_v1.0.yaml
+  rv_as_of: '2026-10-03'
+  base_period_anchor: '2026-07-31'
+  base_period_fiscal_quarter: Q2 FY2027
+  lifecycle_state: current
+  last_check: '2026-10-03'
+  last_check_basis: 'приёмка партии 14 (2026-10-03): RV 83e31c, валидатор 82711a, норматив 3c0b46'
+  next_mandatory_check: после публикации отчёта за Q3 FY2027 (конец ноября 2026; CLR-1 §5.1 — сверка дозором)
+  open_bases: []

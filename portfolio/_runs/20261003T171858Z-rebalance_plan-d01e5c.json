@@ -1,0 +1,345 @@
+{
+  "run_id": "20261003T171858Z-rebalance_plan-d01e5c",
+  "model": "rebalance_plan",
+  "version": "1.0.0",
+  "seed": 0,
+  "inputs": {
+    "reduce_order": [
+      "HOOD",
+      "NBIS",
+      "NVDA"
+    ],
+    "buy_order": [
+      "LLY",
+      "SPOT",
+      "CRWV",
+      "RKLB"
+    ],
+    "step_index": 1
+  },
+  "outputs": {
+    "version": "1.0.0",
+    "nav_base": 182755.91,
+    "price_dates": {
+      "RKLB": "2026-09-18",
+      "NVDA": "2026-09-18",
+      "NET": "2026-09-18",
+      "NBIS": "2026-09-18",
+      "MSFT": "2026-09-18",
+      "META": "2026-09-18",
+      "LLY": "2026-09-18",
+      "HOOD": "2026-09-18",
+      "GLD": "2026-09-18",
+      "ETN": "2026-09-18",
+      "ASML": "2026-09-18",
+      "UFO": "2026-09-18",
+      "ASTS": "2026-09-18",
+      "CRWV": "2026-09-18",
+      "PLTR": "2026-09-18",
+      "SPCX": "2026-09-18",
+      "SPOT": "2026-09-18"
+    },
+    "price_date_text": "2026-09-18",
+    "current_weights": {
+      "RKLB": 0.022612,
+      "NVDA": 0.213029,
+      "NET": 0.017707,
+      "NBIS": 0.330254,
+      "MSFT": 0.018968,
+      "META": 0.054679,
+      "LLY": 0.082186,
+      "HOOD": 0.142271,
+      "GLD": 0.021951,
+      "ETN": 0.011645,
+      "ASML": 0.027655,
+      "UFO": 0.001655,
+      "ASTS": 0.010247,
+      "CRWV": 0.004897,
+      "PLTR": 0.017496,
+      "SPCX": 0.006685,
+      "SPOT": 0.01115
+    },
+    "current_dry_powder": 0.004913,
+    "target_weights": {
+      "NBIS": 0.215,
+      "LLY": 0.14,
+      "SPOT": 0.135,
+      "NVDA": 0.11,
+      "CRWV": 0.105,
+      "RKLB": 0.075,
+      "GLD": 0.022,
+      "UFO": 0.002
+    },
+    "target_dry_powder": 0.196,
+    "target_meta": {
+      "version": "1.0",
+      "decision_ref": "decisions/DR-2026-10-03-01-composition.md",
+      "effective_from": "2026-10-03"
+    },
+    "deltas": {
+      "ASML": -0.027655,
+      "ASTS": -0.010247,
+      "CRWV": 0.100103,
+      "ETN": -0.011645,
+      "GLD": 4.9e-05,
+      "HOOD": -0.142271,
+      "LLY": 0.057814,
+      "META": -0.054679,
+      "MSFT": -0.018968,
+      "NBIS": -0.115254,
+      "NET": -0.017707,
+      "NVDA": -0.103029,
+      "PLTR": -0.017496,
+      "RKLB": 0.052388,
+      "SPCX": -0.006685,
+      "SPOT": 0.12385,
+      "UFO": 0.000345
+    },
+    "step_cap": 0.15,
+    "min_trade_weight": 0.005,
+    "min_partial_weight": 0.02,
+    "total_turnover": 0.525636,
+    "n_steps": 4,
+    "steps": [
+      {
+        "step": 1,
+        "sells": [
+          {
+            "ticker": "HOOD",
+            "delta_w": -0.142271,
+            "from_w": 0.142271,
+            "to_w": 0.0,
+            "delta_value_base": -26000.94,
+            "approx_shares": 217.0,
+            "action": "sell"
+          },
+          {
+            "ticker": "SPCX",
+            "delta_w": -0.006685,
+            "from_w": 0.006685,
+            "to_w": 0.0,
+            "delta_value_base": -1221.68,
+            "approx_shares": 8.0,
+            "action": "sell"
+          }
+        ],
+        "buys": [
+          {
+            "ticker": "LLY",
+            "delta_w": 0.057814,
+            "from_w": 0.082186,
+            "to_w": 0.14,
+            "delta_value_base": 10565.92,
+            "approx_shares": 9.16,
+            "action": "buy"
+          },
+          {
+            "ticker": "SPOT",
+            "delta_w": 0.092186,
+            "from_w": 0.01115,
+            "to_w": 0.103336,
+            "delta_value_base": 16847.47,
+            "approx_shares": 33.07,
+            "action": "buy"
+          }
+        ],
+        "turnover": 0.15,
+        "cash_before": 0.004913,
+        "cash_after": 0.003869,
+        "remaining_turnover": 0.376679
+      },
+      {
+        "step": 2,
+        "sells": [
+          {
+            "ticker": "NBIS",
+            "delta_w": -0.115254,
+            "from_w": 0.330254,
+            "to_w": 0.215,
+            "delta_value_base": -21063.28,
+            "approx_shares": 94.23,
+            "action": "sell"
+          },
+          {
+            "ticker": "NVDA",
+            "delta_w": -0.034746,
+            "from_w": 0.213029,
+            "to_w": 0.178283,
+            "delta_value_base": -6350.11,
+            "approx_shares": 28.57,
+            "action": "sell"
+          }
+        ],
+        "buys": [
+          {
+            "ticker": "SPOT",
+            "delta_w": 0.031664,
+            "from_w": 0.103336,
+            "to_w": 0.135,
+            "delta_value_base": 5786.78,
+            "approx_shares": 11.36,
+            "action": "buy"
+          },
+          {
+            "ticker": "CRWV",
+            "delta_w": 0.100103,
+            "from_w": 0.004897,
+            "to_w": 0.105,
+            "delta_value_base": 18294.41,
+            "approx_shares": 224.86,
+            "action": "buy"
+          }
+        ],
+        "turnover": 0.15,
+        "cash_before": 0.003869,
+        "cash_after": 0.022102,
+        "remaining_turnover": 0.226679
+      },
+      {
+        "step": 3,
+        "sells": [
+          {
+            "ticker": "NVDA",
+            "delta_w": -0.068283,
+            "from_w": 0.178283,
+            "to_w": 0.11,
+            "delta_value_base": -12479.07,
+            "approx_shares": 56.14,
+            "action": "sell"
+          },
+          {
+            "ticker": "META",
+            "delta_w": -0.054679,
+            "from_w": 0.054679,
+            "to_w": 0.0,
+            "delta_value_base": -9992.97,
+            "approx_shares": 15.01,
+            "action": "sell"
+          },
+          {
+            "ticker": "MSFT",
+            "delta_w": -0.018968,
+            "from_w": 0.018968,
+            "to_w": 0.0,
+            "delta_value_base": -3466.58,
+            "approx_shares": 7.02,
+            "action": "sell"
+          }
+        ],
+        "buys": [
+          {
+            "ticker": "RKLB",
+            "delta_w": 0.052388,
+            "from_w": 0.022612,
+            "to_w": 0.075,
+            "delta_value_base": 9574.21,
+            "approx_shares": 148.28,
+            "action": "buy"
+          }
+        ],
+        "turnover": 0.14193,
+        "cash_before": 0.022102,
+        "cash_after": 0.111645,
+        "remaining_turnover": 0.084749
+      },
+      {
+        "step": 4,
+        "sells": [
+          {
+            "ticker": "ASML",
+            "delta_w": -0.027655,
+            "from_w": 0.027655,
+            "to_w": 0.0,
+            "delta_value_base": -5054.04,
+            "approx_shares": 3.01,
+            "action": "sell"
+          },
+          {
+            "ticker": "NET",
+            "delta_w": -0.017707,
+            "from_w": 0.017707,
+            "to_w": 0.0,
+            "delta_value_base": -3236.0,
+            "approx_shares": 10.0,
+            "action": "sell"
+          },
+          {
+            "ticker": "PLTR",
+            "delta_w": -0.017496,
+            "from_w": 0.017496,
+            "to_w": 0.0,
+            "delta_value_base": -3197.52,
+            "approx_shares": 18.0,
+            "action": "sell"
+          },
+          {
+            "ticker": "ETN",
+            "delta_w": -0.011645,
+            "from_w": 0.011645,
+            "to_w": 0.0,
+            "delta_value_base": -2128.18,
+            "approx_shares": 5.01,
+            "action": "sell"
+          },
+          {
+            "ticker": "ASTS",
+            "delta_w": -0.010247,
+            "from_w": 0.010247,
+            "to_w": 0.0,
+            "delta_value_base": -1872.64,
+            "approx_shares": 32.0,
+            "action": "sell"
+          }
+        ],
+        "buys": [],
+        "turnover": 0.084749,
+        "cash_before": 0.111645,
+        "cash_after": 0.196394,
+        "remaining_turnover": 0
+      }
+    ],
+    "final_weights": {
+      "ASML": 0.0,
+      "ASTS": 0.0,
+      "CRWV": 0.105,
+      "ETN": 0.0,
+      "GLD": 0.021951,
+      "HOOD": 0.0,
+      "LLY": 0.14,
+      "META": 0.0,
+      "MSFT": 0.0,
+      "NBIS": 0.215,
+      "NET": 0.0,
+      "NVDA": 0.11,
+      "PLTR": 0.0,
+      "RKLB": 0.075,
+      "SPCX": 0.0,
+      "SPOT": 0.135,
+      "UFO": 0.001655
+    },
+    "final_dry_powder": 0.196394,
+    "checks": {
+      "cash_never_negative": true,
+      "steps_within_cap": true,
+      "final_matches_target": true,
+      "unfinished": false,
+      "ok": true
+    },
+    "signal_texts": [
+      {
+        "step": 1,
+        "text": "AG: invest, ПЕРЕКЛАДКА: шаг 1 из 4 к целевым весам v1.0 (решение DR-2026-10-03-01-composition, NAV $182 756, цены на 2026-09-18)\nПродать: HOOD 14.2 % → 0.0 % (−$26 001, ≈ 217 акц.); SPCX 0.7 % → 0.0 % (−$1 222, ≈ 8 акц.)\nКупить: LLY 8.2 % → 14.0 % ($10 566, ≈ 9.16 акц.); SPOT 1.1 % → 10.3 % ($16 847, ≈ 33.07 акц.)\nКэш после шага: 0.4 % · оборот шага 15.0 % NAV (лимит 15.0 %) · исполнение: 3 транша по торговым дням (ACT-2026-10-01)\nПосле шага до цели: оборот 37.7 % NAV, шагов ещё 3\nЛоты, два счёта, комиссии и налоги не моделировались — учитывать вручную. Порядок — ориентир, не приказ.\nРешение за владельцем. Автоисполнение запрещено."
+      }
+    ],
+    "notes": [
+      "оборот шага = max(продажи, покупки) в долях NAV (= 0.5·Σ|Δw| с кэшем как позицией)",
+      "стадия B исполнения (лоты, счета, издержки, налоги) не моделируется",
+      "не торговый сигнал: решение за владельцем"
+    ]
+  },
+  "elapsed_ms": 384.6,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

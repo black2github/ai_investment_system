@@ -1,0 +1,33 @@
+package: IMMA_Party14_CRWD_HPSA_S_RV_MC_Calibrations
+package_version: '1.0'
+as_of: '2026-10-02'
+scope: Party 14 per §4 of party13-company-models-candidates.feedback.md
+files:
+- file: CRWD_calibration_v1.0.yaml
+  sha256: 6cdd3e4f5c92d8573a92d72ab1704954b5a21b9944d3e83afb05e2dd3b7b1144
+  bytes: 4968
+- file: CRWD_mc_calibration_v1.0.yaml
+  sha256: e3cdee17472118e5a0d16cb1fa57189b367ca5552269b3e00fe3eedb62bb5df3
+  bytes: 12117
+- file: HPSA_calibration_v1.0.yaml
+  sha256: 4c2267b0ad0e9238e94bac4ccb88012fc69f2cfb3c7cd4b673246afbebc2404b
+  bytes: 6980
+- file: HPSA_mc_calibration_v1.0.yaml
+  sha256: f5dbba5d5ee1b1f9a8955daa5f3a4bb7871c57bd513a6e9b3c12f7deeca65d04
+  bytes: 11957
+- file: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: 1dde24ba48b1e4bc2273ac0069d7b024b80ee39c71bf71ffaf2986e34ba2df11
+  bytes: 2711
+- file: PACKAGE_README.md
+  sha256: 34f2594a813f67e917cdeca2fe1efc238cbe4017bded447e2da225b302f0856e
+  bytes: 1590
+- file: S_calibration_v1.0.yaml
+  sha256: a59ce9e21c6b68a8d6b8450f8d848d3188354bcb42f007fcbefa4837266245b5
+  bytes: 5331
+- file: S_mc_calibration_v1.0.yaml
+  sha256: 63761cdf698d99ced451043e1423a017d1d717f627ac06a4ca798f095bc51333
+  bytes: 11289
+host_acceptance_status: PENDING
+notes:
+- MC artifacts validate locally against Company_MC_Calibration_Schema v1.0.2.
+- Local preflight is not a substitute for host validator/sidecar/500k acceptance.

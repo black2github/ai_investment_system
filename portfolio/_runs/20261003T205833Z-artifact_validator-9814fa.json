@@ -1,0 +1,591 @@
+{
+  "run_id": "20261003T205833Z-artifact_validator-9814fa",
+  "model": "artifact_validator",
+  "version": "1.10.1",
+  "seed": 0,
+  "inputs": {
+    "mode": "calibration",
+    "workspace": "/data/workspace-invest",
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "CRWD",
+      "as_of": "2026-10-02",
+      "archetype": "mature_positive_margin",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "ARR_Momentum": "A2",
+        "Net_New_ARR": "N2",
+        "Platform_Adoption": "P2",
+        "Profitability_Cash": "M3",
+        "Retention_Quality": "R2",
+        "M&A_Integration": "I2"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "Subscription": {
+            "base_revenue_quarterly": 1400291000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-07-31 | https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": 0.14,
+              "mode": 0.25,
+              "max": 0.36,
+              "provenance": "model_assumption",
+              "rationale": "Q2 subscription revenue grew 27% YoY; mode 25% is anchored to disclosed Q2 growth and ARR +25%, while tails capture retention, Flex conversion and competitive dispersion."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0.06,
+              "mode": 0.13,
+              "max": 0.2,
+              "provenance": "model_assumption",
+              "rationale": "Long-run recurring-security growth mean-reverts while preserving platform consolidation upside."
+            },
+            "growth_half_life_years": 2.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Growth normalizes over a multi-year operating cycle."
+            },
+            "latent_loading": {
+              "growth": 0.68
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Shared demand exposure remains material alongside company-specific execution."
+            }
+          },
+          "Services": {
+            "base_revenue_quarterly": 70606000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-07-31 | https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": 0,
+              "mode": 0.14,
+              "max": 0.3,
+              "provenance": "model_assumption",
+              "rationale": "Services are a small, more volatile component; center is deliberately below subscription growth."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": 0,
+              "mode": 0.08,
+              "max": 0.15,
+              "provenance": "model_assumption",
+              "rationale": "Long-run services growth converges to lower rates than subscription platform revenue."
+            },
+            "growth_half_life_years": 2.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Growth normalizes over a multi-year operating cycle."
+            },
+            "latent_loading": {
+              "growth": 0.55
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Shared demand exposure remains material alongside company-specific execution."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "mean_reverting_positive_margin",
+        "current_margin": 0.2565781288560654,
+        "current_margin_meta": {
+          "provenance": "derived_fact",
+          "formula": "Q2 FY2027 FCF 377.4M / revenue 1.470897B = 25.6578%. Source: 2026-07-31 | SEC Exhibit 99.1."
+        },
+        "terminal_margin_Y5": {
+          "distribution": "triangular",
+          "min": 0.18,
+          "mode": 0.28,
+          "max": 0.36,
+          "provenance": "model_assumption",
+          "rationale": "Cash margin can expand with subscription scale but the range explicitly retains SBC dilution and M&A/integration burden as risks rather than value adjustments."
+        },
+        "terminal_margin_Y8": {
+          "distribution": "triangular",
+          "min": 0.18,
+          "mode": 0.3,
+          "max": 0.38,
+          "provenance": "model_assumption",
+          "rationale": "Long-run upside is capped below an unconstrained software case; acquisitions must earn their economics rather than being treated as automatic margin accretion."
+        },
+        "half_life_years": 2.0,
+        "half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Cash-margin convergence horizon."
+        },
+        "shock_sigma": 0.04,
+        "shock_sigma_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Quarterly company-specific cash-margin noise, separate from Joint Layer drivers."
+        },
+        "shock_persistence": 0.5,
+        "shock_persistence_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Operating and working-capital shocks persist across adjacent quarters but mean-revert."
+        },
+        "lower_bound": 0.08,
+        "lower_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Severe operating downside bound; discrete thesis breaks remain failure/recalibration events."
+        },
+        "upper_bound": 0.42,
+        "upper_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Caps extrapolation beyond economically plausible mature cash conversion."
+        }
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 18.0,
+            "mode": 32.0,
+            "max": 50.0,
+            "provenance": "model_assumption",
+            "rationale": "Near-term recurring growth can support a premium, with broad downside for duration compression."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 14.0,
+            "mode": 26.0,
+            "max": 42.0,
+            "provenance": "model_assumption",
+            "rationale": "Mature cybersecurity FCF multiple; not reverse-fitted to current market price."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 12.0,
+            "mode": 22.0,
+            "max": 36.0,
+            "provenance": "model_assumption",
+            "rationale": "Further duration compression as growth normalizes."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 3.5,
+            "mode": 7.0,
+            "max": 11.0,
+            "provenance": "model_assumption",
+            "rationale": "Parity bridge: 7.0x revenue / 26x FCF implies 26.9% margin, close to the independently selected Y5 cash-margin center."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.4,
+          "growth__valuation": 0.35,
+          "margin__valuation": 0.4
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Enterprise demand, cash leverage and duration valuation co-move materially."
+        },
+        "default_loading": 0.68,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Common-factor loading leaves material idiosyncratic execution risk."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.45,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Path-volatility calibration for drawdown diagnostics only; does not set terminal value."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 1.5,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Liquid listed-equity valuation dislocations mean-revert over several quarters."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_RUN:CRWD_calibration_v1.0.yaml",
+        "implied_revenue_cagr_5y": 0.6053225899420847,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Local deterministic preflight of Reverse Valuation equity-FCF equation from CRWD_calibration_v1.0.yaml; host run_ref remains authoritative."
+        },
+        "discount_rate": 0.1,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from CRWD RV base calibration."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.011456812421325565,
+              0.011456812421325565
+            ],
+            "margin_nodes_pp": [
+              -0.009204467514322719,
+              0.009204467514322719
+            ],
+            "terminal_multiple_pct": [
+              -0.054662908944644206,
+              0.05782372178332662
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 local preflight: sigma_eq from triangular nodes; growth is base-revenue-weighted RMS of segment initial-growth sigma; margin is Y5 triangular sigma; multiple is Y5 log-space triangular sigma; perturbation = 0.25*sigma; correlation +/-0.15."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Accepted v1.1.2 tolerance for |Delta P(2x,5Y)| and |Delta P(loss>30%,5Y)|."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "CLOUD_SOFTWARE_DEMAND",
+          "ACQUISITION_INTEGRATION",
+          "INTEREST_RATES",
+          "AI_COMPUTE_DEMAND"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "CRWD_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.55,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Company-specific execution shocks persist across adjacent quarters but mean-revert."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "CLOUD_SOFTWARE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Subscription.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Enterprise security/cloud demand primarily shifts subscription growth."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.Subscription.initial_growth.mode",
+              "contribution": 0.01,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "A2/P2 central case includes continued platform consolidation demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse driver direction for this company mapping."
+              }
+            }
+          },
+          "note": "Primary demand linkage."
+        },
+        {
+          "driver_id": "ACQUISITION_INTEGRATION",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Integration quality affects acquired-product economics and cash margin; goodwill growth is a risk signal, not a valuation uplift."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse driver direction for this company mapping."
+              }
+            }
+          },
+          "note": "CRWD-FM-03 integration failure. Goodwill rose materially in H1; no price-fitting adjustment. SBC is monitored separately as dilution/cash-economics risk because no canonical SBC root driver exists."
+        },
+        {
+          "driver_id": "INTEREST_RATES",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": -0.02,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates compress duration valuation; operating model is not changed."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse driver direction for this company mapping."
+              }
+            }
+          },
+          "note": "Valuation-only rate channel."
+        },
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Subscription.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI workload proliferation modestly increases endpoint/cloud security demand but is not the primary thesis driver."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse driver direction for this company mapping."
+              }
+            }
+          },
+          "note": "Secondary demand linkage; kept small to avoid synthetic AI dependence."
+        }
+      ]
+    },
+    "folders": [
+      "crwd"
+    ],
+    "equity_value_0": 276503364733.68,
+    "dispersion_paths": 20000
+  },
+  "outputs": {
+    "model_version": "1.10.1",
+    "schema_version": "1.0.2",
+    "mode": "calibration",
+    "ticker": "CRWD",
+    "archetype": "mature_positive_margin",
+    "schema_errors": [],
+    "integrity": [
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → revenue_model.segments.Subscription.initial_growth",
+        "message": "σ суммарного сдвига q20 = 0.066 ≤ 0.15 (growth; драйверов 2)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → margin_model.terminal_margin_Y5",
+        "message": "σ суммарного сдвига q20 = 0.015 ≤ 0.05 (margin; драйверов 1)"
+      },
+      {
+        "rule": "MC-G5-013",
+        "severity": "info",
+        "path": "driver_parameter_mapping → valuation.Y5.multiple",
+        "message": "σ суммарного сдвига q20 = 0.036 ≤ 0.15 (multiple; драйверов 1)"
+      },
+      {
+        "rule": "MC-DISP-001",
+        "severity": "warning",
+        "path": "dispersion/intrinsic",
+        "message": "intrinsic W = 0.156 ниже ориентира 0.25–0.5: собственная неопределённость слишком узкая"
+      },
+      {
+        "rule": "MC-DISP-002",
+        "severity": "warning",
+        "path": "dispersion/full",
+        "message": "full W = 0.182 ниже ориентира 0.3–0.6"
+      }
+    ],
+    "engine_dry_run": {
+      "engine_version": "2.5.0",
+      "mapping_warnings": [],
+      "deterministic": true,
+      "median_CAGR_5Y": 1.5389068782072057,
+      "P_loss_gt_30pct_5Y": 0.0,
+      "paths": 2000
+    },
+    "aggregate_shift": {
+      "revenue_model.segments.Subscription.initial_growth": {
+        "sigma": 0.066,
+        "cap": 0.15,
+        "kind": "growth",
+        "quarter": 20,
+        "drivers": 2,
+        "sum_abs_effect": 0.042,
+        "ok": true
+      },
+      "margin_model.terminal_margin_Y5": {
+        "sigma": 0.0148,
+        "cap": 0.05,
+        "kind": "margin",
+        "quarter": 20,
+        "drivers": 1,
+        "sum_abs_effect": 0.015,
+        "ok": true
+      },
+      "valuation.Y5.multiple": {
+        "sigma": 0.0357,
+        "cap": 0.15,
+        "kind": "multiple",
+        "quarter": 20,
+        "drivers": 1,
+        "sum_abs_effect": 0.02,
+        "ok": true
+      }
+    },
+    "dispersion": {
+      "paths": 20000,
+      "equity_value_0": 276503364733.68,
+      "intrinsic": {
+        "W": 0.1559,
+        "q05": -0.2530905171741884,
+        "q95": -0.09715640307548362,
+        "median_CAGR_5Y": -0.17463476363555053,
+        "P_loss_gt_30pct_5Y": 0.98595,
+        "P_2x_5Y": 0.0
+      },
+      "full": {
+        "W": 0.1822,
+        "q05": -0.26523317585173706,
+        "q95": -0.08305247253538309,
+        "median_CAGR_5Y": -0.1752652912431002,
+        "P_loss_gt_30pct_5Y": 0.9701,
+        "P_2x_5Y": 0.0
+      },
+      "full_to_intrinsic_ratio": 1.169,
+      "bands": {
+        "intrinsic_W": [
+          0.25,
+          0.5
+        ],
+        "full_W": [
+          0.3,
+          0.6
+        ],
+        "full_to_intrinsic_width_ratio_max": 1.5
+      }
+    },
+    "pass": true,
+    "note": "MC-G5-013 — hard gate по Joint_Simulation_Layer_Rules_v1.1 (strict_aggregate=false → warning); MC-G5-009 (антицикличность) и MC-G5-010 (полнота provenance сверх схемы) статически не проверяются",
+    "decision": "none"
+  },
+  "elapsed_ms": 2131.8,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

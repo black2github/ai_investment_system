@@ -1,0 +1,140 @@
+{
+  "run_id": "20261003T205839Z-reverse_valuation-d4986d",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "S",
+    "valuation_date": "2026-10-03",
+    "calibration": "S_calibration_v1.0 (A2+N2+P2+M2+E2+R1)",
+    "market": {
+      "price": 25.06,
+      "shares_outstanding": 348049117,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm"
+    },
+    "balance_sheet": {
+      "net_debt": -813246000.0,
+      "cash": 813246000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 1098704000.0,
+      "current_fcf_margin": 0.04,
+      "revenue_source": "FY2026 revenue 1.001278B + H1 FY2027 568.638M - H1 FY2026 471.212M = 1.098704B USD TTM.",
+      "source": "Normalized current FCF margin = 4.0% model assumption: FY2026 FCF margin about 5% and H1 FY2027 YTD FCF margin 17.5M / 568.638M = 3.08%; Q2 standalone FCF was -13.2M. The 4.0% center preserves transition risk and is not price-fitted."
+    },
+    "discounting": {
+      "discount_rate": 0.11,
+      "stress_rates": [
+        0.095,
+        0.13
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.06,
+        "base": 0.16,
+        "max": 0.24
+      },
+      "multiple_range": {
+        "min": 12,
+        "base": 22,
+        "max": 36
+      }
+    },
+    "margin_transition": {
+      "type": "mature_mean_reversion",
+      "path": {
+        "1": 0.06,
+        "2": 0.085,
+        "3": 0.11,
+        "4": 0.135,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "ARR_Momentum": "A2",
+      "Net_New_ARR": "N2",
+      "Platform_Adoption": "P2",
+      "Profitability_Cash": "M2",
+      "Enterprise_Scale": "E2",
+      "Retention_Quality": "R1"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "0bf5c6054664d53e",
+    "scenario_state": {
+      "ARR_Momentum": "A2",
+      "Net_New_ARR": "N2",
+      "Platform_Adoption": "P2",
+      "Profitability_Cash": "M2",
+      "Enterprise_Scale": "E2",
+      "Retention_Quality": "R1"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 8722110872.02,
+      "enterprise_value": 7908864872.02,
+      "terminal_fcf_margin": 0.16,
+      "terminal_multiple": 22.0,
+      "discount_rate": 0.11,
+      "current_fcf_margin": 0.04,
+      "revenue_ttm": 1098704000.0,
+      "implied_revenue_cagr_5y": 0.285775,
+      "terminal_revenue": 3861057428.21,
+      "terminal_fcf": 617769188.51,
+      "pv_interim_fcf": 656560081.17,
+      "pv_terminal_value": 8065550797.86,
+      "terminal_value_share_of_pv": 0.9247,
+      "control_cagr": 0.285775
+    },
+    "validation": {
+      "converged": true,
+      "residual": 7.005098342895508,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.06|multiple=12": 0.721,
+        "margin=0.06|multiple=22": 0.5446,
+        "margin=0.06|multiple=36": 0.4102,
+        "margin=0.16|multiple=12": 0.4415,
+        "margin=0.16|multiple=22": 0.2858,
+        "margin=0.16|multiple=36": 0.1697,
+        "margin=0.24|multiple=12": 0.3358,
+        "margin=0.24|multiple=22": 0.1895,
+        "margin=0.24|multiple=36": 0.0812
+      },
+      "discount_rate_grid": {
+        "r=0.095": 0.2684,
+        "r=0.13": 0.3089
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "terminal_dependent",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": false
+    }
+  },
+  "elapsed_ms": 4.9,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

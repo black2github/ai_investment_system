@@ -1,0 +1,140 @@
+{
+  "run_id": "20261003T205832Z-reverse_valuation-83e31c",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "CRWD",
+    "valuation_date": "2026-10-03",
+    "calibration": "CRWD_calibration_v1.0 (A2+N2+P2+M3+R2+I2)",
+    "market": {
+      "price": 270.04,
+      "shares_outstanding": 1023934842,
+      "shares_source": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm"
+    },
+    "balance_sheet": {
+      "net_debt": -4267631000.0,
+      "cash": 5013847000.0,
+      "source": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm"
+    },
+    "base_period": {
+      "revenue_ttm": 5396145000.0,
+      "current_fcf_margin": 0.2565781288560654,
+      "revenue_source": "FY2026 revenue 4.812005B + H1 FY2027 2.856526B - H1 FY2026 2.272386B = 5.396145B USD TTM.",
+      "source": "Q2 FY2027 free cash flow 377.4M / revenue 1.470897B = 25.6578%."
+    },
+    "discounting": {
+      "discount_rate": 0.1,
+      "stress_rates": [
+        0.085,
+        0.12000000000000001
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.18,
+        "base": 0.28,
+        "max": 0.36
+      },
+      "multiple_range": {
+        "min": 14,
+        "base": 26,
+        "max": 42
+      }
+    },
+    "margin_transition": {
+      "type": "mature_mean_reversion",
+      "path": {
+        "1": 0.262,
+        "2": 0.267,
+        "3": 0.272,
+        "4": 0.276,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "ARR_Momentum": "A2",
+      "Net_New_ARR": "N2",
+      "Platform_Adoption": "P2",
+      "Profitability_Cash": "M3",
+      "Retention_Quality": "R2",
+      "M&A_Integration": "I2"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "00277c197160ff5e",
+    "scenario_state": {
+      "ARR_Momentum": "A2",
+      "Net_New_ARR": "N2",
+      "Platform_Adoption": "P2",
+      "Profitability_Cash": "M3",
+      "Retention_Quality": "R2",
+      "M&A_Integration": "I2"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 276503364733.68,
+      "enterprise_value": 272235733733.68,
+      "terminal_fcf_margin": 0.28,
+      "terminal_multiple": 26.0,
+      "discount_rate": 0.1,
+      "current_fcf_margin": 0.2565781288560654,
+      "revenue_ttm": 5396145000.0,
+      "implied_revenue_cagr_5y": 0.605323,
+      "terminal_revenue": 57530108889.46,
+      "terminal_fcf": 16108430489.05,
+      "pv_interim_fcf": 16449597160.98,
+      "pv_terminal_value": 260053767263.32,
+      "terminal_value_share_of_pv": 0.9405,
+      "control_cagr": 0.605323
+    },
+    "validation": {
+      "converged": true,
+      "residual": -309.37872314453125,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.18|multiple=14": 0.9628,
+        "margin=0.18|multiple=26": 0.7471,
+        "margin=0.18|multiple=42": 0.5937,
+        "margin=0.28|multiple=14": 0.8069,
+        "margin=0.28|multiple=26": 0.6053,
+        "margin=0.28|multiple=42": 0.4629,
+        "margin=0.36|multiple=14": 0.7226,
+        "margin=0.36|multiple=26": 0.5292,
+        "margin=0.36|multiple=42": 0.3929
+      },
+      "discount_rate_grid": {
+        "r=0.085": 0.5834,
+        "r=0.12000000000000001": 0.6345
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "terminal_dependent",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": false
+    }
+  },
+  "elapsed_ms": 5.6,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

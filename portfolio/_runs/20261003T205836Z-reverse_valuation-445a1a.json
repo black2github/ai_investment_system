@@ -1,0 +1,140 @@
+{
+  "run_id": "20261003T205836Z-reverse_valuation-445a1a",
+  "model": "reverse_valuation",
+  "version": "1.2.0",
+  "seed": 0,
+  "inputs": {
+    "ticker": "HPS.A",
+    "valuation_date": "2026-10-03",
+    "calibration": "HPSA_calibration_v1.0 (B3+M2+C1+I1+D3+T2)",
+    "market": {
+      "price": 296.97,
+      "shares_outstanding": 11904924,
+      "shares_source": "https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf"
+    },
+    "balance_sheet": {
+      "net_debt": 36478000.0,
+      "cash": 33631000.0,
+      "source": "https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf"
+    },
+    "base_period": {
+      "revenue_ttm": 1062120000.0,
+      "current_fcf_margin": 0.09885659434029462,
+      "revenue_source": "FY2025 sales 898.3M + H1 2026 sales 589.642M - H1 2025 sales 425.822M = 1.062120B CAD TTM; AEG excluded because first factual consolidated period is Q3 2026.",
+      "source": "Normalized pre-AEG H1 FCF margin = (H1 operating cash flow 4.953M + working-capital outflow 68.232M - capex 14.895M) / H1 sales 589.642M = 9.8857%. This is a model_assumption normalization, not reported FCF."
+    },
+    "discounting": {
+      "discount_rate": 0.1,
+      "stress_rates": [
+        0.085,
+        0.12000000000000001
+      ]
+    },
+    "terminal": {
+      "fcf_margin_range": {
+        "min": 0.06,
+        "base": 0.11,
+        "max": 0.16
+      },
+      "multiple_range": {
+        "min": 10,
+        "base": 20,
+        "max": 32
+      }
+    },
+    "margin_transition": {
+      "type": "mature_mean_reversion",
+      "path": {
+        "1": 0.1,
+        "2": 0.103,
+        "3": 0.106,
+        "4": 0.108,
+        "5": "terminal"
+      }
+    },
+    "calculation": {
+      "forecast_years": 5,
+      "terminal_method": "equity_fcf_multiple"
+    },
+    "scenario_state": {
+      "Demand_Backlog": "B3",
+      "Margin_Quality": "M2",
+      "Cash_Conversion": "C1",
+      "AEG_Integration": "I1",
+      "US_DataCenter_Exposure": "D3",
+      "FX_Tariff_Execution": "T2"
+    }
+  },
+  "outputs": {
+    "model_version": "1.2.0",
+    "spec_version": "Investment_System_Reverse_Valuation_Specification_v1.0 + Rules_v1.1",
+    "inputs_hash": "7512b162e4f5c603",
+    "scenario_state": {
+      "Demand_Backlog": "B3",
+      "Margin_Quality": "M2",
+      "Cash_Conversion": "C1",
+      "AEG_Integration": "I1",
+      "US_DataCenter_Exposure": "D3",
+      "FX_Tariff_Execution": "T2"
+    },
+    "terminal_method": "equity_fcf_multiple",
+    "margin_transition": "explicit_path",
+    "calculated": {
+      "equity_value": 3535405280.28,
+      "enterprise_value": 3571883280.28,
+      "terminal_fcf_margin": 0.11,
+      "terminal_multiple": 20.0,
+      "discount_rate": 0.1,
+      "current_fcf_margin": 0.09885659434029462,
+      "revenue_ttm": 1062120000.0,
+      "implied_revenue_cagr_5y": 0.15863,
+      "terminal_revenue": 2217677018.82,
+      "terminal_fcf": 243944472.07,
+      "pv_interim_fcf": 505998788.03,
+      "pv_terminal_value": 3029406487.01,
+      "terminal_value_share_of_pv": 0.8569,
+      "control_cagr": 0.15863
+    },
+    "validation": {
+      "converged": true,
+      "residual": -5.239920139312744,
+      "status": "ok",
+      "assumption_conflict": false
+    },
+    "sensitivity": {
+      "margin_multiple_grid": {
+        "margin=0.06|multiple=10": 0.4561,
+        "margin=0.06|multiple=20": 0.2928,
+        "margin=0.06|multiple=32": 0.1879,
+        "margin=0.11|multiple=10": 0.3128,
+        "margin=0.11|multiple=20": 0.1586,
+        "margin=0.11|multiple=32": 0.0616,
+        "margin=0.16|multiple=10": 0.2279,
+        "margin=0.16|multiple=20": 0.0808,
+        "margin=0.16|multiple=32": -0.011
+      },
+      "discount_rate_grid": {
+        "r=0.085": 0.1428,
+        "r=0.12000000000000001": 0.1797
+      }
+    },
+    "valuation_state": {
+      "previous": null,
+      "candidate": null,
+      "transition_trigger": null,
+      "transition_allowed": false,
+      "evaluation_case": "calibration_base_case"
+    },
+    "model_stability": {
+      "class": "terminal_dependent",
+      "valuation_transition_allowed": true,
+      "require_sensitivity_evidence": true,
+      "require_explicit_model_risk_flag": false
+    }
+  },
+  "elapsed_ms": 5.6,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

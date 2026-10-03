@@ -1,0 +1,136 @@
+calibration_v1.0:
+  ticker: S
+  as_of: '2026-10-02'
+  model: reverse_valuation_v1.0
+  calculation_engine_version: reverse_valuation 1.2.0
+  currency: USD
+  scenario_state:
+    ARR_Momentum: A2
+    Net_New_ARR: N2
+    Platform_Adoption: P2
+    Profitability_Cash: M2
+    Enterprise_Scale: E2
+    Retention_Quality: R1
+  market:
+    price: 25.06
+    price_as_of: '2026-10-02'
+    price_source: https://finance.yahoo.com/quote/S/history/
+    listing: NYSE
+    currency: USD
+    shares_outstanding: 348049117
+    shares_as_of: '2026-08-21'
+    shares_source: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm
+    equity_value: 8722110872.02
+  balance_sheet:
+    cash: 813246000.0
+    debt_current: 0.0
+    debt_noncurrent: 0.0
+    net_debt: -813246000.0
+    as_of: '2026-07-31'
+    currency: USD
+    source: https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm
+    note: cash = cash and cash equivalents + short-term investments + long-term investments. No interest-bearing financial
+      debt disclosed in Q2 FY2027 balance sheet; leases excluded.
+  base_period:
+    revenue_ttm: 1098704000.0
+    current_fcf_margin: 0.04
+    revenue_formula: FY2026 revenue 1.001278B + H1 FY2027 568.638M - H1 FY2026 471.212M = 1.098704B USD TTM.
+    fcf_margin_formula: 'Normalized current FCF margin = 4.0% model assumption: FY2026 FCF margin about 5% and H1 FY2027 YTD
+      FCF margin 17.5M / 568.638M = 3.08%; Q2 standalone FCF was -13.2M. The 4.0% center preserves transition risk and is
+      not price-fitted.'
+  discount_rate:
+    base: 0.11
+    stress:
+      min: 0.095
+      max: 0.13
+  terminal_fcf_margin:
+    min: 0.06
+    base: 0.16
+    max: 0.24
+  terminal_fcf_multiple:
+    unit: x FCF
+    min: 12
+    base: 22
+    max: 36
+  margin_transition:
+    type: mature_mean_reversion
+    path:
+      '1': 0.06
+      '2': 0.085
+      '3': 0.11
+      '4': 0.135
+      '5': terminal
+    critical_assumption:
+      linked_state: A2/N2/P2/M2/E2/R1
+      description: Reported Q2 FCF was negative while H1 and FY2026 were positive. A 4% normalized starting cash margin is
+        therefore an explicit model assumption, not an actual; the MC lower tail permits negative margins.
+      falsification: Two consecutive half-year periods with negative FCF, or ARR growth below 10%, or failure to sustain non-GAAP
+        operating profitability requires recalibration.
+  calculation:
+    forecast_years: 5
+    terminal_method: equity_fcf_multiple
+  sensitivity_grid:
+    discount_rate:
+    - 0.095
+    - 0.11
+    - 0.13
+    terminal_fcf_margin:
+    - 0.06
+    - 0.16
+    - 0.24
+    terminal_fcf_multiple:
+    - 12
+    - 22
+    - 36
+  base_case:
+    discount_rate: 0.11
+    terminal_fcf_margin: 0.16
+    terminal_fcf_multiple: 22
+    margin_path:
+      Y0: 0.04
+      Y1: 0.06
+      Y2: 0.085
+      Y3: 0.11
+      Y4: 0.135
+      Y5: 0.16
+  provenance:
+    market.price:
+      provenance: verified_fact
+      source_ref: 2026-10-02 | https://finance.yahoo.com/quote/S/history/
+    market.shares_outstanding:
+      provenance: verified_fact
+      source_ref: 2026-08-21 | https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm
+    market.equity_value:
+      provenance: derived_fact
+      formula: 25.06 USD/share * 348,049,117 shares = 8,722,110,872.02 USD.
+    base_period.revenue_ttm:
+      provenance: derived_fact
+      formula: FY2026 revenue 1.001278B + H1 FY2027 568.638M - H1 FY2026 471.212M = 1.098704B USD TTM.
+    base_period.current_fcf_margin:
+      provenance: model_assumption
+      formula: 'Normalized current FCF margin = 4.0% model assumption: FY2026 FCF margin about 5% and H1 FY2027 YTD FCF margin
+        17.5M / 568.638M = 3.08%; Q2 standalone FCF was -13.2M. The 4.0% center preserves transition risk and is not price-fitted.'
+      rationale: Normalization is explicitly separated from reported quarter cash flow and is not fitted to price.
+    discount_rate:
+      provenance: model_assumption
+      rationale: Recurring software economics offset by smaller scale, current GAAP losses and unsettled cash conversion;
+        therefore a higher base rate than mature large-cap software.
+    terminal_fcf_margin:
+      provenance: model_assumption
+      rationale: Terminal margin requires substantial conversion from GAAP loss to durable cash profitability; range remains
+        wide and lower tail can revisit negative FCF.
+    terminal_fcf_multiple:
+      provenance: model_assumption
+      rationale: Recurring cybersecurity platform can support a software FCF multiple if cash conversion matures, but current
+        GAAP losses, competitive intensity and execution risk require a wide downside range.
+    margin_transition:
+      provenance: model_assumption
+      rationale: Explicit convergence from current/normalized FCF margin to the independently selected terminal cash-margin
+        center; not price-fitted.
+    balance_sheet.cash:
+      provenance: derived_fact
+      formula: 200.951M cash + 454.297M short-term investments + 157.998M long-term investments = 813.246M USD.
+      source_ref: 2026-07-31 | https://www.sec.gov/Archives/edgar/data/1583708/000158370826000055/s-20260731.htm
+    balance_sheet.net_debt:
+      provenance: derived_fact
+      formula: 0 financial debt - 813.246M cash/investments = -813.246M USD.

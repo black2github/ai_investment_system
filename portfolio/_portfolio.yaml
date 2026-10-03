@@ -395,13 +395,26 @@ portfolio:
       source_snapshot: "20260921T211743Z-portfolio_regime-42defe"
       note: "первый снимок (пересчитан 21.09 дважды: кэш P2 = 0 и 8 benchmark'ов — …-fe89a2; корзина AI_COMPUTE + override — 20260921T135230Z-portfolio_regime-28b2b3; первичный прогон …-b472bc)"
 
-  target_weights:
-    version: null
-    approved_at: null
-    effective_from: null
-    status: draft
-    weights: []
-    sum_check: null
+  target_weights:                 # решение владельца 03.10.2026 (DR-2026-10-03-01, V1 = вариант C захода 9, прогон 20261003T100625Z-portfolio_optimizer-5b06a5)
+    version: "1.0"
+    approved_at: "2026-10-03"
+    effective_from: "2026-10-03"  # дата решения (владелец отдельную дату не называл); перекладка — отдельными сигналами агента ≤ 15 % NAV, порядок DR §3 — ориентир
+    status: approved
+    provenance: owner_judgment
+    universe_note: "целевые веса на текущей вселенной (15 бумаг + GLD/UFO); пересмотр — после захода 10 (глобальный поиск) и онбординга кандидатов (партия 13 IMMA)"
+    weights:
+      - {ticker: NBIS, weight: 0.215}
+      - {ticker: LLY, weight: 0.140}
+      - {ticker: SPOT, weight: 0.135}
+      - {ticker: NVDA, weight: 0.110}
+      - {ticker: CRWV, weight: 0.105}
+      - {ticker: RKLB, weight: 0.075}
+      - {ticker: GLD, weight: 0.022}    # фиксирован (хедж, DR-2026-09-27-01/В1)
+      - {ticker: UFO, weight: 0.002}    # фиксирован
+    dry_powder_weight: 0.196
+    sum_check: 1.0
+    source_run: "portfolio/_runs/20261003T100625Z-portfolio_optimizer-5b06a5.json"
+    decision_ref: "decisions/DR-2026-10-03-01-composition.md"
 
 initial_portfolio_hypothesis:
   status: "pre_system_prior"
@@ -801,5 +814,6 @@ owner_decisions:                 # решения владельца по Decisi
   - {id: "DR-2026-10-02-01/В2", date: "2026-10-03", ticker: null, question: "лимит концентрации сценариев 60 % невыполним при сдвиге вероятностей на ±2.5 п.п.", decision: "V1 — 60 % предупреждение, 70 % жёсткий лимит (approved_limits_v1_1.scenario_concentration)", review: "при пересмотре вероятностей сценариев", source: "decisions/DR-2026-10-02-01-target-weights.md"}
   - {id: "DR-2026-10-02-01/В3", date: "2026-10-03", ticker: null, question: "политика «тема ИИ не наращивается» при покупке CRWV в оптимуме отбора", decision: "V1 — политика применяется к сумме темы по сквозным долям сегментов (заказ IMMA партия 12); покупки внутри темы допустимы, пока сумма темы не растёт; сигнал агента по-прежнему помечается строкой «Политика…»", review: "после внедрения сквозных долей тем", source: "decisions/DR-2026-10-02-01-target-weights.md"}
   - {id: "ACT-2026-10-01/execution", date: "2026-10-01", ticker: null, question: "ограничители исполнения стратегий по фазам (заказ v1.2, вопросы 2/4/5)", decision: "оборот на сигнал ≤ 15 % NAV, 3 транша по торговым дням, не покупать падение первые 5 торговых дней (ориентир принят); стадия candidate — только уведомление; CHIP_COLD_WAR — стратегия «пересмотр без сделок»", review: "после первых стратегий части B и первого живого сигнала", source: "to_imma/scenario-action-layer-v12.request.md (вопросы владельцу 2, 4, 5); approved_limits_v1_1.strategy_execution"}
+  - {id: "DR-2026-10-03-01", date: "2026-10-03", ticker: null, question: "состав портфеля с лимитом числа бумаг (заход 9: B — 7 бумаг, C — 6 бумаг, D — без лимита) и целевые веса", decision: "V1 — вариант C, шесть бумаг: NBIS 21.5, LLY 14.0, SPOT 13.5, NVDA 11.0, CRWV 10.5, RKLB 7.5, GLD 2.2, UFO 0.2, кэш 19.6 % (portfolio.target_weights v1.0, effective_from 2026-10-03); заход 10 (глобальный поиск по B/C) одобрен тем же решением", review: "после захода 10 (глобальный поиск, optimizer 1.4.0) и онбординга кандидатов CRWD / HPS.A / S; перекладка — отдельными сигналами ≤ 15 % NAV (ACT-2026-10-01)", source: "decisions/DR-2026-10-03-01-composition.md"}
   - {id: "THM-007/threshold", date: "2026-10-03", ticker: null, question: "порог материальности 0.20 для сильных драйверов MPC (±2 со strong_share_check): максимальная non-fallback доля связанных тем в выручке/капексе ≥ порога либо явное исключение компании (Theme Look-through v1.0 §8, партия 12 IMMA: model_assumption, pending owner judgment)", decision: "V1 — порог 0.20 подтверждён; случаи ниже порога закрываются явными исключениями (SPCX: LAUNCH_ECONOMICS / GOVERNMENT_DEFENSE — company-level exception) или режимом dependency драйвера (META: AI_COMPUTE_DEMAND); на портфельную политику суммы темы не влияет", review: "при переиздании Theme_Lookthrough_Rules или смене таксономии тем", source: "methodology/Theme_Lookthrough_Rules_v1.0.yaml model_assumptions.strong_driver_minimum_materiality_share; STATUS 03.10"}
   - {id: "DR-2026-09-25-02/p_Q", date: "2026-09-27", ticker: null, question: "вероятность сценария TAIWAN_QUARANTINE (серая зона: ограничения → карантин береговой охраны / частичная блокада → нормализация или заморозка; без конфликта) на горизонте калибровки", decision: "0.175 — середина оценки владельца 15–20 % до конца 2028 для карантина / частичной блокады; вариант V1; BASE = 0.655 (гонка без паритета, без силового Тайваня и без карантина)", review: "по каталогу признаков TQ-F01…F08 (суда береговой охраны и досмотры, ro-ro, пакет вооружений $14 млрд, Patriot/LRASM, страховые ставки, задержки TSMC, ADIZ, портовая логистика); при новой версии калибровки (в т. ч. scope v1.1); не реже раза в квартал — правило DR-2026-09-25-01 п. 5 распространено на карантин", source: "decisions/DR-2026-09-25-02-quarantine-probability.md"}

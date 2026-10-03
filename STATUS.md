@@ -2155,3 +2155,12 @@ S/CRWD); _candidates.yaml: HPS.A и S добавлены в пул (stage candid
 Ждём модели компаний (оси, KPI, переходы, mpc_inputs, theme_exposure) → сверка KPI дозором по источникам досье → заказ
 калибровок. Параллельно открыто: DR-2026-10-03-01 по составу (решение владельца), заход 10 с глобальным поиском (по
 одобрению), ответ IMMA на замечания THM-007 (партия 12).
+
+## 03.10: IMMA подтвердила партию 12 (текст передан владельцем); замечания THM-007 — открытый follow-up
+Партия 12 принята и внедрена: Theme Look-through v1.0 и CAR v1.0 действуют, база AI_TOTAL 21.09 = 0.5428 признана,
+Optimizer v1.1 реализован (1.3.0), cardinality и тема — owner structural constraints, THM/CAR-проверки в validator
+1.10.0. Трактовка IMMA по THM-007 для следующего переиздания: SPCX — явное company-level exception для
+LAUNCH_ECONOMICS / GOVERNMENT_DEFENSE (сильный драйвер материален для тезиса при малой доле сегмента), не снижать
+драйверы; META — AI_COMPUTE_DEMAND как dependency / not-share-binding, не фиктивная доля; порог 0.20 — pending owner
+judgment. Приоритет следующей партии — замена заглушек хотя бы для NBIS и CRWV (определяют AI_TOTAL); первичные темы
+остальных десяти — временные model_assumption. Следующая партия — 13 (заказ отправлен).

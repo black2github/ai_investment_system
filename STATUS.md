@@ -2164,3 +2164,19 @@ LAUNCH_ECONOMICS / GOVERNMENT_DEFENSE (сильный драйвер матер�
 драйверы; META — AI_COMPUTE_DEMAND как dependency / not-share-binding, не фиктивная доля; порог 0.20 — pending owner
 judgment. Приоритет следующей партии — замена заглушек хотя бы для NBIS и CRWV (определяют AI_TOTAL); первичные темы
 остальных десяти — временные model_assumption. Следующая партия — 13 (заказ отправлен).
+
+## 03.10 вечер: автоматизация scenario-dozor заведена и проверена; порог THM-007 0.20 подтверждён владельцем (V1)
+Автоматизация `scenario-dozor` (e18bb4c7…, cron 20 9 Europe/Moscow, Sonnet 5, fallback Haiku 4.5, isolated, announce
+в Telegram, таймаут 900 с) заведена по решению владельца. Задание: наблюдаемые критерии Scenario_Event_Catalog v1.0
+по первоисточникам (Source Policy v1.0, окно 36 ч) → записи наблюдений по Dozor_Scenario_Action_Contract §2 →
+сайдкар `scenario_state` (apply=true, save=true) → финальный ответ = тексты signals[] дословно либо NO_REPLY;
+статусы фаз и тексты считает сайдкар, state.json сценариев руками не правится. scenario_state 1.0.1: условные
+картины (якорь §21) берутся из `_runs/_conditional_runs_partB.json`, если в state нет conditional_pictures.
+Отладочный запуск 19:58 МСК: 105 с, агент нашёл только предвестники (патрули/ADIZ, учения у Хуанъянь, выдворение
+китайских рыбаков у Пратас, давление на пролёт президентского борта, одно дело по экспортному контролю, SMIC на
+7 нм), корректно не засчитал их как критерии, сделал контрольный вызов с пустым списком (apply=false), сайдкар
+вернул 0 переходов / 0 сигналов, набор BASE/normal — NO_REPLY, доставка подавлена. Прогон
+`_runs/20261003T165921Z-scenario_state-9eaf49.json`. Первый плановый запуск — 04.10 09:20 МСК.
+Порог материальности 0.20 (Theme Look-through §8, THM-007) подтверждён владельцем: V1 (запись THM-007/threshold в
+owner_decisions, в нормативе provenance → owner_judgment). Открыто: исключения SPCX / dependency META — переиздание
+файлов IMMA; заход 10 (проверка глобального поиска) — ждёт одобрения; DR-2026-10-03-01 (состав) — ждёт решения.

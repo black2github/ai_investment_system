@@ -47,7 +47,7 @@ pool:
   # --- кандидаты вне портфеля по решению владельца 03.10.2026 (досье notes/candidates-dossier-2026-10-03.md; заказ партии 13) ---
   - {ticker: HPS.A, exchange: TSX, yahoo: HPS-A.TO, currency: CAD, sector_id: ELECTRIFICATION, origin: owner_candidate_2026_10_03, folder: hps_a, stage: conditional_mc, model_received: "2026-10-03",
      note: "Hammond Power Solutions: из ideas (17.09) в конвейер по решению владельца; модель компании — партия 13 IMMA"}
-  - {ticker: S, exchange: NYSE, yahoo: S, currency: USD, sector_id: SOFTWARE, origin: owner_candidate_2026_10_03, folder: s, stage: company_model, model_received: "2026-10-03", theme: AI,
+  - {ticker: S, exchange: NYSE, yahoo: S, currency: USD, sector_id: SOFTWARE, origin: owner_candidate_2026_10_03, folder: s, stage: conditional_mc, model_received: "2026-10-03", theme: AI,
      note: "SentinelOne: парный анализ с CRWD; модель компании — партия 13 IMMA"}
   # CRWD: stage candidate (папка crwd с реестром корзины 17.09) → модель компании — партия 13 IMMA (решение владельца 03.10.2026)
   # --- лист наблюдения и идей: portfolio/_ideas.yaml (watch: DDOG, OKTA, 6481, 6268, ABBN; ideas: HPS.A, POWERINDIA, GEV, ENR, PWR, VRT) ---

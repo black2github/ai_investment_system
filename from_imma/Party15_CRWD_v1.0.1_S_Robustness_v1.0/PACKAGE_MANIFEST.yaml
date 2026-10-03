@@ -1,0 +1,28 @@
+package: IMMA_Party15_CRWD_v1.0.1_S_robustness
+version: '1.0'
+date: '2026-10-04'
+files:
+- file: CRWD_RV_multiple_sensitivity_v1.0.1.yaml
+  sha256: a234dc4b9ebd068462dc2a0640f4b36e1297a0f659772fae700f00903ed04255
+  bytes: 1378
+- file: CRWD_calibration_v1.0.yaml
+  sha256: 6cdd3e4f5c92d8573a92d72ab1704954b5a21b9944d3e83afb05e2dd3b7b1144
+  bytes: 4968
+- file: CRWD_mc_calibration_v1.0.1.patch_notes.md
+  sha256: 9fc40caa59e84af1f66007b2afaedd5c07ff23bd2bb8d0282c42035879f13e2e
+  bytes: 1573
+- file: CRWD_mc_calibration_v1.0.1.yaml
+  sha256: 3b9e53e80bd73807947a4ae5731729f18a54ddec25307b18b62854bde9269db9
+  bytes: 13274
+- file: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: 70555787557f1be776947c557f2695830bb9510186eae06259a77daf40a327b4
+  bytes: 781
+- file: PACKAGE_README.md
+  sha256: fd18b494ac2562a665368a5023a3d5a643587d2bfe709409529d9c76821af7d2
+  bytes: 937
+- file: PARTY15_RESPONSES_v1.0.md
+  sha256: 997f9f220178f04093c3dd5cf82815cf80ea7c309452d3b8548150794d7fcd10
+  bytes: 2310
+- file: S_robustness_zero_band_confirmation_v1.0.md
+  sha256: 898370eec6e3db0be63f95896bf14ff692e0db6ae5ed84d80ff2a6524933e7b4
+  bytes: 1574

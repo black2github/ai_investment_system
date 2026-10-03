@@ -1,0 +1,40 @@
+artifact: reverse_valuation_multiple_sensitivity
+version: 1.0.1
+ticker: CRWD
+as_of: '2026-10-02'
+base_rv_file: CRWD_calibration_v1.0.yaml
+accepted_host_rv_run_suffix: -83e31c
+held_constant:
+  discount_rate: 0.1
+  terminal_fcf_margin: 0.28
+  margin_path:
+    Y0: 0.2565781288560654
+    Y1: 0.262
+    Y2: 0.267
+    Y3: 0.272
+    Y4: 0.276
+    Y5: 0.28
+  equity_value: 276503364733.68
+  revenue_ttm: 5396145000.0
+grid:
+- terminal_fcf_multiple_x: 14
+  implied_revenue_cagr_5y: 0.8068597974203653
+- terminal_fcf_multiple_x: 18
+  implied_revenue_cagr_5y: 0.7226321288647097
+- terminal_fcf_multiple_x: 22
+  implied_revenue_cagr_5y: 0.6577403031307323
+- terminal_fcf_multiple_x: 26
+  implied_revenue_cagr_5y: 0.6053225899420311
+- terminal_fcf_multiple_x: 30
+  implied_revenue_cagr_5y: 0.5615750111619755
+- terminal_fcf_multiple_x: 34
+  implied_revenue_cagr_5y: 0.5241788259875346
+- terminal_fcf_multiple_x: 38
+  implied_revenue_cagr_5y: 0.4916211485782117
+- terminal_fcf_multiple_x: 42
+  implied_revenue_cagr_5y: 0.4628629193541419
+provenance:
+  grid: derived_fact
+  formula: For each multiple M, solve PV_FCF(years 1-4) + Revenue_5 * terminal_margin * M / (1+r)^5 = current equity value
+    for constant revenue CAGR g; all non-multiple inputs are the accepted CRWD RV v1.0 base case.
+  note: Sensitivity only. It does not alter RV v1.0, MC centers, state, or any investment decision.

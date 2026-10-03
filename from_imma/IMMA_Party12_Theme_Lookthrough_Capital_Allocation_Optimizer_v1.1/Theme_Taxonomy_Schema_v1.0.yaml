@@ -1,0 +1,92 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Theme_Taxonomy_Schema_v1.0
+title: Theme Taxonomy v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- version
+- as_of
+- themes
+- aggregates
+- driver_theme_links
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: theme_taxonomy
+  version:
+    const: '1.0'
+  as_of:
+    type: string
+    format: date
+  themes:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - theme_id
+      - name_ru
+      - parent
+      properties:
+        theme_id:
+          type: string
+          pattern: ^[A-Z0-9_]+$
+        name_ru:
+          type: string
+        parent:
+          type:
+          - string
+          - 'null'
+  aggregates:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - aggregate_id
+      - name_ru
+      - member_theme_ids
+      - aggregation
+      - provenance
+      - rationale
+      properties:
+        aggregate_id:
+          type: string
+        name_ru:
+          type: string
+        member_theme_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        aggregation:
+          type: string
+        provenance:
+          type: string
+        rationale:
+          type: string
+  driver_theme_links:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - driver_id
+      - theme_ids
+      - consistency_mode
+      properties:
+        driver_id:
+          type: string
+        theme_ids:
+          type: array
+          items:
+            type: string
+        consistency_mode:
+          enum:
+          - strong_share_check
+          - dependency_not_share_binding
+          - macro_not_share_binding

@@ -1,0 +1,113 @@
+schema_version: '1.0'
+artifact: capital_allocation_risk_rules
+version: '1.0'
+as_of: '2026-10-03'
+principles:
+  automatic_conglomerate_penalty: false
+  trigger_not_decision: true
+  cross_subsidy_inference_rule: Do not infer actual cross-subsidization merely from one profitable and one loss-making segment; require allocation
+    evidence such as segment capex or explicit management disclosure.
+  sotp_diagnostic_only: true
+kpis:
+- id: CAR-KPI-01
+  name: segment_revenue_share
+  formula: segment_revenue / company_revenue
+- id: CAR-KPI-02
+  name: segment_capex_share
+  formula: segment_capex / company_capex
+- id: CAR-KPI-03
+  name: segment_operating_margin
+  formula: segment_operating_income / segment_revenue
+- id: CAR-KPI-04
+  name: segment_capex_to_revenue
+  formula: segment_capex / segment_revenue
+- id: CAR-KPI-05
+  name: capex_share_minus_revenue_share
+  formula: segment_capex_share - segment_revenue_share
+- id: CAR-KPI-06
+  name: negative_segment_ebitda_consecutive_quarters
+  formula: count consecutive verified quarters with segment adjusted EBITDA < 0, if consistently disclosed
+- id: CAR-KPI-07
+  name: segment_disclosure_count
+  formula: count reportable segments
+- id: CAR-KPI-08
+  name: resegmentation_recast_status
+  formula: no_change | resegmented_with_recast | resegmented_without_recast | disclosure_reduced
+trigger_rules:
+- id: CAR-X1
+  name: loss_making_segment_overallocated_capex
+  threshold_status: pending_owner_judgment
+  provenance: model_assumption
+  condition: segment_operating_margin < 0 AND capex_share_minus_revenue_share >= 0.20 for 2 consecutive quarters
+  parameters:
+    capex_minus_revenue_share_min: 0.2
+    consecutive_quarters: 2
+  response: 'Decision Request: capital-allocation review; no automatic trade'
+- id: CAR-X2
+  name: negative_ebitda_with_rising_capex_share
+  threshold_status: pending_owner_judgment
+  provenance: model_assumption
+  condition: segment adjusted EBITDA margin < 0 for 2 consecutive quarters AND capex_share increases >= 0.10 over the comparison interval
+  parameters:
+    capex_share_increase_min: 0.1
+    consecutive_quarters: 2
+  response: 'Decision Request: capital-allocation review; no automatic trade'
+- id: CAR-X3
+  name: capex_intensity_loss_persistence
+  threshold_status: pending_owner_judgment
+  provenance: model_assumption
+  condition: segment_capex_to_revenue >= 1.00 AND segment_operating_margin < 0 for 2 consecutive quarters
+  parameters:
+    capex_to_revenue_min: 1.0
+    consecutive_quarters: 2
+  response: 'Decision Request: funding discipline / segment thesis review; no automatic trade'
+- id: CAR-X4
+  name: disclosure_granularity_deterioration
+  threshold_status: pending_owner_judgment
+  provenance: model_assumption
+  condition: reportable segment count declines OR resegmentation occurs without historical recast OR previously disclosed segment profitability/capex
+    metric is removed
+  parameters: {}
+  response: Immediate disclosure-quality review; no automatic negative inference when comparability is preserved
+- id: CAR-X5
+  name: sotp_conglomerate_discount_warning
+  threshold_status: pending_owner_judgment
+  provenance: model_assumption
+  condition: SOTP_equity_value > 0 AND (1 - market_equity_value / SOTP_equity_value) >= 0.20
+  parameters:
+    discount_warning_min: 0.2
+  response: Warning/model-risk review only; market price is not a calibration target
+sotp:
+  formula: SOTP_equity = sum(independently_valued_segment_EV_or_equity) - net_debt - corporate_adjustments
+  discount_formula: conglomerate_discount = 1 - market_equity_value / SOTP_equity
+  interpretation: positive=discount; negative=premium
+  requirements:
+  - segment valuation assumptions independently justified
+  - corporate costs explicit
+  - debt/cash counted once
+  - no multiple fitting to market cap
+validation_rules:
+- id: CAR-001
+  severity: error
+  rule: schema validation and unique trigger IDs
+- id: CAR-002
+  severity: error
+  rule: each numeric trigger threshold is model_assumption and pending_owner_judgment until owner decision
+- id: CAR-003
+  severity: error
+  rule: segment facts require source_ref/provenance; derived ratios require formula
+- id: CAR-004
+  severity: error
+  rule: CAR-X realization creates review/Decision Request only, never executable trade
+- id: CAR-005
+  severity: error
+  rule: cross-subsidization cannot be asserted without allocation evidence
+- id: CAR-006
+  severity: error
+  rule: SOTP discount is diagnostic only and cannot tune segment multiples to market price
+- id: CAR-007
+  severity: warning
+  rule: resegmentation with full historical recast preserves comparability; record it but do not call disclosure deterioration
+- id: CAR-008
+  severity: error
+  rule: undisclosed required metric => not_evaluable/not_disclosed; do not estimate merely to fire a trigger

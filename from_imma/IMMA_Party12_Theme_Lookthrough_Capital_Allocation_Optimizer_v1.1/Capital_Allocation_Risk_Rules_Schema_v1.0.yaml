@@ -1,0 +1,69 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Capital_Allocation_Risk_Rules_Schema_v1.0
+title: Capital Allocation Risk Rules v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- version
+- as_of
+- principles
+- kpis
+- trigger_rules
+- sotp
+- validation_rules
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: capital_allocation_risk_rules
+  version:
+    const: '1.0'
+  as_of:
+    type: string
+    format: date
+  principles:
+    type: object
+  kpis:
+    type: array
+    minItems: 8
+    items:
+      type: object
+  trigger_rules:
+    type: array
+    minItems: 5
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - name
+      - threshold_status
+      - provenance
+      - condition
+      - parameters
+      - response
+      properties:
+        id:
+          type: string
+          pattern: ^CAR-X[1-9][0-9]*$
+        name:
+          type: string
+        threshold_status:
+          const: pending_owner_judgment
+        provenance:
+          const: model_assumption
+        condition:
+          type: string
+        parameters:
+          type: object
+        response:
+          type: string
+  sotp:
+    type: object
+  validation_rules:
+    type: array
+    minItems: 8
+    items:
+      type: object

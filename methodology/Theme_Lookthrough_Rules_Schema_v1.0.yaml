@@ -1,0 +1,44 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Theme_Lookthrough_Rules_Schema_v1.0
+title: Theme Look-through Rules v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- version
+- as_of
+- rules
+- model_assumptions
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: theme_lookthrough_validation_rules
+  version:
+    const: '1.0'
+  as_of:
+    type: string
+    format: date
+  rules:
+    type: array
+    minItems: 12
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - severity
+      - rule
+      properties:
+        id:
+          type: string
+          pattern: ^THM-[0-9]{3}$
+        severity:
+          enum:
+          - error
+          - warning
+        rule:
+          type: string
+  model_assumptions:
+    type: object

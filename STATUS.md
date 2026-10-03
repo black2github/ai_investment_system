@@ -2102,3 +2102,20 @@ zeroed, binding}; тест (2 бумаги из 3, infeasible при невып�
 Сайдкар 1.2.0. Скрипт _portfolio_run9.py: варианты A без лимита / B 6…8 бумаг мин. 3 % / C 6 бумаг, концентрация hard
 70 %, старты incl. given(S8) — ≈ 3 × 20–25 мин, запуск ПО ОДОБРЕНИЮ владельца. Push ws 56b9e48 выполнен владельцем. НЕ
 закоммичено: lab (optimizer 1.2.0, тест, run9), workspace (STATUS).
+
+## 03.10: партия 12 (доли тем, риск распределения капитала, Optimizer v1.1) ПРИНЯТА и внедрена; optimizer 1.3.0,
+validator 1.10.0; заход 9 идёт
+Пакет IMMA_Party12 (share 6ac0c799, sha256 08638698…, 24 файла — сошлись, термины pass): Theme Look-through v1.0
+(отдельный артефакт theme_exposure_v1.0.yaml, binding basis = revenue, THM-001…012, политика
+AI_THEME_NOT_INCREASE_V1), Capital Allocation Risk v1.0 (двусторонний подход, CAR-X1…X5 pending_owner_judgment, SOTP
+диагностика; SPCX: X1/X3 candidate), Portfolio Optimizer v1.1 полный текст (supersedes схемы 1.0 → 1.1 без пропаж).
+Внедрено: 15 нормативов; ThemeExposure IMMA для SPCX/NVDA/MSFT/META/ETN + заглушки хоста (100 % первичной темы,
+model_assumption) для 10 бумаг; база AI_TOTAL материализована: T(21.09) = 0.5428, T(S8) = 0.4000 — политика
+выполняется. Движок: optimizer 1.3.0 (theme_policy §16 как owner structural constraint, выход §19), validator 1.10.0
+(режимы theme и car; THM-007 на канонических mpc_inputs даёт 3 ошибки у файлов IMMA — SPCX
+LAUNCH_ECONOMICS/GOVERNMENT_DEFENSE при доле Space 12 %, META AI_COMPUTE_DEMAND при нулевой доле тем ИИ — замечания в
+приёмке; порог 0.20 — к владельцу). Приёмка to_imma/party12-theme-car-optimizer-v11.feedback.md написана (НЕ
+отправлена). Заход 9: A (…-4175de) ≈ S8 (медиана 19.9 %, ES5 +32.7 %); B/C/D (CARDINALITY_8 / CARDINALITY_6 /
+NO_CARDINALITY_LIMIT с мин. 3 %, тема как ограничение) запущены отвязанным процессом PowerShell (клиент фоновой
+команды останавливается через 10 мин). НЕ закоммичено: lab (optimizer 1.3.0, validator 1.10.0, тесты, run9,
+_theme_lookthrough.json), workspace (партия 12, theme_exposure ×15, CAR SPCX, политика, приёмка, STATUS).

@@ -1,0 +1,25 @@
+schema_version: '1.0'
+artifact: theme_portfolio_policy
+version: '1.0'
+as_of: '2026-10-03'
+policy_id: AI_THEME_NOT_INCREASE_V1
+owner_decision:
+  date: '2026-10-03'
+  provenance: owner_judgment
+  statement: Совокупная тема ИИ не наращивается; покупки внутри темы допустимы, пока итоговая look-through доля NAV не растёт.
+aggregate_theme_id: AI_TOTAL
+binding_basis: revenue
+baseline:
+  date: '2026-09-21'
+  portfolio_snapshot_ref: portfolio snapshot 2026-09-21
+  value: null
+  provenance: derived_fact
+  status: PENDING_HOST_COMPUTE
+  formula: sum_i(weight_i_2026_09_21 * revenue_share_i_AI_TOTAL)
+constraint:
+  formula: T_AI_TOTAL(target) <= T_AI_TOTAL(baseline) + tolerance
+  tolerance: 1.0e-06
+  provenance: owner_judgment
+  purchases_within_theme_allowed: true
+coverage_rule: Every counted equity requires ThemeExposure; missing segment disclosure uses explicit 100% primary-theme fallback.
+optimizer_constraint_class: owner_structural_constraint

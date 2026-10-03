@@ -1,0 +1,302 @@
+schema_version: '1.0'
+artifact: capital_allocation_risk_assessment
+version: '1.0'
+ticker: SPCX
+as_of: '2026-10-03'
+rules_ref: Capital_Allocation_Risk_Rules_v1.0.yaml
+source_registry:
+  SPCX_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm
+    source_class: SEC_filing
+    document_date: '2026-08-04'
+    period_end: '2026-06-30'
+periods:
+- period_end: '2026-03-31'
+  derivation: derived H1 minus Q2 from same SEC filing
+  segments:
+  - segment_id: Space
+    revenue:
+      value: 619.0
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: H1 2026 value - Q2 2026 value
+    operating_income:
+      value: -662.0
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: H1 2026 value - Q2 2026 value
+    capex:
+      value: 1052.0
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: H1 2026 value - Q2 2026 value
+    revenue_share:
+      value: 0.13187047294418405
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 619 / 4694
+    capex_share:
+      value: 0.10408627683783517
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1052 / 10107
+    operating_margin:
+      value: -1.0694668820678515
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: -662 / 619
+    capex_to_revenue:
+      value: 1.6995153473344102
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1052 / 619
+    capex_share_minus_revenue_share:
+      value: -0.027784196106348885
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 0.104086276838 - 0.131870472944
+  - segment_id: Connectivity
+    revenue:
+      value: 3257.0
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: H1 2026 value - Q2 2026 value
+    operating_income:
+      value: 1188.0
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: H1 2026 value - Q2 2026 value
+    capex:
+      value: 1332.0
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: H1 2026 value - Q2 2026 value
+    revenue_share:
+      value: 0.6938645078824031
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 3257 / 4694
+    capex_share:
+      value: 0.13178984861976847
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1332 / 10107
+    operating_margin:
+      value: 0.3647528400368437
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1188 / 3257
+    capex_to_revenue:
+      value: 0.4089653054958551
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1332 / 3257
+    capex_share_minus_revenue_share:
+      value: -0.5620746592626346
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 0.131789848620 - 0.693864507882
+  - segment_id: AI
+    revenue:
+      value: 818.0
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: H1 2026 value - Q2 2026 value
+    operating_income:
+      value: -2469.0
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: H1 2026 value - Q2 2026 value
+    capex:
+      value: 7723.0
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: H1 2026 value - Q2 2026 value
+    revenue_share:
+      value: 0.17426501917341286
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 818 / 4694
+    capex_share:
+      value: 0.7641238745423964
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 7723 / 10107
+    operating_margin:
+      value: -3.0183374083129584
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: -2469 / 818
+    capex_to_revenue:
+      value: 9.441320293398533
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 7723 / 818
+    capex_share_minus_revenue_share:
+      value: 0.5898588553689835
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 0.764123874542 - 0.174265019173
+- period_end: '2026-06-30'
+  derivation: reported quarter
+  segments:
+  - segment_id: Space
+    revenue:
+      value: 962.0
+      provenance: verified_fact
+      source_ref: SPCX_Q2_2026_10Q
+    operating_income:
+      value: -542.0
+      provenance: verified_fact
+      source_ref: SPCX_Q2_2026_10Q
+    capex:
+      value: 1174.0
+      provenance: verified_fact
+      source_ref: SPCX_Q2_2026_10Q
+    revenue_share:
+      value: 0.12311236242641413
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 962 / 7814
+    capex_share:
+      value: 0.06391202569546518
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1174 / 18369
+    operating_margin:
+      value: -0.5634095634095634
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: -542 / 962
+    capex_to_revenue:
+      value: 1.2203742203742203
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1174 / 962
+    capex_share_minus_revenue_share:
+      value: -0.059200336730948946
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 0.063912025695 - 0.123112362426
+  - segment_id: Connectivity
+    revenue:
+      value: 4291.0
+      provenance: verified_fact
+      source_ref: SPCX_Q2_2026_10Q
+    operating_income:
+      value: 1656.0
+      provenance: verified_fact
+      source_ref: SPCX_Q2_2026_10Q
+    capex:
+      value: 1367.0
+      provenance: verified_fact
+      source_ref: SPCX_Q2_2026_10Q
+    revenue_share:
+      value: 0.5491425646275915
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 4291 / 7814
+    capex_share:
+      value: 0.0744188578583483
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1367 / 18369
+    operating_margin:
+      value: 0.38592402703332557
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1656 / 4291
+    capex_to_revenue:
+      value: 0.31857375903052904
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1367 / 4291
+    capex_share_minus_revenue_share:
+      value: -0.4747237067692432
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 0.074418857858 - 0.549142564628
+  - segment_id: AI
+    revenue:
+      value: 2561.0
+      provenance: verified_fact
+      source_ref: SPCX_Q2_2026_10Q
+    operating_income:
+      value: -1257.0
+      provenance: verified_fact
+      source_ref: SPCX_Q2_2026_10Q
+    capex:
+      value: 15828.0
+      provenance: verified_fact
+      source_ref: SPCX_Q2_2026_10Q
+    revenue_share:
+      value: 0.32774507294599436
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 2561 / 7814
+    capex_share:
+      value: 0.8616691164461865
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 15828 / 18369
+    operating_margin:
+      value: -0.49082389691526745
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: -1257 / 2561
+    capex_to_revenue:
+      value: 6.180398281921125
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 15828 / 2561
+    capex_share_minus_revenue_share:
+      value: 0.5339240435001922
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 0.861669116446 - 0.327745072946
+trigger_evaluations:
+- rule_id: CAR-X1
+  status: candidate_if_threshold_approved
+  segments:
+  - AI
+  evidence:
+  - AI operating margin is negative in derived Q1 and reported Q2.
+  - AI capex_share - revenue_share exceeds 20pp in both periods.
+  note: Proposed threshold is not owner-approved; candidate only, not fired.
+- rule_id: CAR-X2
+  status: not_evaluable
+  segments: []
+  evidence:
+  - Consistent two-quarter segment adjusted EBITDA is not used from the selected 10-Q segment table.
+  note: Metric is not estimated solely to evaluate the trigger.
+- rule_id: CAR-X3
+  status: candidate_if_threshold_approved
+  segments:
+  - Space
+  - AI
+  evidence:
+  - Space and AI each have capex/revenue >=1.0 and negative operating margin in derived Q1 and reported Q2.
+  note: Proposed threshold is not owner-approved; candidate only.
+- rule_id: CAR-X4
+  status: not_observed
+  segments: []
+  evidence:
+  - Selected filing presents the same three reportable segments Space, Connectivity and AI in Q2 and H1 segment tables.
+  note: No disclosure deterioration inferred.
+- rule_id: CAR-X5
+  status: not_computed
+  segments: []
+  evidence: []
+  note: SOTP waits for independently justified segment valuation assumptions.
+sotp_diagnostic:
+  status: not_computed_pending_segment_valuation_assumptions
+  sotp_equity_value: null
+  market_equity_value: null
+  conglomerate_discount: null
+  provenance: model_assumption
+  note: No segment multiple is fitted to current market capitalization; future SOTP must handle corporate debt/cash exactly once.
+notes:
+- Q1 segment facts are exact H1-minus-Q2 derivations from the same Q2 SEC filing.
+- Company disclosure states future expenditures can be adjusted across segments; allocation flexibility is not by itself evidence of value-destructive
+  cross-subsidization.
+- Trigger ≠ Decision.

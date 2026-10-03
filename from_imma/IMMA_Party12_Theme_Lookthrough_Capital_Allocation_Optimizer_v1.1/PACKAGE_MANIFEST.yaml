@@ -1,0 +1,86 @@
+package: IMMA_Party12_Theme_Lookthrough_Capital_Allocation_Optimizer_v1.1
+package_version: '1.0'
+party: 12
+as_of: '2026-10-03'
+status: proposed_for_host_acceptance
+normative_versions:
+  theme_lookthrough: '1.0'
+  theme_taxonomy: '1.0'
+  capital_allocation_risk: '1.0'
+  portfolio_optimizer: '1.1'
+optimizer_supersedes:
+- Portfolio_Optimizer_Specification_v1.0.md
+- Portfolio_Optimizer_Schema_v1.0.yaml
+files:
+- path: Capital_Allocation_Risk_Assessment_Schema_v1.0.yaml
+  sha256: 395cb46934db2a791d2aa6551585743fb032b5b4fb759d1ad2c17ddd1aca657c
+  bytes: 3641
+- path: Capital_Allocation_Risk_Glossary_Note_v1.0.md
+  sha256: cdf79d828d1f0640b7381c89bbdc1f799467fa3518da4ff86beaef000ffac62a
+  bytes: 1744
+- path: Capital_Allocation_Risk_Rules_Schema_v1.0.yaml
+  sha256: 3bafac9672ecc4d692bca7daed37995a93a8423f670a2c795f93a7b3e89d32c9
+  bytes: 1306
+- path: Capital_Allocation_Risk_Rules_v1.0.md
+  sha256: a32313ac7ae97eecbcb526f5be8f5d2c4b765e80b49488fa869c4402de2cb6f1
+  bytes: 2205
+- path: Capital_Allocation_Risk_Rules_v1.0.yaml
+  sha256: f2f9737857811f17f208428f9cef894b08a07a4fccde2f6a489c255098406d21
+  bytes: 4790
+- path: ETN_theme_exposure_v1.0.yaml
+  sha256: b506da44d858f762991ca6dd7e3b091d524a6306925020b76ba50f18264d30fb
+  bytes: 9340
+- path: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: e5f65a07cdc1b227338fd68029f5717ba4d883207f2621d6f6fc592898b9284d
+  bytes: 1767
+- path: META_theme_exposure_v1.0.yaml
+  sha256: 3102897dd8e003f9f93617a6ee1f3bd9af2a616940136b49b9f1faff00c9fa94
+  bytes: 5025
+- path: MSFT_theme_exposure_v1.0.yaml
+  sha256: bc56b288b3c9c2f00be8b0589d6771a58316231b10f36727d83978f0639e41d9
+  bytes: 6231
+- path: NVDA_theme_exposure_v1.0.yaml
+  sha256: c404fe4d02c73cc2c62b4d43af638059102ce42c75e69b69e9ea8016dff21466
+  bytes: 4413
+- path: PACKAGE_README.md
+  sha256: e0f4e897445ec8b7bff316cf8751d60e03d52eb4d6dd7610378ecb638dec795c
+  bytes: 837
+- path: Portfolio_Optimizer_Schema_v1.1.yaml
+  sha256: 7c0bedabe4b2a1fb30a152f798d444a54d9950607e96cbf354eb49ac3f8cec8e
+  bytes: 6176
+- path: Portfolio_Optimizer_Specification_v1.1.md
+  sha256: 105499e769a5f96401fbbbea92029b7d4119f795abb1e73f03f0e846e4ccea00
+  bytes: 14517
+- path: Portfolio_Optimizer_v1.1_Delta.md
+  sha256: 3698eda229bdcd616c5d353123933e1224e9cb180ff45196c3bd77877cca73cd
+  bytes: 1051
+- path: SPCX_capital_allocation_risk_v1.0.yaml
+  sha256: 3818a61fe6be847342654100f6fd903889988814a96f0fbc36f8b8383cc18274
+  bytes: 9354
+- path: SPCX_theme_exposure_v1.0.yaml
+  sha256: 2f4b12cae67014cefe32fe3c59f4fd8b61f815d0dfa23a546f375c9b0e2b237b
+  bytes: 7075
+- path: Theme_Exposure_Schema_v1.0.yaml
+  sha256: bad0af7e09b0c3aa346ea4c9deb95576bf71d6c3e7b44f1ce75471077cda1ca8
+  bytes: 7307
+- path: Theme_Lookthrough_Rules_Schema_v1.0.yaml
+  sha256: 4c73dc567ece1e8eacedcdf4c338e29f22ac7385891bf6b724eb1f3dcfd51e50
+  bytes: 830
+- path: Theme_Lookthrough_Rules_v1.0.yaml
+  sha256: b19f02346525cdeb0eeda6854b7ab378d2b66cba55e08ccf60be1863cbdb0beb
+  bytes: 1938
+- path: Theme_Lookthrough_Specification_v1.0.md
+  sha256: 42593354e2cc051f7acc04d29617df419976ef2596ff5df23704f4837d48d84d
+  bytes: 2851
+- path: Theme_Portfolio_Policy_Schema_v1.0.yaml
+  sha256: 53c42fa11f974cde14de014ab6c776e85e81c10a376aceb59dc7807ce40a3295
+  bytes: 1835
+- path: Theme_Portfolio_Policy_v1.0.yaml
+  sha256: fa07caf2caf9f2e340350d145ec1d110bf139cede76457e46ea17847dddea2b7
+  bytes: 1028
+- path: Theme_Taxonomy_Schema_v1.0.yaml
+  sha256: f02fb56a48af8cc0fc02d2a0289a3945489f2a0feaa2118cfd56b5a19cd7d737
+  bytes: 1831
+- path: Theme_Taxonomy_v1.0.yaml
+  sha256: 1e06c30c850fbeba3939a9e24410316a08ec91fc45bd29b2f388f7dc56434b89
+  bytes: 3440

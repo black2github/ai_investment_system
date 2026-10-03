@@ -1,0 +1,160 @@
+schema_version: '1.0'
+artifact: theme_exposure
+version: '1.0'
+ticker: META
+exchange: NASDAQ
+as_of: '2026-10-03'
+base_period:
+  period_end: '2026-06-30'
+  period_type: quarter
+theme_taxonomy_ref: Theme_Taxonomy_v1.0.yaml
+primary_theme_id: DIGITAL_AD_PLATFORMS
+owner_policy_binding_basis: revenue
+source_registry:
+  META_Q2_2026_RELEASE:
+    url: https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx
+    source_class: issuer_primary
+    document_date: '2026-07-30'
+    period_end: '2026-06-30'
+basis_allocations:
+  revenue:
+    disclosure_status: disclosed
+    share_method: reported_value_share
+    total_raw_value: 60801.0
+    total_allocation_value: 60801.0
+    unit: USD_millions
+    rows:
+    - segment_id: Family_of_Apps
+      theme_id: DIGITAL_AD_PLATFORMS
+      raw_value: 60370.0
+      allocation_value: 60370.0
+      share: 0.9929113008009737
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: META_Q2_2026_RELEASE
+      formula: 60370 / 60801
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: META_Q2_2026_RELEASE
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 60370 / 60801
+    - segment_id: Reality_Labs
+      theme_id: IMMERSIVE_COMPUTING
+      raw_value: 431.0
+      allocation_value: 431.0
+      share: 0.007088699199026331
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: META_Q2_2026_RELEASE
+      formula: 431 / 60801
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: META_Q2_2026_RELEASE
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 431 / 60801
+    basis_provenance: derived_fact
+    fallback_reason: null
+  operating_income_abs:
+    disclosure_status: disclosed
+    share_method: absolute_operating_income_share
+    total_raw_value: 18775.0
+    total_allocation_value: 28013.0
+    unit: USD_millions
+    rows:
+    - segment_id: Family_of_Apps
+      theme_id: DIGITAL_AD_PLATFORMS
+      raw_value: 23394.0
+      allocation_value: 23394.0
+      share: 0.8351122693035377
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: META_Q2_2026_RELEASE
+      formula: 23394 / 28013
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: META_Q2_2026_RELEASE
+        allocation_value:
+          provenance: derived_fact
+          formula: abs(23394.0)
+        share:
+          provenance: derived_fact
+          formula: 23394 / 28013
+    - segment_id: Reality_Labs
+      theme_id: IMMERSIVE_COMPUTING
+      raw_value: -4619.0
+      allocation_value: 4619.0
+      share: 0.16488773069646237
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: META_Q2_2026_RELEASE
+      formula: 4619 / 28013
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: META_Q2_2026_RELEASE
+        allocation_value:
+          provenance: derived_fact
+          formula: abs(-4619.0)
+        share:
+          provenance: derived_fact
+          formula: 4619 / 28013
+    basis_provenance: derived_fact
+    fallback_reason: null
+  capex:
+    disclosure_status: not_separately_disclosed
+    share_method: fallback_100pct_primary_theme
+    total_raw_value: null
+    total_allocation_value: 1.0
+    unit: share
+    rows:
+    - segment_id: NOT_SEPARATELY_DISCLOSED
+      theme_id: DIGITAL_AD_PLATFORMS
+      raw_value: 1.0
+      allocation_value: 1.0
+      share: 1.0
+      unit: share
+      provenance: model_assumption
+      source_ref: null
+      formula: null
+      fallback: fallback_100pct_primary_theme
+      number_provenance:
+        raw_value:
+          provenance: model_assumption
+          source_ref: null
+        allocation_value:
+          provenance: model_assumption
+          formula: null
+        share:
+          provenance: model_assumption
+          formula: fallback share = 1.0
+    basis_provenance: model_assumption
+    fallback_reason: Segment capex is not separately disclosed at this theme allocation level; diagnostic fallback only.
+driver_consistency:
+  mpc_driver_taxonomy_ref: MPC_Driver_Taxonomy_v1.2.1.yaml
+  canonical_mpc_inputs_ref: portfolio/meta/mpc_inputs.yaml
+  strong_driver_abs_score: 2
+  minimum_materiality_share: 0.2
+  share_measure: max_non_fallback_revenue_or_capex_share
+  fallback_share_can_satisfy: false
+  exceptions: []
+  minimum_materiality_share_meta:
+    provenance: model_assumption
+    status: pending_owner_judgment
+notes:
+- Consolidated capex is not allocated to reportable segments in the selected primary source; fallback is to primary theme and is non-binding
+  for owner theme policy.

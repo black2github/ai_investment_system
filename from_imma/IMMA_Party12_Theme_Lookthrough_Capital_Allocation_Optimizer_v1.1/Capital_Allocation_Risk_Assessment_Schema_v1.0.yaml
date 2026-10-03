@@ -1,0 +1,162 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Capital_Allocation_Risk_Assessment_Schema_v1.0
+title: Capital Allocation Risk Assessment v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- version
+- ticker
+- as_of
+- rules_ref
+- source_registry
+- periods
+- trigger_evaluations
+- sotp_diagnostic
+- notes
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: capital_allocation_risk_assessment
+  version:
+    const: '1.0'
+  ticker:
+    type: string
+  as_of:
+    type: string
+    format: date
+  rules_ref:
+    type: string
+  source_registry:
+    type: object
+  periods:
+    type: array
+    minItems: 2
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - period_end
+      - derivation
+      - segments
+      properties:
+        period_end:
+          type: string
+          format: date
+        derivation:
+          type: string
+        segments:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - segment_id
+            - revenue
+            - operating_income
+            - capex
+            - revenue_share
+            - capex_share
+            - operating_margin
+            - capex_to_revenue
+            - capex_share_minus_revenue_share
+            properties:
+              segment_id:
+                type: string
+              revenue: &id001
+                type: object
+                additionalProperties: false
+                required:
+                - value
+                - provenance
+                properties:
+                  value:
+                    type: number
+                  provenance:
+                    enum:
+                    - verified_fact
+                    - derived_fact
+                    - model_assumption
+                  source_ref:
+                    type: string
+                  formula:
+                    type: string
+              operating_income: *id001
+              capex: *id001
+              revenue_share: *id001
+              capex_share: *id001
+              operating_margin: *id001
+              capex_to_revenue: *id001
+              capex_share_minus_revenue_share: *id001
+  trigger_evaluations:
+    type: array
+    minItems: 5
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - rule_id
+      - status
+      - segments
+      - evidence
+      - note
+      properties:
+        rule_id:
+          type: string
+        status:
+          enum:
+          - candidate_if_threshold_approved
+          - not_met_under_proposed_threshold
+          - not_observed
+          - not_evaluable
+          - not_computed
+        segments:
+          type: array
+          items:
+            type: string
+        evidence:
+          type: array
+          items:
+            type: string
+        note:
+          type: string
+  sotp_diagnostic:
+    type: object
+    additionalProperties: false
+    required:
+    - status
+    - sotp_equity_value
+    - market_equity_value
+    - conglomerate_discount
+    - provenance
+    - note
+    properties:
+      status:
+        enum:
+        - not_computed_pending_segment_valuation_assumptions
+        - computed
+      sotp_equity_value:
+        type:
+        - number
+        - 'null'
+      market_equity_value:
+        type:
+        - number
+        - 'null'
+      conglomerate_discount:
+        type:
+        - number
+        - 'null'
+      provenance:
+        enum:
+        - model_assumption
+        - derived_fact
+      note:
+        type: string
+  notes:
+    type: array
+    items:
+      type: string

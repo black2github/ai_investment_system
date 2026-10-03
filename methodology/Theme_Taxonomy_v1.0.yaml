@@ -1,0 +1,115 @@
+schema_version: '1.0'
+artifact: theme_taxonomy
+version: '1.0'
+as_of: '2026-10-03'
+themes:
+- theme_id: AI_COMPUTE
+  name_ru: ИИ-вычисления и AI-инфраструктура
+  parent: null
+- theme_id: AI_CLOUD_COMPUTE
+  name_ru: AI/cloud compute platforms
+  parent: null
+- theme_id: EDGE_COMPUTE
+  name_ru: Периферийные вычисления
+  parent: null
+- theme_id: ENTERPRISE_SOFTWARE
+  name_ru: Корпоративное ПО
+  parent: null
+- theme_id: DIGITAL_AD_PLATFORMS
+  name_ru: Цифровая реклама и платформы
+  parent: null
+- theme_id: SPACE
+  name_ru: Космические системы и пуски
+  parent: null
+- theme_id: CONNECTIVITY
+  name_ru: Связь и спутниковая connectivity
+  parent: null
+- theme_id: INDUSTRIAL_POWER
+  name_ru: Электрификация, питание и промышленная инфраструктура
+  parent: null
+- theme_id: DEFENSE_AEROSPACE
+  name_ru: Оборона и аэрокосмический сектор
+  parent: null
+- theme_id: MOBILITY
+  name_ru: Мобильность и транспортные системы
+  parent: null
+- theme_id: IMMERSIVE_COMPUTING
+  name_ru: AR/VR и immersive computing
+  parent: null
+- theme_id: CONSUMER_DIGITAL
+  name_ru: Потребительские цифровые продукты
+  parent: null
+- theme_id: HEALTHCARE
+  name_ru: Здравоохранение и биофарма
+  parent: null
+- theme_id: FINTECH
+  name_ru: Финтех
+  parent: null
+- theme_id: SEMICONDUCTOR_EQUIPMENT
+  name_ru: Полупроводниковое оборудование
+  parent: null
+- theme_id: OTHER
+  name_ru: Прочее / corporate
+  parent: null
+aggregates:
+- aggregate_id: AI_TOTAL
+  name_ru: Совокупная тема ИИ
+  member_theme_ids:
+  - AI_COMPUTE
+  - AI_CLOUD_COMPUTE
+  aggregation: sum_of_mutually_exclusive_primary_theme_shares
+  provenance: normative_rule
+  rationale: Primary theme allocations are mutually exclusive; AI_TOTAL sums them once without double counting.
+driver_theme_links:
+- driver_id: AI_COMPUTE_DEMAND
+  theme_ids:
+  - AI_COMPUTE
+  - AI_CLOUD_COMPUTE
+  - EDGE_COMPUTE
+  consistency_mode: strong_share_check
+- driver_id: CLOUD_SOFTWARE_DEMAND
+  theme_ids:
+  - ENTERPRISE_SOFTWARE
+  - AI_CLOUD_COMPUTE
+  consistency_mode: strong_share_check
+- driver_id: SATELLITE_CONNECTIVITY
+  theme_ids:
+  - CONNECTIVITY
+  consistency_mode: strong_share_check
+- driver_id: LAUNCH_ECONOMICS
+  theme_ids:
+  - SPACE
+  consistency_mode: strong_share_check
+- driver_id: GOVERNMENT_DEFENSE
+  theme_ids:
+  - DEFENSE_AEROSPACE
+  - SPACE
+  consistency_mode: strong_share_check
+- driver_id: DIGITAL_AD_DEMAND
+  theme_ids:
+  - DIGITAL_AD_PLATFORMS
+  consistency_mode: strong_share_check
+- driver_id: SEMICONDUCTOR_WFE
+  theme_ids:
+  - SEMICONDUCTOR_EQUIPMENT
+  consistency_mode: strong_share_check
+- driver_id: HYPERSCALER_CAPEX
+  theme_ids:
+  - AI_COMPUTE
+  - AI_CLOUD_COMPUTE
+  - INDUSTRIAL_POWER
+  consistency_mode: dependency_not_share_binding
+- driver_id: DATA_CENTER_POWER
+  theme_ids:
+  - AI_CLOUD_COMPUTE
+  - INDUSTRIAL_POWER
+  consistency_mode: dependency_not_share_binding
+- driver_id: TAIWAN_SUPPLY
+  theme_ids: []
+  consistency_mode: dependency_not_share_binding
+- driver_id: INTEREST_RATES
+  theme_ids: []
+  consistency_mode: macro_not_share_binding
+- driver_id: CAPITAL_MARKETS
+  theme_ids: []
+  consistency_mode: macro_not_share_binding

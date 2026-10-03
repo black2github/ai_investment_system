@@ -1,0 +1,240 @@
+schema_version: '1.0'
+artifact: theme_exposure
+version: '1.0'
+ticker: SPCX
+exchange: NASDAQ
+as_of: '2026-10-03'
+base_period:
+  period_end: '2026-06-30'
+  period_type: quarter
+theme_taxonomy_ref: Theme_Taxonomy_v1.0.yaml
+primary_theme_id: AI_COMPUTE
+owner_policy_binding_basis: revenue
+source_registry:
+  SPCX_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm
+    source_class: SEC_filing
+    document_date: '2026-08-04'
+    period_end: '2026-06-30'
+basis_allocations:
+  revenue:
+    disclosure_status: disclosed
+    share_method: reported_value_share
+    total_raw_value: 7814.0
+    total_allocation_value: 7814.0
+    unit: USD_millions
+    rows:
+    - segment_id: Space
+      theme_id: SPACE
+      raw_value: 962.0
+      allocation_value: 962.0
+      share: 0.12311236242641413
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 962 / 7814
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: SPCX_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 962 / 7814
+    - segment_id: Connectivity
+      theme_id: CONNECTIVITY
+      raw_value: 4291.0
+      allocation_value: 4291.0
+      share: 0.5491425646275915
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 4291 / 7814
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: SPCX_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 4291 / 7814
+    - segment_id: AI
+      theme_id: AI_COMPUTE
+      raw_value: 2561.0
+      allocation_value: 2561.0
+      share: 0.32774507294599436
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 2561 / 7814
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: SPCX_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 2561 / 7814
+    basis_provenance: derived_fact
+    fallback_reason: null
+  operating_income_abs:
+    disclosure_status: disclosed
+    share_method: absolute_operating_income_share
+    total_raw_value: -143.0
+    total_allocation_value: 3455.0
+    unit: USD_millions
+    rows:
+    - segment_id: Space
+      theme_id: SPACE
+      raw_value: -542.0
+      allocation_value: 542.0
+      share: 0.1568740955137482
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 542 / 3455
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: SPCX_Q2_2026_10Q
+        allocation_value:
+          provenance: derived_fact
+          formula: abs(-542.0)
+        share:
+          provenance: derived_fact
+          formula: 542 / 3455
+    - segment_id: Connectivity
+      theme_id: CONNECTIVITY
+      raw_value: 1656.0
+      allocation_value: 1656.0
+      share: 0.47930535455861073
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1656 / 3455
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: SPCX_Q2_2026_10Q
+        allocation_value:
+          provenance: derived_fact
+          formula: abs(1656.0)
+        share:
+          provenance: derived_fact
+          formula: 1656 / 3455
+    - segment_id: AI
+      theme_id: AI_COMPUTE
+      raw_value: -1257.0
+      allocation_value: 1257.0
+      share: 0.3638205499276411
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1257 / 3455
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: SPCX_Q2_2026_10Q
+        allocation_value:
+          provenance: derived_fact
+          formula: abs(-1257.0)
+        share:
+          provenance: derived_fact
+          formula: 1257 / 3455
+    basis_provenance: derived_fact
+    fallback_reason: null
+  capex:
+    disclosure_status: disclosed
+    share_method: reported_value_share
+    total_raw_value: 18369.0
+    total_allocation_value: 18369.0
+    unit: USD_millions
+    rows:
+    - segment_id: Space
+      theme_id: SPACE
+      raw_value: 1174.0
+      allocation_value: 1174.0
+      share: 0.06391202569546518
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1174 / 18369
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: SPCX_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 1174 / 18369
+    - segment_id: Connectivity
+      theme_id: CONNECTIVITY
+      raw_value: 1367.0
+      allocation_value: 1367.0
+      share: 0.0744188578583483
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 1367 / 18369
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: SPCX_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 1367 / 18369
+    - segment_id: AI
+      theme_id: AI_COMPUTE
+      raw_value: 15828.0
+      allocation_value: 15828.0
+      share: 0.8616691164461865
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: SPCX_Q2_2026_10Q
+      formula: 15828 / 18369
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: SPCX_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 15828 / 18369
+    basis_provenance: derived_fact
+    fallback_reason: null
+driver_consistency:
+  mpc_driver_taxonomy_ref: MPC_Driver_Taxonomy_v1.2.1.yaml
+  canonical_mpc_inputs_ref: portfolio/spcx/mpc_inputs.yaml
+  strong_driver_abs_score: 2
+  minimum_materiality_share: 0.2
+  share_measure: max_non_fallback_revenue_or_capex_share
+  fallback_share_can_satisfy: false
+  exceptions: []
+  minimum_materiality_share_meta:
+    provenance: model_assumption
+    status: pending_owner_judgment
+notes:
+- AI reportable segment is mapped wholly to AI_COMPUTE at primary-theme level; Advertising sub-revenue is not split because segment EBIT/capex
+  are not disclosed at that sub-level.

@@ -1,0 +1,97 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: Theme_Portfolio_Policy_Schema_v1.0
+title: Theme Portfolio Policy v1.0
+type: object
+additionalProperties: false
+required:
+- schema_version
+- artifact
+- version
+- as_of
+- policy_id
+- owner_decision
+- aggregate_theme_id
+- binding_basis
+- baseline
+- constraint
+- coverage_rule
+- optimizer_constraint_class
+properties:
+  schema_version:
+    const: '1.0'
+  artifact:
+    const: theme_portfolio_policy
+  version:
+    const: '1.0'
+  as_of:
+    type: string
+    format: date
+  policy_id:
+    type: string
+  aggregate_theme_id:
+    type: string
+  binding_basis:
+    const: revenue
+  coverage_rule:
+    type: string
+  optimizer_constraint_class:
+    const: owner_structural_constraint
+  owner_decision:
+    type: object
+    required:
+    - date
+    - provenance
+    - statement
+    properties:
+      date:
+        type: string
+        format: date
+      provenance:
+        const: owner_judgment
+      statement:
+        type: string
+  baseline:
+    type: object
+    required:
+    - date
+    - portfolio_snapshot_ref
+    - value
+    - provenance
+    - status
+    - formula
+    properties:
+      date:
+        const: '2026-09-21'
+      portfolio_snapshot_ref:
+        type: string
+      value:
+        type:
+        - number
+        - 'null'
+        minimum: 0
+        maximum: 1
+      provenance:
+        const: derived_fact
+      status:
+        enum:
+        - PENDING_HOST_COMPUTE
+        - MATERIALIZED
+      formula:
+        type: string
+  constraint:
+    type: object
+    required:
+    - formula
+    - tolerance
+    - provenance
+    - purchases_within_theme_allowed
+    properties:
+      formula:
+        type: string
+      tolerance:
+        type: number
+        minimum: 0
+      provenance:
+        const: owner_judgment
+      purchases_within_theme_allowed:
+        const: true

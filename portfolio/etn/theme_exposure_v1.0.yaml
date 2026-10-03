@@ -1,0 +1,319 @@
+schema_version: '1.0'
+artifact: theme_exposure
+version: '1.0'
+ticker: ETN
+exchange: NYSE
+as_of: '2026-10-03'
+base_period:
+  period_end: '2026-06-30'
+  period_type: quarter
+theme_taxonomy_ref: Theme_Taxonomy_v1.0.yaml
+primary_theme_id: INDUSTRIAL_POWER
+owner_policy_binding_basis: revenue
+source_registry:
+  ETN_Q2_2026_10Q:
+    url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000030/etn-20260630.htm
+    source_class: SEC_filing
+    document_date: '2026-07-31'
+    period_end: '2026-06-30'
+basis_allocations:
+  revenue:
+    disclosure_status: disclosed
+    share_method: reported_value_share
+    total_raw_value: 8531.0
+    total_allocation_value: 8531.0
+    unit: USD_millions
+    rows:
+    - segment_id: Electrical_Americas
+      theme_id: INDUSTRIAL_POWER
+      raw_value: 3951.0
+      allocation_value: 3951.0
+      share: 0.46313445082639787
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 3951 / 8531
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 3951 / 8531
+    - segment_id: Electrical_Global
+      theme_id: INDUSTRIAL_POWER
+      raw_value: 2517.0
+      allocation_value: 2517.0
+      share: 0.2950416129410386
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 2517 / 8531
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 2517 / 8531
+    - segment_id: Aerospace
+      theme_id: DEFENSE_AEROSPACE
+      raw_value: 1222.0
+      allocation_value: 1222.0
+      share: 0.14324229281444145
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 1222 / 8531
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 1222 / 8531
+    - segment_id: Mobility
+      theme_id: MOBILITY
+      raw_value: 841.0
+      allocation_value: 841.0
+      share: 0.09858164341812214
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 841 / 8531
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 841 / 8531
+    basis_provenance: derived_fact
+    fallback_reason: null
+  operating_income_abs:
+    disclosure_status: disclosed
+    share_method: absolute_operating_income_share
+    total_raw_value: 1974.0
+    total_allocation_value: 1974.0
+    unit: USD_millions
+    rows:
+    - segment_id: Electrical_Americas
+      theme_id: INDUSTRIAL_POWER
+      raw_value: 1088.0
+      allocation_value: 1088.0
+      share: 0.5511651469098278
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 1088 / 1974
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: derived_fact
+          formula: abs(1088.0)
+        share:
+          provenance: derived_fact
+          formula: 1088 / 1974
+    - segment_id: Electrical_Global
+      theme_id: INDUSTRIAL_POWER
+      raw_value: 499.0
+      allocation_value: 499.0
+      share: 0.25278622087132724
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 499 / 1974
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: derived_fact
+          formula: abs(499.0)
+        share:
+          provenance: derived_fact
+          formula: 499 / 1974
+    - segment_id: Aerospace
+      theme_id: DEFENSE_AEROSPACE
+      raw_value: 278.0
+      allocation_value: 278.0
+      share: 0.1408308004052685
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 278 / 1974
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: derived_fact
+          formula: abs(278.0)
+        share:
+          provenance: derived_fact
+          formula: 278 / 1974
+    - segment_id: Mobility
+      theme_id: MOBILITY
+      raw_value: 109.0
+      allocation_value: 109.0
+      share: 0.05521783181357649
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 109 / 1974
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: derived_fact
+          formula: abs(109.0)
+        share:
+          provenance: derived_fact
+          formula: 109 / 1974
+    basis_provenance: derived_fact
+    fallback_reason: null
+  capex:
+    disclosure_status: disclosed
+    share_method: reported_value_share
+    total_raw_value: 253.0
+    total_allocation_value: 253.0
+    unit: USD_millions
+    rows:
+    - segment_id: Electrical_Americas
+      theme_id: INDUSTRIAL_POWER
+      raw_value: 84.0
+      allocation_value: 84.0
+      share: 0.33201581027667987
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 84 / 253
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 84 / 253
+    - segment_id: Electrical_Global
+      theme_id: INDUSTRIAL_POWER
+      raw_value: 92.0
+      allocation_value: 92.0
+      share: 0.36363636363636365
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 92 / 253
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 92 / 253
+    - segment_id: Aerospace
+      theme_id: DEFENSE_AEROSPACE
+      raw_value: 21.0
+      allocation_value: 21.0
+      share: 0.08300395256916997
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 21 / 253
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 21 / 253
+    - segment_id: Mobility
+      theme_id: MOBILITY
+      raw_value: 24.0
+      allocation_value: 24.0
+      share: 0.09486166007905138
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 24 / 253
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 24 / 253
+    - segment_id: Corporate
+      theme_id: OTHER
+      raw_value: 32.0
+      allocation_value: 32.0
+      share: 0.12648221343873517
+      unit: USD_millions
+      provenance: derived_fact
+      source_ref: ETN_Q2_2026_10Q
+      formula: 32 / 253
+      fallback: none
+      number_provenance:
+        raw_value:
+          provenance: verified_fact
+          source_ref: ETN_Q2_2026_10Q
+        allocation_value:
+          provenance: verified_fact
+          formula: reported segment value
+        share:
+          provenance: derived_fact
+          formula: 32 / 253
+    basis_provenance: derived_fact
+    fallback_reason: null
+driver_consistency:
+  mpc_driver_taxonomy_ref: MPC_Driver_Taxonomy_v1.2.1.yaml
+  canonical_mpc_inputs_ref: portfolio/etn/mpc_inputs.yaml
+  strong_driver_abs_score: 2
+  minimum_materiality_share: 0.2
+  share_measure: max_non_fallback_revenue_or_capex_share
+  fallback_share_can_satisfy: false
+  exceptions: []
+  minimum_materiality_share_meta:
+    provenance: model_assumption
+    status: pending_owner_judgment
+notes:
+- Corporate capex is allocated to OTHER rather than pro-rated across operating themes.

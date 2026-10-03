@@ -1,0 +1,123 @@
+schema_version: '1.0'
+artifact: theme_exposure
+version: '1.0'
+ticker: NET
+exchange: NYSE
+as_of: '2026-10-03'
+base_period:
+  period_end: '2026-09-21'
+  period_type: quarter
+theme_taxonomy_ref: Theme_Taxonomy_v1.0.yaml
+primary_theme_id: EDGE_COMPUTE
+owner_policy_binding_basis: revenue
+source_registry:
+  NET_HOST_KPI_SOURCE:
+    url: https://www.sec.gov/Archives/edgar/data/1477333/000147733326000053/q226exhibit991.htm
+    source_class: SEC_filing
+    document_date: '2026-09-21'
+    period_end: '2026-09-21'
+basis_allocations:
+  revenue:
+    disclosure_status: not_separately_disclosed
+    share_method: fallback_100pct_primary_theme
+    total_raw_value: null
+    total_allocation_value: 1.0
+    unit: share
+    rows:
+    - segment_id: NOT_SEPARATELY_DISCLOSED
+      theme_id: EDGE_COMPUTE
+      raw_value: 1.0
+      allocation_value: 1.0
+      share: 1.0
+      unit: share
+      provenance: model_assumption
+      source_ref: null
+      formula: null
+      fallback: fallback_100pct_primary_theme
+      number_provenance:
+        raw_value:
+          provenance: model_assumption
+          source_ref: null
+        allocation_value:
+          provenance: model_assumption
+          formula: null
+        share:
+          provenance: model_assumption
+          formula: fallback share = 1.0
+    basis_provenance: model_assumption
+    fallback_reason: 'Хост-заглушка интегратора (03.10.2026, партия 12 §6): сегментное разложение по темам IMMA ещё не выпущено — 100 % первичной
+      темы, model_assumption; пересмотреть при выпуске ThemeExposure IMMA.'
+  operating_income_abs:
+    disclosure_status: not_separately_disclosed
+    share_method: fallback_100pct_primary_theme
+    total_raw_value: null
+    total_allocation_value: 1.0
+    unit: share
+    rows:
+    - segment_id: NOT_SEPARATELY_DISCLOSED
+      theme_id: EDGE_COMPUTE
+      raw_value: 1.0
+      allocation_value: 1.0
+      share: 1.0
+      unit: share
+      provenance: model_assumption
+      source_ref: null
+      formula: null
+      fallback: fallback_100pct_primary_theme
+      number_provenance:
+        raw_value:
+          provenance: model_assumption
+          source_ref: null
+        allocation_value:
+          provenance: model_assumption
+          formula: null
+        share:
+          provenance: model_assumption
+          formula: fallback share = 1.0
+    basis_provenance: model_assumption
+    fallback_reason: 'Хост-заглушка интегратора (03.10.2026, партия 12 §6): сегментное разложение по темам IMMA ещё не выпущено — 100 % первичной
+      темы, model_assumption; пересмотреть при выпуске ThemeExposure IMMA.'
+  capex:
+    disclosure_status: not_separately_disclosed
+    share_method: fallback_100pct_primary_theme
+    total_raw_value: null
+    total_allocation_value: 1.0
+    unit: share
+    rows:
+    - segment_id: NOT_SEPARATELY_DISCLOSED
+      theme_id: EDGE_COMPUTE
+      raw_value: 1.0
+      allocation_value: 1.0
+      share: 1.0
+      unit: share
+      provenance: model_assumption
+      source_ref: null
+      formula: null
+      fallback: fallback_100pct_primary_theme
+      number_provenance:
+        raw_value:
+          provenance: model_assumption
+          source_ref: null
+        allocation_value:
+          provenance: model_assumption
+          formula: null
+        share:
+          provenance: model_assumption
+          formula: fallback share = 1.0
+    basis_provenance: model_assumption
+    fallback_reason: 'Хост-заглушка интегратора (03.10.2026, партия 12 §6): сегментное разложение по темам IMMA ещё не выпущено — 100 % первичной
+      темы, model_assumption; пересмотреть при выпуске ThemeExposure IMMA.'
+driver_consistency:
+  mpc_driver_taxonomy_ref: MPC_Driver_Taxonomy_v1.2.1.yaml
+  canonical_mpc_inputs_ref: portfolio/net/mpc_inputs.yaml
+  strong_driver_abs_score: 2
+  minimum_materiality_share: 0.2
+  share_measure: max_non_fallback_revenue_or_capex_share
+  fallback_share_can_satisfy: false
+  exceptions: []
+  minimum_materiality_share_meta:
+    provenance: model_assumption
+    status: pending_owner_judgment
+notes:
+- 'Хост-заглушка (fallback) интегратора: первичная тема EDGE_COMPUTE назначена интегратором как model_assumption; document_date = дата реестра
+  KPI хоста, не дата документа; источник — первый KPI с source_url из portfolio/net/kpis.yaml. Заменить файлом IMMA при следующей партии.'

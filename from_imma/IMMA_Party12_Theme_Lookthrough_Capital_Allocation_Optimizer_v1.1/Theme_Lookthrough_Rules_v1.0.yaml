@@ -1,0 +1,49 @@
+schema_version: '1.0'
+artifact: theme_lookthrough_validation_rules
+version: '1.0'
+as_of: '2026-10-03'
+rules:
+- id: THM-001
+  severity: error
+  rule: ThemeExposure schema valid; all theme_id references resolve.
+- id: THM-002
+  severity: error
+  rule: Each basis rows.share sums to 1 within 1e-9.
+- id: THM-003
+  severity: error
+  rule: For disclosed basis, share=allocation_value/total_allocation_value within 1e-9.
+- id: THM-004
+  severity: error
+  rule: operating_income_abs uses abs(raw operating income); never signed-total division.
+- id: THM-005
+  severity: error
+  rule: Undisclosed basis is one 100% primary-theme fallback with provenance=model_assumption and explicit reason.
+- id: THM-006
+  severity: error
+  rule: Owner thematic constraint binding basis is revenue; capex and operating-income are diagnostics.
+- id: THM-007
+  severity: error
+  rule: For abs(MPC driver)=2 and taxonomy strong_share_check, max(non-fallback mapped revenue/capex share)>=0.20 OR explicit exception.
+- id: THM-008
+  severity: warning
+  rule: Theme share>=0.20 with mapped strong-share drivers all zero requires review; no automatic MPC change.
+- id: THM-009
+  severity: error
+  rule: Portfolio T_theme=sum_i w_i*share_i; aggregate themes sum mutually-exclusive members once.
+- id: THM-010
+  severity: error
+  rule: Hard owner policy requires ThemeExposure for every counted equity; missing disclosure uses explicit fallback, never omission.
+- id: THM-011
+  severity: error
+  rule: AI_TOTAL target compared with materialized 2026-09-21 baseline; within-theme purchases allowed if aggregate does not rise.
+- id: THM-012
+  severity: error
+  rule: MPC driver score remains ordinal sensitivity and is never converted to business share.
+model_assumptions:
+  strong_driver_minimum_materiality_share:
+    value: 0.2
+    provenance: model_assumption
+    status: pending_owner_judgment
+  share_sum_tolerance:
+    value: 1.0e-09
+    provenance: normative_rule

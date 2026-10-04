@@ -1,0 +1,1076 @@
+{
+  "run_id": "20261004T065128Z-company_mc-7d7c0b",
+  "model": "company_mc",
+  "version": "2.5.0",
+  "seed": 20260920,
+  "inputs": {
+    "calibration": {
+      "schema_version": "1.0.2",
+      "artifact": "company_mc_calibration",
+      "ticker": "CRWD",
+      "as_of": "2026-10-02",
+      "archetype": "mature_positive_margin",
+      "calculation_engine_version": "company_mc 2.3.1",
+      "state_vector": {
+        "ARR_Momentum": "A2",
+        "Net_New_ARR": "N2",
+        "Platform_Adoption": "P2",
+        "Profitability_Cash": "M3",
+        "Retention_Quality": "R2",
+        "M&A_Integration": "I2"
+      },
+      "simulation": {
+        "paths": 500000,
+        "paths_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Normative production path count."
+        },
+        "seed": 20260920,
+        "seed_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Fixed reproducibility seed."
+        },
+        "antithetic_variates": true,
+        "store_summary_quantiles": [
+          0.01,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "store_summary_quantiles_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Standard system summary grid."
+        },
+        "horizons_years": [
+          3,
+          5,
+          8
+        ],
+        "horizons_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Current Thesis / Primary Optimization / Persistence horizons."
+        }
+      },
+      "revenue_model": {
+        "segments": {
+          "Subscription": {
+            "base_revenue_quarterly": 1400291000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-07-31 | https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.05,
+              "mode": 0.25,
+              "max": 0.55,
+              "provenance": "model_assumption",
+              "rationale": "Q2 subscription revenue grew 27% YoY; mode 25% is anchored to disclosed Q2 growth and ARR +25%, while tails capture retention, Flex conversion and competitive dispersion. v1.0.1 widens downside/upside tails for platform-consolidation slowdown versus Flex/platform upside; mode 25% unchanged."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.02,
+              "mode": 0.13,
+              "max": 0.28,
+              "provenance": "model_assumption",
+              "rationale": "Long-run recurring-security growth mean-reverts while preserving platform consolidation upside. v1.0.1 widens long-run normalization tails; mode 13% unchanged."
+            },
+            "growth_half_life_years": 2.5,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Growth normalizes over a multi-year operating cycle."
+            },
+            "latent_loading": {
+              "growth": 0.68
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Shared demand exposure remains material alongside company-specific execution."
+            }
+          },
+          "Services": {
+            "base_revenue_quarterly": 70606000.0,
+            "base_revenue_quarterly_meta": {
+              "provenance": "verified_fact",
+              "source_ref": "2026-07-31 | https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm"
+            },
+            "initial_growth": {
+              "distribution": "triangular",
+              "min": -0.16,
+              "mode": 0.14,
+              "max": 0.44,
+              "provenance": "model_assumption",
+              "rationale": "Services are a small, more volatile component; center is deliberately below subscription growth. v1.0.1 widens the small services segment for contraction/implementation-cycle upside; mode 14% unchanged."
+            },
+            "long_run_growth_y8": {
+              "distribution": "triangular",
+              "min": -0.07,
+              "mode": 0.08,
+              "max": 0.23,
+              "provenance": "model_assumption",
+              "rationale": "Long-run services growth converges to lower rates than subscription platform revenue. v1.0.1 widens long-run services tails; mode 8% unchanged."
+            },
+            "growth_half_life_years": 2.0,
+            "growth_half_life_years_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Growth normalizes over a multi-year operating cycle."
+            },
+            "latent_loading": {
+              "growth": 0.55
+            },
+            "latent_loading_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Shared demand exposure remains material alongside company-specific execution."
+            }
+          }
+        }
+      },
+      "margin_model": {
+        "method": "mean_reverting_positive_margin",
+        "current_margin": 0.2565781288560654,
+        "current_margin_meta": {
+          "provenance": "derived_fact",
+          "formula": "Q2 FY2027 FCF 377.4M / revenue 1.470897B = 25.6578%. Source: 2026-07-31 | SEC Exhibit 99.1."
+        },
+        "terminal_margin_Y5": {
+          "distribution": "triangular",
+          "min": 0.1,
+          "mode": 0.28,
+          "max": 0.46,
+          "provenance": "model_assumption",
+          "rationale": "Cash margin can expand with subscription scale but the range explicitly retains SBC dilution and M&A/integration burden as risks rather than value adjustments. v1.0.1 widens tails for SBC/M&A integration drag and scaled-platform cash-conversion upside; mode 28% unchanged."
+        },
+        "terminal_margin_Y8": {
+          "distribution": "triangular",
+          "min": 0.12,
+          "mode": 0.3,
+          "max": 0.48,
+          "provenance": "model_assumption",
+          "rationale": "Long-run upside is capped below an unconstrained software case; acquisitions must earn their economics rather than being treated as automatic margin accretion. v1.0.1 widens long-run tails while keeping the 30% center unchanged."
+        },
+        "half_life_years": 2.0,
+        "half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Cash-margin convergence horizon."
+        },
+        "shock_sigma": 0.04,
+        "shock_sigma_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Quarterly company-specific cash-margin noise, separate from Joint Layer drivers."
+        },
+        "shock_persistence": 0.5,
+        "shock_persistence_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Operating and working-capital shocks persist across adjacent quarters but mean-revert."
+        },
+        "lower_bound": 0.04,
+        "lower_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Severe operating downside bound; discrete thesis breaks remain failure/recalibration events. v1.0.1 lowers the hard clipping floor so the widened downside terminal-margin tail is not mechanically truncated."
+        },
+        "upper_bound": 0.5,
+        "upper_bound_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Caps extrapolation beyond economically plausible mature cash conversion. v1.0.1 raises the clipping ceiling only to preserve the widened upside tail; no central margin assumption changes."
+        }
+      },
+      "valuation": {
+        "Y3": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 12.0,
+            "mode": 32.0,
+            "max": 56.0,
+            "provenance": "model_assumption",
+            "rationale": "Near-term recurring growth can support a premium, with broad downside for duration compression. v1.0.1 widens duration-compression and premium-platform tails; mode 32x unchanged."
+          }
+        },
+        "Y5": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 8.0,
+            "mode": 26.0,
+            "max": 46.0,
+            "provenance": "model_assumption",
+            "rationale": "Mature cybersecurity FCF multiple; not reverse-fitted to current market price. v1.0.1 adds a substantially lower compression tail for growth deceleration and a wider upside tail; mode 26x unchanged."
+          }
+        },
+        "Y8": {
+          "basis": "FCF_multiple",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 8.0,
+            "mode": 22.0,
+            "max": 40.0,
+            "provenance": "model_assumption",
+            "rationale": "Further duration compression as growth normalizes. v1.0.1 widens mature-duration tails; mode 22x unchanged."
+          }
+        },
+        "negative_fcf_fallback": {
+          "basis": "revenue_bridge",
+          "multiple": {
+            "distribution": "triangular",
+            "min": 3.5,
+            "mode": 7.0,
+            "max": 11.0,
+            "provenance": "model_assumption",
+            "rationale": "Parity bridge: 7.0x revenue / 26x FCF implies 26.9% margin, close to the independently selected Y5 cash-margin center."
+          }
+        }
+      },
+      "dependencies": {
+        "latent_factors": [
+          "growth",
+          "margin",
+          "valuation"
+        ],
+        "factor_correlations": {
+          "growth__margin": 0.4,
+          "growth__valuation": 0.35,
+          "margin__valuation": 0.4
+        },
+        "factor_correlations_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Enterprise demand, cash leverage and duration valuation co-move materially."
+        },
+        "default_loading": 0.68,
+        "default_loading_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Common-factor loading leaves material idiosyncratic execution risk."
+        }
+      },
+      "market_path_model": {
+        "quarterly_log_price_noise": {
+          "annualized_sigma": 0.45,
+          "annualized_sigma_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Path-volatility calibration for drawdown diagnostics only; does not set terminal value."
+          }
+        },
+        "valuation_mean_reversion_half_life_years": 1.5,
+        "valuation_mean_reversion_half_life_years_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Liquid listed-equity valuation dislocations mean-revert over several quarters."
+        }
+      },
+      "reverse_valuation_ref": {
+        "run_ref": "PENDING_HOST_BIND:CRWD_RV_v1.0_host_suffix_83e31c",
+        "implied_revenue_cagr_5y": 0.6053225899420847,
+        "implied_revenue_cagr_5y_meta": {
+          "provenance": "derived_fact",
+          "formula": "Host-accepted Reverse Valuation v1.0 suffix -83e31c: implied 5Y revenue CAGR 60.5323%; CRWD v1.0.1 does not change RV inputs."
+        },
+        "discount_rate": 0.1,
+        "discount_rate_meta": {
+          "provenance": "model_assumption",
+          "rationale": "Inherited from CRWD RV base calibration."
+        }
+      },
+      "robustness_tests": {
+        "Scenario_Robustness": {
+          "perturbations": {
+            "growth_modes_pp": [
+              -0.03257359312880715,
+              0.03257359312880715
+            ],
+            "margin_nodes_pp": [
+              -0.019544155877284287,
+              0.019544155877284287
+            ],
+            "terminal_multiple_pct": [
+              -0.07675553226796095,
+              0.08313673674808131
+            ],
+            "correlation_rho": [
+              -0.15,
+              0.15
+            ]
+          },
+          "perturbations_meta": {
+            "provenance": "derived_fact",
+            "formula": "v1.1.2 local preflight recomputed for CRWD v1.0.1 after tail widening: sigma_eq from triangular nodes; growth is base-revenue-weighted RMS of segment initial-growth sigma; margin is Y5 triangular sigma; multiple is Y5 log-space triangular sigma; perturbation = 0.25*sigma; correlation +/-0.15. Modes unchanged."
+          },
+          "delta_tolerance": 0.1,
+          "delta_tolerance_meta": {
+            "provenance": "model_assumption",
+            "rationale": "Accepted v1.1.2 tolerance for |Delta P(2x,5Y)| and |Delta P(loss>30%,5Y)|."
+          }
+        }
+      },
+      "joint_simulation": {
+        "layer_version": "1.0",
+        "active_drivers": [
+          "CLOUD_SOFTWARE_DEMAND",
+          "ACQUISITION_INTEGRATION",
+          "INTEREST_RATES",
+          "AI_COMPUTE_DEMAND"
+        ],
+        "company_idiosyncratic_factors": [
+          {
+            "id": "CRWD_EXECUTION",
+            "distribution": "standard_normal",
+            "persistence": 0.55,
+            "persistence_meta": {
+              "provenance": "model_assumption",
+              "rationale": "Company-specific execution shocks persist across adjacent quarters but mean-revert."
+            }
+          }
+        ],
+        "path_alignment": {
+          "use_global_path_id": true
+        }
+      },
+      "driver_parameter_mapping": [
+        {
+          "driver_id": "CLOUD_SOFTWARE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Subscription.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.03,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Enterprise security/cloud demand primarily shifts subscription growth."
+              }
+            }
+          ],
+          "structural_support": [
+            {
+              "path": "revenue_model.segments.Subscription.initial_growth.mode",
+              "contribution": 0.01,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "A2/P2 central case includes continued platform consolidation demand."
+              }
+            }
+          ],
+          "stability": {
+            "knockout": {
+              "mode": "remove_structural_support"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse driver direction for this company mapping."
+              }
+            }
+          },
+          "note": "Primary demand linkage."
+        },
+        {
+          "driver_id": "ACQUISITION_INTEGRATION",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "margin_model.terminal_margin_Y5",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.015,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Integration quality affects acquired-product economics and cash margin; goodwill growth is a risk signal, not a valuation uplift."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse driver direction for this company mapping."
+              }
+            }
+          },
+          "note": "CRWD-FM-03 integration failure. Goodwill rose materially in H1; no price-fitting adjustment. SBC is monitored separately as dilution/cash-economics risk because no canonical SBC root driver exists."
+        },
+        {
+          "driver_id": "INTEREST_RATES",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "valuation.Y5.multiple",
+              "transform": "log_multiplier",
+              "effect_per_plus_1sigma": -0.02,
+              "lag_quarters": 0,
+              "decay_half_life_quarters": 6,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Higher rates compress duration valuation; operating model is not changed."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": 1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse driver direction for this company mapping."
+              }
+            }
+          },
+          "note": "Valuation-only rate channel."
+        },
+        {
+          "driver_id": "AI_COMPUTE_DEMAND",
+          "material": true,
+          "stochastic_targets": [
+            {
+              "path": "revenue_model.segments.Subscription.initial_growth",
+              "transform": "additive_pp",
+              "effect_per_plus_1sigma": 0.012,
+              "lag_quarters": 1,
+              "decay_half_life_quarters": 8,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "AI workload proliferation modestly increases endpoint/cloud security demand but is not the primary thesis driver."
+              }
+            }
+          ],
+          "structural_support": [],
+          "stability": {
+            "knockout": {
+              "mode": "not_applicable"
+            },
+            "adverse_driver_stress": {
+              "driver_sigma": -1,
+              "meta": {
+                "provenance": "model_assumption",
+                "rationale": "Adverse driver direction for this company mapping."
+              }
+            }
+          },
+          "note": "Secondary demand linkage; kept small to avoid synthetic AI dependence."
+        }
+      ]
+    },
+    "equity_value_0": 276503364733.68,
+    "convergence_check": true,
+    "robustness": true,
+    "robustness_paths": 100000,
+    "store_paths": true,
+    "joint_layer_spec": {
+      "version": "1.1",
+      "artifact": "joint_simulation_layer",
+      "supersedes": "Joint_Simulation_Layer_Schema_v1.0",
+      "as_of": "2026-09-25",
+      "status": "proposed_normative",
+      "scenario_interface": {
+        "scenario_engine_required_for_multiscenario": true,
+        "fallback_without_scenario_engine": {
+          "id": "BASE",
+          "probability": 1.0,
+          "driver_overrides": {},
+          "root_correlation_overrides": []
+        }
+      },
+      "root_factors": {
+        "distribution": "stationary_standard_normal_AR1",
+        "timestep": "quarterly",
+        "factors": {
+          "GLOBAL_GROWTH": {
+            "phi": 0.65
+          },
+          "AI_CAPEX_CYCLE": {
+            "phi": 0.75
+          },
+          "SEMI_SUPPLY_HEALTH": {
+            "phi": 0.55
+          },
+          "POWER_BUILDOUT": {
+            "phi": 0.8
+          },
+          "FINANCIAL_CONDITIONS": {
+            "phi": 0.6
+          },
+          "SPACE_GOVERNMENT_DEMAND": {
+            "phi": 0.75
+          },
+          "SPACE_REGULATORY_ACCESS": {
+            "phi": 0.7
+          },
+          "HEALTHCARE_DEMAND_ACCESS": {
+            "phi": 0.7
+          },
+          "CONSUMER_RISK_APPETITE": {
+            "phi": 0.55
+          },
+          "DIGITAL_PLATFORM_DEMAND": {
+            "phi": 0.6
+          },
+          "CHINA_MARKET_ACCESS": {
+            "phi": 0.7
+          }
+        },
+        "provenance": "model_assumption"
+      },
+      "root_correlation": {
+        "diagonal": 1.0,
+        "default_off_diagonal": 0.0,
+        "pair_overrides": {
+          "GLOBAL_GROWTH__AI_CAPEX_CYCLE": 0.35,
+          "GLOBAL_GROWTH__FINANCIAL_CONDITIONS": 0.35,
+          "GLOBAL_GROWTH__CONSUMER_RISK_APPETITE": 0.45,
+          "GLOBAL_GROWTH__DIGITAL_PLATFORM_DEMAND": 0.55,
+          "GLOBAL_GROWTH__HEALTHCARE_DEMAND_ACCESS": 0.1,
+          "GLOBAL_GROWTH__POWER_BUILDOUT": 0.25,
+          "GLOBAL_GROWTH__SEMI_SUPPLY_HEALTH": 0.15,
+          "GLOBAL_GROWTH__CHINA_MARKET_ACCESS": 0.1,
+          "AI_CAPEX_CYCLE__SEMI_SUPPLY_HEALTH": 0.3,
+          "AI_CAPEX_CYCLE__POWER_BUILDOUT": 0.45,
+          "AI_CAPEX_CYCLE__DIGITAL_PLATFORM_DEMAND": 0.3,
+          "AI_CAPEX_CYCLE__FINANCIAL_CONDITIONS": 0.2,
+          "SEMI_SUPPLY_HEALTH__CHINA_MARKET_ACCESS": 0.2,
+          "FINANCIAL_CONDITIONS__CONSUMER_RISK_APPETITE": 0.4,
+          "FINANCIAL_CONDITIONS__DIGITAL_PLATFORM_DEMAND": 0.2,
+          "FINANCIAL_CONDITIONS__CHINA_MARKET_ACCESS": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__GLOBAL_GROWTH": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__FINANCIAL_CONDITIONS": 0.05,
+          "SPACE_GOVERNMENT_DEMAND__SPACE_REGULATORY_ACCESS": 0.1,
+          "SPACE_REGULATORY_ACCESS__GLOBAL_GROWTH": 0.05,
+          "HEALTHCARE_DEMAND_ACCESS__CONSUMER_RISK_APPETITE": 0.05
+        },
+        "provenance": "model_assumption",
+        "psd_checked_v1_0": true
+      },
+      "scenario_persistence_override": {
+        "semantics": "innovation_level_driver_persistence",
+        "null_behavior": "bypass_use_base_or_phase_root_driver_path",
+        "root_phi_unchanged": true,
+        "company_mapping_decay_unchanged": true,
+        "innovation_formula": "eta_d,t = standardize(sum(lambda_d,r * u_r,t) + w_d * epsilon_d,t), with u_r,t root innovations after the current phase root-correlation state and epsilon_d,t the same driver idiosyncratic innovation used by BASE",
+        "recursion_formula": "y_d,t = rho_t * y_d,t-1 + sqrt(1-rho_t^2) * eta_d,t",
+        "scenario_driver_formula": "driver_scenario_d,t = mean_shift_d,t + volatility_multiplier_d,t * y_d,t",
+        "initialization": "when override begins, y_d,t-1 equals the last emitted standardized driver shock; do not initialize to zero",
+        "ramp_rule": "numeric-to-numeric rho is linearly interpolated by phase weight; null is bypass and is not interpreted as rho=0",
+        "validation_rule": "on a constant-rho plateau after warm-up, Var(y) must remain approximately 1 and empirical lag-1 correlation must approximate rho; insufficient plateau length is diagnostic, not failure",
+        "provenance": "normative_rule"
+      },
+      "driver_generation": {
+        "formula": "standardize(sum(root_loading * root_factor) + idio_weight * epsilon_driver)",
+        "unspecified_driver_default": "idiosyncratic",
+        "explicit_idiosyncratic_drivers": [
+          "ACQUISITION_INTEGRATION",
+          "DRUG_PIPELINE",
+          "BIOPHARMA_MANUFACTURING_CAPACITY",
+          "PHARMA_REGULATION",
+          "PATENT_EXCLUSIVITY",
+          "FINTECH_REGULATION"
+        ],
+        "explicit_idiosyncratic_rule": "These taxonomy drivers intentionally have no root mapping in v1.1. They retain independent standardized driver innovations; scenario mean/volatility overrides may still apply if a scenario explicitly names them. No root covariance is implied until a future normative reissue adds a mapping.",
+        "mappings": {
+          "AI_COMPUTE_DEMAND": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.85,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "HYPERSCALER_CAPEX": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.8,
+              "FINANCIAL_CONDITIONS": 0.15
+            },
+            "idio_weight": 0.35
+          },
+          "SEMICONDUCTOR_WFE": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.5,
+              "GLOBAL_GROWTH": 0.3
+            },
+            "idio_weight": 0.45
+          },
+          "ADVANCED_PACKAGING": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.65,
+              "AI_CAPEX_CYCLE": 0.35
+            },
+            "idio_weight": 0.35
+          },
+          "HBM_MEMORY": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.55,
+              "AI_CAPEX_CYCLE": 0.45
+            },
+            "idio_weight": 0.35
+          },
+          "EDA_DESIGN_COMPLEXITY": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.4,
+              "DIGITAL_PLATFORM_DEMAND": 0.25
+            },
+            "idio_weight": 0.6
+          },
+          "CLOUD_SOFTWARE_DEMAND": {
+            "roots": {
+              "DIGITAL_PLATFORM_DEMAND": 0.75,
+              "GLOBAL_GROWTH": 0.25
+            },
+            "idio_weight": 0.35
+          },
+          "DATA_CENTER_POWER": {
+            "roots": {
+              "POWER_BUILDOUT": 0.75,
+              "AI_CAPEX_CYCLE": 0.3
+            },
+            "idio_weight": 0.35
+          },
+          "LAUNCH_ECONOMICS": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.25,
+              "SPACE_REGULATORY_ACCESS": 0.2
+            },
+            "idio_weight": 0.75
+          },
+          "SATELLITE_CONNECTIVITY": {
+            "roots": {
+              "GLOBAL_GROWTH": 0.25,
+              "SPACE_GOVERNMENT_DEMAND": 0.25
+            },
+            "idio_weight": 0.7
+          },
+          "GOVERNMENT_DEFENSE": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.8,
+              "GLOBAL_GROWTH": 0.1
+            },
+            "idio_weight": 0.35
+          },
+          "INTEREST_RATES": {
+            "roots": {
+              "FINANCIAL_CONDITIONS": -0.9
+            },
+            "idio_weight": 0.25
+          },
+          "CAPITAL_MARKETS": {
+            "roots": {
+              "FINANCIAL_CONDITIONS": 0.9
+            },
+            "idio_weight": 0.25
+          },
+          "CHINA_REVENUE": {
+            "roots": {
+              "CHINA_MARKET_ACCESS": 0.8,
+              "GLOBAL_GROWTH": 0.15
+            },
+            "idio_weight": 0.35
+          },
+          "TAIWAN_SUPPLY": {
+            "roots": {
+              "SEMI_SUPPLY_HEALTH": 0.9
+            },
+            "idio_weight": 0.25
+          },
+          "AI_CLOUD_PRICING": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.6
+            },
+            "idio_weight": 0.55
+          },
+          "HEALTHCARE_DEMAND": {
+            "roots": {
+              "HEALTHCARE_DEMAND_ACCESS": 0.8,
+              "GLOBAL_GROWTH": 0.1
+            },
+            "idio_weight": 0.4
+          },
+          "REIMBURSEMENT_PRICING": {
+            "roots": {
+              "HEALTHCARE_DEMAND_ACCESS": 0.6
+            },
+            "idio_weight": 0.6
+          },
+          "ELECTRIFICATION_GRID": {
+            "roots": {
+              "POWER_BUILDOUT": 0.75,
+              "GLOBAL_GROWTH": 0.15
+            },
+            "idio_weight": 0.4
+          },
+          "UTILITY_CAPEX": {
+            "roots": {
+              "POWER_BUILDOUT": 0.65,
+              "GLOBAL_GROWTH": 0.2,
+              "FINANCIAL_CONDITIONS": 0.15
+            },
+            "idio_weight": 0.4
+          },
+          "INDUSTRIAL_RESHORING": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.3,
+              "POWER_BUILDOUT": 0.35,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.6
+          },
+          "AEROSPACE_CYCLE": {
+            "roots": {
+              "SPACE_GOVERNMENT_DEMAND": 0.5,
+              "GLOBAL_GROWTH": 0.25
+            },
+            "idio_weight": 0.55
+          },
+          "CONSUMER_CREDIT": {
+            "roots": {
+              "CONSUMER_RISK_APPETITE": 0.8,
+              "FINANCIAL_CONDITIONS": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "CRYPTO_CYCLE": {
+            "roots": {
+              "CONSUMER_RISK_APPETITE": 0.55,
+              "FINANCIAL_CONDITIONS": 0.35
+            },
+            "idio_weight": 0.5
+          },
+          "DIGITAL_AD_DEMAND": {
+            "roots": {
+              "DIGITAL_PLATFORM_DEMAND": 0.7,
+              "CONSUMER_RISK_APPETITE": 0.2,
+              "GLOBAL_GROWTH": 0.2
+            },
+            "idio_weight": 0.35
+          },
+          "SPACE_REGULATION": {
+            "roots": {
+              "SPACE_REGULATORY_ACCESS": -0.9
+            },
+            "idio_weight": 0.25
+          },
+          "ACCELERATOR_PRICE_COMPETITION": {
+            "roots": {
+              "AI_CAPEX_CYCLE": 0.35,
+              "SEMI_SUPPLY_HEALTH": 0.3
+            },
+            "idio_weight": 0.65
+          }
+        }
+      },
+      "company_calibration_required_sections": [
+        "joint_simulation",
+        "driver_parameter_mapping"
+      ],
+      "material_driver_rule": {
+        "any_of": [
+          "abs(driver_exposure_vector) == 2",
+          "terminal_value_sensitivity_share >= 0.10",
+          "one_sigma_driver_shift_changes_median_CAGR_5Y_by_at_least_0.01",
+          "driver participates in critical_or_high_failure_mode"
+        ],
+        "provenance": "model_assumption"
+      },
+      "joint_path_algorithm": [
+        "sample_scenario",
+        "generate_root_paths",
+        "apply_scenario_overrides",
+        "generate_standardized_driver_paths",
+        "map_drivers_to_company_parameters",
+        "add_company_idiosyncratic_shocks",
+        "run_company_models",
+        "store_relative_values_with_same_path_id"
+      ],
+      "scenario_override_execution_v1_1": [
+        "apply_scenario_root_correlation_state",
+        "derive_root_innovations_for_persistence_override",
+        "generate_or_reuse_standardized_driver_path",
+        "apply_scenario_driver_mean_volatility_and_persistence_overrides",
+        "preserve_same_global_path_id_and_base_innovations"
+      ],
+      "validation": [
+        "root_matrix_psd",
+        "all_material_drivers_have_mapping",
+        "scenario_probabilities_sum_to_one",
+        "driver_long_run_variance_approximately_one",
+        "scenario_persistence_plateau_variance_approximately_one",
+        "scenario_persistence_plateau_lag1_matches_override",
+        "same_factor_path_for_all_companies",
+        "standalone_marginals_match_joint_marginals_within_tolerance",
+        "no_double_counting"
+      ]
+    }
+  },
+  "outputs": {
+    "model_version": "2.5.0",
+    "paths_file": "/data/workspace-invest/portfolio/_runs/20261004T065128Z-company_mc-7d7c0b-paths.npz",
+    "spec_version": "MC_Calibration_Archetypes_v1.0+Rules_v1.1+Joint_Simulation_Layer_v1.0+Conditional_MC_v1.1.3",
+    "ticker": "CRWD",
+    "archetype": "mature_positive_margin",
+    "margin_method": "mean_reverting_positive_margin",
+    "adapted_from": null,
+    "state_vector": {
+      "ARR_Momentum": "A2",
+      "Net_New_ARR": "N2",
+      "Platform_Adoption": "P2",
+      "Profitability_Cash": "M3",
+      "Retention_Quality": "R2",
+      "M&A_Integration": "I2"
+    },
+    "inputs_hash": "0ee27ed2f42baedd",
+    "seed": 20260920,
+    "paths": 500000,
+    "equity_value_0": 276503364733.68,
+    "factor_correlation_psd_fixed": false,
+    "dependency_structure": "latent_factor_plus_idiosyncratic_shock (Archetypes §2.1); общий ранг не используется",
+    "joint_simulation": {
+      "layer_version": "1.4.0",
+      "global_seed": 20260920,
+      "active_drivers": [
+        "CLOUD_SOFTWARE_DEMAND",
+        "ACQUISITION_INTEGRATION",
+        "INTEREST_RATES",
+        "AI_COMPUTE_DEMAND"
+      ],
+      "scenario": "BASE",
+      "adverse_driver_stress": [],
+      "scenario_phases": null,
+      "scenario_mode": "BASE",
+      "knockout_applied": [],
+      "path_id_rule": "path_id = chunk_index*chunk + i; шоки по SeedSequence([global_seed, chunk_index])"
+    },
+    "base": {
+      "paths": 500000,
+      "return": {
+        "median_CAGR_3Y": -0.31956647793408816,
+        "median_CAGR_5Y": -0.17373982392571163,
+        "median_CAGR_8Y": -0.06776252228936347,
+        "P_2x_3Y": 0.0,
+        "P_2x_5Y": 0.000142,
+        "P_2x_8Y": 0.022742,
+        "P_5x_5Y": 0.0,
+        "P_5x_8Y": 4e-05,
+        "CAGR_5Y_quantiles": {
+          "0.01": -0.34804068773598645,
+          "0.05": -0.302623009737049,
+          "0.1": -0.27621831587165785,
+          "0.25": -0.2293344715152335,
+          "0.5": -0.17373982392571163,
+          "0.75": -0.11524582375416881,
+          "0.9": -0.060435491631986304,
+          "0.95": -0.026796543688081233,
+          "0.99": 0.03660993809696087
+        },
+        "bridge_dependent": {
+          "Y3": true,
+          "Y5": true,
+          "Y8": true
+        }
+      },
+      "downside": {
+        "P_loss_gt_30pct_5Y": 0.883244,
+        "P_loss_gt_50pct_5Y": 0.69578,
+        "expected_shortfall_5pct_5Y": -0.863734143828119,
+        "max_drawdown_5Y_quantiles": {
+          "0.05": -0.9185505518634622,
+          "0.25": -0.8576423909445958,
+          "0.5": -0.7925664940345059,
+          "0.75": -0.7040727007501021,
+          "0.95": -0.5401957391746244
+        },
+        "max_drawdown_model_dependent": true
+      },
+      "scenario": {
+        "variance_within_state_CAGR_5Y": 0.007010188144087059,
+        "variance_between_state_scenarios": null,
+        "persistence_ratio": null,
+        "persistence_class": null,
+        "scenario_concentration": null
+      },
+      "valuation_basis_share": {
+        "Y3": {
+          "multiple": 0.546726,
+          "revenue_bridge": 0.0,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.0,
+          "crossover_bridge": 0.29573,
+          "basis_blend": 0.157544
+        },
+        "Y5": {
+          "multiple": 0.358026,
+          "revenue_bridge": 0.0,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.0,
+          "crossover_bridge": 0.501048,
+          "basis_blend": 0.140926
+        },
+        "Y8": {
+          "multiple": 0.32156,
+          "revenue_bridge": 0.0,
+          "negative_fcf_fallback": 0.0,
+          "milestone_conditioned_EV": 0.0,
+          "failure_residual": 0.0,
+          "crossover_bridge": 0.552556,
+          "basis_blend": 0.125884
+        }
+      },
+      "basis_parity_margin": {
+        "Y3": {
+          "median": 0.21555405137772748,
+          "q05": 0.14219460981398693,
+          "q95": 0.35087983834262954,
+          "paths_share": 1.0
+        },
+        "Y5": {
+          "median": 0.26929142210358314,
+          "q05": 0.1748092841228741,
+          "q95": 0.46483400983920725,
+          "paths_share": 1.0
+        },
+        "Y8": {
+          "median": 0.3080923749610537,
+          "q05": 0.20173222817213707,
+          "q95": 0.5095390370137852,
+          "paths_share": 1.0
+        }
+      },
+      "positive_fcf_bridge_share": {
+        "Y3": {
+          "bridge_with_positive_fcf": 0.29573,
+          "bridge_with_nonpositive_fcf": 0.0,
+          "positive_share_of_bridge_paths": 1.0
+        },
+        "Y5": {
+          "bridge_with_positive_fcf": 0.501048,
+          "bridge_with_nonpositive_fcf": 0.0,
+          "positive_share_of_bridge_paths": 1.0
+        },
+        "Y8": {
+          "bridge_with_positive_fcf": 0.552556,
+          "bridge_with_nonpositive_fcf": 0.0,
+          "positive_share_of_bridge_paths": 1.0
+        }
+      },
+      "valuation_crossover": {
+        "mode": "parity_gated_linear_blend_v1",
+        "blend_width": 0.04,
+        "bridge_dependent_rule": "доля кодов 1/2/5/6 ≥ 5 % (зафиксировано IMMA 24.09.2026; spec v1.1.3 §10)"
+      },
+      "gap_metrics": {
+        "median_revenue_CAGR_5Y": 0.17570530234628146,
+        "median_fcf_margin_Y5": 0.2757530952318257,
+        "RV_Growth_Gap": 0.4296172875958032,
+        "Price_Expectation_Gap": 4.1819546573322395,
+        "note": "диагностика (ответ LLM 21.09): без автоматического перехода оси Valuation"
+      },
+      "median_equity_value_5Y_b": 106.48404165656666,
+      "mapping_warnings": []
+    },
+    "convergence": {
+      "runs": {
+        "100000": {
+          "median_CAGR_5Y": -0.17349299815662217,
+          "ES5": -0.863278300437776,
+          "P_loss_gt_30pct_5Y": 0.88367
+        },
+        "250000": {
+          "median_CAGR_5Y": -0.17363486123493826,
+          "ES5": -0.8636000451216764,
+          "P_loss_gt_30pct_5Y": 0.883472
+        },
+        "500000": {
+          "median_CAGR_5Y": -0.17373982392571163,
+          "ES5": -0.863734143828119,
+          "P_loss_gt_30pct_5Y": 0.883244
+        }
+      },
+      "stable": true,
+      "tolerance": {
+        "median_CAGR_5Y": 0.005,
+        "ES5": 0.01,
+        "P_loss_gt_30pct_5Y": 0.01
+      }
+    },
+    "robustness": {
+      "runs": [
+        {
+          "perturbation": "growth_modes_pp",
+          "value": -0.03257359312880715,
+          "median_CAGR_5Y": -0.1944342662024549,
+          "dP_2x_5Y": -9.200000000000001e-05,
+          "dP_loss_gt_30pct_5Y": 0.040495999999999976
+        },
+        {
+          "perturbation": "growth_modes_pp",
+          "value": 0.03257359312880715,
+          "median_CAGR_5Y": -0.15261961743402735,
+          "dP_2x_5Y": 0.00019800000000000002,
+          "dP_loss_gt_30pct_5Y": -0.05392400000000008
+        },
+        {
+          "perturbation": "margin_nodes_pp",
+          "value": -0.019544155877284287,
+          "median_CAGR_5Y": -0.17822666456692537,
+          "dP_2x_5Y": -5.2000000000000004e-05,
+          "dP_loss_gt_30pct_5Y": 0.016336000000000017
+        },
+        {
+          "perturbation": "margin_nodes_pp",
+          "value": 0.019544155877284287,
+          "median_CAGR_5Y": -0.16817501113974243,
+          "dP_2x_5Y": 6.8e-05,
+          "dP_loss_gt_30pct_5Y": -0.018863999999999992
+        },
+        {
+          "perturbation": "terminal_multiple_pct",
+          "value": -0.07675553226796095,
+          "median_CAGR_5Y": -0.18658930213753722,
+          "dP_2x_5Y": -7.200000000000002e-05,
+          "dP_loss_gt_30pct_5Y": 0.028845999999999927
+        },
+        {
+          "perturbation": "terminal_multiple_pct",
+          "value": 0.08313673674808131,
+          "median_CAGR_5Y": -0.16018583737432585,
+          "dP_2x_5Y": 0.000148,
+          "dP_loss_gt_30pct_5Y": -0.03544400000000003
+        },
+        {
+          "perturbation": "correlation_rho",
+          "value": -0.15,
+          "median_CAGR_5Y": -0.17361502588936573,
+          "dP_2x_5Y": -4.2000000000000004e-05,
+          "dP_loss_gt_30pct_5Y": 0.011205999999999938
+        },
+        {
+          "perturbation": "correlation_rho",
+          "value": 0.15,
+          "median_CAGR_5Y": -0.17340713096130767,
+          "dP_2x_5Y": 6.8e-05,
+          "dP_loss_gt_30pct_5Y": -0.010484000000000049
+        }
+      ],
+      "paths_per_run": 100000,
+      "same_sign_share": 1.0,
+      "within_delta_tolerance_share": 1.0,
+      "delta_tolerance": 0.1,
+      "pass": true,
+      "pass_rule": "v1.1: знак медианы CAGR 5Y сохранён в ≥75% прогонов И |ΔP(2x,5Y)|, |ΔP(loss>30%,5Y)| ≤ допуска в ≥75%"
+    }
+  },
+  "elapsed_ms": 124911.8,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

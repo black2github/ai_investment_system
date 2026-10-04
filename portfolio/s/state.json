@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.5",
-  "updated": "2026-10-03T21:30:00Z",
+  "updated": "2026-10-04T07:40:00Z",
   "price": {
     "last": 25.06,
     "last_at": "2026-10-02",
@@ -39,6 +39,11 @@
       "timestamp": "2026-10-03T21:30:00Z",
       "kind": "calc",
       "summary": "Интеграция калибровки S v1.0 (партия 14, 2026-10-03): calibration_v1.0.yaml + mc_calibration_v1.0.yaml приняты (RV d4986d, валидатор calibration pass d65ac5); нормативный прогон: 20261003T210450Z-company_mc-775457"
+    },
+    {
+      "timestamp": "2026-10-04T07:40:00Z",
+      "kind": "calc",
+      "summary": "Нормативный прогон под Joint v1.1: 20261004T065334Z-company_mc-3aa543 (пересчёт под Joint Schema v1.1 (прогон партии 14 …-775457 был под v1.0 — дефект скрипта приёмки); калибровка та же; robustness знак 0.625 — вырожденный случай §12 (ε = 1 п.п.), допуск 1.0); это действующий норматив для портфельного слоя (_norm_runs_joint11)"
     }
   ],
   "scenario_state": {
@@ -308,6 +313,48 @@
         ]
       },
       "paths_file": "portfolio/_runs/20261003T210450Z-company_mc-775457-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.14222487886272944,
+        "q05": 0.09080923199765996,
+        "q95": 0.21787440927684978,
+        "paths_share": 1.0
+      }
+    },
+    {
+      "run_id": "20261004T065334Z-company_mc-3aa543",
+      "model": "company_mc",
+      "version": "2.5.0",
+      "timestamp": "20261004T065334",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Schema v1.1 / Rules v1.1.2; company_mc 2.5.0)",
+      "calibration": "mc_calibration_v1.0.yaml",
+      "purpose": "нормативный прогон S mc_calibration_v1.0.yaml под Joint v1.1 (пересчёт под Joint Schema v1.1 (прогон партии 14 …-775457 был под v1.0 — дефект скрипта приёмки); калибровка та же; robustness знак 0.625 — вырожденный случай §12 (ε = 1 п.п.), допуск 1.0)",
+      "equity_value_0_b": 8.72,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": -0.0837,
+        "median_CAGR_5Y": 0.0021,
+        "median_CAGR_8Y": 0.0563,
+        "CAGR_5Y_q05_q95": [
+          -0.118,
+          0.134
+        ],
+        "P_2x_5Y": 0.0344,
+        "P_loss_gt_30pct_5Y": 0.169,
+        "P_loss_gt_50pct_5Y": 0.0341,
+        "ES5": -0.5384,
+        "median_equity_value_5Y_b": 8.82,
+        "RV_Growth_Gap": 0.125,
+        "Price_Expectation_Gap": 1.6672,
+        "convergence_stable": true,
+        "robustness_pass": false,
+        "robustness_shares": [
+          0.625,
+          1.0
+        ]
+      },
+      "paths_file": "portfolio/_runs/20261004T065334Z-company_mc-3aa543-paths.npz",
       "valuation_crossover": "parity_gated_linear_blend_v1",
       "basis_parity_margin_Y5": {
         "median": 0.14222487886272944,

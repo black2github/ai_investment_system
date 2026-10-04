@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.5",
-  "updated": "2026-10-03T21:30:00Z",
+  "updated": "2026-10-04T07:40:00Z",
   "price": {
     "last": 296.97,
     "last_at": "2026-10-02",
@@ -39,6 +39,11 @@
       "timestamp": "2026-10-03T21:30:00Z",
       "kind": "calc",
       "summary": "Интеграция калибровки HPS.A v1.0 (партия 14, 2026-10-03): calibration_v1.0.yaml + mc_calibration_v1.0.yaml приняты (RV 445a1a, валидатор calibration pass 91e257); нормативный прогон: 20261003T210242Z-company_mc-98b0da"
+    },
+    {
+      "timestamp": "2026-10-04T07:40:00Z",
+      "kind": "calc",
+      "summary": "Нормативный прогон под Joint v1.1: 20261004T064913Z-company_mc-001f6b (партия 16: mc v1.0.1 (mapping CAPITAL_MARKETS / TAIWAN_SUPPLY; валидатор bcd9e0 pass, σ 0.117/0.015/0.076, W 0.270/0.350)); это действующий норматив для портфельного слоя (_norm_runs_joint11)"
     }
   ],
   "scenario_state": {
@@ -313,6 +318,48 @@
         "median": 0.10955580718865474,
         "q05": 0.06995637033613113,
         "q95": 0.16820438904662396,
+        "paths_share": 1.0
+      }
+    },
+    {
+      "run_id": "20261004T064913Z-company_mc-001f6b",
+      "model": "company_mc",
+      "version": "2.5.0",
+      "timestamp": "20261004T064913",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Schema v1.1 / Rules v1.1.2; company_mc 2.5.0)",
+      "calibration": "mc_calibration_v1.0.1.yaml",
+      "purpose": "нормативный прогон HPS.A mc_calibration_v1.0.1.yaml под Joint v1.1 (партия 16: mc v1.0.1 (mapping CAPITAL_MARKETS / TAIWAN_SUPPLY; валидатор bcd9e0 pass, σ 0.117/0.015/0.076, W 0.270/0.350))",
+      "equity_value_0_b": 3.54,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": 0.1827,
+        "median_CAGR_5Y": 0.1511,
+        "median_CAGR_8Y": 0.1328,
+        "CAGR_5Y_q05_q95": [
+          -0.014,
+          0.336
+        ],
+        "P_2x_5Y": 0.5092,
+        "P_loss_gt_30pct_5Y": 0.013,
+        "P_loss_gt_50pct_5Y": 0.0018,
+        "ES5": -0.2297,
+        "median_equity_value_5Y_b": 7.15,
+        "RV_Growth_Gap": -0.0076,
+        "Price_Expectation_Gap": 0.7969,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          1.0
+        ]
+      },
+      "paths_file": "portfolio/_runs/20261004T064913Z-company_mc-001f6b-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.10951487433539558,
+        "q05": 0.06900523332384534,
+        "q95": 0.17073355016204964,
         "paths_share": 1.0
       }
     }

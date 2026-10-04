@@ -2,7 +2,7 @@ schema_version: '1.0'
 artifact: calibration_lifecycle_state
 rules_ref: Calibration_Lifecycle_Rules_v1.0.md
 registry_ref: Calibration_Lifecycle_Registry_v1.0.yaml
-updated: '2026-10-03'
+updated: '2026-10-04'
 base_period_max_age_quarters: 2
 note: 'Хост-реестр состояний lifecycle принятых калибровок (§2: current | review_required | revalidation_required | recalibration_required | superseded).
   Ведёт интегратор; основания классифицируются по CLR-1…6 реестра IMMA; неприятный результат модели основанием не является (§3).'
@@ -235,7 +235,7 @@ calibrations:
 - ticker: HPS.A
   folder: hps_a
   archetype: mature_positive_margin
-  mc_file: mc_calibration_v1.0.yaml
+  mc_file: mc_calibration_v1.0.1.yaml
   mc_as_of: '2026-10-03'
   rv_file: calibration_v1.0.yaml
   rv_as_of: '2026-10-03'
@@ -243,7 +243,7 @@ calibrations:
   base_period_fiscal_quarter: Q2 2026
   lifecycle_state: current
   last_check: '2026-10-03'
-  last_check_basis: 'приёмка партии 14 (03.10): RV 445a1a, валидатор calibration 91e257 (5× MC-G5-001 reviewed-immaterial), норматив 98b0da'
+  last_check_basis: 'партия 16 (04.10): mc v1.0.1 — mapping CAPITAL_MARKETS / TAIWAN_SUPPLY (валидатор bcd9e0), норматив под Joint v1.1 001f6b; партия 14: RV 445a1a'
   next_mandatory_check: после публикации отчёта за Q3 2026 (CLR-1 §5.1 — сверка дозором; первая консолидация AEG → CLR-2 пересмотр базы без
     pro-forma; §5.2 — второй новый квартал без обновления anchor → recalibration_required)
   open_bases: []

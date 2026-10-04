@@ -1,0 +1,24 @@
+package: IMMA_Party17_MC_G5_014_Scenario_Mapping_Completeness_v1.0
+as_of: '2026-10-04'
+files:
+- path: Joint_Simulation_Layer_Rules_v1.1.3.md
+  sha256: 7932dfe44e91c9081a307b631f3b1d5f2f5685d74500165bd50947b267e0c1f5
+  bytes: 10542
+- path: Joint_Simulation_Layer_Rules_v1.1.3.yaml
+  sha256: eff549226c84d4e38053e8250cf845cbf3149d09617a956ff4249d68ddd67002
+  bytes: 7809
+- path: Joint_Simulation_Layer_Rules_v1.1.3_Patch_Notes.md
+  sha256: 5a9074d0d286dad04a69f1fc7cc5b970e74545bad53da244562b2c3244e235ca
+  bytes: 1247
+- path: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: 14472c2a693cea67d5161103d9d7d720ecc7c5a3527e6f7dd46b13125243c026
+  bytes: 1183
+- path: MC_G5_014_Validator_Fixtures_v1.0.yaml
+  sha256: dddbc8a80f6004854f1c51bd744ebd3f48d60bea21cfdaa79f882e9fd4e4f319
+  bytes: 2038
+- path: PACKAGE_README.md
+  sha256: 61818494f339e647609163b492542a21207f9bfff199ad4fd0455aaa12688007
+  bytes: 763
+- path: Scenario_Overridden_Driver_Reference_v1.0.yaml
+  sha256: 4e0d6f3f606bbe195e1f072f207efb91f39b8f25d90eb093cec48e13fc62534d
+  bytes: 1444

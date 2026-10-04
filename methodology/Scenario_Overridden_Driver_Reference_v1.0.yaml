@@ -1,0 +1,64 @@
+artifact: scenario_overridden_driver_reference
+version: '1.0'
+as_of: '2026-10-04'
+authoritative: false
+source_scenarios:
+- TAIWAN_SEIZURE_v1.1.1
+- TAIWAN_QUARANTINE_v1.1.1
+- CHIP_COLD_WAR_v1.1.1
+note: Reference snapshot only. Validator must derive authoritative set from active driver_overrides in the run context.
+drivers:
+- driver_id: ACCELERATOR_PRICE_COMPETITION
+  scenarios:
+  - CHIP_COLD_WAR
+- driver_id: ADVANCED_PACKAGING
+  scenarios:
+  - TAIWAN_QUARANTINE
+  - TAIWAN_SEIZURE
+- driver_id: AI_CLOUD_PRICING
+  scenarios:
+  - CHIP_COLD_WAR
+- driver_id: AI_COMPUTE_DEMAND
+  scenarios:
+  - TAIWAN_QUARANTINE
+  - TAIWAN_SEIZURE
+- driver_id: CAPITAL_MARKETS
+  scenarios:
+  - TAIWAN_QUARANTINE
+  - TAIWAN_SEIZURE
+- driver_id: CHINA_REVENUE
+  scenarios:
+  - CHIP_COLD_WAR
+  - TAIWAN_QUARANTINE
+  - TAIWAN_SEIZURE
+- driver_id: DATA_CENTER_POWER
+  scenarios:
+  - CHIP_COLD_WAR
+- driver_id: GOVERNMENT_DEFENSE
+  scenarios:
+  - CHIP_COLD_WAR
+  - TAIWAN_QUARANTINE
+  - TAIWAN_SEIZURE
+- driver_id: HBM_MEMORY
+  scenarios:
+  - TAIWAN_QUARANTINE
+  - TAIWAN_SEIZURE
+- driver_id: HYPERSCALER_CAPEX
+  scenarios:
+  - CHIP_COLD_WAR
+- driver_id: INDUSTRIAL_RESHORING
+  scenarios:
+  - CHIP_COLD_WAR
+- driver_id: INTEREST_RATES
+  scenarios:
+  - CHIP_COLD_WAR
+- driver_id: SEMICONDUCTOR_WFE
+  scenarios:
+  - CHIP_COLD_WAR
+  - TAIWAN_QUARANTINE
+  - TAIWAN_SEIZURE
+- driver_id: TAIWAN_SUPPLY
+  scenarios:
+  - CHIP_COLD_WAR
+  - TAIWAN_QUARANTINE
+  - TAIWAN_SEIZURE

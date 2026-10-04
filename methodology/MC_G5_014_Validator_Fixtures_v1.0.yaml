@@ -1,0 +1,76 @@
+artifact: mc_g5_014_validator_fixtures
+version: '1.0'
+rule_ref: Joint_Simulation_Layer_Rules_v1.1.3#MC-G5-014
+fixtures:
+- id: G5-014-PASS-DIRECT
+  expected: pass
+  exposure:
+    TAIWAN_SUPPLY: 1
+  scenario_overrides:
+  - TAIWAN_SUPPLY
+  mapping_driver_ids:
+  - TAIWAN_SUPPLY
+  driver_interpretation: {}
+- id: G5-014-FAIL-UNMAPPED
+  expected: error
+  exposure:
+    TAIWAN_SUPPLY: 1
+  scenario_overrides:
+  - TAIWAN_SUPPLY
+  mapping_driver_ids: []
+  driver_interpretation: {}
+- id: G5-014-PASS-ZERO-EXPOSURE
+  expected: pass
+  exposure:
+    TAIWAN_SUPPLY: 0
+  scenario_overrides:
+  - TAIWAN_SUPPLY
+  mapping_driver_ids: []
+  driver_interpretation: {}
+- id: G5-014-PASS-SUBSTITUTE
+  expected: pass
+  exposure:
+    AI_COMPUTE_DEMAND: 1
+    DATA_CENTER_POWER: 2
+  scenario_overrides:
+  - AI_COMPUTE_DEMAND
+  mapping_driver_ids:
+  - DATA_CENTER_POWER
+  driver_interpretation:
+    AI_COMPUTE_DEMAND:
+      scenario_mapping_exception:
+        status: approved_exception
+        reason_code: substitute_channel
+        substitute_driver_ids:
+        - DATA_CENTER_POWER
+        rationale: Avoid double counting; compute demand reaches this company through data-center power demand.
+        provenance: model_assumption
+        review_ref: CAL-REVIEW-EXAMPLE
+- id: G5-014-FAIL-BARE-REVIEWED
+  expected: error
+  exposure:
+    AI_COMPUTE_DEMAND: 1
+  scenario_overrides:
+  - AI_COMPUTE_DEMAND
+  mapping_driver_ids: []
+  driver_interpretation:
+    AI_COMPUTE_DEMAND:
+      rationale: reviewed-immaterial
+- id: G5-014-FAIL-SUBSTITUTE-NOT-MAPPED
+  expected: error
+  exposure:
+    AI_COMPUTE_DEMAND: 1
+    DATA_CENTER_POWER: 2
+  scenario_overrides:
+  - AI_COMPUTE_DEMAND
+  mapping_driver_ids: []
+  driver_interpretation:
+    AI_COMPUTE_DEMAND:
+      scenario_mapping_exception:
+        status: approved_exception
+        reason_code: substitute_channel
+        substitute_driver_ids:
+        - DATA_CENTER_POWER
+        rationale: Intended substitute but no live mapping exists.
+        provenance: model_assumption
+        review_ref: CAL-REVIEW-EXAMPLE

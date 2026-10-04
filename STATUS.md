@@ -2286,3 +2286,19 @@ HPS.A 6 % до консолидации AEG) — ждёт владельца. Б
 и теста устойчивости U18 (трактовка интегратора), либо по запросу владельца. CRWD / S / HPS.A остаются в конвейере (conditional_mc) и
 входят в каждый следующий заход. Открыто у владельца: порог ES5 0.02 (§2 Optimizer). Далее: приёмка партии 16 к IMMA; валидатор —
 сценарно-зависимое правило MC-G5-001.
+
+## 04.10: ПАРТИЯ 17 ПРИНЯТА — Joint Rules v1.1.3 с MC-G5-014; валидатор 1.12.0; ревизия 18 калибровок: 17 пробелов у 7 бумаг
+Пакет IMMA_Party17 (share 6ac21d05): Joint_Simulation_Layer_Rules v1.1.3 (check_supersedes к 1.1.2: пропаж 0, изменены версия/дата/
+зависимость движка; MC-G5-001 и 013 без изменений) + MC-G5-014 «scenario-visible mapping completeness»: ненулевая экспозиция по драйверу,
+который переопределяет хотя бы одна фаза действующих сценариев, требует прямого mapping или структурного исключения
+mpc_inputs.driver_interpretation[driver].scenario_mapping_exception (status approved_exception, reason_code из 4, rationale,
+provenance, review_ref; substitute_channel — заместитель с живым mapping; not_applicable_until_anchor — anchor_condition); голый
+«reviewed-immaterial» не освобождает. Нормативы → methodology (+ справочный список 14 драйверов, фикстуры). Валидатор 1.12.0: множество
+шокируемых драйверов строится динамически из последних калибровок сценариев в portfolio/_scenarios (совпало со снимком IMMA: 14), отчёт
+§8.5 в outputs.scenario_mapping; дефолты режима calibration — Schema v1.1 / Rules v1.1.3; тест на 6 фикстурах IMMA — pass (36 тестов
+валидатора). Ревизия всех 18 действующих калибровок (без прогонов движка): ошибок MC-G5-014 — 17 у 7 бумаг, все экспозиции ±1: CRWV
+(ADVANCED_PACKAGING, HBM_MEMORY), ETN (GOVERNMENT_DEFENSE, INTEREST_RATES, SEMICONDUCTOR_WFE), MSFT (GOVERNMENT_DEFENSE, INTEREST_RATES),
+NET (CAPITAL_MARKETS, DATA_CENTER_POWER, HYPERSCALER_CAPEX, INTEREST_RATES), PLTR (CAPITAL_MARKETS, INDUSTRIAL_RESHORING, INTEREST_RATES),
+SPOT (AI_COMPUTE_DEMAND), HPS.A (AI_COMPUTE_DEMAND, INDUSTRIAL_RESHORING — обоснованы прозой в партии 16, нужен структурный объект).
+По правилу миграции v1.1.3 принятые калибровки остаются принятыми; до следующего сценарно-зависимого прогона пробелы закрываются
+исключениями или mapping (с перемером MC-G5-013) — заказ партии 18.

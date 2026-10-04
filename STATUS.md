@@ -2302,3 +2302,17 @@ NET (CAPITAL_MARKETS, DATA_CENTER_POWER, HYPERSCALER_CAPEX, INTEREST_RATES), PLT
 SPOT (AI_COMPUTE_DEMAND), HPS.A (AI_COMPUTE_DEMAND, INDUSTRIAL_RESHORING — обоснованы прозой в партии 16, нужен структурный объект).
 По правилу миграции v1.1.3 принятые калибровки остаются принятыми; до следующего сценарно-зависимого прогона пробелы закрываются
 исключениями или mapping (с перемером MC-G5-013) — заказ партии 18.
+
+## 04.10 день: ПАРТИЯ 18 ПРИНЯТА (лёгкая часть) — 17 пробелов MC-G5-014 закрыты, аудит 18 калибровок: 0 ошибок
+Пакет IMMA_Party18 (share 6ac244d4): 6 прямых mapping (INTEREST_RATES → мультипликатор Y5 у ETN −0.015 / MSFT −0.018 / NET −0.025 /
+PLTR −0.025; CAPITAL_MARKETS +0.015 у NET и PLTR) + 11 структурных исключений (substitute_channel / immaterial_at_company_level,
+review_ref IMMA-P18-MCG5-014-20261004). MC-переиздания ETN v1.0.3 / MSFT v1.0.2 / NET v1.0.1 / PLTR v1.0.1 — check_supersedes точный
+(изменён только as_of + добавлены mapping) → скопированы; валидатор calibration pass у всех четырёх (σ MC-G5-013 перемерена: мультипликатор
+ETN 0.043, MSFT 0.048, NET 0.090, PLTR 0.096 при cap 0.15; сухой прогон чистый; W в ориентире). mpc_inputs: HPS.A v1.0.2 — замена целиком
+(supersedes точный); ШЕСТЬ файлов IMMA (CRWV, ETN, MSFT, NET, PLTR, SPOT) РЕКОНСТРУИРОВАНЫ из архива восстановления и расходятся с хостом
+(таксономия 1.1 → 1.2.1, экспозиции CRWV UTILITY_CAPEX / ELECTRIFICATION_GRID 1 → 0, MSFT UTILITY_CAPEX / ELECTRIFICATION_GRID /
+DIGITAL_AD_DEMAND 1 → 0 и TAIWAN_SUPPLY +1 → −1, у SPOT пропали failure mode / benchmark / cross_portfolio_common_causes, у ETN taxonomy_gap)
+→ целиком НЕ принимались: интегратор внёс только дельту (`_integrate_party18.py`: объекты scenario_mapping_exception, версия, changelog;
+экспозиции / failure modes / benchmark неизменны — инвариант проверен). Папки 7/7 pass (…-204ff7). Аудит MC-G5-014 по всем 18 действующим
+калибровкам — **0 ошибок**. Lifecycle: mc_file обновлены у четырёх. Тяжёлая часть (по одобрению): нормативы ETN / MSFT / NET / PLTR под
+новыми mapping, пути под сценариями и фазами (4 × 8), смеси, заход в режиме вселенной.

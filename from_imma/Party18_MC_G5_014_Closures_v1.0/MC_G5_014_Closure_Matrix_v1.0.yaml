@@ -1,0 +1,134 @@
+artifact: MC_G5_014_Closure_Matrix
+version: '1.0'
+as_of: '2026-10-04'
+rules_ref: Joint_Simulation_Layer_Rules_v1.1.3 §8 / MC-G5-014
+review_ref: IMMA-P18-MCG5-014-20261004
+anti_circularity: Mapping vs exception and effect sizes were selected from causal channels / cross-name system precedents,
+  not from scenario portfolio outcomes.
+summary:
+  gaps: 17
+  direct_mappings: 6
+  structured_exceptions: 11
+  companies: 7
+closures:
+- ticker: CRWV
+  driver_id: ADVANCED_PACKAGING
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: substitute_channel
+  substitute_driver_ids:
+  - TAIWAN_SUPPLY
+- ticker: CRWV
+  driver_id: HBM_MEMORY
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: substitute_channel
+  substitute_driver_ids:
+  - TAIWAN_SUPPLY
+- ticker: ETN
+  driver_id: GOVERNMENT_DEFENSE
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: immaterial_at_company_level
+- ticker: ETN
+  driver_id: INTEREST_RATES
+  exposure: -1
+  closure_type: mapping
+  mapping:
+    target: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: -0.015
+- ticker: ETN
+  driver_id: SEMICONDUCTOR_WFE
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: substitute_channel
+  substitute_driver_ids:
+  - INDUSTRIAL_RESHORING
+- ticker: MSFT
+  driver_id: GOVERNMENT_DEFENSE
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: immaterial_at_company_level
+- ticker: MSFT
+  driver_id: INTEREST_RATES
+  exposure: -1
+  closure_type: mapping
+  mapping:
+    target: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: -0.018
+- ticker: NET
+  driver_id: CAPITAL_MARKETS
+  exposure: 1
+  closure_type: mapping
+  mapping:
+    target: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: 0.015
+- ticker: NET
+  driver_id: DATA_CENTER_POWER
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: substitute_channel
+  substitute_driver_ids:
+  - AI_COMPUTE_DEMAND
+- ticker: NET
+  driver_id: HYPERSCALER_CAPEX
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: substitute_channel
+  substitute_driver_ids:
+  - AI_COMPUTE_DEMAND
+  - CLOUD_SOFTWARE_DEMAND
+- ticker: NET
+  driver_id: INTEREST_RATES
+  exposure: -1
+  closure_type: mapping
+  mapping:
+    target: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: -0.025
+- ticker: PLTR
+  driver_id: CAPITAL_MARKETS
+  exposure: 1
+  closure_type: mapping
+  mapping:
+    target: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: 0.015
+- ticker: PLTR
+  driver_id: INDUSTRIAL_RESHORING
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: substitute_channel
+  substitute_driver_ids:
+  - CLOUD_SOFTWARE_DEMAND
+- ticker: PLTR
+  driver_id: INTEREST_RATES
+  exposure: -1
+  closure_type: mapping
+  mapping:
+    target: valuation.Y5.multiple
+    transform: log_multiplier
+    effect_per_plus_1sigma: -0.025
+- ticker: SPOT
+  driver_id: AI_COMPUTE_DEMAND
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: immaterial_at_company_level
+- ticker: HPS.A
+  driver_id: AI_COMPUTE_DEMAND
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: substitute_channel
+  substitute_driver_ids:
+  - DATA_CENTER_POWER
+  - HYPERSCALER_CAPEX
+- ticker: HPS.A
+  driver_id: INDUSTRIAL_RESHORING
+  exposure: 1
+  closure_type: exception
+  exception_reason_code: substitute_channel
+  substitute_driver_ids:
+  - ELECTRIFICATION_GRID

@@ -1,6 +1,6 @@
 schema_version: 1.0.5
 driver_vector_provenance: model_assumption
-version: '1.0'
+version: '1.0.1'
 ticker: SPOT
 artifact: mpc_inputs
 as_of: '2026-09-25'
@@ -38,20 +38,6 @@ driver_exposure_vector:
   FINTECH_REGULATION: 0
   DIGITAL_AD_DEMAND: 2
   SPACE_REGULATION: 0
-driver_interpretation:
-  DIGITAL_AD_DEMAND:
-    directionality: positive
-    vector_score: 2
-    positive_channel: Ad-Supported revenue is directly exposed to advertising demand.
-    negative_channel: null
-    net_rule_v1: Primary cyclical revenue exposure.
-  AI_CLOUD_PRICING:
-    directionality: negative
-    vector_score: -1
-    positive_channel: null
-    negative_channel: Higher cloud/AI service economics can raise infrastructure/content-personalization cost; this is secondary
-      to content royalties.
-    net_rule_v1: Small cost exposure only; do not treat as AI revenue driver.
 failure_modes:
 - failure_id: SPOT-FM-01
   name: Audience/subscriber growth slows materially
@@ -92,3 +78,26 @@ driver_taxonomy_version: '1.1'
 taxonomy_gap: []
 taxonomy_gap_note: No new taxonomy driver is required for initial SPOT model; content-cost/common-cause risks remain failure
   modes rather than forced MPC drivers.
+changelog:
+- date: '2026-10-04'
+  change: 'Party 18 (IMMA review IMMA-P18-MCG5-014-20261004): структурные исключения MC-G5-014 для AI_COMPUTE_DEMAND; экспозиции и failure modes не менялись; интегратор внёс только дельту (файл IMMA SPOT_mpc_inputs_v1.0.1 реконструирован и расходится с хостом)'
+driver_interpretation:
+  DIGITAL_AD_DEMAND:
+    directionality: positive
+    vector_score: 2
+    positive_channel: Ad-Supported revenue is directly exposed to advertising demand.
+    negative_channel: null
+    net_rule_v1: Primary cyclical revenue exposure.
+  AI_CLOUD_PRICING:
+    directionality: negative
+    vector_score: -1
+    positive_channel: null
+    negative_channel: Higher cloud/AI service economics can raise infrastructure/content-personalization cost; this is secondary to content royalties.
+    net_rule_v1: Small cost exposure only; do not treat as AI revenue driver.
+  AI_COMPUTE_DEMAND:
+    scenario_mapping_exception:
+      status: approved_exception
+      reason_code: immaterial_at_company_level
+      rationale: AI compute demand is a second-order product/personalization dependency for Spotify; the company does not disclose a material revenue channel tied to compute demand and AI infrastructure economics are already handled on the cost side through AI_CLOUD_PRICING.
+      provenance: model_assumption
+      review_ref: IMMA-P18-MCG5-014-20261004

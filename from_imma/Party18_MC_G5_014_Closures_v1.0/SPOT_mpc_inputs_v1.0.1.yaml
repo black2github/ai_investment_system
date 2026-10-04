@@ -1,0 +1,88 @@
+schema_version: 1.0.5
+version: 1.0.1
+ticker: SPOT
+artifact: mpc_inputs
+as_of: '2026-10-04'
+source_artifact: accepted canonical SPOT mpc_inputs + Party18 MC-G5-014 review
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 1
+  HYPERSCALER_CAPEX: 0
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 1
+  DATA_CENTER_POWER: 0
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 1
+  AI_CLOUD_PRICING: -1
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 2
+  SPACE_REGULATION: 0
+  ACCELERATOR_PRICE_COMPETITION: 0
+driver_vector_provenance: model_assumption
+driver_interpretation:
+  AI_COMPUTE_DEMAND:
+    scenario_mapping_exception:
+      status: approved_exception
+      reason_code: immaterial_at_company_level
+      rationale: AI compute demand is a second-order product/personalization dependency for Spotify; the company does not
+        disclose a material revenue channel tied to compute demand and AI infrastructure economics are already handled on
+        the cost side through AI_CLOUD_PRICING.
+      provenance: model_assumption
+      review_ref: IMMA-P18-MCG5-014-20261004
+failure_modes:
+- failure_id: SPOT-FM-01
+  name: Consumer engagement or premium subscriber growth decelerates
+  common_cause_id: CONSUMER_ENGAGEMENT_SLOWDOWN
+  severity: high
+- failure_id: SPOT-FM-02
+  name: Pricing or premium monetization underperforms
+  common_cause_id: SUBSCRIPTION_MONETIZATION_FAILURE
+  severity: high
+- failure_id: SPOT-FM-03
+  name: Digital advertising demand or ad monetization slows
+  common_cause_id: DIGITAL_AD_DEMAND_SLOWDOWN
+  severity: medium
+- failure_id: SPOT-FM-04
+  name: Music/podcast content economics or licensing costs compress margins
+  common_cause_id: CONTENT_LICENSING_COST_PRESSURE
+  severity: high
+- failure_id: SPOT-FM-05
+  name: AI/content investment overruns expected monetization
+  common_cause_id: AI_CONTENT_INVESTMENT_OVERRUN
+  severity: medium
+failure_modes_provenance: model_assumption
+driver_taxonomy_version: 1.2.1
+taxonomy_gap: []
+taxonomy_gap_note: null
+driver_exposure_semantics:
+  scale:
+    '-2': strong negative
+    '-1': moderate negative
+    '0': neutral/not material
+    '1': moderate positive
+    '2': strong positive
+  provenance: normative_rule
+  direction_rule: Sign is company impact from a positive driver shock.
+changelog:
+- date: '2026-10-04'
+  change: 'Party18: add MC-G5-014 structured scenario-mapping exceptions only; driver exposure scores are unchanged.'

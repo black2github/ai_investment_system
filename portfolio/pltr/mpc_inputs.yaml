@@ -1,7 +1,7 @@
 # Входы MPC для PLTR: вектор экспозиций по драйверам и failure modes (Marginal_Portfolio_Contribution_Schema_v1.0).
 schema_version: '1.0.5'
 driver_vector_provenance: model_assumption
-version: '1.0'
+version: '1.0.1'
 ticker: PLTR
 artifact: mpc_inputs
 as_of: '2026-09-21'
@@ -70,5 +70,17 @@ failure_modes:
   severity: medium
 driver_taxonomy_version: '1.1'
 changelog:
+- date: '2026-10-04'
+  change: 'Party 18 (IMMA review IMMA-P18-MCG5-014-20261004): структурные исключения MC-G5-014 для INDUSTRIAL_RESHORING; экспозиции и failure modes не менялись; интегратор внёс только дельту (файл IMMA PLTR_mpc_inputs_v1.0.1 реконструирован и расходится с хостом)'
 - date: '2026-09-21'
   change: 'taxonomy v1.1: добавлено 16 драйверов (MPC_driver_exposure_patch_v1.1, share https://chatgpt.com/share/6ab134dd-6b98-83eb-aa2d-7aaebb521909)'
+driver_interpretation:
+  INDUSTRIAL_RESHORING:
+    scenario_mapping_exception:
+      status: approved_exception
+      reason_code: substitute_channel
+      rationale: Reshoring affects Palantir through commercial software/AIP deployment budgets rather than a distinct reported segment; the live CLOUD_SOFTWARE_DEMAND mapping is the quantitative channel.
+      provenance: model_assumption
+      review_ref: IMMA-P18-MCG5-014-20261004
+      substitute_driver_ids:
+      - CLOUD_SOFTWARE_DEMAND

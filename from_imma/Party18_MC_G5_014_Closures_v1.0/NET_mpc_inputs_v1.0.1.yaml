@@ -1,0 +1,108 @@
+schema_version: 1.0.5
+version: 1.0.1
+ticker: NET
+artifact: mpc_inputs
+as_of: '2026-10-04'
+source_artifact: accepted canonical NET mpc_inputs + Party18 MC-G5-014 review
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 2
+  HYPERSCALER_CAPEX: 1
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 2
+  DATA_CENTER_POWER: 1
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 0
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 0
+  AI_CLOUD_PRICING: 1
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+  ACCELERATOR_PRICE_COMPETITION: 0
+driver_vector_provenance: model_assumption
+driver_interpretation:
+  DATA_CENTER_POWER:
+    scenario_mapping_exception:
+      status: approved_exception
+      reason_code: substitute_channel
+      rationale: Power availability influences Cloudflare mainly through upstream AI/edge traffic and cloud-software demand
+        rather than owned data-center capex; the demand effect is already represented by AI_COMPUTE_DEMAND.
+      provenance: model_assumption
+      review_ref: IMMA-P18-MCG5-014-20261004
+      substitute_driver_ids:
+      - AI_COMPUTE_DEMAND
+  HYPERSCALER_CAPEX:
+    scenario_mapping_exception:
+      status: approved_exception
+      reason_code: substitute_channel
+      rationale: Hyperscaler capex affects Cloudflare indirectly through the AI/cloud traffic ecosystem; its company-level
+        effect is already captured by live AI_COMPUTE_DEMAND and CLOUD_SOFTWARE_DEMAND mappings.
+      provenance: model_assumption
+      review_ref: IMMA-P18-MCG5-014-20261004
+      substitute_driver_ids:
+      - AI_COMPUTE_DEMAND
+      - CLOUD_SOFTWARE_DEMAND
+failure_modes:
+- failure_id: NET-FM-01
+  name: Enterprise/cloud software spending slowdown
+  common_cause_id: CLOUD_SOFTWARE_DEMAND_SLOWDOWN
+  severity: high
+- failure_id: NET-FM-02
+  name: AI edge inference/agent monetization fails to become material
+  common_cause_id: AI_MONETIZATION_FAILURE
+  severity: high
+- failure_id: NET-FM-03
+  name: Hyperscaler/cloud-platform competition
+  common_cause_id: CLOUD_PLATFORM_COMPETITION
+  severity: high
+- failure_id: NET-FM-04
+  name: Network outage/security incident
+  common_cause_id: INTERNET_INFRASTRUCTURE_OUTAGE
+  severity: critical
+- failure_id: NET-FM-05
+  name: Large-customer expansion/NRR decelerates
+  common_cause_id: ENTERPRISE_EXPANSION_SLOWDOWN
+  severity: high
+- failure_id: NET-FM-06
+  name: AI traffic cost grows faster than monetization
+  common_cause_id: AI_OVERBUILD
+  severity: medium
+- failure_id: NET-FM-07
+  name: Valuation sensitivity under higher rates
+  common_cause_id: CAPITAL_MARKETS_TIGHTENING
+  severity: medium
+failure_modes_provenance: model_assumption
+driver_taxonomy_version: 1.2.1
+taxonomy_gap: []
+taxonomy_gap_note: null
+driver_exposure_semantics:
+  scale:
+    '-2': strong negative
+    '-1': moderate negative
+    '0': neutral/not material
+    '1': moderate positive
+    '2': strong positive
+  provenance: normative_rule
+  direction_rule: Sign is company impact from a positive driver shock.
+changelog:
+- date: '2026-10-04'
+  change: 'Party18: add MC-G5-014 structured scenario-mapping exceptions only; driver exposure scores are unchanged.'

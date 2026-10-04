@@ -1,0 +1,102 @@
+schema_version: 1.0.5
+version: 1.0.2
+ticker: MSFT
+artifact: mpc_inputs
+as_of: '2026-10-04'
+source_artifact: accepted canonical MSFT mpc_inputs + Party18 MC-G5-014 review
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 2
+  HYPERSCALER_CAPEX: -2
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: -1
+  HBM_MEMORY: -1
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 2
+  DATA_CENTER_POWER: -2
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 1
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 0
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: -1
+  ACQUISITION_INTEGRATION: 1
+  AI_CLOUD_PRICING: 2
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 0
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+  ACCELERATOR_PRICE_COMPETITION: 1
+driver_vector_provenance: model_assumption
+driver_interpretation:
+  HYPERSCALER_CAPEX:
+    directionality: dual
+    vector_score: -2
+    positive_channel: AI infrastructure enables Azure/Copilot growth.
+    negative_channel: Microsoft is itself a large infrastructure buyer; higher capex reduces near-term FCF and cloud gross
+      margin.
+    net_rule_v1: Encode cost channel as -2; monetization separately as AI_COMPUTE_DEMAND +2 and CLOUD_SOFTWARE_DEMAND +2.
+  GOVERNMENT_DEFENSE:
+    scenario_mapping_exception:
+      status: approved_exception
+      reason_code: immaterial_at_company_level
+      rationale: Government/defense demand is diversified inside a much larger cloud/software revenue base and is not separately
+        disclosed or modeled as a company-level stochastic target.
+      provenance: model_assumption
+      review_ref: IMMA-P18-MCG5-014-20261004
+failure_modes:
+- failure_id: MSFT-FM-01
+  name: AI capex outruns monetization
+  common_cause_id: AI_OVERBUILD
+  severity: high
+- failure_id: MSFT-FM-02
+  name: Azure capacity/power constraints limit revenue capture
+  common_cause_id: DATA_CENTER_POWER_CONSTRAINT
+  severity: high
+- failure_id: MSFT-FM-03
+  name: GPU/HBM supply disruption delays cloud capacity
+  common_cause_id: TAIWAN_SUPPLY_DISRUPTION
+  severity: high
+- failure_id: MSFT-FM-04
+  name: Enterprise/cloud software demand decelerates
+  common_cause_id: CLOUD_SOFTWARE_DEMAND_SLOWDOWN
+  severity: high
+- failure_id: MSFT-FM-05
+  name: Frontier-model/OpenAI concentration or contract-economics risk
+  common_cause_id: AI_CLOUD_CUSTOMER_FINANCING_STRESS
+  severity: high
+- failure_id: MSFT-FM-06
+  name: AI infrastructure structurally compresses cloud margins
+  common_cause_id: HYPERSCALER_CAPEX_SLOWDOWN
+  severity: medium
+- failure_id: MSFT-FM-07
+  name: Regulatory/antitrust pressure
+  common_cause_id: PLATFORM_REGULATORY_PRESSURE
+  severity: medium
+failure_modes_provenance: model_assumption
+driver_taxonomy_version: 1.2.1
+taxonomy_gap: []
+taxonomy_gap_note: null
+driver_exposure_semantics:
+  scale:
+    '-2': strong negative
+    '-1': moderate negative
+    '0': neutral/not material
+    '1': moderate positive
+    '2': strong positive
+  provenance: normative_rule
+  direction_rule: Sign is company impact from a positive driver shock.
+changelog:
+- date: '2026-10-04'
+  change: 'Party18: add MC-G5-014 structured scenario-mapping exceptions only; driver exposure scores are unchanged.'

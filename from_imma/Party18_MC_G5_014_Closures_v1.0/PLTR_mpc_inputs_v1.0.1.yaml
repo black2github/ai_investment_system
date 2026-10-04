@@ -1,0 +1,97 @@
+schema_version: 1.0.5
+version: 1.0.1
+ticker: PLTR
+artifact: mpc_inputs
+as_of: '2026-10-04'
+source_artifact: accepted canonical PLTR mpc_inputs + Party18 MC-G5-014 review
+driver_exposure_vector:
+  AI_COMPUTE_DEMAND: 1
+  HYPERSCALER_CAPEX: 0
+  SEMICONDUCTOR_WFE: 0
+  ADVANCED_PACKAGING: 0
+  HBM_MEMORY: 0
+  EDA_DESIGN_COMPLEXITY: 0
+  CLOUD_SOFTWARE_DEMAND: 2
+  DATA_CENTER_POWER: 0
+  LAUNCH_ECONOMICS: 0
+  SATELLITE_CONNECTIVITY: 0
+  GOVERNMENT_DEFENSE: 2
+  INTEREST_RATES: -1
+  CAPITAL_MARKETS: 1
+  CHINA_REVENUE: 0
+  TAIWAN_SUPPLY: 0
+  ACQUISITION_INTEGRATION: 0
+  AI_CLOUD_PRICING: 0
+  HEALTHCARE_DEMAND: 0
+  DRUG_PIPELINE: 0
+  REIMBURSEMENT_PRICING: 0
+  BIOPHARMA_MANUFACTURING_CAPACITY: 0
+  PHARMA_REGULATION: 0
+  PATENT_EXCLUSIVITY: 0
+  ELECTRIFICATION_GRID: 0
+  UTILITY_CAPEX: 0
+  INDUSTRIAL_RESHORING: 1
+  AEROSPACE_CYCLE: 0
+  CONSUMER_CREDIT: 0
+  CRYPTO_CYCLE: 0
+  FINTECH_REGULATION: 0
+  DIGITAL_AD_DEMAND: 0
+  SPACE_REGULATION: 0
+  ACCELERATOR_PRICE_COMPETITION: 0
+driver_vector_provenance: model_assumption
+driver_interpretation:
+  INDUSTRIAL_RESHORING:
+    scenario_mapping_exception:
+      status: approved_exception
+      reason_code: substitute_channel
+      rationale: Reshoring affects Palantir through commercial software/AIP deployment budgets rather than a distinct reported
+        segment; the live CLOUD_SOFTWARE_DEMAND mapping is the quantitative channel.
+      provenance: model_assumption
+      review_ref: IMMA-P18-MCG5-014-20261004
+      substitute_driver_ids:
+      - CLOUD_SOFTWARE_DEMAND
+failure_modes:
+- failure_id: PLTR-FM-01
+  name: U.S. government procurement/budget slowdown
+  common_cause_id: GOVERNMENT_DEFENSE_BUDGET_SLOWDOWN
+  severity: high
+- failure_id: PLTR-FM-02
+  name: Commercial AI deployment growth slows
+  common_cause_id: CLOUD_SOFTWARE_DEMAND_SLOWDOWN
+  severity: high
+- failure_id: PLTR-FM-03
+  name: AIP commercialization fails to sustain current expansion
+  common_cause_id: AI_MONETIZATION_FAILURE
+  severity: high
+- failure_id: PLTR-FM-04
+  name: TCV/RDV fails to convert because options are not exercised or contracts terminate
+  common_cause_id: CONTRACT_CONVERSION_FAILURE
+  severity: high
+- failure_id: PLTR-FM-05
+  name: Government-contract compliance/security issue impairs eligibility
+  common_cause_id: GOVERNMENT_CONTRACT_COMPLIANCE
+  severity: critical
+- failure_id: PLTR-FM-06
+  name: U.S. revenue concentration magnifies domestic demand shock
+  common_cause_id: GEOGRAPHIC_REVENUE_CONCENTRATION
+  severity: medium
+- failure_id: PLTR-FM-07
+  name: Stock-based compensation/dilution reaccelerates
+  common_cause_id: EQUITY_COMPENSATION_DILUTION
+  severity: medium
+failure_modes_provenance: model_assumption
+driver_taxonomy_version: 1.2.1
+taxonomy_gap: []
+taxonomy_gap_note: null
+driver_exposure_semantics:
+  scale:
+    '-2': strong negative
+    '-1': moderate negative
+    '0': neutral/not material
+    '1': moderate positive
+    '2': strong positive
+  provenance: normative_rule
+  direction_rule: Sign is company impact from a positive driver shock.
+changelog:
+- date: '2026-10-04'
+  change: 'Party18: add MC-G5-014 structured scenario-mapping exceptions only; driver exposure scores are unchanged.'

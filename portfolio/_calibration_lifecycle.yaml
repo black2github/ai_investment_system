@@ -55,8 +55,8 @@ calibrations:
 - ticker: ETN
   folder: etn
   archetype: mature_positive_margin
-  mc_file: mc_calibration_v1.0.2.yaml
-  mc_as_of: '2026-09-24'
+  mc_file: mc_calibration_v1.0.3.yaml
+  mc_as_of: '2026-10-04'
   rv_file: calibration_v1.0.yaml
   rv_as_of: '2026-09-24'
   base_period_anchor: '2026-06-30'
@@ -115,8 +115,8 @@ calibrations:
 - ticker: MSFT
   folder: msft
   archetype: mature_positive_margin
-  mc_file: mc_calibration_v1.0.1.yaml
-  mc_as_of: '2026-09-25'
+  mc_file: mc_calibration_v1.0.2.yaml
+  mc_as_of: '2026-10-04'
   rv_file: calibration_v1.0.yaml
   rv_as_of: '2026-09-24'
   base_period_anchor: '2026-06-30'
@@ -145,8 +145,8 @@ calibrations:
 - ticker: NET
   folder: net
   archetype: mature_positive_margin
-  mc_file: mc_calibration_v1.0.yaml
-  mc_as_of: '2026-09-24'
+  mc_file: mc_calibration_v1.0.1.yaml
+  mc_as_of: '2026-10-04'
   rv_file: calibration_v1.0.yaml
   rv_as_of: '2026-09-24'
   base_period_anchor: '2026-06-30'
@@ -175,8 +175,8 @@ calibrations:
 - ticker: PLTR
   folder: pltr
   archetype: mature_positive_margin
-  mc_file: mc_calibration_v1.0.yaml
-  mc_as_of: '2026-09-24'
+  mc_file: mc_calibration_v1.0.1.yaml
+  mc_as_of: '2026-10-04'
   rv_file: calibration_v1.0.yaml
   rv_as_of: '2026-09-24'
   base_period_anchor: '2026-06-30'

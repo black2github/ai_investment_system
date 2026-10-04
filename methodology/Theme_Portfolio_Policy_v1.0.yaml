@@ -12,11 +12,11 @@ binding_basis: revenue
 baseline:
   date: '2026-09-21'
   portfolio_snapshot_ref: portfolio/_portfolio.yaml machine_outputs.current_weights (цены 18.09.2026, состав 21.09.2026)
-  value: 0.542759
+  value: 0.536558
   provenance: derived_fact
   status: MATERIALIZED
   formula: sum_i(weight_i_2026_09_21 * revenue_share_i_AI_TOTAL)
-  materialized_by: integrator 2026-10-03
+  materialized_by: 'integrator 2026-10-03; пересчёт 2026-10-04 (партия 16: ThemeExposure IMMA для NBIS / CRWV / SPCX / META; прежнее значение 0.542759 с заглушкой NBIS = 1.0)'
   materialization_note: 'revenue shares: IMMA ThemeExposure для SPCX/NVDA/MSFT/META/ETN; для 10 остальных бумаг — хост-заглушки 100 % первичной
     темы (NBIS, CRWV → AI_CLOUD_COMPUTE; прочие вне AI_TOTAL); пересчитать при выпуске ThemeExposure IMMA'
 constraint:

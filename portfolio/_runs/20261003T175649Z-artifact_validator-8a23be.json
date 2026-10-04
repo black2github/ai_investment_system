@@ -1,0 +1,1321 @@
+{
+  "run_id": "20261003T175649Z-artifact_validator-8a23be",
+  "model": "artifact_validator",
+  "version": "1.10.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "workspace",
+    "workspace": "/data/workspace-invest",
+    "documents": {
+      "states.yaml": {
+        "schema_version": "1.0.5",
+        "version": "1.0",
+        "artifact": "company_states",
+        "as_of": "2026-10-03",
+        "ticker": "HPS.A",
+        "source_artifact": "HPS.A_candidate_v1.0.yaml",
+        "purpose": "Machine-verifiable company state axes for monitoring and later RV/MC calibration; Trigger != Decision.",
+        "semantics": {
+          "evidence_required": true,
+          "pending_verification_blocks_transition": true,
+          "trigger_not_decision": true,
+          "numeric_thresholds_provenance": "model_assumption",
+          "primary_only": true,
+          "existing_trigger_policy": "Confirmed transitions create Decision Request and Calibration Lifecycle CLR-2 review; no automatic trade."
+        },
+        "sources": {
+          "hps_q2_release": {
+            "source_class": "issuer_ir_release",
+            "url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "as_of": "2026-07-30",
+            "title": "HPS Q2 2026 financial-results press release",
+            "access_note": null
+          },
+          "hps_q2_report": {
+            "source_class": "issuer_ir_release",
+            "url": "https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf",
+            "as_of": "2026-07-30",
+            "title": "HPS Q2 2026 Report: MD&A + interim statements",
+            "access_note": null
+          },
+          "hps_aeg_close": {
+            "source_class": "issuer_ir_release",
+            "url": "https://asia.hammondpowersolutions.com/news/2026/june/hps-completes-acquisition-of-aeg-power-solutions",
+            "as_of": "2026-06-29",
+            "title": "HPS completes AEG Power Solutions acquisition",
+            "access_note": null
+          },
+          "hps_aeg_initial": {
+            "source_class": "issuer_ir_release",
+            "url": "https://americas.hammondpowersolutions.com/news/2026/february/hps-aeg-power-solutions-aquisition",
+            "as_of": "2026-02-17",
+            "title": "HPS agreement to acquire AEG Power Solutions",
+            "access_note": null
+          },
+          "hps_sedarplus": {
+            "source_class": "regulatory_filing",
+            "url": "https://www.sedarplus.ca/csa-party/relay.html?target=csa-party&url=https%3A%2F%2Fwww.sedarplus.ca%2Fcsa-party%2Fservice%2Fcreate.html%3FtargetAppCode%3Dcsa-party%26service%3DsearchDocuments",
+            "as_of": "2026-07-30",
+            "title": "SEDAR+ public document search",
+            "access_note": "SEDAR+ Generate URL links are sessionized; no stable direct Q2 document URL was independently verified. The exact issuer-hosted duplicate Q2 Report is hps_q2_report."
+          },
+          "hps_price": {
+            "source_class": "market_data_provider",
+            "url": "https://finance.yahoo.com/quote/HPS-A.TO/",
+            "as_of": "2026-10-02",
+            "title": "Yahoo Finance HPS-A.TO",
+            "access_note": null
+          }
+        },
+        "axes": {
+          "Demand_Backlog": {
+            "name": "Demand and Backlog",
+            "name_ru": "спрос и backlog",
+            "states": {
+              "B0": {
+                "name": "weak",
+                "criteria": "backlog YoY <0%"
+              },
+              "B1": {
+                "name": "normal",
+                "criteria": "backlog YoY >=0% and <30%"
+              },
+              "B2": {
+                "name": "strong",
+                "criteria": "backlog YoY >=30% and <75%"
+              },
+              "B3": {
+                "name": "very_strong_cooling",
+                "criteria": "backlog YoY >=75% AND sequential backlog change <0%"
+              },
+              "B4": {
+                "name": "very_strong_accelerating",
+                "criteria": "backlog YoY >=75% AND sequential backlog change >=0%"
+              }
+            },
+            "current": "B3",
+            "current_evidence": [
+              "Backlog +96.9% YoY, but -6.9% vs Q1 2026 and -3.1% vs Q4 2025."
+            ],
+            "source_refs": [
+              "hps_q2_release",
+              "hps_q2_report"
+            ],
+            "current_note": "Current state provenance: derived_fact.",
+            "evidence_type": "mixed",
+            "verification_rule": "Use cited primary facts; numeric state thresholds are model_assumption."
+          },
+          "Margin_Quality": {
+            "name": "Margin Quality",
+            "name_ru": "качество маржи",
+            "states": {
+              "M0": {
+                "name": "weak",
+                "criteria": "gross margin <25% OR adjusted EBITDA margin <10%"
+              },
+              "M1": {
+                "name": "normal",
+                "criteria": "gross margin >=25% and <30% AND EBITDA margin >=10%"
+              },
+              "M2": {
+                "name": "strong",
+                "criteria": "gross margin >=30% and <32% AND EBITDA margin >=14%"
+              },
+              "M3": {
+                "name": "high",
+                "criteria": "gross margin >=32% AND adjusted EBITDA margin >=16%"
+              }
+            },
+            "current": "M2",
+            "current_evidence": [
+              "Gross margin 31.5%; adjusted EBITDA C$53.247M / C$324.802M = 16.39%."
+            ],
+            "source_refs": [
+              "hps_q2_release"
+            ],
+            "current_note": "Current state provenance: derived_fact.",
+            "evidence_type": "mixed",
+            "verification_rule": "Use cited primary facts; numeric state thresholds are model_assumption."
+          },
+          "Cash_Conversion": {
+            "name": "Cash Conversion and Working Capital",
+            "name_ru": "денежная конверсия и оборотный капитал",
+            "states": {
+              "C0": {
+                "name": "healthy",
+                "criteria": "quarterly CFO >0 AND working capital/sales <15%"
+              },
+              "C1": {
+                "name": "stretched",
+                "criteria": "quarterly CFO <=0 OR working capital/sales >=15% and <20%"
+              },
+              "C2": {
+                "name": "stress",
+                "criteria": "quarterly CFO < -5% of sales OR working capital/sales >=20%"
+              },
+              "C3": {
+                "name": "recovered",
+                "criteria": "quarterly CFO >0 for 2 quarters AND working capital/sales <15%"
+              }
+            },
+            "current": "C1",
+            "current_evidence": [
+              "Q2 cash used in operations C$6.4M; working capital declined to 17.7% of sales."
+            ],
+            "source_refs": [
+              "hps_q2_release"
+            ],
+            "current_note": "Current state provenance: verified_fact.",
+            "evidence_type": "quantitative",
+            "verification_rule": "Use cited primary facts; numeric state thresholds are model_assumption."
+          },
+          "AEG_Integration": {
+            "name": "AEG Integration",
+            "name_ru": "интеграция AEG",
+            "states": {
+              "I0": {
+                "name": "pre_close",
+                "criteria": "AEG transaction not closed"
+              },
+              "I1": {
+                "name": "closed_not_consolidated",
+                "criteria": "transaction closed but no full-quarter AEG results yet"
+              },
+              "I2": {
+                "name": "integration_on_track",
+                "criteria": "AEG full-quarter revenue disclosed and combined adjusted EBITDA margin >=12%"
+              },
+              "I3": {
+                "name": "integration_strain",
+                "criteria": "combined adjusted EBITDA margin <10% OR integration costs >5% of quarterly sales for 2 quarters"
+              },
+              "I4": {
+                "name": "integrated_scale",
+                "criteria": "AEG included for >=4 quarters AND combined adjusted EBITDA margin >=15%"
+              }
+            },
+            "current": "I1",
+            "current_evidence": [
+              "AEG acquisition closed 2026-06-29 for about C$365M; Q2 excludes AEG revenue/costs; Q3 will include full quarter and associated debt."
+            ],
+            "source_refs": [
+              "hps_aeg_close",
+              "hps_q2_release"
+            ],
+            "current_note": "Current state provenance: verified_fact.",
+            "evidence_type": "quantitative",
+            "verification_rule": "Use cited primary facts; numeric state thresholds are model_assumption."
+          },
+          "US_DataCenter_Exposure": {
+            "name": "US/Data-Center Exposure",
+            "name_ru": "экспозиция на США и ЦОД",
+            "states": {
+              "D0": {
+                "name": "low",
+                "criteria": "US & Mexico sales YoY <10%"
+              },
+              "D1": {
+                "name": "normal",
+                "criteria": "growth >=10% and <30%"
+              },
+              "D2": {
+                "name": "strong",
+                "criteria": "growth >=30% and <60%"
+              },
+              "D3": {
+                "name": "very_strong",
+                "criteria": "growth >=60%"
+              }
+            },
+            "current": "D3",
+            "current_evidence": [
+              "US & Mexico sales +73.0% YoY; management cites data-centre shipments as main driver."
+            ],
+            "source_refs": [
+              "hps_q2_release",
+              "hps_q2_report"
+            ],
+            "current_note": "Current state provenance: verified_fact.",
+            "evidence_type": "quantitative",
+            "verification_rule": "Use cited primary facts; numeric state thresholds are model_assumption."
+          },
+          "FX_Tariff_Execution": {
+            "name": "FX and Tariff Execution",
+            "name_ru": "исполнение при FX/тарифах",
+            "states": {
+              "T0": {
+                "name": "unmanaged",
+                "criteria": "gross margin <28% while tariff/FX headwinds are cited"
+              },
+              "T1": {
+                "name": "absorbing",
+                "criteria": "gross margin 28-30% under tariff/FX headwinds"
+              },
+              "T2": {
+                "name": "managed",
+                "criteria": "gross margin >=30% while price actions offset tariff pressure"
+              },
+              "T3": {
+                "name": "durably_managed",
+                "criteria": "gross margin >=31% for 2 quarters while tariff pressure persists"
+              }
+            },
+            "current": "T2",
+            "current_evidence": [
+              "Gross margin 31.5%; company says pricing actions offset direct/indirect tariff input costs; USD/CAD Q2 rate weakened 0.4% YoY."
+            ],
+            "source_refs": [
+              "hps_q2_release",
+              "hps_q2_report"
+            ],
+            "current_note": "Current state provenance: verified_fact.",
+            "evidence_type": "quantitative",
+            "verification_rule": "Use cited primary facts; numeric state thresholds are model_assumption."
+          }
+        },
+        "changelog": [
+          {
+            "version": "1.0",
+            "date": "2026-10-03",
+            "change": "Initial Party 13 company model."
+          }
+        ]
+      },
+      "kpis.yaml": {
+        "schema_version": "1.0.5",
+        "version": "1.0",
+        "artifact": "critical_kpis",
+        "as_of": "2026-10-03",
+        "ticker": "HPS.A",
+        "max_critical_kpis": 10,
+        "source_artifact": "HPS.A_candidate_v1.0.yaml",
+        "zone_semantics": {
+          "thresholds_provenance": "model_assumption",
+          "green": "thesis-supportive / lower risk",
+          "yellow": "monitor / mixed",
+          "red": "thesis-risk / Decision Request"
+        },
+        "critical_kpis": [
+          {
+            "id": "HPSA-KPI-01",
+            "name": "Sales YoY growth",
+            "unit": "fraction",
+            "period": "quarterly",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_release",
+            "thresholds": {
+              "green": ">=0.30",
+              "yellow": ">=0.10 and <0.30",
+              "red": "<0.10"
+            },
+            "last_value": 0.447,
+            "observation_qualifier": "exact",
+            "last_date": "2026-06-27",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "provenance": "verified_fact",
+            "value_type": "actual",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN."
+          },
+          {
+            "id": "HPSA-KPI-02",
+            "name": "US & Mexico sales YoY growth",
+            "unit": "fraction",
+            "period": "quarterly",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_release",
+            "thresholds": {
+              "green": ">=0.40",
+              "yellow": ">=0.15 and <0.40",
+              "red": "<0.15"
+            },
+            "last_value": 0.73,
+            "observation_qualifier": "exact",
+            "last_date": "2026-06-27",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "provenance": "verified_fact",
+            "value_type": "actual",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN."
+          },
+          {
+            "id": "HPSA-KPI-03",
+            "name": "Backlog YoY growth",
+            "unit": "fraction",
+            "period": "quarterly",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_release",
+            "thresholds": {
+              "green": ">=0.50",
+              "yellow": ">=0.20 and <0.50",
+              "red": "<0.20"
+            },
+            "last_value": 0.969,
+            "observation_qualifier": "exact",
+            "last_date": "2026-06-27",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "provenance": "verified_fact",
+            "value_type": "actual",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN."
+          },
+          {
+            "id": "HPSA-KPI-04",
+            "name": "Backlog sequential change vs Q1",
+            "unit": "fraction",
+            "period": "quarterly",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_report",
+            "thresholds": {
+              "green": ">=0.00",
+              "yellow": ">=-0.10 and <0.00",
+              "red": "<-0.10"
+            },
+            "last_value": -0.069,
+            "observation_qualifier": "exact",
+            "last_date": "2026-06-27",
+            "source_url": "https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf",
+            "verified": true,
+            "provenance": "verified_fact",
+            "value_type": "actual",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN."
+          },
+          {
+            "id": "HPSA-KPI-05",
+            "name": "Gross margin",
+            "unit": "fraction",
+            "period": "quarterly",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_release",
+            "thresholds": {
+              "green": ">=0.31",
+              "yellow": ">=0.28 and <0.31",
+              "red": "<0.28"
+            },
+            "last_value": 0.315,
+            "observation_qualifier": "exact",
+            "last_date": "2026-06-27",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "provenance": "verified_fact",
+            "value_type": "actual",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN."
+          },
+          {
+            "id": "HPSA-KPI-06",
+            "name": "Adjusted EBITDA margin",
+            "unit": "fraction",
+            "period": "quarterly",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_release",
+            "thresholds": {
+              "green": ">=0.16",
+              "yellow": ">=0.12 and <0.16",
+              "red": "<0.12"
+            },
+            "last_value": 0.16393679841872894,
+            "observation_qualifier": "exact",
+            "last_date": "2026-06-27",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "provenance": "derived_fact",
+            "value_type": "actual",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.",
+            "formula": "53.247 / 324.802"
+          },
+          {
+            "id": "HPSA-KPI-07",
+            "name": "Cash generated/(used) by operations",
+            "unit": "CAD M",
+            "period": "quarterly",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_release",
+            "thresholds": {
+              "green": ">0",
+              "yellow": "<=0 and >-15",
+              "red": "<=-15"
+            },
+            "last_value": -6.4,
+            "observation_qualifier": "exact",
+            "last_date": "2026-06-27",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "provenance": "verified_fact",
+            "value_type": "actual",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN."
+          },
+          {
+            "id": "HPSA-KPI-08",
+            "name": "Working capital as share of sales",
+            "unit": "fraction",
+            "period": "quarterly",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_release",
+            "thresholds": {
+              "green": "<0.15",
+              "yellow": ">=0.15 and <0.20",
+              "red": ">=0.20"
+            },
+            "last_value": 0.177,
+            "observation_qualifier": "exact",
+            "last_date": "2026-06-27",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "provenance": "verified_fact",
+            "value_type": "actual",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN."
+          },
+          {
+            "id": "HPSA-KPI-09",
+            "name": "FY2026 capital spending guidance midpoint",
+            "unit": "CAD M",
+            "period": "annual_guidance",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_release",
+            "thresholds": {
+              "green": "<=40",
+              "yellow": ">40 and <=50",
+              "red": ">50"
+            },
+            "last_value": 37.5,
+            "observation_qualifier": "exact",
+            "last_date": "2026-06-27",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "provenance": "derived_fact",
+            "value_type": "company_guidance",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.",
+            "formula": "(35 + 40) / 2",
+            "target_date": "2026-12-31"
+          },
+          {
+            "id": "HPSA-KPI-10",
+            "name": "AEG quarterly revenue contribution",
+            "unit": "CAD M",
+            "period": "quarterly",
+            "source_class": "issuer_ir_release",
+            "source_ref": "hps_q2_report",
+            "thresholds": {
+              "green": ">=70",
+              "yellow": ">=40 and <70",
+              "red": "<40"
+            },
+            "last_value": null,
+            "observation_qualifier": "pending_verification",
+            "last_date": "2026-06-27",
+            "source_url": "https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf",
+            "verified": true,
+            "provenance": "verified_fact",
+            "value_type": "actual",
+            "verified_note": "Primary-source fact/formula prechecked for Party 13; host Dozor re-verification run_id is PENDING_HOST_RUN.",
+            "verification_status": "pending_verification"
+          }
+        ],
+        "changelog": [
+          {
+            "version": "1.0",
+            "date": "2026-10-03",
+            "change": "Initial Party 13 KPI set."
+          }
+        ]
+      },
+      "triggers.yaml": {
+        "schema_version": "1.0.5",
+        "profile": "full_model",
+        "meta": {
+          "ticker": "HPS.A",
+          "company": "Hammond Power Solutions Inc.",
+          "exchange": "TSX",
+          "yahoo_symbol": "HPS-A.TO",
+          "registry_updated": "2026-10-03",
+          "source_artifact": "HPS.A_candidate_v1.0.yaml",
+          "price_source": "https://finance.yahoo.com/quote/HPS-A.TO/",
+          "price_at_registry": 232.89,
+          "position": null,
+          "currency": "CAD",
+          "strategy_date": "2026-09-17",
+          "strategy_source": "portfolio/_ideas.yaml",
+          "status_in_basket": "idea"
+        },
+        "route": {
+          "steps": [
+            {
+              "id": "model",
+              "kind": "model",
+              "name": "Company model accepted",
+              "ref": "states.yaml"
+            },
+            {
+              "id": "dozor",
+              "kind": "verification",
+              "name": "Dozor KPI/source verification",
+              "ref": "PENDING_HOST_RUN"
+            },
+            {
+              "id": "calibration",
+              "kind": "calibration",
+              "name": "RV + MC calibration after model acceptance",
+              "ref": null
+            }
+          ]
+        },
+        "rules": {
+          "evidence_required": true,
+          "pending_verification_blocks_transition": true,
+          "trigger_not_decision": true,
+          "all_numeric_thresholds_provenance": "model_assumption"
+        },
+        "triggers": [
+          {
+            "id": "HPSA-E-01",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "Demand_Backlog",
+            "transition": {
+              "from": "B3",
+              "to": "B4"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-03",
+              "HPSA-KPI-04"
+            ],
+            "condition": "backlog YoY remains >=75% AND sequential backlog change becomes >=0%",
+            "condition_provenance": "model_assumption",
+            "period": "one verified report",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-E-02",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "Demand_Backlog",
+            "transition": {
+              "from": "B3",
+              "to": "B2"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-03",
+              "HPSA-KPI-04"
+            ],
+            "condition": "backlog YoY <75% OR sequential decline worse than 10% for 2 quarters",
+            "condition_provenance": "model_assumption",
+            "period": "2 quarters",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-E-03",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "Margin_Quality",
+            "transition": {
+              "from": "M2",
+              "to": "M3"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-05",
+              "HPSA-KPI-06"
+            ],
+            "condition": "gross margin >=32% AND adjusted EBITDA margin >=16% for 2 quarters",
+            "condition_provenance": "model_assumption",
+            "period": "2 quarters",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-E-04",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "Margin_Quality",
+            "transition": {
+              "from": "M2",
+              "to": "M1"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-05",
+              "HPSA-KPI-06"
+            ],
+            "condition": "gross margin <30% OR adjusted EBITDA margin <14% for 2 quarters",
+            "condition_provenance": "model_assumption",
+            "period": "2 quarters",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-E-05",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "Cash_Conversion",
+            "transition": {
+              "from": "C1",
+              "to": "C3"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-07",
+              "HPSA-KPI-08"
+            ],
+            "condition": "quarterly CFO >0 for 2 quarters AND working capital/sales <15%",
+            "condition_provenance": "model_assumption",
+            "period": "2 quarters",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-E-06",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "Cash_Conversion",
+            "transition": {
+              "from": "C1",
+              "to": "C2"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-07",
+              "HPSA-KPI-08"
+            ],
+            "condition": "quarterly CFO <= -5% of sales OR working capital/sales >=20%",
+            "condition_provenance": "model_assumption",
+            "period": "one verified report",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-E-07",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "AEG_Integration",
+            "transition": {
+              "from": "I1",
+              "to": "I2"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-10",
+              "HPSA-KPI-06"
+            ],
+            "condition": "AEG full-quarter revenue is disclosed AND combined adjusted EBITDA margin >=12%",
+            "condition_provenance": "model_assumption",
+            "period": "one full consolidated quarter",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-E-08",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "AEG_Integration",
+            "transition": {
+              "from": "I1",
+              "to": "I3"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-10",
+              "HPSA-KPI-06"
+            ],
+            "condition": "combined adjusted EBITDA margin <10% for 2 quarters OR disclosed integration costs >5% of sales for 2 quarters",
+            "condition_provenance": "model_assumption",
+            "period": "2 quarters",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-E-09",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "US_DataCenter_Exposure",
+            "transition": {
+              "from": "D3",
+              "to": "D2"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-02",
+              "HPSA-KPI-03"
+            ],
+            "condition": "US & Mexico sales growth <60% AND backlog YoY <50% for 2 quarters",
+            "condition_provenance": "model_assumption",
+            "period": "2 quarters",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-E-10",
+            "class": "event",
+            "step": "state_transition",
+            "axis": "FX_Tariff_Execution",
+            "transition": {
+              "from": "T2",
+              "to": "T3"
+            },
+            "level": "E2",
+            "kpis": [
+              "HPSA-KPI-05"
+            ],
+            "condition": "gross margin >=31% for 2 quarters while tariff pressure remains disclosed",
+            "condition_provenance": "model_assumption",
+            "period": "2 quarters",
+            "source": "primary company filing/release",
+            "action": "Record transition; issue Decision Request; calibration review: see Calibration_Lifecycle_Rules v1.0 CLR-2.",
+            "automation": "Dozor report-check after each earnings release",
+            "status": "planned",
+            "fired": []
+          },
+          {
+            "id": "HPSA-LEGACY-01",
+            "class": "event",
+            "step": "legacy_owner_registry",
+            "axis": null,
+            "level": null,
+            "kpis": [],
+            "condition": "backlog + orders >=20% YoY AND valuation <=20x forward earnings",
+            "condition_provenance": null,
+            "period": "owner registry condition",
+            "source": "portfolio/_ideas.yaml 2026-09-17",
+            "action": "Owner review only; this is historical owner_judgment and is not a model state transition.",
+            "automation": "weekly idea review",
+            "status": "planned",
+            "fired": [],
+            "note": "Preserved from owner _ideas.yaml; not normalized into model-assumption thresholds."
+          }
+        ],
+        "automations_note": "Dozor checks state-transition conditions after primary earnings/filing updates; Trigger != Decision."
+      },
+      "mpc_inputs.yaml": {
+        "schema_version": "1.0.5",
+        "version": "1.0",
+        "ticker": "HPS.A",
+        "artifact": "mpc_inputs",
+        "as_of": "2026-10-03",
+        "source_artifact": "HPS.A_candidate_v1.0.yaml",
+        "driver_exposure_vector": {
+          "AI_COMPUTE_DEMAND": 1,
+          "HYPERSCALER_CAPEX": 2,
+          "SEMICONDUCTOR_WFE": 0,
+          "ADVANCED_PACKAGING": 0,
+          "HBM_MEMORY": 0,
+          "EDA_DESIGN_COMPLEXITY": 0,
+          "CLOUD_SOFTWARE_DEMAND": 0,
+          "DATA_CENTER_POWER": 2,
+          "LAUNCH_ECONOMICS": 0,
+          "SATELLITE_CONNECTIVITY": 0,
+          "GOVERNMENT_DEFENSE": 0,
+          "INTEREST_RATES": -1,
+          "CAPITAL_MARKETS": -1,
+          "CHINA_REVENUE": 0,
+          "TAIWAN_SUPPLY": -1,
+          "ACQUISITION_INTEGRATION": 2,
+          "AI_CLOUD_PRICING": 0,
+          "HEALTHCARE_DEMAND": 0,
+          "DRUG_PIPELINE": 0,
+          "REIMBURSEMENT_PRICING": 0,
+          "BIOPHARMA_MANUFACTURING_CAPACITY": 0,
+          "PHARMA_REGULATION": 0,
+          "PATENT_EXCLUSIVITY": 0,
+          "ELECTRIFICATION_GRID": 1,
+          "UTILITY_CAPEX": 1,
+          "INDUSTRIAL_RESHORING": 1,
+          "AEROSPACE_CYCLE": 0,
+          "CONSUMER_CREDIT": 0,
+          "CRYPTO_CYCLE": 0,
+          "FINTECH_REGULATION": 0,
+          "DIGITAL_AD_DEMAND": 0,
+          "SPACE_REGULATION": 0,
+          "ACCELERATOR_PRICE_COMPETITION": 0
+        },
+        "driver_vector_provenance": "model_assumption",
+        "driver_interpretation": {
+          "HYPERSCALER_CAPEX": {
+            "directionality": "positive_dependency",
+            "rationale": "Data-centre buildout directly supports transformer/power-quality demand; taxonomy link is dependency_not_share_binding."
+          },
+          "DATA_CENTER_POWER": {
+            "directionality": "positive_dependency",
+            "rationale": "Power-density/infrastructure investment expands demand; not a business-share driver."
+          },
+          "ACQUISITION_INTEGRATION": {
+            "directionality": "positive_if_successful",
+            "rationale": "AEG integration is material to future mix and margin; integration failure remains a failure mode."
+          },
+          "TAIWAN_SUPPLY": {
+            "directionality": "negative",
+            "rationale": "Electronics/power-conversion components can face supply disruption; magnitude kept -1 because HPS transformer manufacturing is geographically diversified."
+          }
+        },
+        "failure_modes": [
+          {
+            "failure_id": "HPSA-FM-01",
+            "common_cause_id": "DATA_CENTER_CAPEX_SLOWDOWN",
+            "severity": "high",
+            "name": "Large data-centre project orders/backlog decelerate",
+            "axis_refs": [
+              "Demand_Backlog",
+              "US_DataCenter_Exposure"
+            ],
+            "rationale": "Model-assumption failure mode for joint/common-cause monitoring."
+          },
+          {
+            "failure_id": "HPSA-FM-02",
+            "common_cause_id": "ACQUISITION_INTEGRATION_FAILURE",
+            "severity": "critical",
+            "name": "AEG integration, leverage or synergy realization fails",
+            "axis_refs": [
+              "AEG_Integration",
+              "Margin_Quality"
+            ],
+            "rationale": "Model-assumption failure mode for joint/common-cause monitoring."
+          },
+          {
+            "failure_id": "HPSA-FM-03",
+            "common_cause_id": "WORKING_CAPITAL_STRESS",
+            "severity": "high",
+            "name": "Receivables/inventory consume cash despite EBITDA growth",
+            "axis_refs": [
+              "Cash_Conversion"
+            ],
+            "rationale": "Model-assumption failure mode for joint/common-cause monitoring."
+          },
+          {
+            "failure_id": "HPSA-FM-04",
+            "common_cause_id": "TRADE_TARIFF_INPUT_COST",
+            "severity": "high",
+            "name": "Tariffs/raw-material inflation outpace price realization",
+            "axis_refs": [
+              "FX_Tariff_Execution",
+              "Margin_Quality"
+            ],
+            "rationale": "Model-assumption failure mode for joint/common-cause monitoring."
+          },
+          {
+            "failure_id": "HPSA-FM-05",
+            "common_cause_id": "FX_TRANSLATION_VOLATILITY",
+            "severity": "medium",
+            "name": "CAD/USD and broader post-AEG currency moves impair reported margin/cash conversion",
+            "axis_refs": [
+              "FX_Tariff_Execution"
+            ],
+            "rationale": "Model-assumption failure mode for joint/common-cause monitoring."
+          },
+          {
+            "failure_id": "HPSA-FM-06",
+            "common_cause_id": "ELECTRIFICATION_CYCLE_SLOWDOWN",
+            "severity": "high",
+            "name": "Grid/industrial electrification spending weakens",
+            "axis_refs": [
+              "Demand_Backlog"
+            ],
+            "rationale": "Model-assumption failure mode for joint/common-cause monitoring."
+          }
+        ],
+        "failure_modes_provenance": "model_assumption",
+        "driver_taxonomy_version": "1.2.1",
+        "taxonomy_gap": [],
+        "taxonomy_gap_note": null,
+        "driver_exposure_semantics": {
+          "scale": {
+            "-2": "strong negative",
+            "-1": "moderate negative",
+            "0": "neutral/not material",
+            "1": "moderate positive",
+            "2": "strong positive"
+          },
+          "provenance": "normative_rule",
+          "direction_rule": "Sign is company impact from a positive driver shock."
+        },
+        "changelog": [
+          {
+            "date": "2026-10-03",
+            "change": "Initial Party 13 MPC input vector on taxonomy v1.2.1."
+          }
+        ]
+      },
+      "state.json": {
+        "schema_version": "1.0.5",
+        "updated": "2026-10-03T19:30:00+03:00",
+        "price": {
+          "last": 296.97,
+          "last_at": "2026-10-02",
+          "zone": null,
+          "source_url": "https://finance.yahoo.com/quote/HPS-A.TO/",
+          "provenance": "verified_fact",
+          "symbol": "HPS-A.TO",
+          "note": "Market observation only; not a valuation/calibration anchor."
+        },
+        "fired": [],
+        "events_reported": [],
+        "pending_verification": [
+          {
+            "kind": "dozor_full_model_verification",
+            "run_id": "PENDING_HOST_RUN"
+          }
+        ],
+        "notes": [
+          "Party 13 initial full model. RV/MC calibration intentionally deferred until host Dozor/folder acceptance."
+        ],
+        "route": {
+          "current": "dozor_verification",
+          "done_steps": [
+            "model"
+          ],
+          "changed_at": "2026-10-03",
+          "note": "After 100% source/KPI verification, route proceeds to separate RV+MC calibration order."
+        },
+        "info_log": [
+          {
+            "timestamp": "2026-10-03T19:30:00+03:00",
+            "kind": "model_created",
+            "summary": "Party 13 company model generated; Trigger != Decision."
+          }
+        ],
+        "scenario_state": {
+          "Demand_Backlog": {
+            "state": "B3",
+            "since": "2026-06-27",
+            "evidence": [
+              "Backlog +96.9% YoY, but -6.9% vs Q1 2026 and -3.1% vs Q4 2025."
+            ],
+            "source": "hps_q2_release,hps_q2_report",
+            "verified": true,
+            "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
+            "evidence_type": "mixed",
+            "verification_run_id": null
+          },
+          "Margin_Quality": {
+            "state": "M2",
+            "since": "2026-06-27",
+            "evidence": [
+              "Gross margin 31.5%; adjusted EBITDA C$53.247M / C$324.802M = 16.39%."
+            ],
+            "source": "hps_q2_release",
+            "verified": true,
+            "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
+            "evidence_type": "mixed",
+            "verification_run_id": null
+          },
+          "Cash_Conversion": {
+            "state": "C1",
+            "since": "2026-06-27",
+            "evidence": [
+              "Q2 cash used in operations C$6.4M; working capital declined to 17.7% of sales."
+            ],
+            "source": "hps_q2_release",
+            "verified": true,
+            "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
+            "evidence_type": "quantitative",
+            "verification_run_id": null
+          },
+          "AEG_Integration": {
+            "state": "I1",
+            "since": "2026-06-27",
+            "evidence": [
+              "AEG acquisition closed 2026-06-29 for about C$365M; Q2 excludes AEG revenue/costs; Q3 will include full quarter and associated debt."
+            ],
+            "source": "hps_aeg_close,hps_q2_release",
+            "verified": true,
+            "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
+            "evidence_type": "quantitative",
+            "verification_run_id": null
+          },
+          "US_DataCenter_Exposure": {
+            "state": "D3",
+            "since": "2026-06-27",
+            "evidence": [
+              "US & Mexico sales +73.0% YoY; management cites data-centre shipments as main driver."
+            ],
+            "source": "hps_q2_release,hps_q2_report",
+            "verified": true,
+            "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
+            "evidence_type": "quantitative",
+            "verification_run_id": null
+          },
+          "FX_Tariff_Execution": {
+            "state": "T2",
+            "since": "2026-06-27",
+            "evidence": [
+              "Gross margin 31.5%; company says pricing actions offset direct/indirect tariff input costs; USD/CAD Q2 rate weakened 0.4% YoY."
+            ],
+            "source": "hps_q2_release,hps_q2_report",
+            "verified": true,
+            "verified_note": "Primary-source evidence supplied/checked for Party13; host immutable verification run_id pending.",
+            "evidence_type": "quantitative",
+            "verification_run_id": null
+          }
+        },
+        "state_transitions": [],
+        "kpi_observations": [
+          {
+            "kpi_id": "HPSA-KPI-01",
+            "name": "Sales YoY growth",
+            "period_end": "2026-06-27",
+            "value": 0.447,
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "actual",
+            "provenance": "verified_fact",
+            "verification_run_id": null
+          },
+          {
+            "kpi_id": "HPSA-KPI-02",
+            "name": "US & Mexico sales YoY growth",
+            "period_end": "2026-06-27",
+            "value": 0.73,
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "actual",
+            "provenance": "verified_fact",
+            "verification_run_id": null
+          },
+          {
+            "kpi_id": "HPSA-KPI-03",
+            "name": "Backlog YoY growth",
+            "period_end": "2026-06-27",
+            "value": 0.969,
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "actual",
+            "provenance": "verified_fact",
+            "verification_run_id": null
+          },
+          {
+            "kpi_id": "HPSA-KPI-04",
+            "name": "Backlog sequential change vs Q1",
+            "period_end": "2026-06-27",
+            "value": -0.069,
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "source_url": "https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "actual",
+            "provenance": "verified_fact",
+            "verification_run_id": null
+          },
+          {
+            "kpi_id": "HPSA-KPI-05",
+            "name": "Gross margin",
+            "period_end": "2026-06-27",
+            "value": 0.315,
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "actual",
+            "provenance": "verified_fact",
+            "verification_run_id": null
+          },
+          {
+            "kpi_id": "HPSA-KPI-06",
+            "name": "Adjusted EBITDA margin",
+            "period_end": "2026-06-27",
+            "value": 0.16393679841872894,
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "actual",
+            "provenance": "derived_fact",
+            "verification_run_id": null
+          },
+          {
+            "kpi_id": "HPSA-KPI-07",
+            "name": "Cash generated/(used) by operations",
+            "period_end": "2026-06-27",
+            "value": -6.4,
+            "observation_qualifier": "exact",
+            "unit": "CAD M",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "actual",
+            "provenance": "verified_fact",
+            "verification_run_id": null
+          },
+          {
+            "kpi_id": "HPSA-KPI-08",
+            "name": "Working capital as share of sales",
+            "period_end": "2026-06-27",
+            "value": 0.177,
+            "observation_qualifier": "exact",
+            "unit": "fraction",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "actual",
+            "provenance": "verified_fact",
+            "verification_run_id": null
+          },
+          {
+            "kpi_id": "HPSA-KPI-09",
+            "name": "FY2026 capital spending guidance midpoint",
+            "period_end": "2026-06-27",
+            "value": 37.5,
+            "observation_qualifier": "exact",
+            "unit": "CAD M",
+            "source_url": "https://emea.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/Q2-2026-Financial-Results-Press-Release---073026.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "company_guidance",
+            "provenance": "derived_fact",
+            "verification_run_id": null
+          },
+          {
+            "kpi_id": "HPSA-KPI-10",
+            "name": "AEG quarterly revenue contribution",
+            "period_end": "2026-06-27",
+            "value": null,
+            "observation_qualifier": "pending_verification",
+            "unit": "CAD M",
+            "source_url": "https://americas.hammondpowersolutions.com/-/media/Project/HPS/shared/Investor-Relations/2026-YEAR-ITEMS/Q2-2026/2026-HPS-Q2-Report_FINAL.pdf",
+            "verified": true,
+            "verified_by": "Party13 primary-source precheck; host Dozor recheck pending",
+            "value_type": "actual",
+            "provenance": "verified_fact",
+            "verification_run_id": null
+          }
+        ],
+        "calc_runs": []
+      }
+    }
+  },
+  "outputs": {
+    "model_version": "1.10.0",
+    "schema_version": "1.0.5",
+    "mode": "workspace",
+    "workspace": "/data/workspace-invest",
+    "folders": {
+      "<documents>": {
+        "profile": "full_model",
+        "files": {
+          "states.yaml": {
+            "schema_errors": []
+          },
+          "kpis.yaml": {
+            "schema_errors": []
+          },
+          "triggers.yaml": {
+            "schema_errors": []
+          },
+          "mpc_inputs.yaml": {
+            "schema_errors": []
+          },
+          "state.json": {
+            "schema_errors": []
+          }
+        },
+        "integrity": [],
+        "schema_errors": 0,
+        "integrity_errors": 0,
+        "integrity_warnings": 0,
+        "pass": true
+      }
+    },
+    "summary": {
+      "folders": 1,
+      "pass": 1,
+      "fail": 0,
+      "failed": []
+    },
+    "rules": {
+      "implemented": [
+        "ART-REF-001",
+        "ART-REF-002",
+        "ART-REF-003",
+        "ART-REF-004",
+        "ART-REF-005",
+        "ART-REF-007",
+        "ART-REF-008",
+        "ART-REF-009",
+        "ART-REF-010",
+        "ART-REF-011",
+        "ART-REF-012",
+        "ART-REF-014",
+        "ART-REF-015",
+        "ART-REF-016",
+        "ART-REF-017",
+        "ART-REF-018",
+        "ART-REF-019",
+        "ART-REF-020",
+        "ART-REF-021",
+        "ART-REF-022",
+        "ART-REF-023",
+        "ART-REF-024",
+        "ART-REF-030",
+        "ART-REF-031",
+        "CAND-REF-001",
+        "CAND-REF-002",
+        "CAND-REF-003",
+        "CAND-REF-004",
+        "CAND-REF-005",
+        "CAND-REF-006",
+        "CAND-REF-007",
+        "CAND-REF-008",
+        "CAND-REF-009",
+        "CAND-REF-010",
+        "CAND-REF-012",
+        "CAND-REF-013",
+        "CAND-REF-014",
+        "CAND-REF-015",
+        "CAND-REF-016",
+        "CAND-REF-017"
+      ],
+      "partial_or_not_implemented": {
+        "ART-REF-005": "класс источника проверяется по enum схемы; иерархия/допустимость по типу факта — Source Policy v1.0 (партия 2)",
+        "ART-REF-006": "provenance проверяется у KPI/наблюдений/вектора драйверов (обязательные поля схемы); «каждое материальное число» в свободных полях не трассируется",
+        "ART-REF-013": "авторитет присвоения ID — свойство интегратора (процесс), статически не проверяется; проверяется только уникальность и шаблон <TK>-...",
+        "ART-REF-023": "качественные оси: проверяется наличие source/evidence при evidence_type=qualitative_primary_source; декларация бинарной деривации — semantic review (IMA-08)",
+        "CAND-REF-011": "как ART-REF-006"
+      }
+    },
+    "decision": "none"
+  },
+  "elapsed_ms": 1322.3,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}

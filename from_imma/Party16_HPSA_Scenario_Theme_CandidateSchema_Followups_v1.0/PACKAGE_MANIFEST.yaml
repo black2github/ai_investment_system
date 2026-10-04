@@ -1,0 +1,34 @@
+package: IMMA_Party16_HPSA_Scenario_Theme_CandidateSchema_Followups
+version: '1.0'
+created: '2026-10-04'
+files:
+- name: CRWV_theme_exposure_v1.0.yaml
+  sha256: 3a6b6dad334ee8e43f0781787f0db47c69505f3bf687fc33f9e879dd215f4664
+- name: Company_Candidate_Schema_v1.0.2.yaml
+  sha256: 32113a56f22f8cb2a50018a8d2db47cfd7e2c8686c83e0940531b361d76c476c
+- name: Company_Candidate_Schema_v1.0.2_Patch_Notes.md
+  sha256: 58f3e4886c0c28c1a7975c283ad80600111cf51cd3cb183513309f631ec45ec7
+- name: Conditional_MC_vNext_Section12_ZeroBand_Patch_Note.md
+  sha256: 23b2c1138eb271f1cbda8e47f0540f60266ab90e94dcd098a5d3e6210b63d1ec
+- name: HPSA_Scenario_Mapping_Decision_v1.0.md
+  sha256: 5dac2d9832cadd8fb72345f1791f6c9d15536f80499dace8d5ac69889e197c22
+- name: HPSA_mc_calibration_v1.0.1.patch_notes.md
+  sha256: 24b29b78c33f2d3a5a0f0d406f7bc28d9b1f198ac73a0341d77bdf9041581654
+- name: HPSA_mc_calibration_v1.0.1.yaml
+  sha256: ed1ae4f6fa1fb74f3a7c8dd29d256c462606c12d5373f0ac420855fffef1666e
+- name: HPSA_mpc_inputs_v1.0.1.patch_notes.md
+  sha256: 7ef07b8bc8714f7aa0dcba95053f6354f70f187aca14379eff082522d2e2c9bd
+- name: HPSA_mpc_inputs_v1.0.1.yaml
+  sha256: ba03294736d70cc3fe21bddeb2e5add6e7f30703ee1bccd6034a12970be967ce
+- name: LOCAL_VALIDATION_REPORT_v1.0.md
+  sha256: fc6b5d477c0bad96def64d447da1e442f35a6ab324d179e4ea266553a2fc6148
+- name: META_theme_exposure_v1.0.yaml
+  sha256: 2670743ecf36c021f160125c7a407661dcbfb47d4a5208eb6dbfad3408a48598
+- name: NBIS_theme_exposure_v1.0.yaml
+  sha256: 2580c83846c6a858227d7ab00e5bea7985dcf4b7bf9a3a05bbf0f327b8ab3777
+- name: PACKAGE_README.md
+  sha256: cf33c4dfe6950c5092fef831e6ebe93aca118d37a5012c6073590898a6bda9c7
+- name: Portfolio_Optimizer_v1.1_Section2_ES5_Hurdle_Patch_Note.md
+  sha256: 562649520e32d1f8d88a7a624c29be72bc11f10e8fd74e9b074c0692f0c9d25c
+- name: SPCX_theme_exposure_v1.0.yaml
+  sha256: 4d67bb92e2aa5044134e9e5c9050c00f369ae3a5b5e9100440eb6d211728c306

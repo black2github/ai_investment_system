@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T19:50:00Z",
+  "updated": "2026-10-10T00:30:00Z",
   "source": "https://chatgpt.com/share/6aabd184-f904-83ed-bc0e-2ebd7172c89b",
   "price": {
     "symbol": "NET",
@@ -110,6 +110,11 @@
       "timestamp": "2026-09-24T19:50:00Z",
       "kind": "model_risk",
       "summary": "IMMA (share 6ab57a50) подтвердила: отрицательный коридор CAGR 5Y (−32…−0.4 %, медиана −16.4 %, run …-a8783a) — осознанный вывод калибровки v1.0, не пропущенный параметр; RV model_fragile (implied 66.9 %). Калибровку не менять; перекалибровка только при конкретном механизме (FCF-маржа, монетизация Workers/AI, долгосрочный рост). Decision Request DR-2026-09-24-02 владельцу с флагом model_fragile / valuation_disconnect."
+    },
+    {
+      "timestamp": "2026-10-10T00:30:00Z",
+      "kind": "calc",
+      "summary": "Интеграция mc_calibration_v1.0.1.yaml (партия 18, MC-G5-014): нормативный прогон 20261009T215855Z-company_mc-b7d3ef — действующий норматив для портфельного слоя"
     }
   ],
   "scenario_state": {
@@ -349,6 +354,48 @@
         "median": 0.19828425625810425,
         "q05": 0.09671440011540865,
         "q95": 0.35189995611819846,
+        "paths_share": 1.0
+      }
+    },
+    {
+      "run_id": "20261009T215855Z-company_mc-b7d3ef",
+      "model": "company_mc",
+      "version": "2.5.0",
+      "timestamp": "20261009T215855",
+      "spec": "Company_Conditional_Monte_Carlo_Specification_v1.1.3 (Joint_Simulation_Layer_Schema v1.1 / Rules v1.1.3; company_mc 2.5.0)",
+      "calibration": "mc_calibration_v1.0.1.yaml",
+      "purpose": "нормативный прогон NET mc_calibration_v1.0.1.yaml (партия 18: mapping INTEREST_RATES / CAPITAL_MARKETS на мультипликатор Y5 для MC-G5-014; центры неизменны; валидатор calibration pass, σ MC-G5-013 перемерена)",
+      "equity_value_0_b": 115.6,
+      "paths": 500000,
+      "seed": 20260920,
+      "summary": {
+        "median_CAGR_3Y": -0.3345,
+        "median_CAGR_5Y": -0.1641,
+        "median_CAGR_8Y": -0.0554,
+        "CAGR_5Y_q05_q95": [
+          -0.32,
+          -0.001
+        ],
+        "P_2x_5Y": 0.0015,
+        "P_loss_gt_30pct_5Y": 0.8354,
+        "P_loss_gt_50pct_5Y": 0.6403,
+        "ES5": -0.8887,
+        "median_equity_value_5Y_b": 47.18,
+        "RV_Growth_Gap": 0.4549,
+        "Price_Expectation_Gap": 4.0363,
+        "convergence_stable": true,
+        "robustness_pass": true,
+        "robustness_shares": [
+          1.0,
+          1.0
+        ]
+      },
+      "paths_file": "portfolio/_runs/20261009T215855Z-company_mc-b7d3ef-paths.npz",
+      "valuation_crossover": "parity_gated_linear_blend_v1",
+      "basis_parity_margin_Y5": {
+        "median": 0.19790598089907552,
+        "q05": 0.09571139147823642,
+        "q95": 0.35727786121201766,
         "paths_share": 1.0
       }
     }

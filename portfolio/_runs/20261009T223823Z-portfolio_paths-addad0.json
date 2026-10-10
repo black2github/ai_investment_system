@@ -1,0 +1,94 @@
+{
+  "run_id": "20261009T223823Z-portfolio_paths-addad0",
+  "model": "portfolio_paths",
+  "version": "1.4.0",
+  "seed": 0,
+  "inputs": {
+    "mode": "mixture_export",
+    "scenarios": [
+      {
+        "id": "BASE",
+        "paths_files": {
+          "PLTR": "/data/workspace-invest/portfolio/_runs/20261009T220100Z-company_mc-7dda6e-paths.npz",
+          "NET": "/data/workspace-invest/portfolio/_runs/20261009T215855Z-company_mc-b7d3ef-paths.npz",
+          "MSFT": "/data/workspace-invest/portfolio/_runs/20261009T215606Z-company_mc-bd34f8-paths.npz",
+          "ETN": "/data/workspace-invest/portfolio/_runs/20261009T215315Z-company_mc-2c5b1f-paths.npz"
+        }
+      },
+      {
+        "id": "TAIWAN_SEIZURE",
+        "probability": 0.1,
+        "paths_files": {
+          "PLTR": "/data/workspace-invest/portfolio/_runs/20261009T220643Z-company_mc-d773fd-paths.npz",
+          "NET": "/data/workspace-invest/portfolio/_runs/20261009T220546Z-company_mc-8362c6-paths.npz",
+          "MSFT": "/data/workspace-invest/portfolio/_runs/20261009T220425Z-company_mc-1d1c6f-paths.npz",
+          "ETN": "/data/workspace-invest/portfolio/_runs/20261009T220315Z-company_mc-e17e10-paths.npz"
+        }
+      },
+      {
+        "id": "CHIP_COLD_WAR",
+        "probability": 0.07,
+        "paths_files": {
+          "PLTR": "/data/workspace-invest/portfolio/_runs/20261009T221103Z-company_mc-210a1f-paths.npz",
+          "NET": "/data/workspace-invest/portfolio/_runs/20261009T221006Z-company_mc-9b8345-paths.npz",
+          "MSFT": "/data/workspace-invest/portfolio/_runs/20261009T220849Z-company_mc-6a9f03-paths.npz",
+          "ETN": "/data/workspace-invest/portfolio/_runs/20261009T220743Z-company_mc-f073ed-paths.npz"
+        }
+      },
+      {
+        "id": "TAIWAN_QUARANTINE",
+        "probability": 0.175,
+        "paths_files": {
+          "PLTR": "/data/workspace-invest/portfolio/_runs/20261009T221521Z-company_mc-3ebb0c-paths.npz",
+          "NET": "/data/workspace-invest/portfolio/_runs/20261009T221422Z-company_mc-bbf4f4-paths.npz",
+          "MSFT": "/data/workspace-invest/portfolio/_runs/20261009T221305Z-company_mc-f70e89-paths.npz",
+          "ETN": "/data/workspace-invest/portfolio/_runs/20261009T221201Z-company_mc-95e4af-paths.npz"
+        }
+      }
+    ],
+    "out_dir": "/data/workspace-invest/portfolio/_runs",
+    "tag": "mix-p10-p07-p175"
+  },
+  "outputs": {
+    "model_version": "1.4.0",
+    "mode": "mixture_export",
+    "spec": "Scenario_Engine_Specification_v1.0",
+    "paths": 500000,
+    "probabilities": {
+      "TAIWAN_SEIZURE": 0.1,
+      "CHIP_COLD_WAR": 0.07,
+      "TAIWAN_QUARANTINE": 0.175,
+      "BASE": 0.655
+    },
+    "ranges": {
+      "BASE": [
+        0,
+        327500
+      ],
+      "TAIWAN_SEIZURE": [
+        327500,
+        377500
+      ],
+      "CHIP_COLD_WAR": [
+        377500,
+        412500
+      ],
+      "TAIWAN_QUARANTINE": [
+        412500,
+        500000
+      ]
+    },
+    "paths_files": {
+      "PLTR": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-PLTR-paths.npz",
+      "NET": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-NET-paths.npz",
+      "MSFT": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-MSFT-paths.npz",
+      "ETN": "/data/workspace-invest/portfolio/_runs/mix-p10-p07-p175-mixture-ETN-paths.npz"
+    },
+    "note": "файлы-смеси = стратифицированная выборка взвешенной смеси §6 (одни диапазоны path_id у всех компаний); читаются оптимизатором и Stability без изменений"
+  },
+  "elapsed_ms": 4183.6,
+  "service": {
+    "name": "invest-calc",
+    "version": "0.1.0"
+  }
+}
